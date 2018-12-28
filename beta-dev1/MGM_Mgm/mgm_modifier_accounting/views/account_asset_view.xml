@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_account_asset_asset_form_inherit_modifier">
+        <field name="name">account.asset.asset.form.inherit.modifier</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_asset_form"/>
+        <field name="arch" type="xml">
+
+            <field name="date" position="after">
+                <field name="responsible_id"/>
+            </field>
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_asset_asset_purchase_tree_inherit_modifier">
+        <field name="name">account.asset.asset.purchase.tree.inherit.modifier</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_asset_purchase_tree"/>
+        <field name="arch" type="xml">
+
+            <field name="category_id" position="after">
+                <field name="responsible_id"/>
+            </field>
+
+        </field>
+    </record>
+
+</odoo>

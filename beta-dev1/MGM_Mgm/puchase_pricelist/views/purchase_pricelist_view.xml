@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="purchase_product_pricelist_view_form" model="ir.ui.view">
+            <field name="name">purchase.product.pricelist.inherit.product</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="before">
+                    <field name="pricelist_type" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_product_pricelist_view_tree" model="ir.ui.view">
+            <field name="name">purchase.product.pricelist.tree.inherit.product</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="currency_id" position="before">
+                    <field name="pricelist_type"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="purchase_order_product_pricelist_view" model="ir.ui.view">
+            <field name="name">purchase.order.product.pricelist.inherit.product</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="pricelist_id" string="Pricelist" required="1" groups="product.group_sale_pricelist"
+                    domain="['|',('pricelist_type','!=','sale'),('pricelist_type','=',False)]"/>
+                </xpath>
+
+                <xpath expr="//tree//field[@name='product_id']" position="attributes">
+                    <attribute name="context">{'partner_id':parent.partner_id, 'quantity':product_qty,
+                        'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//form//field[@name='product_id']" position="attributes">
+                    <attribute name="context">{'partner_id':parent.partner_id, 'quantity':product_qty,
+                        'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}
+                    </attribute>
+                </xpath>
+
+
+                <xpath expr="//tree//field[@name='product_qty']" position="attributes">
+                    <attribute name="context">{'partner_id':parent.partner_id, 'quantity':product_qty,
+                        'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//form//field[@name='product_qty']" position="attributes">
+                    <attribute name="context">{'partner_id':parent.partner_id, 'quantity':product_qty,
+                        'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}
+                    </attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <menuitem id="menu_product_pricelist_main" name="Pricelists" parent="purchase.menu_purchase_config"
+                  groups="product.group_sale_pricelist" sequence="1000000"/>
+
+        <menuitem action="product.product_pricelist_action2" id="menu_product_pricelist_action2"
+                  parent="menu_product_pricelist_main" sequence="1" groups="product.group_sale_pricelist"/>
+
+
+    </data>
+</odoo>

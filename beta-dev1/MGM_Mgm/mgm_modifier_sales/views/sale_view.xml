@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_order_form_additional_price_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.add.additional.price</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="context">{'check_additional_price' : True, 'default_check_additional_price':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <attribute name="context">{'check_additional_price' : True, 'default_check_additional_price':True}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="mother_vessel" />
+                    <field name="requisition_state" invisible="1"/>
+                </xpath>
+				
+                <xpath expr="//notebook/page[1]" position="after">
+                    <page string="Shipping Information"  attrs="{'invisible': [('requisition_state','=','ferry')]}">
+                        <field name="laycan_ids">
+                            <tree editable="top">
+                                <field name="laycan_in"/>
+                                <field name="laycan_out"/>
+                                <field name="commence_date"/>
+                                <field name="complete_date"/>
+                                <field name="subcon"/>
+                                <field name="late_fee"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_order_form_inherit_additional_price_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.add.additional.price</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_discount_total.discount_sale_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//field[@name='amount_tax']" position="after">
+                    <field widget="monetary" name="additional_price_amount" readonly="1"/>
+                </xpath>
+                <xpath expr="//form//field[@name='discount_rate']" position="after">
+                    <field widget="monetary" name="additional_price" readonly="0"/>
+                </xpath>
+                <xpath expr="//form//field[@name='discount_rate']" position="after">
+                    <field widget="monetary" name="tmp_price" invisible="1" readonly="0"/>
+                </xpath>
+                <xpath expr="//tree//field[@name='discount']" position="after">
+                    <field name="check_additional_price" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_order_form_add_asset_field" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.add.asset</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="mgm_joining_sales.view_order_form_add_source_field"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group/group[2]/field[@name='source_document']" position="after">source_document
+					<field name="asset"/>
+				</xpath>
+            </field>
+        </record>
+        
+        <menuitem id="menu_action_followups_sales" name="Customers Statement" action="enterprise_accounting_report.action_account_followup_all" parent="sales_team.menu_sales" sequence="30"/>
+         <menuitem
+            id="sales_team.menu_sales"
+            name="Default Sales"
+            parent="sales_team.menu_base_partner"
+            sequence="15"/>
+    </data>
+</odoo>

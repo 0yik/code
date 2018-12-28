@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bank_transaction_form_view">
+            <field name="name">bank.transaction.form</field>
+            <field name="model">bank.transaction</field>
+            <field name="arch" type="xml">
+                <form string="Bank Transaction">
+                    <header>
+                        <button name="action_post" states="unposted" string="Post" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" nolabel="1"/>
+                   </header>
+                    <sheet>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="type"/>
+                                <field name="journal_id" required="1"/>
+                                <field name="date"/>
+                            </group>
+                            <group>
+                                <field name="reference"/>
+                                <field name="bank_account_id" domain="[('type', '=', 'bank')]" required="1"/>
+                                <field name="amount" required="1"/>
+                                <field name="move_id" readonly="1" attrs="{'invisible' : [('move_id','=',False)]}" string="Journal Move"/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Bank">
+                                <field name="bank_transaction_line_in_ids" attrs="{'invisible' : [('type','!=','in')]}">
+                                    <tree string="Bank Transaction Lines" editable="bottom">
+                                        <field name="account_id"/>
+                                        <field name="amount_currency" required="1" sum="Total"/>
+                                    </tree>
+                                </field>
+                                <field name="bank_transaction_line_out_ids" attrs="{'invisible' : [('type','!=','out')]}">
+                                    <tree string="Bank Transaction Lines" editable="bottom">
+                                        <field name="master_expense_id"/>
+                                        <field name="description"/>
+                                        <field name="amount_currency" required="1" sum="Total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bank_transaction_tree_view">
+            <field name="name">bank.transaction.form</field>
+            <field name="model">bank.transaction</field>
+            <field name="arch" type="xml">
+                <tree string="Bank Transaction">
+                    <field name="type"/>
+                    <field name="journal_id"/>
+                    <field name="date"/>
+                    <field name="reference"/>
+                    <field name="bank_account_id"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_bank_transaction">
+            <field name="name">Bank Transaction</field>
+            <field name="res_model">bank.transaction</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_bank_transaction" parent="account.menu_finance_entries" name="Bank Transaction" sequence="10"
+                  action="action_bank_transaction"/>
+
+        <record id="seq_bank_in" model="ir.sequence">
+            <field name="name">Bank Transaction IN</field>
+            <field name="code">bank.seq.in</field>
+            <field name="prefix">BT/IN/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_bank_out" model="ir.sequence">
+            <field name="name">Bank Transaction OUT</field>
+            <field name="code">bank.seq.out</field>
+            <field name="prefix">BT/OUT/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

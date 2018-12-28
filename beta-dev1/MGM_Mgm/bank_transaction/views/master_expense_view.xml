@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="master_expense_form_view">
+            <field name="name">master.expense.form</field>
+            <field name="model">master.expense</field>
+            <field name="arch" type="xml">
+                <form string="Master Expense">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="description" />
+                                <field name="account_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="master_expense_tree_view">
+            <field name="name">master.expense.tree</field>
+            <field name="model">master.expense</field>
+            <field name="arch" type="xml">
+                <tree string="Master Expense">
+                    <field name="name"/>
+                    <field name="description" />
+                    <field name="account_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_master_expense">
+            <field name="name">Master Expense</field>
+            <field name="res_model">master.expense</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_parent_bank_transaction" name="Bank Transaction"
+                  parent="account.menu_finance_configuration"
+                  sequence="100001"/>
+
+        <menuitem id="menu_master_expense" parent="menu_parent_bank_transaction" name="Expense Master" sequence="10"
+                  action="action_master_expense"/>
+    </data>
+</odoo>

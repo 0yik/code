@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_shipment_invoice" model="ir.ui.view">
+            <field name="name">shipment.invoice.form</field>
+            <field name="model">shipment.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Shipping Invoice">
+                    <group>
+                         <group>
+                             <field name="shipment_id" domain="shiping_domain" required="1"/>
+                             <field name="shiping_domain" invisible="1"/>
+                         </group>
+                    </group>
+                    <footer>
+                        <button string='Create Invoice' name="create_vendor_bill" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_shipment_invoice" model="ir.actions.act_window">
+            <field name="name">Shipment Invoice</field>
+            <field name="res_model">shipment.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+           <field name="view_id" ref="view_shipment_invoice"/>
+           <field name="target">new</field>
+        </record>
+
+
+    </data>
+</odoo>

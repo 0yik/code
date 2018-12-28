@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_fund_transfer_tree" model="ir.ui.view">
+            <field name="name">fund.transfer.tree</field>
+            <field name="model">fund.transfer</field>
+            <field name="arch" type="xml">
+                <tree string="Fund Transfer">
+                    <field name="docuemnt"/>
+                    <field name="request_date"/>
+                    <field name="fr_number"/>
+                    <field name="bank_account"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_fund_transfer_form" model="ir.ui.view">
+            <field name="name">fund.transfer.form</field>
+            <field name="model">fund.transfer</field>
+            <field name="arch" type="xml">
+                <form string="Fund Transfer">
+                    <header>
+                        <button name="fund_post" string="Post" type="object" states="unposted" class="btn-primary"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        <button name="open_journal_entry"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            string="-> View Journal Entry"
+                            attrs="{'invisible': [('move_id', '=', False)]}">
+                        </button>
+                    </div>
+                        <group>
+                            <group>
+                                <field name="docuemnt" required="1"/>
+                                <field name="request_date" required="1"/>
+                            </group>
+                            <group>
+                                <field name="fr_number" required="1" domain="[('state','=','approved')]"/>
+                                <field name="bank_account" required="1"/>
+                                <field name="amount_transfer" invisible="1"/>
+                                <field name="move_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Transfer Line">
+                                <field name="fun_trans_line">
+                                    <tree string="Fund Transfer" editable="bottom">
+                                        <field name="emp_id"/>
+                                        <field name="designation"/>
+                                        <field name="department_id"/>
+                                        <field name="currency"/>
+                                        <field name="amount" sum="Total Amount"/>
+                                        <field name="amount_transfer" sum="Transfered Amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_fund_transfer" model="ir.actions.act_window">
+            <field name="name">Fund Transfer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fund.transfer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+         <menuitem id="menu_child_fund_transfer"
+                action="action_fund_transfer" parent="menu_fund_request"
+                sequence="11"/>
+
+
+</odoo>

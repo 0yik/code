@@ -1,0 +1,28 @@
+<odoo>
+    <record id="mgm_multi_assign_analytics_form" model="ir.ui.view">
+        <field name="name">mgm.multi.assign.analytics.form</field>
+        <field name="model">mgm.multi.assign.analytics</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Analytics Accounting">
+                <sheet>
+                    <field name="login_company_id" invisible="1"/>
+                    <field name="multi_analytics_accounting_line">
+                        <tree editable="bottom">
+                            <field name="analytic_account_level_id" required="1"/>
+                            <!--<field name="analytic_account_id" required="1" domain="[('level_id', 'in', [analytic_account_level_id])]"/>-->
+                            <field name="analytic_account_id" required="1"
+                                   domain="[('level_id', 'in', [analytic_account_level_id]), ('company_id', '=', parent.login_company_id)]"/>
+                        </tree>
+                    </field>
+                </sheet>
+                <footer>
+                    <button string='Save' name="save_multi_analytics_accounting_line" type="object"
+                            class="btn-primary"/>
+                    <button string="Discard" class="btn-primary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_form_inherit_shipping" model="ir.ui.view">
+        <field name="name">purchase.order.form.shipping</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <div class="oe_button_box" name="button_box">
+                <button name="action_view_vendor_bills"
+                        type="object"
+                        class="oe_stat_button" icon="fa-archive"
+                        attrs="{'invisible': [('vendor_bill_count', '=', 0)]}">
+                    <field name="vendor_bill_count" widget="statinfo" string="Shipping Bills"/>
+                </button>
+            </div>
+
+
+            <button name="action_rfq_send" position="after">
+                <button type="action" name='%(action_shipment_invoice)d' states="purchase" string="Create Shipping Invoice" />
+            </button>
+
+            <xpath expr="//notebook/page[1]//field[@name='notes']" position="after">
+                 <field name="service_product_lines">
+                     <tree string="Service Order Lines" editable="bottom">
+                        <field name="product_id"  domain="[('type', '=', 'service')]"/>
+                        <field name="name" />
+                        <field name="shipping_amount"/>
+                        <field name="shipping_vendor" />
+                        <field name="shipping_information" />
+                        <field name="total"/>
+                    </tree>
+                    <form string="Service Product Line">
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name="product_id" domain="[('type', '=', 'service')]" />
+                                    <field name="name" />
+                                    <field name="shipping_amount" widget="monetary"/>
+                                    <field name="shipping_vendor" />
+                                    <field name="shipping_information" />
+                                    <field name="total" widget="monetary"/>
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+
+                <group class="oe_subtotal_footer oe_right">
+                    <div class="oe_subtotal_footer_separator oe_inline">
+                        <label for="service_amount_total"/>
+                    </div>
+                    <field name="service_amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

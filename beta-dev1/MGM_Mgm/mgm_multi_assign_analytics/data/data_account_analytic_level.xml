@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="data_account_analytic_level_location" model="account.analytic.level">
+            <field name="name">Location</field>
+        </record>
+        <record id="data_account_analytic_level_business_unit" model="account.analytic.level">
+            <field name="name">Business Unit</field>
+        </record>
+        <record id="data_account_analytic_level_contract" model="account.analytic.level">
+            <field name="name">Contract</field>
+        </record>
+        <record id="data_account_analytic_level_project" model="account.analytic.level">
+            <field name="name">Project</field>
+        </record>
+        <record id="data_account_analytic_level_asset" model="account.analytic.level">
+            <field name="name">Asset</field>
+        </record>
+        <record id="data_account_analytic_level_department" model="account.analytic.level">
+            <field name="name">Department</field>
+        </record>
+        
+    </data>
+</odoo>

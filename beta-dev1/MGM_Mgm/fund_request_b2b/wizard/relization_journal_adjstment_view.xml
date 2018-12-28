@@ -1,0 +1,22 @@
+<odoo>
+<record id="relization_journal_adjustment_form" model="ir.ui.view">
+		<field name="name">relization.journal.adjustment.form</field>
+		<field name="model">relization.journal.adjustment</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Relization Account Adjustment">
+				<sheet>
+					<group>
+						<field name="bank_account_id" required="1"/>
+						<field name="account_journal_id" required="1"/>
+					</group>
+				</sheet>
+				<footer>
+                    <button string='Post' name="create_journal_entry" type="object" class="btn-primary"/>
+                    <button string="Discard" class="btn-primary" special="cancel"/>
+                </footer>
+			</form>
+		</field>
+	</record>
+
+</odoo>

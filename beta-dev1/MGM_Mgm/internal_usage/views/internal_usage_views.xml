@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_stock_picking_internal_usage_tree_inherit">
+            <field name="name">stock.picking.internal.usage.inherit.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="location_id"/>
+                </xpath>
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                    <field name="asset_id"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="business_unit_id"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="internal_usage_view_picking_inherit_form" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <field name="location_id" position="attributes">
+                    <attribute name="domain">[('usage','=','internal')]</attribute>
+                </field>
+                <field name="location_dest_id" position="attributes">
+                    <attribute name="domain">[('usage','=','internal')]</attribute>
+                </field>
+
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="internal_usage_menu" invisible="1"/>
+                    <!--<field name="warehouse_id" attrs="{'invisible': [('internal_usage_menu', '!=', True)]}"/>-->
+                    <field name="location_warehouse_id" domain="[('usage','=','internal')]"/>
+                </xpath>
+
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                    <!--<field name="asset_id" attrs="{'invisible': [('internal_usage_menu', '!=', True)]}"/>-->
+                    <field name="asset_id"/>
+                </xpath>
+
+
+                <field name="move_lines" position="attributes">
+                    <attribute name="context">{'address_in_id': partner_id,
+                        'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree',
+                        'default_picking_type_id': picking_type_id, 'default_location_id': location_id,
+                        'default_location_dest_id': location_dest_id,
+                        'default_location_warehouse_id':location_warehouse_id}
+                    </attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="move_line_view_picking_inherit_form" model="ir.ui.view">
+            <field name="name">move.stock.move.form.inherit</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="internal_usage_menu" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="product_default_code"/>
+                    <field name="product_description_picking"/>
+                    <field name="location_warehouse_id" domain="[('usage','=','internal')]"/>
+                    <field name="stock_on_hand"/>
+                </xpath>
+                <xpath expr="//field[@name='product_uom']" position="after">
+                    <field name="product_list_price" sum="Total"/>
+                    <field name="product_categ_id"/>
+                </xpath>
+
+                <!--<xpath expr="//field[@name='product_id']" position="after">
+                    <field name="product_default_code" attrs="{'invisible':[('internal_usage_menu', '=', False)]}"/>
+                    <field name="product_description_picking"
+                           attrs="{'invisible': [('internal_usage_menu', '!=', True)]}"/>
+                    <field name="stock_on_hand" attrs="{'invisible': [('internal_usage_menu', '!=', True)]}"/>
+                    <field name="warehouse_id" attrs="{'invisible': [('internal_usage_menu', '!=', True)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='product_uom']" position="after">
+                    <field name="product_list_price" sum="Total"
+                           attrs="{'invisible': [('internal_usage_menu', '!=', True)]}"/>
+                    <field name="product_categ_id" attrs="{'invisible': [('internal_usage_menu', '!=', True)]}"/>
+                </xpath> -->
+
+                <xpath expr="//field[@name='product_uom_qty']" position="replace">
+                    <field name="product_uom_qty" sum="Total"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="action_picking_internal_usage_tree_all" model="ir.actions.act_window">
+            <field name="name">Internal Usage</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('picking_type_code','=','internal')]</field>
+            <field name="context">{
+                'search_default_picking_type_code': 'internal',
+                'default_picking_type_code': 'internal' ,
+                'contact_display': 'partner_address',
+                'default_internal_usage_menu':True,
+                }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a new Internal transfer.
+                </p>
+                <p>
+                    You can either do it immediately or mark it as Todo for future processing. Use your scanner to
+                    validate the transferred quantity quicker.
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem id="internal_usage" name="Internal Usage" parent="stock.menu_stock_warehouse_mgmt" sequence="3"
+                  action="action_picking_internal_usage_tree_all"
+                  groups="stock.group_stock_manager,stock.group_stock_user"/>
+
+    </data>
+</odoo>

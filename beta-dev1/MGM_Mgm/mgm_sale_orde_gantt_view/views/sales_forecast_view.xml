@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!-- Sales forecast gantt view -->
+        <record id="sale_order_line_gantt_view" model="ir.ui.view">
+            <field name="name">sale.order.line.gantt</field>
+            <field name="model">stock.picking</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <gantt date_start="gantt_start_date" date_stop="gantt_end_date" 
+                    string="Sale Order" default_group_by="sale_order_id">
+                </gantt>
+            </field>
+        </record>
+
+        <record id="action_order_forecast_all" model="ir.actions.act_window">
+            <field name="name">Sales Forecast</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">gantt</field>
+            <field name="view_id" ref="sale_order_line_gantt_view"></field>
+            <field name="domain">[('state','!=','cancel')]</field>
+            <field name="context">{'gantt_pass': True}</field>
+        </record>
+
+        <menuitem name="Sales Forecast" action="action_order_forecast_all" id="menu_sale_forcast_all"
+                  parent="sales_team.menu_sale_report" sequence="11"/>
+
+    </data>
+</odoo>

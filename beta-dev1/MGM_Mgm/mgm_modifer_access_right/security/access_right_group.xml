@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--TODO USER GROUP-->
+        <!--MGM access right category-->
+        <record model="ir.module.category" id="mgm_category_access_right">
+            <field name="name">MGM</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <!--Super admin group-->
+        <record id="super_admin_group" model="res.groups">
+            <field name="name">Superadmin group</field>
+            <field name="category_id" ref="mgm_category_access_right"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Fund config wizard -->
+    <record id="view_fund_config_settings" model="ir.ui.view">
+        <field name="name">Fund settings</field>
+        <field name="model">fund.config.settings</field>
+        <field name="arch" type="xml">
+            <form string="Configure Fund Journal" class="oe_form_configuration" name="fund_config_form">
+                <header>
+                    <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="cancel" class="oe_link" special="cancel"/>
+                </header>
+                <div id="main">
+                    <group string="Journal" name="config_alias">
+                        <field name="group_use_journal" widget="radio"/>
+                    </group>
+                </div> 
+            </form>
+        </field>
+    </record>
+
+    <record id="action_fund_config" model="ir.actions.act_window">
+        <field name="name">Configure Fund Journal</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">fund.config.settings</field>
+        <field name="view_id" ref="view_fund_config_settings"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <menuitem id="menu_fund_journal_config" name="Configuration" parent="menu_main_fund_request" sequence="100" action="action_fund_config" groups="base.group_system"/>
+</odoo>

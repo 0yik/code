@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_sale_advance_payment_inv_custom">
+            <field name="name">sale.advance.payment.inv.form.inherit</field>
+            <field name="model">sale.advance.payment.inv</field>
+            <field name="inherit_id" ref="sale.view_sale_advance_payment_inv"/>
+            <field name="arch" type="xml">
+                <!--xpath expr="//form/group/field[@name='advance_payment_method']" position="after"-->
+                <xpath expr="//form" position="replace">
+                    <form string="Invoice Sales Order">
+                        <sheet>
+                            <notebook>
+                                <page string="Conversion Rate">
+                                    <group>
+                                        <field name="currency_id"/>
+                                        <field name="currency_to_id"/>
+                                        <field name="rate" digits="(14, 7)"/>
+                                        <field name="date"/>
+                                    </group>
+                                </page>
+                                <page string="Invoice Sales Order">
+                                    <p class="oe_grey">
+                                        Invoices will be created in draft so that you can review
+                                        them before validation.
+                                    </p>
+                                    <group>
+                                        <field name="count" invisible="[('count','=',1)]" readonly="True"/>
+                                        <field name="advance_payment_method" class="oe_inline" widget="radio"
+                                               attrs="{'invisible': [('count','&gt;',1)]}"/>
+                                        <field name="product_id"
+                                               context="{'search_default_services': 1, 'default_type': 'service', 'default_invoice_policy': 'order'}"
+                                               class="oe_inline"
+                                               attrs="{'invisible': 1}"/>
+                                        <label for="amount"
+                                               attrs="{'invisible': [('advance_payment_method', 'not in', ('fixed','percentage'))]}"/>
+                                        <div attrs="{'invisible': [('advance_payment_method', 'not in', ('fixed','percentage'))]}">
+                                            <field name="amount"
+                                                   attrs="{'required': [('advance_payment_method', 'in', ('fixed','percentage'))]}"
+                                                   class="oe_inline" widget="monetary"/>
+                                            <label string="%%"
+                                                   attrs="{'invisible': [('advance_payment_method', '!=', 'percentage')]}"
+                                                   class="oe_inline"/>
+                                        </div>
+                                        <field name="deposit_account_id" class="oe_inline"
+                                               attrs="{'invisible': ['|', ('advance_payment_method', 'not in', ('fixed', 'percentage')), ('product_id', '!=', False)]}"
+                                               groups="account.group_account_manager"/>
+                                        <field name="deposit_taxes_id" class="oe_inline" widget="many2many_tags"
+                                               domain="[('type_tax_use','=','sale')]"
+                                               attrs="{'invisible': ['|', ('advance_payment_method', 'not in', ('fixed', 'percentage')), ('product_id', '!=', False)]}"/>
+                                    </group>
+
+                                </page>
+                            </notebook>
+
+                            <footer>
+                                <button name="create_invoices" string="Create and View Invoices" type="object"
+                                        context="{'open_invoices': True}" class="btn-primary"/>
+                                <button name="create_invoices" string="Create Invoices" type="object"
+                                        class="btn-primary"/>
+                                <button string="Cancel" class="btn-default" special="cancel"/>
+                            </footer>
+
+                        </sheet>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_invoice_form_custom">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <!--xpath expr="//form/sheet/group/group[2]/div/field[@name='company_currency_id']" position="after"-->
+                <xpath expr="//form/sheet/group/group[2]/div[last()]" position="after">
+                    <field name="exchange_rate" digits="(14, 7)"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_vendor_invoice_form_custom_inherit">
+            <field name="name">vendor.invoice.custom.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                    <field name="purchase_order_id" invisible="1"/>
+                    <button name="multi_analytic_account" string="Analytic Account" type="object" class="btn-primary"
+                            style="width:10%;"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

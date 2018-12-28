@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="business_unit_form" model="ir.ui.view">
+            <field name="name">Business Unit</field>
+            <field name="model">business.unit</field>
+            <field name="arch" type="xml">
+                <form string="Business Unit">
+                    <sheet>
+                        <group col="4">
+                            <field name="name" required="1"/>
+                            <field name="unit" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="business_unit_tree" model="ir.ui.view">
+            <field name="name">Business Unit</field>
+            <field name="model">business.unit</field>
+            <field name="arch" type="xml">
+                <tree string="Business Unit">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="business_unit_action" model="ir.actions.act_window">
+            <field name="name">Business Unit</field>
+            <field name="res_model">business.unit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_business_unit" name="Business Unit" parent="sales_team.menu_sale_config" sequence="12" action="business_unit_action"/>
+
+        <record id="business_unit_action" model="ir.actions.act_window">
+            <field name="name">Business Unit</field>
+            <field name="res_model">business.unit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="sub_contractor_action" model="ir.actions.act_window">
+            <field name="name">Sub Contractor</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{"default_company_type":'subcon'}</field>
+        </record>
+
+        <menuitem id="menu_sub_contractor" name="Sub Contractor" parent="sales_team.menu_sales" sequence="5" action="sub_contractor_action"/>
+    </data>
+</odoo>

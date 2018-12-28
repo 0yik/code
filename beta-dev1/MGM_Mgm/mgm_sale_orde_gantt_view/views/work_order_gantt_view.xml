@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+    
+        <!-- workorder forecast gantt view -->
+        <record id="work_order_gantt_view" model="ir.ui.view">
+            <field name="name">sale.order.line.gantt</field>
+            <field name="model">stock.picking</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <gantt date_start="gantt_start_date" date_stop="gantt_end_date" string="Sale Order"
+                       default_group_by="business_unit_id">
+                </gantt>
+            </field>
+        </record>
+
+        <record id="action_work_order_forecast_all" model="ir.actions.act_window">
+            <field name="name">Work order Forecast</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">gantt</field>
+            <field name="view_id" ref="work_order_gantt_view"></field>
+            <field name="domain">[('state','!=','cancel')]</field>
+            <field name="context">{'gantt_pass': True}</field>
+        </record>
+
+
+        <menuitem name="Work Order Forecast" action="action_work_order_forecast_all"
+                  id="menu_work_order_forcast_all"
+                  parent="sales_team.menu_sale_report" sequence="11"/>
+                  
+    </data>
+</odoo>
+

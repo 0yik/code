@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="sale_view_picking_form_workorder" model="ir.ui.view">
+            <field name="name">stock.picking.form.view.workorder</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="min_date" position="after">
+                    <field name="end_date"/>
+                    <field name="gantt_start_date" invisible="1"/>
+					<field name="gantt_end_date" invisible="1"/>
+					<field name="business_unit_id"/>
+                </field>
+            </field>
+        </record>
+        
+        <record id="SaleOrder_view_order_form" model="ir.ui.view">
+			<field name="name">SaleOrder.view.order.form.inherited</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//sheet/group/group/field[@name='partner_shipping_id']" position="after">
+					<field name="business_unit_id"/>
+				</xpath>
+			</field>
+		</record>
+
+    </data>
+</odoo>

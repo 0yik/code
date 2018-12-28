@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- ****** Demo data of sale_bar_chart ****** -->
+        <record id="record_01" model="sales.bar.chart">
+            <field name="name">All</field>
+        </record>
+        <record id="record_02" model="sales.bar.chart">
+            <field name="name">Ferry</field>
+        </record>
+        <record id="record_03" model="sales.bar.chart">
+            <field name="name">FLF</field>
+        </record>
+        <record id="record_04" model="sales.bar.chart">
+            <field name="name">Tug &amp; Barge</field>
+        </record>
+        <record id="record_05" model="sales.bar.chart">
+            <field name="name">Stevedoring</field>
+        </record>
+        <record id="record_06" model="sales.bar.chart">
+            <field name="name">Other Quotation</field>
+        </record>
+        
+</odoo>

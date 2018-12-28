@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="asset_product_selection_form" model="ir.ui.view">
+            <field name="name">asset.product.selection.form</field>
+            <field name="model">asset.product.selection</field>
+            <field name="arch" type="xml">
+                <form string="Selection of Product">
+                   <sheet>
+                       <group>
+                            <group>
+                                <field name="invoice_id"/>
+                            </group>
+                            <group>
+                                <field name="purchase_id"/>
+                            </group>
+                       </group>
+                       <notebook>
+                           <page string="Product Lines">
+                               <field name="purchase_line">
+                                   <tree string="Products" create="false" editable="bottom" mode="tree">
+                                       <field name="product_id" readonly="1" />
+                                       <field name="product_code" readonly="1" />
+                                       <field name="quantity" readonly="1" />
+                                       <field name="unit_price" readonly="1" />
+                                       <field name="is_selected" invisible="0"/>
+                                       <!--<button name="action_select_product" icon="fa fa-tasks" type="object"/>-->
+                                   </tree>
+                               </field>
+                           </page>
+                       </notebook>
+                       <footer>
+                            <button name="action_select_product" string="Select" type="object" class="btn-primary"/>
+                             or
+                            <button special="cancel" string="Cancel" class="oe_link"/>
+                        </footer>
+
+                   </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_action_select_product" model="ir.actions.act_window">
+            <field name="name">Product selection form PO</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">asset.product.selection</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="purchase_order_form_modifier_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.modifier.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//sheet/div[2]" position="replace">
+                    <div class="oe_edit_only">
+                        <label string="Request for Quotation " class="oe_inline" attrs="{'invisible': [('state','not in',('draft','sent','bid'))]}"/>
+                        <label string="Purchase Order " class="oe_inline" attrs="{'invisible': [('state','in',('draft','sent','bid'))]}"/>
+                        <label for="reference_number" style="margin-left:65px" class="oe_inline"/>
+                    </div>
+                    <h1>
+                        <field name="name" class="oe_inline" readonly="1" />
+                        <field name="reference_number" style="margin-left:50px" class="oe_inline" required="1" />
+                    </h1>
+
+                </xpath>
+
+                <field name="partner_ref" position="after">
+                    <field name="asset_id"/>
+                </field>
+
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="string">Product Name</attribute>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/form//group/field[@name='product_id']" position="attributes">
+                    <attribute name="string">Product Name</attribute>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/tree/field[@name='product_id']" position="before">
+                    <field name="product_code"/>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/form/sheet//field[@name='product_id']" position="before">
+                    <field name="product_code"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

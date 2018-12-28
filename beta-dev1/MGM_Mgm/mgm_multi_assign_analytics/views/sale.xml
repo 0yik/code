@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<record model="ir.ui.view" id="view_order_form_custom_inherit">
+            <field name="name">sale.order.custom.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!--xpath expr="//form/sheet/notebook/page[last()]/group/group/field[@name='project_id']" position="after"-->
+                <xpath expr="//form/sheet/group/group[last()]" position="after">
+                    <button name="analytic_account" string="Analytic Account" type="object" class="btn-primary" style="width:10%;"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[last()]/group/group/field[@name='project_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[last()]/group/group/field[@name='related_project_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

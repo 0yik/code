@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form -->    
+    <record id="view_sales_bar_chart_form" model="ir.ui.view">
+		<field name="name">sales.bar.chart.form</field>
+		<field name="model">sales.bar.chart</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Business Unit" version="10.0">
+			    <sheet>
+			        <group>
+						<field name="name"/>
+					</group>
+			    </sheet>
+			</form>
+		</field>
+	</record>
+	
+	<!-- Tree -->
+	 <record id="view_sales_bar_chart_tree" model="ir.ui.view">
+        <field name = "name">sales.bar.chart.tree</field>
+        <field name = "model">sales.bar.chart</field>
+        <field name="type">tree</field>
+        <field name = "arch" type = "xml">
+            <tree string="Business Unit">
+                <field name="name"/>
+            </tree>
+       </field>
+   </record>
+    <!-- Dashboard -->
+    <record id="sales_bar_chart_view_kanban" model="ir.ui.view" >
+        <field name="name">sales.bar.chart.dashboard</field>
+        <field name="model">sales.bar.chart</field>
+        <field name="arch" type="xml">
+            <!--kanban class="oe_background_grey o_kanban_dashboard o_salesteam_kanban" create="0" js_class="sales_team_dashboard"-->
+            <kanban class="o_kanban_view oe_background_grey o_kanban_dashboard o_salesteam_kanban" create="0">
+                <field name="name"/>
+                 <field name="kanban_dashboard_graph_ferry"/>
+                 <field name="kanban_dashboard_graph_flf"/>
+                 <field name="months_total"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(0)}">
+                        <t t-value="record.name.raw_value" t-set="record_name"/>
+                        <t t-value="JSON.parse(record.months_total.raw_value)" t-set="record_amount"/>
+                            <div class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary"><field name="name"/></div>
+                                </div>
+                                
+                            </div>
+                            <div class="container o_kanban_card_content o_visible">
+                                <div class="row">
+                                    <t t-if="record_name == 'Ferry' || record_name == 'FLF' || record_name == 'All' || record_name == 'Tug &amp; Barge' || record_name == 'Stevedoring' || record_name == 'Other Quotation'" t-call="saleBodyGraph"/>
+                                </div>
+                            </div>
+                                
+                           </div>
+                    </t>
+                    <t t-name="saleBodyGraph">
+                        <div class="o_kanban_graph_section">
+                            <t t-if="record_name == 'Ferry'">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                       <span>Jan. <t t-esc="record_amount.january_total"/></span> 
+                                       <span>Feb. <t t-esc="record_amount.febuary_total"/></span> 
+                                       <span>Mar. <t t-esc="record_amount.march_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Apr. <t t-esc="record_amount.april_total"/></span> 
+                                       <span>May. <t t-esc="record_amount.may_total"/></span> 
+                                       <span>Jun. <t t-esc="record_amount.june_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Jul. <t t-esc="record_amount.july_total"/></span> 
+                                       <span>Aug. <t t-esc="record_amount.august_total"/></span> 
+                                       <span>Sep. <t t-esc="record_amount.september_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Oct. <t t-esc="record_amount.october_total"/></span> 
+                                       <span>Nov. <t t-esc="record_amount.november_total"/></span> 
+                                       <span>Dec. <t t-esc="record_amount.december_total"/></span> 
+                                    </div>
+                                </div>
+                                 <br/>
+                                <field name="kanban_dashboard_graph_ferry" graph_type="bar" widget="dashboard_graph"/>
+                            </t>
+                            <t t-if="record_name == 'FLF'">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                       <span>Jan. <t t-esc="record_amount.january_total"/></span> 
+                                       <span>Feb. <t t-esc="record_amount.febuary_total"/></span> 
+                                       <span>Mar. <t t-esc="record_amount.march_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Apr. <t t-esc="record_amount.april_total"/></span> 
+                                       <span>May. <t t-esc="record_amount.may_total"/></span> 
+                                       <span>Jun. <t t-esc="record_amount.june_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Jul. <t t-esc="record_amount.july_total"/></span> 
+                                       <span>Aug. <t t-esc="record_amount.august_total"/></span> 
+                                       <span>Sep. <t t-esc="record_amount.september_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Oct. <t t-esc="record_amount.october_total"/></span> 
+                                       <span>Nov. <t t-esc="record_amount.november_total"/></span> 
+                                       <span>Dec. <t t-esc="record_amount.december_total"/></span> 
+                                    </div>
+                                </div>
+                                <br/>
+                                <field name="kanban_dashboard_graph_flf" graph_type="bar" widget="dashboard_graph"/>
+                            </t>
+                            <t t-if="record_name == 'All'">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                       <span>Jan. <t t-esc="record_amount.january_total"/></span> 
+                                       <span>Feb. <t t-esc="record_amount.febuary_total"/></span> 
+                                       <span>Mar. <t t-esc="record_amount.march_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Apr. <t t-esc="record_amount.april_total"/></span> 
+                                       <span>May. <t t-esc="record_amount.may_total"/></span> 
+                                       <span>Jun. <t t-esc="record_amount.june_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Jul. <t t-esc="record_amount.july_total"/></span> 
+                                       <span>Aug. <t t-esc="record_amount.august_total"/></span> 
+                                       <span>Sep. <t t-esc="record_amount.september_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Oct. <t t-esc="record_amount.october_total"/></span> 
+                                       <span>Nov. <t t-esc="record_amount.november_total"/></span> 
+                                       <span>Dec. <t t-esc="record_amount.december_total"/></span> 
+                                    </div>
+                                </div>
+                                <br/>
+                                <field name="kanban_dashboard_graph_total" graph_type="bar" widget="dashboard_graph"/>
+                            </t>
+                            <t t-if="record_name == 'Tug &amp; Barge'">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                       <span>Jan. <t t-esc="record_amount.january_total"/></span> 
+                                       <span>Feb. <t t-esc="record_amount.febuary_total"/></span> 
+                                       <span>Mar. <t t-esc="record_amount.march_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Apr. <t t-esc="record_amount.april_total"/></span> 
+                                       <span>May. <t t-esc="record_amount.may_total"/></span> 
+                                       <span>Jun. <t t-esc="record_amount.june_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Jul. <t t-esc="record_amount.july_total"/></span> 
+                                       <span>Aug. <t t-esc="record_amount.august_total"/></span> 
+                                       <span>Sep. <t t-esc="record_amount.september_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Oct. <t t-esc="record_amount.october_total"/></span> 
+                                       <span>Nov. <t t-esc="record_amount.november_total"/></span> 
+                                       <span>Dec. <t t-esc="record_amount.december_total"/></span> 
+                                    </div>
+                                </div>
+                                <br/>
+                                <field name="kanban_dashboard_graph_tug_and_burg" graph_type="bar" widget="dashboard_graph"/>
+                            </t>
+                            <t t-if="record_name == 'Stevedoring'">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                       <span>Jan. <t t-esc="record_amount.january_total"/></span> 
+                                       <span>Feb. <t t-esc="record_amount.febuary_total"/></span> 
+                                       <span>Mar. <t t-esc="record_amount.march_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Apr. <t t-esc="record_amount.april_total"/></span> 
+                                       <span>May. <t t-esc="record_amount.may_total"/></span> 
+                                       <span>Jun. <t t-esc="record_amount.june_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Jul. <t t-esc="record_amount.july_total"/></span> 
+                                       <span>Aug. <t t-esc="record_amount.august_total"/></span> 
+                                       <span>Sep. <t t-esc="record_amount.september_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Oct. <t t-esc="record_amount.october_total"/></span> 
+                                       <span>Nov. <t t-esc="record_amount.november_total"/></span> 
+                                       <span>Dec. <t t-esc="record_amount.december_total"/></span> 
+                                    </div>
+                                </div>
+                                <br/>
+                                <field name="kanban_dashboard_graph_stevedoring" graph_type="bar" widget="dashboard_graph"/>
+                            </t>
+                            <t t-if="record_name == 'Other Quotation'">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                       <span>Jan. <t t-esc="record_amount.january_total"/></span> 
+                                       <span>Feb. <t t-esc="record_amount.febuary_total"/></span> 
+                                       <span>Mar. <t t-esc="record_amount.march_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Apr. <t t-esc="record_amount.april_total"/></span> 
+                                       <span>May. <t t-esc="record_amount.may_total"/></span> 
+                                       <span>Jun. <t t-esc="record_amount.june_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Jul. <t t-esc="record_amount.july_total"/></span> 
+                                       <span>Aug. <t t-esc="record_amount.august_total"/></span> 
+                                       <span>Sep. <t t-esc="record_amount.september_total"/></span> 
+                                    </div>
+                                    <div class="col-xs-3">
+                                       <span>Oct. <t t-esc="record_amount.october_total"/></span> 
+                                       <span>Nov. <t t-esc="record_amount.november_total"/></span> 
+                                       <span>Dec. <t t-esc="record_amount.december_total"/></span> 
+                                    </div>
+                                </div>
+                                <br/>
+                                <field name="kanban_dashboard_graph_others" graph_type="bar" widget="dashboard_graph"/>
+                            </t>
+                        </div>  
+                    </t>
+                </templates>
+
+            </kanban>
+        </field>
+    </record>
+    
+    <!-- Customer Action view -->
+        <record id = "sales_bar_chart_action" model="ir.actions.act_window">
+            <field name = "name">Sales to Invoice Dashboard</field>
+            <field name = "res_model">sales.bar.chart</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">kanban,form</field>
+        </record>
+    <menuitem id="sales_bar_chart_menu_custom" action="mgm_sales_bar_chart.sales_bar_chart_action" sequence="2" parent="sales_team.menu_sales_team_act" name="Dashboard Sale to Invoice"/>
+    <menuitem id="crm_team_dashboard_custom" action="sales_team.crm_team_salesteams_act" sequence="1" parent="sales_team.menu_sales_team_act" name="Dashboard"/>
+</odoo>

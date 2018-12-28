@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<record model="ir.ui.view" id="view_customer_receipt_form_inherit">
+            <field name="name">receipt.payment.form.inherit</field>
+            <field name="model">receipt.payment</field>
+            <field name="inherit_id" ref="sg_partner_payment.view_customer_receipt_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[1]/field[@name='line_cr_ids']/tree/field[@name='amount']" position="after">
+                    <field name="memo"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page/field[@name='line_dr_ids']/tree/field[@name='amount']" position="after">
+                    <field name="memo"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="receipt_payment_debit_form_inherit">
+            <field name="name">receipt.payment.debit.inherit</field>
+            <field name="model">receipt.payment.debit</field>
+            <field name="inherit_id" ref="sg_partner_payment.receipt_payment_debit_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/group/group/field[@name='reconcile']" position="after">
+                    <field name="memo"/>
+                </xpath>
+               
+            </field>
+        </record>
+        <record model="ir.ui.view" id="receipt_payment_credit_form_inherit">
+            <field name="name">receipt.payment.credit.inherit</field>
+            <field name="model">receipt.payment.credit</field>
+            <field name="inherit_id" ref="sg_partner_payment.receipt_payment_credit_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/group/group/field[@name='reconcile']" position="after">
+                    <field name="memo"/>
+                </xpath>
+               
+            </field>
+        </record>
+    </data>
+</odoo>
+

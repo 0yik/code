@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="assets" inherit_id="web.assets_backend">
+			<xpath expr="." position="inside">
+				<script type="text/javascript" src="/mgm_modifier_sales/static/src/js/mgm_modifier_sales_currency.js"></script>
+			</xpath>
+		</template>
+	</data>
+</odoo>

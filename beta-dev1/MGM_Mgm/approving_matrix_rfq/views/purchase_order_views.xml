@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_purchase_order_form_inherit">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_rfq_send'][1]" position="attributes">
+                    <attribute name="states">rfq_approved</attribute>
+                </xpath>
+                <xpath expr="//button[@name='print_quotation'][1]" position="attributes">
+                    <attribute name="states">rfq_approved</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_confirm'][1]" position="attributes">
+                    <attribute name="states">rfq_approved</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_confirm'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_draft']" position="attributes">
+                    <attribute name="states">cancel,rfq_reject</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="attributes">
+                    <attribute name="states">draft,to approve,sent,purchase,rfq_reject</attribute>
+                </xpath>
+
+                <xpath expr="//header/button[@name='button_confirm']" position="after">
+                    <button name="request_rfq_approve" string="Request for Approve RFQ" type="object"
+                            class="oe_highlight" attrs="{'invisible':[('state', 'not in', ('draft','sent'))]}"/>
+                    <button name="rfq_approved" string="Approve RFQ" type="object" class="oe_highlight"
+                            attrs="{'invisible':[('state', '!=', 'waiting_for_approval')]}"
+                            groups="purchase.group_purchase_manager"/>
+                    <button name="rfq_rejected" string="Reject RFQ" type="object" class="oe_highlight"
+                            attrs="{'invisible':[('state', '!=', 'waiting_for_approval')]}"
+                            groups="purchase.group_purchase_manager"/>
+                </xpath>
+
+
+                <field name="company_id" position="after">
+                    <field name="approving_matrix_id" string="Approving Matrix" required="1"
+                           attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
+                           options="{'no_create_edit': True}" domain="[('matrix_type','=','amount')]"/>
+                </field>
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="Approve Matrix Lines">
+                        <field name="approving_matrix_line_ids" options='{"no_open": True}'>
+                            <tree>
+                                <field name="employee_ids" widget="many2many_tags"/>
+                                <field name="approved"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                
+                 <xpath expr="//form/sheet/group/group/field[@name='is_shipped']" position="after">
+                    <field name="is_multiline_approval" invisible="1"/>
+                    <field name="is_button_rejected" invisible="1"/>
+                </xpath>
+                
+                <xpath expr="//header/button[@name='rfq_approved']" position="replace">
+                    <button name="rfq_approved" string="Approve RFQ" type="object" class="oe_highlight"
+                            attrs="{'invisible':['|',('state', '!=', 'waiting_for_approval'),('is_multiline_approval', '=', True)]}"
+                            groups="purchase.group_purchase_manager"/>
+                </xpath>
+                <xpath expr="//header/button[@name='rfq_rejected']" position="replace">
+                     <button name="rfq_rejected" string="Reject RFQ" type="object" class="oe_highlight"
+                            attrs="{'invisible':['|',('state', '!=', 'waiting_for_approval'),('is_multiline_approval', '=', True)]}"
+                            groups="purchase.group_purchase_manager"/>
+                    
+                </xpath>
+                
+                <xpath expr="//header/button[@name='button_draft']" position="replace">
+                     <button name="button_draft" string="Reject RFQ" type="object" class="oe_highlight"
+                            attrs="{'invisible':['|',('state', '!=', ('cancel','rfq_reject')),('is_button_rejected', '=', True)]}"
+                            groups="purchase.group_purchase_manager"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

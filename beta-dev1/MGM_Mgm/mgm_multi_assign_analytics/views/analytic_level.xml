@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_account_analytic_level_tree_custom_inherit">
+            <field name="name">account.analytic.level.tree.inherit</field>
+            <field name="model">account.analytic.level</field>
+            <field name="inherit_id" ref="multi_level_analytical.account_analytic_level_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="sequence" widget="handle"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="tax_adjustments_wizard_inherit">
+            <field name="name">tax.adjustments.wizard.form.inherit</field>
+            <field name="model">tax.adjustments.wizard</field>
+            <field name="inherit_id" ref="account.tax_adjustments_wizard"/>
+            <field name="arch" type="xml">
+                <field name="amount" position="after">
+                    <field name="invoice_id" string="Invoice" context="{'select_from_tax_adjustment' : True}" options='{"always_reload": True}'/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
