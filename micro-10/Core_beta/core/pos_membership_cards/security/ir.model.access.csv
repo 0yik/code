@@ -1,8 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-manager_access_pos_card_category,manager.access.pos.card.category,model_pos_membership_category,point_of_sale.group_pos_manager,1,1,1,1
-manager_access_pos_card,manager.access.pos.card,model_pos_membership_card,point_of_sale.group_pos_manager,1,1,1,1
-manager_access_membership_config,manager.access.membership.config,model_membership_config,point_of_sale.group_pos_manager,1,1,1,1
-
-user_access_pos_card_category,user.access.pos.card.category,model_pos_membership_category,point_of_sale.group_pos_user,1,1,0,0
-user_access_pos_card,user.access.pos.card,model_pos_membership_card,point_of_sale.group_pos_user,1,1,0,0
-user_access_membership_config,user.access.membership.config,model_membership_config,point_of_sale.group_pos_user,1,1,1,1

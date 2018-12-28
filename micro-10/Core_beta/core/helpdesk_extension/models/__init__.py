@@ -1,5 +1,0 @@
-import res_partner
-import helpdesk_team
-import helpdesk_ticket
-import loop_email
-import mail_thread

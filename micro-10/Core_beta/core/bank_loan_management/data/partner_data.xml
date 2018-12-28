@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-
-    <record id="bank_supplier" model="res.partner">
-        <field name="name">Bank</field>
-        <field name="supplier">True</field>
-        <field name="customer">False</field>
-    </record>
-</odoo>

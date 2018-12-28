@@ -1,4 +1,0 @@
-import mail_channel
-import mail_message
-import res_user
-import helpdesk

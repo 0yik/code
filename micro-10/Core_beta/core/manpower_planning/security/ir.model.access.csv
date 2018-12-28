@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_manpower_planning_user,access.manpower.planning.manager,model_manpower_planning,base.group_user,1,1,1,1
-access_manpower_planning_line_user,access.manpower.planning.line.user,model_manpower_planning_line,base.group_user,1,1,1,1

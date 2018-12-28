@@ -1,2 +1,0 @@
-import leave_stucture
-import hr_employee

@@ -1,2 +1,0 @@
-import invoice_debit_note
-import invoice_credit_note

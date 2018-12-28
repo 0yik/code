@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_purchase_payment_voucher,purchase.payment.voucher,model_purchase_payment_voucher,,1,1,1,0
-access_invoice_information,invoice.information,model_invoice_information,,1,1,1,1

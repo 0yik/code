@@ -1,1 +1,0 @@
-import opportunity_partner

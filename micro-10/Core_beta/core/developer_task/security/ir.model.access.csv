@@ -1,9 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_developer_task,developer.task.list,model_developer_task_list,base.group_user,1,0,0,0
-access_developer_task_developer,developer.task.developer.access,model_developer_task_list,developer_task.group_project_developer_access,1,1,0,0
-access_task_revision,task.revision.module,model_task_revision_module,base.group_user,1,1,1,1
-model_module_repository_project_manager,module.repository.project.manager.access,module_repository.model_module_repository,project.group_project_manager,1,1,1,1
-model_module_repository_developer,module.repository.developer.access,module_repository.model_module_repository,developer_task.group_project_developer_access,1,1,1,0
-access_developer_task_developer_project_manager,developer.task.access.project.manager,model_developer_task_list,project.group_project_manager,1,1,1,1
-access_developer_task_status,access_developer_task_status,model_developer_task_status,base.group_user,1,0,0,0
-access_developer_task_status_all,access_developer_task_status_all,model_developer_task_status,project.group_project_manager,1,1,1,1

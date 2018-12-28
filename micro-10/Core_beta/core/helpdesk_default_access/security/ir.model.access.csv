@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-helpdesk.access_helpdesk_ticket,helpdesk.ticket,helpdesk.model_helpdesk_ticket,helpdesk.group_helpdesk_user,1,1,1,0
-helpdesk.access_ir_module_module_helpdesk_manager,helpdesk_manager_ir_module_module,base.model_ir_module_module,helpdesk.group_helpdesk_manager,1,0,0,0
-helpdesk.access_ir_module_category_helpdesk_manager,helpdesk_manager_ir_module_category,base.model_ir_module_category,helpdesk.group_helpdesk_manager,1,0,0,0
-helpdesk.access_ir_actions_todo_helpdesk_manager,helpdesk_manager_ir_actions_todo,base.model_ir_actions_todo,helpdesk.group_helpdesk_manager,1,0,0,0

@@ -1,3 +1,0 @@
-import account
-import customer_prepayment_schedule
-import supplier_prepayment_schedule

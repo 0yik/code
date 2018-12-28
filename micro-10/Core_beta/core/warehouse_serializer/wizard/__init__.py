@@ -1,1 +1,0 @@
-import serial_lot_number

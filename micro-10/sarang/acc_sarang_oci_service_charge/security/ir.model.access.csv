@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_service_charge,access.service.charge.public,acc_sarang_oci_service_charge.model_service_charge,,1,0,0,0

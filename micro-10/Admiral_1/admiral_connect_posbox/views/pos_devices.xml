@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-        <template id="assets" name="pos_assets">
-            <link rel="stylesheet" href="/admiral_connect_posbox/static/src/css/pos_devices.css" id="pos-devices-stylesheet"/>
-
-            <script type="text/javascript" src="/admiral_connect_posbox/static/src/js/pos_devices.js"></script>
-        </template>
-</odoo>

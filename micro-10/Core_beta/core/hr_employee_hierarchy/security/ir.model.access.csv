@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_leave_approval_hierarchy_emp,access_leave_approval_hierarchy_emp,model_leave_approve_hierarchy,,1,0,0,0
-access_leave_approval_hierarchy_line_emp,access_leave_approval_hierarchy_line_emp,model_leave_approve_line,,1,0,0,0
-access_leave_approval_hierarchy_mgr,access_leave_approval_hierarchy_mgr,model_leave_approve_hierarchy,base.group_user,1,1,1,1
-access_leave_approval_hierarchy_line_mgr,access_leave_approval_hierarchy_line_mgr,model_leave_approve_line,hr.group_hr_manager,1,1,1,1

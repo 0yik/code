@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<odoo>
-    <template id="assets_front_end" name="inventory_summary" inherit_id="web.assets_backend">
-        <xpath expr="." position="inside">
-            <script type="text/javascript" src="/hm_sales_standardization/static/src/js/sales_target.js"></script>
-        </xpath>
-    </template>
-</odoo>

@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_barcode_scan_modifier_barcode_scan_modifier,barcode_scan_modifier.barcode_scan_modifier,model_barcode_scan_modifier_barcode_scan_modifier,,1,0,0,0

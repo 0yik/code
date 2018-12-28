@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_pos_modifier_tax_pos_modifier_tax,pos_modifier_tax.pos_modifier_tax,model_pos_modifier_tax_pos_modifier_tax,,1,0,0,0

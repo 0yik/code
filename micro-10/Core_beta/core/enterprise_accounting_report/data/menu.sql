@@ -1,1 +1,0 @@
-UPDATE ir_ui_menu SET active=null WHERE id in (SELECT id FROM ir_ui_menu WHERE name='Cash Flow Statement' and sequence=10);

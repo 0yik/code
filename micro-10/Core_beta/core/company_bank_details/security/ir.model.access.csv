@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_res_partner_bank_type_field,access_res_partner_bank_type_field,model_res_partner_bank_type_field,,1,0,0,0
-access_res_partner_bank_type,access_res_partner_bank_type,model_res_partner_bank_type,,1,0,0,0

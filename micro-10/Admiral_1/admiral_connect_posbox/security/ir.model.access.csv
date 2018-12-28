@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_admiral_connect_posbox_admiral_connect_posbox,admiral_connect_posbox.admiral_connect_posbox,model_admiral_connect_posbox_admiral_connect_posbox,,1,0,0,0

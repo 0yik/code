@@ -1,5 +1,0 @@
-import product
-import booking_order
-import stock
-import stock_production_lot
-import account_invoice

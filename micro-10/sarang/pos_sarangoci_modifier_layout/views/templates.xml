@@ -1,9 +1,0 @@
-<odoo>
-    <template id="assets" inherit_id="point_of_sale.assets">
-        <xpath expr="." position="inside">
-            <link rel="stylesheet" href="/pos_sarangoci_modifier_layout/static/src/css/receipt_layout.css" />
-            <link rel="stylesheet" href="/pos_sarangoci_modifier_layout/static/src/css/note_button.css" />
-            <script type="text/javascript" src="/pos_sarangoci_modifier_layout/static/src/js/sarangoci_button.js"></script>
-        </xpath>
-    </template>
-</odoo>

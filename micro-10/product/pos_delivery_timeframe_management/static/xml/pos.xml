@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<templates id="template" xml:space="preserve">
-    <t t-name="TimeFrameDeliveryCheckbox">
-        <div class='checkbox js_deliverycheckbox'>
-			<label><input type="checkbox" id="apply_charges"/>Apply Charges</label>
-        </div>
-    </t>
-</templates>

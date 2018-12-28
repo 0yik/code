@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_company_line_user,access.company_line_user,model_company_line,base.group_user,1,1,1,1
-access_company_lines_user,access.company_lines_user,model_company_lines,base.group_user,1,1,1,1

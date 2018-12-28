@@ -1,2 +1,0 @@
-import account
-import res_company

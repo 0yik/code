@@ -1,2 +1,0 @@
-import product_inherit
-import sale_inherit

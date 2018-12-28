@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_ems_class_student_line,access_ems_class_student_line,model_ems_class_student_line,,1,0,0,0

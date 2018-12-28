@@ -1,2 +1,0 @@
-import pos_order
-import pos_promotion

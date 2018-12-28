@@ -1,8 +1,0 @@
-<odoo>
-    <template id="assets" inherit_id="point_of_sale.assets">
-      <xpath expr="." position="inside">
-          <script type="text/javascript" src="/pos_delivery_timeframe_calendar/static/js/pos.js"></script>
-          <link rel="stylesheet" href="/pos_delivery_timeframe_calendar/static/css/pos.css" type="text/css"/>
-      </xpath>
-    </template>
-</odoo>

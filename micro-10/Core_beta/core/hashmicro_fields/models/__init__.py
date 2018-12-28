@@ -1,3 +1,0 @@
-import crm_lead
-import crm_reseller
-import calendar

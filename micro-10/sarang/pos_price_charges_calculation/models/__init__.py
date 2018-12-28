@@ -1,3 +1,0 @@
-import account_invoice
-import pos_order
-import product

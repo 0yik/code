@@ -1,1 +1,0 @@
-# equip10-moduleboard
