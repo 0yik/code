@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="ace_view_pos_config_form">
+            <field name="name">pos.config.form.view.inherit</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_form"></field>
+            <field name="arch" type="xml">
+                <field name="iface_display_categ_images" position="after">
+                    <field name="enable_pos_serial" />
+                    <field name="product_exp_days"
+                                attrs="{'invisible': [('enable_pos_serial','=',False)]}"/>
+                </field>
+            </field>
+        </record>
+        
+        <record id="order_inherited_form_view" model="ir.ui.view">
+            <field name="name">pos.order.inherited.view</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <field name="price_unit" position="before">
+                    <field name="serial_nums"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="view_account_analytic_account_form_inherit" model="ir.ui.view">
+            <field name="name">analytic.analytic.account.form.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//button[@name='toggle_active']" position="after">
+                    <button name="open_project"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            string="-> View Project"
+                            attrs="{'invisible': [('project_id', '=', False)]}">
+                        </button>
+                    <field name="project_id" invisible="1"/>
+                    <button name="open_manufacture_order"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            string="-> View Manufacture"
+                            attrs="{'invisible': [('mrp_production_ids', '=', False)]}">
+                        </button>
+            </xpath>
+            <group name="main" position="after">
+                <notebook>
+                    <page name="product_to_manufacture" string="Product To Manufacture">
+                        <field name="product_to_manufacture_ids">
+                            <tree string="Product To Manufacture" editable="bottom">
+                                <field name="product_id"/>
+                                <field name="quantity"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="product_to_manufacture" string="Product To Manufacture" invisible="1">
+                        <field name="mrp_production_ids">
+                        </field>
+                    </page>
+                </notebook>
+            </group>
+
+            </field>
+        </record>
+
+</odoo>

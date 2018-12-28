@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_barcode_showsn_barcode_showsn,barcode_showsn.barcode_showsn,model_barcode_showsn_barcode_showsn,,1,0,0,0

@@ -1,0 +1,120 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="fleet_vehicle_view_form_inherit">
+		    <field name="name">fleet.vehicle.form.inherit</field>
+		    <field name="model">fleet.vehicle</field>
+			<field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+		    <field name="arch" type="xml">
+				<xpath expr="//button[@name='return_action_to_open']" position="after">
+					<button name="get_maintenances" class="oe_stat_button" icon="fa-ticket" type="object" context="{'default_vehicle_id': active_id}">
+		                <div class="o_stat_info">
+		                    <field name="no_of_maintenance" class="o_stat_value"/>
+		                    <span class="o_stat_text"> Maintenance </span>
+		                </div>
+		            </button>
+				</xpath>
+
+				<xpath expr="//form/sheet/div[@class='oe_title']" position="inside">
+					<br/>
+					<label for="type_of_assets"/>
+					<field name="type_of_assets"/>
+				</xpath>
+				<xpath expr="//group[1]" position="after">
+					<group attrs="{'invisible': ['|', ('type_of_assets', '=', 'fleet'), ('type_of_assets', '=', False)]}">
+                        <group>
+                            <field name="owner_user_id" string="Requested By"/>
+                            <field name="equipment_id"  context="{'default_category_id':category_id}"/>
+                            <field name="request_date"/>
+                            <field name="close_date" groups="base.group_no_one"/>
+                            <field name="maintenance_type" widget="radio"/>
+                        </group>
+                        <group>
+                            <field name="maintenance_team_id"/>
+                            <field name="technician_user_id" string="Responsible"/>
+                            <label for="schedule_date"/>
+                            <div class="o_row">
+                                <field name="schedule_date"/>
+                                <label string="for"/>
+                                <field name="duration" class="oe_inline"/> hours
+                            </div>
+                            <field name="priority" widget="priority"/>
+                        </group>
+                    </group>
+				</xpath>
+				<xpath expr="//group[3]" position="attributes">
+					<attribute name="attrs">{'invisible': [('type_of_assets', '=', 'other assets')]}</attribute>
+				</xpath>
+				<xpath expr="//group[1]" position="attributes">
+					<attribute name="attrs">{'invisible': [('type_of_assets', '=', 'other assets')]}</attribute>
+				</xpath>
+			</field>
+		</record>
+		<menuitem
+		    id="maintenance.menu_maintenance_title"
+		    name="Maintenance"
+		    web_icon="maintenance,static/description/icon.png"
+		    sequence="3"
+			parent="fleet.menu_root"/>
+
+		<menuitem
+        id="maintenance.menu_equipment_form"
+        name="Equipments"
+        parent="fleet.menu_root"
+        action="maintenance.hr_equipment_action"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        sequence="2"/>
+
+		<record id="fleet.menu_root" model="ir.ui.menu">
+			<field name="name">Assets Tracking</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_equipment_request_view_form_inherit">
+		    <field name="name">maintenance.request.form.inherit</field>
+		    <field name="model">maintenance.request</field>
+			<field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+		    <field name="arch" type="xml">
+				<field name="owner_user_id" position="after">
+					<field name="vehicle_id" attrs="{'invisible': [('vehicle', '!=', True)]}"/>
+				</field>
+				<field name="equipment_id" position="attributes">
+					<attribute name="attrs">{'invisible': [('equipment', '!=', True)]}</attribute>
+				</field>
+				<field name="name" position="after">
+					<group>
+						<group>
+							<field name="vehicle"/>
+						</group>
+						<group>
+							<field name="equipment"/>
+						</group>
+					</group>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_equipment_request_view_kanban_inherit">
+		    <field name="name">equipment.request.kanban.inherit</field>
+		    <field name="model">maintenance.request</field>
+			<field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban"/>
+		    <field name="arch" type="xml">
+				<xpath expr="//div/div[2]/div[1]/span[2]" position="after">
+					<span class="oe_grey" t-if="record.vehicle_id.raw_value"><field name="vehicle_id"/><br/></span>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_equipment_view_form_inherit">
+		    <field name="name">maintenance.equipment.form.inherit</field>
+		    <field name="model">maintenance.equipment</field>
+			<field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+		    <field name="arch" type="xml">
+				<field name="category_id" position="after">
+					<field name="asset_category_id"/>
+				</field>
+				<field name="category_id" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

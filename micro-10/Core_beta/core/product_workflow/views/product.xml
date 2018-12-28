@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="inherit_product_view_add_state">
+        <field name="name">inherit.product.view.add.state</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="approve" type="object" string="Approve" class="btn-primary" groups="base.group_product_approve_manager" states="draft"/>
+                <button name="refuse" type="object" string="Refuse" class="btn-primary" groups="base.group_product_approve_manager" states="draft"/>
+                <button name="set_to_draft" type="object" string="Set To Draft" class="btn-primary" groups="base.group_product_approve_manager" states="cancel"/>
+                <field align="right" name="state" widget="statusbar"  statusbar_visible="draft,approve,cancel"/>
+                </header>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_product_tree_view_inherit_add_workflow">
+        <field name="name">product.product.tree.view.inherit.add.workflow</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="barcode" position="after">
+                <field name="state"/>
+                </field>
+        </field>
+    </record>
+
+    </data>
+</odoo>

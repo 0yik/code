@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="substitute_teacher_email_verification" model="ir.config_parameter">
+            <field name="key">teacher_email_verification</field>
+            <field name="value">Hello %s
+            					You have been substitute for the below class: %s
+                                Thanks
+            </field>
+        </record>
+        
+        <record id="admin_notification_day" model="ir.config_parameter">
+            <field name="key">admin_notification_day_1</field>
+            <field name="value">2</field>
+        </record>
+        
+        <record model="ir.cron" id="admin_substitute_notification_cron">
+		    <field name="name">Admin Substitute Notification Cron</field>
+		    <field name="interval_number">1</field>
+		    <field name="interval_type">minutes</field>
+		    <field name="numbercall">-1</field>
+		    <field name="doall" eval="True"/>
+		    <field name="model" eval="'daily.attendance'"/>
+		    <field name="function" eval="'cron_admin_substitute_notification'"/>
+		    <field name="args" eval="'()'" />
+		</record>
+        
+    </data>
+</odoo>

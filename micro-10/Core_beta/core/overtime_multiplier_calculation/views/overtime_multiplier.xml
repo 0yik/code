@@ -1,0 +1,61 @@
+<odoo>
+    <record id="view_overtime_multiplier_form" model="ir.ui.view">
+        <field name="name">view.overtime.multiplier.form</field>
+        <field name="model">overtime.multiplier</field>
+        <field name="arch" type="xml">
+            <form>
+            	<header>
+            		<button name="%(action_allocate_overtime_multiplier)d" string="Allocate Overtime Multiplier" context="{'default_overtime_multiplier_id': active_id}" type="action" class="btn-primary"/>
+            	</header>
+            	<sheet>
+	            	<group>
+						<group>
+		                    <field name="name"/>
+		                    <field name="overtime_name"/>
+		                </group>
+		                <group>
+		    				<field name="amount_calculation_method" widget="radio"/>
+		    				<field name="multiply_by_amount" attrs="{'readonly': [('amount_calculation_method', 'in', ['formula', 'fixed_amount'])], 'required': [('amount_calculation_method', 'in', ['multiply_by_amount'])]}"/>
+		    				<field name="formula" attrs="{'readonly': [('amount_calculation_method', 'in', ['multiply_by_amount', 'fixed_amount'])], 'required': [('amount_calculation_method', 'in', ['formula'])]}" widget='ace' options="{'mode': 'python'}"/>
+		    				<field name="fixed_amount" attrs="{'readonly': [('amount_calculation_method', 'in', ['formula', 'multiply_by_amount'])], 'required': [('amount_calculation_method', 'in', ['fixed_amount'])]}"/>
+		                </group>
+		            </group>
+		            <notebook>
+			            <page string='Multiplier Rules'>
+			                <field name="overtime_multiplier_rule_ids">
+			                    <tree editable="bottom">
+			                        <field name="rule_from"/>
+			                        <field name="rule_to"/>
+			                        <field name="rule_multiply_by"/>
+			                    </tree>
+			                </field>
+		                </page>
+	            	</notebook>
+	            </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_overtime_multiplier_tree" model="ir.ui.view">
+        <field name="name">view.overtime.multiplier.tree</field>
+        <field name="model">overtime.multiplier</field>
+        <field name="arch" type="xml">
+            <tree>
+            	<field name="name"/>
+				<field name="overtime_name"/>
+				<field name="amount_calculation_method"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_overtime_multiplier" model="ir.actions.act_window">
+        <field name="name">Overtime Multiplier</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">overtime.multiplier</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="overtime_menu" name="Overtime" parent="overtime_rounding.configuration_menu"/>
+    <menuitem id="overtime_multiplier_menu_action" name="Overtime Multiplier Setting" action="action_overtime_multiplier" parent="overtime_menu"/>
+</odoo>

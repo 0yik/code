@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="assets_inventory" inherit_id="web.assets_backend">
+		<xpath expr="." position="inside">
+			<script type="text/javascript" src="/inventory_check_bom/static/src/js/bom_check.js"/>
+			<link rel="stylesheet" href="/inventory_check_bom/static/src/css/style.css"/>
+		</xpath>
+	</template>
+</odoo>

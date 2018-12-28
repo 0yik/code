@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_allocate_leaves_form_extend" model="ir.ui.view">
+        <field name="name">view_allocate_leaves_form_extend</field>
+        <field name="model">allocate.leaves</field>
+        <field name="inherit_id" ref="sg_allocate_leave.view_allocate_leaves_form"/>
+        <field name="arch" type="xml">
+			<field name="fiscal_year_id" position="attributes">
+            	<attribute name="required">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="edit_holiday_extended_propel" model="ir.ui.view">
+        <field name="name">edit_holiday_extended_propel</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="sg_hr_holiday.edit_holiday_extended"/>
+        <field name="arch" type="xml">
+			<field name="name" position="replace">
+            	<field name="name" attrs="{'readonly':[('state','in',['validate'])]}" string="Reason"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_holidays_urgent_leave_form_ext" model="ir.ui.view">
+        <field name="name">hr_holidays_urgent_leave_form_ext</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="propell_modifier_urgent_leave.hr_holidays_urgent_leave_form"/>
+        <field name="arch" type="xml">
+			<field name="is_urgent" position="attributes">
+            	<attribute name="attrs">{'readonly':[('state','in',['validate'])]}</attribute>
+            </field>
+        </field>
+    </record>
+    
+    <record id="hr_holidays_leave_approval_hierarchy_form" model="ir.ui.view">
+        <field name="name">Hr Holidays Leave approval hierarchyForm</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+        <field name="arch" type="xml">
+			<field name="holiday_status_id" position="attributes">
+            	<attribute name="attrs">{'readonly':[('state','not in',['draft','confirm', 'next_approval'])]}</attribute>
+            </field>
+			<field name="holiday_status_id" position="after">
+    			<field name="is_oil" invisible="1" />
+    		</field>
+            
+			<field name="date_from" position="attributes">
+            	<attribute name="attrs">{'readonly':[('state','not in',['draft','confirm'])]}</attribute>
+            </field>
+            <field name="date_to" position="attributes">
+                <attribute name="attrs">{'readonly':[('state','not in',['draft','confirm'])]}</attribute>
+            </field>
+
+        	<xpath expr="//field[@name='state']" position="replace">
+        		<field name="state" widget="statusbar" statusbar_visible="draft,validate"/>
+        	</xpath>
+        	<xpath expr="//button[@name='action_refuse']" position="replace">
+                <button string="Refuse" name="action_refuse" attrs="{'invisible': [('state', 'in', ['draft','confirm', 'refuse'])]}" type="object" groups="hr_holidays.group_hr_holidays_user"/>
+            </xpath>
+        	<xpath expr="//button[@name='action_validate']" position="attributes">
+				<attribute name="invisible">1</attribute>
+            </xpath>
+			<xpath expr="//button[@name='action_approve']" position="attributes">
+    			<attribute name="attrs">{'invisible': ['|',('is_oil', '=', False)]}</attribute>
+            </xpath>            
+<!--         	<xpath expr="//button[@name='action_refuse']" position="replace"> -->
+<!--                 <button string="Reset to Draft" name="action_draft" type="object" attrs="{'invisible': ['|', ('can_reset', '=', False), ('state', 'not in', ['confirm', 'refuse'])]}"/> -->
+<!--             </xpath> -->
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button string="Approve by SIC/Manager" name="approve_sic" states="confirm" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_sic"/>
+                <button string="Approve by TIC/OIC" name="approve_tic" states="tic_approval" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_tic"/>
+                <button string="Approve by Deputy HOD" name="approve_deputy" states="deputy_hod_approval" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_deputy_hod"/>
+                <button string="Approve by HOD" name="approve_hod" states="hod_approval" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_hod"/>
+                <button string="Approve by GM" name="approve_gm" states="gm_approval" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_gm"/>
+                <button string="Approve by ED" name="approve_ed" states="ed_approval" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_ed"/>
+                <button string="Approve by MD" name="approve_md" states="md_approval" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_md"/>
+                <button string="Approve by Next Manager" name="approve_next" states="next_approval" type="object" class="oe_highlight" groups=""/>
+                <button string="Validate" name="validate_allocate_leave" states="validate1" type="object" class="oe_highlight" groups=""/>
+
+            </xpath>
+        </field>
+    </record>
+    
+
+<!-- 		To Approve leave request  -->
+         <record id="hr_holidays.open_department_holidays_approve" model="ir.actions.act_window">
+            <field name="name">Department Leaves</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="context">{'search_default_department':1, 'search_default_approve':1, 'baseon_user':1,}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a new leave request.
+                </p>
+            </field>
+            <field name="domain">[('type','=','remove')]</field>
+            <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        </record>
+		
+</odoo>

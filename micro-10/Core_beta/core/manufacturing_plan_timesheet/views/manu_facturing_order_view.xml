@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+
+        <record id="mrp_production_form_view_inherit" model="ir.ui.view">
+            <field name="name">mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/span[1]" position="after">
+                    <button name="button_add_timesheet_cost" states="confirmed"
+                                string="Get Timesheet Cost"
+                                type="object" class="oe_highlight"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend" name="Location Product Dashboard Assets" inherit_id="web.assets_backend" priority="18">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/less" href="/dashboard_location_product/static/src/less/stock_dashboard.less"/>
+            <script type="text/javascript" src="/dashboard_location_product/static/src/js/stock_dashboard.js"/>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,5 @@
+<odoo>
+    <data noupdate="1">
+        <function name="update_null_amount_total" model="account.invoice"/>
+    </data>
+</odoo>

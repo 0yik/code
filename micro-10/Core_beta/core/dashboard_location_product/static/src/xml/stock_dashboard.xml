@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+    <t t-name="StockDashboardMain">
+        <div class="container-fluid o_dashboard_location_product">
+            <div class="row">
+                <div class="o_dashboard_location_product_enterprise"/>
+                <div class="col-xs-6 o_dashboard_location_product_col">
+                    <div class="text-center o_dashboard_location_product_1"/>
+                </div>
+                <div class="col-xs-6 o_dashboard_location_product_col">
+                    <div class="text-center o_dashboard_location_product_2"/>
+                </div>
+                <div class="col-xs-3 o_dashboard_location_product_col">
+                    <div class="text-center o_dashboard_location_product_3"/>
+                </div>
+                <div class="col-xs-3 o_dashboard_location_product_col">
+                    <div class="text-center o_dashboard_location_product_4"/>
+                </div>
+                <div class="col-xs-3 o_dashboard_location_product_col">
+                    <div class="text-center o_dashboard_location_product_5"/>
+                </div>
+                <div class="col-xs-3 o_dashboard_location_product_col">
+                    <div class="text-center o_dashboard_location_product_6"/>
+                </div>
+                <div class="col-xs-6 o_dashboard_location_product_col">
+                    <div class="text-center o_dashboard_location_product_7"/>
+                </div>
+                <div class="col-xs-6 o_dashboard_location_product_col">
+                    <div class="text-center o_dashboard_location_product_8"/>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="StockDashboard1">
+        <div class="text-center o_dashboard_location_product_1">
+            <i class="fa fa-cube fa-4x text-muted o_open_location" style="cursor: pointer;"/>
+            <div class="o_dashboard_location_product_header">
+                <t t-esc="widget.name"/>
+            </div>
+            <div>
+                <a class="btn btn-primary btn-block o_open_products" role="button"><strong>Show Products</strong></a>
+            </div>
+            <div class="clearfix"/>
+        </div>
+    </t>
+
+    <t t-name="StockDashboard2">
+        <div class="text-center o_dashboard_location_product_2">
+            <i class="fa fa-cube fa-4x text-muted o_open_location" style="cursor: pointer;"/>
+            <div class="o_dashboard_location_product_header">
+                <t t-esc="widget.name"/>
+            </div>
+            <div>
+                <a class="btn btn-primary btn-block o_open_products" role="button"><strong>Show Products</strong></a>
+            </div>
+            <div class="clearfix"/>
+        </div>
+    </t>
+
+    <t t-name="StockDashboard3">
+        <div class="text-center o_dashboard_location_product_3">
+            <i class="fa fa-cube fa-4x text-muted o_open_location" style="cursor: pointer;"/>
+            <div class="o_dashboard_location_product_header">
+                <t t-esc="widget.name"/>
+            </div>
+            <div>
+                <a class="btn btn-primary btn-block o_open_products" role="button"><strong>Show Products</strong></a>
+            </div>
+            <div class="clearfix"/>
+        </div>
+    </t>
+
+    <t t-name="StockDashboard4">
+        <div class="text-center o_dashboard_location_product_4">
+            <i class="fa fa-cube fa-4x text-muted o_open_location" style="cursor: pointer;"/>
+            <div class="o_dashboard_location_product_header">
+                <t t-esc="widget.name"/>
+            </div>
+            <div>
+                <a class="btn btn-primary btn-block o_open_products" role="button"><strong>Show Products</strong></a>
+            </div>
+            <div class="clearfix"/>
+        </div>
+    </t>
+
+    <t t-name="StockDashboard5">
+        <div class="text-center o_dashboard_location_product_5">
+            <i class="fa fa-cube fa-4x text-muted o_open_location" style="cursor: pointer;"/>
+            <div class="o_dashboard_location_product_header">
+                <t t-esc="widget.name"/>
+            </div>
+            <div>
+                <a class="btn btn-primary btn-block o_open_products" role="button"><strong>Show Products</strong></a>
+            </div>
+            <div class="clearfix"/>
+        </div>
+    </t>
+
+    <t t-name="StockDashboard6">
+        <div class="text-center o_dashboard_location_product_6">
+            <i class="fa fa-cube fa-4x text-muted o_open_location" style="cursor: pointer;"/>
+            <div class="o_dashboard_location_product_header">
+                <t t-esc="widget.name"/>
+            </div>
+            <div>
+                <a class="btn btn-primary btn-block o_open_products" role="button"><strong>Show Products</strong></a>
+            </div>
+            <div class="clearfix"/>
+        </div>
+    </t>
+
+    <t t-name="StockDashboard7">
+        <div class="text-center o_dashboard_location_product_7">
+            <i class="fa fa-cube fa-4x text-muted o_open_location" style="cursor: pointer;"/>
+            <div class="o_dashboard_location_product_header">
+                <t t-esc="widget.name"/>
+            </div>
+            <div>
+                <a class="btn btn-primary btn-block o_open_products" role="button"><strong>Show Products</strong></a>
+            </div>
+            <div class="clearfix"/>
+        </div>
+    </t>
+
+    <t t-name="StockDashboard8">
+        <div class="text-center o_dashboard_location_product_8">
+            <i class="fa fa-cube fa-4x text-muted o_open_location" style="cursor: pointer;"/>
+            <div class="o_dashboard_location_product_header">
+                <t t-esc="widget.name"/>
+            </div>
+            <div>
+                <a class="btn btn-primary btn-block o_open_products" role="button"><strong>Show Products</strong></a>
+            </div>
+            <div class="clearfix"/>
+        </div>
+    </t>
+
+</templates>

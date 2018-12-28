@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="l10n_id_bukti_potong_pph_type_view_tree" model="ir.ui.view">
+            <field name="name">Type of Bukti Potong PPh Tree</field>
+            <field name="model">l10n_id.bukti_potong_pph_type</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="l10n_id_bukti_potong_pph_type_view_form" model="ir.ui.view">
+            <field name="name">Type of Bukti Potong PPh Form</field>
+            <field name="model">l10n_id.bukti_potong_pph_type</field>
+            <field name="arch" type="xml">
+                <form create="false" delete="false">
+                    <group name="group_main" colspan="4" col="2">
+                        <field name="name"/>
+                        <field name="code"/>                    
+                        <field name="active"/>
+                        <field name="description"/>
+                    </group>
+                    <notebook>
+                        <page name="page_data" string="Data Restriction">
+                            <group name="group_data_1" colspan="4" col="2">
+                                <field name="journal_ids" widget="many2many_tags"/>
+                                <field name="account_ids" widget="many2many_tags"/>
+                                <field name="tax_ids" widget="many2many_tags"/>
+                                <!-- <field name="base_code_ids" widget="many2many_tags"/> -->
+                                <!-- <field name="tax_code_ids" widget="many2many_tags"/> -->
+                            </group>
+                        </page>
+                        <page name="page_policy" string="Workflow Policy">
+                            <group name="group_policy_1" colspan="4" col="2">
+                                <field name="allow_confirm_group_ids" widget="many2many_tags"/>
+                                <field name="allow_approve_group_ids" widget="many2many_tags"/>
+                                <field name="allow_cancel_group_ids" widget="many2many_tags"/>
+                                <field name="allow_reset_group_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="l10n_id_bukti_potong_pph_type_action" model="ir.actions.act_window">
+            <field name="name">Type of Bukti Potong PPh</field>
+            <field name="res_model">l10n_id.bukti_potong_pph_type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem 
+            id="l10n_id_bukti_potong_pph_type_menu"
+            name="Type of Bukti Potong PPh"
+            parent="indonesia_income_tax.taxform_configuration_menu"
+            action="l10n_id_bukti_potong_pph_type_action"
+            groups="base.group_system"
+            sequence="1"/>
+   
+    </data>
+</odoo>
+

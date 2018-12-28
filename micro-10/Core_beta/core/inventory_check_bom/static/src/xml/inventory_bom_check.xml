@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-name="InventoryCheckBOM">
+        <div class="oe_inventory_bom_check ui-toolbar col-lg-8 col-md-8 col-sm-6 col-xs-12" style="margin-bottom:0px; margin-left: 6px; width: 69%; float: left;">
+            <div class="oe_inventory_bom_check row" >
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <button id="max_qty" class="btn btn-primary" style="margin-right: 130px;">Max Quantity</button>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <span style="font-size: 16px; font-weight: bold;">Quantities:</span>
+                    <input type="number" class="oe_inventory_product_qty" id="product_qty" value="0" style="display: inline-block; width: 20%;" required="true"/>
+                    <span id="product_uom" style="font-size: 16px; margin-right: 30px;"/>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <span style="font-size: 16px; font-weight: bold;">Include BOM :</span>
+                    <input type="checkbox" class="oe_account_bom_check" style="display: inline-block; width: 50%;" checked="true"/>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

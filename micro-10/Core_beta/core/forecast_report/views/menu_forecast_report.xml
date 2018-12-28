@@ -1,0 +1,62 @@
+<odoo>
+
+    <record id="forecast_report_form_view" model="ir.ui.view">
+        <field name="name">report.forecast</field>
+        <field name="model">report.forecast</field>
+        <field name="arch" type="xml">
+            <form string="Forecast Reports">
+                <group>
+                    <label for="forecast_date_from" string="Forecast Period" />
+                    <div>
+                        <div>
+                            <field name="forecast_date_from" class="oe_inline"/>
+                             -
+                            <field name="forecast_date_to" class="oe_inline"/>
+                        </div>
+                    </div>
+                    <label for="sample_month" string="Sample Data" />
+                    <div>
+                        <div>
+                            <field name="sample_month" class="oe_inline"/>
+                            -
+                            <field name="sample_year" class="oe_inline"/>
+                        </div>
+                    </div>
+                    <label for="month_growth_date_from" string="Month to Month Growth Period" />
+                    <div>
+                        <div>
+                            <field name="month_growth_year_from" class="oe_inline"/>
+                            -
+                            <field name="month_growth_year_to" class="oe_inline"/>
+                        </div>
+                    </div>
+                </group>
+                <field name="growth_ids" context="{'forecast_report' : True}">
+                    <tree editable="bottom" context="{'forecast_report' : True}">
+                        <field name="account_code" readonly="1"/>
+                        <field name="account_id" invisible="1"/>
+                        <field name="account_name" readonly="1"  context="{'forecast_report' : True}"/>
+                        <field name="growth_rate"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="print_xls_report" string="Print XLS" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_highlight" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_forecast_report_income_summary">
+        <field name="name">forecast report</field>
+        <field name="res_model">report.forecast</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="forecast_report_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_sale_forecast_report" name="Forecast Report" action="action_forecast_report_income_summary" parent="account.menu_finance_entries" sequence="125"/>
+
+</odoo>

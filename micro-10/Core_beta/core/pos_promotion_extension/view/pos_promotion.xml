@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <record id="pos_promotion_form_inherit" model="ir.ui.view">
+            <field name="name">pos.promotion.form</field>
+            <field name="model">pos.promotion</field>
+            <field name="priority">100</field>
+            <field name="inherit_id" ref="pos_promotion.pos_promotion_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group[9]" position="attributes">
+                    <attribute name="attrs">{'invisible': [('type', 'not in', ['7_total_price_filter_quantity','6_price_filter_quantity'])],
+                        'required': [('type', 'in', ['7_total_price_filter_quantity','6_price_filter_quantity'])]}</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/group[last()]" position="after">
+                    <group string="Discounts on Payment Method" attrs="{'invisible': [('type', '!=', '8_payment_method_discount')], 'required': [('type', '=', '8_payment_method_discount')]}">
+                        <field name="pos_promotion_discount_payment_ids" nolabel="1">
+                            <tree string="Discounts on Payment Method" editable="1">
+                                <field name="min_amount"/>
+                                <field name="max_amount"/>
+                                <field name="discount_type"/>
+                                <field name="discount_value"/>
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+                <field name="active" position="after">
+                    <field name="payment_method_id" required="1" domain="[('journal_user', '=', True)]"/>
+                </field>
+                <field name="end_date" position="after">
+                    <field name="bill_discount_vendor"/>
+                    <field name="partner_id" attrs="{'invisible': [('bill_discount_vendor', '=', False)], 'required': [('bill_discount_vendor', '=', True)]}"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

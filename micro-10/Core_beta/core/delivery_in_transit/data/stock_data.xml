@@ -1,0 +1,8 @@
+<odoo>
+
+    <record id="stock_location_location_id" model="stock.location">
+        <field name="name">Transiting Location</field>
+        <field name="usage">virtual_location</field>
+    </record>
+
+</odoo>

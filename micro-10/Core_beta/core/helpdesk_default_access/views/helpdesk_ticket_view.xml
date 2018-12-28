@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<odoo>
+    
+    <record id="helpdesk_ticket_view_form_inherited_user" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.inherited</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form" />
+        <field name="groups_id" eval="[(6, 0, [ref('helpdesk.group_helpdesk_user')])]"/>
+        <field name="priority" eval="50"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="replace">
+                <field name="user_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="helpdesk_ticket_view_form_inherited_manager" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.inherited</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form" />
+        <field name="priority" eval="50"/>
+         <field name="groups_id" eval="[(6, 0, [ref('helpdesk.group_helpdesk_manager')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="replace">           
+                <field name="user_id" readonly="0" />
+            </xpath>
+        </field>
+    </record>
+<!-- style="border: 1px solid; margin-top: 10px; padding: 10px; text-decoration: none; color: #404040; border-radius: 5px; font-size: 16px;" -->
+    <template id="message_user_assigned" inherit_id="mail.message_user_assigned">
+        <xpath expr="//p[2]" position="replace" />
+        <xpath expr="//p[3]" position="replace" />
+        <xpath expr="//p//a" position="replace" />
+
+        <xpath expr="//p" position="replace">
+            <t t-if="object._name == 'helpdesk.ticket'">
+                <div>
+                    <p>Dear <t t-esc="object.user_id.name"/>,</p>
+                    <p>This is a new ticket created by: <t t-esc="object.create_uid.name" /></p> 
+                    <p>Email:  <t t-esc="object.create_uid.email" /></p> 
+                    <p>Content: <t t-esc="object.description"/> </p>
+                    <p style="padding:5px;border-radius:5px;float: right;border: 1px solid;">
+                        <a style="text-decoration: none!important;color: black;" t-att-href="'/mail/view?model=%s&amp;res_id=%s' % (object._name, object.id)">View Ticket
+                        </a>
+                    </p>
+                    <br/>
+                    <p>Best regards,</p>
+                </div>
+            </t>
+            <t t-if="object._name != 'helpdesk.ticket'">
+                <p>Dear <t t-esc="object.user_id.name"/>,</p>
+                <p>You have been assigned to the <t t-esc="object._description.lower()"/> <t t-esc="object.name_get()[0][1]"/>.</p>
+                <p>
+                    <a t-att-href="'/mail/view?model=%s&amp;res_id=%s' % (object._name, object.id)"
+                            style="background-color: #9E588B; margin-top: 10px; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">
+                        View <t t-esc="object._description.lower()"/>
+                    </a>
+                </p>
+                <p style="color:#9E588B;">Powered by <a href="https://www.odoo.com">Odoo</a>.</p>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

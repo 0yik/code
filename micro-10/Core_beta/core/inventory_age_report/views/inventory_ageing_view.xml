@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report id="action_report_aged_inventory"
+                model="stock.quant"
+                string="Stock_Aging_Report"
+                report_type="qweb-pdf"
+                name="inventory_age_report.report_stockageing"
+                file="inventory_age_report.report_stockageing"
+                menu="False">
+        </report>
+    </data>
+</odoo>

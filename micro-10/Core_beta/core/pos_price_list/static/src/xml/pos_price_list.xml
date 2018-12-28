@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:fdl=1:
+-->
+<templates xml:space="preserve">
+
+    <t t-name="PricelistWidget">
+       <div class="col-md-12"  style="padding: 0px 6px 0px;">
+            <select class='pricelist_selection' name='property_product_pricelist' style="font-size:18px;background: #efefef;width:200px;height:40px;">
+                <t t-foreach="widget.pos.pricelists" t-as="pricelist">
+                    <option t-att-value= "pricelist.id +'-'+ pricelist.name +'-'+ pricelist.currency_id[0]"><b><t t-esc="pricelist.name"/></b></option>
+                </t>
+            </select>
+       </div>
+    </t>
+
+</templates>

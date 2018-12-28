@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_sales_bom_check_wizard" model="ir.ui.view">
+            <field name="name">sales.bom.check.wizard</field>
+            <field name="model">sales.bom.check</field>
+            <field name="arch" type="xml">
+                <form string="">
+					<group string="Unavailable Products">
+		        		<field name="unavailable_products" nolabel="1" readonly="1"/>
+		        	</group>
+					<group>
+			            <field name="bom_check_line" nolabel="1" readonly="1">
+							<tree editable='top' >
+								<field name="product_id"/>
+								<field name="product_uom_qty"/>
+								<field name="product_qty_available"/>
+								<field name="required_material_id"/>
+								<field name="req_product_qty"/>
+								<field name="material_qty_available"/>
+								<!--field name="req_product_uom"/-->
+								<field name="state"/>
+							</tree>
+						</field>
+		        	</group>
+		        	<group string="Required Material's Invetory by Location">
+		        		<field name="required_material_location_stock" nolabel="1" readonly="1"/>
+		        	</group>
+		            <footer>
+		                <button string="Confirm Sale" name="action_confirm" type="object" class="oe_highlight"/>
+		                or
+		                <button string="Cancel" class="oe_link" special="cancel" />
+		            </footer>
+               </form>
+            </field>
+        </record>
+        
+        <record id="action_transfer_do_wizard" model="ir.actions.act_window">
+        	<field name="name">Transfer Delivery Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.bom.check</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sales_bom_check_wizard"/>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+    </data>
+</openerp>

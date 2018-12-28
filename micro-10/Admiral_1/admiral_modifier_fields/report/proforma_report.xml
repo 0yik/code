@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ====================
+            HEADER Consignment Note REPORT
+             ==================== -->
+        <template id="admiral_modifier_fields.external_layout_header_proforma">
+             <div class="header">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:86px;width: 180px;"/>
+                    </div>
+                    <div class="col-xs-6">
+                        <b><span class="text-left" style="top:17px;font-size:20pt;font-family:Arial;" t-esc="company.name"></span></b>
+                        <br/>
+                        <span class="text-left" style="font-size:12pt;font-family:Arial;" t-esc="company.street and company.street or ''"></span> .
+                        <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.street2 and company.street2 or ''"> . </span>
+                        <br/>
+                        <span class="text-left" style="font-size:12pt;font-family:Arial;" t-esc="company.country_id and company.country_id.name or ''"></span>
+                        <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.zip and company.zip or ''"></span>
+                        <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;"> . Mobile :</span>
+                        <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.partner_id.mobile and company.partner_id.mobile or company.phone"></span> .
+                    </div>
+                    <div class="col-xs-3">
+                        <b><span class="text-right" style="top:17px;font-size:20pt;font-family:Arial; float:right;"> CONSIGNMENT </span></b>
+                        <br/>
+                        <b><span class="text-right" style="top:17px;font-size:20pt;font-family:Arial; float:right;"> NOTE </span></b>
+
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!-- ====================
+            FOOTER Consignment Note REPORT
+             ==================== -->
+        <template id="admiral_modifier_fields.external_layout_footer_proforma">
+            <div class="footer">
+                    <div class="text-center" style="border-top:5px solid black;">
+                        <div class="col-xs-4 col-xs-offset-8" name="company_address"
+                             style="text-align:left;text-transform:uppercase;font-size:11px;padding:5px 0 10px;">
+                            <span t-field="company.partner_id.name"/>
+                        </div>
+                        <div class="col-xs-12 text-left"
+                             style="border-top:1px solid black;border-bottom:1px solid black;font-size:10px;">
+                            This is a computer generated copy, no signature required.
+                        </div>
+                    </div>
+                </div>
+        </template>
+
+
+        <!-- Headers and Footers for Consignment Note Report -->
+        <template id="external_layout_proforma_header_footer">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="admiral_modifier_fields.external_layout_header_proforma" />
+            <t t-raw="0" />
+            <t t-call="admiral_modifier_fields.external_layout_footer_proforma" />
+        </template>
+
+        <!-- Report CONSIGNMENT NOTE -->
+        <template id="admiral_modifier_fields.report_proforma_document">
+            <t t-call="admiral_modifier_fields.external_layout_proforma_header_footer">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <div class="page" style="font-size:12pt;font-family:Arial;">
+                    <div class="oe_structure"/>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <strong>TO :</strong>
+                            <br/>
+                            <span t-if="not o.partner_id.is_company" t-esc="o.partner_id.parent_id.name"/>
+                            <span t-if="o.partner_id.is_company" t-esc="o.partner_id.name"/>
+                            <br/>
+                            <span t-if="o.partner_id.street" t-esc="o.partner_id.street"/><br/>
+                            <span t-if="o.partner_id.street2" t-esc="o.partner_id.street2"/><br/>
+                            <span t-if="o.partner_id.country_id or o.partner_id.city" t-esc="o.partner_id.country_id and o.partner_id.country_id.name or o.partner_id.city"/><span t-if="o.partner_id.zip" t-esc="o.partner_id.zip"/><br/>
+                            Tel. <span t-if="o.partner_id.phone" t-esc="o.partner_id.phone"/><br/>
+                            <span>Attention : </span>
+                            <span t-if="not o.partner_id.is_company" t-esc="o.partner_id.name"/><br/><br/>
+                        </div>
+                        <div class="col-xs-6 ">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td > <span><strong> DATE </strong></span> </td>
+                                    <td style="text-align:right;"> : <span t-field="o.date_order"/> </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr style="background-color:#8ec5ff;font-weight:500;text-transform:uppercase;text-align:center;">
+                                <th class="text-center" style="border:none;border-right: 1px solid black;padding:4px; width: 55%;"><strong>DESCRIPTION</strong></th>
+                                <th class="text-center" style="border:none;border-right: 1px solid black;padding:4px;"><strong>QTY (KG)</strong></th>
+                                <th class="text-center" style="border:none;border-right: 1px solid black;padding:4px;"><strong>UNIT PRICE/KG</strong></th>
+                                <th class="text-center" style="border:none;border-right: 1px solid black;padding:4px;"><strong>AMOUNT</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size:12px;">
+                            <t t-foreach="o.order_line" t-as="line">
+                                <tr style="background-color:white;">
+                                    <td class="text-left" style="border:none;border-right: 1px solid black;text-align:left;padding:4px;" >
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <td class="text-center" style="border:none;border-right: 1px solid black;padding:4px;">
+                                        <span t-field="line.product_qty"/>
+                                        <span t-field="line.product_uom.name" groups="product.group_uom"/>
+                                    </td>
+                                    <td class="text-center" style="border:none;border-right: 1px solid black;padding:4px;">
+                                        <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                    <td class="text-center" style="border:none;padding:4px;">
+                                        <span t-field="line.price_subtotal"
+                                            t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr style="background-color:#b8b8b8;color:#b8b8b8;">
+                                    <td style="border:none;border-right: 1px solid black;padding:4px;">text</td>
+                                    <td style="border:none;border-right: 1px solid black;padding:4px;">text</td>
+                                    <td style="border:none;border-right: 1px solid black;padding:4px;">text</td>
+                                    <td style="border:none;">text</td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <br/>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <td style="width: 55%; background-color:#8ec5ff; border:none;" colspan="2"><span><strong> VALUE FOR CUSTOM ONLY </strong></span></td>
+                                <td style="border:none;"></td>
+                                <td style="border:none;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <div class="col-xs-12" style="margin-top:30px;background-color:#b7b7b7;">
+                        <p style="font-weight:500;">REMARKS :</p>
+                        <p t-field="o.notes"></p>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_proforma">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="admiral_modifier_fields.report_proforma_document" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            string="Proforma"
+            id="action_report_proforma"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="admiral_modifier_fields.report_proforma"
+            file="admiral_modifier_fields.report_proforma"
+        />
+    </data>
+</odoo>

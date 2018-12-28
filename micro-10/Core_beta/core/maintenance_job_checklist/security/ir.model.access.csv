@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+job_checklist,job_checklist,model_job_checklist,,1,1,1,1
+job_checklist_description,job_checklist_description,model_job_checklist_description,,1,1,1,1
+job_order_checklist,job_order_checklist,model_job_order_checklist,,1,1,1,1

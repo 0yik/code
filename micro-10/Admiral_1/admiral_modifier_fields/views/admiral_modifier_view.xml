@@ -1,0 +1,40 @@
+<odoo>
+  <data>
+      <record id="product_template_common_form_inherit" model="ir.ui.view">
+            <field name="name">product.template.common.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//form/sheet/notebook/page[@name='notes']" position="after">
+	        		<page string="Add" name="add">
+                        <group>
+                            <field name="appearance" string="Appearance"/>
+                            <field name="colour" string="Colour"/>
+                            <field name="ol_des_top" string="Olfactory Description Top"/>
+                            <field name="ol_des_body" string="Olfactory Description Body"/>
+                            <field name="ol_des_bottom" string="Olfactory Description Bottom"/>
+                            <field name="odour" string="Odour"/>
+                            <field name="density" string="Density"/>
+                            <field name="refrac_index" string="Refraction Index at 25 Degree"/>
+                            <field name="acid_value" string="Acid Value"/>
+                            <field name="purity" string="Purity(GC)"/>
+                            <field name="shelf_life" string="Shelf Life"/>
+                        </group>
+                    </page>
+	        	</xpath>
+            </field>
+       	</record>
+
+      <record id="product_template_common_form_inherit" model="ir.ui.view">
+            <field name="name">admiral_sale_order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='validity_date']" position="replace">
+                    <field name="validity_date" string='Validity Date'/>
+                </xpath>
+            </field>
+       	</record>
+
+  </data>
+</odoo>

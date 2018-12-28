@@ -1,0 +1,2 @@
+import hr_payslip
+import hr_employee

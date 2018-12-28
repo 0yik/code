@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_agedpartnerbalance2">
+    <t t-call="report.html_container">
+        <t t-call="report.internal_layout">
+            <div class="page">
+            	<t t-if="type=='customer'">
+            		<t t-if="currency['foreign_currency'] == 1"><h2>Account Receivable Foreign Currency Report</h2></t>
+                	<t t-if="currency['foreign_currency'] != 1"><h2>Account Receivable Currency Report</h2></t>
+            	</t>
+            	<t t-if="type=='supplier'">
+                	<t t-if="currency['foreign_currency'] == 1"><h2>Account Payable Foreign Currency Report</h2></t>
+                	<t t-if="currency['foreign_currency'] != 1"><h2>Account Payable Currency Report</h2></t>
+            	</t>
+            	<t t-if="type=='both'">
+                	<t t-if="currency['foreign_currency'] == 1"><h2>Account Receivable/Payable Foreign Currency Report</h2></t>
+                	<t t-if="currency['foreign_currency'] != 1"><h2>Account Receivable/Payable Currency Report</h2></t>
+            	</t>
+
+
+                <div class="row mt32">
+                    <div class="col-xs-3">
+                        <strong>Start Date:</strong>
+                        <p t-esc="data['date_from']"/>
+                    </div>
+                    <div class="col-xs-3">
+                        <strong>Period Length (days)</strong>
+                        <p t-esc="data['period_length']"/>
+                    </div>
+                </div>
+                <div class="row mb32">
+                    <div class="col-xs-3">
+                        <strong>Partner's:</strong>
+                        <p>
+                            <span t-if="data['result_selection'] == 'customer'">Receivable Accounts</span>
+                            <span t-if="data['result_selection'] == 'supplier'">Payable Accounts</span>
+                            <span t-if="data['result_selection'] == 'customer_supplier'">Receivable and Payable Accounts</span>
+                        </p>
+                    </div>
+                    <div class="col-xs-3">
+                        <strong>Target Moves:</strong>
+                        <p>
+                            <span t-if="data['target_move'] == 'all'">All Entries</span>
+                            <span t-if="data['target_move'] == 'posted'">All Posted Entries</span>
+                        </p>
+                    </div>
+                </div>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Partner Name</th>
+                            <th class="text-left">Date</th>
+                            <th class="text-left">Invoice reference</th>
+                            <t t-if="currency['foreign_currency'] == 1"><th class="text-left">Amount (foreign Currency)</th></t>
+                            <t t-if="currency['foreign_currency'] != 1"><th>Total Amount</th></t>
+                            <t t-if="currency['foreign_currency'] == 1"><th class="text-left">Currency</th></t>
+                            <t t-if="currency['foreign_currency'] == 1"><th class="text-left" style="white-space:normal;">Exchange rate on the date</th></t>
+                            <t t-if="currency['foreign_currency'] == 1"><th class="text-left">Amount in <t t-if="data['company_currency']" t-esc="data['company_currency']"/></th> <!--<t t-if="data['company_currency']" t-esc="data['company_currency']"/>--></t>
+                            <th class="text-left">Not Due</th>
+                            <th t-foreach="[4,3,2,1,0]" t-as="i">
+                                <t t-esc="periods[i]['name']"/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	<t t-foreach="invoices.keys()" t-as="invoice_partner">
+	                        <tr t-foreach="invoices[invoice_partner]" t-as="invoice">
+	                        	<td class="text-left">
+	                                <span t-esc="invoice['partner']"/>
+	                            </td>
+	                            <td class="text-left">
+	                                <span t-esc="invoice['date']"/>
+	                            </td>
+	                            <td class="text-left">
+	                                <span t-esc="invoice['number']"/>
+	                            </td>
+	                            <td style="padding-right:20px">
+	                            	<t t-if="currency['foreign_currency'] != 1"><span t-esc="invoice['amount_company']" t-options="{'widget': 'monetary', 'display_currency': invoice['company_currency']}"/></t>
+	                                <t t-if="currency['foreign_currency'] == 1"><span t-esc="invoice['amount']" t-options="{'widget': 'monetary', 'display_currency': invoice['currency_id']}"/></t>
+	                            </td>
+	                            <t t-if="currency['foreign_currency'] == 1"><td class="text-left">
+	                                <span t-esc="invoice['currency_id'].name"/>
+	                            </td></t>
+	                            <t t-if="currency['foreign_currency'] == 1"><td class="text-right" style="padding-right:30px">
+	                                <span t-esc="invoice['rate']"/>
+	                            </td></t>
+	                            <t t-if="currency['foreign_currency'] == 1"><td class="text-right">
+	                                <span t-esc="invoice['amount_company']" t-options="{'widget': 'monetary', 'display_currency': invoice['company_currency']}"/>
+	                            </td></t>
+	                            <td class="text-left">
+	                                <span t-esc="invoice['not_due']" t-options="{'widget': 'monetary', 'display_currency': invoice['company_currency']}"/>
+	                            </td>
+                                <td t-foreach="[4,3,2,1,0]" t-as="i">
+                                    <span t-esc="invoice['periods'][i]" t-options="{'widget': 'monetary', 'display_currency': invoice['company_currency']}"/>
+                                </td>
+	                        </tr>
+                    	</t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </t>
+</template>
+</odoo>

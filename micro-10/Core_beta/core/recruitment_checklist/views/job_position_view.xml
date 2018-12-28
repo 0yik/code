@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_hr_job_inherit_form" model="ir.ui.view">
+            <field name="name">View Hr Job Inherit Form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/div[last()]" position="after">
+                    <separator string="Entry Checklist"/>
+                    <group>
+                        <field name="education_certificate"/>
+                        <field name="salary_payslip"/>
+                        <field name="experience_certificate"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_job_survey_inherit_form" model="ir.ui.view">
+            <field name="name">Hr Job Survey Inherit Form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_job_survey"/>
+            <field name="arch" type="xml">
+                <button name="action_get_attachment_tree_view" position="after">
+                    <button class="oe_stat_button" type="object" name="action_view_entry_list" icon="fa-check-square-o" attrs="{'invisible': [('entry_list_count','=',0)]}">
+                        <field string="Entry Checklist" name="entry_list_count" widget="statinfo" attrs="{'invisible': [('entry_list_count','=',0)]}"/>
+                    </button>
+                </button>
+            </field>
+        </record>
+
+    </data>
+</odoo>

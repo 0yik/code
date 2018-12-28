@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_planner_pdf_new,planner.pdf.new,model_web_planner_pdf,base.group_user,1,0,0,0
+access_planner_pdf_new_manager,access.planner.pdf.new.manager,model_web_planner_pdf,base.group_erp_manager,1,1,1,1

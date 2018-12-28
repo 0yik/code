@@ -1,0 +1,59 @@
+<odoo>
+    <data>
+        <record model="ir.module.category" id="inventory_accessright">
+            <field name="name">Inventory</field>
+        </record>
+
+        <record id="group_warehousemanager" model="res.groups">
+            <field name="name">WarehouseManager</field>
+            <field name="category_id" ref="inventory_accessright"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <!--field name="implied_ids" eval="[(4, ref('stock.group_stock_manager'))]"/-->
+        </record>
+        
+        <record id="group_receiving" model="res.groups">
+            <field name="name">Receiving</field>
+            <field name="category_id" ref="inventory_accessright"/>
+        </record>
+        
+        <record id="group_picking" model="res.groups">
+            <field name="name">Picking</field>
+            <field name="category_id" ref="inventory_accessright"/>
+        </record>
+
+        <record id="group_put_away" model="res.groups">
+            <field name="name">Put Away</field>
+            <field name="category_id" ref="inventory_accessright"/>
+        </record>
+
+        <record id="group_packing" model="res.groups">
+            <field name="name">Packing</field>
+            <field name="category_id" ref="inventory_accessright"/>
+        </record>
+        
+        <record id="group_stocktake" model="res.groups">
+            <field name="name">Stocktake</field>
+            <field name="category_id" ref="inventory_accessright"/>
+        </record>
+
+        <record id="group_delivery" model="res.groups">
+            <field name="name">Delivery</field>
+            <field name="category_id" ref="inventory_accessright"/>
+        </record>
+
+        <record id="group_inventory_valuation" model="res.groups">
+            <field name="name">Inventory Valuation</field>
+            <field name="category_id" ref="inventory_accessright"/>
+        </record>
+
+        <record id="group_stock_move" model="res.groups">
+            <field name="name">Stockmoves</field>
+            <field name="category_id" ref="inventory_accessright"/>
+        </record>
+
+        <record id="group_internal_transfer" model="res.groups">
+            <field name="name">Internal Transfer</field>
+            <field name="category_id" ref="inventory_accessright"/>
+        </record>
+    </data>
+</odoo>

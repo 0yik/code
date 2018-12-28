@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+    	<report
+			id="package_label_report_qweb"
+			string="package Label"
+			model="package.label"
+			report_type="qweb-pdf"
+			name="package_label_printing.report_package"
+		 />
+    
+        <record id="paperformat_package_label_printing" model="report.paperformat">
+            <field name="name">Package Label</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">100</field>
+            <field name="page_width">110</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">4</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">250</field>
+        </record>
+        
+        <record id="package_label_printing.package_label_report_qweb" model="ir.actions.report.xml">
+    		<field name="paperformat_id" ref="package_label_printing.paperformat_package_label_printing" />
+		</record>
+    </data>
+</openerp>

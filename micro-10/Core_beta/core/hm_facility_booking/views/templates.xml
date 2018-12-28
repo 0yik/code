@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="assets_booking_facility" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<script type="text/javascript" src="/hm_facility_booking/static/src/js/facility_booking_order.js"/>
+		</xpath>
+	</template>
+</odoo>

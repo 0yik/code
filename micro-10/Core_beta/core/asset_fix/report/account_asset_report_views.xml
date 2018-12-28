@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="action_account_asset_report_pivot_inherit">
+        <field name="name">asset.asset.report.pivot.inherit</field>
+        <field name="model">asset.asset.report</field>
+        <field name="inherit_id" ref="account_asset.action_account_asset_report_pivot"/>
+        <field name="arch" type="xml">
+            <field name="unposted_value" position="after">
+                <field name="cumulative_depreciation" type="measure"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

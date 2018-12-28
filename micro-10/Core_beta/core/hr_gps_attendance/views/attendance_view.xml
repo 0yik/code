@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="hr_attendance_view_form_inherited_gps" model="ir.ui.view">
+        <field name="name">hr.attendance.form.gps</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">0</attribute>
+                <attribute name="edit">1</attribute>
+            </xpath>
+            <field name="check_in" position="after">
+                <label for="sign_in_lat" string="Check In latitude"/>
+                <div>
+                    <field name="sign_in_lat" class="oe_inline" readonly="1"/>
+                    <span class="oe_inline">&#160;</span>
+                    <label for="sign_out_lng" string="Check In longitude" style="font-weight: bold; margin-left: 15px; border-right: 1px solid #cacaca; height: 20px; padding-right: 20px;"/>
+                    <field name="sign_in_lng"  class="oe_inline" readonly="1"/>
+                </div>
+            </field>
+            <field name="check_out" position="after">
+                <label for="sign_out_lat" string="Check Out latitude"/>
+                <div>
+                    <field name="sign_out_lat" class="oe_inline" readonly="1"/>
+                    <span class="oe_inline">&#160;</span>
+                    <label for="sign_out_lng" string="Check Out longitude" style="font-weight: bold; margin-left: 15px; border-right: 1px solid #cacaca; height: 20px; padding-right: 20px;"/>
+                    <field name="sign_out_lng"  class="oe_inline" readonly="1"/>
+                </div>
+            </field>
+            <field name="check_in" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <field name="check_out" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <xpath expr="/form/sheet" position="inside">
+                <group style="margin: 0px;">
+                    <group style="margin: 0px;">
+                        <separator string="Check In Location"/>
+                    </group>
+                    <group style="margin: 0px;">
+                        <separator string="Check Out Location"/>
+                    </group>
+                </group>
+                <group style="margin: 0px;">
+                    <group style="margin: 0px; margin-right: 5px; width: 49.5%;">
+                        <field name="sign_in_location" widget="map"  nolabel="1" attrs="{'readonly': [('sign_in_lat', '=', False)]}"/>
+                    </group>
+                    <group style="margin: 0px; margin-left: 5px; width: 49.5%;">
+                        <field name="sign_out_location" widget="map"  nolabel="1" attrs="{'readonly': [('sign_out_lat', '=', False)]}"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

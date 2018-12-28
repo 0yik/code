@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+        <record id="invoice_supplier_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Payments" name="accout_invoice_payment" attrs="{'invisible': ['|',('payment_move_line_ids','=',[]),('payment_move_line_ids','=',False)]}">
+                        <field name="payment_move_line_ids" >
+                            <tree string="Payments">
+                                    <field name="date" string="Payment Date"/>
+                                    <field name="move_id"/>
+                                    <field name="ref"/>
+                                    <field name="name"/>
+                                    <field name="journal_id"/>
+                                    <field name="debit"/>
+                                    <field name="credit"/>
+                                    <!--<field name="amount_currency"/>-->
+                                    <field name="currency_id" groups="base.group_multi_currency"/>
+                                </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="invoice_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Payments" name="accout_invoice_payment" attrs="{'invisible': ['|',('payment_move_line_ids','=',[]),('payment_move_line_ids','=',False)]}">
+                        <field name="payment_move_line_ids" >
+                            <tree string="Payments">
+                                    <field name="date" string="Payment Date"/>
+                                    <field name="move_id"/>
+                                    <field name="ref"/>
+                                    <field name="name"/>
+                                    <field name="journal_id"/>
+                                    <field name="debit"/>
+                                    <field name="credit"/>
+                                    <!--<field name="amount_currency"/>-->
+                                    <field name="currency_id" groups="base.group_multi_currency"/>
+                                </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

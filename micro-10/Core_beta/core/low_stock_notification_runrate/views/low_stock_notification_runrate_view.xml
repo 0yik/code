@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="low_stock_notification_tree_inherit">
+            <field name="name">low_stock_notification list inherit</field>
+            <field name="model">low.stock.notification</field>
+            <field name="inherit_id" ref="low_stock_notification.low_stock_notification_tree"/>
+            <field name="arch" type="xml">
+                <field name="location_id" position="after">
+                    <field name="type"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="low_stock_notification_form_inherit">
+            <field name="name">low_stock_notification form inherit</field>
+            <field name="model">low.stock.notification</field>
+            <field name="inherit_id" ref="low_stock_notification.low_stock_notification_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after" >
+                    <field name="type"/>
+                </field>
+                <field name="line_ids" position="attributes">
+                    <attribute name="attrs">{'invisible': [('type','!=', 'normal')]}</attribute>
+                </field>
+                <xpath expr="//group[@name='Product']" position="after">
+                    <field name="rr_line_ids" attrs="{'invisible': [('type','!=', 'runrate')]}">
+                        <tree editable="bottom">
+                            <field name="rr_product_id"/>
+                            <field name="rr_sample_date"/>
+                            <field name="rr_check_notify_date"/>
+                        </tree>
+                        <form>
+                            <group>
+                                <field name="rr_product_id"/>
+                                <field name="rr_sample_date"/>
+                                <field name="rr_check_notify_date"/>
+                            </group>
+                        </form>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

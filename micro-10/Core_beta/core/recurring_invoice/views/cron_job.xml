@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+        <record model="ir.cron" id="ir_cron_recurring_customer_invoice">
+            <field name="name">Recurring Customer Invoice</field>
+            <field name="active" eval="True"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=0)).strftime('%Y-%m-%d 12:00:00')"/>
+            <field name="model" eval="'recurring.invoice'"/>
+            <field name="function" eval="'auto_create_customer_invoice'"/>
+            <field name="args" eval="'()'"/>
+        </record>
+        <record model="ir.cron" id="ir_cron_recurring_vendor_invoice">
+            <field name="name">Recurring Vendor Invoice</field>
+            <field name="active" eval="True"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=0)).strftime('%Y-%m-%d 12:00:00')"/>
+            <field name="model" eval="'recurring.invoice'"/>
+            <field name="function" eval="'auto_create_vendor_invoice'"/>
+            <field name="args" eval="'()'"/>
+        </record>
+    </data>
+</odoo>

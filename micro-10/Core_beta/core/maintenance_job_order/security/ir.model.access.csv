@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+job_order,job_order,model_job_order,,1,1,1,1
+job_order_stages,job_order_stages,model_job_order_stages,,1,1,1,1

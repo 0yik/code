@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record model="ir.cron" id="ir_cron_leave_auto_allocate_by_joindate">
+            <field name="name">Leave Auto Allocation By Join-year</field>
+            <field name="interval_number">12</field>
+            <field name="interval_type">months</field><!-- it s every year -->
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'holiday.group.config.line'"/>
+            <field name="function" eval="'allocate_leave_by_joinyear'"/>
+            <field name="args">()</field>
+        </record>
+    </data>
+</odoo>

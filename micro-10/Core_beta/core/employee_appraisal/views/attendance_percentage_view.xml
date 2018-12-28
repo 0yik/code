@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+
+        <record id="attendance_percentage_form_view" model="ir.ui.view">
+            <field name="name">attendance.percentage.form.view</field>
+            <field name="model">attendance.percentage</field>
+            <field name="arch" type="xml">
+                <form>
+		    <group>
+                        <field name="from_val" required="1" context="{'from_val':from_val}"/>
+                        <field name="to_val" required="1" context="{'to_val':to_val}"/>
+                        <field name="rating" required="1"/>
+		    </group>
+                </form>
+            </field>
+        </record>
+
+	<record id="attendance_percentage_tree_view" model="ir.ui.view">
+	    <field name="name">attendance.percentage.tree.view</field>
+	    <field name="model">attendance.percentage</field>
+	    <field name="arch" type="xml">
+		<tree>
+		    <field name="from_val"/>
+		    <field name="to_val"/>
+		    <field name="rating"/>
+		</tree>
+	    </field>
+	</record>
+
+	<record id="attendance_percentage_action" model="ir.actions.act_window">
+	    <field name="name">Attendance Percentage</field>
+	    <field name="res_model">attendance.percentage</field>
+	    <field name="view_type">form</field>
+	    <field name="view_mode">tree,form</field>
+	</record>
+
+    </data>
+</odoo>

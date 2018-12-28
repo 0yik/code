@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_form_inherit" model="ir.ui.view">
+        <field name="name">Account Form Inherit</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <field name="internal_type" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="invisible">False</attribute>
+            </field>
+            <field name="user_type_id" position="after">
+                <field name="parent_id" domain="[('internal_type','=','view')]"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_account_tree_inherit" model="ir.ui.view">
+        <field name="name">Account Tree Inherit</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="colors">blue:internal_type == 'view';black:type in ('other','receivable','payable')
+                </attribute>
+            </xpath>
+            <field name="currency_id" position="after">
+                <field name="internal_type"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

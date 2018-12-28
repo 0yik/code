@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+    <t t-extend="InventoryCheckBOM">
+        <t t-jquery=".oe_inventory_product_qty" t-operation="replace">
+            <input type="number" class="oe_inventory_product_qty" id="product_qty" value="1" style="display: inline-block; width: 10%;" required="true"/>
+        </t>
+    </t>
+</templates>

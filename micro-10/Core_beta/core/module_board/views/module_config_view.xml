@@ -1,0 +1,859 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--CRM Module Config View-->
+        <record id="view_crm_module_config_settings" model="ir.ui.view">
+            <field name="name">View CRM Module Config Settings</field>
+            <field name="model">module.board.config</field>
+            <field name="arch" type="xml">
+                <form string="Configure CRM Modules" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <div id="main">
+                        <group string="Opportunities">
+                            <label string="Quotation &amp; Sales Orders"/>
+                            <div>
+                                <field name="module_sale"/>
+                                <label for="module_sale"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_quotation_opportunities"/>
+                                <label for="module_quotation_opportunities"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_sale_discount_total"/>
+                                <label for="module_sale_discount_total"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_sale_order_revision"/>
+                                <label for="module_sale_order_revision"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_sale_subscription"/>
+                                <label for="module_sale_subscription"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_sale_sourced_by_line"/>
+                                <label for="module_sale_sourced_by_line"/>
+                            </div>
+
+                            <label string="Customers/Opportunities"/>
+                            <div>
+                                <field name="module_crm_phonecall"/>
+                                <label for="module_crm_phonecall"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_crm_profiling"/>
+                                <label for="module_crm_profiling"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_pipeline_activity_history"/>
+                                <label for="module_pipeline_activity_history"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_pipeline_won"/>
+                                <label for="module_pipeline_won"/>
+                            </div>
+                        </group>
+
+                        <group string="Quotation &amp; Sales Orders">
+                            <label string="General"/>
+                            <div>
+                                <field name="module_crm"/>
+                                <label for="module_crm"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_dusal_sale"/>
+                                <label for="module_dusal_sale"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_partner_credit_limit"/>
+                                <label for="module_partner_credit_limit"/>
+                            </div>
+                        </group>
+
+                        <group string="Others">
+                            <label string="Helpdesk"/>
+                            <div>
+                                <field name="module_helpdesk_extension"/>
+                                <label for="module_helpdesk_extension"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_helpdesk_email_routing"/>
+                                <label for="module_helpdesk_email_routing"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_helpdesk_default_access"/>
+                                <label for="module_helpdesk_default_access"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_website_helpdesk_livechat"/>
+                                <label for="module_website_helpdesk_livechat"/>
+                            </div>
+                            <label string="Analytic"/>
+                            <div>
+                                <field name="module_so_analytic"/>
+                                <label for="module_so_analytic"/>
+                            </div>
+                        </group>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--Purchase Module Config View-->
+        <record id="view_purchase_module_config_settings" model="ir.ui.view">
+            <field name="name">View Purchase Module Config Settings</field>
+            <field name="model">module.board.config</field>
+            <field name="arch" type="xml">
+                <form string="Configure Purchase Modules" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <div id="main">
+                        <group string="Purchasing">
+                            <label string="General"/>
+                            <div>
+                                <field name="module_purchase"/>
+                                <label for="module_purchase"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_purchase_request_to_requisition"/>
+                                <label for="module_purchase_request_to_requisition"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_dusal_purchase"/>
+                                <label for="module_dusal_purchase"/>
+                            </div>
+                        </group>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--Inventory Module Config View-->
+        <record id="view_inventory_module_config_settings" model="ir.ui.view">
+            <field name="name">View Inventory Module Config Settings</field>
+            <field name="model">module.board.config</field>
+            <field name="arch" type="xml">
+                <form string="Configure Inventory Modules" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <div id="main">
+                        <group string="Inventory">
+                            <label string="General"/>
+                            <div>
+                                <field name="module_stock"/>
+                                <label for="module_stock"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_mrp_repair"/>
+                                <label for="module_mrp_repair"/>
+                            </div>
+                            <label string="Stock Barcode"/>
+                            <div>
+                                <field name="module_stock_barcode"/>
+                                <label for="module_stock_barcode"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_simple_stock2"/>
+                                <label for="module_simple_stock2"/>
+                            </div>
+                        </group>
+
+                        <group string="Delivery Process &amp; Printouts">
+                            <label string="Delivery Process"/>
+                            <div>
+                                <field name="module_auto_stock_refund"/>
+                                <label for="module_auto_stock_refund"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_stock_transport_management"/>
+                                <label for="module_stock_transport_management"/>
+                            </div>
+                        </group>
+
+                        <group string="Barcode Management">
+                            <label string="Barcodes"/>
+                            <div>
+                                <field name="module_barcodes"/>
+                                <label for="module_barcodes"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_barcodes_generator_product"/>
+                                <label for="module_barcodes_generator_product"/>
+                            </div>
+                        </group>
+
+                        <group string="Reports &amp; Analytics">
+                            <label string="Reports"/>
+                            <div>
+                                <field name="module_inventory_age_report"/>
+                                <label for="module_inventory_age_report"/>
+                            </div>
+                        </group>
+
+                        <group string="Others">
+                            <label string="Quality Controls"/>
+                            <div>
+                                <field name="module_quality_control_hr"/>
+                                <label for="module_quality_control_hr"/>
+                            </div>
+                        </group>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--Accounting Module Config View-->
+        <record id="view_accounting_module_config_settings" model="ir.ui.view">
+            <field name="name">View Accounting Module Config Settings</field>
+            <field name="model">module.board.config</field>
+            <field name="arch" type="xml">
+                <form string="Configure Accounting Modules" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <div id="main">
+                        <group string="Invoices, Payments &amp; Currencies">
+                            <label string="General"/>
+                            <div>
+                                <field name="module_account"/>
+                                <label for="module_account"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_account_accountant"/>
+                                <label for="module_account_accountant"/>
+                            </div>
+                            <label string="Payments"/>
+                            <div>
+                                <field name="module_account_followup"/>
+                                <label for="module_account_followup"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_payment_receipt_invoice"/>
+                                <label for="module_payment_receipt_invoice"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_payment_tab_invoices"/>
+                                <label for="module_payment_tab_invoices"/>
+                            </div>
+                            <label string="Currencies"/>
+                            <div>
+                                <field name="module_currency_rate_update"/>
+                                <label for="module_currency_rate_update"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_sg_se_currency"/>
+                                <label for="module_sg_se_currency"/>
+                            </div>
+                        </group>
+
+                        <group string="Users &amp; Access">
+                            <label string="Access Rights"/>
+                            <div>
+                                <field name="module_accounting_auditor"/>
+                                <label for="module_accounting_auditor"/>
+                            </div>
+                        </group>
+
+                        <group string="Analytic Accounts">
+                            <label string="Budgets"/>
+                            <div>
+                                <field name="module_budget_management_extension"/>
+                                <label for="module_budget_management_extension"/>
+                            </div>
+                            <label string="Contracts"/>
+                            <div>
+                                <field name="module_my_account_analytic_analysis"/>
+                                <label for="module_my_account_analytic_analysis"/>
+                            </div>
+                            <label string="Assets"/>
+                            <div>
+                                <field name="module_account_asset"/>
+                                <label for="module_account_asset"/>
+                            </div>
+                        </group>
+
+                        <group string="Singapore Localizations">
+                            <label string="Setup"/>
+                            <div>
+                                <field name="module_sg_accomodation"/>
+                                <label for="module_sg_accomodation"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_sg_account_config"/>
+                                <label for="module_sg_account_config"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_sg_bank_reconcile"/>
+                                <label for="module_sg_bank_reconcile"/>
+                            </div>
+                        </group>
+
+                        <group string="Reports">
+                            <label string="Reports Generation"/>
+                            <div>
+                                <field name="module_account_balance_reporting"/>
+                                <label for="module_account_balance_reporting"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_report_xlsx"/>
+                                <label for="module_report_xlsx"/>
+                            </div>
+                        </group>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--HRM Module Config View-->
+        <record id="view_hrm_module_config_settings" model="ir.ui.view">
+            <field name="name">View HRM Module Config Settings</field>
+            <field name="model">module.board.config</field>
+            <field name="arch" type="xml">
+                <form string="Configure HRM Modules" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <div id="main">
+                        <group string="General">
+                            <label string="General"/>
+                            <div>
+                                <field name="module_hr"/>
+                                <label for="module_hr"/>
+                            </div>
+                            <label string="Employees"/>
+                            <div>
+                                <field name="module_user_creation_from_employee"/>
+                                <label for="module_user_creation_from_employee"/>
+                            </div>
+                            <label string="Reporting"/>
+                            <div>
+                                <field name="module_hr_dashboard"/>
+                                <label for="module_hr_dashboard"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_hr_payslip_monthly_report"/>
+                                <label for="module_hr_payslip_monthly_report"/>
+                            </div>
+                            <label string="Leaves"/>
+                            <div>
+                                <field name="module_hr_leave_balance"/>
+                                <label for="module_hr_leave_balance"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_sg_allocate_leave"/>
+                                <label for="module_sg_allocate_leave"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_urgent_leave_function"/>
+                                <label for="module_urgent_leave_function"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_leave_manager_approval"/>
+                                <label for="module_leave_manager_approval"/>
+                            </div>
+                            <label string="Expenses"/>
+                            <div>
+                                <field name="module_sg_expense_maxcap"/>
+                                <label for="module_sg_expense_maxcap"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_sg_expense_payroll"/>
+                                <label for="module_sg_expense_payroll"/>
+                            </div>
+                            <label string="Timesheet"/>
+                            <div>
+                                <field name="module_hr_timesheet"/>
+                                <label for="module_hr_timesheet"/>
+                            </div>
+                        </group>
+
+                        <group string="Singapore Localization">
+                            <label string="Setup"/>
+                            <div>
+                                <field name="module_sg_appendix8a_report"/>
+                                <label for="module_sg_appendix8a_report"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_sg_expire_leave"/>
+                                <label for="module_sg_expire_leave"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_sg_hr_config"/>
+                                <label for="module_sg_hr_config"/>
+                            </div>
+                        </group>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--Industries Module Config View-->
+        <record id="view_industries_module_config_settings" model="ir.ui.view">
+            <field name="name">View Industries Module Config Settings</field>
+            <field name="model">module.board.config</field>
+            <field name="arch" type="xml">
+                <form string="Configure Industries Modules" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <div id="main">
+                        <group string="Hotels Management">
+                            <label string="Hotels"/>
+                            <div>
+                                <field name="module_hotel"/>
+                                <label for="module_hotel"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_hotel_pos_restaurant"/>
+                                <label for="module_hotel_pos_restaurant"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_report_hotel_reservation"/>
+                                <label for="module_report_hotel_reservation"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_board_frontdesk"/>
+                                <label for="module_board_frontdesk"/>
+                            </div>
+                        </group>
+                        <group string="Cab Booking">
+                            <label string="Reservation"/>
+                            <div>
+                                <field name="module_car_booking_management"/>
+                                <label for="module_car_booking_management"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_cab_booking_management"/>
+                                <label for="module_cab_booking_management"/>
+                            </div>
+                        </group>
+                        <group string="Manufacturing">
+                            <label string="General"/>
+                            <div>
+                                <field name="module_mrp"/>
+                                <label for="module_mrp"/>
+                            </div>
+                            <label string="Materials"/>
+                            <div>
+                                <field name="module_bom_components_image"/>
+                                <label for="module_bom_components_image"/>
+                            </div>
+                        </group>
+
+                        <group string="Gym">
+                            <label string="Gym Management"/>
+                            <div>
+                                <field name="module_gym_management"/>
+                                <label for="module_gym_management"/>
+                            </div>
+                        </group>
+
+                        <group string="Insurance">
+                            <label string="Insurance Management"/>
+                            <div>
+                                <field name="module_insurance_management_cybro"/>
+                                <label for="module_insurance_management_cybro"/>
+                            </div>
+                        </group>
+
+                        <group string="Medical">
+                            <label string="Medical"/>
+                            <div>
+                                <field name="module_medical"/>
+                                <label for="module_medical"/>
+                            </div>
+                        </group>
+
+                        <group string="Salon &amp; SPA">
+                            <label string="Salon &amp; SPA"/>
+                            <div>
+                                <field name="module_salon_management"/>
+                                <label for="module_salon_management"/>
+                            </div>
+                        </group>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--General Module Config View-->
+        <record id="view_general_module_config_settings" model="ir.ui.view">
+            <field name="name">View General Module Config Settings</field>
+            <field name="model">module.board.config</field>
+            <field name="arch" type="xml">
+                <form string="Configure General Modules" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <div id="main">
+                        <group string="General">
+                            <label string="Records"/>
+                            <div>
+                                <field name="module_auditlog"/>
+                                <label for="module_auditlog"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_document"/>
+                                <label for="module_document"/>
+                            </div>
+                            <label string="Fields"/>
+                            <div>
+                                <field name="module_company_bank_details"/>
+                                <label for="module_company_bank_details"/>
+                            </div>
+                            <label string="Users"/>
+                            <div>
+                                <field name="module_access_rights_group"/>
+                                <label for="module_access_rights_group"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_website_digital_sign"/>
+                                <label for="module_website_digital_sign"/>
+                            </div>
+                            <label string="Emails"/>
+                            <div>
+                                <field name="module_email_management"/>
+                                <label for="module_email_management"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_mail_auto_reply"/>
+                                <label for="module_mail_auto_reply"/>
+                            </div>
+                            <label string="Partners"/>
+                            <div>
+                                <field name="module_partner_contact_birthdate"/>
+                                <label for="module_partner_contact_birthdate"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_partner_contact_gender"/>
+                                <label for="module_partner_contact_gender"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_partner_firstname"/>
+                                <label for="module_partner_firstname"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_partner_identification"/>
+                                <label for="module_partner_identification"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_partner_geo_map_location"/>
+                                <label for="module_partner_geo_map_location"/>
+                            </div>
+                            <label string="Products"/>
+                            <div>
+                                <field name="module_product_pack"/>
+                                <label for="module_product_pack"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_product_warehouse_quantity"/>
+                                <label for="module_product_warehouse_quantity"/>
+                            </div>
+                        </group>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--Other Module Config View-->
+        <record id="view_other_module_config_settings" model="ir.ui.view">
+            <field name="name">View Other Module Config Settings</field>
+            <field name="model">module.board.config</field>
+            <field name="arch" type="xml">
+                <form string="Configure Other Modules" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <div id="main">
+                        <group string="Marketing">
+                            <label string="Mass Mailing"/>
+                            <div>
+                                <field name="module_mass_mailing"/>
+                                <label for="module_mass_mailing"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_website_event"/>
+                                <label for="module_website_event"/>
+                            </div>
+                        </group>
+
+                        <group string="Point Of Sales">
+                            <label string="General"/>
+                            <div>
+                                <field name="module_point_of_sale"/>
+                                <label for="module_point_of_sale"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_pos_analytic_by_config"/>
+                                <label for="module_pos_analytic_by_config"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_pos_stock_avail"/>
+                                <label for="module_pos_stock_avail"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_pos_ticket"/>
+                                <label for="module_pos_ticket"/>
+                            </div>
+                        </group>
+
+                        <group string="Document Management System">
+                            <label string="General"/>
+                            <div>
+                                <field name="module_muk_dms"/>
+                                <label for="module_muk_dms"/>
+                            </div>
+                        </group>
+
+                        <group string="Projects">
+                            <label string="General"/>
+                            <div>
+                                <field name="module_project"/>
+                                <label for="module_project"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_project_forecast"/>
+                                <label for="module_project_forecast"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_project_subtask"/>
+                                <label for="module_project_subtask"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_workload_in_project"/>
+                                <label for="module_workload_in_project"/>
+                            </div>
+                        </group>
+
+                        <group string="Assets">
+                            <label string="Asset &amp; Group Management"/>
+                            <div>
+                                <field name="module_fleet_rental"/>
+                                <label for="module_fleet_rental"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_fleet_repair_request_management"/>
+                                <label for="module_fleet_repair_request_management"/>
+                            </div>
+                        </group>
+
+                        <group string="Website">
+                            <label string="User Interface"/>
+                            <div>
+                                <field name="module_muk_theme_nav_transparent"/>
+                                <label for="module_muk_theme_nav_transparent"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_website_forum"/>
+                                <label for="module_website_forum"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_website_slides"/>
+                                <label for="module_website_slides"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_website_blog"/>
+                                <label for="module_website_blog"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_survey"/>
+                                <label for="module_survey"/>
+                            </div>
+                            <label string=""/>
+                            <div>
+                                <field name="module_website_sale"/>
+                                <label for="module_website_sale"/>
+                            </div>
+                        </group>
+
+                        <group string="Equipments">
+                            <label string="Equipment Management"/>
+                            <div>
+                                <field name="module_maintenance"/>
+                                <label for="module_maintenance"/>
+                            </div>
+                        </group>
+
+                        <group string="Others">
+                            <label string="Others"/>
+                            <div>
+                                <field name="module_lunch"/>
+                                <label for="module_lunch"/>
+                            </div>
+                        </group>
+
+                        <group string="Manufacturing">
+                            <label string="Bill of Material"/>
+                            <div>
+                                <field name="module_bom_components_image"/>
+                                <label for="module_bom_components_image"/>
+                            </div>
+                        </group>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--CRM Module Config Action-->
+        <record id="action_crm_module_config" model="ir.actions.act_window">
+            <field name="name">CRM Configure Module</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">module.board.config</field>
+            <field name="view_id" ref="view_crm_module_config_settings"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <!--Purchase Module Config Action-->
+        <record id="action_purchase_module_config" model="ir.actions.act_window">
+            <field name="name">Purchase Configure Module</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">module.board.config</field>
+            <field name="view_id" ref="view_purchase_module_config_settings"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <!--Inventory Module Config Action-->
+        <record id="action_inventory_module_config" model="ir.actions.act_window">
+            <field name="name">Inventory Configure Module</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">module.board.config</field>
+            <field name="view_id" ref="view_inventory_module_config_settings"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <!--Accounting Module Config Action-->
+        <record id="action_accounting_module_config" model="ir.actions.act_window">
+            <field name="name">Accounting Configure Module</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">module.board.config</field>
+            <field name="view_id" ref="view_accounting_module_config_settings"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <!--HRM Module Config Action-->
+        <record id="action_hrm_module_config" model="ir.actions.act_window">
+            <field name="name">HRM Configure Module</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">module.board.config</field>
+            <field name="view_id" ref="view_hrm_module_config_settings"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <!--Industries Modules Config Action-->
+        <record id="action_industries_module_config" model="ir.actions.act_window">
+            <field name="name">Industries Module Configure</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">module.board.config</field>
+            <field name="view_id" ref="view_industries_module_config_settings"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <!--General Module Config Action-->
+        <record id="action_general_module_config" model="ir.actions.act_window">
+            <field name="name">Sales Configure Module</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">module.board.config</field>
+            <field name="view_id" ref="view_general_module_config_settings"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <!--Other Modules Config Action-->
+        <record id="action_other_module_config" model="ir.actions.act_window">
+            <field name="name">Other Module Configure</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">module.board.config</field>
+            <field name="view_id" ref="view_other_module_config_settings"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <menuitem id="menu_module_board" name="Module Board" sequence="309" groups="base.group_system"/>
+        <menuitem id="submenu_crm" name="CRM" action="action_crm_module_config" parent="menu_module_board" sequence="1" groups="base.group_system"/>
+        <menuitem id="submenu_purchase" name="Purchase" action="action_purchase_module_config" parent="menu_module_board" sequence="2" groups="base.group_system"/>
+        <menuitem id="submenu_inventory" name="Inventory" action="action_inventory_module_config" parent="menu_module_board" sequence="3" groups="base.group_system"/>
+        <menuitem id="submenu_accounting" name="Accounting" action="action_accounting_module_config" parent="menu_module_board" sequence="4" groups="base.group_system"/>
+        <menuitem id="submenu_hrm" name="HRM" action="action_hrm_module_config" parent="menu_module_board" sequence="5" groups="base.group_system"/>
+        <menuitem id="submenu_industries" name="Industries" action="action_industries_module_config" parent="menu_module_board" sequence="6" groups="base.group_system"/>
+        <menuitem id="submenu_general" name="General" action="action_general_module_config" parent="menu_module_board" sequence="7" groups="base.group_system"/>
+        <menuitem id="submenu_others" name="Others" action="action_other_module_config" parent="menu_module_board" sequence="8" groups="base.group_system"/>
+
+    </data>
+</odoo>

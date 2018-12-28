@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="purchase_template" xml:space="preserve">
+    <t t-name="purchase_dashboard.HrDashboard">
+        <div class="col-md-12 col-sm-12 col-xs-12" style="color:white; overflow:hidden;">
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_open_pr_to_approve"
+                 name="base.action_pr_to_approve" role="button">
+                <div  class="box oe_kanban_color_2" style="padding-bottom:500px; margin-bottom: -500px;">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h2>Purchase Request To Approve</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <img class="img_bg" style="float:right;padding: 24px;" src="/purchase_dashboard/static/src/img/order.png"
+                            height="15%" width="100%"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h3>Count <t t-esc="number_purchase_request_to_approve" /></h3>
+                            <!--<h4 class="line_hover">-->
+                                <!--<span  />-->
+                            <!--</h4>-->
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_rfq_open"
+                 name="purchase.purchase_rfq" role="button">
+                <div  class="box customer_oe_kanban_color_1" style=" padding-bottom:500px; margin-bottom: -500px;">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h2 >Total Requests For Quotation</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <img class="img_bg" style="float:right;padding: 24px;" src="/purchase_dashboard/static/src/img/rfq.png"
+                            height="15%" width="100%"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h3>Count: <t t-esc="number_of_rfq" /></h3>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <!--<t t-esc="emp_recruit_perc" />% of total Employees-->
+                            <!--(<t t-esc="total_emp" />)-->
+                            <!--<h2>Total: <t t-esc="currency" /> 56835.3</h2>-->
+                            <h3>Total: <t t-esc="currency" /> <t t-esc="total_amount_of_rfq" /></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_purchase_month_open"
+                 name="purchase_dashboard.action_open_purchase_month" role="button">
+                <div  class="box oe_kanban_color_2" style=" padding-bottom:500px; margin-bottom: -500px;">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h2>This Month Purchase</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <img class="img_bg" style="float:right;padding: 24px;" src="/purchase_dashboard/static/src/img/money.png"
+                            height="15%" width="100%"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h3>Count: <t t-esc="number_of_purchase_month" /></h3>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h3>Total: <t t-esc="currency" /> <t t-esc="total_amount_of_purchase_month" /></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_purchase_open"
+                 name="purchase.purchase_form_action" role="button">
+                <div  class="box customer_oe_kanban_color_1" style=" padding-bottom:500px; margin-bottom: -500px;">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h2>Total Purchase</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <img class="img_bg" style="float:right;padding: 24px;" src="/purchase_dashboard/static/src/img/purchase.png"
+                            height="15%" width="100%"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h3>Count: <t t-esc="number_of_purchase_total" /></h3>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h3>Total: <t t-esc="currency" /> <t t-esc="total_amount_of_purchase_total" /></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12" style="color:white; overflow:hidden;">
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_open_incoming_shipment"
+                 name="purchase_dashboard.action_open_incoming_shipment" role="button">
+                <div  class="box customer_oe_kanban_color_1" style=" padding-bottom:500px; margin-bottom: -450px;">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h2>Today's Incoming Shipment</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <img class="img_bg" style="float:right;padding: 24px;" src="/purchase_dashboard/static/src/img/incoming_shipments.png"
+                            height="15%" width="100%"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h3>Count: <t t-esc="number_of_incoming_shipment" /></h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_open_pending_shipment"
+                 name="purchase_dashboard.action_open_pending_shipment" role="button">
+                <div  class="box oe_kanban_color_2" style=" padding-bottom:500px; margin-bottom: -450px;">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h2>Pending Shipments</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <img class="img_bg" style="float:right;padding: 24px;" src="/purchase_dashboard/static/src/img/pending_shipment.png"
+                            height="15%" width="100%"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h3>Count: <t t-esc="number_of_pending_shipment" /></h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_open_invoices"
+                 name="account.action_invoice_tree2" role="button">
+                <div  class="box customer_oe_kanban_color_1" style=" padding-bottom:500px; margin-bottom: -450px;">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h2>Bills To Pay</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <img class="img_bg" style="float:right;padding: 24px;" src="/purchase_dashboard/static/src/img/document.png"
+                            height="15%" width="100%"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h3>Count: <t t-esc="number_of_invoices" /></h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_open_tender"
+                 name="purchase_tender_comparison.action_purchase_tender" role="button">
+                <div  class="box oe_kanban_color_2" style=" padding-bottom:500px; margin-bottom: -450px;">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h2>Tender</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <img class="img_bg" style="float:right;padding: 24px;" src="/purchase_dashboard/static/src/img/tender.png"
+                            height="15%" width="100%"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h3>Count: <t t-esc="number_of_purchase_tender" /></h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12" style="color:white; overflow:hidden">
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_open_stock_low_product"
+                 name="purchase_dashboard.action_open_stock_low_product" role="button">
+                <div  class="box oe_kanban_color_2" style=" padding-bottom:500px; margin-bottom: -450px;">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h2>Low Stock Products</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <img class="img_bg" style="float:right;padding: 24px;" src="/purchase_dashboard/static/src/img/low_stock_product.png"
+                            height="15%" width="100%"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h3>Count: <t t-esc="number_of_low_stock_products" /></h3>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+       <div id="container2" class="chart-container col-md-12 col-sm-12 col-xs-12"  style="position: relative; height:300px;">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+                <h2 style="margin-left: -10px">Top 10 Vendors</h2>
+            </div>
+            <canvas id="myChart2"/>
+      </div>
+
+
+    </t>
+</templates>

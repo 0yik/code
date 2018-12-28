@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="account_voucher.action_sale_receipt" model="ir.actions.act_window">
+        <field name="name">Other Income</field>
+    </record>
+
+    <record id="account_voucher.action_purchase_receipt" model="ir.actions.act_window">
+        <field name="name">Expenses</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,37 @@
+<odoo>
+    <record id="view_partner_property_form_inh" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="point_of_sale.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <field name="phone" position="before">
+                    <field name="birth_date"/>
+                    <field name="is_birthdate_month" />
+                </field>
+            </data>
+        </field>
+    </record>
+
+    <record id="view_pos_config_form_inh" model="ir.ui.view">
+        <field name="name">pos.config.form</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='active']" position="after">
+                <field name="birthday_discount"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_pos_form_inh" model="ir.ui.view">
+        <field name="name">pos.order.form</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price_unit']" position="after">
+                <field name="membership_birthmonth_discount" widget="monetary"/>
+            </xpath>
+        </field>
+    </record>
+ </odoo>

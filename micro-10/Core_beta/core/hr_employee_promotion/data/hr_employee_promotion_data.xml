@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="ir_cron_employee_promotion" model="ir.cron">
+            <field name="name"> Employee Promotion </field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model">promotion.request</field>
+            <field name="function">manage_employee_promotion</field>
+            <field name="args">()</field>
+        </record>
+
+
+        <record id="approve_promotion_request" model="mail.template">
+            <field name="name">Approval for Promotion Request</field>
+            <field name="model_id" ref="hr_employee_promotion.model_promotion_request"/>
+            <field name="email_from">
+                <![CDATA["${user.company_id.name|safe}" <${(user.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.user.login|safe}</field>
+            <field name="subject">${object.create_uid.name} submitted a promotion request for ${object.employee_id.name}</field>
+            <field name="body_html"><![CDATA[
+                <div style="padding:0px;width:600px;background: #FFFFFF repeat top /100%;">
+
+                    % set email_to_name = object.get_email_to_name()
+
+                    <p>Dear ${email_to_name} </p>
+                    <br/>
+
+                    % set access_action = object.get_action_approve_promotion_request()
+
+                    <div style="padding:0px;width:600px;background: #FFFFFF repeat top /100%;">
+                        <p> ${object.create_uid.name} submitted a promotion request for ${object.employee_id.name} </p>
+                        <p>From 		: ${object.job_id.name}. </p>
+                        <p>Promoted to 	: ${object.promoted_to.name}. </p>
+                        <p>Requested Date	: ${object.req_date}. </p>
+                        <p>Promotion Date	: ${object.promo_date}. </p>
+
+                        <p> Please review and do the needful for request.</p>
+                     </div>
+                 <br/>
+                <p>
+                    <center>
+                      <a href="web#id=${object.id}&view_type=form&model=promotion.request&action=${access_action}"
+                       style="background-color: #1abc9c; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;" class="o_default_snippet_text">
+                      View Promotion Request </a>
+                    </center>
+               </p>
+
+                </div>
+                <div style="padding:0px;width:600px;background: #FFFFFF repeat top /100%;">
+                Thank You,
+                </div>
+                <div style="padding:0px;width:600px; margin-top: 10px; background: #fff repeat top /100%;">
+                    <p>${user.signature | safe}</p>
+                </div>
+            ]]></field>
+
+        </record>
+
+
+    </data>
+</odoo>

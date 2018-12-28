@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_membership_card">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <h3>Membership Card</h3>
+                                <div><span t-field="o.user_id.company_id"/></div>
+                                <div>Tel:<span t-field="o.user_id.company_id.phone"/></div>
+                                <div>Email:<span t-field="o.user_id.company_id.email"/></div>
+                                <div>Website:<span t-field="o.user_id.company_id.website"/></div>
+                                <div><b>Membership Template</b></div>
+                                <div><span t-field="o.card_category"/></div>
+                                <div><b>Customer:</b><span t-field="o.customer_id"/></div>
+                                <div><b>Validity</b></div>
+                                <div>From:<span t-field="o.issue_date"/></div>
+                                <div>To:<span t-field="o.expiry_date"/></div>
+                                <img t-if="o.card_code"  class="barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',o.card_code, 600, 100)" style="width:300px;height:30px;"/>
+                                <br/>
+                                <strong >Secret Membership Code:<span t-field="o.card_code"/></strong>
+                                <div style="border-style: solid;border-width: 2px;height:30px">Note: Keep Your Membership Code Safe.<hr/></div>
+                            </div>
+                        </div>
+
+                    </div>
+                  
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

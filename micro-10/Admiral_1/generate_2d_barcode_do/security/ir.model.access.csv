@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_lot_number_serializer,lot_number_serializer,warehouse_serializer.model_lot_number_serializer,,1,1,1,1
+access_product_sku_serializer,product_sku_serializer,warehouse_serializer.model_product_sku_serializer,,1,1,1,1
+access_barcode_number,barcode_number,warehouse_serializer.model_barcode_number,,1,1,1,1
+access_generate_barcode_number,generate_barcode_number,warehouse_serializer.model_generate_barcode_number,,1,1,1,1
+access_label_size,label_size,warehouse_serializer.model_label_size,,1,1,1,1
+access_serial_lot_number,serial_lot_number,warehouse_serializer.model_serial_lot_number,,1,1,1,1
+access_serial_lot_product,serial_lot_product,warehouse_serializer.model_serial_lot_product,,1,1,1,1

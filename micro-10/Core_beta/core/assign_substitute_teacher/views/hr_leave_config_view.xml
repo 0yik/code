@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_substitute_teacher_email_config" model="ir.ui.view">
+            <field name="name">Substitute Teacher Email Config</field>
+            <field name="model">hr.leave.config.settings</field>
+            <field name="inherit_id" ref="sg_hr_holiday.view_hr_leave_configuration"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/group[1]" position="after">
+                    <group string="Configuration of Substitute Teacher Confirm Class Email.">
+                    	<field name="admin_notification" class="oe_inline"/>
+                    </group>
+                    <group string="Substitute Teacher Email Notification">
+                        <field name="substitute_teacher_email" class="oe_inline" nolabel="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

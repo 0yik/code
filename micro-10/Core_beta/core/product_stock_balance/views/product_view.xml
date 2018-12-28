@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+        <record id="view_template_property_form_product_ctock" model="ir.ui.view">
+            <field name="name">product.template.stock.property.form.inherit.product.stock</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='group_lots_and_weight']"  position="before">
+                    <group string="Stock balance by locations" attrs="{'invisible': [('type', '=', 'service')]}" groups="base.group_user">
+                        <div>
+                        <field name="location_ids" context="{'template_id': id}">
+                            <tree delete='false' create='false'>
+                                <field name="complete_name"/>
+                                <field name="qty_available" string="On hand"/>
+                                <field name="virtual_available" string="Forecast"/>
+                                <field name="incoming_qty" string="Incom"/>
+                                <field name="outgoing_qty" string="Out"/>
+                            </tree>
+                        </field>
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_template_property_form_product_ctock_variant" model="ir.ui.view">
+            <field name="name">product.template.stock.property.form.inherit.product.stock2</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock.product_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+               <xpath expr="//group[@name='group_lots_and_weight']"  position="before">
+                    <group string="Stocks balance by locations" attrs="{'invisible': [('type', '=', 'service')]}" groups="base.group_user">
+                        <div>
+                        <field name="location_ids" context="{'product_id': id}">
+                            <tree delete='false' create='false'>
+                                <field name="complete_name"/>
+                                <field name="qty_available" string="On hand"/>
+                                <field name="virtual_available" string="Forecast"/>
+                                <field name="incoming_qty" string="Incom"/>
+                                <field name="outgoing_qty" string="Out"/>
+                            </tree>
+                        </field>
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

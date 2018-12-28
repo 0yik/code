@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+  <data>
+    <record id="view_repair_order_form_inherit_asset_repair" model="ir.ui.view">
+      <field name="name">mrp.repair.form.inherit.asset.repair</field>
+      <field name="model">mrp.repair</field>
+      <field name="inherit_id" ref="mrp_repair.view_repair_order_form"/>
+      <field name="arch" type="xml">
+        <field name="product_id" position="after">
+          <field name="asset_id"/>
+        </field>
+
+        <field name="guarantee_limit" position="after">
+          <field name="maintenance_id"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

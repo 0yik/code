@@ -1,0 +1,247 @@
+<odoo>
+	<template id="payment_voucher_form_report">
+		<t t-call="report.html_container">
+			<t t-foreach='docs' t-as="o">
+				<div class="page">
+					<div class="row">
+						<div class="table text-center" align="center" width="100%">
+							<div class="row" >
+								<div class="col-xs-12 text-center">
+									<div class="row" >
+										<div class="col-xs-12 text-center" style="font-size: 2.2em;">
+											<b>
+												<span t-field="o.company_id.name"/>
+											</b>
+										</div>
+<!-- 										<div class="col-xs-12 " style="font-size: 1.0em; text-align: center; margin-top:15px">
+											<b style="border-style: solid; border-width: 3px;">
+												 PAYMENT VOUCHER
+											</b>
+										</div> -->
+										<div class="col-xs-12 " style="font-size: 1.6em; text-align: center; margin-top:12px">
+											<b>PAYMENT VOUCHER</b>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+								
+						<div class="row" style='font-size:15px; margin-bottom:28px;'>
+                			<div class="col-xs-2">
+                				<div class="row">
+		                			<div class="col-xs-12">
+		                				Date:
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-3">
+                				<div class="row" >
+		                			<div class="col-xs-12">
+		                				<span t-field="o.date"/>
+<!-- 										<hr style="border-color: black;margin-top: 0px;margin-bottom: 0px;padding: 0px 0;"/> -->
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-2">
+                				<div class="row">
+		                			<div class="col-xs-12">
+		                				Voucher No:
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-4">
+                				<div class="row" >
+		                			<div class="col-xs-12">
+		                				<span t-field="o.number"/>
+<!-- 										<hr style="border-color: black;margin-top: 0px;margin-bottom: 0px;padding: 0px 0;"/> -->
+		                			</div>
+		                		</div>
+		                	</div>
+		                </div>
+
+						<div class="row" style='font-size:15px; margin-bottom:24px;'>
+                			<div class="col-xs-2">
+                				<div class="row">
+		                			<div class="col-xs-12">
+		                				Payee Name:
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-3">
+                				<div class="row" >
+		                			<div class="col-xs-12">
+		                				<span t-field="o.name.name"/>
+<!-- 										<hr style="border-color: black;margin-top: 0px;margin-bottom: 0px;padding: 0px 0;"/> -->
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-2">
+                				<div class="row">
+		                			<div class="col-xs-12">
+		                				Cheque No:
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-4">
+                				<div class="row" >
+		                			<div class="col-xs-12">
+		                				<span t-field="o.cheque_number"/>
+<!-- 										<hr style="border-color: black;margin-top: 0px;margin-bottom: 0px;padding: 0px 0;"/> -->
+		                			</div>
+		                		</div>
+		                	</div>
+		                </div>
+ 						<div t-if='o.line_ids'>
+							<table class="table text-center" align="center" width="100%"
+									style='font-size:10px !important; border:2px;border: 2px solid black;border-collapse: collapse;'>
+								<tr>
+									<td class="text-center" style='border:2px solid black;font-size:15px;'>
+										<b>Invoice Date</b>
+									</td>
+									<td class="text-center" style='border:2px solid black;font-size:15px;'>
+										<b>Invoice No/Acc. Code</b>
+									</td>
+									<td class="text-center" style='border:2px solid black;font-size:15px;'>
+										<b>Description</b>
+									</td>
+									<td class="text-center" style='border:2px solid black;font-size:15px;'>
+										<b>Amount</b>
+									</td>
+									
+								</tr>
+								<tr t-foreach="o.line_ids" style=" font-size:15px;" t-as="line">
+									<td class="text-center"  style='border:2px solid black'>
+										<span t-field="line.invoice_date"/>
+									</td>
+									<td class="text-center"  style='border:2px solid black'>
+										<span t-field="line.invoice_number"/>
+									</td>
+									<td class="text-center"  style='border:2px solid black'>
+										<span t-field="line.product_id.name"/>
+									</td>
+									<td class="text-center"  style='border:2px solid black'>
+										<span t-field="line.amount"/>
+									</td>
+								</tr>
+								<tr  style="font-size:15px;">
+									<td>
+									</td>
+									<td>
+									</td>
+									<td  style="border:0px;">
+										<b>Total Amount</b>
+									</td>
+									<td class="text-center" style='border:2px solid black'>
+										<b><span t-field="o.total_amount"/></b>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="row" style='font-size:15px;  margin-top:26px;'>
+							<div class="col-xs-2">
+                				<div class="row">
+		                			<div class="col-xs-12">
+		                				Bank Account:
+		                			</div>
+		                		</div>
+			                </div>
+		                	<div class="col-xs-10">
+                				<div class="row">
+		                			<div class="col-xs-12">
+		                				<span t-field="o.bank_id.name"/>
+										<hr style="border-color: black;margin-top: 0px;margin-bottom: 0px;padding: 0px 0;"/>
+		                			</div>
+		                		</div>
+		                	</div>
+						</div>
+						
+						<div class="row" style='font-size:15px; margin-top:28px;'>
+                			<div class="col-xs-2">
+                				<div class="row">
+		                			<div class="col-xs-12">
+		                				Prepared By:
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-2">
+                				<div class="row" >
+		                			<div class="col-xs-12">
+		                				<span t-field="o.prepared_by.name"/>
+										<hr style="border-color: black;margin-top: 0px;margin-bottom: 0px;padding: 0px 0;"/>
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-2">
+                				<div class="row">
+		                			<div class="col-xs-12">
+		                				Checked By:
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-2">
+                				<div class="row" >
+		                			<div class="col-xs-12">
+		                				<span t-field="o.checked_by.name"/>
+										<hr style="border-color: black;margin-top: 0px;margin-bottom: 0px;padding: 0px 0;"/>
+		                			</div>
+		                		</div>
+		                	</div>
+		                 	<div class="col-xs-2">
+                				<div class="row">
+		                			<div class="col-xs-12">
+		                				Approved By:
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-2">
+                				<div class="row" >
+		                			<div class="col-xs-12">
+		                				<span t-field="o.approved_by.name"/>
+		                				<!-- <span>1234567890ss1111</span> -->
+										<hr style="border-color: black;margin-top: 0px;margin-bottom: 0px;padding: 0px 0;"/>
+		                			</div>
+		                		</div>
+		                	</div>
+		                </div>
+		                
+		                <div class="row" style='font-size:15px; margin-top:28px;'>
+                			<div class="col-xs-2">
+                				<div class="row">
+		                			<div class="col-xs-12">
+		                				Posted By:
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-2">
+                				<div class="row" >
+		                			<div class="col-xs-12">
+		                				
+		                				<!-- <span t-field="o.date"/> -->
+										<hr style="border-color: black;margin-top: 0px;margin-bottom: 0px;padding: 0px 0;"/>
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-2">
+                				<div class="row">
+		                			<div class="col-xs-12">
+		                				Received By:
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<div class="col-xs-2">
+                				<div class="row" >
+		                			<div class="col-xs-12">
+		                				
+		                				<!-- <span t-field="o.number"/> -->
+		                				<!-- <span>1234567890ss1111</span> -->
+										<hr style="border-color: black;margin-top: 0px;margin-bottom: 0px;padding: 0px 0;"/>
+		                			</div>
+		                		</div>
+		                	</div>
+		                </div>
+					</div>
+				</div>
+			</t>
+		</t>
+	</template>
+</odoo>

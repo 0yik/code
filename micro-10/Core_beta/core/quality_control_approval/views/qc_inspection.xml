@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record id="qc_inspection_form_view_inherit" model="ir.ui.view">
+            <field name="name">qc.inspection</field>
+            <field name="model">qc.inspection</field>
+            <field name="inherit_id" ref="quality_control.qc_inspection_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_approve']" position="attributes">
+                    <attribute name="string">Fail</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_approve']" position="after">
+                    <button name="action_pass" type="object" states="waiting" class="oe_highlight" string="Pass"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

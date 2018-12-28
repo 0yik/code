@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+{
+    "name": "Teachers Timesheet",
+    "author": "HashMicro/ Amit Patel",
+    "version": "1.0",
+    'description': '''This module help to timesheet for the teacher based on the class and project duration.''',
+    'summary': 'Teacher Timesheet',
+    "website": "www.hashmicro.com",
+    "category": "Timesheet",
+    "depends": [
+		'school',
+		'hr_timesheet',
+		'hr_timesheet_sheet',
+		'school_attendance',
+		'ems_attendance',
+		'ems_class_classroom',
+		'web_readonly_bypass',
+		'stable_hr_timesheet_invoice',
+    ],
+    "data": [
+		'views/timesheet_assets.xml',
+		'views/daily_attendance_view.xml',
+		'views/daily_att_email_setting.xml',
+		'wizard/submit_attendance_view.xml',
+		'data/cron.xml',
+    ],
+    "qweb": [],
+    'demo': [],
+    'installable': True,
+    'auto_install': False,
+    'qweb': ['static/src/xml/timesheet.xml', ],
+}

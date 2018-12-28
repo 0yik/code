@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<menuitem id="menu_class_classroom" name="Class &amp; Classroom" parent="school.menu_configuration" sequence="10"/>
+	
+	<!-- Equipment Terms View -->
+  	
+  	<record id="ems_equipment_tree_view" model="ir.ui.view">
+        <field name="name">ems.equipment.tree.view</field>
+        <field name="model">ems.equipment</field>            
+        <field name="arch" type="xml">
+            <tree editable="top"> 
+                <field name="name"/>                          
+            </tree>
+        </field>
+    </record>
+    
+    <record id="ems_equipment_action" model="ir.actions.act_window">
+        <field name="name">Equipment</field>
+        <field name="res_model">ems.equipment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Equipment"
+            id="menu_ems_equipment"
+            parent="menu_class_classroom"
+            action="ems_equipment_action"
+            sequence="10"/>
+	
+	<!-- Class Room View -->
+  	
+  	<record id="ems_classroom_tree_view" model="ir.ui.view">
+        <field name="name">ems.classroom.tree.view</field>
+        <field name="model">ems.classroom</field>            
+        <field name="arch" type="xml">
+            <tree> 
+            	<field name="date"/>
+                <field name="name"/>
+                <field name="capacity"/>
+                <field name="equipment_id"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="ems_classroom_calendar" model="ir.ui.view">
+        <field name="name">ems.classroom.calendar</field>
+        <field name="model">ems.classroom</field>
+        <field name="arch" type="xml">
+            <calendar string="Classroom" color="name" date_start="date" quick_add="False">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="capacity"/>
+                <field name="equipment_ids"/>
+            </calendar>
+        </field>
+    </record>
+    
+    <record id="view_ems_classroom_form" model="ir.ui.view">
+        <field name="name">ems.classroom.form</field>
+        <field name="model">ems.classroom</field>
+        <field name="arch" type="xml">
+            <form string="Class Room">
+            	<sheet>
+            		<group>
+            			<group>
+            				<field name="name"/>
+            				<field name="capacity"/>
+            			</group>
+            			<group>
+            				<field name="equipment_ids" widget="many2many_tags"/>
+            				<field name="date"/>
+            			</group>
+        			</group>
+        			<group string="Description">
+    					<field name="description" nolabel="1"/>
+        			</group>
+            	</sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_ems_classroom" model="ir.actions.act_window">
+        <field name="name">Class Room</field>
+        <field name="res_model">ems.classroom</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">calendar,tree,form</field>
+    </record>
+    
+    <menuitem name="Class Room"
+            id="menu_ems_classroom"
+            parent="menu_class_classroom"
+            action="action_ems_classroom"
+            sequence="20"/>
+	
+	
+</odoo>   

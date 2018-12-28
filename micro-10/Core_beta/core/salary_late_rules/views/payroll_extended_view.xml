@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="hr_payslip_extended_form_view_inherit">
+            <field name="name">hr.payslip.extended.form</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="l10n_sg_hr_payroll.hr_payslip_extended_form_view" />
+            <field name="arch" type="xml">
+                <field name="overtime_hours" position="after">
+                    <field name="total_absence_days"/>
+                    <field name="absence_deduction" invisible="1"/>
+                    <field name="late_entry_count" invisible="0"/>
+                    <field name="late_entry_deduction" invisible="0"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

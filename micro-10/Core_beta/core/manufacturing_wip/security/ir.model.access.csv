@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mrp_plan,access_mrp_plan,model_mrp_plan,,1,1,1,1
+access_mrp_order,access_mrp_order,model_mrp_order,,1,1,1,1
+access_mrp_order_wizard,access_mrp_order_wizard,model_mrp_order_wizard,,1,1,1,1
+access_mrp_order_wizard_line,access_mrp_order_wizard_line,model_mrp_order_wizard_line,,1,1,1,1

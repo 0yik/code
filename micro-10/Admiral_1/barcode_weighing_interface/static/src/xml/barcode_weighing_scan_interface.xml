@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="BarcodeWeighingWidget">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="b_workorder_name">
+                    <h1>
+                        Work Orders :
+                    </h1>
+                    <h1>
+                        <t t-esc="widget.order_name"/>
+                    </h1>
+                </div>
+                <div class="b_button_close">
+                    <button class="btn btn-danger navbar-btn js_barcode_weighing_close">Close</button>
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <div class="b_material">
+                    <h1>
+                        <span class="b_material_name"></span>
+                        <span class="b_material_qty"></span>
+                        <span class="b_material_uom"></span>
+                    </h1>
+                </div>
+                <div class="container b_table_product_info">
+                    <table class='table table-condensed b_product_table'>
+                        <thead>
+                            <tr>
+                                <th class="text-left" style="font-size: initial;"><h2>Product</h2></th>
+                                <th class='text-center' style="font-size: initial;"><h2>Lot Number</h2></th>
+                                <th class="text-right" style="font-size: initial;"><h2>Expiry Date</h2></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container b_form_barcode_weighing">
+                    <!--<input type="text" class="text-center b_barcode_input" placeholder="Barcode Input" id="id_barcode"/>-->
+                    <h2><input type="text" class="text-center b_weighing_input" t-attf-placeholder="Weighing Input" id="id_weighing" readonly="readonly"/></h2>
+                </div>
+                <div class="container b_button_done">
+                    <button disabled="true" class="btn btn-danger js_barcode_weighing_done"><h2><t t-esc="widget.button_done_html"/></h2></button>
+                    <button disabled="true" style="display:none;" class="btn btn-info btn-lg js_barcode_weighing_pass"><h2>Supervisor Bypass</h2></button>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <table class="table table-bordered b_table_detail">
+                    <thead>
+                        <tr>
+                            <th class="text-left" style="font-size: initial;"><h2>Name</h2></th>
+                            <th class="text-center" style="font-size: initial;"><h2>Quantity</h2></th>
+                            <th class="text-center" style="font-size: initial;"><h2>UOM</h2></th>
+                            <th class="text-center" style="font-size: initial;"><h2>Lot Number</h2></th>
+                            <th class="text-center" style="font-size: initial;"><h2>Done</h2></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-if = "widget">
+                            <t t-foreach="widget.data" t-as="line">
+                                <tr>
+                                    <td class="text-left"><h3><t t-esc="line.product_name"/></h3></td>
+                                    <td class="text-center"><h3><t t-esc="line.quantity"/></h3></td>
+                                    <td class="text-center"><h3><t t-esc="line.product_uom"/></h3></td>
+                                    <td class="text-center"><h3><t t-esc="line.lot"/></h3></td>
+                                    <td class="text-center"><h3><t t-esc="line.quantity_done"/></h3></td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </t>
+    <t t-name="BarcodeWeighingWidgetTableContent">
+        <tr>
+            <td class="text-left"><h3><t t-esc="widget.product_name"/></h3></td>
+            <td class="text-center"><h3><t t-esc="widget.lot_number"/></h3></td>
+            <td class="text-right"><h3><t t-esc="widget.life_date"/></h3></td>
+        </tr>
+    </t>
+    <t t-name="BarcodeWeighingWidgetTableDetail">
+        <t t-if="widget">
+            <t t-foreach="widget" t-as="line">
+                <tr>
+                    <td class="text-left"><h3><t t-esc="line.product_name"/></h3></td>
+                    <td class="text-center"><h3><t t-esc="line.quantity"/></h3></td>
+                    <td class="text-center"><h3><t t-esc="line.product_uom"/></h3></td>
+                    <td class="text-center"><h3><t t-esc="line.lot"/></h3></td>
+                    <td class="text-center "><h3><t t-esc="line.quantity_done"/></h3></td>
+                </tr>
+            </t>
+        </t>
+    </t>
+</templates>

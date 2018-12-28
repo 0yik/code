@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="view_users_form_simple_modif_mail_inherit_for_user_status" model="ir.ui.view">
+            <field name="name">User Preferences Inherit for Livechat Status</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="mail.view_users_form_simple_modif_mail"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="notify_email" position="before">
+                        <field name="user_status" widget="radio" readonly="0"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_users_form_mail_inherit_for_user_status" model="ir.ui.view">
+            <field name="name">User Form Mail Inherit for Livechat Status</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="mail.view_users_form_mail"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="notify_email" position="before">
+                        <field name="user_status" widget="radio" readonly="0"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</odoo>

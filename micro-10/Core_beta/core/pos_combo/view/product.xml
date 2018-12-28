@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="pos_combo_variant" model="ir.actions.act_window">
+            <field name="name">Product Variants</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('sale_ok', '=', True), ('available_in_pos', '=', True)]</field>
+            <field name="context">{"search_default_filter_to_sell":1}</field>
+            <field name="view_id" ref="product.product_product_tree_view"/>
+            <field name="search_view_id" ref="product.product_search_form_view"/>
+        </record>
+
+        <menuitem id="pos_customize"
+              parent="point_of_sale.menu_point_root"
+              sequence="20"
+              name="Variants"
+              groups="product.group_product_variant"
+              />
+
+        <menuitem action="product.attribute_action"
+              id="menu_pos_combo_attribute_action"
+              parent="pos_customize"
+              sequence="1"
+              groups="product.group_product_variant"/>
+
+        <menuitem action="product.variants_action"
+              id="menu_pos_combo_variants_action"
+              parent="pos_customize"
+              sequence="2"
+              groups="product.group_product_variant"/>
+
+        <menuitem action="pos_combo_variant"
+              id="menu_product_normal_action_sell"
+              parent="pos_customize"
+              sequence="3"
+              groups="product.group_product_variant"/>
+
+
+        <record model="ir.ui.view" id="product_product_combo_form">
+            <field name="name">product.product.combo</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="groups_id" eval="[(4, ref('point_of_sale.group_pos_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[1]" position="before">
+                    <page name="pos_extend" string="POS Extends">
+                        <group>
+                            <field name="pos_type"/>
+                        </group>
+                        <group string="Combo/Package" attrs="{'invisible': [('pos_type', '!=', 'is_combo')]}">
+                            <field name="pos_product_combo_ids" nolabel="1" colspan="4">
+                                <tree string="Products pack" editable="1">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Variants" attrs="{'invisible': [('pos_type', '!=', 'multi_variant')]}">
+                            <field name="pos_product_variant_ids" nolabel="1">
+                                <tree string="Variants" editable="1">
+                                    <field name="attribute_id1" options="{'no_create_edit': True}"/>
+                                    <field name="value_id1" domain="[('attribute_id', '=', attribute_id1)]" options="{'no_create_edit': True}"/>
+                                    <field name="attribute_id2" options="{'no_create_edit': True}"/>
+                                    <field name="value_id2" domain="[('attribute_id', '=', attribute_id2)]" options="{'no_create_edit': True}"/>
+                                    <field name="attribute_id3" options="{'no_create_edit': True}"/>
+                                    <field name="value_id3" domain="[('attribute_id', '=', attribute_id3)]" options="{'no_create_edit': True}"/>
+                                    <field name="price_extra"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+

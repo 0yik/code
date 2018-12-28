@@ -1,0 +1,111 @@
+<odoo>
+	<data>
+
+		<record model="ir.cron" id="password_change_reminder">
+	        <field name="name">Password Change Reminder</field>
+	        <field name="interval_number">1</field>
+	        <field name="interval_type">days</field>
+	        <field name="numbercall">-1</field>
+	        <field name="doall" eval="False"/>
+	        <field name="model" eval="'res.users'"/>
+	        <field name="function" eval="'_change_password_reminder'"/>
+	        <field name="args" eval="'()'" />
+	        <field name="active" eval="True"/>
+	    </record>
+
+		<record id="password_change_upon_initial_logon" model="ir.config_parameter">
+			<field name="key">password_change_upon_initial_logon</field>
+			<field name="value">True</field>
+		</record>
+	
+		<record id="change_reminder_days" model="ir.config_parameter">
+			<field name="key">change_reminder_days</field>
+			<field name="value">90</field>
+		</record>
+
+		<record id="password_history" model="ir.config_parameter">
+			<field name="key">password_history</field>
+			<field name="value">True</field>
+		</record>
+
+		<record id="password_complexity" model="ir.config_parameter">
+			<field name="key">password_complexity</field>
+			<field name="value">True</field>
+		</record>
+
+		<record id="activate_password_validation" model="ir.config_parameter">
+			<field name="key">activate_password_validation</field>
+			<field name="value">True</field>
+		</record>
+		
+		<record id="allowed_login_attempts" model="ir.config_parameter">
+			<field name="key">allowed_login_attempts</field>
+			<field name="value">3</field>
+		</record>
+		
+		<record id="activate_minimum_password_length" model="ir.config_parameter">
+			<field name="key">activate_minimum_password_length</field>
+			<field name="value">True</field>
+		</record>
+		
+		<record id="minimum_password_length" model="ir.config_parameter">
+			<field name="key">minimum_password_length</field>
+			<field name="value">8</field>
+		</record>
+	
+		<record id="mail_template_account_block_maximum_login_attempt" model="mail.template">
+            <field name="name">Maximum Login attempt</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="email_from"><![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="subject"><![CDATA[You have reached the maximum limit of logon attempts]]></field>
+            <field name="body_html"><![CDATA[
+<div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+    <table cellspacing="0" cellpadding="0" style="width:600px;border-collapse:collapse;background:inherit;color:inherit">
+        <tbody><tr>
+            <td valign="center" width="200" style="padding:10px 10px 10px 5px;font-size: 12px">
+                <img src="/logo.png" style="padding: 0px; margin: 0px; height: auto; width: 80px;" alt="${user.company_id.name}">
+            </td>
+        </tr></tbody>
+    </table>
+</div>
+<div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+<p>Dear ${object.name},</p>
+    <p>
+        You have reached the maximum limit of logon attempts. Please contact your administrator for more information.
+    </p>
+    <p>Best regards,</p>
+</div>
+]]></field>
+        </record>
+        
+        
+        <record id="mail_template_password_change_reminder" model="mail.template">
+            <field name="name">Password Change Reminder</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="email_from"><![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="subject"><![CDATA[Password Change Reminder]]></field>
+            <field name="body_html"><![CDATA[
+<div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+    <table cellspacing="0" cellpadding="0" style="width:600px;border-collapse:collapse;background:inherit;color:inherit">
+        <tbody><tr>
+            <td valign="center" width="200" style="padding:10px 10px 10px 5px;font-size: 12px">
+                <img src="/logo.png" style="padding: 0px; margin: 0px; height: auto; width: 80px;" alt="${user.company_id.name}">
+            </td>
+        </tr></tbody>
+    </table>
+</div>
+<div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+<p>Dear ${object.name},</p>
+    <p>
+       	You have changed the password ${ctx.get('days')} days ago. Please change your password to secure your account. 
+    </p>
+    <p>Best regards,</p>
+</div>
+]]></field>
+        </record>
+        
+
+    </data>
+</odoo>

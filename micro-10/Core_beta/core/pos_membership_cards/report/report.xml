@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<report
+		    id="membership_card_report"
+		    model="pos.membership.card"
+		    string="Membership Card"
+		    report_type="qweb-pdf"
+		    name="pos_membership_cards.report_membership_card"
+		    menu='False'        
+		/>
+	</data>
+</odoo>

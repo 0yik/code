@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend" inherit_id="hr_gps_attendance.assets_backend" name="branch_location">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/hr_gps_attendance_radius/static/src/js/branch_location.js"/>
+            <script type="text/javascript" src="/hr_gps_attendance_radius/static/src/js/current_location.js"/>
+        </xpath>
+    </template>
+
+</odoo>

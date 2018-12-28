@@ -1,0 +1,36 @@
+<odoo>
+    <record model="ir.ui.view" id="wizard_form_view">
+        <field name="name">disciplinary.report.wizard.form.view</field>
+        <field name="model">disciplinary.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Disciplinary Report ">
+                <sheet>            
+                  <group>
+                    <group string="Leave Summary Report">
+                        <field name="all_employee"/>
+                        <field name="all_stages"/>
+                        <div> <strong> Date From </strong> <field name="from_date" class="oe_inline"/> <strong> Date To </strong><field name="to_date"  class="oe_inline"/></div>
+                    </group>
+                  </group>
+                  <group>
+                        <field name="employee" string="Name of Employee"/>
+                        <field name="disciplinary_stages"/>
+                  </group>
+                </sheet>
+             </form>
+             <footer>
+                <button string="Cancel" class="oe_link" special="cancel"/>
+                or 
+                <button name="save" string="Save" type="object" default_focus="1" class="oe_highlight"/>
+             </footer>
+        </field>
+    </record> 
+
+    <act_window id="wizard_disciplinary_report"
+        name="Disciplinary Report"
+        src_model="disciplinary.stage"
+        res_model="disciplinary.report.wizard"
+        view_mode="form"
+        target="new"
+        />
+</odoo>

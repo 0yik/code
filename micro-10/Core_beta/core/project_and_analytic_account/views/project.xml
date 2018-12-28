@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_list_budget_cost_field_inherit" model="ir.ui.view">
+        <field name="name">project.list.budget.cost.field.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="arch" type="xml">
+        	<field name="partner_id" position="after">
+        		<field name="budgeted_cost" />
+				<field name="spent_budget" />        		
+    		</field>
+    	</field>
+   	</record>
+
+   	<!-- Spent Budget and Budgeted Cost fields in Project Form -->
+    <record id="project_form_budget_cost_fields_add" model="ir.ui.view">
+        <field name="name">project.form.budget.cost.field.add.in.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+		<field name="sequence">50</field>        
+        <field name="arch" type="xml">
+        	<xpath expr="//notebook" position="before">
+        		<group>
+        			<field name="budgeted_cost" readonly="1"/>
+					<field name="spent_budget" />
+				</group>       		
+    		</xpath>
+    	</field>
+   	</record>   	   	
+</odoo>

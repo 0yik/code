@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record id="edit_holiday_extended_status_form_mass_leave" model="ir.ui.view">
+        <field name="name">Edit Holiday Extended status Form Mass Leave</field>
+        <field name="model">hr.holidays.status</field>
+        <field name="inherit_id" ref="sg_holiday_extended.sg_holiday_hr_extended_form"/>
+        <field name="arch" type="xml">
+            <field name="pre_approved" position="after">
+                <field name="mass_leave_deduction"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

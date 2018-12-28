@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record id="deduct_hr_holidays_form_view" model="ir.ui.view">
+        <field name="name">Deduct Hr Holidays Form View</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+        <field name="arch" type="xml">
+            <field name="department_id" position="after">
+                <field name="is_deducted" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_deduct_leave" model="ir.actions.act_window">
+        <field name="name">Deducted Leaves</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.holidays</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_deducted', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a leave deduction.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_leave_deduction" action="action_deduct_leave" parent="hr_holidays.menu_hr_holidays_my_leaves" sequence="201"/>
+
+</odoo>

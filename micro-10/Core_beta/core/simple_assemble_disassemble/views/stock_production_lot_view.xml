@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_stock_production_lot_materials" model="ir.ui.view">
+        <field name="name">stock.production.lot.inherit.form</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="arch" type="xml">
+        <xpath expr="/form/sheet/notebook/page[1]" position="after">
+            <page name="material_details" string="Material">
+                <field name="material_ids" readonly="1">
+                    <tree editable="bottom">
+                        <field name="product_id" />
+                        <field name="qty_pro" />
+                        <field name="stock_lot" domain="[('product_id','=',product_id)]" />
+                    </tree>
+                </field>
+            </page>
+        </xpath>
+        </field>
+    </record>
+
+</odoo>

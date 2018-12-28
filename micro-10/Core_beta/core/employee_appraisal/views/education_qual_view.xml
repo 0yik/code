@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+
+        <record id="education_qual_tree_view" model="ir.ui.view">
+            <field name="name">education.qual.tree.view</field>
+            <field name="model">education.qualification</field>
+            <field name="arch" type="xml">
+                <tree>
+                   <field name="qual_seq"/>
+                   <field name="name"/>
+                   <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="education_qual_form_view" model="ir.ui.view">
+            <field name="name">education.qual.form.view</field>
+            <field name="model">education.qualification</field>
+            <field name="arch" type="xml">
+                <form>
+                   <sheet>
+	                   <b><field name="qual_seq" readonly="1"/></b>
+                       <group>
+                       <field name="name"/>
+                       <field name="active"/>
+                       <field name="note"/>
+                       </group>
+                   </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="education_qual_action" model="ir.actions.act_window">
+            <field name="name">Qualification</field>
+            <field name="res_model">education.qualification</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>
+

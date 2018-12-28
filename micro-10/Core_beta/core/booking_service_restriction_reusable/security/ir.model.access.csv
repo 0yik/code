@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fields&flow_reusable_fields&flow_reusable,fields&flow_reusable.fields&flow_reusable,model_fields&flow_reusable_fields&flow_reusable,,1,0,0,0

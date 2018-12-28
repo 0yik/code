@@ -1,0 +1,105 @@
+<odoo>
+    <data>
+
+        <!-- Anchor Type Inherits -->
+        <record id="hilti_modifier_customer_booking.action_type_anchor_view" model="ir.actions.act_window">
+            <field name="name">Calendar Type</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a Calendar Type
+                </p>
+            </field>
+        </record>
+
+        <record id="hilti_modifier_customer_booking.menu_action_type_anchor_view" model="ir.ui.menu">
+            <field name="name">Calendar Type</field>
+        </record>
+
+        <record id="anchor_type_view_tree_inherit" model="ir.ui.view">
+            <field name="name">Calendar Type Tree View Inherit</field>
+            <field name="model">anchor.type</field>
+            <field name="inherit_id" ref="hilti_modifier_customer_booking.anchor_type_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="attributes">
+                    <attribute name="string">Calendar Type</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="anchor_type_view_inherit" model="ir.ui.view">
+            <field name="name">Calendar Type Form View Inherit</field>
+            <field name="model">anchor.type</field>
+            <field name="inherit_id" ref="hilti_modifier_customer_booking.anchor_type_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="attributes">
+                    <attribute name="string">Calendar Type</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!-- Anchor Size Inherits -->
+        <record id="hilti_modifier_customer_booking.menu_action_size_anchor_view" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+
+        <!-- Anchor Management Inherits -->
+        <record id="hilti_modifier_customer_booking.action_master_anchor_view" model="ir.actions.act_window">
+            <field name="name">Calendar Management</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a Calendar Management
+                </p>
+            </field>
+        </record>
+
+        <record id="hilti_modifier_customer_booking.menu_action_master_anchor_view" model="ir.ui.menu">
+            <field name="name">Calendar Management</field>
+        </record>
+
+        <record id="anchor_master_view_tree_inherit" model="ir.ui.view">
+            <field name="name">Calendar Management Tree View Inherit</field>
+            <field name="model">anchor.master</field>
+            <field name="inherit_id" ref="hilti_modifier_customer_booking.anchor_master_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="anchor_type_id" position="attributes">
+                    <attribute name="string">Calendar Type</attribute>
+                </field>
+                <field name="anchor_size_id" position="replace">
+                    <field name="user_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="anchor_master_view_inherit" model="ir.ui.view">
+            <field name="name">Calendar Management Form View Inherit</field>
+            <field name="model">anchor.master</field>
+            <field name="inherit_id" ref="hilti_modifier_customer_booking.anchor_master_view"/>
+            <field name="arch" type="xml">
+                <field name="anchor_type_id" position="attributes">
+                    <attribute name="string">Calendar Type</attribute>
+                </field>
+                <field name="anchor_size_id" position="replace">
+                    <field name="user_id" required="1"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Equipment Management Inherits -->
+        <record id="hilti_modifier_customer_booking.menu_equipment_equipment" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+
+        <!-- Timeslot Management Inherits -->
+        <record id="time_slot_master_view_inherit" model="ir.ui.view">
+            <field name="name">Timeslot Management Form View Inherit</field>
+            <field name="model">timeslot.master</field>
+            <field name="inherit_id" ref="hilti_modifier_customer_booking.time_slot_master_view"/>
+            <field name="arch" type="xml">
+                <field name="time_slot_based" position="attributes">
+                    <attribute name="string">Dynamic Timeslots – Based on the time required set in Calendar Type</attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

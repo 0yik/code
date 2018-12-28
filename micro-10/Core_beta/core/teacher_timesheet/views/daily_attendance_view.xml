@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	
+	<!-- Reset To Draft the Attendance sheet From List view -->
+	<record id="ir_actions_draft_attendance" model="ir.actions.server">
+        <field name="name"> Reset Draft</field>
+        <field name="model_id" ref="model_daily_attendance"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_draft_attendance_sheet()</field>
+    </record>
+
+    <record id="id_draft_attendance" model="ir.values">
+        <field name="model_id" ref="model_daily_attendance" />
+        <field name="name">Reset To Draft</field>
+        <field name="key2">client_action_multi</field>
+        <field eval="'ir.actions.server,%d'%ir_actions_draft_attendance" name="value"/>
+        <field name="key">action</field>
+        <field name="model">daily.attendance</field>
+    </record>
+	
+	<!-- Submit the Attendance sheet From List view -->
+	<record id="ir_actions_submit_attendance" model="ir.actions.server">
+        <field name="name">Submit</field>
+        <field name="model_id" ref="model_daily_attendance"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_submit_attendance_sheet()</field>
+    </record>
+
+    <record id="id_submit_attendance" model="ir.values">
+        <field name="model_id" ref="model_daily_attendance" />
+        <field name="name">Submit Attendance Sheet</field>
+        <field name="key2">client_action_multi</field>
+        <field eval="'ir.actions.server,%d'%ir_actions_submit_attendance" name="value"/>
+        <field name="key">action</field>
+        <field name="model">daily.attendance</field>
+    </record>
+    
+    <!-- Validate the Attendance sheet From List view -->
+	<!--record id="ir_actions_validate_attendance" model="ir.actions.server">
+        <field name="name">Validate</field>
+        <field name="model_id" ref="model_daily_attendance"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_validate_attendance_sheet()</field>
+    </record>
+
+    <record id="id_validate_attendance" model="ir.values">
+        <field name="model_id" ref="model_daily_attendance" />
+        <field name="name">Validate Attendance Sheet</field>
+        <field name="key2">client_action_multi</field>
+        <field eval="'ir.actions.server,%d'%ir_actions_validate_attendance" name="value"/>
+        <field name="key">action</field>
+        <field name="model">daily.attendance</field>
+    </record-->
+    
+    <!-- Set To Draft the timesheet from the list view  -->
+	<record id="ir_actions_timesheet_reset_to_draft" model="ir.actions.server">
+        <field name="name">Reset To Draft</field>
+        <field name="model_id" ref="model_hr_timesheet_sheet_sheet"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_reset_draft_timesheet()</field>
+    </record>
+
+    <record id="id_set_draft_timesheet" model="ir.values">
+        <field name="model_id" ref="model_hr_timesheet_sheet_sheet" />
+        <field name="name">Reset To Draft</field>
+        <field name="key2">client_action_multi</field>
+        <field eval="'ir.actions.server,%d'%ir_actions_timesheet_reset_to_draft" name="value"/>
+        <field name="key">action</field>
+        <field name="model">hr_timesheet_sheet.sheet</field>
+    </record>
+	
+	
+	<!--  Inherit Daily Attendance Sheet Form View -->
+	<record id="view_daily_attendance_form_1_timesheet" model="ir.ui.view">
+        <field name="name">daily.attendance.form.timesheet</field>
+        <field name="model">daily.attendance</field>
+        <field name="inherit_id" ref="school_attendance.view_daily_attendance_form_1"/>
+        <field name="arch" type="xml">
+			<xpath expr="//header/button[@name='attendance_validate']" position="after">
+				<button name="submit_to_employee" string="Submit" states="draft" type="object" groups="school.group_school_teacher,base.user_root"/>
+			</xpath>
+			<xpath expr="//header/button[@name='attendance_validate']" position="attributes">
+				<attribute name="states">submitted</attribute>
+			</xpath>
+			<xpath expr="//header/button[@name='attendance_draft']" position="attributes">
+				<attribute name="states">validate,submitted</attribute>
+			</xpath>
+        </field>
+    </record>
+    
+    <record id="view_daily_attendance_form_1_ems_timesheet" model="ir.ui.view">
+        <field name="name">daily.attendance.form.ems.timesheet</field>
+        <field name="model">daily.attendance</field>
+        <field name="inherit_id" ref="ems_attendance.view_daily_attendance_form_1_ems"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='class_id']" position="after">
+				<field name="school_id"/>
+				<field name="project_id"/>
+			</xpath>
+        </field>
+    </record>
+    
+    <record id="view_school_school_form_modifier_ttank" model="ir.ui.view">
+        <field name="name">school.school.form.modifier.ttank</field>
+        <field name="model">school.school</field>
+        <field name="inherit_id" ref="school.view_school_school_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//sheet/group/field[@name='lang']" position="after">
+				<field name="project_id"/>
+			</xpath>
+        </field>
+    </record>
+    
+    <record id="view_daily_attendance_tree_custom" model="ir.ui.view">
+        <field name="name">daily.attendance.tree.custom</field>
+        <field name="model">daily.attendance</field>
+        <field name="inherit_id" ref="school_attendance.view_daily_attendance_tree"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='date']" position="before">
+				<field name="school_id"/>
+				<field name="class_id"/>
+				<field name="subject_id"/>
+				<field name="teacher_id"/>
+				<field name="academic_year_id" string="Term"/>
+				<field name="project_id"/>
+				<field name="action_draft" invisible="1"/>
+			</xpath>
+			<xpath expr="//field[@name='user_id']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='standard_id']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='student_ids']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='roll_no']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='stud_id']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+        </field>
+    </record>
+    
+    <record id="view_daily_attendance_search_custom" model="ir.ui.view">
+        <field name="name">daily.attendance.search.custom</field>
+        <field name="model">daily.attendance</field>
+        <field name="inherit_id" ref="school_attendance.view_daily_attendance_search"/>
+        <field name="arch" type="xml">
+			<xpath expr="//search/group[1]/field[@name='standard_id']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//search/group[2]/filter[1]" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//search/group[1]" position="inside">
+				<field name="school_id"/>
+				<field name="class_id"/>
+				<field name="subject_id"/>
+				<field name="teacher_id"/>
+				<field name="academic_year_id" string="Term"/>
+				<field name="project_id"/>
+			</xpath>
+			<xpath expr="//search/group[2]" position="inside">
+				<filter icon="terp-project" string="Class" help="By Class" context="{'group_by':'class_id'}"/>
+				<filter icon="terp-project" string="Subject" help="By subject" context="{'group_by':'subject_id'}"/>
+				<filter icon="terp-project" string="Teacher" help="By teacher" context="{'group_by':'teacher_id'}"/>
+				<filter icon="terp-project" string="Term" help="By Term" context="{'group_by':'academic_year_id'}"/>
+				<filter icon="terp-project" string="Project" help="By Project" context="{'group_by':'project_id'}"/>
+			</xpath>
+        </field>
+    </record>
+    
+    
+    
+    <!-- Timesheet -->
+    <record id="hr_timesheet_sheet_form_timesheet" model="ir.ui.view">
+        <field name="name">hr.timesheet.sheet.form.timesheet</field>
+        <field name="model">hr_timesheet_sheet.sheet</field>
+        <field name="inherit_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//sheet/notebook/page[2]/field[@name='timesheet_ids']/tree/field[@name='project_id']" position="after">
+				<field name="school_id"/>
+				<field name="class_id"/>
+			</xpath>
+			<xpath expr="//sheet/notebook/page[2]/field[@name='timesheet_ids']/form/group/field[@name='project_id']" position="after">
+				<field name="school_id"/>
+				<field name="class_id"/>
+			</xpath>
+			<xpath expr="//sheet/group/group/field[@name='company_id']" position="after">
+				<field name="attendance_id" readonly="1"/>
+				<!--field name="attendance_ids" readonly="1" widget='many2many_tags'/-->
+			</xpath>
+			<xpath expr="//sheet/notebook" position="inside">
+				<page string="Attendance Sheet Details">
+					<group string="Added Attendance Sheet Hours">
+						<field name="attendance_ids" readonly="1" nolabel="1"/>
+					</group>
+					<group string="Skipped Attendance Sheet Hours">
+						<field name="skip_attendance_ids" readonly="1" nolabel="1"/>
+					</group>
+				</page>
+			</xpath>
+        </field>
+    </record>
+    
+    <record id="hr_timesheet_line_tree_timesheet" model="ir.ui.view">
+        <field name="name">account.analytic.line.tree.hr_timesheet.timesheet</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='project_id']" position="after">
+				<field name="school_id"/>
+				<field name="class_id"/>
+			</xpath>
+        </field>
+    </record>
+    
+</odoo>   

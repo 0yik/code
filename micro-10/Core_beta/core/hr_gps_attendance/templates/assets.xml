@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend"
+              inherit_id="web.assets_backend"
+              name="current_location">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/hr_gps_attendance/static/src/js/current_location.js"/>
+        </xpath>
+    </template>
+
+</odoo>

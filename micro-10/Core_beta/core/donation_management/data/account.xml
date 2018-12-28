@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="donation_account" model="account.account">
+        <field name="code">90900</field>
+        <field name="name">Donations</field>
+        <field name="user_type_id" ref="account.data_account_type_other_income"/>
+    </record>
+
+</odoo>

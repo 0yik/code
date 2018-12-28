@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_crm_module_form">
+        <field name="name">view.crm.module.form</field>
+        <field name="model">crm.module</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name='opportunity_id'/>
+                        <field name='module_id'/>
+                        <field name='country_id' readonly='1'/>
+                        <field name='industry_id' readonly='1'/>
+                        <field name='team_id' readonly='1'/>
+                        <field name='user_id' readonly='1'/>
+                        <field name='user_id2' readonly='1'/>
+                    </group>
+                    <group/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="crm_stage_form_hm" model="ir.ui.view">
+        <field name="name">crm.stage.form</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <field name="probability" position="after">
+                <field name="is_reseller_stage"/>
+            </field>
+        </field>
+    </record>
+
+
+    <record id="view_crm_module_pivot" model="ir.ui.view">
+        <field name="name">view.crm.module.pivot</field>
+        <field name="model">crm.module</field>
+        <field name="arch" type="xml">
+            <pivot string="Modules" display_quantity="true">
+            	<field name="opportunity_id" type="row"/>
+                <field name="module_id" type="row"/>
+                <field name="industry_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_crm_module_tree">
+        <field name="name">view.crm.module.tree</field>
+        <field name="model">crm.module</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name='opportunity_id'/>
+                <field name='module_id'/>
+                <field name='industry_id'/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_crm_module_search_view">
+        <field name="name">view.crm.module.search</field>
+        <field name="model">crm.module</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="opportunity" string="Opportunity" domain="[('type','=','opportunity')]"
+                        help="Show only opportunity"/>
+                <separator/>
+                <filter string="Current" name="current" domain="[('active', '=', True)]"/>
+                <separator/>
+                <filter string="My Opportunities" name="my" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <field name="module_id"/>
+                <field name="industry_id"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_module" string="Module" context="{'group_by':'module_id'}"/>
+                    <filter name="group_industry" string="Industry" context="{'group_by':'industry_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_crm_module">
+        <field name="name">Module</field>
+        <field name="res_model">crm.module</field>
+        <field name="view_type">form</field>
+        <field name="context">{'search_default_opportunity': True, 'search_default_current': True, 'search_default_my': True}
+        </field>
+        <field name="view_mode">pivot,tree,form</field>
+    </record>
+
+    <menuitem
+            id="crm_module_menu"
+            name="Module"
+            parent="sales_team.menu_sales"
+            sequence="4"
+            action="action_crm_module"/>
+
+
+    <!-- <record model="ir.ui.view" id="view_module_module_form">
+        <field name="name">view.module.module.form</field>
+        <field name="model">module.module</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name='name'/>
+                    </group>
+                    <group/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="crm_stage_form_hm" model="ir.ui.view">
+        <field name="name">crm.stage.form</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <field name="probability" position="after">
+                <field name="is_reseller_stage"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_module_module_tree">
+        <field name="name">view.module.module.tree</field>
+        <field name="model">module.module</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_module_module">
+        <field name="name">Module</field>
+        <field name="res_model">module.module</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+      <menuitem
+          id="module_module_menu"
+          name="Module"
+          parent="sales_team.menu_sales"
+          sequence="4"
+          action="action_module_module" /> -->
+
+    <record model="ir.ui.view" id="view_industry_industry_form">
+        <field name="name">view.crm.industry.form</field>
+        <field name="model">industry.industry</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name='name'/>
+                    </group>
+                    <group/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_industry_industry_tree">
+        <field name="name">view.industry.industry.tree</field>
+        <field name="model">industry.industry</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_industry_industry">
+        <field name="name">Industry</field>
+        <field name="res_model">industry.industry</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="industry_industry_menu"
+            name="Industry"
+            parent="sales_team.menu_sales"
+            sequence="4"
+            action="action_industry_industry"/>
+
+
+    <!-- <record model="ir.ui.view" id="view_crm_industry_form">
+       <field name="name">view.crm.industry.form</field>
+       <field name="model">crm.industry</field>
+       <field name="arch" type="xml">
+           <form>
+               <sheet>
+                   <group>
+                       <field name='industry_id'/>
+                       <field name='opportunity_id'/>
+                   </group>
+                   <group/>
+               </sheet>
+           </form>
+       </field>
+   </record>
+
+   <record model="ir.ui.view" id="view_crm_industry_tree">
+       <field name="name">view.crm.industry.tree</field>
+       <field name="model">crm.industry</field>
+       <field name="arch" type="xml">
+           <tree>
+               <field name='industry_id'/>
+               <field name='opportunity_id'/>
+           </tree>
+       </field>
+   </record>
+
+   <record id="view_crm_industry_pivot" model="ir.ui.view">
+       <field name="name">view.crm.industry.pivot</field>
+       <field name="model">crm.industry</field>
+       <field name="arch" type="xml">
+           <pivot string="Industry" display_quantity="true">
+               <field name='opportunity_id' type="row"/>
+               <field name='industry_id' type="row"/>
+           </pivot>
+       </field>
+   </record>
+
+   <record model="ir.actions.act_window" id="action_crm_industry">
+       <field name="name">Industry</field>
+       <field name="res_model">crm.industry</field>
+       <field name="view_type">form</field>
+       <field name="view_mode">tree,form,pivot</field>
+   </record>
+
+   <menuitem
+         id="crm_industry_menu"
+         name="Industry"
+         parent="sales_team.menu_sales"
+         sequence="4"
+         action="action_crm_industry" /> -->
+
+
+    <menuitem action="utm.utm_medium_action" id="menu_utm_medium_hashmicro" parent="sales_team.menu_sales"
+              sequence="5"/>
+    <menuitem action="utm.utm_source_action" id="menu_utm_source_hashmicro" parent="sales_team.menu_sales"
+              sequence="5"/>
+
+    <record id="crm_case_tree_view_oppor_hm" model="ir.ui.view">
+        <field name="name">crm.lead.tree.opportunity</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="create_date" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="create_date" position="before">
+                <field name="creation_date" string="Create Date"></field>
+            </field>
+            <field name="date_action" position="after">
+                <field name="next_activity_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm.crm_lead_opportunities_tree_view">
+        <field name="domain">[('type','=','opportunity')]</field>
+    </record>
+
+    <record model="ir.ui.view" id="crm_case_form_view_oppor_extended">
+        <field name="name">crm.case.form.view.oppor.extended</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <!--             <xpath expr="//button[@name='action_set_won']" position="after">
+                              <button name="action_set_unquilified" string="Mark Unqualified" type="object" class="oe_highlight"/>
+                        </xpath> -->
+            <field name="stage_id" position="attributes">
+                <attribute name="domain">['|', ('team_id', '=', False), ('team_id', '=',
+                    team_id),('is_reseller_stage','=',False)]
+                </attribute>
+            </field>
+
+            <field name='email_from' position='after'>
+                <field name='email_from2'/>
+            </field>
+            <field name='phone' position='after'>
+                <field name='phone2'/>
+            </field>
+            <field name="user_id" position="before">
+                <field name="creation_date" readonly="0"/>
+            </field>
+            <field name="user_id" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+            <field name="team_id" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+            <field name="user_id" position="after">
+                <field name="user_id2"/>
+            </field>
+            <page name="lead" position='replace'/>
+            <field name="date_deadline" position="after">
+                <field name="stage_new_id"/>
+            </field>
+            <xpath expr="//notebook" position="inside">
+                <page name="modules" string="Modules">
+                    <field name="crm_module_ids">
+                        <tree editable="top">
+                            <field name="module_id"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="industry" string="Industries">
+                    <group>
+                        <field name="crm_industry_id" required="1"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr='//sheet/group' position='after'>
+                <group>
+                    <group>
+                        <field name="partner_name"/>
+                        <label for="street" string="Address"/>
+                        <div class="o_address_format">
+                            <field name="street" placeholder="Street..." class="o_address_street"/>
+                            <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                            <field name="city" placeholder="City" class="o_address_city"/>
+                            <field name="state_id" class="o_address_state" placeholder="State"
+                                   options="{&quot;no_open&quot;: True}"/>
+                            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                            <field name="country_id" required="1" placeholder="Country" class="o_address_country"
+                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                        </div>
+                    </group>
+
+                    <group>
+                        <label for="contact_name"/>
+                        <div class="o_row">
+                            <field name="contact_name"/>
+                            <field name="title" placeholder="Title" domain="[]"
+                                   options="{&quot;no_open&quot;: True}"/>
+                        </div>
+                        <field name="function"/>
+                        <field name="mobile"/>
+                        <field name="fax"/>
+                        <field name="opt_out"/>
+                    </group>
+                    <group string="Marketing">
+                        <field name="campaign_id"/>
+                        <field name="medium_id"/>
+                        <field name="source_id"/>
+                    </group>
+                    <group string="Misc" name="Misc">
+                        <field name="day_open" groups="base.group_no_one"/>
+                        <field name="day_close" groups="base.group_no_one"/>
+                        <field name="referred"/>
+                        <field name="type" invisible="1"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_crm_lead_salesperson_form">
+        <field name="name">view.crm.lead.salesperson.form</field>
+        <field name="model">crm.lead.salesperson</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="4">
+                        <field name='name' required="1"/>
+                        <field name='team_id' required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_crm_lead_salesperson_tree">
+        <field name="name">view.crm.lead.salesperson.tree</field>
+        <field name="model">crm.lead.salesperson</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name='name'/>
+                <field name="team_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_crm_lead_salesperson">
+        <field name="name">Define Crm Lead Salesperson</field>
+        <field name="res_model">crm.lead.salesperson</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="crm_lead_salesperson_menu"
+            name="Define Crm Lead Salesperson"
+            parent="crm.menu_crm_config_lead"
+            sequence="4"
+            action="action_crm_lead_salesperson"/>
+
+</odoo>

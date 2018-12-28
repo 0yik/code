@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="hr_salary_rule_category_idn_allw" model="hr.salary.rule.category">
+			<field name="code">IDN-ALLW</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - Allowance</field>
+            <field name="note">For allowances included in tax calculation</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_irglr" model="hr.salary.rule.category">
+			<field name="code">IDN-IRGLR</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - Irregular Income</field>
+            <field name="note">For Festive Bonus / Bonus included in tax calculation</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_taxallw" model="hr.salary.rule.category">
+			<field name="code">IDN-TAXALLW</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - Tax Allowance</field>
+            <field name="note">For allowances that covers the income tax</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_cospost" model="hr.salary.rule.category">
+			<field name="code">IDN-COSPOST</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - Biaya Jabatan</field>
+            <field name="note">For Biaya Jabatan calculation</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_cospostirg" model="hr.salary.rule.category">
+			<field name="code">IDN-COSPOSTIRG</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - Biaya Jabatan Irregular</field>
+            <field name="note">For Biaya Jabatan calculation with irregular income</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_yrlyincm" model="hr.salary.rule.category">
+			<field name="code">IDN-YRLYINCM</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - Penghasilan Setahun</field>
+            <field name="note">For yearly income calculation</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_yrlyincmirg" model="hr.salary.rule.category">
+			<field name="code">IDN-YRLYINCMIRG</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - Penghasilan Setahun Irregular</field>
+            <field name="note">For yearly income + irregular calculation</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_ptkp" model="hr.salary.rule.category">
+			<field name="code">IDN - PTKP</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - PTKP</field>
+            <field name="note">For detecting employee’s PTKP</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_pkp" model="hr.salary.rule.category">
+			<field name="code">IDN - PKP</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - PKP</field>
+            <field name="note">Calculating Yearly Income, deducted with PTKP</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_pkpirg" model="hr.salary.rule.category">
+			<field name="code">IDN-PKPIRG</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - PKP Irregular</field>
+            <field name="note">Calculating Yearly Income + irregular calculation, deducted with PTKP</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_yrlytax" model="hr.salary.rule.category">
+			<field name="code">IDN-YRLYTAX</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - Pajak Disetahunkan</field>
+            <field name="note">Calculating Yearly Tax</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_yrlytaxirg" model="hr.salary.rule.category">
+			<field name="code">IDN-YRLYTAXIRG</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - Pajak Disetahunkan Irregular</field>
+            <field name="note">Calculating Yearly Tax with irregular income</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_pph21" model="hr.salary.rule.category">
+			<field name="code">IDN-PPh21</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - Pajak Perbulan</field>
+            <field name="note">Monthly tax</field>
+		</record>
+
+        <record id="hr_salary_rule_category_idn_pph21irg" model="hr.salary.rule.category">
+			<field name="code">IDN-PPh21IRG</field>
+			<field name="company_id" ref="base.main_company" />
+			<field name="name">IDN - Pajak Perbulan Irregular</field>
+            <field name="note">Monthly irregular tax</field>
+		</record>
+
+    </data>
+</odoo>

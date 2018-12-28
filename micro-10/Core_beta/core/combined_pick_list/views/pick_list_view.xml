@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--Pick list form view-->
+        <record id="pick_list_form" model="ir.ui.view">
+            <field name="name">Pick List Form</field>
+            <field name="model">pick.list</field>
+            <field name="arch" type="xml">
+                <form string="Pick List" create="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="qty"/>
+                            </group>
+                            <group>
+                                <field name="picking_id"/>
+                                <field name="wave_id" attrs="{'invisible': [('wave_id','=',False)]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Pick list tree view-->
+        <record id="pick_list_tree_view" model="ir.ui.view">
+            <field name="name">Pick List Tree View</field>
+            <field name="model">pick.list</field>
+            <field name="arch" type="xml">
+                <tree string="Pick List" create="false">
+                    <field name="product_id"/>
+                    <field name="qty"/>
+                    <field name="picking_id"/>
+                    <field name="wave_id" attrs="{'invisible': [('wave_id','=',False)]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Pick list search view-->
+        <record id="pick_list_search_view" model="ir.ui.view">
+            <field name="name">Pick List Search View</field>
+            <field name="model">pick.list</field>
+            <field name="arch" type="xml">
+                <search string="Pick List">
+                    <field name="product_id"/>
+                    <field name="picking_id"/>
+                    <field name="wave_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Product" name="group_product_id" domain="[]" context="{'group_by':'product_id'}"/>
+                        <filter string="Delivery Order" domain="[]" context="{'group_by':'picking_id'}"/>
+                        <filter string="Picking Wave" domain="[]" context="{'group_by':'wave_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--Action window for pick list-->
+        <record id="action_pick_list" model="ir.actions.act_window">
+            <field name="name">Pick List</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pick.list</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_group_product_id': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a pick list.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="submenu_pick_list" name="Pick List" parent="stock.menu_stock_warehouse_mgmt" sequence="29" action="action_pick_list" groups="stock.group_stock_manager,stock.group_stock_user"/>
+
+    </data>
+</odoo>

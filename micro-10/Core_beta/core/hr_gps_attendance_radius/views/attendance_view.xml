@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="hr_attendance_view_form_inherited_gps_radius" model="ir.ui.view">
+        <field name="name">hr.attendance.form.gps.radius</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_gps_attendance.hr_attendance_view_form_inherited_gps" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='check_out']" position="before">
+                <field name="check_in_location" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_attendance_view_form_inherited_gps_radius_out" model="ir.ui.view">
+        <field name="name">hr.attendance.form.gps.radius.out</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sheet_id']" position="before">
+                <field name="check_out_location" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Job Order Stage View-->
+
+        <record id="job_order_Stages_view_tree" model="ir.ui.view">
+            <field name="name">job.order.stages.tree</field>
+            <field name="model">job.order.stages</field>
+            <field name="arch" type="xml">
+                <tree string="Job Order Stages" editable="top">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="fold"/>
+                    <field name="is_in_progress"/>
+                    <field name="final_state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_maintenance_job_order_stages" model="ir.actions.act_window">
+            <field name="name">Job Order Stages</field>
+            <field name="res_model">job.order.stages</field>
+            <field name="view_mode">tree</field>
+            <field name="view_type">form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+                id="menu_maintenance_job_order_stages"
+                name="Job Order Stages"
+                parent="maintenance.menu_maintenance_configuration"
+                action="action_maintenance_job_order_stages"
+                groups="maintenance.group_equipment_manager"
+                sequence="1"/>
+
+        <!--Job Order Vies-->
+        <record id="job_order_view_tree" model="ir.ui.view">
+            <field name="name">job.order.tree</field>
+            <field name="model">job.order</field>
+            <field name="arch" type="xml">
+                <tree string="Job Order">
+                    <field name="name"/>
+                    <field name="requested_by"/>
+                    <field name="team_id"/>
+                    <field name="responsible_id"/>
+                    <field name="equipment_id" string="Facility" />
+                    <field name="request_date"/>
+                    <field name="status_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="job_order_view_form" model="ir.ui.view">
+            <field name="name">job.order.form</field>
+            <field name="model">job.order</field>
+            <field name="arch" type="xml">
+                <form string="Job order">
+                    <header>
+                        <field name="status_id" widget="statusbar" clickable="true" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Subject"/>
+                            <h1>
+                                <field name="number" attrs="{'invisible' : [('number','=',False)]}"/>
+                                <br/>
+                                <field name="name" placeholder="Job Order Subject"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="maintenance_id"/>
+                            <field name="requested_by"/>
+                            <field name="team_id"/>
+                            <field name="responsible_id"/>
+                            <field name="location_id" string="Location"/>
+                            <field name="equipment_id"/>
+                            <field name="request_date"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="job_order_view_kanban" model="ir.ui.view">
+            <field name="name">job.order.kanban</field>
+            <field name="model">job.order</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="status_id">
+                    <field name="name"/>
+                    <field name="requested_by"/>
+                    <field name="team_id"/>
+                    <field name="responsible_id"/>
+                    <field name="equipment_id"/>
+                    <field name="request_date"/>
+                    <field name="status_id"/>
+                    <templates>
+                        <t t-name="kanban-tooltip">
+                           <ul class="oe_kanban_tooltip">
+
+                           </ul>
+                        </t>
+
+                        <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click oe_semantic_html_override">
+                                <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                                        <span class="fa fa-bars fa-lg"/>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <t t-if="widget.editable">
+                                            <li>
+                                                <a type="edit">Edit...</a>
+                                            </li>
+                                        </t>
+                                        <t t-if="widget.deletable">
+                                            <li>
+                                                <a type="delete">Delete</a>
+                                            </li>
+                                        </t>
+                                        <li>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_content" tooltip="kanban-tooltip">
+                                    <div>
+                                        <b>
+                                            <field name="name"/>
+                                        </b>
+                                        <br/>
+                                        <span name="requested_by" t-if="record.requested_by.raw_value">
+                                            <field name="requested_by"/>
+                                            <br/>
+                                        </span>
+                                        <span class="oe_grey" t-if="record.equipment_id.raw_value">
+                                            <field name="equipment_id"/>
+                                            <br/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_footer_left" style="margin-top:2px;">
+                                        <span t-if="record.team_id.raw_value">
+                                            <field name="team_id"/>
+                                        </span>
+                                        <span t-if="record.responsible_id.raw_value">
+                                            <field name="responsible_id"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_m_job_order" model="ir.actions.act_window">
+            <field name="name">Job Order</field>
+            <field name="res_model">job.order</field>
+            <field name='view_type'>form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="job_order_view_kanban"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a new maintenance job order.
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+                id="menu_m_job_order"
+                name="Job Order"
+                parent="maintenance.menu_m_request"
+                action="action_m_job_order"
+                groups="maintenance.group_equipment_manager,base.group_user"
+                sequence="1"/>
+
+
+        <record id="maintenance_extended_formview_inherit_customer" model="ir.ui.view">
+            <field name="name">maintenance.extended.location.inherited.form</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//div[@class='oe_title']" position="before">
+                     <div class="oe_button_box" name="button_box">
+                        <button name="action_view_job_order"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('job_order_count', '=', 0)]}">
+                            <field name="job_order_count" widget="statinfo" string="Job Order"/>
+                            <field name="job_order_ids" invisible="1"/>
+                        </button>
+                    </div>
+                 </xpath>
+            </field>
+        </record>
+
+        <record id="hr_equipment_stage_view_tree_approve_state" model="ir.ui.view">
+                    <field name="name">maintenance.stage</field>
+                    <field name="model">maintenance.stage</field>
+                    <field name="inherit_id" ref="maintenance.hr_equipment_stage_view_tree"/>
+                    <field name="arch" type="xml">
+                        <field name="done" position="after">
+                            <field name="approval_state"/>
+                        </field>
+                    </field>
+                </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+        <template id="report_employee_evaluation_document">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                        <t t-if="not doc.is_year">
+                            <center><h3><strong>Evaluation Report</strong></h3></center>
+                        </t>
+                        <t t-if="doc.is_year">
+                            <center><h3><strong>Performance Report</strong></h3></center>
+                        </t>
+                        <div style="width:400px; float:left">
+                                <table>
+                                    <tr>
+                                        <td><t>Employee Name</t></td>
+                                        <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                        <td><span t-field="doc.emp_id"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><t>Employee ID</t></td>
+                                        <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                        <td><span t-field="doc.emp_id.emp_id"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><t>Year</t></td>
+                                        <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                        <td><span t-field="doc.year"/></td>
+                                    </tr>
+                                    <t t-if="not doc.is_year">
+                                    <tr>
+                                        <td><t>Quarter</t></td>
+                                        <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                        <td><span t-field="doc.quarter"/></td>
+                                    </tr>
+                                    </t>
+                                    <tr>
+                                        <td><t>Joining Date</t></td>
+                                        <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                        <td><t t-if="doc.emp_id.join_date"><span t-field="doc.emp_id.join_date"/></t></td>
+                                    </tr>
+                                    <tr>
+                                        <td><t>Department</t></td>
+                                        <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                        <td><span t-field="doc.emp_id.department_id"/></td>
+                                    </tr>
+                                </table>
+                        </div>
+
+                        <div style="clear: both;">
+                        </div>
+
+                    <p></p>
+                    <center><strong><t>Ratings</t></strong></center>
+                    <div>
+			<t t-if="not doc.is_year">
+                        <table cellspacing="0" style="width:100%; border:1px solid black;" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-left" style="border:1px solid black;">Rating Lables</th>
+                                    <th class="text-left" style="border:1px solid black;"><t t-if="doc.quarter=='q1'">Q1</t><t t-if="doc.quarter=='q2'">Q2</t><t t-if="doc.quarter=='q3'">Q3</t><t t-if="doc.quarter=='q4'">Q4</t></th>
+					<th class="text-left" style="border:1px solid black;">Comments</th>
+                                </tr>
+                            </thead>
+			    <tbody>
+                                <tr t-foreach="doc.emp_rating_ids" t-as="line">
+                                    <td class="text-left" style="border:1px solid black; cellpadding='0'">
+                                        <span t-field="line.rating_label_id"/>
+                                    </td>
+                                    <td class="text-left" style="border:1px solid black">
+                                       <span t-field="line.rating"/>
+                                    </td>
+                                   
+				    <td class="text-left" style="border:1px solid black">
+                                        <span t-field="line.comment"/>
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+			</table>
+
+                        </t>
+                        <t t-if="doc.is_year">
+			<table cellspacing="0" style="width:100%; border:1px solid black;" class="table table-bordered">
+			    	<thead>
+					<tr>
+						<th class="text-left" style="border:1px solid black;">Rating Lables</th>
+						<th class="text-left" style="border:1px solid black;">Q1</th>
+						<th class="text-left" style="border:1px solid black;">Comments</th>
+						<th class="text-left" style="border:1px solid black;">Q2</th>
+						<th class="text-left" style="border:1px solid black;">Comments</th>
+						<th class="text-left" style="border:1px solid black;">Q3</th>
+						<th class="text-left" style="border:1px solid black;">Comments</th>
+						<th class="text-left" style="border:1px solid black;">Q4</th>
+						<th class="text-left" style="border:1px solid black;">Comments</th>
+					</tr>
+				</thead>
+                            <tbody>
+                                <tr t-foreach="doc._get_details()" t-as="line">
+                                    <td class="text-left" style="border:1px solid black">
+                                        <span t-esc="line[0]"/>
+                                    </td>
+                                    <td class="text-left" style="border:1px solid black">
+                                        <span t-esc="line[1]"/>
+                                    </td>
+                                    <td class="text-left" style="border:1px solid black">
+                                        <span t-esc="line[2]"/>
+                                    </td>
+                                    <td class="text-left" style="border:1px solid black">
+                                        <span t-esc="line[3]"/>
+                                    </td>
+					<td class="text-left" style="border:1px solid black">
+                                        <span t-esc="line[4]"/>
+                                    </td>
+					<td class="text-left" style="border:1px solid black">
+                                        <span t-esc="line[5]"/>
+                                    </td>
+                                    <td class="text-left" style="border:1px solid black">
+                                        <span t-esc="line[6]"/>
+                                    </td>
+                                    <td class="text-left" style="border:1px solid black">
+                                        <span t-esc="line[7]"/>
+                                    </td>
+                                        <td class="text-left" style="border:1px solid black">
+                                        <span t-esc="line[8]"/>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                            
+                        </table>
+			</t>
+                        <div class="oe_structue"/>
+                        <div class="row">
+                        <div>
+                            <p></p>
+                            <p></p>
+                            <div class="col-md-6">
+                                <t t-if="doc.is_year">
+                                     <table>
+                                        <tr>
+                                            <td><t>Current year salary</t></td>
+                                            <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                            <td><span t-esc="doc._get_values()[0]"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><t>Final Increment</t></td>
+                                            <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                            <td><span t-esc="doc._get_values()[1]"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><t>Final salary</t></td>
+                                            <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                            <td><span t-esc="doc._get_values()[2]"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><t>Performance of the year</t></td>
+                                            <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                            <td><span t-esc="doc._get_values()[3]"/></td>
+                                        </tr>
+                                    </table>
+                                </t>
+                                <t t-if="not doc.is_year">
+                                    <t>Performance of the quarter : </t>
+                                    <span t-field="doc.perf_for_quarter"/><br/>
+                                </t>
+
+                            </div>
+                            <div class="col-md-6">
+                                <t></t>
+                            </div>
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="report_employee_evaluation">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="employee_appraisal.report_employee_evaluation_document"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

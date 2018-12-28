@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_config_settingsinherit_inherit" model="ir.ui.view">
+            <field name="name">account.config.settings</field>
+            <field name="model">account.config.settings</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='accounting']" position="inside">
+                    <label for="id" string="Gain/Loss on Asset Disposal"/>
+                        <div name="asset_account">
+                            <div>
+                                <field name="asset_account" attrs="{'invisible' : [('module_account_asset','=',False)]}" options="{'no_create': True}" class="oe_inline"/>
+                            </div>
+                        </div>
+                </xpath>
+            </field>
+        </record>
+
+    <record id="view_account_asset_category_form_inherit" model="ir.ui.view">
+        <field name="name">Asset Category Form Inherit</field>
+        <field name="model">account.asset.category</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_category_form"/>
+        <field name="arch" type="xml">
+            <field name="account_analytic_id" position="after">
+                <field name="account_surplus_id" domain="[('user_type_id.name','=','Equity')]" required="1"/>
+                <field name="account_loss_id" domain="[('user_type_id.name','=','Expenses')]" required="1"/>
+                <field name="gain_asset_disposal" domain="[('user_type_id.name','in',['Other Income','Income'])]" required="1"/>
+                <field name="loss_asset_disposal" domain="[('user_type_id.name','=','Expenses')]" required="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_account_asset_asset_form_inherit" model="ir.ui.view">
+        <field name="name">Asset Form Inherit</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_asset_form"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <button name="button_revalue_asset" states="open" string="Revalue Assets" type="object"/>
+            </field>
+            <field name="date" position="after">
+                <field name="owner_id" string="Owner"/>
+            </field>
+            <field name="invoice_id" position="after">
+                <field name="asset_location_id" />
+            </field>
+
+        </field>
+    </record>
+
+</odoo>

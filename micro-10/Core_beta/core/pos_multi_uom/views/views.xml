@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_pos_config_form">
+            <field name="name">pos.config.form.view</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_form" />
+            <field name="arch" type="xml">
+                <field name="iface_display_categ_images" position="after">
+                    <field name='allow_multi_uom' />
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="product_normal_form_view">
+            <field name="name">product.product.view.form.easy</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <field name="attribute_value_ids" position="before">
+                    <field name='has_multi_uom' /><label string="Has multi UOM"/>
+                </field>
+                <group name="pos" position="after">
+                    <group name="POSUOM" string="Point of sale UOM">
+                        <div>
+                            <field name="multi_uom_ids">
+                                <tree editable="bottom">
+                                    <field name="multi_uom_id" required="True"/>
+                                    <field name="sequence"/>
+                                    <field name="price"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </group>
+                </group>
+            </field>
+        </record>
+    </data>
+</odoo>

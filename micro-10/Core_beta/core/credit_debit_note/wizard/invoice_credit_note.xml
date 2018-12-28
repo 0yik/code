@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_credit_note_wizard" model="ir.ui.view">
+        <field name="name">invoice.credit.note.wizard.form</field>
+        <field name="model">invoice.credit.note.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Credit Note">
+                <group>
+                     <group>
+                         <field name="description"/>
+                     </group>
+                     <group>
+                         <field name="date_invoice" invisible="1"/>
+                         <field name="date" string="Credit Note Date" required="1" />
+                     </group>
+                </group>
+                <footer>
+                    <button string='Create Credit Note' name="compute_credit_note" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="action_credit_note_wizard" model="ir.actions.act_window">
+        <field name="name">Invoice - Credit Note</field>
+        <field name="res_model">invoice.credit.note.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+       <field name="view_id" ref="view_credit_note_wizard"/>
+       <field name="target">new</field>
+    </record>
+
+</odoo>

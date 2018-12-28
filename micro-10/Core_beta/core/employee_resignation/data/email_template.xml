@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<data noupdate="1">
+
+        <!--Email template for submit request -->
+        <record id="email_template_edi_resignation_request" model="mail.template">
+            <field name="name">Resignation Request - Send by Email</field>
+            <field name="email_from">${(object.employee_id.user_id.email and '%s &lt;%s&gt;' % (object.employee_id.user_id.name, object.employee_id.user_id.email) or '')|safe}</field>
+            <field name="email_from">${ctx['email_from']|safe}</field>
+            <!--field name="subject">${object.employee_id.name or 'n/a' } Submitted Resignation Request on ${ctx['date_resignation']|safe}</field-->
+            <!--field name="partner_to">${object.partner_id.id}</field-->
+            <field name="email_to">${ctx['email_to']|safe}</field>
+            <field name="model_id" ref="employee_resignation.model_resignation_request"/>
+            <field name="auto_delete" eval="True"/>
+            <!--field name="report_template" ref="report_sale_order"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field-->
+            <!--field name="lang">${object.partner_id.lang}</field-->
+            <field name="body_html"><![CDATA[
+<p>Dear ${ctx['department_manager']|safe},
+<p>
+${object.employee_id.name} submitted resignation request on ${ctx['date_resignation']|safe}.
+</p>
+<p>
+<b>Notice Period:</b> ${object.notice_period_id.duration or ''} day(s)
+</p>
+<p>
+<b>Cessation Date:</b> ${ctx['cessation_date']|safe}
+</p>
+<p>
+Kindly review the resignation request at</strong> <a href="${ctx['url']|safe}" target="_blank">(${object.name})</a>
+</p>
+Thank You.
+    <br/><br/>
+
+]]></field>
+        </record>
+</data>
+
+<data noupdate="1">
+        <!--Email template for submit request Approved-->
+        <record id="email_template_edi_resignation_request_approved" model="mail.template">
+            <field name="name">Resignation Request Approved- Send by Email</field>
+            <!--field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field-->
+            <field name="email_from">${ctx['email_from']|safe}</field>
+            <field name="subject">Resignation ${object.name or 'n/a' } Approved</field>
+            <!--field name="partner_to">${object.partner_id.id}</field-->
+            <field name="email_to">${ctx['email_to']|safe}</field>
+            <field name="model_id" ref="employee_resignation.model_resignation_request"/>
+            <field name="auto_delete" eval="True"/>
+            <!--field name="report_template" ref="report_sale_order"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field-->
+            <!--field name="lang">${object.partner_id.lang}</field-->
+            <field name="body_html"><![CDATA[
+<p>Dear ${object.employee_id.name},
+<p>
+Your resignation request <a href="${ctx['url']|safe}" target="_blank">(${object.name})</a> has been Approved.
+</p>
+<p>
+<b>Department Manager Comments:</b> ${object.department_comment or ''}
+</p>
+<p>
+<b>HR Manager Comments:</b> ${object.hr_comment or ''}
+</p>
+<br/><br/>
+
+]]></field>
+        </record>
+</data>
+
+<data noupdate="1">
+        <!--Email template for submit request Reject-->
+        <record id="email_template_edi_resignation_request_reject" model="mail.template">
+            <field name="name">Resignation Request Reject- Send by Email</field>
+            <!--field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field-->
+            <field name="email_from">${ctx['email_from']|safe}</field>
+            <field name="subject">Resignation ${object.name or 'n/a' } Rejected</field>
+            <!--field name="partner_to">${object.partner_id.id}</field-->
+            <field name="email_to">${ctx['email_to']|safe}</field>
+            <!--field name="email_to">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field-->
+            <field name="model_id" ref="employee_resignation.model_resignation_request"/>
+            <field name="auto_delete" eval="True"/>
+            <!--field name="report_template" ref="report_sale_order"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field-->
+            <!--field name="lang">${object.partner_id.lang}</field-->
+            <field name="body_html"><![CDATA[
+<p>Dear ${object.employee_id.name},
+<p>
+Your resignation request <a href="${ctx['url']|safe}" target="_blank">(${object.name})</a> has been Rejected.
+</p>
+<p>
+<b>Department Manager Comments:</b> ${object.department_comment or ''}
+</p>
+<p>
+<b>HR Manager Comments:</b> ${object.hr_comment or ''}
+</p>
+    <br/><br/>
+
+]]></field>
+        </record>
+</data>
+
+</odoo>

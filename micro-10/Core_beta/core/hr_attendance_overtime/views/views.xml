@@ -1,0 +1,46 @@
+<openerp>
+    <data>
+
+        <record id="hr_timesheet_day_tree_inherit" model="ir.ui.view">
+            <field name="name">hr.timesheet.day.tree</field>
+            <field name="model">hr_timesheet_sheet.sheet.day</field>
+            <field name="inherit_id" ref="hr_timesheet_attendance.hr_timesheet_day_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="field[@name='name']" position="after">
+                    <field name="contracthours" widget="float_time" sum="Total contracthours"/>
+                </xpath>
+                <xpath expr="//field[@name='total_difference']" position="attributes">
+                    <attribute name="string">Attendance/Timesheet Difference</attribute>
+                </xpath>
+                <xpath expr="field[@name='total_difference']" position="after">
+                    <field name="late" widget="float_time" sum="Total late"/>
+                    <field name="undertime" widget="float_time" sum="Total undertime"/>
+                    <field name="overtimehours" widget="float_time" sum="Total overtimehours"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_timesheet_sheet_form_inherits" model="ir.ui.view">
+            <field name="name">hr.timesheet.sheet.form</field>
+            <field name="model">hr_timesheet_sheet.sheet</field>
+            <field name="inherit_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='total_difference']" position="attributes">
+                    <attribute name="string">Attendance/Timesheet Difference</attribute>
+                </xpath>
+                <xpath expr="//field[@name='period_ids']//tree//field[@name='name']" position="after">
+                    <field name="contracthours" widget="float_time" sum="ContractHours"/>
+                </xpath>
+                <xpath expr="//field[@name='period_ids']//tree//field[@name='total_difference']" position="attributes">
+                    <attribute name="string">Attendance/Timesheet Difference</attribute>
+                </xpath>
+                <xpath expr="//field[@name='period_ids']//tree//field[@name='total_difference']" position="after">
+                    <field name="late" widget="float_time" sum="Total late"/>
+                    <field name="undertime" widget="float_time" sum="Total undertime"/>
+                    <field name="overtimehours" widget="float_time" sum="OvertimeHours"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

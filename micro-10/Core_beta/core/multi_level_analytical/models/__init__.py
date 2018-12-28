@@ -1,0 +1,15 @@
+import partner
+import analytic_distribution
+import purchase
+import purchase_request
+import pos_order
+import branch
+import hr_payroll
+import sale
+import product
+import stock
+import account_res_config
+import analytic_level
+import account_invoice
+import account_financial_report
+import account_report_context_common

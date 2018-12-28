@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+
+        <record id="hr_salary_rule_leaveencashment" model="hr.salary.rule">
+            <field name="code">LEC</field>
+            <field eval="402" name="sequence"/>
+            <field name="is_cpf">aw</field>
+            <field eval="1" name="appears_on_payslip"/>
+            <field eval="1" name="appear_on_report"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Leave Encashment</field>
+            <field name="condition_python">if payslip.emp_status == 'in_notice' or payslip.emp_status == 'terminated':
+                  result = True
+                else:
+                  result = False
+            </field>
+            <field name="amount_python_compute">if payslip.cessation_date &gt;= payslip.date_from and payslip.cessation_date &lt;= payslip.date_to:
+    result = (categories.BASIC / (worked_days.WORK100.number_of_days - worked_days.PUBLICHOLIDAYS.number_of_days)) * worked_days.LEBAL.number_of_days
+else:
+    result=0</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+    </data>
+
+</odoo>

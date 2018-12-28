@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		
+		<record id="view_mail_statistics_report_pivot" model="ir.ui.view">
+            <field name="name">mail.statistics.report.pivot</field>
+            <field name="model">mail.statistics.report</field>
+            <field name="inherit_id" ref="mass_mailing.view_mail_statistics_report_pivot"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='replied']" position="after">
+              		<field name="clicked" type="measure"/>
+                </xpath>
+            </field>
+        </record>
+        
+</odoo>

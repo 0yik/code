@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_waste_manager_waste_officer_group,waste_manager_waste_officer_group,model_waste_manager,waste_officer_group,1,1,1,1
+access_waste_manager_waste_user_group,waste_manager_waste_user_group,model_waste_manager,waste_user_group,1,1,1,1
+access_waste_scrap_waste_officer_group,waste_scrap_waste_officer_group,model_waste_scrap,waste_officer_group,1,1,1,1
+access_waste_scrap_waste_user_group,waste_scrap_waste_user_group,model_waste_scrap,waste_user_group,1,1,1,1

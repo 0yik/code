@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <record id="product_attribute_01" model="product.attribute">
+            <field name="name">Bread</field>
+        </record>
+        <record id="product_attribute_02" model="product.attribute">
+            <field name="name">Color</field>
+        </record>
+        <record id="product_attribute_03" model="product.attribute">
+            <field name="name">Fabric</field>
+        </record>
+        <record id="product_attribute_04" model="product.attribute">
+            <field name="name">Metarial</field>
+        </record>
+        <record id="product_attribute_05" model="product.attribute">
+            <field name="name">Milk</field>
+        </record>
+        <record id="product_attribute_06" model="product.attribute">
+            <field name="name">Size</field>
+        </record>
+        <record id="product_attribute_07" model="product.attribute">
+            <field name="name">Stength</field>
+        </record>
+        <record id="product_attribute_08" model="product.attribute">
+            <field name="name">Style</field>
+        </record>
+        <record id="product_attribute_09" model="product.attribute">
+            <field name="name">Title</field>
+        </record>
+
+    </data>
+</odoo>

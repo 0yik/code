@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+
+        <record id="year_config_tree_view" model="ir.ui.view">
+            <field name="name">year.config.tree.view</field>
+            <field name="model">year.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                   <field name="year" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="year_config_form_view"  model="ir.ui.view">
+            <field name="name">year.config.form.view</field>
+            <field name="model">year.config</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="year" required="1"/>
+                        </group>
+                        <group name='quarter info' string='Quarter Information'>
+                        	<field name="quarter_line" nolabel="1">
+                        		<tree>
+                        			<field name="name"/>
+                        			<field name="quarter_startdate"/>
+                        			<field name="quarter_enddate"/>
+                        		</tree>
+                        		<form>
+					    <group>
+                        			<field name="name"/>
+                        			<field name="quarter_startdate"/>
+                        			<field name="quarter_enddate"/>
+					    </group>
+                        		</form>
+                        	</field>
+                        
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="year_action" model="ir.actions.act_window">
+            <field name="name">Year</field>
+            <field name="res_model">year.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
+

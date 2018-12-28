@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="hr_template" xml:space="preserve">
+    <t t-name="hr_dashboard.HrDashboard">
+       <!--  <div class="new">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+                <h5 >New data</h5>
+            </div>
+        </div> -->
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_open"
+                 name="hr_dashboard.action_open_emp" role="button">
+                <div class="box oe_kanban_color_2">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h5 >New Opening</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <img src="/hr_dashboard/static/src/img/new-open.png"
+                            height="15%" width="100%" class="img_bg"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12 col-xs-12">
+                        <h5 class="line_hover">
+                            <span t-esc="emp_recruit" />
+                        </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <t t-esc="emp_recruit_perc" />% of total Employees
+                            (<t t-esc="total_emp" />)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_join"
+                name="hr_dashboard.action_join_emp" role="button" >
+                <div class="box oe_kanban_color_1">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <h5>New Joinees</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <img src="/hr_dashboard/static/src/img/new-job.png"
+                                height="15%" width="100%" class="img_bg"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12 col-xs-12">
+	                        <h5 class="line_hover">
+	                            <span t-esc="join_emp" />
+	                        </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12" width="100%">
+                            <t t-esc="join_emp_perc" />% of total Employees
+                            (<t t-esc="total_emp" />)
+                        </div>
+                        <!-- <div class="col-md-2 col-sm-1 col-xs-12">
+                            <button type="button" class="btn_action_join"
+                                name="hr_dashboard.action_join_emp" style="color:black;">+</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_notice" 
+                role="button" name="hr_dashboard.action_notice_period_emp">
+                <div class="box oe_kanban_color_2">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12" width="100%">
+                            <h5>In Notice Period</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <img src="/hr_dashboard/static/src/img/notice.png"
+                                height="15%" width="100%" class="img_bg"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12 col-xs-12">
+                        <h5 class="line_hover">
+                            <span t-esc="notice_emp" />
+                        </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12" width="100%">
+                            <t t-esc="notice_emp_perc" />% of total Employees
+                            (<t t-esc="total_emp" />)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_leave" 
+                name="hr_dashboard.action_on_leave" role="button">
+                <div class="box oe_kanban_color_1">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12" width="100%">
+                            <h5 >On Leave</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <img src="/hr_dashboard/static/src/img/leave.png"
+                                height="15%" width="100%" class="img_bg"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12 col-xs-12">
+                        <h5 class="line_hover">
+                            <span t-esc="emp_on_leave" />
+                        </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12" width="100%">
+                            <t t-esc="emp_on_leave_perc" />% of total Employees
+                            (<t t-esc="total_emp" />)
+                        </div>
+                        <!-- <div class="col-md-3 col-sm-6 col-xs-12">
+                            <button type="button" style="color:black;"
+                                class="btn_action_leave" name="hr_dashboard.action_on_leave">
+                                +
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_absent" role="button" >
+                <div class="box oe_kanban_color_1">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12" width="100%">
+                            <h5>Today Absentees</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <img src="/hr_dashboard/static/src/img/today-ab.png"
+                            height="15%" width="100%" class="img_bg"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12 col-xs-12">
+                        <h5 class="line_hover">
+                            <span t-esc="absent_emp" />
+                        </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <t t-esc="absent_emp_perc" />% of total Employees
+                            (<t t-esc="total_emp" />)
+                        </div>
+                        <!-- <div class="col-md-3 col-sm-6 col-xs-12">
+                            <button type="button" class="btn_action_absent"
+                            style="color:black;">+</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-3 col-sm-6 col-xs-12 " >
+                <div class="box oe_kanban_color_2">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12" width="100%">
+                            <h5>Upcoming Events</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <img src="/hr_dashboard/static/src/img/up-event.png"
+                            height="15%" width="100%" class="img_bg"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12 col-xs-12">
+                        <h5 class="line_hover">
+                            <t t-esc="event_len" />
+                        </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 col-sm-6 col-xs-12" width="100%">
+                            <t t-esc="event_name"/>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <button type="button" style="color:black;"
+                            class="btn_action_event" >+</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_late_emp" role="button" >
+                <div class="box oe_kanban_color_2">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12" width="100%">
+                            <h5>Late Employee</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <img src="/hr_dashboard/static/src/img/late.png"
+                            height="15%" width="100%" class="img_bg"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12 col-xs-12">
+                        <h5 class="line_hover">
+                            <span t-esc="late_emp" />
+                        </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12" width="100%">
+                            <t t-esc="late_emp_perc" />% of total Employees
+                            (<t t-esc="total_emp" />)
+                        </div>
+                        <!-- <div class="col-md-3 col-sm-6 col-xs-12">
+                            <button type="button" style="color:black;"
+                            class="btn_action_late_emp" >+</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-3 col-sm-6 col-xs-12 " >
+                <div class="box oe_kanban_color_1">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-6" width="100%">
+                            <h5>Average Age</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <img src="/hr_dashboard/static/src/img/avg-age.png"
+                                height="15%" width="100%" class="img_bg" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12 col-xs-12">
+	                        <h5 class="line_hover">
+	                            <span t-esc="avg_age" />
+	                        </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-6 col-xs-12" 
+                            >
+                            <t t-if="avg_age &gt;= 1 and avg_age &lt;= 25">
+                                Fresh thoughts, Energy unlimited
+                            </t>
+                            <t t-if="avg_age &gt;= 26 and avg_age &lt;= 35">
+                                Keep calm, Act matured
+                            </t>
+                            <t t-if="avg_age &gt;= 36 and avg_age &lt;= 50">
+                                Experience cultivated
+                            </t>
+                            <t t-if="avg_age &gt;= 51">
+                                The unstoppable
+                            </t>
+                            <t t-if="avg_age == 0">
+                                No Average Age
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_probation" 
+                role="button" name="hr_dashboard.action_probation_period_emp">
+                <div class="box oe_kanban_color_2">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12" width="100%">
+                            <h5>In Probation Period</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <img src="/hr_dashboard/static/src/img/notice.png"
+                                height="15%" width="100%" class="img_bg"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12 col-xs-12">
+                        <h5 class="line_hover">
+                            <span t-esc="probation_emp" />
+                        </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12" width="100%">
+                            <t t-esc="probation_emp_perc" />% of total Employees
+                            (<t t-esc="total_emp" />)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-6 col-sm-6 col-xs-12" >
+                <div class="deco box">
+                    <h3>Employee Birthday</h3><h3>(<t t-esc="month_date" />)</h3>
+                </div>
+                <t t-foreach="bday_details" t-as="bday_detail">
+                    <div class="col-md-4 text-center len">
+                        <h4>
+                            <img t-att-src="bday_detail['Img']" height="50px" width="50px"/>
+                        </h4>
+                        <h5 style="color:black">
+                            <t t-esc="bday_detail['Name']"/>
+                        </h5>
+                        <h6 style="color:grey">
+                            <span t-esc="bday_detail['birthday']"/>
+                        </h6>
+                        <h6 style="color:grey">
+                            <t t-esc="bday_detail['age']"/> Years old
+                        </h6>
+                    </div>
+                </t>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12" >
+                <div class="deco box">
+                    <h3>Work Anniversaries</h3><h3>(<t t-esc="month_date" />)</h3>
+                    
+                </div>
+                <t t-foreach="aday_details" t-as="aday_detail">
+                    <div class="col-md-4 text-center len">
+                        <t t-if="aday_detail['Img']">
+                            <h4>
+                                <img t-att-src="aday_detail['Img']" height="50px" width="50px"/>
+                            </h4>
+                        </t>
+                        <t t-if="aday_detail['Name']">
+                            <h5 style="color:black">
+                                <span t-esc="aday_detail['Name']"/>
+                            </h5>
+                        </t>
+                        <t t-if="aday_detail['join_date']">
+                            <h6 style="color:grey">
+                                <span t-esc="aday_detail['join_date']"/>
+                            </h6>
+                        </t>
+                        <t t-if="aday_detail['anniversary']">
+                            <h6 style="color:grey;align:center">
+                                <t t-esc="aday_detail['anniversary']"/> Anniversary
+                            </h6>
+                        </t>
+
+                    </div>
+                </t>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="col-md-6 col-sm-6 col-xs-12" >
+                <t t-if="bday_details[0]"> 
+                <h4 class="text-center">
+                    <a class="a_bday_action" role="button">
+                        View All
+                    </a>
+                </h4>
+                </t>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12" >
+                <t t-if="aday_details[0]"> 
+                <h4 class="text-center">
+                    <a class="a_aday_action" role="button" >
+                        View All
+                    </a>
+                </h4>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

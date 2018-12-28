@@ -1,0 +1,221 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+	<data>
+
+		<record id="hr_employee_view" model="ir.ui.view">
+			<field name="name">hr.employee.view</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"></field>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet" position="before">
+					<header>
+						<button name="create_appraisal" string="Create Appraisal"
+							type="object" class="oe_highlight" attrs="{'invisible':[('id','=',False)]}"
+							groups="hr.group_hr_manager" />
+					</header>
+				</xpath>
+				<xpath expr="/form/sheet/div[2]" position="after">
+					<group>
+						<group>
+							<field name="emp_id" required="1" />
+						</group>
+						<group>
+							<field name="end_date" />
+							<field name="is_login_user" invisible='1' />
+							<field name="id" invisible='1' />
+						</group>
+					</group>
+				</xpath>
+				<xpath
+					expr="/form/sheet/notebook/page[1]/group/group[2]/field[@name='coach_id']"
+					position="after">
+					<field name="end_date" />
+					<field name="education_qual_id" invisible="1"/>
+					<field name="status" invisible="1"/>
+					<field name="shift_id" />
+					<field name="current_salary" required="1" groups="hr.group_hr_manager" />
+				</xpath>
+<!-- 				<xpath
+					expr="/form/sheet/notebook/page[2]/group/group[1]/field[@name='bank_account_id']"
+					position="before">
+					<field name="bank_acc" />
+				</xpath> -->
+
+<!-- 				<xpath
+					expr="/form/sheet/notebook/page[2]/group/group[1]/field[@name='bank_account_id']"
+					position="after">
+					<field name="education_qual_id" required="1" />
+					<field name="other_id" />
+				</xpath> -->
+
+				<xpath
+					expr="/form/sheet/notebook/page[1]/group/group[1]/field[@name='mobile_phone']"
+					position="attributes">
+					<attribute name="required">1</attribute>
+					<attribute name="context">{'mobile_phone':mobile_phone}</attribute>
+				</xpath>
+				<field name="work_phone" position="attributes">
+					<attribute name="context">{'work_phone':work_phone}</attribute>
+				</field>
+				<xpath
+					expr="/form/sheet/notebook/page[1]/group/group[1]/field[@name='work_email']"
+					position="attributes">
+					<attribute name="required">0</attribute>
+				</xpath>
+				<xpath
+					expr="/form/sheet/notebook/page[1]/group/group[2]/field[@name='department_id']"
+					position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+
+<!-- 				<xpath
+					expr="/form/sheet/notebook/page[2]/group/group[4]/field[@name='birthday']"
+					position="attributes">
+					<attribute name="required">1</attribute>
+					<attribute name="context">{'birthday':birthday}</attribute>
+				</xpath> -->
+				<xpath expr="/form/sheet/notebook/page[2]" position="attributes">
+					<attribute name="attrs">{'invisible':[('is_login_user','=',False),('id','!=',False)]}
+					</attribute>
+					<attribute name="groups">base.group_user</attribute>
+				</xpath>
+				<xpath expr="//field[@name='work_location']" position="attributes">
+					<attribute name="string">Office Location</attribute>
+				</xpath>
+
+				<!-- for history tabs -->
+				<xpath expr="//notebook" position="inside">
+					<page string="Emergency Contact">
+						<group>
+							<group>
+								<field name="emg_contact_name" />
+								<label for="emg_contact_no_code" string="Emergency Contact Number" />
+								<div>
+									<field name="emg_contact_no_code" class="oe_inline"
+										context="{'emg_contact_no_code':emg_contact_no_code}" />
+									<field name="emg_contact_no" class="oe_inline" />
+								</div>
+							</group>
+							<group>
+							</group>
+						</group>
+					</page>
+					<page string="History" groups="hr.group_hr_user">
+						<notebook>
+							<page string="Department History">
+								<field name="department_history_ids" readonly="1">
+									<tree editable="bottom">
+										<field name="department_id" />
+										<field name="start_date" />
+										<field name="end_date" />
+									</tree>
+									<form>
+										<group>
+											<field name="department_id" readonly="1" />
+											<field name="start_date" readonly="1" />
+											<field name="end_date" readonly="1" />
+										</group>
+									</form>
+								</field>
+							</page>
+						</notebook>
+						<notebook>
+							<page name="salary_history" string="Salary History" groups="hr.group_hr_manager">
+								<field name="salary_history_ids" readonly="1"
+									groups="hr.group_hr_manager">
+									<tree editable="bottom">
+										<field name="salary" />
+										<field name="currency" />
+										<field name="start_date" />
+										<field name="end_date" />
+										<field name="year" />
+										<field name="increment" />
+									</tree>
+									<form>
+										<group>
+											<field name="salary" readonly="1" />
+											<field name="currency" readonly="1" />
+											<field name="start_date" readonly="1" />
+											<field name="end_date" readonly="1" />
+											<field name="year" readonly="1" />
+											<field name="increment" readonly="1" />
+										</group>
+									</form>
+								</field>
+							</page>
+						</notebook>
+						<notebook>
+							<page string="Supervisor History">
+								<field name="supervisor_history_ids" readonly="1">
+									<tree editable="bottom">
+										<field name="supervisor_name" />
+										<field name="start_date" />
+										<field name="end_date" />
+									</tree>
+									<form>
+										<group>
+											<field name="supervisor_name" readonly="1" />
+											<field name="start_date" readonly="1" />
+											<field name="end_date" readonly="1" />
+										</group>
+									</form>
+								</field>
+							</page>
+						</notebook>
+						<notebook>
+							<page string="Employee Memo History">
+								<field name="emp_memo_history_ids" readonly="1">
+									<tree>
+										<field name="name" />
+										<field name="memo_type" />
+										<field name="memo_desc" />
+										<field name="date" />
+										<field name="year" />
+										<field name="quarter" />
+									</tree>
+									<form>
+										<group>
+											<field name="name" readonly="1" />
+											<field name="memo_type" readonly="1" />
+											<field name="memo_desc" readonly="1" />
+											<field name="date" readonly="1" />
+											<field name="year" readonly="1" />
+											<field name="quarter" readonly="1" />
+										</group>
+									</form>
+								</field>
+							</page>
+						</notebook>
+					</page>
+					<page string="Evaluation">
+						<field name="evaluation_ids" readonly="1" />
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+		<!-- Salary history, Current salary and Salary history Page hidden for
+			the admin user. -->
+		<record id="salary_history_hr_admin" model="ir.ui.view">
+			<field name="name">salary.history.admin</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr_employee_view" />
+			<field name="groups_id" eval="[(6,0,[ref('base.group_system')])]" />
+			<field name="arch" type="xml">
+				<field name="salary_history_ids" position="attributes">
+					<attribute name="invisible">0</attribute>
+				</field>
+				<xpath expr="//page[@name='salary_history']" position="attributes">
+					<attribute name="invisible">0</attribute>
+				</xpath>
+				<field name="current_salary" position="attributes">
+					<attribute name="invisible">0</attribute>
+					<attribute name="groups">hr.group_hr_manager</attribute>
+				</field>
+			</field>
+		</record>
+
+
+	</data>
+</odoo>
+

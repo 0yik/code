@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+	<data>
+		<template id="report_employee_salary_doc">
+			<t t-call="report.external_layout">
+				<div class="page">
+					<div class="row">
+					<center><h3><strong>Employee Salary</strong></h3></center>
+					</div>
+								
+					<div style="width: 350px; float: left;">
+					<table>
+				        <tr><td><t>Employee</t></td><td><t> : </t><span t-field="doc.name"/></td></tr>	
+					<tr><td><t>Employee ID</t></td><td><t> : </t><span t-field="doc.employee_id"/></td></tr>
+					
+					<tr><td><t>Date</t></td><td><t> : </t><span t-field="doc.date"/></td></tr>
+					<tr><td><t>Current Salary</t></td><td><t> : </t><span t-field="doc.curr_salary"/></td></tr>
+					<tr><td><t>Calculated Increment</t></td><td><t>: </t><span t-field="doc.calculated_increment"/></td></tr>
+					<tr><td><t>Management Round Off</t></td><td><t> : </t><span t-field="doc.management_round_off"/></td></tr>
+					<tr><td><t>Final Increment</t></td><td><t> : </t><span t-field="doc.final_increment"/></td></tr>
+					<tr><td><t>Increment %</t></td><td><t> : </t><span t-field="doc.increment_per"/></td></tr>
+					</table>
+				
+					</div>
+					<div  style="margin-left: 420px;">
+                                                <t>Year <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></t><span t-field="doc.year"/>
+                                                </div>
+                                        <div style="clear: both;">
+                                                
+                                        </div>
+
+					<div>
+					<strong>Management Comments :</strong><br/>
+					<span t-field="doc.management_comments"/>
+					</div>
+				</div>
+			</t>
+		</template>
+		<template id="report_employee_salary_id">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="doc">
+					<t t-call="employee_appraisal.report_employee_salary_doc"/>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>
+				

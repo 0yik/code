@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+<!-- All Leave Structure -->
+
+        <record id="holiday_group_config_all_leave" model="holiday.group.config">
+            <field name="name">All Leave</field>
+        </record>
+
+<!-- Leave Types -->
+
+        <record model="hr.holidays.status" id="sg_holiday_extended.holiday_status_ml">
+            <field name="name2">Maternity Leave</field>
+       </record>
+
+<!-- Config Lines -->
+        <record id="all_leave_holiday_group_config_line_1" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_med_out"/>
+            <field name="default_leave_allocation">14</field>
+            <field name="max_leave_kept">14</field>
+            <field name="carryover">none</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+        </record>
+        <record id="all_leave_holiday_group_config_line_2" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_hos_leave"/>
+            <field name="default_leave_allocation">60</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">60</field>
+            <field name="carryover">none</field>
+            <field name="hospitalisation_leave">True</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_3" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_compas"/>
+            <field name="default_leave_allocation">5</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">5</field>
+            <field name="carryover">none</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_4" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_compas_othr"/>
+            <field name="default_leave_allocation">3</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">3</field>
+            <field name="carryover">none</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_5" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_mrg"/>
+            <field name="default_leave_allocation">5</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">5</field>
+            <field name="carryover">none</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_6" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_Earn_leave"/>
+            <field name="default_leave_allocation">14</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">20</field>
+            <field name="carryover">none</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_7" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="hr_holidays.holiday_status_unpaid"/>
+            <field name="default_leave_allocation">100</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">none</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_8" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_Off_in_lieu_leave"/>
+            <field name="default_leave_allocation">0</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">none</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_9" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_pd"/>
+            <field name="default_leave_allocation">10</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">none</field>
+            <field name="paternity_leave">True</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_10" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_child_care"/>
+            <field name="default_leave_allocation">10</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">none</field>
+            <field name="childcare_leave">True</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_11" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_extd_chld_care_leave"/>
+            <field name="default_leave_allocation">10</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">none</field>
+            <field name="ext_childcare_leave">True</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_12" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_share"/>
+            <field name="default_leave_allocation">4</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">none</field>
+            <field name="shared_parental_leave">True</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_13" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_alM"/>
+            <field name="default_leave_allocation">0</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">no_of_days</field>
+            <field name="carry_no_of_days">3</field>
+            <field name="by_joined_year">True</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_14" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_ml"/>
+            <field name="default_leave_allocation">0</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">none</field>
+            <field name="maternity_leave">True</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_15" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="hr_holidays.holiday_status_sl"/>
+            <field name="default_leave_allocation">0</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">none</field>
+            <field name="sick_leave">True</field>
+        </record>
+        <record id="all_leave_holiday_group_config_line_16" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_inpaid_IC_leave_4"/>
+            <field name="default_leave_allocation">0</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">none</field>
+            <field name="unpaid_infant_care_leave">True</field>
+        </record>
+
+<!-- Annual Leave Type Data -->
+
+        <record id="annual_leave01" model="annual.leave.joined.year">
+          <field name="year">0</field>
+          <field name="days">7</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_13"/>
+        </record>
+        <record id="annual_leave02" model="annual.leave.joined.year">
+          <field name="year">2</field>
+          <field name="days">8</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_13"/>
+        </record>
+        <record id="annual_leave03" model="annual.leave.joined.year">
+          <field name="year">3</field>
+          <field name="days">9</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_13"/>
+        </record>
+        <record id="annual_leave04" model="annual.leave.joined.year">
+          <field name="year">4</field>
+          <field name="days">10</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_13"/>
+        </record>
+        <record id="annual_leave05" model="annual.leave.joined.year">
+          <field name="year">5</field>
+          <field name="days">11</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_13"/>
+        </record>
+        <record id="annual_leave06" model="annual.leave.joined.year">
+          <field name="year">6</field>
+          <field name="days">12</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_13"/>
+        </record>
+        <record id="annual_leave07" model="annual.leave.joined.year">
+          <field name="year">7</field>
+          <field name="days">13</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_13"/>
+        </record>
+        <record id="annual_leave08" model="annual.leave.joined.year">
+          <field name="year">8</field>
+          <field name="days">14</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_13"/>
+        </record>
+        
+<!-- Childcare Leave -->
+
+        <record id="child_care01" model="childcare.leave">
+          <field name="year">0.25</field>
+          <field name="age">7</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg')])]"></field>
+          <field name="days">6</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_10"/>
+        </record>
+
+        <record id="child_care02" model="childcare.leave">
+          <field name="year">0.25</field>
+          <field name="age">7</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.id'), ref('base.my'), ref('base.in'), ref('base.ph'), ref('base.cn'), ref('base.hk')])]"></field>
+          <field name="days">2</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_10"/>
+        </record>
+
+<!-- Extended Child Care Leave -->
+
+        <record id="ext_child_care01" model="extended.childcare.leave">
+          <field name="year">0.25</field>
+          <field name="age_from">7</field>
+          <field name="age_to">12</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg')])]"></field>
+          <field name="days">2</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_11"/>
+        </record>
+
+<!-- Parernity Leave -->
+
+        <record id="paternity01" model="paternity.leave">
+          <field name="year">0.25</field>
+          <field name="gender">male</field>
+          <field name="relationship">daughter</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg')])]"></field>
+          <field name="days">2</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_9"/>
+        </record>
+        <record id="paternity02" model="paternity.leave">
+          <field name="year">0.25</field>
+          <field name="gender">male</field>
+          <field name="relationship">son</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg')])]"></field>
+          <field name="days">2</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_9"/>
+        </record>
+
+<!-- Shared Parental Leave -->
+
+        <record id="shared_parental01" model="shared.parental.leave">
+          <field name="year">0.25</field>
+          <field name="gender">male</field>
+          <field name="marital">married</field>
+          <field name="relationship">daughter</field>
+          <field name="birth_date">01/01/2017</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg')])]"></field>
+          <field name="days">4</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_12"/>
+        </record>
+        <record id="shared_parental02" model="shared.parental.leave">
+          <field name="year">0.25</field>
+          <field name="gender">male</field>
+          <field name="marital">married</field>
+          <field name="relationship">son</field>
+          <field name="birth_date">01/01/2017</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg')])]"></field>
+          <field name="days">4</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_12"/>
+        </record>
+        
+<!-- Unpaid Infant Care Leave -->
+
+        <record id="unpaid_infant01" model="unpaid.infant.care.leave">
+          <field name="year">0.25</field>
+          <field name="age">2</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg')])]"></field>
+          <field name="days">6</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_16"/>
+        </record>
+
+<!-- Sick Leave -->
+
+        <record id="sick_leave01" model="sick.leave">
+          <field name="year">0.25</field>
+          <field name="days">5</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_15"/>
+        </record>
+        <record id="sick_leave02" model="sick.leave">
+          <field name="year">0.33</field>
+          <field name="days">8</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_15"/>
+        </record>
+        <record id="sick_leave03" model="sick.leave">
+          <field name="year">0.42</field>
+          <field name="days">11</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_15"/>
+        </record>
+        <record id="sick_leave04" model="sick.leave">
+          <field name="year">0.50</field>
+          <field name="days">14</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_15"/>
+        </record>
+        
+<!-- Hospitalisation Leave -->
+
+        <record id="hospitalisation_leave01" model="hospitalisation.leave">
+          <field name="year">0.25</field>
+          <field name="days">15</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_2"/>
+        </record>
+        <record id="hospitalisation_leave02" model="hospitalisation.leave">
+          <field name="year">0.33</field>
+          <field name="days">30</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_2"/>
+        </record>
+        <record id="hospitalisation_leave03" model="hospitalisation.leave">
+          <field name="year">0.42</field>
+          <field name="days">45</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_2"/>
+        </record>
+        <record id="hospitalisation_leave04" model="hospitalisation.leave">
+          <field name="year">0.50</field>
+          <field name="days">60</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_2"/>
+        </record>
+
+<!-- 2. Maternity Leave -->
+        <record id="maternity01" model="maternity.leave">
+          <field name="year">0.25</field>
+          <field name="gender">female</field>
+          <field name="birth_date">01/01//2017</field>
+          <field name="relationship">daughter</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg')])]"></field>
+          <field name="days">16</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_14"/>
+        </record>
+        <record id="maternity02" model="maternity.leave">
+          <field name="year">0.25</field>
+          <field name="gender">female</field>
+          <field name="birth_date">01/01//2017</field>
+          <field name="relationship">son</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg')])]"></field>
+          <field name="days">16</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_14"/>
+        </record>
+        <record id="maternity03" model="maternity.leave">
+          <field name="year">0.25</field>
+          <field name="gender">female</field>
+          <field name="birth_date">01/01//2017</field>
+          <field name="relationship">son</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg'), ref('base.id'), ref('base.my'), ref('base.in'), ref('base.ph'), ref('base.cn'), ref('base.hk')])]"></field>
+          <field name="days">12</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_14"/>
+        </record>
+        <record id="maternity04" model="maternity.leave">
+          <field name="year">0.25</field>
+          <field name="gender">female</field>
+          <field name="birth_date">01/01//2017</field>
+          <field name="relationship">daughter</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.id'), ref('base.my'), ref('base.in'), ref('base.ph'), ref('base.cn'), ref('base.hk')])]"></field>
+          <field name="days">12</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_14"/>
+        </record>
+
+    </data>
+</odoo>
+

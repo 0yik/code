@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_adjustment,access.stock.adjustment,model_stock_adjustment,,1,1,1,0
+access_stock_adjustment_line,access.stock.adjustment.line,model_stock_adjustment_line,,1,1,1,1

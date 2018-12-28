@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="project_view_form_inherit" model="ir.ui.view">
+        <field name="name">project.project.form.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="before">
+                <group>
+                    <field name="manager_ids" widget="many2many_tags" options="{'no_create_edit': True}" required="1"/>
+                    <field name="specialist_ids" widget="many2many_tags" options="{'no_create_edit': True}" required="1"/>
+                    <field name="customer_ids" widget="many2many_tags" options="{'no_create_edit': True}" required="1"/>
+                    <field name="category" required="1"/>
+                    <!--<field name="module_ids" widget="many2many_tags" options="{'no_create_edit': True}" required="1"/>-->
+					<field name="product_ids" widget="many2many_tags" options="{'no_create_edit': True}" required="1"/>                    
+                    <field name="sbd" filename="filename" required="1"/>
+                    <field name="filename" invisible="1"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//notebook/page[1]" position="before">
+                <page name="Document" string="Milestones">
+                    <field name="document_ids">
+                        <tree editable="bottom">
+                            <field name="name" string="Milestone Name" required="1"/>
+                            <field name="description"/>
+                            <field name="date" string="Date Started" required="1"/>
+							<field name="date_completed" />
+							<field name="notes" />
+							<field name="planned_date_readonly" invisible="1"  />    
+							<field name="planned_start_date" attrs="{'readonly':[('planned_date_readonly','=',True)]}" />
+							<field name="planned_end_date" attrs="{'readonly':[('planned_date_readonly','=',True)]}"  />
+							<!--<field name="planned_start_readonly" invisible="1" />-->						
+							<button name="data_commit" class="btn-primary" string="commit" type="object" />		                    
+                            <field name="type" invisible="1"/>
+                            <field name="data" widget="binary" filename="filename"/>
+                            <field name="filename" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <!--Add Meeting Buttons -->
+			<xpath expr="//div[@class='oe_button_box']" position="inside">
+            		<button name="project_meetings" type="object" class="oe_stat_button"
+                            icon="fa-calendar" sting="Meetings" groups="project.group_project_manager">
+						<field name="total_meetings" widget="statinfo" string="Meetings" groups="project.group_project_manager"/>
+					</button>            		
+			</xpath>
+			<!-- Needs to chnage the string for Tasks button -->
+<!-- 			<field name="task_count" position="replace">
+				<field string="Changes Requests" name="task_count" widget="statinfo" />
+			</field>            	 -->
+        </field>
+    </record>
+    
+    <!-- Milestones(Project Document) List, Search,Action and Menu -->
+    <record id="view_project_milestone_list" model="ir.ui.view">
+        <field name="name">project.milestone.tree.view</field>
+        <field name="model">project.document</field>
+        <field name="arch" type="xml">
+            <tree string="Project Milestone">
+                <field name="project_id"/>
+                <field name="project_managers"/>
+				<field name="system_specialists"/>
+				<field name="name" string="MileStone Name"/>
+				<field name="project_category"/>
+				<field name="planned_start_date"/>
+				<field name="planned_end_date"/>
+				<field name="date"/>
+				<field name="date_completed"/>					               
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_project_milestone_search" model="ir.ui.view">
+        <field name="name">view.project.milestone.search</field>
+        <field name="model">project.document</field>
+        <field name="arch" type="xml">
+            <search string="Project Document">
+                <field name="project_id"/>
+                <group expand="0" string="Group By">                  
+                    <filter string="Project" domain="[]" context="{'group_by':'project_id'}"/>
+                    <filter string="Project Category" domain="[]" context="{'group_by':'project_category'}"/>
+					<filter string="Project Manager" domain="[]" context="{'group_by':'project_managers'}"/>                    
+                </group>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_project_milestone">
+		<field name="name">Milestones</field>
+	<field name="res_model">project.document</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" ref="view_project_milestone_search"/>
+    </record>
+
+	<menuitem 
+		action="action_project_milestone" 
+		id="menu_project_milestone" 
+		parent="project.menu_main_pm" 
+		sequence="1"
+		groups="project.group_project_manager"/>
+	
+	<!-- Change Tasks menu name to Changes Requests and set some groups in it  -->
+	<record id="project.menu_action_view_task" model="ir.ui.menu">
+		<field name="name">Project Tasks</field>
+		<field name="parent_id" ref="project.menu_main_pm" />
+		<field name="sequence">2</field>		
+		<field name="groups_id" eval="[(4, ref('project.group_project_user'))]" />
+	</record>
+	
+	<!-- Change parent menu of Module repository menu  -->
+	<record id="module_repository.menu_module_repository" model="ir.ui.menu">
+		<field name="parent_id" ref="project.menu_main_pm" />
+		<field name="sequence">2</field>		
+	</record>
+
+	<!-- Change parent menu of Developer Task menu  -->
+	<record id="developer_task.project_action_view_task" model="ir.ui.menu">
+		<field name="parent_id" ref="project.menu_main_pm" />
+		<field name="sequence">2</field>		
+	</record>
+		
+	<!-- Hide search menu -->
+	<!--<record id="project.menu_project_management" model="ir.ui.menu">
+		<field name="groups_id" eval="[(6,0,[ref('project_portal_hm.group_hide_unused_menus')])]" />	
+	</record>-->	
+	
+	<!-- Quoted Price Field in Task form -->
+    <record id="project_task_form_inherit" model="ir.ui.view">
+        <field name="name">project.task.form.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+		<field name="arch" type="xml">
+			<field name="user_id" position="after">
+				<field name="quoted_price" />
+			</field>				
+		</field>        
+	</record>
+	
+	<!-- Use as Default field in Task Stages -->
+    <record id="view_taskP_stage_form_use_as_default_field" model="ir.ui.view">
+        <field name="name">task.stage.form.inherit</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_edit"/>
+		<field name="arch" type="xml">
+			<field name="mail_template_id" position="after">
+				<field name="use_as_default" />
+			</field>				
+		</field>        
+	</record>
+	
+	<!-- Project Menu access for developer group -->        
+	<record id="project.menu_project_management" model="ir.ui.menu">
+		<field name="groups_id" eval="[(4, ref('developer_task.group_project_developer_access'))]" />
+	</record>
+
+	<record id="project.menu_main_pm" model="ir.ui.menu">
+		<field name="groups_id" eval="[(4, ref('developer_task.group_project_developer_access'))]" />
+	</record>
+
+	<record id="project.menu_projects" model="ir.ui.menu">
+		<field name="groups_id" eval="[(4, ref('project.group_project_manager'))]" />
+	</record>
+	
+	<!-- Project List view changes -->
+    <record id="project_project_list_column_changes" model="ir.ui.view">
+        <field name="name">project.project.list.column.changes</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="arch" type="xml">
+        	<field name="name" position="after">
+				<field name="manager_ids" widget="many2many_tags" />
+				<field name="specialist_ids" widget="many2many_tags" />
+				<field name="customer_ids" widget="many2many_tags" />
+				<field name="category"  />
+				<field name="product_ids" widget="many2many_tags" />      		 
+			</field>
+			<field name="user_id" position="attributes">
+				<attribute name="invisible">1</attribute> 
+			</field>
+			<field name="partner_id" position="attributes">
+				<attribute name="invisible">1</attribute> 
+			</field>			
+        </field>
+   	</record>		
+					                            
+</odoo>

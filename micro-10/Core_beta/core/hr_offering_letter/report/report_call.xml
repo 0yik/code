@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+            
+    <report 
+        id="action_cash_leaves" 
+        model="hr.applicant" 
+        string="hol"
+        report_type="qweb-pdf"
+        name="hr_offering_letter.report_summary" 
+        file="hr_offering_letter.report_summary"
+        menu="False" 
+    />
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="res_company_view_form_inherited_gps" model="ir.ui.view">
+        <field name="name">res.company.form.gps</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <field name="website" position="after">
+                <button
+                        string="Geolocate"
+                        name="geo_localize_company"
+                        colspan="2"
+                        icon="fa-check"
+                        type="object"/>
+                <field name="lat_comapny" required="1"/>
+                <field name="lng_company" required="1"/>
+                <label for="checkin_radius" string="Check In Radius"/>
+                <div>
+                    <field name="checkin_radius" class="oe_inline" required="1"/>
+                    <span class="oe_inline">&#160;</span>
+                    <field name="checkin_radius_selection"  class="oe_inline" style="margin-left: 10px;" required="1"/>
+                </div>
+                <field name="allow_boundary_check_in"/>
+                <label for="checkout_radius" string="Check Out Radius"/>
+                <div>
+                    <field name="checkout_radius" class="oe_inline" required="1"/>
+                    <span class="oe_inline">&#160;</span>
+                    <field name="checkout_radius_selection"  class="oe_inline" style="margin-left: 10px;" required="1"/>
+                </div>
+                <field name="allow_boundary_check_out"/>
+            </field>
+        </field>
+    </record>
+</odoo>

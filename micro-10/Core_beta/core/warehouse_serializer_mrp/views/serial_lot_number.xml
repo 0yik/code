@@ -1,0 +1,28 @@
+<odoo>
+    <!--form view of Serial Lot number wizard for MRP-->
+    <record id="view_form_serial_lot_from_mo" model="ir.ui.view">
+        <field name="name">view.form.serial.lot.number.mo</field>
+        <field name="model">serial.lot.number</field>
+        <field name="arch" type="xml">
+            <form string="Full names" version="8.0">
+                <group string="Product To Serializer">
+                    <field name="serial_name" readonly="True"/>
+                </group>
+                <group>
+                    <field name="stock_lot_line_ids">
+                        <tree editable="bottom">
+                            <field name="product_id"/>
+                            <field name="quantity"/>
+                            <button name="split_quantities_mrp" string="Split" type="object" icon="fa-globe" attrs="{'invisible':[('quantity','=',1)]}"/>
+                            <field name="check_lot_number" invisible="1"/>
+                            <field name="main_product" invisible="1"/>
+                            <field name="lot_serial_number" readonly="1"/>
+                            <field name="source_location_id" invisible="1"/>
+                            <field name="location_dest_id" invisible="1"/>
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>

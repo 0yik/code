@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+<!-- All Leave Structure -->
+
+        <record id="holiday_group_config_all_leave_indo" model="holiday.group.config">
+            <field name="name">Employee Leave based on IDN Gov's Regulation</field>
+        </record>
+
+<!-- Leave Types -->
+
+        <record model="hr.holidays.status" id="sg_holiday_extended.holiday_status_ml">
+            <field name="name2">Maternity Leave</field>
+       </record>
+
+        <record model="hr.holidays.status" id="holiday_status_baptism_child">
+            <field name="name2">Baptism / Circumcise (Child)</field>
+            <field name="name">B/C</field>
+            <field name="color_name">red</field>
+            <field name="paid_leave">True</field>
+            <field name="count_days_by">working_days_only</field>
+            <field name="carryover">none</field>
+        </record>
+
+<!-- Config Lines -->
+        <!-- Al -->
+        <record id="all_leave_holiday_group_config_line_other" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_al"/>
+            <field name="default_leave_allocation">0</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave_indo"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">unlimited</field>
+            <field name="by_joined_year">True</field>
+        </record>
+        
+        <!-- done -->
+        <record id="all_leave_holiday_group_config_line_5_indo" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_mrg"/>
+            <field name="default_leave_allocation">3</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave_indo"/>
+            <field name="max_leave_kept">3</field>
+            <field name="carryover">unlimited</field>
+        </record>
+        
+        <!-- done -->
+        <record id="all_leave_holiday_group_config_line_6_indo" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_mrg_chld"/>
+            <field name="default_leave_allocation">2</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave_indo"/>
+            <field name="max_leave_kept">2</field>
+            <field name="carryover">unlimited</field>
+        </record>
+
+        <!-- done -->
+        <record id="all_leave_holiday_group_config_line_14_indo" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_ml"/>
+            <field name="default_leave_allocation">0</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave_indo"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">unlimited</field>
+            <field name="maternity_leave">True</field>
+        </record>
+        
+        <!-- done -->
+        <record id="all_leave_holiday_group_config_line_9_indo" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_pd"/>
+            <field name="default_leave_allocation">10</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave_indo"/>
+            <field name="max_leave_kept">0</field>
+            <field name="carryover">unlimited</field>
+            <field name="paternity_leave">True</field>
+        </record>
+
+        <!-- done -->
+        <record id="all_leave_holiday_group_config_line_1_indo" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="holiday_status_baptism_child"/>
+            <field name="default_leave_allocation">2</field>
+            <field name="max_leave_kept">2</field>
+            <field name="carryover">unlimited</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave_indo"/>
+        </record>
+        
+        <!-- done -->
+        <record id="all_leave_holiday_group_config_line_3_indo" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_compas"/>
+            <field name="default_leave_allocation">2</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave_indo"/>
+            <field name="max_leave_kept">2</field>
+            <field name="carryover">unlimited</field>
+        </record>
+        
+        <!-- done -->
+        <record id="all_leave_holiday_group_config_line_4_indo" model="holiday.group.config.line">
+            <field name="leave_type_id" ref="sg_holiday_extended.holiday_status_compas_othr"/>
+            <field name="default_leave_allocation">1</field>
+            <field name="holiday_group_config_id" ref="holiday_group_config_all_leave_indo"/>
+            <field name="max_leave_kept">1</field>
+            <field name="carryover">unlimited</field>
+        </record>
+        
+        
+<!-- Annual Leave Type Data -->
+
+        <record id="annual_leave01_indo" model="annual.leave.joined.year">
+          <field name="year">1</field>
+          <field name="days">12</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_other"/>
+        </record>
+
+<!-- Parernity Leave -->
+
+        <record id="paternity01_indo" model="paternity.leave">
+          <field name="year">0.25</field>
+          <field name="gender">male</field>
+          <field name="relationship">daughter</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg'), ref('base.id'), ref('base.my'), ref('base.in'), ref('base.ph'), ref('base.cn'), ref('base.hk')])]"></field>
+          <field name="days">2</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_9_indo"/>
+        </record>
+        <record id="paternity02_indo" model="paternity.leave">
+          <field name="year">0.25</field>
+          <field name="gender">male</field>
+          <field name="relationship">son</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg'), ref('base.id'), ref('base.my'), ref('base.in'), ref('base.ph'), ref('base.cn'), ref('base.hk')])]"></field>
+          <field name="days">2</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_9_indo"/>
+        </record>
+
+<!--  Maternity Leave -->
+        <record id="maternity01_indo" model="maternity.leave">
+          <field name="year">0.25</field>
+          <field name="gender">female</field>
+          <field name="birth_date">01/01//2017</field>
+          <field name="relationship">son</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.sg'), ref('base.id'), ref('base.my'), ref('base.in'), ref('base.ph'), ref('base.cn'), ref('base.hk')])]"></field>
+          <field name="days">90</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_14_indo"/>
+        </record>
+        <record id="maternity02_indo" model="maternity.leave">
+          <field name="year">0.25</field>
+          <field name="gender">female</field>
+          <field name="birth_date">01/01//2017</field>
+          <field name="relationship">daughter</field>
+          <field name="nationality_ids" eval="[(6,0, [ref('base.id'), ref('base.my'), ref('base.in'), ref('base.ph'), ref('base.cn'), ref('base.hk')])]"></field>
+          <field name="days">90</field>
+          <field name="config_line_id" ref="all_leave_holiday_group_config_line_14_indo"/>
+        </record>
+
+    </data>
+</odoo>
+

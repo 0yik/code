@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="product_template_product_form_inherit">
+            <field name="name">product.template.product.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="barcode_weighing_interface.product_template_product_form_inherit"/>
+            <field name="arch" type="xml">
+                <field name="tolerance" position="after">
+                    <field name="form"/>
+                    <field name="volatile"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

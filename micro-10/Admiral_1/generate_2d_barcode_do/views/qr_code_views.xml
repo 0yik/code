@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report id="report_qrcode_label_do_qweb"
+                string="QR Code"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                file="generate_2d_barcode_do.qrcode_label"
+                name="generate_2d_barcode_do.qrcode_label"
+                menu="False"
+        />
+
+        <record id="report_qrcode_label_do_qweb" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="admiral_modifier_printout.qrcode_label_paperformat"/>
+        </record>
+
+        <template id="qrcode_label">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+
+                    <t t-foreach="o.generate_qr_code()" t-as="code">
+                        <div class="page">
+                            <div class="row" >
+                                <div class="col-xs-4" style="margin-top: 50px;">
+                                    <img  t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', code.get('code'), 240, 240)"/>
+                                </div>
+                                <div class="col-xs-4" style="padding: 5px;margin-top:120px;">
+                                    <table padding-top="5px" cellpadding="2px" width="100%" class="table-borderless font8px">
+                                        <tr>
+                                            <td style="vertical-align: middle; font-size: 18px"><strong>Product</strong></td>
+                                            <td style="vertical-align: middle;">: &#160;</td>
+                                            <td><span t-esc="code.get('product')"/></td>
+                                        </tr>
+                                        <tr t-if="o.product_id and o.product_id.barcode" height="20px"  valign="center">
+                                            <td style="vertical-align: middle; font-size: 18px"><strong>Product SKU</strong></td>
+                                            <td>: &#160;</td>
+                                            <td style="font-size: 18px"><span t-esc="code.get('barcode')"/></td>
+                                        </tr>
+                                        <tr >
+                                            <td style="font-size: 18px"><strong>Lot Number</strong></td>
+                                            <td>: &#160;</td>
+                                            <td style="font-size: 18px"><span t-esc="code.get('lot')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 18px"><strong>Expiry Date</strong></td>
+                                            <td>: &#160;</td>
+                                            <td style="font-size: 18px"><span t-esc="code.get('expiry_date')" t-field-options="{&quot;format&quot;: &quot;dd-MM-YYYY&quot;}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 18px"><strong>Date</strong></td>
+                                            <td>: &#160;</td>
+                                            <td style="font-size: 18px"><span t-esc="code.get('date')" t-field-options="{&quot;format&quot;: &quot;dd-MM-YYYY&quot;}"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-xs-4" style="margin-top: 50px;">
+                                    <img width="210px" height="210px" src="/generate_2d_barcode_do/static/img/logo.png"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

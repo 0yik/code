@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--Access Head of Purchase group-->
+        <record id="access_head_purchase" model="res.groups">
+            <field name="name">Head of Purchase</field>
+        </record>
+    </data>
+</odoo>

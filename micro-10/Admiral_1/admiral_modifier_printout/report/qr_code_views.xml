@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report id="generate_2d_barcode.report_qrcode_label_qweb"
+            string="QR Code"
+            model="stock.production.lot"
+            report_type = "qweb-pdf"
+            file="generate_2d_barcode.qrcode_label"
+            name="generate_2d_barcode.qrcode_label"/>
+
+        <record id="qrcode_label_paperformat" model="report.paperformat">
+            <field name="name">QR CODE</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">100</field>
+            <field name="page_width">230</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="True"/>
+            <field name="header_spacing">10</field>
+            <field name="dpi">80</field>
+        </record>
+
+        <record id="generate_2d_barcode.report_qrcode_label_qweb" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="qrcode_label_paperformat"/>
+        </record>
+
+        <template id="generate_2d_barcode.qrcode_label">
+            <t t-call="report.html_container">
+
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-4" style="margin-top: 50px;">
+                                <img width="100%" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.get_barcode(), 240, 240)"/>
+                            </div>
+                            <div class="col-xs-4" style="padding: 5px;margin-top:120px;">
+                                <table padding-top="5px" cellpadding="2px" width="100%" class="table-borderless font8px">
+                                    <tr valign="middle">
+                                        <td style="vertical-align: middle; font-size: 18px"><strong>Product </strong></td>
+                                        <td style="vertical-align: middle;" >:</td>
+                                        <td style="font-size: 18px"><span style="text-align: left;" t-field="o.product_id.name"/></td>
+                                    </tr>
+                                    <tr t-if="o.product_id and o.product_id.barcode" height="20px"  valign="center">
+                                        <td style="vertical-align: middle; font-size: 18px"><strong>Product SKU </strong></td>
+                                        <td>: &#160;</td>
+                                        <td style="font-size: 18px"><span style="text-align: left;" t-field="o.product_id.barcode"/></td>
+                                    </tr>
+                                    <tr >
+                                        <td style="font-size: 18px"><strong>Lot Number  </strong></td>
+                                        <td>: &#160;</td>
+                                        <td style="font-size: 18px"><span style="text-align: left;" t-field="o.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 18px"><strong>Expiry Date  </strong></td>
+                                        <td>: &#160;</td>
+                                        <td style="font-size: 18px"><span style="text-align: left;" t-field="o.use_date" t-field-options="{&quot;format&quot;: &quot;dd-MM-YYYY&quot;}"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-xs-4" style="margin-top: 60px;">
+                                <img width="240px" height="240px" src="/admiral_modifier_printout/static/src/img/logo.png"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+            </t>
+        </template>
+    </data>
+</odoo>

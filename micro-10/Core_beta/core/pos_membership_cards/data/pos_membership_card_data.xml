@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1">
+       <record id="wk_res_partner_1" model="res.partner">
+            <field name="name">Webkul</field>
+            <field eval="[(6, 0, [ref('base.res_partner_category_7'), ref('base.res_partner_category_9')])]" name="category_id"/>
+            <field name="is_company">1</field>
+            <field name="city">Noida</field>
+            <field name="zip">201308</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="street">A-67 Sector-63</field>
+            <field name="email">demo@demo.com</field>
+            <field name="phone">+919874563211</field>
+            <field name="website">http://www.webkul.com</field>
+            <field name="image" type="base64" file="pos_membership_cards/static/description/webkul_icon.png"/>
+        </record>
+        <record id="pos_membership_demo_category" model="pos.membership.category">
+            <field name="name">Gold</field>
+            <field name="discount">10</field>
+            <field name="max_validity">1</field>
+        </record>
+         <record id="pos_membership_card_demo" model="pos.membership.card">
+            <field name="card_category" ref="pos_membership_demo_category"/>
+            <field name="state">draft</field>
+            <field name="customer_id" ref="wk_res_partner_1"/>
+        </record>
+        <function
+            id="demo_membership_card_1"
+            model="pos.membership.card"
+            name="confirm_demo_membership_card"
+        />
+    </data>
+</odoo>

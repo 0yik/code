@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_employee_notice_period_form" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="sg_hr_employee.view_employee_form_parent2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='join_date']" position="after">
+                    <label for="notice_period_id" string="Notice Period" class="oe_inline" />
+                    <div>
+                        <field name="notice_period_id" readonly="1" nolabel="1"  class="oe_inline"/> day(s)
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_employee_btn_period_form" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button string="Change Notice Period"
+                            icon="" states=""
+                            type="action" name="%(act_open_change_notice_period_view)d"
+                            context="{'default_current_notice_id': notice_period_id}"/>
+                    </header>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

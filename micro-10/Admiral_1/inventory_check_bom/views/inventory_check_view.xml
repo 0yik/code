@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_inventory_check_tree" model="ir.ui.view">
+            <field name="name">inventory.check.tree</field>
+            <field name="model">inventory.check</field>
+            <field name="inherit_id" ref="inventory_check.view_inventory_check_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='stock_quant_id']" position="replace">
+                    <field name="string_stock_quant"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,59 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_pos_config_syncing">
+            <field name="name">pos.config.bus</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="pos_base.pos_base_config"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='pos_config_extend']" position="inside">
+                    <group name="bus" string="Syncing settings">
+                        <field name="display_person_add_line"/>
+                        <field name="bus_id"/>
+                        <field name='user_ids' required="1" widget="many2many_tags"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="point_of_sale.action_pos_config_kanban" model="ir.actions.act_window">
+            <field name="domain">[('user_ids', 'in', [uid])]</field>
+        </record>
+
+        <record id="pos_bus_extend" model="ir.ui.view">
+            <field name="name">pos.config.tree.view</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="user_ids"/>
+                    <field name="bus_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="pos_bus_tree" model="ir.ui.view">
+            <field name="name">pos.bus.tree</field>
+            <field name="model">pos.bus</field>
+            <field name="arch" type="xml">
+                <tree string="Bus Location" editable="1">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_bus">
+            <field name="name">Bus Locations</field>
+            <field name="res_model">pos.bus</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_action_pos_bus"
+                  parent="point_of_sale.menu_point_config_product"
+                  action="action_pos_bus"
+                  sequence="200"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	    <!-- Group for hide unused menus -->
+	    <record id="group_hide_unused_menus" model="res.groups">
+	        <field name="name">Hide Unused Menus</field>
+		</record>	       		    
+	    		
+		<!-- Project Manager can see all teams -->
+	    <record id="project_team_project_manager_view_rule" model="ir.rule">
+	        <field name="name">Project Team : Project Manager View</field>
+	        <field name="model_id" ref="model_project_team"/>
+	        <field name="domain_force">[(1,'=',1)]</field>
+	        <field eval="1" name="perm_read"/>
+			<field eval="0" name="perm_create"/>
+			<field eval="0" name="perm_write"/>
+			<field eval="0" name="perm_unlink"/>
+			<field name="groups" eval="[(4,ref('project.group_project_manager'))]"/>			       
+	    </record>
+
+	    <!-- Project Manager can modify teams only in which they have set as Project Manger / System Specialist -->
+	    <record id="project_team_project_manager_modify_rule" model="ir.rule">
+	        <field name="name">Project Team : Project Manager Modify</field>
+	        <field name="model_id" ref="model_project_team"/>
+	        <field name="domain_force">['|',('project_manager','=',user.id),('specialist_ids','in',[user.id])]</field>
+	        <field eval="0" name="perm_read"/>
+			<field eval="1" name="perm_create"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_unlink"/>
+			<field name="groups" eval="[(4,ref('project.group_project_manager'))]"/>			       
+	    </record>
+
+	    <!-- Project Manager can see all projects -->
+	    <record id="project.project_project_manager_rule" model="ir.rule">
+			<field eval="0" name="perm_create"/>
+			<field eval="0" name="perm_write"/>
+			<field eval="0" name="perm_unlink"/>			       
+	    </record>
+	    
+	    <!-- Project Manager can modify projects only in which they have set as Project Manger / System Specialist -->
+	    <record id="project_project_manager_modify_rule" model="ir.rule">
+	        <field name="name">Project Project : Project Manager Modify</field>
+	        <field name="model_id" ref="developer_task.model_project_project"/>
+	        <field name="domain_force">['|',('manager_ids', 'in', [user.id]),('specialist_ids','in',[user.id])]</field>
+	        <field eval="0" name="perm_read"/>
+			<field eval="1" name="perm_create"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_unlink"/>
+			<field name="groups" eval="[(4,ref('project.group_project_manager'))]"/>			       
+	    </record>
+	    
+	    <!-- Project Head can see / modify all teams -->
+	    <record id="project_head_team_access_rule" model="ir.rule">
+	        <field name="name">Project Team : Project Head Access</field>
+	        <field name="model_id" ref="model_project_team"/>
+	        <field name="domain_force">[(1,'=',1)]</field>
+			<field name="groups" eval="[(4,ref('developer_task.group_project_head'))]"/>
+	    </record>
+	    
+	    <!-- Project Head can see / modify all projects -->
+	    <record id="project_project_head_access_rule" model="ir.rule">
+	        <field name="name">Project Project : Project Head Access</field>
+	        <field name="model_id" ref="developer_task.model_project_project"/>
+	        <field name="domain_force">[(1,'=',1)]</field>
+	        <field name="groups" eval="[(4,ref('developer_task.group_project_head'))]"/>
+		</record>
+		
+		<!-- Project rule for employess is modify and now onwards it will apply in read only -->
+		<record model="ir.rule" id="project.project_public_members_rule">
+			<field eval="0" name="perm_create"/>
+			<field eval="0" name="perm_write"/>
+			<field eval="0" name="perm_unlink"/>
+			<field name="active">0</field>		 
+		</record>
+		
+		<!-- Project Access Rule for Project Developers -->			            
+	    <record id="project_project_developer_access_rule" model="ir.rule">
+	        <field name="name">Project Project : Developer Access</field>
+	        <field name="model_id" ref="developer_task.model_project_project"/>
+	        <field name="domain_force">[('project_developer_ids', 'in', [user.id])]</field>
+	        <field eval="1" name="perm_read"/>
+			<field eval="1" name="perm_create"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_unlink"/>
+			<field name="groups" eval="[(4,ref('developer_task.group_project_developer_access'))]"/>			       
+	    </record>	    				     	    
+	    	    	    
+	</data>
+</odoo>

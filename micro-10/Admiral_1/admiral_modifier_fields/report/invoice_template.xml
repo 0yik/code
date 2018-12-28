@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- Headers and Footers for Invoice Report -->		
+<template id="external_layout_invoice_header_footer">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="admiral_modifier_fields.external_layout_header_invoice" />
+    <t t-raw="0" />
+    <t t-call="admiral_modifier_fields.external_layout_footer_invoice" />
+</template>
+<!-- ==================== 
+    HEADER INVOICE REPORT 
+     ==================== -->
+<template id="admiral_modifier_fields.external_layout_header_invoice">
+     <div class="header">
+        <div class="row">
+            <div class="col-xs-3">
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:86px;width: 180px;"/>
+            </div>
+            <div class="col-xs-6">
+                <b><span class="text-left" style="top:17px;font-size:20pt;font-family:Arial;" t-esc="company.name"></span></b>
+                <br/>
+                <span class="text-left" style="font-size:12pt;font-family:Arial;" t-esc="company.street and company.street or ''"></span> . 
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.street2 and company.street2 or ''"> . </span>
+                <br/>
+                <span class="text-left" style="font-size:12pt;font-family:Arial;" t-esc="company.country_id and company.country_id.name or ''"></span>  
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.zip and company.zip or ''"></span>
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;"> . Mobile :</span>
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.partner_id.mobile and company.partner_id.mobile or company.phone"></span> .
+                <br/>
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;"> Company Registration No. </span> <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.company_registry and company.company_registry or ''"/>
+                <br/>
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;"> GST Registration No. </span> <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.vat and company.vat or ''"/>
+            </div>
+            <div class="col-xs-3">
+                <b><span class="text-right" style="top:17px;font-size:26pt;font-family:Arial;"> INVOICE </span></b>
+            </div>
+        </div>
+    </div>
+</template>
+<!-- ==================== 
+    FOOTER INVOICE REPORT 
+     ==================== -->
+<template id="admiral_modifier_fields.external_layout_footer_invoice">
+    <div class="footer">
+    	<div class="row">
+            <div class="col-xs-12 text-right" style="font-weight:bold">
+                <b><span t-field="company.name" style="font-size:15pt;font-family:Arial;"/></b>
+            </div>
+         </div>
+         <div class="row">
+         	<div class="col-xs-12 text-left" style="font-size:12pt;font-family:Arial;">
+         		This is a computer generated copy, no signature required.
+            </div>
+         </div>
+         <div class="row">
+         	<div class="col-xs-12 text-right">
+         		<div class="text-right" style="float:right;font-size:12pt;font-family:Arial;">
+                    <ul class="list-inline">
+                        <li>Page:</li>
+                        <li><span class="page"/></li>
+                        <li>of</li>
+                        <li><span class="topage"/></li>
+                    </ul>
+                </div>
+            </div>
+         </div>
+    </div>      
+</template>
+
+<!-- Headers and Footers for Purchase Order Report -->		
+<template id="external_layout_po_header_footer">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="admiral_modifier_fields.external_layout_header_po" />
+    <t t-raw="0" />
+    <t t-call="admiral_modifier_fields.external_layout_footer_po" />
+</template>
+<!-- ==================== 
+    HEADER PURCHASE ORDER REPORT 
+     ==================== -->
+<template id="admiral_modifier_fields.external_layout_header_po">
+     <div class="header">
+        <div class="row">
+            <div class="col-xs-3">
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:86px;width: 180px;"/>
+            </div>
+            <div class="col-xs-6">
+                <b><span class="text-left" style="top:17px;font-size:20pt;font-family:Arial;" t-esc="company.name"></span></b>
+                <br/>
+                <span class="text-left" style="font-size:12pt;font-family:Arial;" t-esc="company.street and company.street or ''"></span> . 
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.street2 and company.street2 or ''"> . </span>
+                <br/>
+                <span class="text-left" style="font-size:12pt;font-family:Arial;" t-esc="company.country_id and company.country_id.name or ''"></span>  
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.zip and company.zip or ''"></span>
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;"> . Mobile :</span>
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.partner_id.mobile and company.partner_id.mobile or company.phone"></span> .
+            </div>
+            <div class="col-xs-3">
+                <b><span class="text-right" style="top:17px;font-size:26pt;font-family:Arial;"> PURCHASE ORDER </span></b>
+            </div>
+        </div>
+    </div>
+</template>
+<!-- ==================== 
+    FOOTER PURCHASE ORDER REPORT 
+     ==================== -->
+<template id="admiral_modifier_fields.external_layout_footer_po">
+    <div class="footer">
+        <div class="text-center" style="border-top: 1px solid black;">
+    	<div class="row">
+            <div class="col-xs-12 text-right" style="font-weight:bold">
+                <b><span t-field="company.name" style="font-size:15pt;font-family:Arial;"/></b>
+            </div>
+         </div>
+         <div class="row">
+         	<div class="col-xs-12 text-right">
+         		<div class="text-right" style="float:right">
+                    <ul class="list-inline">
+                        <li>Page:</li>
+                        <li><span class="page"/></li>
+                        <li>of</li>
+                        <li><span class="topage"/></li>
+                    </ul>
+                </div>
+            </div>
+         </div>
+         </div>
+    </div>      
+</template>
+
+<!-- Customize INVOICE REPORT -->
+<template id="account.report_invoice_document">
+    <t t-call="admiral_modifier_fields.external_layout_invoice_header_footer">
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+        <div class="page" style="font-size:12pt;font-family:Arial;">
+            <div class="row">
+                <div class="col-xs-6">
+                    <span><strong> TO : </strong></span>
+                    <br/>
+                    <span t-if="not o.partner_id.is_company" t-esc="o.partner_id.parent_id.name"/>
+                    <span t-if="o.partner_id.is_company" t-esc="o.partner_id.name"/>
+                    <br/>
+                    <span t-if="o.partner_id.street" t-esc="o.partner_id.street"/><br/>
+                    <span t-if="o.partner_id.street2" t-esc="o.partner_id.street2"/><br/>
+                    <span t-if="o.partner_id.country_id or o.partner_id.city" t-esc="o.partner_id.country_id and o.partner_id.country_id.name or o.partner_id.city"/> <span t-if="o.partner_id.zip" t-esc="o.partner_id.zip"/><br/><br/>
+                    <!-- <span t-if="not o.partner_id.is_company">Attention : </span> -->
+                    <!-- <span t-if="not o.partner_id.is_company" t-esc="o.partner_id.name"><br/></span> -->
+                </div>
+                <div class="col-xs-6">
+                    <table>
+                        <tr>
+                            <td style="width:80px;"> <span><strong> INV NO </strong></span> </td>
+                            <td> : <span t-field="o.number"/> </td>
+                        </tr>
+                        <tr>
+                            <td style="width:80px;"> <span><strong> DATE </strong></span> </td>
+                            <td> : <span t-field="o.date_invoice"/> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>DESCRIPTION</th>
+                        <th class="text-right">QTY(kg)</th>
+                        <th class="text-right">UNIT PRICE/KG</th>
+                        <th class="text-right">AMOUNT</th>
+                    </tr>
+                </thead>
+                <tbody class="invoice_tbody">
+                    <tr t-foreach="o.invoice_line_ids" t-as="l">
+                        <td><span t-field="l.name"/></td>
+                        <td class="text-right">
+                            <span t-field="l.quantity"/>
+                            <span t-field="l.uom_id"  groups="product.group_uom"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="l.price_unit" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="l.price_subtotal" 
+                                t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p t-if="o.payment_term_id">
+                <span><strong> PAYMENT TERMS : </strong></span>
+                <span t-field="o.payment_term_id.note"/>
+            </p>
+            
+            <p t-if="o.payment_term_id">
+                <span><strong> DELIVERY TERMS : </strong></span>
+                <span t-field="o.deli_term"/>
+            </p>
+            
+            <div class="row">
+                <div class="col-xs-4 pull-right">
+                    <table class="table table-condensed">
+                        <tr class="border-black">
+                            <td><strong>TOTAL DUE</strong></td>
+                            <td class="text-right">
+                                 <span t-field="o.amount_total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <p>
+                <span><strong> Delivery to : </strong></span>
+            <br/>
+                <span t-if="not o.partner_shipping_id.is_company" t-esc="o.partner_shipping_id.parent_id.name"/>
+                <span t-if="o.partner_shipping_id.is_company" t-esc="o.partner_shipping_id.name"/>
+                <br/>
+                <span t-if="o.partner_shipping_id.street" t-esc="o.partner_shipping_id.street"/><br/>
+                <span t-if="o.partner_shipping_id.street2" t-esc="o.partner_shipping_id.street2"/><br/>
+                <span t-if="o.partner_shipping_id.country_id or o.partner_shipping_id.city" t-esc="o.partner_shipping_id.country_id and o.partner_shipping_id.country_id.name or o.partner_shipping_id.city"/> <span t-if="o.partner_shipping_id.zip" t-esc="o.partner_shipping_id.zip"/><br/>
+                <span>Tel.</span>
+                <span t-if="o.partner_shipping_id.phone" t-esc="o.partner_shipping_id.phone"/><br/>
+                <span t-if="not o.partner_shipping_id.is_company">Contact : </span>
+                <span t-if="not o.partner_shipping_id.is_company" t-esc="o.partner_shipping_id.name"><br/></span>
+            </p>
+        </div>
+    </t>
+</template>
+
+    <!-- Add new field Delivery Terms inside the account invoice -->
+    <record id="invoice_form_inherit_delivery_term" model="ir.ui.view">
+        <field name="name">account.invoice.form.inherit.delivery.term</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_term_id" position="after">
+                <field name="deli_term"/>
+            </field>
+        </field>
+    </record>
+
+<!-- Report Purchase Order Customize -->
+<template id="purchase.report_purchaseorder_document">
+    <t t-call="admiral_modifier_fields.external_layout_po_header_footer">
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+        <div class="page" style="font-size:12pt;font-family:Arial;">
+            <div class="oe_structure"/>
+            <div class="row">
+                <div class="col-xs-6">
+                    <strong>TO :</strong>
+                    <br/>
+                    <span t-if="not o.partner_id.is_company" t-esc="o.partner_id.parent_id.name"/>
+                    <span t-if="o.partner_id.is_company" t-esc="o.partner_id.name"/>
+                    <br/>
+                    <span t-if="o.partner_id.street" t-esc="o.partner_id.street"/><br/>
+                    <span t-if="o.partner_id.street2" t-esc="o.partner_id.street2"/><br/>
+                    <span t-if="o.partner_id.country_id or o.partner_id.city" t-esc="o.partner_id.country_id and o.partner_id.country_id.name or o.partner_id.city"/> <span t-if="o.partner_id.zip" t-esc="o.partner_id.zip"/><br/>
+                    <span>Attention : </span>
+                    <span t-if="not o.partner_id.is_company" t-esc="o.partner_id.name"/><br/><br/>
+                </div>
+                <div class="col-xs-5 col-xs-offset-1">
+                    <table>
+                        <tr>
+                            <td style="width:80px;"> <span><strong> PO NO </strong></span> </td>
+                            <td> : <span t-field="o.name"/> </td>
+                        </tr>
+                        <tr>
+                            <td style="width:80px;"> <span><strong> DATE </strong></span> </td>
+                            <td> : <span t-field="o.date_order"/> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th><strong>DESCRIPTION</strong></th>
+                        <th class="text-right"><strong>QTY (KG)</strong></th>
+                        <th class="text-right"><strong>UNIT PRICE/KG</strong></th>
+                        <th class="text-right"><strong>AMOUNT</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="o.order_line" t-as="line">
+                        <td>
+                            <span t-field="line.name"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="line.product_qty"/>
+                            <span t-field="line.product_uom.name" groups="product.group_uom"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="line.price_subtotal"
+                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </td>
+                    </tr>
+                    <tr class="border-black">
+                            <td><strong>TOTAL  :</strong></td>
+                            <td class="text-right"><strong> <span t-esc="sum([l.product_qty for l in o.order_line])" /> </strong></td>
+                            <td></td>
+                            <td class="text-right">
+                                <span t-field="o.amount_total"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <p>
+                <span><strong> PAYMENT TERMS : </strong></span>
+                <span t-field="o.payment_term_id.note"/>
+            </p>
+            <p t-if="o.incoterm_id">
+                <span><strong> INCOTERM : </strong></span>
+                <span t-field="o.incoterm_id.name"/>
+            </p>
+            <p t-if="o.incoterm_id">
+                <span><strong> Special Instruction : </strong></span>
+                <br/>
+                <span t-field="o.notes"/>
+            </p>
+            <div class="oe_structure"/>
+        </div>
+    </t>
+</template>
+    
+<!-- Headers and Footers for Consignment Note Report -->		
+<template id="external_layout_cn_header_footer">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="admiral_modifier_fields.external_layout_header_cn" />
+    <t t-raw="0" />
+    <t t-call="admiral_modifier_fields.external_layout_footer_cn" />
+</template>
+<!-- ==================== 
+    HEADER Consignment Note REPORT 
+     ==================== -->
+<template id="admiral_modifier_fields.external_layout_header_cn">
+     <div class="header">
+        <div class="row">
+            <div class="col-xs-3">
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:86px;width: 180px;"/>
+            </div>
+            <div class="col-xs-6">
+                <b><span class="text-left" style="top:17px;font-size:20pt;font-family:Arial;" t-esc="company.name"></span></b>
+                <br/>
+                <span class="text-left" style="font-size:12pt;font-family:Arial;" t-esc="company.street and company.street or ''"></span> . 
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.street2 and company.street2 or ''"> . </span>
+                <br/>
+                <span class="text-left" style="font-size:12pt;font-family:Arial;" t-esc="company.country_id and company.country_id.name or ''"></span>  
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.zip and company.zip or ''"></span>
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;"> . Mobile :</span>
+                <span class="text-left" style="top:17px;font-size:12pt;font-family:Arial;" t-esc="company.partner_id.mobile and company.partner_id.mobile or company.phone"></span> .
+            </div>
+            <div class="col-xs-3">
+                <b><span class="text-right" style="top:17px;font-size:20pt;font-family:Arial;"> CONSIGNMENT NOTE </span></b>
+            </div>
+        </div>
+    </div>
+</template>
+<!-- ==================== 
+    FOOTER Consignment Note REPORT 
+     ==================== -->
+<template id="admiral_modifier_fields.external_layout_footer_cn">
+    <div class="footer">
+        <div class="text-center" style="border-top: 1px solid black;">
+    	<div class="row">
+            <div class="col-xs-12 text-right" style="font-weight:bold">
+                <b><span t-field="company.name" style="font-size:15pt;font-family:Arial;"/></b>
+            </div>
+         </div>
+         <div class="row">
+         	<div class="col-xs-12 text-right">
+         		<div class="text-right" style="float:right">
+                    <ul class="list-inline">
+                        <li>Page:</li>
+                        <li><span class="page"/></li>
+                        <li>of</li>
+                        <li><span class="topage"/></li>
+                    </ul>
+                </div>
+            </div>
+         </div>
+         </div>
+    </div>      
+</template>
+
+<!-- Report CONSIGNMENT NOTE -->
+<template id="admiral_modifier_fields.report_consignmentnote_document">
+    <t t-call="admiral_modifier_fields.external_layout_cn_header_footer">
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+        <div class="page" style="font-size:12pt;font-family:Arial;">
+            <div class="oe_structure"/>
+            <div class="row">
+                <div class="col-xs-6">
+                    <strong>TO :</strong>
+                    <br/>
+                    <span t-if="not o.partner_id.is_company" t-esc="o.partner_id.parent_id.name"/>
+                    <span t-if="o.partner_id.is_company" t-esc="o.partner_id.name"/>
+                    <br/>
+                    <span t-if="o.partner_id.street" t-esc="o.partner_id.street"/><br/>
+                    <span t-if="o.partner_id.street2" t-esc="o.partner_id.street2"/><br/>
+                    <span t-if="o.partner_id.country_id or o.partner_id.city" t-esc="o.partner_id.country_id and o.partner_id.country_id.name or o.partner_id.city"/><span t-if="o.partner_id.zip" t-esc="o.partner_id.zip"/><br/>
+                    Tel. <span t-if="o.partner_id.phone" t-esc="o.partner_id.phone"/><br/>
+                    <span>Attention : </span>
+                    <span t-if="not o.partner_id.is_company" t-esc="o.partner_id.name"/><br/><br/>
+                </div>
+                <div class="col-xs-5 col-xs-offset-1">
+                    <table>
+                        <tr>
+                            <td style="width:80px;"> <span><strong> DATE </strong></span> </td>
+                            <td> : <span t-field="o.date_order"/> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th><strong>DESCRIPTION</strong></th>
+                        <th class="text-right"><strong>QTY (KG)</strong></th>
+                        <th class="text-right"><strong>UNIT PRICE/KG</strong></th>
+                        <th class="text-right"><strong>AMOUNT</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="o.order_line" t-as="line">
+                        <td>
+                            <span t-field="line.name"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="line.product_qty"/>
+                            <span t-field="line.product_uom.name" groups="product.group_uom"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="line.price_subtotal"
+                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                <span><strong> VALUE FOR CUSTOM ONLY </strong></span>
+            </p>
+            <p>
+                <span><strong> REMARKS : </strong></span>
+                <br/>
+                <span t-field="o.notes"/>
+            </p>
+            <!-- <div class="oe_structure"/> -->
+        </div>
+    </t>
+</template>
+
+<template id="report_cnorder">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="admiral_modifier_fields.report_consignmentnote_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+        <report 
+            string="Consignment Note" 
+            id="action_report_consignment_note" 
+            model="purchase.order" 
+            report_type="qweb-pdf"
+            name="admiral_modifier_fields.report_cnorder" 
+            file="admiral_modifier_fields.report_cnorder" 
+        />
+</odoo>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_form_notification_inherit" model="ir.ui.view">
+        <field name="name">Purchase Order Form Notification Inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <field name="is_shipped" position="after">
+                <field name="is_vendor_bill" invisible="1"/>
+                <field name="is_unreceived" invisible="1"/>
+            </field>
+            <field name="origin" position="before">
+                <field name="approval_id" required="1"  attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                <field name="approve_check" invisible="1"/>
+            </field>
+            <xpath expr="//form/sheet/notebook" position="replace">
+                <notebook>
+                    <page string="Products">
+                        <field name="order_line" attrs="{'readonly':[('state','in', ('to approve','done', 'cancel')),('approve_check','=',False)]}">
+                            <tree string="Purchase Order Lines">
+                                <field name="currency_id" invisible="1"/>
+                                <field name="state" invisible="1"/>
+                                <field name="sequence" widget="handle"/>
+                                <field name="product_id" attrs="{'readonly': [('state', 'in', ('purchase','done', 'cancel'))]}" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}"/>
+                                <field name="name"/>
+                                <field name="date_planned"/>
+                                <field name="receive_date" invisible="1"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                <field name="account_analytic_id" context="{'default_partner_id':parent.partner_id}" groups="purchase.group_analytic_accounting"/>
+                                <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting" widget="many2many_tags"/>
+                                <field name="product_qty"/>
+                                <field name="qty_received" invisible="not context.get('show_purchase', False)"/>
+                                <field name="qty_invoiced" invisible="not context.get('show_purchase', False)"/>
+                                <field name="product_uom" groups="product.group_uom" attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
+                                <field name="price_unit"/>
+                                <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase'}"/>
+                                <field name="price_subtotal" widget="monetary"/>
+                            </tree>
+                            <form string="Purchase Order Line">
+                                <sheet>
+                                    <group>
+                                        <group>
+                                            <field name="state" invisible="1"/>
+                                            <field name="approve_check" invisible="1"/>
+                                            <field name="product_id"
+                                                   context="{'partner_id': parent.partner_id}" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                            <label for="product_qty"/>
+                                            <div>
+                                                <field name="product_qty" class="oe_inline" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                                <span class="oe_inline">&#160;</span>
+                                                <field name="product_uom" groups="product.group_uom" class="oe_inline" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                            </div>
+                                            <field name="price_unit" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                        </group>
+                                        <group>
+                                            <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use', '=', 'purchase')]" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                            <field name="date_planned" widget="date" attrs="{'readonly':['|',('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                            <field name="receive_date" widget="date" invisible="1" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                            <field name="account_analytic_id" colspan="2" groups="purchase.group_analytic_accounting" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                        </group>
+                                    </group>
+                                    <notebook>
+                                    <page string="Notes">
+                                        <field name="name" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                    </page><page string="Invoices and Incoming Shipments">
+                                        <field name="invoice_lines" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                        <field name="move_ids" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                    </page>
+                                    </notebook>
+                                </sheet>
+                            </form>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <div class="oe_subtotal_footer_separator oe_inline">
+                                <label for="amount_total"/>
+                            </div>
+                            <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                        <field name="notes" class="oe_inline" placeholder="An administrator can set up default Terms and conditions in your Company settings." attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                        <div class="oe_clear"/>
+                    </page>
+                    <page string="Deliveries &amp; Invoices">
+                        <group>
+                            <group>
+                                <label for="date_planned"/>
+                                <div>
+                                    <field name="date_planned" required="1" attrs="{'readonly': [('state', 'not in', ('draft', 'sent'))]}"/>
+                                    <button name="action_set_date_planned" type="object"
+                                        states="draft,sent"
+                                        string="Set date to all order lines"
+                                        help="This changes the scheduled date of all order lines to the given date"
+                                        class="fa fa-calendar o_icon_button oe_edit_only" attrs="{'invisible':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                </div>
+                                <field name="picking_type_id" domain="[('code','=','incoming')]" options="{'no_create': True}" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}" groups="stock.group_stock_multi_locations"/>
+                                <field name="dest_address_id" groups="stock.group_stock_multi_locations" attrs="{'invisible': [('default_location_dest_id_usage', '!=', 'customer')], 'required': [('default_location_dest_id_usage', '=', 'customer')],'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                                <field name="default_location_dest_id_usage" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}" invisible="1"/>
+                                <field name="incoterm_id" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                            </group>
+                            <group>
+                                <field name="invoice_status"/>
+                                <field name="payment_term_id" options="{'no_open': True, 'no_create': True}" attrs="{'readonly': ['|','|',('invoice_status','=', 'invoiced'), ('state', '=', 'done'), ('approve_check','=',False)]}"/>
+                                <field name="fiscal_position_id" attrs="{'readonly': ['|','|',('invoice_status','=', 'invoiced'), ('state', '=', 'done'), ('approve_check','=',False)]}"/>
+                                <field name="date_approve" groups="base.group_no_one" attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+            <button name="button_confirm" position="replace">
+                <button name="button_confirm" type="object" states="draft" string="Request Approval" id="draft_confirm"/>
+            </button>
+            <button name="button_approve" position="replace">
+                <button name="button_approve" type="object" string="Approved" class="oe_highlight" attrs="{'invisible':['|',('state','!=','to approve'),('approve_check','=',False)]}"/>
+            </button>
+            <button name="button_cancel" position="after">
+                <button name="button_reject" string="Reject" type="object" attrs="{'invisible':['|',('state','!=','to approve'),('approve_check','=',False)]}"/>
+            </button>
+            <button name="button_cancel" position="replace">
+                <button name="button_cancel" states="draft,sent,purchase" string="Cancel" type="object" attrs="{'invisible': [('state','=','to approve')]}" />
+            </button>
+        </field>
+    </record>
+
+    <!--Vendor bill notification scheduler-->
+    <record id="vendor_bill_notification_scheduler" model="ir.cron">
+        <field name="name">Vendor Bill Notification Scheduler</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model" eval="'purchase.order'"/>
+        <field name="function" eval="'vendor_bill_notification_scheduler'"/>
+        <field name="args" eval="'()'"/>
+        <field name="active" eval="True"/>
+    </record>
+
+    <!--Unreceived PO notification scheduler-->
+    <record id="unreceived_notification_scheduler" model="ir.cron">
+        <field name="name">Unreceived Notification Scheduler</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model" eval="'purchase.order'"/>
+        <field name="function" eval="'unreceived_notification_scheduler'"/>
+        <field name="args" eval="'()'"/>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

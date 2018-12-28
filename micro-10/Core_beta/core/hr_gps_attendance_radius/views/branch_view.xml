@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="res_branch_view_form_inherited_gps" model="ir.ui.view">
+        <field name="name">res.branch.form.gps</field>
+        <field name="model">res.branch</field>
+        <field name="inherit_id" ref="branch.view_res_branch_form" />
+        <field name="arch" type="xml">
+            <field name="address" position="replace">
+                <label for="street" string="Address"/>
+                <div class="o_address_format">
+                    <button
+                        string="Geolocate"
+                        name="geo_localize_branch"
+                        colspan="2"
+                        icon="fa-check"
+                        type="object"/>
+                    <field name="street" placeholder="Street..." class="o_address_street" />
+                    <!--<field name="street2" placeholder="Street 2..." class="o_address_street" />-->
+                    <field name="city" placeholder="City" class="o_address_city"/>
+                    <field name="state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}"  context="{'country_id': country_id, 'zip': zip}"/>
+                    <field name="zip" placeholder="ZIP" class="o_address_zip" />
+                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                </div>
+            </field>
+            <field name="telephone_no" position="after">
+                <field name="lat" readonly="0"/>
+                <field name="lng" readonly="0"/>
+                <label for="checkin_radius" string="Check In Radius"/>
+                <div>
+                    <field name="checkin_radius" class="oe_inline"/>
+                    <span class="oe_inline">&#160;</span>
+                    <field name="checkin_radius_selection"  class="oe_inline" style="margin-left: 10px;"/>
+                </div>
+                <field name="allow_boundary_check_in"/>
+                <label for="checkout_radius" string="Check Out Radius"/>
+                <div>
+                    <field name="checkout_radius" class="oe_inline"/>
+                    <span class="oe_inline">&#160;</span>
+                    <field name="checkout_radius_selection"  class="oe_inline" style="margin-left: 10px;"/>
+                </div>
+                <field name="allow_boundary_check_out"/>
+            </field>
+        </field>
+    </record>
+    <record id="res_employee_view_form_inherited_gps" model="ir.ui.view">
+        <field name="name">hr.employee.form.gps</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='hr_settings']/group/group/field[@name='user_id']" position="after">
+                <label for="check_in_verification" string="Check In Verification"/>
+                <div>
+                    <field name="check_in_verification" class="oe_inline"/>
+                    <span class="oe_inline">&#160;</span>
+                    <label for="checkin_branch_id" string="Check In Location"
+                           style="font-weight: bold; margin-left: 15px; border-right: 1px solid #cacaca; height: 20px; padding-right: 10px;"
+                            attrs="{'invisible': [('check_in_verification', '=', False)]}"
+                    />
+                    <field name="check_in_selection"  class="oe_inline"
+                           style="margin-left: 10px;"
+                           nolabel="1"  default="branch"
+                           attrs="{'invisible': [('check_in_verification', '=', False)]}"
+                    />
+                    <field name="checkin_branch_id"  class="oe_inline" style="margin-left: 10px;"
+                             attrs="{'invisible': ['|',('check_in_selection', '=', 'company'),('check_in_verification', '=', False)],
+                                    'required': [('check_in_selection', '=', 'branch')]}"
+                    />
+                    <field name="checkin_company_id"  class="oe_inline" style="margin-left: 10px;"
+                            attrs="{'invisible': ['|',('check_in_selection', '=', 'branch'),('check_in_verification', '=', False)],
+                                     'required': [('check_in_selection', '=', 'company')]}"
+                           nolabel="1"/>
+                </div>
+
+                <label for="check_out_verification" string="Check Out Verification"/>
+                <div>
+                    <field name="check_out_verification" class="oe_inline"/>
+                    <span class="oe_inline">&#160;</span>
+                    <label for="checkout_branch_id" string="Check Out Location"
+                           style="font-weight: bold; margin-left: 15px; border-right: 1px solid #cacaca; height: 20px; padding-right: 10px;"
+                            attrs="{'invisible': [('check_out_verification', '=', False)]}"
+                    />
+
+                    <field name="check_out_selection"  class="oe_inline"
+                           style="margin-left: 10px;"
+                           nolabel="1" default="branch"
+                           attrs="{'invisible': [('check_out_verification', '=', False)]}"
+                    />
+                    <field name="checkout_company_id"  class="oe_inline"
+                           style="margin-left: 10px;" nolabel="1"
+                            attrs="{'invisible': ['|',('check_out_selection', '=', 'branch'),('check_out_verification', '=', False)],
+                             'required': [('check_out_selection', '=', 'company')]}"
+                    />
+                    <field name="checkout_branch_id"  class="oe_inline" style="margin-left: 10px;"
+                            attrs="{'invisible': ['|',('check_out_selection', '=', 'company'),('check_out_verification', '=', False)],
+                                     'required': [('check_out_selection', '=', 'branch')]}"
+                    />
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

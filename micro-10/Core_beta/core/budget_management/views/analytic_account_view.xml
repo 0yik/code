@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_analytic_account_form_inherit" model="ir.ui.view">
+        <field name="name">Analytic Account Form Inherit 1</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="account_budget.view_account_analytic_account_form_inherit_budget"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="reserved_amount" readonly="1"/>
+            </field>
+            <xpath expr="//notebook/page/field[@name='crossovered_budget_line']/tree/field[@name='planned_amount']" position="after">
+                <field name="reserved_amount" readonly="1"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Reservation Request">
+                    <field name="budget_reserver_ids" readonly="1">
+                        <tree create="false" delete="false">
+                            <field name="name" string="Reference"/>
+                            <field name="requester"/>
+                            <field name="crossovered_budget_id"/>
+                            <field name="budget_reserve_date" string="Request Date"/>
+                            <field name="reserve_budget" string="Reserved Amount"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_invoice_version,Invoice Version,model_invoice_version,,1,1,1,1
+access_invoice_version_line,Invoice Version Line,model_invoice_version_line,,1,1,1,1
+access_sale_version,Sale Version,model_sale_version,,1,1,1,1
+access_sale_version_line,Sale Version Line,model_sale_version_line,,1,1,1,1
+access_purchase_version,Purchase Version,model_purchase_version,,1,1,1,1
+access_purchase_version_line,Purchase Version Line,model_purchase_version_line,,1,1,1,1

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_epmloyee_attendance">
+        <t t-call="report.html_container">
+            <t t-foreach="employees_data" t-as="one_emp_data">
+                <t t-call="report.external_layout">
+                    <div class="page">
+
+                        <div class="row">
+                            <div class="col-xs-10 row">
+                                <div class="col-xs-12">
+                                    <h2>Attendance Report</h2>
+                                    <t t-if="period"><span t-esc="period"/></t>
+                                    <br/><br/>
+                                </div>
+                                <div class="col-xs-6">
+                                    <b>Employee&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;: </b><span t-esc="one_emp_data['emp_name']"/><br/>
+                                    <b>Employee ID&amp;nbsp;: </b><span t-esc="one_emp_data['emp_number']"/><br/>
+                                    <b>Department&amp;nbsp;&amp;nbsp;&amp;nbsp;: </b><span t-esc="one_emp_data['emp_department']"/><br/>
+                                </div>
+                                <div class="col-xs-6 pull-right">
+                                    <b>Total Hours&amp;nbsp;&amp;nbsp;&amp;nbsp;: </b><span t-esc="one_emp_data['total_attendance']"/><br/>
+                                    <b>OT 1.0 Hours&amp;nbsp;: </b><span t-esc="one_emp_data['total_1_attendance']"/><br/>
+                                    <b>OT 1.5 Hours&amp;nbsp;: </b><span t-esc="one_emp_data['total_1_5_attendance']"/><br/>
+                                    <b>OT 2.0 Hours&amp;nbsp;: </b><span t-esc="one_emp_data['total_2_attendance']"/><br/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table class="mt32" style="border:1px solid;width:100%;">
+                                    <thead>
+                                        <tr style="height:35px;border:1px solid">
+                                            <th style="vertical-align:middle;text-align:center;border:1px solid">Date</th>
+                                            <th style="vertical-align:middle;text-align:center;border:1px solid">Attendance</th>
+                                            <th style="vertical-align:middle;text-align:center;border:1px solid">Early</th>
+                                            <th style="vertical-align:middle;text-align:center;border:1px solid">Late</th>
+                                            <th style="vertical-align:middle;text-align:center;border:1px solid">Undertime</th>
+                                            <th style="vertical-align:middle;text-align:center;border:1px solid">OT 1.0 Hours</th>
+                                            <th style="vertical-align:middle;text-align:center;border:1px solid">OT 1.5 Hours</th>
+                                            <th style="vertical-align:middle;text-align:center;border:1px solid">OT 2.0 Hours</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="one_emp_data['attendances']" t-as="one_attendance" style="height:35px;border:1px solid">
+                                            <td style="vertical-align:middle;text-align:center;border:1px solid"><span t-esc="one_attendance['date']"/></td>
+                                            <td style="vertical-align:middle;text-align:center;border:1px solid"><span t-esc="one_attendance['total_attendance']"/></td>
+                                            <td style="vertical-align:middle;text-align:center;border:1px solid"><span t-esc="one_attendance['early']"/></td>
+                                            <td style="vertical-align:middle;text-align:center;border:1px solid"><span t-esc="one_attendance['late']"/></td>
+                                            <td style="vertical-align:middle;text-align:center;border:1px solid"><span t-esc="one_attendance['undertime']"/></td>
+                                            <td style="vertical-align:middle;text-align:center;border:1px solid"><span t-esc="one_attendance['ot1_hours']"/></td>
+                                            <td style="vertical-align:middle;text-align:center;border:1px solid"><span t-esc="one_attendance['ot1_5_hours']"/></td>
+                                            <td style="vertical-align:middle;text-align:center;border:1px solid"><span t-esc="one_attendance['ot2_hours']"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

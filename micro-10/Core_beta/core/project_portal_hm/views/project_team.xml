@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<!-- Project Team List View -->
+        <record id="view_project_team_tree" model="ir.ui.view">
+            <field name="name">project.team.tree.view</field>
+            <field name="model">project.team</field>
+            <field name="arch" type="xml">
+                <tree string="Project Team">
+                    <field name="name"/>
+                    <field name="project_manager"/>
+                </tree>
+            </field>
+        </record>
+        
+		<!-- Project Team Form View -->        
+        <record id="view_project_team_form" model="ir.ui.view">
+            <field name="name">project.team.form.view</field>
+            <field name="model">project.team</field>
+            <field name="arch" type="xml">
+                <form string="Project Team">
+                	<group>
+                    	<field name="name"/>
+                    	<field name="project_manager" required="1"/>
+                    </group>
+                    <group string="System Specialists">
+                    	<field name="specialist_ids" nolabel="1">
+                    		<tree string="System Specialist" editable="bottom">
+                    			<field name="name" />
+                    		</tree> 
+                    	</field> 
+                    </group>
+                    <group string="Developers">
+                    	<field name="developer_ids" nolabel="1">
+                    		<tree string="Developers" editable="bottom">
+                    			<field name="user_id" required="1" domain="[('has_developer_group','=',True)]"></field>  
+                    		</tree> 
+                    	</field> 
+                    </group>                    
+                </form>
+            </field>
+        </record>
+
+        <record id="action_project_team" model="ir.actions.act_window">
+            <field name="name">Project Team</field>
+            <field name="res_model">project.team</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+		<record id="view_developer_task_list_filter_inherit" model="ir.ui.view">
+			<field name="name">developer.task.list.filter.inherit</field>
+			<field name="model">developer.task.list</field>
+			<field name="inherit_id" ref="developer_task.view_developer_task_list_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//group" position="inside">
+					<filter string="Developer" domain="[]" name="developer_filter" />
+					<filter string="Not Completed" domain="[('status_project','!=','done')]" name="status_filter" />
+				</xpath> 
+			</field>
+		</record>
+		
+		<record id="developer_form_dummy_button_add" model="ir.ui.view">
+		    <field name="name">developer.form.dummy.button.add</field>
+		    <field name="model">developer.task.list</field>
+		    <field name="inherit_id" ref="developer_task.developer_task_list_form" />
+		    <field name="arch" type="xml">
+		    	<xpath expr="//sheet" position="after">
+		    		<footer>
+		    			<button name="button_dummy_for_save_record" type="object" string="Save" options="{'reload_on_button': True}" 
+		    				invisible="not context.get('from_team_developers_kanban')" class="btn-primary"/>
+                        <button string="Discard" class="btn-default" special="cancel"
+                        	invisible="not context.get('from_team_developers_kanban')"/>		    			 
+		    		</footer> 
+		    	</xpath> 
+		    </field>
+	    </record>
+										
+
+        <record id="developer_tasks_list_with_filter" model="ir.actions.act_window">
+			<field name="name">Developer Tasks</field>
+			<field name="res_model">developer.task.list</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_developer_filter':1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new Developer Tasks.
+                </p>
+            </field>
+        </record>
+        
+        <!-- In project By default set list view -->
+        <record id="project.open_view_project_all" model="ir.actions.act_window">
+            <field name="name">Projects</field>
+            <field name="res_model">project.project</field>
+            <field name="view_type">form</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="search_view_id" ref="project.view_project_project_filter"/>
+            <field name="target">main</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new project.<br/>
+                    <i>Or <a type="action" name="%(project.activate_sample_project)d">activate a sample project</a> to play with.</i>
+                </p>
+            </field>
+        </record>        						                
+                
+	<menuitem 
+		action="action_project_team" 
+		id="menu_action_project_team" 
+		parent="project.menu_project_config" 
+		sequence="30"/>
+	
+		<record id="action_developers_dashboard" model="ir.actions.act_window">
+		    <field name="name">Developer Dashboard</field>
+		    <field name="res_model">team.developers</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">kanban,tree,form</field>
+		    <field name="context">{'from_team_developers_kanban':True}</field>
+		</record>		
+
+        <record model="ir.ui.view" id="team_developer_kanban">
+            <field name="name">team.developer.kanban</field>
+            <field name="model">team.developers</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey o_kanban_dashboard o_project_kanban" on_create="project.open_create_project" default_group_by="dashboard_team_id">
+                    <field name="current_team_id"/>
+					<field name="dashboard_team_id"/>                    
+                    <field name="user_id"/>
+					<field name="user_task_details"/>
+					<field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_global_click">
+	                            	<div>
+		                            	<a type="object" name="open_developer_task_form" class="o_kanban_add_developer_task">
+		                            		<span class="fa fa-plus o_fa_line_hight" />
+		                            	</a>
+		                            </div>
+	                            	                            	
+                                <div class="o_project_kanban_main o_project_kanban_boxes o_w100">	
+			                            <a name="%(developer_tasks_list_with_filter)d" type="action">
+			                            	<span class="o_value"></span>
+			                            </a>		                                                            	
+                                    <div class="o_kanban_card_content o_visible o_kanban_width_set">
+                                        <div class="o_kanban_primary_left">
+                                            <div class="o_primary">
+                                                <span class="o_discription_style"><b><t t-esc="record.user_id.value"/></b> - <t t-esc="record.current_team_id.value"/></span>  
+                                            </div>
+                                        	<div class="o_primary">
+												<!--<t t-foreach="record.project_ids.raw_value.slice(0,11)" t-as="proj">
+													<span class="o_discription_style"><t t-esc="kanban_get_project_data('project.project',1)"/></span> 
+												</t>
+												<span class="o_discription_style"><t t-esc="record.project_ids.value"/></span> -->                                        		
+                                        		<span class="o_discription_style"><t t-esc="record.user_task_details.value"/></span>
+                                        	</div>                           	                                                                                        
+                                        </div>
+                                    </div>
+		                            <div class="o_project_kanban_boxes">
+		                           </div>                                    
+                                </div>
+
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_team_developer_search" model="ir.ui.view">
+            <field name="name">team.developer.search</field>
+            <field name="model">team.developers</field>
+            <field name="arch" type="xml">
+                <search string="Team Developer">
+                    <field name="user_id" filter_domain="[('user_id','ilike',self)]" string="Developer"/>
+                    <filter string="Developer" domain="[]" context="{'group_by': 'user_id'}"/>
+                </search>
+            </field>
+        </record>
+
+		<menuitem 
+			action="action_developers_dashboard" 
+			id="menu_action_developer_dashboard" 
+			parent="project.menu_main_pm" 
+			sequence="1"
+			groups="project.group_project_manager"/>
+									                        	                 	 
+</odoo>

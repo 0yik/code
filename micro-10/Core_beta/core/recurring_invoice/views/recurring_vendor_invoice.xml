@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="recurring_vendor_invoice_tree" model="ir.ui.view">
+        <field name="name">recurring.invoice.tree</field>
+        <field name="model">recurring.invoice</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="partner_id"/>
+                <field name="amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="recurring_vendor_invoice_form">
+        <field name="name">recurring.invoice.form</field>
+        <field name="model">recurring.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Recurring Customer Invoice">
+                <header>
+                    <button name="button_progress" string="Set In Progress" type="object" states="draft" class="btn btn-primary"/>
+                    <button name="button_cancel" string="Cancel Recurring" type="object" states="progress"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <field name="type" invisible="1"/>
+                    <group>
+                        <group>
+                            <field string="Vendor" name="partner_id" domain="[('supplier', '=', True)]" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="start_date" attrs="{'readonly':[('state','!=','draft')]}" />
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="account_id" domain="[('company_id', '=', company_id),('internal_type','=', 'receivable'), ('deprecated', '=', False)]" groups="account.group_account_user"/>
+                        </group>
+                        <group>
+                            <field name="frequency" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="interval_unit" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="currency_id" groups="base.group_multi_currency" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="company_currency_id" invisible="1"/>
+                            <field name="journal_id" groups="account.group_account_user" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Invoice Lines">
+                             <field name="recurring_invoice_line_ids" nolabel="1" widget="one2many_list" context="{'default_recurring_invoice_id': id,'default_currency_id':currency_id}">
+                                <tree string="Invoice Lines" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id"/>
+                                    <field name="origin" invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="account_id" groups="account.group_account_user" domain="[('company_id', '=', parent.company_id), ('internal_type', '=', 'other')]"/>
+                                    <field name="account_analytic_id" groups="analytic.group_analytic_accounting" domain="[('company_id', '=', parent.company_id)]"/>
+                                    <field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id" groups="product.group_uom"/>
+                                    <field name="price_unit"/>
+                                    <field name="discount" groups="base.group_no_one"/>
+                                    <field name="invoice_line_tax_ids" widget="many2many_tags" domain="[('type_tax_use','=','sale')]" options="{'no_create': True}"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </tree>
+                             </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount"/>
+                            </group>
+                        </page>
+                        <page string="Recurring Schedule" states="cancel,progress,completed">
+                             <field name="recurring_schedule_lines" nolabel="1" widget="one2many_list">
+                                <tree string="Invoice Lines">
+                                    <field name="date"/>
+                                    <field name="invoice_state"/>
+                                    <field name="invoice_number"/>
+                                    <field name="created"/>
+                                </tree>
+                             </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_recurring_vendor_invoice">
+        <field name="name">Recurring Vendor Invoice</field>
+        <field name="res_model">recurring.invoice</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type','=','in_invoice')]</field>
+        <field name="context">{'type':'in_invoice'}</field>
+    </record>
+    <record id="action_recurring_vendor_invoice_tree_view" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="recurring_vendor_invoice_tree"/>
+        <field name="act_window_id" ref="action_recurring_vendor_invoice"/>
+    </record>
+
+    <record id="action_recurring_vendor_vendor_invoice_form_view" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="recurring_vendor_invoice_form"/>
+        <field name="act_window_id" ref="action_recurring_vendor_invoice"/>
+    </record>
+
+    <menuitem action="action_recurring_vendor_invoice" id="menu_recurring_vendor_invoice" parent="account.menu_finance_payables" sequence="100"/>
+    </data>
+</odoo>
+

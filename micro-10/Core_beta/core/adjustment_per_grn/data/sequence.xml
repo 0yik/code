@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for assemble-->
+        <record id="seq_stock_adjustment" model="ir.sequence">
+            <field name="name">GRN Adjustment</field>
+            <field name="code">stock.adjustment</field>
+            <field name="prefix">GRN/ADJ/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

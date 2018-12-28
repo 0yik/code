@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="barcode_extension_assests_backends_js" name="barcode_extention_js" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+           <script type="text/javascript" src="barcode_extension/static/src/js/form_view.js"></script>
+        </xpath>
+    </template>
+</odoo>

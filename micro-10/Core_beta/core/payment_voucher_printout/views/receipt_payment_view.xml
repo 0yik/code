@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_receipt_payment_report_form" model="ir.ui.view">
+            <field name="name">receipt.payment.form</field>
+            <field name="model">receipt.payment</field>
+            <field name="inherit_id" ref="sg_partner_payment.view_supplier_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='memo']" position="after">
+                    <field name="payment_voucher_no" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="cheque_no" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="checked_by" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="approved_by" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

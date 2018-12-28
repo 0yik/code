@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <template id="successful_feedback" name="Success Page" page="True">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure"/>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="alert alert-success">
+                                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                                    <h2>Your Feedabck have been sent successfully.</h2>
+                                    <h2>Thank You!</h2>
+                                </div>
+                                <p class="container">
+                                    <a class="btn btn-primary pull-left mb32" onclick="history.go(-1);" ><span class="hidden-xs">Go Back</span><span class="fa fa-long-arrow-left"/></a>
+                                </p>  
+                            </div>
+                            <div class="col-md-3">
+                                <img width="200" height="200" src="/fleet_repair_request_management/static/description/success.png" alt="show repair" class="img-square" />
+                            </div>
+                    </div>
+                </div>
+            <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+    
+</odoo>

@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="action_loop_email_tree">
+            <field name="name">Loop Email</field>
+            <field name="res_model">loop.email</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="view_loop_email_tree" model="ir.ui.view">
+            <field name="name">loop_email</field>
+            <field name="model">loop.email</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="loop_email_form_view">
+            <field name="name">loop.email.form</field>
+            <field name="model">loop.email</field>
+            <field name="arch" type="xml">
+                <form string="Loop Email Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="inherited_mail_incoming">
+            <field name="name">mail.message</field>
+            <field name="model">mail.message</field>
+            <field name="inherit_id" ref="mail.view_message_form"/>
+            <field name="priority" eval="50"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='email_from']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem
+                parent="base.menu_email"
+                id="menu_action_loop_email_tree"
+                action="action_loop_email_tree"
+                name="External Email"
+                sequence="14"
+                groups="base.group_no_one"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,258 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+
+        <record id="emp_eval_tree_view" model="ir.ui.view">
+            <field name="name">emp.eval.tree.view</field>
+            <field name="model">employee.evaluation</field>
+            <field name="arch" type="xml">
+                <tree create="false">
+                    <field name="emp_id"/>
+                    <field name="job_title"/>
+                    <field name="reviewer"/>
+                    <field name="year"/>
+                    <field name="quarter"/>
+                    <field name="perf_for_quarter" avg="Performance"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="emp_eval_form_view" model="ir.ui.view">
+            <field name="name">emp.eval.form.view</field>
+            <field name="model">employee.evaluation</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                	<header>
+                		<button name='evaluate' string='Evaluate' type='object' attrs="{'invisible':[('status','!=','draft')]}"/>
+                		<button name='completed_evaluation' string='Evaluation Complete' type='object'  
+                				attrs="{'invisible':['|',('perf_for_quarter','=',0),('status','not in',['draft','in_progress'])]}"/>
+				<button name='reevaluate' string='Re Evaluate' type='object' attrs="{'invisible':['|',('status','=','draft'),('is_complete','=',True)]}" groups="employee_appraisal.top_level_manager"/>
+                		<field name="status" widget="statusbar" readonly="1"/>
+                	</header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="emp_id" readonly="1" required="1"/>
+                                <field name="employee_id" readonly="1"/>
+                                <field name="department_id" readonly="1"/>
+                                <field name="reviewer" readonly="1"/>
+                                <field name="year" readonly="1" required="1" attrs="{'readonly':[('status','=','completed')]}" options="{'no_create_edit':True,'no_open':True,'no_quick_create':True}"/>
+                                <field name="quarter" readonly="1" required="1" attrs="{'readonly':[('status','=','completed')]}" options="{'no_create_edit':True,'no_open':True,'no_quick_create':True}"/>
+                            </group>
+                            <group>
+                            	<field name="job_title" readonly="1"/>
+                            	<field name="is_final_quarter" invisible="1"/>
+                                <field name="is_year" invisible="1"/>
+                                <field name="is_complete" invisible="1"/>   
+				 
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Ratings">
+                                <field name="emp_rating_ids" required="1" attrs="{'readonly':[('status','in',['in_progress','completed'])]}">
+                                    <tree editable="bottom" create="false">
+                                        <field name="rating_label_id" readonly="1" options="{'no_open':True}"/>
+                                        <field name="rating" context="{'eval_department_id':parent.department_id, 'eval_rating_id':rating_label_id,'full_score':full_score}" readonly="0" />
+                                        <field name="full_score" readonly="1" options="{'no_open':True}"/>
+                                        <field name="comment" placeholder="Comments...."/>
+                                        <field name="is_attendance_type" invisible="1"/>
+		                                <field name="stop_process" invisible="1"/>   
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="rating_label_id" readonly="1" options="{'no_open':True}"/>
+                                            <field name="rating" readonly="1" options="{'no_open':True}"/>
+                                            <field name="comment" readonly="1"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                        <page string="Overall Rating" attrs="{'invisible':[('quarter','!=','q4')]}" groups="employee_appraisal.top_level_manager">			   
+                           <field name="emp_evaluation_ids" readonly="0" >
+                             <tree editable="bottom" create="false">
+                               <field name="name" />
+                               <field name="quarter1" />
+                               <field name="quarter2" />
+                               <field name="quarter3" />
+                               <field name="quarter4" />
+				<field name="average"/>
+                             </tree>
+
+                           </field>
+
+                        </page>
+                        </notebook>
+                        <group>
+                        	<group>
+                        		<field name="calculated_increment" readonly='1' attrs="{'invisible':[('is_final_quarter','!=',True)]}" groups="hr.group_hr_manager"/>
+                        		<field name="calculated_salary" readonly='1' attrs="{'invisible':[('is_final_quarter','!=',True)]}" groups="hr.group_hr_manager"/>
+                        		<label for="mngmt_roundoff" attrs="{'invisible':['|',('status','in',['draft']),('is_final_quarter','!=',True)]}" groups="employee_appraisal.top_level_manager"/>
+                        		<div>
+                        			<div>
+                        				<field name='mngmt_roundoff' required="1" attrs="{'invisible':['|',('status','in',['draft']),('is_final_quarter','!=',True)],'readonly':[('status','=','completed')]}" class="oe_inline" groups="employee_appraisal.top_level_manager"/>
+                        				<button name="open_memo" string="Memo" type="object" class="oe_highlight oe_edit" attrs="{'invisible':[('status','=','completed')]}"/>
+                        			</div>
+                        		</div>
+                        		<field name='final_increment' readonly='1' attrs="{'invisible':[('is_final_quarter','!=',True)]}" groups="hr.group_hr_manager"/>
+                        		<field name='final_salary' readonly='1' attrs="{'invisible':[('is_final_quarter','!=',True)]}" groups="hr.group_hr_manager"/>
+                        		<field name='mngmt_comments' placeholder='Management Comments...' attrs="{'invisible':['|',('status','in',['draft']),('is_final_quarter','!=',True)],'readonly':[('status','=','completed')]}"/>
+                        	</group><group></group>
+                        </group>
+                        <group string="Calculation">
+                            <group>
+                                <field name="perf_for_quarter" readonly='1'/>
+                                <field name="perf_for_year" readonly='1' attrs="{'invisible':[('is_final_quarter','!=',True)]}"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Hidden the Calculated Increment, Calculated salary, Final Increment, Final Salary to the System Admin. -->
+        <record id="salary_increment_values_admin" model="ir.ui.view">
+                <field name="name">calculated.increment.admin</field>
+                <field name="model">employee.evaluation</field>
+                <field name="inherit_id" ref="emp_eval_form_view"/>
+                <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+                <field name="arch" type="xml">
+                        <field name="calculated_increment" position="attributes">
+                                <attribute name="invisible">1</attribute>
+                        </field>
+                        <field name="calculated_salary" position="attributes">
+                                <attribute name="invisible">1</attribute>
+                        </field>
+                        <field name="final_increment" position="attributes">
+                                <attribute name="invisible">1</attribute>
+                        </field>
+                        <field name="final_salary" position="attributes">
+                                <attribute name="invisible">1</attribute>
+                        </field>
+
+                </field>
+        </record>
+
+        <!-- Employee evaluation form rating column -->
+        <record id="rating_hr_manager" model="ir.ui.view">
+            <field name="name">rating.hr.manager</field>
+            <field name="model">employee.evaluation</field>
+            <field name="inherit_id" ref="emp_eval_form_view"/>
+            <field name="groups_id" eval="[(6,0,[ref('hr.group_hr_manager')])]"/>
+            <field name="arch" type="xml">
+                <field name="rating"  position="attributes">
+                        <attribute name="readonly">0</attribute>
+                </field>
+                <field name="year" position="attributes">
+                        <attribute name="readonly">0</attribute>
+                </field>
+                <field name="quarter" position="attributes">
+                        <attribute name="readonly">0</attribute>
+                </field>
+            </field>
+        </record>
+
+<!--         <record id="rating_tlm" model="ir.ui.view">
+                <field name="name">rating.tlm</field>
+                <field name="model">employee.evaluation</field>
+                <field name="inherit_id" ref="rating_hr_manager"/>
+                <field name="groups_id" eval="[(6,0,[ref('top_level_manager'),ref('base.group_system')])]"/>
+                <field name="arch" type="xml">
+                        <field name="rating"  position="attributes">
+                                <attribute name="readonly">0</attribute>
+                        </field>
+                        <field name="year" position="attributes">
+                                <attribute name="readonly">1</attribute>
+                        </field>
+                        <field name="quarter" position="attributes">
+                                <attribute name="readonly">1</attribute>
+                        </field>
+                </field>
+        </record> -->
+
+
+        
+        <record model="ir.ui.view" id="search_employee_evaluation">
+            <field name="name">Employee Evaluation Search</field>
+            <field name="model">employee.evaluation</field>
+            <field name="arch" type="xml">
+                <search string="Employee Evaluation">
+                    <group string="Group By">
+                        <filter name="group_employee_id" string="Employee" icon="terp-partner" context="{'group_by' : 'emp_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--Graph view-->
+        <record id="employee_evaluation_graph_view" model="ir.ui.view">
+            <field name="name">Employee Evaluation Graph View</field>
+            <field name="model">emp.rating.lines</field>
+            <field name="arch" type="xml">
+                <graph string="Ratings Analysis">
+                    <field name="employee_id" type="col"/>
+                    <field name="rating_label_id" type="row"/>
+                    <field name="ratings" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!--Pivot view-->
+        <record id="employee_evaluation_pivot_view" model="ir.ui.view">
+            <field name="name">Employee Evaluation Pivot View</field>
+            <field name="model">emp.rating.lines</field>
+            <field name="arch" type="xml">
+                <pivot string="Ratings Analysis">
+                    <field name="ratings" type="measure"/>
+                    <field name="average_rating" type="measure"/>
+                    <field name="rating_label_id" type="row"/>
+                    <field name="employee_id" type="row"/>
+                    <field name="quarter" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="emp_eval_action" model="ir.actions.act_window">
+            <field name="name">Employee Evaluation</field>
+            <field name="res_model">employee.evaluation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+           <field name="context">{'search_default_group_employee_id': 1}</field>
+        </record>
+
+        <record id="emp_pending_eval_action" model="ir.actions.act_window">
+            <field name="name">In progress Evaluation </field>
+            <field name="res_model">employee.evaluation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('status','=','in_progress')]</field>
+        </record>
+
+        <record id="action_employee_rating_analysis" model="ir.actions.act_window">
+            <field name="name">Ratings Analysis</field>
+            <field name="res_model">emp.rating.lines</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">pivot,graph</field>
+            <field name="domain">[('status', '=', 'completed')]</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'pivot', 'view_id': ref('employee_evaluation_pivot_view')}),
+                          (0, 0, {'view_mode': 'graph', 'view_id': ref('employee_evaluation_graph_view')})]"/>
+            <field name="help">Ratings Analysis allows you to easily check and analyse your company employee rating history and performance.</field>
+        </record>
+
+        <menuitem id="menu_ratings_analysis" sequence="14" action="action_employee_rating_analysis" parent="employee_appraisal.report_menu_view" groups="hr.group_hr_user"/>
+        
+        <!-- Inherited to rename the label from Employees to Human Resources -->
+        <!--<menuitem name="Human Resources"-->
+            <!--id="hr.menu_hr_root"-->
+            <!--groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"-->
+            <!--icon="fa-user"-->
+            <!--web_icon="hr,static/description/icon.png"-->
+            <!--sequence="75"/>-->
+       	
+    </data>
+</odoo>
+

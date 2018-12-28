@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherited Student Fees Structure Line Form View -->
+    <record id="view_ems_class_form_make_up_class" model="ir.ui.view">
+        <field name="name">ems.class.make.up.class</field>
+        <field name="model">ems.class</field>
+        <field name="inherit_id" ref="ems_class_classroom.view_ems_class_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[1]" position="after">
+                <page string="Students" name="students">
+                	<field name="student_ids" nolabel="1" colspan="4">
+                        <tree string="Student Information" editable="bottom">
+                            <field name="student_id" required="1" options="{&quot;no_create&quot;: True}"/>
+                            <field name="roll_no" />
+                            <field name="is_present"/>
+                            <field name="is_absent"/>
+                            <field name="ems_id" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    
+</odoo>   

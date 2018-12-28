@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Employee -->
+    <record id="view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+        
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button class="oe_stat_button org-chart" special="cancel"
+                    icon="fa-list-ul" >
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Org Chart</span>
+                    </div>
+                </button>
+            
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_department_form_inherit" model="ir.ui.view">
+        <field name="name">hr.department.form.inherit</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_form" />
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button class="oe_stat_button org-chart" special="cancel" context="{'model': hr_department}"
+                    icon="fa-list-ul" >
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Org Chart</span>
+                    </div>
+                </button>
+
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_job_inherit_form" model="ir.ui.view">
+            <field name="name">View Hr Job Inherit Form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_job_survey"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='address_id']" position="after">
+                   <field name="parent_id"/>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

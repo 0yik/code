@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+
+		<t t-extend="KanbanView.buttons">
+			<t t-jquery="button" t-operation="replace">
+				<t t-if="widget.model != 'team.developers' ">
+	        		<button type="button" class="btn btn-primary btn-sm o-kanban-button-new" accesskey="c">
+	            		<t t-esc="widget.options.create_text || _t('Create')"/>
+	            	</button>
+            	</t>			
+			</t> 
+		</t>
+		
+		<t t-extend="KanbanView.ColumnQuickCreate">
+			<t t-jquery="div.o_column_quick_create" t-operation="replace">
+				<!--<t t-if="widget.model != 'team.developers' ">
+				    <div class="o_column_quick_create">
+				        <div class="o_column_header">
+				            <span class="o_kanban_add_column"><i class="fa fa-chevron-right"/></span>
+				            <span class="o_kanban_title"><t t-esc="widget"/></span>
+				        </div>
+				        <div class="o_kanban_quick_create">
+				            <input type="text" placeholder="Add"/>
+				            <button class="btn btn-sm btn-primary o_kanban_add">Add</button>
+				            <button class="btn btn-sm btn-default o_kanban_cancel">Discard</button>
+				        </div>
+				    </div>
+	            </t>-->				 
+			</t> 
+		</t>
+		
+		<t t-extend="KanbanView.Group">
+			<t t-jquery=".o_kanban_quick_add" t-operation="replace">
+			</t>
+				<!--<t t-if="widget.model != 'team.developers'">
+		            <t t-if="widget.quick_create">
+		                <span class="o_kanban_quick_add"><i class="fa fa-plus"/></span>
+		            </t>					
+		            <span class="o_kanban_config dropdown">
+		                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-gear"/></a>
+		                <ul class="dropdown-menu" role="menu">
+		                    <li><a class="o_kanban_toggle_fold" href="#">Fold</a></li>
+		                    <t t-if="widget.grouped_by_m2o">
+		                        <li t-if="widget.editable and widget.id"><a class="o_column_edit" href="#">Edit Stage</a></li>
+		                        <li t-if="widget.deletable and widget.id"><a class="o_column_delete" href="#">Delete</a></li>
+		                    </t>
+		                    <t t-if="widget.has_active_field">
+		                        <li><a class="o_column_archive" href="#"><t t-esc="widget.model"/></a></li>
+		                        <li><a class="o_column_unarchive" href="#">Unarchive Records</a></li>
+		                    </t>
+		                </ul>
+		            </span>-->
+		</t>	 
+
+</templates>

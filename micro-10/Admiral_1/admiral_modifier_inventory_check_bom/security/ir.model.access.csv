@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_admiral_modifier_inventory_check_bom_inventory_check_modifier,access_right_inventory_check_modifier,inventory_check.model_inventory_check,,1,1,1,1

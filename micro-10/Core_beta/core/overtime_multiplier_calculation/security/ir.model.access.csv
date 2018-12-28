@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_overtime_multiplier_manager,access.overtime.multiplier,model_overtime_multiplier,hr.group_hr_manager,1,1,1,1
+access_overtime_multiplier_rule_manager,access.overtime.multiplier.rule,model_overtime_multiplier_rule,hr.group_hr_manager,1,1,1,1
+access_overtime_multiplier_employee_manager,access.overtime.multiplier.employee,model_overtime_multiplier_employee,hr.group_hr_manager,1,1,1,1
+access_allocate_overtime_multiplier_manager,access.allocate.overtime.multiplier,model_allocate_overtime_multiplier,hr.group_hr_manager,1,1,1,1
+
+

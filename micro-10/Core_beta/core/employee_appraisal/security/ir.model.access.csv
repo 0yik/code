@@ -1,0 +1,62 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_edu_qual_base_user,base_user,model_education_qualification,base.group_user,1,0,0,0
+access_emp_memo_base_user,base_user,model_employee_memo,base.group_user,1,0,0,0
+access_rating_config_base_user,base_user,model_rating_config,base.group_user,1,0,0,0
+access_year_config_base_hr_user,base_hr_user year config,model_year_config,hr.group_hr_user,1,1,1,1
+
+access_sal_band_base_hr_user,base_hr_user_salary_band,model_salary_band,hr.group_hr_user,1,1,1,1
+access_emp_eval_base_user,base_user,model_employee_evaluation,base.group_user,1,0,0,0
+access_eval_report_base_user,base_user,model_evaluation_report,base.group_user,1,1,1,1
+access_sal_history_base_user,base_user,model_salary_history,base.group_user,1,1,1,1
+
+access_edu_qual_hr_manager,hr_manager,model_education_qualification,hr.group_hr_manager,1,1,1,0
+access_edu_qual_top_level_manager,top_level_manager,model_education_qualification,top_level_manager,1,1,1,0
+access_emp_memo_hr_manager,hr_manager,model_employee_memo,hr.group_hr_manager,1,1,1,0
+access_emp_memo_top_level_manager,top_level_manager,model_employee_memo,top_level_manager,1,1,1,0
+access_rating_config_hr_manager,hr_manager,model_rating_config,hr.group_hr_manager,1,1,1,0
+access_rating_config_top_level_manager,top_level_manager,model_rating_config,top_level_manager,1,1,1,0
+
+hr.access_hr_employee_user,hr.employee user,hr.model_hr_employee,hr.group_hr_user,1,1,0,0
+access_hr_employee_hr_manager,hr_manager,hr.model_hr_employee,hr.group_hr_manager,1,1,1,1
+access_hr_employee_top_level_manager,hr_manager,hr.model_hr_employee,top_level_manager,1,1,1,1
+
+hr.access_hr_department_user,hr.department.user,hr.model_hr_department,hr.group_hr_user,1,0,0,0
+access_hr_department_hr_manager,hr_manager,hr.model_hr_department,hr.group_hr_manager,1,1,1,0
+access_hr_department_top_level_manager,top_level_manager,hr.model_hr_department,top_level_manager,1,1,1,0
+
+access_salary_history_lines_emp,Salary History Lines Emp,model_salary_history_lines,base.group_user,1,1,1,1
+access_supervisor_history_lines_emp,Supervisor history lines Emp,model_supervisor_history_lines,base.group_user,1,1,1,1
+access_department_history_lines_emp,Department history lines Emp,model_department_history_lines,base.group_user,1,1,1,1
+access_employee_history_lines_emp,Employee history lines Emp,model_employee_history_lines,base.group_user,1,1,1,1
+
+access_perf_report_base_user,base_user,model_performance_report,base.group_user,1,1,1,1
+
+access_deparment_history_lines,dep_history,model_department_history_lines,base.group_user,1,0,0,0
+access_supervisor_history_lines,supervisor_history,model_supervisor_history_lines,base.group_user,1,0,0,0
+access_emp_history_lines,emp_status_history,model_employee_history_lines,base.group_user,1,0,0,0
+
+
+access_weightage_lines emp,base_user,model_weightage_lines,base.group_user,1,1,1,1
+access_rating_values emp,base_user,model_rating_values,base.group_user,1,1,1,1
+access_employee_evaluation_officer,base_user,model_employee_evaluation,hr.group_hr_user,1,1,0,0
+access_employee_evaluation_hr,base_user,model_employee_evaluation,hr.group_hr_manager,1,1,1,1
+
+access_emp_rating_lines_base_user,base_user,model_emp_rating_lines,base.group_user,1,1,1,1
+
+access_rating_lines_base_user,base_user,model_rating_lines,base.group_user,1,1,1,1
+access_salaryrange_lines_base_user,base_user,model_salaryrange_lines,base.group_user,1,1,1,1
+
+access_emp_memo_history_Emp,Emp Memo History,model_emp_memo_history,base.group_user,1,1,1,1
+access_quarter_line_emp,Emp Quarter Line,model_quarter_line,base.group_user,1,1,1,1
+access_emp_perf_emp,Emp Employee Performance,model_employee_performance,base.group_user,1,1,1,1
+
+access_salary_report_emp,Salary Report Emp,model_salary_report,base.group_user,1,1,1,1
+access_attenadance_percentage_emp,Attendance Percentage Emp,model_attendance_percentage,base.group_user,1,1,1,1
+
+access_employee_evaluation_history,Evaluation History,model_employee_evaluation_history,base.group_user,1,1,1,0
+
+access_import_success,Import Success Emp,model_import_success,base.group_user,1,1,1,0
+access_res_groups_employee,res_groups employee,base.model_res_groups,base.group_user,1,1,0,0
+access_ir_module_categ_employee,ir_module_categ employee,base.model_ir_module_category,base.group_user,1,1,0,0
+access_ir_ui_view_employee,ir_ui_view employee,base.model_ir_ui_view,base.group_user,1,1,0,0

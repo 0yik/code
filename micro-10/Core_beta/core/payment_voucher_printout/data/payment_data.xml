@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="sequence_payment_voucher_no" model="ir.sequence">
+            <field name="name">paymentVoucher</field>
+            <field name="code">payment.voucher</field>
+            <field name="prefix">PV-</field>
+            <field eval="3" name="padding"/>
+            <field eval="1" name="number_increment"/>
+        </record>
+
+        <record id="sequence_supplier_payment_no" model="ir.sequence">
+            <field name="name">receipt.payment</field>
+            <field name="code">receipt.payment</field>
+            <field name="prefix">PV-</field>
+            <field eval="3" name="padding"/>
+            <field eval="1" name="number_increment"/>
+        </record>
+	</data>
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="ir_actions_server_download_material_shortage" model="ir.actions.server">
+            <field name="name">Material Shortage</field>
+            <field name="model_id" ref="model_mrp_production"/>
+            <field name="state">code</field>
+            <field name="code">action = model.download_material_shortage_to_excel()</field>
+        </record>
+
+        <record id="ir_actions_server_download_capacity_planning" model="ir.actions.server">
+            <field name="name">Capacity Planning</field>
+            <field name="model_id" ref="model_mrp_production"/>
+            <field name="state">code</field>
+            <field name="code">action = model.download_capacity_planning_to_excel()</field>
+        </record>
+
+        <record id="ir_actions_server_download_production_schedule" model="ir.actions.server">
+            <field name="name">Production Schdedule</field>
+            <field name="model_id" ref="model_mrp_production"/>
+            <field name="state">code</field>
+            <field name="code">action = model.download_production_schedule_to_excel()</field>
+        </record>
+
+        <record id="ir_actions_server_download_stock_take" model="ir.actions.server">
+            <field name="name">Stock Take Rpt</field>
+            <field name="model_id" ref="model_mrp_production"/>
+            <field name="state">code</field>
+            <field name="code">action = model.download_stock_take_to_excel()</field>
+        </record>
+
+        <menuitem id="menu_report_excel" name="Report to Excel" parent="mrp.menu_mrp_reporting" sequence="13"/>
+
+        <menuitem id="menu_material_shortage" name="Material Shortage" parent="menu_report_excel"
+			action="ir_actions_server_download_material_shortage" sequence="0"/>
+
+        <menuitem id="menu_capacity_planning" name="Capacity Planning" parent="menu_report_excel"
+			action="ir_actions_server_download_capacity_planning" sequence="1"/>
+
+        <menuitem id="menu_production_schedule" name="Production Schdedule" parent="menu_report_excel"
+			action="ir_actions_server_download_production_schedule" sequence="2"/>
+
+        <menuitem id="menu_stock_take" name="Stock Take Rpt" parent="menu_report_excel"
+			action="ir_actions_server_download_stock_take" sequence="3"/>
+
+        
+        <!--<record id="id_export_server_download_product" model="ir.values">-->
+            <!--<field name="model_id" ref="model_mrp_production" />-->
+            <!--<field name="name">Material Shortage</field>-->
+            <!--<field eval="'ir.actions.server,' + str(ref('ir_actions_server_download_material_shortage'))" name="value"/>-->
+            <!--<field name="key">action</field>-->
+            <!--<field name="model">mrp.production</field>-->
+        <!--</record>-->
+    </data>
+</odoo>

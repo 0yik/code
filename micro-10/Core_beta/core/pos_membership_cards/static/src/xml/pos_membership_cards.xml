@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+	<t t-extend="PaymentScreenWidget">
+		<t t-jquery=".payment-buttons" t-operation="append">
+			<div class='button' id='membership_card'>
+				<i class='fa fa-credit-card' /> Membership Card
+			</div>
+		</t>
+	</t>
+
+	<t t-name="MembershipAlertPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height:260px !important">
+                <p class="title"  style="width:92%">
+                    <t t-esc=" widget.options.title || 'Message' " />
+                </p>
+                <p class="body">
+                    <t t-esc="  widget.options.body || '' " />
+                </p>
+                <div class="footer">
+                    <div class="button cancel">
+                        OK
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>   
+
+	<t t-extend="PaymentScreen-Paymentlines">
+		<t t-jquery=".paymentlines-empty .total" t-operation="after">
+			<center>
+				<div id='membership_discount' style="color:rgb(67, 153, 110);font-size: larger;">
+					<t t-if="widget.pos.get_order().membership_applied_discount != False">
+						<b><t t-esc="widget.pos.get_order().membership_applied_discount"/>% Membership Discount Applied</b>
+					</t>
+				</div>
+			</center>
+		</t>
+	</t>
+
+
+	<t t-name="MembershipCardPopup">
+		<div class="modal-dialog">
+			<div class="popup popup-textinput">
+				<div class='title'>
+					MEMBERSHIP CARD
+				</div>
+				<div>
+					<table width="80%" style='margin-left: 10%;margin-right:10%;margin-top: 2%;'>
+						<tr>
+							<td>
+								<b>Card Code:</b>
+							</td>
+							<td>
+								<input id='card_code' class='detail' placeholder='--Card Code--'></input>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<div id="check_card" class="button" style="margin-right: 10%;margin-top: 2%;">
+									Check
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class="fa fa-warning" id='card_error' style='color: rgb(159, 96, 0); font-size: smaller; height: 28px; padding-top: 2.3%; text-align: justify; background-color: rgb(254, 239, 179);padding-left: 2%;margin-top: 15%;padding-right: 2%; display:none;'> Invalid Card Code
+								</div>								
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div id='card_valid' style='color: rgb(59, 79, 43); font-size: smaller; height: 45px; padding: 3%; text-align: justify; margin-top: 7%; background-color: rgb(186, 224, 155);display:none;'>
+								</div>								
+							</td>
+						</tr>
+					</table>
+					<div id="delete_paymentlines_alert" style='color: rgb(159, 96, 0); font-size: small; height: 28px; padding-top: 2.3%; text-align: center; background-color: rgb(254, 239, 179);padding-left: 2%;margin-top: 2%;padding-right: 2%; display:none;'>
+					</div>
+				</div>
+				<div class="footer">
+					<div id='wk_apply' class="button" style="display:none;">
+						Apply Discount
+					</div>
+					<div id='wk_cancel' class="button cancel">
+						Cancel
+					</div>
+				</div>
+			</div>
+		</div>
+	</t>
+
+</templates>

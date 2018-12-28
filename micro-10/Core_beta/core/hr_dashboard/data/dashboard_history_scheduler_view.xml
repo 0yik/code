@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!-- Scheduler for Dashboard History -->
+	<record id="dashboard_history_scheduler" model="ir.cron">
+		<field name="name">Employee Dashboard History</field>
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="doall" eval="False"/>
+		<field name="model" eval="'hr.dashboard'"/>
+		<field name="function" eval="'create_dashboard_history'"/>
+		<field name="args" eval="'()'"/>
+	</record>
+</odoo>

@@ -1,0 +1,39 @@
+<odoo>
+
+    <record id="ais_api_schedule_wizard" model="ir.ui.view">
+        <field name="name">Next Schedule</field>
+        <field name="model">ais.api.schedule</field>
+        <field name="arch" type="xml">
+            <form string="History">
+                <group col="4">
+                    <field name="next_schedule_date"/>
+                    <field name="form_type"/>
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="source"/>
+                    <field name="organization_id_type"/>
+                    <field name="company_id" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="batch_indicatior"/>
+                    <field name="organization_id_no"/>
+                    <field name="payroll_user" />
+                    <field name="user_id"/>
+                    <field name="user_id_type"/>
+                    <field name="batch_date" />
+                </group>
+                <separator string="Employees"/>
+                <field name="employee_ids">
+                    <tree string="Employees">
+                        <field name="name"/>
+                        <field name="department_id"/>
+                        <field name="work_email"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="action_set" string="Save" type="object" class="oe_highlight"/>
+                    <button name="cancel" string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

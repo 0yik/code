@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mail_mass_mailing_form" model="ir.ui.view">
+        <field name="name">mail.mass_mailing.form</field>
+        <field name="model">mail.mass_mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_button_box']" position="after">
+                <div class="oe_button_box" name="button_box">
+                    <button class="oe_stat_button" icon="fa-search-plus"
+                            name="%(wizard_mass_mailing_preview)d" string="Preview" type="action" target="new"
+                            context="{'template_id':active_id, 'preview_of_mail': 1}"/>
+                </div>
+            </xpath>
+            <xpath expr="//button[@name='put_in_queue']" position="attributes">
+                <attribute name="string">Send Now</attribute>
+            </xpath>
+            <xpath expr="//button[@name='put_in_queue']" position="after">
+                <button name="schedule_mail" type="object"
+                        attrs="{'invisible': ['|', ('state', 'in', ('in_queue', 'done'))]}"
+                        class="oe_highlight" string="Schedule Mail"/>
+            </xpath>
+            <xpath expr="//field[@name='schedule_date']" position="before">
+                <field name="schedule_ok" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='clicks_ratio']" position="replace">
+                <field name="click_ratio" string="Clicks" widget="percentpie"/>
+            </xpath>
+            <xpath expr="//field[@name='schedule_date']" position="attributes">
+                <attribute name="attrs">{'readonly': [('schedule_ok', '=', True)]}</attribute>
+            </xpath>
+            <field name="mailing_domain" position="replace">
+                <div>
+                    <field name="mailing_domain" widget="char_domain" style="overflow:scroll;"
+                                    placeholder="Select recipients"
+                                    attrs="{'invisible': [('mailing_model', '=', 'mail.mass_mailing.contact')]}"
+                                    options="{'model_field': 'mailing_model', 'model_domain': 'mailing_domain'}"
+                                    context="{'search_default_not_opt_out':1}"/>
+                </div>
+            </field>
+
+        </field>
+    </record>
+
+</odoo>

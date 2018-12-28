@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_principal_loan" model="product.product">
+        <field name="name">Principal Loan</field>
+    </record>
+
+    <!-- 2. Interest Loan -->
+    <record id="product_interest_loan" model="product.product">
+        <field name="name">Interest Loan</field>
+    </record>
+</odoo>

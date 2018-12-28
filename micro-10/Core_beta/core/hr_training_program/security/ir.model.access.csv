@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_training_programs,access_training_programs,model_training_programs,,1,1,1,1
+access_training_conducts,access_training_conducts,model_training_conducts,,1,1,1,1
+access_list_conducts,access_list_conducts,model_list_conducts,,1,1,1,1
+access_employee_bond,access_employee_bond,model_employee_bond,,1,1,1,1
+access_training_requests,access_training_requests,model_training_requests,,1,1,1,1
+access_candidates_training,access_candidates_training,model_candidates_training,,1,1,1,1
+access_training_progress,access_training_progress,model_training_progress,,1,1,1,1

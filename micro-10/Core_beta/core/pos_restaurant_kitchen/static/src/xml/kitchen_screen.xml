@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    
+    <t t-name="KitchenScreenWidget">
+        <div class="paylaterlist-screen clientlist-screen screen">
+            <div class="kitchen_screen">
+                <section class="full-content" style="top:1px">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-x scrollable-y'>
+                                    <table class='paylater-list lines-list'>
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="kitchen_header">Floor</th>
+                                                <th class="kitchen_header">Table</th>
+                                                <th class="kitchen_header">Time</th>
+                                                <th class="kitchen_header">Name</th>
+                                                <th class="kitchen_header">Quantity</th>
+                                                <th class="kitchen_header">Notes</th>
+                                                <th class="kitchen_header">Status</th>
+                                                <th class="kitchen_header"></th>
+                                                <th class="kitchen_header"></th>
+                                            </tr>
+                                        </thead>
+                                        <div>
+                                            <tbody class='kitchen-list-priority'>
+                                            </tbody>
+                                            <tbody class='kitchen-list-error'>
+                                            </tbody>
+                                            <tbody class='kitchen-list-normal'>
+                                            </tbody>
+                                            <tbody class='kitchen-list-need-to-confirm'>
+                                            </tbody>
+                                            <tbody class='kitchen-list-waiting-delivery'>
+                                            </tbody>
+                                            <tbody class='kitchen-list-cancel'>
+                                            </tbody>
+                                            <tbody class='kitchen-list-not-enough-material'>
+                                            </tbody>
+                                        </div>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </t>
+    <t t-name="KitchenLine">
+        <tr class='client-line' t-att-data-id='line.uid'>
+            <th class="table-line"><img class='oe_avatar' t-att-src='line.product_url(line.product.id)' /></th>
+            <td class="table-line"><t t-esc='line.order.table.floor.name' /></td>
+            <td class="table-line"><t t-esc='line.order.table.name'/></td>
+            <td class='table-line'><t t-esc='line.creation_time'/></td>
+            <td class="table-line"><t t-esc='line.product.display_name' /></td>
+            <td class="table-line">
+                <t t-if='line.quantity_updated'>
+                    <t t-if='line.quantity_updated !== line.quantity'>
+                        <t t-esc='line.quantity - line.quantity_updated'/>    
+                    </t>
+                    <t t-if='line.quantity_updated == line.quantity'>
+                        <t t-esc='line.quantity'/>    
+                    </t>    
+                </t>
+                <t t-if='!line.quantity_updated'>
+                    <t t-esc='line.quantity'/>
+                </t>
+            </td>
+            <td class="table-line-note"><t t-esc='line.note' /></td>
+            <td class="cooking-status-warning">
+                <t t-if="line.state === 'High-Priority'" ><p class="blink"><i class="fa fa-bullhorn"/> <t t-esc='line.state' /></p></t>
+                <t t-if="line.state !== 'High-Priority'" ><t t-esc='line.state' /></t>
+            </td>
+            <td>
+                <t t-if="line.state == 'Confirmed' || line.state == 'Error' || line.state == 'High-Priority'">
+                    <button class="control-button highlight kitchen_delivery" style="font-size:24px;top:20px"><i class='fa fa-bell-o'/> Delivery</button>
+                </t>
+            </td>
+            <td>
+                <t t-if="line.state == 'Confirmed' || line.state == 'Error' || line.state == 'High-Priority'">
+                    <button class="control-button highlight kitchen_cancel" style="font-size:24px;top:20px"><i class='fa fa-info-circle'/> Not Enough Material</button>
+                </t>
+            </td>
+            <td>
+                <t t-if="line.state != 'Confirmed'">
+                    <t t-if="line.state != 'Cancel'">
+                        <button class="control-button highlight kitchen_put_back" style="font-size:24px;top:20px"><i class='fa fa-step-backward'/> Put Back</button>
+                    </t>
+                </t>
+            </td>
+            <td>
+                <t t-if="line.state == 'Cancel'">
+                    <button class="control-button highlight kitchen_confirm_cancel" style="font-size:24px;top:20px"><i class='fa fa-check'/> Confirm cancel</button>
+                </t>
+            </td>
+        </tr>
+    </t>
+
+
+</templates>

@@ -1,0 +1,1 @@
+import pos_multi_auto_price

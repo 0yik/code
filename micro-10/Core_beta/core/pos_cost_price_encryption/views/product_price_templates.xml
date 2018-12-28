@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets" inherit_id="point_of_sale.assets">
+          <xpath expr="." position="inside">
+              <script type="text/javascript" src="/pos_cost_price_encryption/static/src/js/encrypt.js"></script>
+              <!--<link rel="stylesheet" href="/pos_cost_price_encryption/static/src/css/discount.css" />-->
+          </xpath>
+        </template>
+
+        <template id="web.assets_backend">
+        <t t-call="web.less_helpers"/>
+
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/import_bootstrap.less"/>
+
+        <link rel="stylesheet" type="text/css" href="/web/static/lib/nvd3/nv.d3.css"/>
+        <link rel="stylesheet" type="text/css" href="/base/static/src/css/modules.css"/>
+
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/bootstrap_overridden.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/webclient_extra.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/webclient_layout.less"/>
+
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/webclient.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/datepicker.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/progress_bar.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/dropdown.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/tooltip.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/debug_manager.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/control_panel.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/control_panel_layout.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/views.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/pivot_view.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/graph_view.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/tree_view.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/form_view_layout.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/form_view.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/list_view.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/search_view.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/modal.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/data_export.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/switch_company_menu.less"/>
+
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/dropdown_extra.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/views_extra.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/form_view_extra.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/form_view_layout_extra.less"/>
+        <link rel="stylesheet" type="text/less" href="/web/static/src/less/search_view_extra.less"/>
+
+        <script type="text/javascript" src="/web/static/lib/jquery.scrollTo/jquery.scrollTo.js"></script>
+        <script type="text/javascript" src="/web/static/lib/nvd3/d3.v3.js"></script>
+        <script type="text/javascript" src="/web/static/lib/nvd3/nv.d3.js"></script>
+        <script type="text/javascript" src="/pos_cost_price_encryption/static/src/js/new_backbone.js"></script>
+        <script type="text/javascript" src="/web/static/lib/fuzzy-master/fuzzy.js"></script>
+
+        <script type="text/javascript" charset="utf-8">
+            odoo._modules = <t t-raw="get_modules_order()"/>;
+        </script>
+
+        <script type="text/javascript" src="/web/static/lib/py.js/lib/py.js"></script>
+        <!-- Special case: core.js declares $.browser needed by ba-bbq -->
+        <script type="text/javascript" src="/web/static/lib/jquery.ba-bbq/jquery.ba-bbq.js"></script>
+
+        <script type="text/javascript" src="/web/static/src/js/framework/data_model.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/framework/formats.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/framework/view.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/framework/pyeval.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/action_manager.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/control_panel.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/view_manager.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/abstract_web_client.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/web_client.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/framework/data.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/compatibility.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/framework/misc.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/framework/crash_manager.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/framework/data_manager.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/services/crash_manager.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/services/data_manager.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/services/session.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/auto_complete.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/change_password.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/debug_manager.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/data_export.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/date_picker.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/loading.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/notification.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/sidebar.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/priority.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/progress_bar.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/pager.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/systray_menu.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/switch_company_menu.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/widgets/user_menu.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/menu.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/list_common.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/list_view.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/form_view.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/form_common.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/form_widgets.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/form_upgrade_widgets.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/form_relational_widgets.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/list_view_editable.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/pivot_view.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/graph_view.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/graph_widget.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/search_view.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/search_filters.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/search_inputs.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/search_menus.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/views/tree_view.js"></script>
+        <script type="text/javascript" src="/web/static/src/js/apps.js"></script>
+    </template>
+    </data>
+</odoo>

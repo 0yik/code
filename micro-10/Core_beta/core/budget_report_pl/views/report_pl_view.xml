@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="budget_report_pl_view_form" model="ir.ui.view">
+        <field name="name">Budget Report PL Form</field>
+        <field name="model">budget.report.pl</field>
+        <field name="arch" type="xml">
+            <form string="Budget PL Report">
+                <header>
+                    <button string="Confirm" name="action_budget_confirm" states="draft" type="object" class="oe_highlight"/>
+                    <button string="Approve" name="action_budget_validate" states="confirm" type="object" class="oe_highlight"/>
+                    <button string="Done" name="action_budget_done" states="validate" type="object" class="oe_highlight"/>
+                    <button string="Reset to Draft" name="action_budget_draft" states="cancel" type="object" />
+                    <button string="Cancel Budget" name="action_budget_cancel" states="confirm,validate" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                </header>
+                <sheet string="Budget">
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" required="1" attrs="{'readonly':[('state','!=','draft')]}" placeholder="Budget Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <label for="date_from" string="Period"/>
+                            <div>
+                                <field name="date_from" required="1" class="oe_inline" attrs="{'readonly':[('state','!=','draft')]}"/> -
+                                <field name="date_to" required="1" class="oe_inline" attrs="{'readonly':[('state','!=','draft')]}" nolabel="1"/>
+                            </div>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Budget Lines">
+                            <field name="line_ids" context="{'default_date_from': date_from,'default_date_to': date_to}" colspan="4" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}">
+                                <tree string="Budget Lines">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="account_id" required="1"/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="paid_date"/>
+                                    <field name="planned_amount" sum="Planned Amount" widget="monetary"/>
+                                    <field name="practical_amount" sum="Practical Amount" widget="monetary"/>
+                                    <field name="theoretical_amount" sum="Theoretical Amount" widget="monetary"/>
+                                    <field name="percentage" sum="Percentage Amount" widget="monetary"/>
+                                </tree>
+                                <form string="Budget Lines">
+                                    <group>
+                                        <group>
+                                            <field name="account_id" required="1"/>
+                                            <field name="planned_amount" widget="monetary"/>
+                                            <field name="theoretical_amount" widget="monetary"/>
+                                            <field name="practical_amount" widget="monetary"/>
+                                            <field name="percentage" widget="monetary"/>
+                                        </group>
+                                        <group>
+                                            <label for="date_from" string="Period"/>
+                                            <div>
+                                                <field name="date_from" required="1" class="oe_inline"/> -
+                                                <field name="date_to" required="1" class="oe_inline"/>
+                                            </div>
+                                            <field name="paid_date" groups="base.group_no_one"/>
+                                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="budget_report_pl_view_tree" model="ir.ui.view">
+        <field name="name">Budget Report PL Tree</field>
+        <field name="model">budget.report.pl</field>
+        <field name="arch" type="xml">
+           <tree decoration-info="state == 'draft'" decoration-muted="state in ('done','cancel')" string="Budget">
+                <field name="name" colspan="1"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                <field name="user_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="budget_report_pl_search" model="ir.ui.view">
+       <field name="name">Budget Report PL Search</field>
+       <field name="model">budget.report.pl</field>
+       <field name="arch" type="xml">
+           <search string="Budget">
+                <field name="name" filter_domain="[('name','ilike',self)]" string="Budget"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <filter string="Draft" domain="[('state','=','draft')]" help="Draft Budgets"/>
+                <filter string="To Approve" domain="[('state','=','confirm')]" help="To Approve Budgets" />
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="act_budget_report_pl_view" model="ir.actions.act_window">
+        <field name="name">Budget Report (P&amp;L)</field>
+        <field name="res_model">budget.report.pl</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new budget profit and loss report.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_act_budget_report_pl_view" name="Budget Report (P&amp;L)" parent="account.account_reports_management_menu" action="act_budget_report_pl_view" sequence="2"/>
+
+</odoo>

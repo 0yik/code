@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="project_issue_start_stop_form_view" model="ir.ui.view">
+            <field name="name">project.issue.start.stop.form</field>
+            <field name="model">project.issue</field>
+            <field name="inherit_id" ref="project_issue.project_issue_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[contains(@class, 'oe_button_box')]" position="inside">
+                    <button name="action_start" string="Start" type="object" attrs="{'invisible': [('start_stop', '=', True)]}" class="oe_inline oe_stat_button" icon="fa-play"/>
+                    <button name="action_stop" string="Stop" type="object" attrs="{'invisible': [('start_stop', '=', False)]}" class="oe_stat_button oe_inline" icon="fa-stop"/>
+                </xpath>
+
+                <field name="tag_ids" position="after">
+                    <field name="running_work_description" attrs="{'invisible': [('start_stop', '=', False)]}" placeholder="Work Description"/>
+                    <field name="date_start" invisible="1"/>
+                    <field name="date_end" invisible="1"/>
+                    <field name="start_stop" invisible="1"/>
+                </field>
+                <field name="task_id" position="after">
+                    <div attrs="{'invisible': [('start_stop', '=', False)]}" colspan="2">
+                        <button style="pointer-events: none;" class="oe_inline label label-default">
+                            <field name="time_count" widget="web_issue_time_counter" />
+                        </button>
+                    </div>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_issue_form2_inherited">
+            <field name="name">project.issue.sheet.form.inherited</field>
+            <field name="model">project.issue</field>
+            <field name="inherit_id" ref="project_issue_sheet.project_issue_form_view" />
+            <field name="arch" type="xml">
+                <field name="timesheet_ids" position="replace">
+                    <field name="timesheet_ids" colspan="4" nolabel="1" context="{'default_user_id' : uid, 'default_project_id': project_id}" groups="base.group_user">
+                        <tree editable="top" string="Timesheet Activities">
+                            <field name="date"/>
+                            <field name="user_id" required="1"/>
+                            <field name="name"/>
+                            <field name="date_start"/>
+                            <field name="date_stop"/>
+                            <field name="unit_amount" string="Duration" widget="float_time"/>
+                            <field name="project_id" invisible="1" required="1"/>
+                        </tree>
+                    </field>
+                </field>
+            </field>
+        </record>
+
+        <record id="project_issue_kanban_view" model="ir.ui.view">
+            <field name="name">project.issue.kanban</field>
+            <field name="model">project.issue</field>
+            <field name="inherit_id" ref="project_issue.project_issue_kanban_view"/>
+            <field name="arch" type="xml">
+                <field name="color" position="after">
+                    <field name="start_stop"/>
+                </field>
+                <xpath expr="//div[contains(@class, 'oe_kanban_bottom_left')]" position="inside">
+                    <div class="pull-right" groups="base.group_user" style="margin-left: 10px;">
+                        <t attrs="{'invisible': [('start_stop', '=', True)]}">
+                            <a type="object" name="action_start" class="btn btn-primary">
+                                <span class="fa fa-play"/>
+                            </a>
+                        </t>
+                        <t attrs="{'invisible': [('start_stop', '=', False)]}">
+                            <a type="object" name="action_stop" class="btn btn-danger">
+                                <span class="fa fa-stop"/>
+                            </a>
+                        </t>
+                    </div> 
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

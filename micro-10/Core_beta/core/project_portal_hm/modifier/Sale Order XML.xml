@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Orders>
+	<Order OrderNumber="0001/Q-MIIPS/IPT/05/17">
+		<head>
+			<Supplier SupplierCodeEdi="123">
+				<Name>PT. INTI PRESISI TOOLSINDO</Name>
+				<StreetBox1>1725 Slough Ave.</StreetBox1>
+				<StreetBox2/>
+				<ZipCity1>Scranton Bragança</ZipCity1>
+				<ZipCity2>18540</ZipCity2>
+				<Country>Portugal</Country>
+			</Supplier>
+			<Buyer>
+				<Name>ABC123</Name>
+				<StreetBox1>bapunagar</StreetBox1>
+				<StreetBox2/>
+				<ZipCity1>False </ZipCity1>
+				<ZipCity2/>
+				<Country>India</Country>
+			</Buyer>
+			<References>
+				<BuyerReference/>
+				<BuyerComment/>
+				<GoodsLabeling/>
+			</References>
+			<DeliveryAddress>
+				<Name>ABC123</Name>
+				<StreetBox1>bapunagar</StreetBox1>
+				<StreetBox2/>
+				<ZipCity1>False </ZipCity1>
+				<ZipCity2/>
+				<Country>India</Country>
+				<CompanyAdressFlag/>
+			</DeliveryAddress>
+			<Terms>
+				<DeliveryTerms>
+					<IncoTermCombiTerm/>
+					<DeliveryMethod/>
+					<TransportPayer/>
+					<CustomerTransportTimeDays/>
+				</DeliveryTerms>
+				<CustomerInvoiceCode/>
+				<OrderDate>2017-05-02</OrderDate>
+				<PaymentTerms>
+					<TermsOfPaymentDays>15 Days</TermsOfPaymentDays>
+				</PaymentTerms>
+			</Terms>
+			<Export>
+				<Currency>USD</Currency>
+			</Export>
+		</head>
+		<Rows>
+			<Row RowNumber="1" RowType="">
+				<Part PartNumber="" SupplierPartNumber=""/>
+				<Text>[1021] Test Product</Text>
+				<ReferenceNumber>1021</ReferenceNumber>
+				<Quantity>1.0</Quantity>
+				<Unit>Unit(s)</Unit>
+				<DeliveryPeriod/>
+				<Each/>
+				<Discount/>
+				<Setup/>
+				<Alloy/>
+			</Row>
+		</Rows>
+	</Order>
+</Orders>

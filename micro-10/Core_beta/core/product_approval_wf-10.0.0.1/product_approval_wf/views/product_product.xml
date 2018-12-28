@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<!-- <record id="product_product_only_form_view_shahjad" model="ir.ui.view">
+				<field name="name">product.product.form.inherit.shahjad</field>
+				<field name="model">product.product</field>
+				<field name="inherit_id" ref="product.product_normal_form_view" />
+				<field name='priority'>60</field>
+				<field name="arch" type="xml">
+					<xpath expr="//header" position="inside">
+						<field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+					</xpath>
+				</field>
+		</record>	 -->	
+	</data>
+</openerp>

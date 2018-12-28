@@ -1,0 +1,303 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="hr_holidays_leave_type_form" model="ir.ui.view">
+        <field name="name">Hr Holidays Urgent Leave Form</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+            	<field name="applicant_date" readonly="1"/>
+            </field>
+            <field name="holiday_status_id" position="attributes">
+				<attribute name="required">1</attribute>
+				<attribute name="options">{'no_create': True, 'no_edit': True,'no_create_edit': True}</attribute>
+            </field>
+            <field name="date_from" position="attributes">
+				<attribute name="attrs">{'required':[('type','=','remove')]}</attribute>
+            </field>
+
+<!-- 			<xpath expr="//sheet/group/div[@groups='hr_holidays.group_hr_holidays_manager']" position="attributes"> -->
+<!-- 				<attribute name="groups">base.group_user</attribute> -->
+<!-- 			</xpath> -->
+
+            <field name="next_manager_id" position="after">
+	            <field name="attachment" filename="attachment_name" attrs="{'invisible':[('leave_type_code','not in',['CCL','ECCL'])],'required':[('leave_type_code','in',['CCL','ECCL'])]}"/>
+	            <field name="attachment_name" invisible="1"/>
+	            <field name="child_age" attrs="{'invisible':[('leave_type_code','not in',['CCL','ECCL'])]}"/>
+
+	            <field name="attachment_gppl_name" invisible="1"/>
+	            <field name="attachment_gppl" filename="attachment_gppl_name" attrs="{'invisible':[('leave_type_code','not in',['PL'])],'required':[('leave_type_code','in',['PL'])]}" />
+	            <field name="gppl_link" readonly="1" widget ="url" attrs="{'invisible':[('leave_type_code','not in',['PL'])]}"/>
+
+	            <field name="attachment_splas_name" invisible="1"/>
+	            <field name="attachment_splas" filename="attachment_splas_name" attrs="{'invisible':[('leave_type_code','not in',['SPL'])],'required':[('leave_type_code','in',['SPL'])]}" />
+<!-- 				<label class="oe_inline" string="Attach agreement form from"/> -->
+<!-- 	            <field name="text" readonly="1" nolabel="1"/> -->
+	            <field name="attachment_spl_name" invisible="1"/>
+	            <field name="attachment_spl" filename="attachment_spl_name" attrs="{'invisible':[('leave_type_code','not in',['SPL'])],'required':[('leave_type_code','in',['SPL'])]}" />
+	            <field name="spl_link" readonly="1" widget ="url" attrs="{'invisible':[('leave_type_code','not in',['SPL'])]}"/>
+<!-- 				<field name="singaporean" attrs="{'invisible':[('leave_type_code','not in',['PL','SPL'])]}"/> -->
+
+	            <field name="attachment_gmpl_name" invisible="1"/>
+	            <field name="attachment_gmpl" filename="attachment_gmpl_name" attrs="{'invisible':[('leave_type_code','not in',['MLC','ML','ML8','ML4','ML15','ML16'])],'required':[('leave_type_code','in',['MLC','ML','ML8','ML4','ML15','ML16']),('is_non_sp_child','=',False)]}" />
+	            <field name="gmpl_link" readonly="1" widget ="url" attrs="{'invisible':[('leave_type_code','not in',['MLC','ML','ML8','ML4','ML15','ML16'])]}"/>
+				<field name="is_non_sp_child" invisible="1"/>
+				
+	            <field name="medical_certificate_name" invisible="1"/>
+	            <field name="medical_certificate" filename="medical_certificate_name" attrs="{'invisible':[('leave_type_code','not in',['MOL','SL'])],'required':[('leave_type_code','in',['MOL', 'SL'])]}" />
+
+	            <field name="hospital_certificate_name" invisible="1"/>
+	            <field name="hospital_certificate" filename="hospital_certificate_name" attrs="{'invisible':[('leave_type_code','not in',['HOL'])],'required':[('leave_type_code','in',['HOL'])]}" />
+
+	            <field name="death_certificate_name" invisible="1"/>
+	            <field name="death_certificate" filename="death_certificate_name" attrs="{'invisible':[('leave_type_code','not in',['CL'])],'required':[('leave_type_code','in',['CL'])]}" />
+
+	            <field name="relevent_certificate_name" invisible="1"/>
+	            <field name="relevent_certificate" filename="relevent_certificate_name" attrs="{'invisible':[('leave_type_code','not in',['EL'])],'required':[('leave_type_code','in',['EL'])]}" />
+
+				<field name="is_admin" invisible="1"/>
+
+            </field>
+            <field name="employee_id" position="attributes">
+            	<attribute name="attrs">{'invisible':['|',('is_admin','=',False),('state','not in',['confirm','draft'])], 'required':[('is_admin','=',True)]}</attribute>
+			</field>
+
+        </field>
+    </record>
+
+    <record id="sg_hr_holiday_leave_type_extend" model="ir.ui.view">
+        <field name="name">Hr Holidays Urgent Leave Form</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="sg_holiday_extended.sg_hr_holiday_extended"/>
+        <field name="arch" type="xml">
+            <field name="child_birthdate" position="replace">
+<!--             	<attribute name="attrs">{'required':['&amp;',('type','=','remove'),'|',('leave_type_code','in',['ECL','CCL','UICL']),'&amp;',('leave_type_code','in',['PL','SPL']),('gender','=','male')],'invisible':['|',('type','!=','remove'),'|',('leave_type_code','not in',['ECL','CCL','UICL','PL','SPL']),'&amp;',('leave_type_code','in',['PL','SPL']),('gender','!=','male')]}</attribute> -->
+<!-- 				<attribute name="invisible">1</attribute> -->
+				<field name="child_birthdate" required="0" invisible="1"/>
+			</field>
+            <field name="off_in_lieu_detail" position="attributes">
+				<attribute name="attrs">{}</attribute>
+				<attribute name="invisible">1</attribute>
+			</field>
+		</field>
+	</record>
+
+    <record id="hr_holidays_form_inherit_extend" model="ir.ui.view">
+        <field name="name">Hr Holidays Urgent Leave Form</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="leave_manager_approval.hr_holidays_form_inherit"/>
+        <field name="arch" type="xml">
+            <field name="next_manager_id" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</field>
+		</field>
+	</record>
+
+    <record id="hr_holidays_urgent_leave_form_extend" model="ir.ui.view">
+        <field name="name">Hr Holidays Urgent Leave Form Extend</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="propell_modifier_urgent_leave.hr_holidays_urgent_leave_form"/>
+        <field name="arch" type="xml">
+            <field name="is_urgent" position="attributes">
+				<attribute name="attrs">{'readonly':[('state','not in',['draft', 'confirm'])],'invisible':['|',('type','=','add'),('leave_type_code','=','OIL')]}</attribute>
+			</field>
+		</field>
+	</record>
+
+		<!--<record id="hr_employee_inherit_form_sg_leave_type" model="ir.ui.view">-->
+			<!--<field name="name">hr.employee.inheri.form.extended.inherit</field>-->
+			<!--<field name="model">hr.employee</field>-->
+			<!--<field name="inherit_id"-->
+				<!--ref="sg_holiday_extended.hr_employee_inherit_form_extended" />-->
+			<!--<field name="arch" type="xml">-->
+				<!--<xpath expr="//page[@name='Dependents']/field[@name='dependent_ids']/tree/field[@name='last_name']" position="after">-->
+					<!--<field name="singaporean" />-->
+				<!--</xpath>-->
+			<!--</field>-->
+		<!--</record>-->
+
+        <record id="open_allocation_holidays_extend" model="ir.actions.act_window">
+            <field name="name">Allocation Request</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="context">{
+                'default_type':'add',
+                'search_default_my_leaves': 1,
+                'off_in_lieu':True,
+                'default_state':'next_approval',
+                'default_is_urgent':False,
+                'needaction_menu_ref':
+                [
+                    'hr_holidays.menu_open_company_allocation',
+                ]
+            }</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a new leave allocation request.
+                </p>
+            </field>
+            <field name="domain">[('type','=','add')]</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        </record>
+
+        <menuitem
+            id="hr_holidays.menu_open_allocation_holidays"
+            parent="hr_holidays.menu_hr_holidays_my_leaves"
+            action="open_allocation_holidays_extend"
+            sequence="40"/>
+
+<!--         <record id="view_allocate_leaves_info_form" model="ir.ui.view"> -->
+<!--             <field name="name">view.allocate.leave.info.form</field> -->
+<!--             <field name="model">allocate.leaves</field> -->
+<!--             <field name="arch" type="xml"> -->
+<!--                 <form> -->
+<!--                 	<p>List of employee to whom leave is not allocate due to following reason.</p> -->
+<!--                     <group> -->
+<!--                         <field name="leave_reason_ids" nolabel="1"> -->
+<!--                         	<tree create="false" editable="bottom"> -->
+<!--                         		<field name="employee_id" readonly="1"/> -->
+<!--                         		<field name="reason" readonly="1"/> -->
+<!--                         	</tree> -->
+<!--                         </field> -->
+<!--                    	</group> -->
+<!--                     <footer> -->
+<!--                         <button special="cancel" string="OK"/> -->
+<!--                     </footer> -->
+<!--                 </form> -->
+<!--             </field> -->
+<!--         </record> -->
+
+<!-- 		make menu invisible -->
+        <menuitem
+            id="hr_holidays.menu_open_allocation_holidays"
+			name="Off in lieu"
+            parent="hr_holidays.menu_hr_holidays_my_leaves"
+            action="open_allocation_holidays_extend"
+            sequence="40"/>
+<!--             groups="sg_leave_types.group_hide_menu" -->
+
+        <record id="hr.view_employee_form_propell_ext]" model="ir.ui.view">
+            <field name="name">hr.view.employee.form.propell.ext</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+				<field name="coach_id" position="attributes">
+               		<attribute name="invisible">1</attribute>
+				</field>
+						
+			</field>
+		</record>
+
+        <record id="hr.menu_open_view_employee_list_my" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+		<!-- Inherited Action in HR Employee -->
+		<record id="hr.open_view_employee_list_my" model="ir.actions.act_window">
+			<field name="name">Employees</field>
+			<field name="res_model">hr.employee</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+			<field name="domain">[]</field>
+			<field name="context">{'search_default_active': 1}  <!-- , 'group_by':['department_id'] -->
+			</field>
+			<field name="view_id" eval="False" />
+			<field name="search_view_id" ref="hr.view_employee_filter" />
+			<field name="help">Here you can manage your work force by creating
+				employees and assigning them specific properties in the system.
+				Maintain all employee related information and keep track of anything
+				that needs to be recorded for them. The personal information tab
+				will help you maintain their identity data. The Categories tab gives
+				you the opportunity to assign them related employee categories
+				depending on their position and activities within the company. A
+				category can be a seniority level within the company or a
+				department. The Timesheets tab allows to assign them a specific
+				timesheet and analytic journal where they will be able to enter time
+				through the system. In the note tab, you can enter text data that
+				should be recorded for a specific employee.
+			</field>
+		</record>
+
+    <!--Action For Urgent Leave-->
+    <record id="propell_modifier_urgent_leave.action_urgent_leave_request" model="ir.actions.act_window">
+        <field name="name">Leaves Request</field>
+        <field name="res_model">hr.holidays</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+        <field name="context">{
+            'default_is_urgent': False,
+            'default_type': 'remove',
+            'search_default_my_leaves': 1,
+            'needaction_menu_ref':
+            [
+                'hr_holidays.menu_open_company_allocation',
+            ]
+        }</field>
+        <field name="domain">[('type','=','remove'), ('state', '!=', 'refuse'), ('employee_id.user_id', '=', uid)]</field>
+        <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a new urgent leave request.
+          </p><p>
+            Once you have recorded your urgent request, it will be sent
+            to a manager for validation. Be sure to set the allow to override
+            limit leave type (recuperation, legal holidays, sickness) and enable urgent.
+          </p>
+        </field>
+    </record>
+
+<!--     <record id="hr_holidays.open_ask_holidays" model="ir.actions.act_window"> -->
+<!--         <field name="name">Leaves Request</field> -->
+<!--         <field name="res_model">hr.holidays</field> -->
+<!--         <field name="view_type">form</field> -->
+<!--         <field name="view_id" ref="hr_holidays.edit_holiday_new"/> -->
+<!--         <field name="context">{ -->
+<!--         	'default_is_urgent': False, -->
+<!--             'default_type': 'remove', -->
+<!--             'search_default_my_leaves': 1, -->
+<!--             'needaction_menu_ref': -->
+<!--             [ -->
+<!--                 'hr_holidays.menu_open_company_allocation', -->
+<!--             ] -->
+<!--         }</field> -->
+<!--         <field name="domain">[('type','=','remove')]</field> -->
+<!--         <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/> -->
+<!--         <field name="help" type="html"> -->
+<!--           <p class="oe_view_nocontent_create"> -->
+<!--             Click to create a new leave request. -->
+<!--           </p><p> -->
+<!--             Once you have recorded your leave request, it will be sent -->
+<!--             to a manager for validation. Be sure to set the right leave -->
+<!--             type (recuperation, legal holidays, sickness) and the exact -->
+<!--             number of open days related to your leave. -->
+<!--           </p> -->
+<!--         </field> -->
+<!--     </record> -->
+
+<!--         <record id="hr_holidays.action_hr_holidays_dashboard" model="ir.actions.act_window"> -->
+<!--             <field name="name">All Leaves</field> -->
+<!--             <field name="res_model">hr.holidays</field> -->
+<!--             <field name="view_type">form</field> -->
+<!--             <field name="view_mode">calendar</field> -->
+<!--             <field name="context">{'default_is_urgent': False,'search_default_year': 1, 'search_default_group_employee': 1}</field> -->
+<!--             <field name="domain">[('holiday_type','=','employee'), ('type', '=', 'remove'), ('state', '!=', 'refuse')]</field> -->
+<!--             <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/> -->
+<!--         </record> -->
+
+        <!-- Shortcuts -->
+        <record id="hr_holidays.act_hr_employee_holiday_request" model="ir.actions.act_window">
+            <field name="name">Leaves</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="src_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_employee_id': [active_id], 'default_employee_id': active_id, 'search_default_group_type': 1,
+                'search_default_year': 1}</field>
+            <field name="domain">[('holiday_type','=','employee'), ('holiday_status_id.limit', '=', False), ('state','not in', ['draft', 'refuse', 'cancel'])]</field>
+            <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        </record>
+		
+</odoo>

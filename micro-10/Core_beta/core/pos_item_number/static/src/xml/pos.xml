@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="Orderline" t-extend="Orderline">
+        <t t-jquery=".product-name" t-operation="before">
+            <span class="product-sequence" style="padding-right:5px;font-weight:bold">
+                <t t-esc="line.sequence"/>
+            </span>
+        </t>
+    </t>
+
+</templates>

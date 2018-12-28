@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_employee_report_view_pivot" model="ir.ui.view">
+            <field name="name">hr.employee.pivot</field>
+            <field name="model">hr.employee.report.view</field>
+            <field name="arch" type="xml">
+                <pivot string="Employee Analysis">
+                    <field name="name" type="row"/>
+                    <field name="date_from" interval="month" type="col"/>
+                    <field name="net" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!--<record id="hr_employee_report_view_graph" model="ir.ui.view">-->
+            <!--<field name="name">hr.employee.graph</field>-->
+            <!--<field name="model">hr.employee.report.view</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<graph string="Employee Analysis">-->
+                    <!--<field name="name" type="row"/>-->
+                    <!--<field name="net" type="measure"/>-->
+                <!--</graph>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <record id="hr_employee_report_view_search" model="ir.ui.view">
+            <field name="name">hr.employee.search</field>
+            <field name="model">hr.employee.report.view</field>
+            <field name="arch" type="xml">
+                <search string="Employee Analysis">
+                    <field name="name"/>
+                    <field name="date_from"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <filter string="This Year" name="year" domain="[('date_from','&lt;=', time.strftime('%%Y-12-31')),('date_from','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                    <separator/>
+                    <field name="department_id"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Employee" name="Employee" context="{'group_by':'name'}"/>
+                        <filter string="Job" context="{'group_by':'job_id'}"/>
+                        <filter string="Department" context="{'group_by':'department_id'}"/>
+                        <filter string="Employment Status" context="{'group_by':'emp_status'}"/>
+                        <filter string="Company" groups="base.group_multi_company" context="{'group_by':'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_employee_view_report" model="ir.actions.act_window">
+            <field name="res_model">hr.employee.report.view</field>
+            <field name="name">Employee Analysis</field>
+            <field name="view_type">form</field>
+            <!--<field name="view_mode">pivot,graph</field>-->
+            <field name="view_mode">pivot</field>
+            <field name="context">{'search_default_year':1}</field>
+            <field name="help"></field>
+        </record>
+
+        <menuitem id="menu_hr_payslip_view_report" name="Employee Analysis"
+            parent="sg_hr_employee.menu_parent_hr_report_summary" action="action_hr_employee_view_report"
+            groups="hr.group_hr_manager" sequence="0"/>
+
+    </data>
+</odoo>

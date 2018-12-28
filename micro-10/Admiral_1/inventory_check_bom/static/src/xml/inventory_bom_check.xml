@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-name="InventoryCheckBOM">
+        <div class="oe_inventory_bom_check ui-toolbar" style="margin-bottom:0px; margin-left: 6px; width: 50%; float: left;">
+            <div class="oe_inventory_bom_check">
+                <span style="font-size: 16px; font-weight: bold;">Include BOM :</span>
+                <input type="checkbox" class="oe_account_bom_check" style="display: inline-block; width: 50%;" checked="true"/>
+            </div>
+        </div>
+    </t>
+
+</templates>

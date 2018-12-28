@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_do_picking_move" model="ir.actions.act_window">
+            <field name="name">Ougoing  Products</field>
+            <field name="res_model">stock.move</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain" eval="[('picking_id.picking_type_id.code','=','outgoing'), ('location_id.usage','!=','internal'), ('location_dest_id.usage', '=', 'customer')]"/>
+            <field name="view_id" ref="stock.view_move_tree_receipt_picking"/>
+            <field name="context">{'search_default_ready': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to register a product Delivery order.
+              </p><p>
+                Here you can send individual products, no matter what
+                Delivery order or picking order they come from. You will find
+                the list of all products you are waiting for. Once you deliver
+                an order, you can filter based on the name of the customer or
+                the sale order reference. Then you can confirm all products
+                deliver using the buttons on the right of each line.
+              </p>
+            </field>
+        </record> 
+    </data>
+</odoo>

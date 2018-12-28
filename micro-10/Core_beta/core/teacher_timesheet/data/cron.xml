@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+    <record model="ir.cron" id="daily_att_admin_email">
+        <field name="name">Alert Admin for Not Submiting Daily Attendance Sheet</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="True"/>
+        <field name="model" eval="'daily.attendance'"/>
+        <field name="function" eval="'cron_remind_admin_daily_att_submission'"/>
+        <field name="args" eval="'()'" />
+    </record>
+</odoo>

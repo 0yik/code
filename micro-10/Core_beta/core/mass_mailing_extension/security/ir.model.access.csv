@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_link_tracker,link.tracker,model_link_tracker,,1,1,1,1
+access_link_tracker_code,link.tracker.code,model_link_tracker_code,,1,1,1,1
+access_link_tracker_click,link.tracker.click,model_link_tracker_click,,1,1,1,1
+

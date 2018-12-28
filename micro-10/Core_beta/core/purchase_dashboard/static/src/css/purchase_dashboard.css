@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+.box {
+	margin-left: -10px;
+	margin-right: -10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 8px;
+    box-shadow: 2px 2px 3px 0 rgba(0,0,0,.5);
+}
+
+.img_bg{
+	background-color:currentColor;
+}
+
+.line_hover:hover{
+	white-space:nowrap;
+	text-decoration:none;
+	border-radius:4px;
+	font-size:35px;
+	
+	}
+
+.deco{
+	background-color:#333333;
+	color: white;
+	padding:1px;
+	border-radius:3px;
+	text:center;
+	padding-left:inherit;
+}
+
+.len{
+	padding:5px;
+	height:150px;
+}
+
+.customer_oe_kanban_color_1{
+    background-color: #d0c8e2;
+    color: #37385d;
+}

@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_1721_3a1_external_layout_header">
+        <div class="header">
+            <div class="row">
+                <style>
+                    input[type="checkbox"] {
+                      -webkit-appearance: none;
+                      -moz-appearance: none;
+                      appearance: none;
+
+                      /* Styling checkbox */
+                      width: 16px;
+                      height: 16px;
+                      background-color: white;
+                        border: 1px solid;
+                    }
+
+                    input[type="checkbox"]:checked {
+                      background-color: black;
+                    }
+                </style>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td rowspan="2"
+                                style="border:1px solid black;border-top:1px solid white;border-left:1px solid white;">
+                                <center>
+                                    <img src="/indonesia_spt/static/description/logo.png" style="margin-top:20px"
+                                         width="90px" height="90px"/>
+                                    <!--<p class="text-center" style="font-weight:bold;font-size:13px;">-->
+                                    <p class="text-center" style="font-weight:bold;">
+                                        <!--<b class="text-center">-->
+                                        <br/>
+                                        KEMENTERIAN KEUANGAN RI
+                                        <br/>
+                                        DIREKTORAT JENDERAL PAJAK
+                                    </p>
+                                </center>
+                            </td>
+                            <td style="border:1px solid black;border-top:1px solid white;">
+                                <p class="text-center mt16" style="font-weight:bold;">
+                                    BUKTI PEMOTONGAN PAJAK PENGHASILAN
+                                    <br/>
+                                    PASAL 21 BAGI PEGAWAI TETAP ATAU
+                                    <br/>
+                                    PENERIMA PENSIUN ATAU TUNJANGAN HARI
+                                    <br/>
+                                    TUA/JAMINAN HARI TUA BERKALA
+                                    <br/>
+                                </p>
+                            </td>
+                            <td colspan="2" style="border:1px solid white;">
+                                <div class="pull-right" style="margin-right:10px;">
+                                    <input type="checkbox" name="0" value="0"/>
+                                    <input type="checkbox" checked="checked" name="1" value="1"/>
+                                    <input type="checkbox" name="2" value="2"/>
+                                    <input type="checkbox" checked="checked" name="3" value="3"/>
+                                </div>
+                                <br/>
+                                <p class="text-center" style="font-weight:bold;margin-top:5px;">
+                                    FORMULIR 1721 - A1
+                                </p>
+                                <span style="font-weight:bold;margin-bottom:2px">&amp;nbsp; &amp;nbsp; Lembar ke-1 : untuk
+                                    Penerima
+                                    Penghasilan
+                                    <br/>
+                                    &amp;nbsp;&amp;nbsp; Lembar ke-2 : untuk Pemotong
+                                </span>
+                                <p class="text-center" style="font-weight:bold;">
+                                    <span>
+                                        <b>MASA PEROLEHAN
+                                            <br/>
+                                            PENGHASILAN [mm - mm]
+                                            <br/>
+                                        </b>
+                                    </span>
+                                    <b><t t-esc="one_data['emp_contract_start_month']"/> - <t t-esc="one_data['emp_contract_end_month']"/></b>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="border:1px solid black;">
+                                <span style="font-weight:bold;">
+                                    <b>NOMOR:&amp;nbsp;&amp;nbsp;</b>1 . 1 - <t t-esc="one_data['print_current_month']"/> . <t t-esc="one_data['print_current_year']"/> - <t t-esc="one_data['print_sequence']"/>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="border:1px solid black;font-weight:bold;">
+                                <b>NPWP <br/> PEMOTONG : &amp;nbsp;&amp;nbsp;<t t-esc="one_data['company_npwp']"/></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="border:1px solid black;font-weight:bold;">
+                                <b>NAMA <br/> PEMOTONG : &amp;nbsp;&amp;nbsp;<t t-esc="one_data['company_name']"/></b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_1721_3a1_external_layout_footer">
+        <footer>
+            <div class="row">
+            </div>
+        </footer>
+    </template>
+
+
+    <template id="report_spt_1721_3a1_external_layout">
+        <style>
+            body, header, footer {font-family:Arial,Helvetica,sans-serif !important;};
+        </style>
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+
+        <t t-call="indonesia_spt.report_1721_3a1_external_layout_header"/>
+        <t t-raw="0"/>
+        <t t-call="indonesia_spt.report_1721_3a1_external_layout_footer"/>
+    </template>
+
+    <template id="report_1721_3a1">
+        <t t-call="report.html_container">
+            <t t-foreach="data['emp_dict']" t-as="one_data">
+                <t t-call="indonesia_spt.report_spt_1721_3a1_external_layout">
+                    <div class="page">
+                        <style>
+                            .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot >
+                            tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered >
+                            tfoot > tr > td{
+                                border: 1px solid black;
+                            }
+                        </style>
+                        <div class="row">
+                            <b>A. IDENTITAS PENERIMA PENGHASILAN YANG DIPOTONG</b>
+                        </div>
+                        <div class="row">
+                            <table class="table table-bordered"
+                                   style="width:100%;border:1px solid black !important;padding:3px;">
+                                <tr>
+                                    <td style="border:none;">
+                                        <b>1. NPWP : &amp;nbsp;<t t-esc="one_data['emp_npwp_number']"/></b>
+                                    </td>
+                                    <td style="border:none;">
+                                        <b>6. STATUS / JUMLAH TANGGUNGAN KELUARGA UNTUK PTKP</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:none;">
+                                        <b>2. NIK /NO.<br/>PASPOR: &amp;nbsp;<t t-esc="one_data['emp_identification_id']"/></b>
+                                    </td>
+                                    <td style="border:none;">
+                                        <b><t t-esc="one_data['emp_ptkp_status']"/></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:none;">
+                                        <b>3. NAMA : <t t-esc="one_data['emp_name']"/></b>
+                                    </td>
+                                    <td style="border:none;">
+                                        <b>7. NAMA JABATAN : <t t-esc="one_data['emp_job']"/></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:none;">
+                                        <b>4. ALAMAT: <t t-esc="one_data['emp_address']"/></b>
+                                    </td>
+                                    <td style="border:none;">
+                                        <b>8. KARYAWAN ASING &amp;nbsp;&amp;nbsp;&amp;nbsp;<input type="checkbox" name="vehicle" value="Bike" t-att-checked="not one_data['emp_indonatian']"/></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:none;">
+                                        <b></b>
+                                    </td>
+                                    <td style="border:none;">
+                                        <b>9. KODE NEGARA DOMISILI: <t t-esc="one_data['emp_country']"/></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:none;">
+                                        <b>5. JENIS KELAMIN :
+                                            <input type="checkbox" name="vehicle" value="Bike" t-att-checked="one_data['emp_gender'] == 'male'">&amp;nbsp;&amp;nbsp;&amp;nbsp;LAKI-LAKI</input>
+                                            <input type="checkbox" name="vehicle" value="Bike" t-att-checked="one_data['emp_gender'] == 'female'">&amp;nbsp;&amp;nbsp;&amp;nbsp;PEREMPUAN</input>
+                                        </b>
+                                    </td>
+                                    <td style="border:none;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <b>B. RINCIAN PENGHASILAN DAN PENGHITUNGAN PPh PASAL 21</b>
+                        </div>
+
+
+                        <div class="row">
+                            <table class="table table-bordered"
+                                   style="width:100%;border:1px solid black !important;padding:3px;">
+                                <tr>
+                                    <td class="text-center" colspan="2">
+                                        <b>URAIAN</b>
+                                    </td>
+                                    <td class="text-center">
+                                        <b>JUMLAH (Rp)</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" colspan="2">
+                                        <b>KODE OBJEK PAJAK:
+                                            <input type="checkbox" name="vehicle" value="Bike" t-att-checked="one_data['emp_tax_calculation_method'] == 'pegawai_tetap'">&amp;nbsp;&amp;nbsp;&amp;nbsp;21-100-01</input>
+                                            <input type="checkbox" name="vehicle" value="Bike">&amp;nbsp;&amp;nbsp;&amp;nbsp;21-100-02</input>
+                                        </b>
+                                    </td>
+                                    <td style="background-color: lightgray;"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">PENGHASILAN BRUTO:</td>
+                                    <td style="background-color: lightgray;"></td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>GAJI/PENSIUN ATAU THT/JHT</td>
+                                    <td><t t-esc="one_data['emp_contract_basic_salary']"/></td>
+                                </tr>
+                                <tr>
+                                    <td>2.</td>
+                                    <td>TUNJANGAN PPh</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>3.</td>
+                                    <td>TUNJANGAN LAINNYA, UANG LEMBUR DAN SEBAGAINYA</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>4.</td>
+                                    <td>HONORARIUM DAN IMBALAN LAIN SEJENISNYA</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>5.</td>
+                                    <td>PREMI ASURANSI YANG DIBAYAR PEMBERI KERJA</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>6.</td>
+                                    <td>PENERIMAAN DALAM BENTUK NATURA DAN KENIKMATAN LAINNYA YANG DIKENAKAN PEMOTONGAN PPh
+                                        PASAL 21
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>7.</td>
+                                    <td>TANTIEM, BONUS, GRATIFIKASI, JASA PRODUKSI DAN THR</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>8.</td>
+                                    <td>JUMLAH PENGHASILAN BRUTO (1 S.D.7)</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b>PENGURANGAN:</b>
+                                    </td>
+                                    <td style="background-color: lightgray;"></td>
+                                </tr>
+                                <tr>
+                                    <td>9.</td>
+                                    <td>BIAYA JABATAN/BIAYA PENSIUN</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>10.</td>
+                                    <td>IURAN PENSIUN ATAU IURAN THT/JHT</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>11.</td>
+                                    <td>JUMLAH PENGURANGAN (9 S.D.10)</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b>PENGHITUNGAN PPh PASAL 21:</b>
+                                    </td>
+                                    <td style="background-color: lightgray;"></td>
+                                </tr>
+                                <tr>
+                                    <td>12.</td>
+                                    <td>JUMLAH PENGHASILAN NETO (8 - 11)</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>13.</td>
+                                    <td>PENGHASILAN NETO MASA SEBELUMNYA</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>14.</td>
+                                    <td>JUMLAH PENGHASILAN NETO UNTUK PENGHITUNGAN PPh PASAL 21 (SETAHUN/DISETAHUNKAN)</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>15.</td>
+                                    <td>PENGHASILAN TIDAK KENA PAJAK (PTKP)</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>16.</td>
+                                    <td>PENGHASILAN KENA PAJAK SETAHUN/DISETAHUNKAN (14 - 15)</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>17.</td>
+                                    <td>PPh PASAL 21 ATAS PENGHASILAN KENA PAJAK SETAHUN/DISETAHUNKAN</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>18.</td>
+                                    <td>PPh PASAL 21 YANG TELAH DIPOTONG MASA SEBELUMNYA</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>19.</td>
+                                    <td>PPh PASAL 21 TERUTANG</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>20.</td>
+                                    <td>PPh PASAL 21 DAN PPh PASAL 26 YANG TELAH DIPOTONG DAN DILUNASI</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <b>C. IDENTITAS PEMOTONG</b>
+                        </div>
+                        <div class="row" style="border:1px #000 solid">
+                            <div class="col-xs-5 mt16" style="margin-bottom:30px">
+                                <b>1. NPWP: <t t-esc="one_data['company_taxcutter_npwp']"/></b>
+                                <br/><br/>
+                                <b>2. NAMA : <t t-esc="one_data['company_taxcutter_name']"/></b>
+                                <br/>
+                            </div>
+                            <div class="col-xs-4 mt16">
+                                <b>3. TANGGAL &amp; TANDA TANGAN</b>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <b>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;<t t-esc="one_data['last_display_date']"/></b>
+                                <!--<b>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[dd/mm/yyyy]</b>-->
+                            </div>
+                            <div class="col-xs-3 mt16"
+                                 style="border:1px #000 solid;padding:50px 10px 30px 10px;margin-right:2px;">
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="paperformat_1721_3a1_report" model="report.paperformat">
+        <field name="name">1721 - 1 - A1</field>
+        <field name="default" eval="True"/>
+        <field name="format">A3</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">80</field>
+        <field name="margin_bottom">00</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">75</field>
+        <field name="dpi">80</field>
+    </record>
+
+    <report
+            id="indonesia_spt_1721_3a1_report"
+            model="hr.employee"
+            string="1721 – A1 Report"
+            report_type="qweb-pdf"
+            name="indonesia_spt.report_1721_3a1"
+            file="indonesia_spt.report_1721_3a1"
+            paperformat="paperformat_1721_3a1_report"
+    />
+
+</odoo>

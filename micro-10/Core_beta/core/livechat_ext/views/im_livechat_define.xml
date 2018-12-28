@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="assets_frontend" name="livechat_ext assets frontend" inherit_id="website.assets_frontend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/livechat_ext/static/src/js/chat_window_ext.js"></script>
+                <script type="text/javascript" src="/livechat_ext/static/src/js/im_livechat_ext.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

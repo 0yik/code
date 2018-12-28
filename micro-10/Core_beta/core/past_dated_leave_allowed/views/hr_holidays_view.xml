@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_holidays_type_inherit_form" model="ir.ui.view">
+            <field name="name">hr.holidays.type.form</field>
+            <field name="model">hr.holidays.status</field>
+            <field name="inherit_id" ref="sg_holiday_extended.sg_holiday_hr_extended_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='no_of_days']" position="after">
+                    <field name="allow_past_date"/>
+                    <field name="allow_past_days"
+                        attrs="{'required': [('allow_past_date','=', True)], 'invisible': [('allow_past_date', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

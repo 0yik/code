@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="purchase_order_line_pivot">
+        <field name="name">purchase.order.line.pivot</field>
+        <field name="model">purchase.order.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Purchase Order Line" display_quantity="True">
+                <field name="product_id" type="row"/>
+                <field name="price_unit" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="purchase_order_line_graph">
+        <field name="name">purchase.order.line.graph</field>
+        <field name="model">purchase.order.line</field>
+        <field name="arch" type="xml">
+            <graph string="Purchase Order Line">
+                <field name="product_id"/>
+                <field name="price_unit" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="purchase_order_line_tree_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.line.inherit.tree</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+        <field name="arch" type="xml">
+        	<field name="date_planned" position="after">
+        		<field name="state"/>
+        	</field>
+            <field name="product_qty" position="after">
+        		<field name="qty_received"/>
+        		<field name="qty_invoiced"/>
+        	</field>
+        </field>
+    </record>
+
+    <record id="purchase_order_line_action" model="ir.actions.act_window">
+        <field name="name">Purchase Order Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.order.line</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="purchase.purchase_order_line_search"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to define a Purchase Order Line.
+          </p>
+        </field>
+   	</record>
+
+   	<menuitem id="menu_purchase_order_lines" name="Purchase Order Lines"
+        parent="purchase.menu_procurement_management" sequence="8" 
+        action="purchase_order_line_action"/>
+</odoo>

@@ -1,0 +1,8 @@
+<odoo>
+    <menuitem id='indonesia_spt_menu' name='SPT' parent="sg_hr_employee.menu_parent_hr_report_summary"/>
+    <menuitem id='indonesia_spt_1721_1_menu' name='1721-1' parent="indonesia_spt_menu" action='indonesia_spt.action_wizard_report_1721_1'/>
+    <menuitem id='indonesia_spt_1721_3_a1_menu' sequence="1" name='1721 – A1' parent="sg_hr_employee.menu_root_hr_parent" action='indonesia_spt.action_wizard_report_1721_3a1'/>
+    <!--<menuitem id='indonesia_spt_1721_3_a1_menu' name='1721 – A1' parent="indonesia_spt_menu" action='indonesia_spt.action_wizard_report_1721_3a1'/>-->
+    <menuitem id='indonesia_spt_1721_3_a2_menu' sequence="1" name='1721 – A2' parent="sg_hr_employee.menu_root_hr_parent" action='indonesia_spt.action_wizard_report_1721_3a2'/>
+    <!--<menuitem id='indonesia_spt_1721_3_a2_menu' name='1721 – A2' parent="indonesia_spt_menu" action='indonesia_spt.action_wizard_report_1721_3a2'/>-->
+</odoo>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_purchase_payment_voucher_tree" model="ir.ui.view">
+	    <field name="name">purchase.payment.voucher.tree</field>
+	    <field name="model">purchase.payment.voucher</field>
+	    <field name="arch" type="xml">
+	        <tree string="Purchase Payment Voucher" colors="green: state=='submitted';green: state=='verified';green: state=='approved'">
+	            <field name="name"/>
+	            <field name="number"/>
+	            <field name="date"/>
+	            <field name="total_amount"/>
+	            <field name="state"/>
+	        </tree>
+	    </field>
+	</record>
+	
+	<record id="view_purchase_payment_voucher_form" model="ir.ui.view">
+	    <field name="name">purchase.payment.voucher.form</field>
+	    <field name="model">purchase.payment.voucher</field>
+	    <field name="arch" type="xml">
+	        <form string="Purchase Payment Voucher">
+	        	<header>
+                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,submitted,verified,approved,cancelled"/>
+                    <button name="submit_voucher" string="Submit Voucher" type="object" states="draft" class="btn-primary"/>
+                    <button name="verify_voucher" string="Verify Voucher" type="object" states="submitted" class="btn-primary"/>
+                    <button name="approve_voucher" string="Approve Voucher" type="object" states="verified" class="btn-primary"/>
+                    <button name="cancel_voucher" string="Cancel Voucher" type="object" states="approved,draft,submitted,verified" class="btn-primary"/>
+                    <button name="draft_voucher" string="Draft Voucher" type="object" states="cancelled" class="btn-primary"/>
+                </header>
+                <sheet string="Purchase Payment Voucher">
+                	<div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoice"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o" string="Invoices">
+                        </button>
+                        <button name="action_view_voucher"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o" string="Vouchers">
+                        </button>
+                    </div>
+                	<h1 class="mt0">
+                        <field name="number" readonly="1" class="oe_inline" attrs="{'invisible': [('state','in',('draft',))]}"/>
+                    </h1>
+		            <group>
+		                <group>
+		                    <field name="name" domain="[('supplier', '=', True)]" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+		                    <field name="date" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+		                    <field name="payment_method" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+		                    <field name="payment_account_id" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+		                    <field name="bank_id" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+		                    <field name="cheque_number" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+		                    <field name="cheque_date" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+		                    <field name="company_id" invisible="1"/>
+		                </group>
+		                <group>
+		                	<field name="vendor_bill_ids" widget='many2many_tags' domain="[('type', '=', 'in_invoice'), ('partner_id', '=', name)]" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+		                    <field name="account_voucher_ids" widget='many2many_tags' domain="[('voucher_type', '=', 'purchase'), ('partner_id', '=', name)]" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+		                    <field name="currency_id" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+		                    <field name="remarks" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+		                </group>
+		            </group>
+		            <notebook colspan="4">
+                        <page string="Invoice Information">
+                            <field name="line_ids" nolabel="1" widget="one2many_list" mode="tree" attrs="{'readonly': [('state', '=', 'approved')]}">
+                                <tree string="Invoice Lines" editable="bottom">
+                                	<field name="invoice_number"/>
+                                	<field name="invoice_date"/>
+                                	<field name="product_id" domain="[('purchase_ok', '=', True)]"/>
+                                	<field name="amount"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+		                        <field name="total_amount" class="oe_subtotal_footer_separator"/>
+		                    </group>
+                        </page>
+                    </notebook>
+                    
+	            </sheet>
+	        </form>
+	    </field>
+	</record>
+	
+	<record id="action_purchase_payment_voucher" model="ir.actions.act_window">
+        <field name="name">Payment Voucher</field>
+        <field name="res_model">purchase.payment.voucher</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_purchase_payment_voucher_tree"/>
+    </record>
+    
+    <menuitem action="action_purchase_payment_voucher" id="menu_purchase_payment_voucher" parent="account.menu_finance_payables" sequence="5"/>
+	
+</odoo>

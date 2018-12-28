@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="developer_task_list_form" model="ir.ui.view">
+        <field name="name">developer.task.list.form.view</field>
+        <field name="model">developer.task.list</field>
+        <field name="arch" type="xml">
+            <form string="Project Checklist">
+<!--                 <header>
+                    <field name="state" widget="statusbar"/>
+                </header> -->
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="type" required="1" widget="selection"/>
+                            <field name="state" options="{'fold_field': 'fold'}" invisible="1"></field>
+                            <field name="project_id" required="True"/>
+                            <field name="status_project" required="1"/>
+                            <field name="developer_id" domain="[('has_developer_group','=',True)]" required="1"/>
+                            <field name="filename" invisible="1"/>
+                            <field name="upload_video" filename="filename"/>
+                        </group>
+                        <group>
+                            <field name="objective_name"/>
+                            <field name="manager_id" required="True"/>
+                            <field name="deadline_of_task"/>
+                        </group>
+                    </group>
+                    <separator string="Module"></separator>
+                    <field name="module_ids" nolable="1"/>
+                    <separator string="Revisions"></separator>
+                    <field name="revision_ids" nolable="1" context="{'developer_id' : developer_id, 'project_manager_review':manager_id}">
+                        <tree>
+                            <field name="revision_summary"/>
+                            <field name="date_asked"/>
+                            <field name="project_manager_review"/>
+                            <field name="developer_id" readonly="1"/>
+                        </tree>
+                    </field>
+                    <separator string="Features"></separator>
+                    <field name="proj_features" nolable="1"/>
+                    <separator string="Case Study"></separator>
+                    <field name="proj_case_study" nolable="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="developer_task_kanban_view" model="ir.ui.view">
+        <field name="name">developer.task.list</field>
+        <field name="model">developer.task.list</field>
+        <field name="arch" type="xml">
+        <kanban default_group_by="state">
+            <field name="project_id"/>
+            <field name="name"/>
+            <field name="developer_id"/>
+            <field name="objective_name"/>
+            <field name="color"/>
+            <templates>
+                <t t-name="kanban-box">
+                    <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_global_click">
+                            <strong>
+                            <span t-if="record.project_id.value"><field name="project_id"/></span>
+                              -  
+                            <span t-if="record.name.value"><field name="name"/></span>
+                            </strong>
+                            <br/>
+<!--                         <div class="oe_kanban_details"> -->
+                            <strong>Developer : </strong><span t-if="record.developer_id.value"><field name="developer_id"/></span><br/>
+                            <strong>Objective : </strong><span t-if="record.objective_name.value"><field name="objective_name"/></span>
+<!--                         </div> -->
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+        </field>
+    </record>
+
+    <record id="task_revision_module" model="ir.ui.view">
+        <field name="name">task.revision.module.view</field>
+        <field name="model">task.revision.module</field>
+        <field name="arch" type="xml">
+            <form string="Task Revisions">
+                <sheet>
+                    <group col="4">
+                        <field name="revision_summary" required="1"/>
+                        <field name="date_asked"/>
+                        <field name="project_manager_review" required="1"/>
+                        <field name="developer_id"  required="1"/>
+                        <field name="attch_bin_revision" widget="binary" filename="filename"/>
+                        <field name="filename" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="developer_task_list_tree_view">
+        <field name="name">project.task.tree.view</field>
+        <field name="model">developer.task.list</field>
+        <field name="arch" type="xml">
+            <tree string="Tasks List">
+                 <field name="name"/>
+                 <field name="objective_name"/>
+                 <field name="project_id"/>
+                 <field name="manager_id"/>
+                 <field name="status_project"/>
+                 <field name="deadline_of_task"/>
+                 <field name="developer_id"/>
+                 <field name="module_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_developer_task_list_filter" model="ir.ui.view">
+        <field name="name">view.project.task.filter</field>
+        <field name="model">developer.task.list</field>
+        <field name="arch" type="xml">
+            <search string="Search Checklist">
+                            <field name="name"/>
+                <field name="project_id"/>
+                <field name="manager_id"/>
+                <field name="developer_id"/>
+                <group expand="0" string="Group By">
+                    <filter icon="terp-mail-message-new" string="Status" name="my_taskstatus_filter" domain="[('status_project','in',('pending','toberevised'))]"/>
+                    <filter string="Project" domain="[]" context="{'group_by':'project_id'}"/>
+                    <filter string="Project Manager" domain="[]" context="{'group_by':'manager_id'}"/>
+                    <filter string="Developer" domain="[]" context="{'group_by':'developer_id'}"/>
+                    <filter name="status" string="Status" domain="[]" context="{'group_by':'status_project'}"/>
+                </group>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_checklist">
+      <field name="name">Developer Tasks</field>
+      <field name="res_model">developer.task.list</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">kanban,tree,form</field>
+<!--       <field name="context">{
+                'search_default_status': 1,
+            }</field> -->
+    </record>
+
+    <menuitem id="project_action_view_task" parent="project.menu_main_pm" name="Developer Tasks" action="action_checklist"/>
+    
+    <record model="ir.ui.view" id="view_developer_task_status_form">
+        <field name="name">view.developer.task.status.form</field>
+        <field name="model">developer.task.status</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="status_project"/>
+                        <field name="fold"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_developer_task_status_tree">
+        <field name="name">view.developer.task.status.tree</field>
+        <field name="model">developer.task.status</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="status_project"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_developer_task_status">
+        <field name="name">Developer Task Stages</field>
+        <field name="res_model">developer.task.status</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem 
+        action="action_developer_task_status" 
+        id="menu_developer_task_status" 
+        parent="project.menu_project_config" 
+        sequence="30" groups="group_project_head"/>
+
+    <record id="project_form_view_inherit" model="ir.ui.view">
+        <field name="name">project.form.view.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[1]" position="before">
+                <page string="Developer Tasks">
+                    <field name="developer_task_ids">
+                        <tree string="Developer Tasks">
+                            <field name="name"/>
+                            <field name="objective_name"/>
+                            <field name="status_project"/>
+                            <field name="developer_id"/>
+                            <field name="module_ids"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_inherit_config_settings" model="ir.ui.view">
+            <field name="name">project settings</field>
+            <field name="model">project.config.settings</field>
+            <field name="inherit_id" ref="project.view_config_settings"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='project_management']" position="inside">
+                    <label for="past_dated_task_days"/>
+                        <div>
+                            <field name="past_dated_task_days"  class="oe_inline" />
+                        </div>
+
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

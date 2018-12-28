@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="service_order_01" model="product.product">
+            <field name="name">Maintenance Fee</field>
+        </record>
+
+        <record id="service_delivery" model="product.product">
+            <field name="name">Rental Fee</field>
+        </record>
+    </data>
+</odoo>

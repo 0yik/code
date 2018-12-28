@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+  <data>
+    <record id="hr_equipment_request_view_form_inherit_asset_repair" model="ir.ui.view">
+      <field name="name">equipment.request.form.inherit.asset.repair</field>
+      <field name="model">maintenance.request</field>
+      <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+      <field name="arch" type="xml">
+        <field name="equipment_id" position="after">
+          <field name="asset_id"/>
+        </field>
+
+        <field name="priority" position="after">
+          <field name="currency_id"/>
+          <field name="cost"/>
+        </field>
+
+        <field name="stage_id" position="before">
+          <button name="btn_start_maintenance" string="Start Maintenance" type="object" attrs="{'invisible': [('archive', '=', True)]}" class="btn btn-primary"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

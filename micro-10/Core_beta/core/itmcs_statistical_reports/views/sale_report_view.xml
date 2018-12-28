@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="custom_view_order_product_pivot" model="ir.ui.view">
+         <field name="name">sale.report.pivot</field>
+         <field name="model">sale.report</field>
+         <field name="inherit_id" ref="sale.view_order_product_pivot" />
+			<field name="arch" type="xml">
+		            <xpath expr="//field[@name='team_id']" position="replace">
+		            </xpath>
+            		<xpath expr="//field[@name='price_subtotal']" position="replace">
+		            </xpath>
+            		 <xpath expr="//field[@name='date']" position="after">
+                 		<field name="product_uom_qty" type="measure"/>
+                 		<field name="price_unit"  type="measure"/>
+                 		<field name="purchase_price"  type="measure"/>
+                 		<field name="gross_profit"  type="measure"/>
+                 		<field name="margin_per"  type="measure"/>
+		            </xpath>
+         	</field>
+    </record>
+    
+    
+    <record id="custom_view_order_purchase_pivot" model="ir.ui.view">
+         <field name="name">purchase.report.pivot</field>
+         <field name="model">purchase.report</field>
+         <field name="inherit_id" ref="purchase.view_purchase_order_pivot" />
+			<field name="arch" type="xml">
+		            <xpath expr="//field[@name='date_order']" position="replace">
+		            </xpath>
+            		<xpath expr="//field[@name='price_total']" position="replace">
+		            </xpath>
+		            <xpath expr="//field[@name='price_average']" position="replace">
+		            </xpath>
+            		 <xpath expr="//field[@name='unit_quantity']" position="after">
+                 		<field name="price_unit" type="measure"/>
+                 		<field name="amount_total"  type="measure"/>
+		            </xpath>
+         	</field>
+    </record>
+    
+</odoo>

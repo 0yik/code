@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_euro_budget_pl" model="report.paperformat">
+        <field name="name">Budget Report P&amp;L Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">35</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="report_budget_report"
+        string="Budget P&amp;L"
+        model="budget.report.pl"
+        report_type="qweb-pdf"
+        file="budget_report_pl.report_budget_pl"
+        name="budget_report_pl.report_budget_pl"/>
+
+    <record id="report_budget_report" model="ir.actions.report.xml">
+        <field name="paperformat_id" ref="budget_report_pl.paperformat_euro_budget_pl"/>
+    </record>
+
+    <report id="report_budget_report2"
+        string="Budget P&amp;L Detail"
+        model="budget.report.pl"
+        report_type="qweb-pdf"
+        file="budget_report_pl.report_budget_pl2"
+        name="budget_report_pl.report_budget_pl2"/>
+
+    <record id="report_budget_report2" model="ir.actions.report.xml">
+        <field name="paperformat_id" ref="budget_report_pl.paperformat_euro_budget_pl"/>
+    </record>
+
+</odoo>

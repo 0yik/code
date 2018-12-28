@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_leave_configuration_email_config" model="ir.ui.view">
+            <field name="name">Leave Email Config</field>
+            <field name="model">hr.leave.config.settings</field>
+            <field name="inherit_id" ref="sg_hr_holiday.view_hr_leave_configuration"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/group[1]" position="after">
+                    <group string="Email For Leave Approval">
+                        <field name="leave_approval_email" class="oe_inline" nolabel="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_move_purchase_inherit" model="ir.ui.view">
+        <field name="name">stock.move.form.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form"/>
+        <field name="arch" type="xml">
+             <xpath expr='//group[@name="quants_grp"]' position='before'>
+                <field name="stockmove_seller_ids" context="{'form_view_ref': 'purchase_stock_ext.stockmove_supplierinfo_form_view', 'tree_view_ref': 'purchase_stock_ext.stockmove_supplierinfo_tree_view'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stockmove_supplierinfo_form_view" model="ir.ui.view">
+            <field name="name">stockmove.supplierinfo.form.view</field>
+            <field name="model">stock.move.supplierinfo</field>
+            <field name="arch" type="xml">
+                <form string="Vendor Information">
+                    <group>
+                        <group string="Vendor">
+                            <field name="name" context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}"/>
+                            <field name="product_name"/>
+                            <field name="product_code"/>
+                            <field name="product_id" domain="[('product_tmpl_id', '=', product_tmpl_id)]" invisible="1"/>
+                            <label for="delay"/>
+                            <div>
+                                <field name="delay" class="oe_inline"/> days
+                            </div>
+                        </group>
+                        <group string="Price List">
+                            <field name="product_tmpl_id" string="Product" invisible="1"/>
+                            <label for="min_qty"/>
+                            <div>
+                                <field name="min_qty" class="oe_inline"/>
+                                <field name="product_uom" class="oe_inline" groups="product.group_uom"/>
+                                <field name="barcode_ref"/>
+                            </div>
+                            <label for="price"/>
+                            <div>
+                                <field name="price" class="oe_inline"/><field name="currency_id" class="oe_inline" groups="base.group_multi_currency"/>
+                            </div>
+                            <label for="date_start" string="Validity"/>
+                            <div><field name="date_start" class="oe_inline"/> to <field name="date_end" class="oe_inline"/></div>
+                        </group>
+                        <group string="Other Information" groups="base.group_multi_company">
+                            <field name="company_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="stockmove_supplierinfo_tree_view" model="ir.ui.view">
+            <field name="name">stock.move.supplierinfo.tree.view</field>
+            <field name="model">stock.move.supplierinfo</field>
+            <field name="arch" type="xml">
+                <tree string="Vendor Information" editable="bottom">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="product_tmpl_id" string="Product" invisible="1"/>
+                    <field name="delay" />
+                    <field name="min_qty"/>
+                    <field name="company_id"/>
+                    <field name="barcode_ref"/>
+                </tree>
+            </field>
+        </record>
+
+</odoo>

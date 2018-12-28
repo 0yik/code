@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+	<record id="import_success_view_form" model="ir.ui.view">
+	    <field name="name">import.success.view.form</field>
+	    <field name="model">import.success</field>
+	    <field name="arch" type="xml">
+		<form>
+		    <sheet>
+		        <h1>
+			    <field name="message" readonly="1" />
+			</h1>
+		    </sheet>
+		</form>
+	    </field>
+	</record>
+    </data>
+</odoo>
+			

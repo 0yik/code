@@ -1,0 +1,12 @@
+/* added for when image in list view and we try to edit.*/
+.o_row_edition .oe_image_tree {
+	min-height:76px !important;
+}
+.o_form_view .oe_avatar > img {
+	margin-bottom:5px;
+	margin-top:5px;
+	margin-left:3px;
+}
+.o_form_field_image.o_form_field{
+	width:auto !important;
+}
