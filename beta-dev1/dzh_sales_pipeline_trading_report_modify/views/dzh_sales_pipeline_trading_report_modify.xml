@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--create header and footer-->
+        <template id="external_layout_trading_report">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="dzh_sales_pipeline_trading_report_modify.external_layout_header_trading_report" />
+            <t t-raw="0" />
+            <t t-call="dzh_sales_pipeline_trading_report_modify.external_layout_footer_trading_report" />
+        </template>
+
+        <template id="dzh_sales_pipeline_trading_report_modify.external_layout_header_trading_report">
+            <div class="header">
+                <div class="header" style="padding-bottom:0px; margin:0px">
+                    <div class="row">
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:40px;width:160px;float:right"/>
+                        <span  class ="text-center" style="font-size: 24px; font-weight:bold">Trading Solutions - Sales Pipeline (Corporate) as at
+                                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %b %Y')"/></span>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="dzh_sales_pipeline_trading_report_modify.external_layout_footer_trading_report">
+            <div class="footer" style="font-size:10pt;">
+                <div class="row">
+                    <div class="col-xs-12 text-right">
+                        <div class="text-right" style="float:right">
+                            <ul class="list-inline">
+                                <li>Page:</li>
+                                <li><span class="page"/></li>
+                                <li>of</li>
+                                <li><span class="topage"/></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <report
+            id="action_pipeline_trading_report"
+            model="pipeline.trading.report"
+            string="Pipeline Trading Report"
+            name="dzh_sales_pipeline_trading_report_modify.pipeline_trading_report"
+            file="dzh_sales_pipeline_trading_report_modify.pipeline_trading_report"
+            report_type="qweb-pdf"
+        />
+
+        <record id="report_pipe_qweb_paperformat" model="report.paperformat">
+            <field name="name">Holidays Summary</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_pipeline_trading_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report_pipe_qweb_paperformat"/>
+        </record>
+        <!--create report-->
+        <template id="dzh_sales_pipeline_trading_report_modify.pipeline_trading_report">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="dzh_sales_pipeline_trading_report_modify.external_layout_trading_report">
+                        <div class="page">
+                            <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet"/>
+                            <div t-foreach="o.country_ids" t-as="country">
+                                <table class="table table-bordered" style="font-size:14px; padding-top:10px; width:100%;">
+                                    <thead style="display:table-header-group;display:none;">
+                                        <!--get sales person and not duplicate-->
+                                        <t t-set="refund_partners" t-value="[]"/>
+                                        <t t-foreach="o.pipeline_ids" t-as="refund" t-if="refund.user_id">
+                                            <t t-if="refund.team_id.country.id == country.id">
+                                                <t t-if="refund.user_id.name not in refund_partners">
+                                                    <t t-set="refund_partners" t-value="refund_partners + [refund.user_id.name]"/>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <!--<span style="font-size: 12px;font-weight: bold;" t-field="country.name"/><span>  -  </span>-->
+                                        <!--<span style="font-size: 12px;font-weight: bold;" t-foreach="refund_partners" t-as="partner">-->
+                                               <!--<span t-esc="partner"/> &amp;-->
+                                        <!--</span>-->
+                                        <!--<tr>-->
+                                            <!--<td style="background-color: #F0E68C;">ALL</td>-->
+                                        <!--</tr>-->
+
+                                    </thead>
+                                    <!--<t t-set="total" t-value="0" />-->
+
+                                    <tbody>
+                                        <tr style="background-color: #95b3d7;">
+                                            <td style="font-weight:bold;font-size:16px;"><t t-esc="country.name"/> </td>
+                                            <td colspan="9"></td>
+                                        </tr>
+                                        <tr style="background-color: #95b3d7;page-break-inside:avoid;">
+                                            <th class="text-left" style="background-color:#95b3d7; border:1px solid #BFBFBF; width:13%">Company</th>
+                                            <th class="text-left" style="background-color:#95b3d7; border:1px solid #BFBFBF; width:9%">Country</th>
+                                            <th class="text-left" style="background-color:#95b3d7; border:1px solid #BFBFBF; width:9%">Account Manager</th>
+                                            <th class="text-left" style="background-color:#95b3d7; border:1px solid #BFBFBF; width:9%">Services/Solutions</th>
+                                            <th class="text-left" style="background-color:#95b3d7; border:1px solid #BFBFBF; width:11%">Potential Revenue Monthy</th>
+                                            <th class="text-left" style="background-color:#95b3d7; border:1px solid #BFBFBF; width:11%">Annual Revenue</th>
+                                            <th class="text-left" style="background-color:#95b3d7; border:1px solid #BFBFBF; width:9%">One Time Revenue</th>
+                                            <th class="text-left" style="background-color:#95b3d7; border:1px solid #BFBFBF; width:9%">Start Date/Billing</th>
+                                            <th class="text-left" style="background-color:#95b3d7; border:1px solid #BFBFBF; width:9%">Probability</th>
+                                            <th class="text-left" style="background-color:#95b3d7; border:1px solid #BFBFBF; width:11%">Remarks</th>
+                                            <!--<th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Invoice Number</th>-->
+                                            <!--<th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Payment Dat Remark</th>-->
+                                        </tr>
+                                        <t t-set="total_planned" t-value="0"/>
+                                        <t t-set="annual_planned" t-value="0"/>
+                                        <tr style="page-break-inside:avoid;">
+                                            <td style="background-color:#95b3d7;">Trading (GTS)</td>
+                                            <td colspan="9"></td>
+                                        </tr>
+                                        <!--<t t-if="o.pipeline_ids">-->
+                                        <t t-foreach="o.currency_ids" t-as="currency">
+                                            <t t-set="total_planned_currency_newsale" t-value="0"/>
+                                            <t t-set="annual_planned_currency_newsale" t-value="0"/>
+                                            <t t-set="total_planned_currency_potential" t-value="0"/>
+                                            <t t-set="annual_planned_currency_potential" t-value="0"/>
+                                            <t t-set="one_time_planned_currency_newsale" t-value="0"/>
+                                            <t t-set="one_time_planned_currency_potential" t-value="0"/>
+                                            <t t-set="fla" t-value="0"/>
+                                            <t t-foreach="o.date_filter1[0]" t-as="lead_id">
+                                                <tr t-foreach="o.pipeline_ids" t-as="lead" style="page-break-inside:avoid;">
+                                                    <t t-if="lead.team_id.country.id == country.id and lead.invoice_type == 'trading_gts' and lead_id == lead.id and lead.currency_id.id == currency.id">
+                                                        <td style="font-family: 'Noto Sans TC', sans-serif;">
+                                                            <span t-field="lead.partner_name"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-field="lead.country_id.name"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-field="lead.user_id"/>
+                                                        </td>
+                                                        <td>
+                                                            <p t-if="lead.product_id">
+                                                                <span t-field="lead.name"></span>
+                                                                <p t-foreach="lead.product_id" t-as="product">
+                                                                    <span t-field="product.name"></span>
+                                                                </p>
+                                                            </p>
+                                                            <p t-else="">
+                                                                    <span t-field="lead.name"></span>
+                                                            </p>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="'{0:,.2f}'.format(lead.planned_revenue)"/>
+                                                            <t t-set="total_planned" t-value="total_planned + lead.planned_revenue"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="'{0:,.2f}'.format(lead.annual_revenue)"/>
+                                                            <t t-set="annual_planned" t-value="annual_planned + lead.annual_revenue"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-field="lead.one_time_revenue"/>
+                                                        </td>
+                                                        <td>
+                                                            <span style="white-space:nowrap;" t-field="lead.x_subscription_period" t-field-options="{&quot;format&quot;: &quot;d-MMM-yy&quot;}"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="int(lead.probability)"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-field="lead.remarks"/>
+                                                        </td>
+                                                        <t t-set="fla" t-value="1"/>
+                                                        <t t-if="lead.probability == 100">
+                                                            <t t-set="total_planned_currency_newsale" t-value="total_planned_currency_newsale + lead.planned_revenue"/>
+                                                            <t t-set="annual_planned_currency_newsale" t-value="annual_planned_currency_newsale + lead.annual_revenue"/>
+                                                            <t t-set="one_time_planned_currency_newsale" t-value="one_time_planned_currency_newsale + lead.one_time_revenue"/>
+                                                        </t>
+                                                        <t t-if="lead.probability != 100">
+                                                            <t t-set="total_planned_currency_potential" t-value="total_planned_currency_potential + lead.planned_revenue"/>
+                                                            <t t-set="annual_planned_currency_potential" t-value="annual_planned_currency_potential + lead.annual_revenue"/>
+                                                            <t t-set="one_time_planned_currency_potential" t-value="one_time_planned_currency_potential + lead.one_time_revenue"/>
+                                                        </t>
+                                                    </t>
+                                                </tr>
+                                            </t>
+                                            <t t-if="fla == 1">
+                                                <t t-set="currency_rate" t-value="0"/>
+                                                <t t-set="currency_rate_sin" t-value="0"/>
+                                                <t t-foreach="o.curency_rate_ids" t-as="currency_rate_id">
+                                                    <t t-if="currency_rate_id.currency_id.id == currency.id">
+                                                        <t t-set="currency_rate" t-value="currency_rate_id.rate"/>
+                                                    </t>
+                                                    <t t-if="currency_rate_id.currency_id.id == o.currency_sin_obj">
+                                                        <t t-set="currency_rate_sin" t-value="currency_rate_id.rate"/>
+                                                    </t>
+                                                </t>
+                                                <t t-if="currency.name != 'SGD'">
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>New Sales Revenue - <t t-esc="currency.name"/></span>
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(total_planned_currency_newsale)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(annual_planned_currency_newsale)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(one_time_planned_currency_newsale)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>New Sales Revenue - SGD</span>
+                                                        </td>
+                                                        <td></td>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(total_planned_currency_newsale / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(annual_planned_currency_newsale / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(one_time_planned_currency_newsale / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>Potential Revenue - <t t-esc="currency.name"/></span>
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(total_planned_currency_potential)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(annual_planned_currency_potential)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(one_time_planned_currency_potential)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>Potential Revenue - SGD</span>
+                                                        </td>
+                                                        <td></td>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(total_planned_currency_potential / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(annual_planned_currency_potential / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(one_time_planned_currency_potential / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </t>
+                                                <t t-if="currency.name == 'SGD'">
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>New Sales Revenue - SGD</span>
+                                                        </td>
+                                                        <td></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(total_planned_currency_newsale)"></span></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(annual_planned_currency_newsale)"></span></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(one_time_planned_currency_newsale)"></span></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>Potential Revenue - SGD</span>
+                                                        </td>
+                                                        <td></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(total_planned_currency_potential)"></span></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(annual_planned_currency_potential)"></span></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(one_time_planned_currency_potential)"></span></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <!--<t t-set="fla" t-value="0"/>-->
+                                        <!--<t t-set="count" t-value="0"/>-->
+                                        <!--<t t-foreach="o.currency_ids" t-as="currency">-->
+                                            <!--<t t-set="count" t-value="count + 1"/>-->
+                                            <!--<t t-set="total_planned_currency" t-value="0"/>-->
+                                            <!--<t t-set="annual_planned_currency" t-value="0"/>-->
+                                            <!--<t t-foreach="o.pipeline_ids" t-as="lead">-->
+                                                <!--<t t-if="lead.partner_id.country_id.id == country.id and lead.invoice_type == 'trading_gts' and lead.currency_id.id == currency.id and lead.probability == 100">-->
+                                                    <!--<t t-set="total_planned_currency" t-value="total_planned_currency + lead.planned_revenue"/>-->
+                                                    <!--<t t-set="annual_planned_currency" t-value="annual_planned_currency + lead.annual_revenue"/>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                            <!--<t t-if="total_planned_currency == 0 and annual_planned_currency == 0">-->
+                                                <!--<t t-if="count == len(o.currency_ids) and fla == 0">-->
+                                                    <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                        <!--<td colspan="3">-->
+                                                                <!--<span t-esc="o.date_filter2[0]"></span>-->
+                                                        <!--</td>-->
+                                                        <!--<td>SGD</td>-->
+                                                        <!--<td>$ 0</td>-->
+                                                        <!--<td>$ 0</td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                    <!--</tr>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                            <!--<t t-if="total_planned_currency != 0 or annual_planned_currency !=0">-->
+                                                <!--<t t-set="fla" t-value="fla + 1"/>-->
+                                                <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                    <!--<t t-if="fla == 1">-->
+                                                        <!--<td colspan="3">-->
+                                                            <!--<span t-esc="o.date_filter2[0]"></span>-->
+                                                        <!--</td>-->
+                                                    <!--</t>-->
+                                                    <!--<t t-if="fla != 1">-->
+                                                        <!--<td colspan="3">-->
+                                                        <!--</td>-->
+                                                    <!--</t>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.name"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.symbol"> </span><span t-esc="'{0:,.2f}'.format(int(total_planned_currency))"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.symbol"></span><span t-esc="'{0:,.2f}'.format(int(annual_planned_currency))"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td></td>-->
+                                                    <!--<td></td>-->
+                                                    <!--<td></td>-->
+                                                    <!--<td></td>-->
+                                                <!--</tr>-->
+                                                <!--<t t-if="currency.id != o.currency_sin_obj">-->
+                                                    <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                        <!--<td colspan="3"></td>-->
+                                                        <!--<td>-->
+                                                            <!--<span>SGD</span>-->
+                                                        <!--</td>-->
+                                                        <!--<t t-set="currency_rate" t-value="0"/>-->
+                                                        <!--<t t-set="currency_rate_sin" t-value="0"/>-->
+                                                        <!--<t t-foreach="o.curency_rate_ids" t-as="currency_rate_id">-->
+                                                            <!--<t t-if="currency_rate_id.currency_id.id == currency.id">-->
+                                                                <!--<t t-set="currency_rate" t-value="currency_rate_id.rate"/>-->
+                                                            <!--</t>-->
+                                                            <!--<t t-if="currency_rate_id.currency_id.id == o.currency_sin_obj">-->
+                                                                <!--<t t-set="currency_rate_sin" t-value="currency_rate_id.rate"/>-->
+                                                            <!--</t>-->
+                                                        <!--</t>-->
+                                                        <!--<td>-->
+                                                            <!--<t t-if="currency_rate != 0 and currency_rate_sin != 0">-->
+                                                                <!--<span>$</span><span t-esc="'{0:,.2f}'.format(float(float(total_planned_currency / currency_rate) * currency_rate_sin))"></span>-->
+                                                            <!--</t>-->
+                                                        <!--</td>-->
+                                                        <!--<td>-->
+                                                            <!--<t t-if="currency_rate != 0 and currency_rate_sin != 0">-->
+                                                                <!--<span>$</span><span t-esc="'{0:,.2f}'.format(float(float(annual_planned_currency / currency_rate) * currency_rate_sin))"></span>-->
+                                                            <!--</t>-->
+                                                        <!--</td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                    <!--</tr>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                        <!--</t>-->
+                                        <!--<t t-set="fla" t-value="0"/>-->
+                                        <!--<t t-set="count" t-value="0"/>-->
+                                        <!--<t t-foreach="o.currency_ids" t-as="currency">-->
+                                            <!--<t t-set="count" t-value="count + 1"/>-->
+                                            <!--<t t-set="total_planned_currency" t-value="0"/>-->
+                                            <!--<t t-set="annual_planned_currency" t-value="0"/>-->
+                                            <!--<t t-foreach="o.pipeline_ids" t-as="lead">-->
+                                                <!--<t t-if="lead.partner_id.country_id.id == country.id and lead.invoice_type == 'trading_gts' and lead.currency_id.id == currency.id and lead.probability != 100">-->
+                                                    <!--<t t-set="total_planned_currency" t-value="total_planned_currency + lead.planned_revenue"/>-->
+                                                    <!--<t t-set="annual_planned_currency" t-value="annual_planned_currency + lead.annual_revenue"/>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                            <!--<t t-if="total_planned_currency == 0 and annual_planned_currency == 0">-->
+                                                <!--<t t-if="count == len(o.currency_ids) and fla == 0">-->
+                                                    <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                        <!--<td colspan="3">-->
+                                                                <!--<span t-esc="o.date_filter[0]"></span>-->
+                                                        <!--</td>-->
+                                                        <!--<td>SGD</td>-->
+                                                        <!--<td>$ 0</td>-->
+                                                        <!--<td>$ 0</td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                    <!--</tr>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                            <!--<t t-if="total_planned_currency != 0 or annual_planned_currency !=0">-->
+                                                <!--<t t-set="fla" t-value="fla + 1"/>-->
+                                                <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                    <!--<t t-if="fla == 1">-->
+                                                        <!--<td colspan="3">-->
+                                                            <!--<span t-esc="o.date_filter[0]"></span>-->
+                                                        <!--</td>-->
+                                                    <!--</t>-->
+                                                    <!--<t t-if="fla != 1">-->
+                                                        <!--<td colspan="3">-->
+                                                        <!--</td>-->
+                                                    <!--</t>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.name"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.symbol"> </span><span t-esc="'{0:,.2f}'.format(int(total_planned_currency))"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.symbol"></span><span t-esc="'{0:,.2f}'.format(int(annual_planned_currency))"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--&lt;!&ndash;<span>SGD</span>&ndash;&gt;-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--&lt;!&ndash;<span>SGD</span>&ndash;&gt;-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--&lt;!&ndash;<span>SGD</span>&ndash;&gt;-->
+                                                    <!--</td>-->
+                                                    <!--<td></td>-->
+                                                <!--</tr>-->
+                                                <!--<t t-if="currency.id != o.currency_sin_obj">-->
+                                                    <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                        <!--<td colspan="3"></td>-->
+                                                        <!--<td>-->
+                                                            <!--<span>SGD</span>-->
+                                                        <!--</td>-->
+                                                        <!--<t t-set="currency_rate" t-value="0"/>-->
+                                                        <!--<t t-set="currency_rate_sin" t-value="0"/>-->
+                                                        <!--<t t-foreach="o.curency_rate_ids" t-as="currency_rate_id">-->
+                                                            <!--<t t-if="currency_rate_id.currency_id.id == currency.id">-->
+                                                                <!--<t t-set="currency_rate" t-value="currency_rate_id.rate"/>-->
+                                                            <!--</t>-->
+                                                            <!--<t t-if="currency_rate_id.currency_id.id == o.currency_sin_obj">-->
+                                                                <!--<t t-set="currency_rate_sin" t-value="currency_rate_id.rate"/>-->
+                                                            <!--</t>-->
+                                                        <!--</t>-->
+                                                        <!--<td>-->
+                                                            <!--<t t-if="currency_rate != 0 and currency_rate_sin != 0">-->
+                                                                <!--<span>$</span><span t-esc="'{0:,.2f}'.format(float(float(total_planned_currency / currency_rate) * currency_rate_sin))"></span>-->
+                                                            <!--</t>-->
+                                                        <!--</td>-->
+                                                        <!--<td>-->
+                                                            <!--<t t-if="currency_rate != 0 and currency_rate_sin != 0">-->
+                                                                <!--<span>$</span><span t-esc="'{0:,.2f}'.format(float(float(annual_planned_currency / currency_rate) * currency_rate_sin))"></span>-->
+                                                            <!--</t>-->
+                                                        <!--</td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                    <!--</tr>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                        <!--</t>-->
+                                        <!--</t>-->
+                                        <!--<t t-else="">-->
+                                            <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                <!--<td colspan="3">-->
+                                                        <!--<span t-esc="o.date_filter2[0]"></span>-->
+                                                <!--</td>-->
+                                                <!--<td>SGD</td>-->
+                                                <!--<td>$ 0</td>-->
+                                                <!--<td>$ 0</td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                            <!--</tr>-->
+                                            <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                <!--<td colspan="3">-->
+                                                        <!--<span t-esc="o.date_filter[0]"></span>-->
+                                                <!--</td>-->
+                                                <!--<td>SGD</td>-->
+                                                <!--<td>$ 0</td>-->
+                                                <!--<td>$ 0</td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                            <!--</tr>-->
+                                        <!--</t>-->
+
+                                        <t t-set="total_planned" t-value="0"/>
+                                        <t t-set="annual_planned" t-value="0"/>
+                                        <tr style="page-break-inside:avoid;">
+                                            <td style="background-color:#95b3d7;">Trading (DZHI)</td>
+                                            <td colspan="9"></td>
+                                        </tr>
+                                        <!--<t t-if="o.pipeline_ids">-->
+                                        <t t-foreach="o.currency_ids" t-as="currency">
+                                            <t t-set="total_planned_currency_newsale" t-value="0"/>
+                                            <t t-set="annual_planned_currency_newsale" t-value="0"/>
+                                            <t t-set="total_planned_currency_potential" t-value="0"/>
+                                            <t t-set="annual_planned_currency_potential" t-value="0"/>
+                                            <t t-set="one_time_planned_currency_newsale" t-value="0"/>
+                                            <t t-set="one_time_planned_currency_potential" t-value="0"/>
+                                            <t t-set="fla" t-value="0"/>
+                                            <t t-foreach="o.date_filter1[0]" t-as="lead_id">
+                                                <tr t-foreach="o.pipeline_ids" t-as="lead" style="page-break-inside:avoid;">
+                                                    <t t-if="lead.team_id.country.id == country.id and lead.invoice_type == 'trading_dzh' and lead_id == lead.id and lead.currency_id.id == currency.id">
+                                                        <td style="font-family: 'Noto Sans TC', sans-serif;'">
+                                                            <span t-field="lead.partner_name"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-field="lead.country_id.name"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-field="lead.user_id"/>
+                                                        </td>
+                                                        <td>
+                                                            <p t-if="lead.product_id">
+                                                                <span t-field="lead.name"></span>
+                                                                <p t-foreach="lead.product_id" t-as="product">
+                                                                    <span t-field="product.name"></span>
+                                                                </p>
+                                                            </p>
+                                                            <p t-else="">
+                                                                    <span t-field="lead.name"></span>
+                                                            </p>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="'{0:,.2f}'.format(lead.planned_revenue)"/>
+                                                            <t t-set="total_planned" t-value="total_planned + lead.planned_revenue"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="'{0:,.2f}'.format(lead.annual_revenue)"/>
+                                                            <t t-set="annual_planned" t-value="annual_planned + lead.annual_revenue"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-field="lead.one_time_revenue"/>
+                                                        </td>
+                                                        <td>
+                                                            <span style="white-space:nowrap;" t-field="lead.x_subscription_period" t-field-options="{&quot;format&quot;: &quot;d-MMM-yy&quot;}"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="int(lead.probability)"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-field="lead.remarks"/>
+                                                        </td>
+                                                        <t t-set="fla" t-value="1"/>
+                                                        <t t-if="lead.probability == 100">
+                                                            <t t-set="total_planned_currency_newsale" t-value="total_planned_currency_newsale + lead.planned_revenue"/>
+                                                            <t t-set="annual_planned_currency_newsale" t-value="annual_planned_currency_newsale + lead.annual_revenue"/>
+                                                            <t t-set="one_time_planned_currency_newsale" t-value="one_time_planned_currency_newsale + lead.one_time_revenue"/>
+                                                        </t>
+                                                        <t t-if="lead.probability != 100">
+                                                            <t t-set="total_planned_currency_potential" t-value="total_planned_currency_potential + lead.planned_revenue"/>
+                                                            <t t-set="annual_planned_currency_potential" t-value="annual_planned_currency_potential + lead.annual_revenue"/>
+                                                            <t t-set="one_time_planned_currency_potential" t-value="one_time_planned_currency_potential + lead.one_time_revenue"/>
+                                                        </t>
+                                                    </t>
+                                                </tr>
+                                            </t>
+                                            <t t-if="fla == 1">
+                                                <t t-set="currency_rate" t-value="0"/>
+                                                <t t-set="currency_rate_sin" t-value="0"/>
+                                                <t t-foreach="o.curency_rate_ids" t-as="currency_rate_id">
+                                                    <t t-if="currency_rate_id.currency_id.id == currency.id">
+                                                        <t t-set="currency_rate" t-value="currency_rate_id.rate"/>
+                                                    </t>
+                                                    <t t-if="currency_rate_id.currency_id.id == o.currency_sin_obj">
+                                                        <t t-set="currency_rate_sin" t-value="currency_rate_id.rate"/>
+                                                    </t>
+                                                </t>
+                                                <t t-if="currency.name != 'SGD'">
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>New Sales Revenue - <t t-esc="currency.name"/></span>
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(total_planned_currency_newsale)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(annual_planned_currency_newsale)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(one_time_planned_currency_newsale)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>New Sales Revenue - SGD</span>
+                                                        </td>
+                                                        <td></td>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(total_planned_currency_newsale / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(annual_planned_currency_newsale / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(one_time_planned_currency_newsale / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>Potential Revenue - <t t-esc="currency.name"/></span>
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(total_planned_currency_potential)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(annual_planned_currency_potential)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                            <span t-esc="'{0:,.2f}'.format(one_time_planned_currency_potential)"></span>
+                                                            <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>Potential Revenue - SGD</span>
+                                                        </td>
+                                                        <td></td>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(total_planned_currency_potential / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(annual_planned_currency_potential / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                            <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(one_time_planned_currency_potential / currency_rate) * currency_rate_sin))"></span></td>
+                                                        </t>
+                                                        <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                            <td><span>$ 0.00</span></td>
+                                                        </t>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </t>
+                                                <t t-if="currency.name == 'SGD'">
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>New Sales Revenue - SGD</span>
+                                                        </td>
+                                                        <td></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(total_planned_currency_newsale)"></span></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(annual_planned_currency_newsale)"></span></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(one_time_planned_currency_newsale)"></span></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                        <td colspan="3">
+                                                            <span>Potential Revenue - SGD</span>
+                                                        </td>
+                                                        <td></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(total_planned_currency_potential)"></span></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(annual_planned_currency_potential)"></span></td>
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(one_time_planned_currency_potential)"></span></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </t>
+
+                                        <!--<t t-set="fla" t-value="0"/>-->
+                                        <!--<t t-set="count" t-value="0"/>-->
+                                        <!--<t t-foreach="o.currency_ids" t-as="currency">-->
+                                            <!--<t t-set="count" t-value="count + 1"/>-->
+                                            <!--<t t-set="total_planned_currency" t-value="0"/>-->
+                                            <!--<t t-set="annual_planned_currency" t-value="0"/>-->
+                                            <!--<t t-foreach="o.pipeline_ids" t-as="lead">-->
+                                                <!--<t t-if="lead.partner_id.country_id.id == country.id and lead.invoice_type == 'trading_dzh' and lead.currency_id.id == currency.id and lead.probability == 100">-->
+                                                    <!--<t t-set="total_planned_currency" t-value="total_planned_currency + lead.planned_revenue"/>-->
+                                                    <!--<t t-set="annual_planned_currency" t-value="annual_planned_currency + lead.annual_revenue"/>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                            <!--<t t-if="total_planned_currency == 0 and annual_planned_currency == 0">-->
+                                                <!--<t t-if="count == len(o.currency_ids) and fla == 0">-->
+                                                    <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                        <!--<td colspan="3">-->
+                                                                <!--<span t-esc="o.date_filter2[0]"></span>-->
+                                                        <!--</td>-->
+                                                        <!--<td>SGD</td>-->
+                                                        <!--<td>$ 0</td>-->
+                                                        <!--<td>$ 0</td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                    <!--</tr>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                            <!--<t t-if="total_planned_currency != 0 or annual_planned_currency !=0">-->
+                                                <!--<t t-set="fla" t-value="fla + 1"/>-->
+                                                <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                    <!--<t t-if="fla == 1">-->
+                                                        <!--<td colspan="3">-->
+                                                            <!--<span t-esc="o.date_filter2[0]"></span>-->
+                                                        <!--</td>-->
+                                                    <!--</t>-->
+                                                    <!--<t t-if="fla != 1">-->
+                                                        <!--<td colspan="3">-->
+                                                        <!--</td>-->
+                                                    <!--</t>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.name"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.symbol"> </span><span t-esc="'{0:,.2f}'.format(int(total_planned_currency))"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.symbol"></span><span t-esc="'{0:,.2f}'.format(int(annual_planned_currency))"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--&lt;!&ndash;<span>SGD</span>&ndash;&gt;-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--&lt;!&ndash;<span>SGD</span>&ndash;&gt;-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--&lt;!&ndash;<span>SGD</span>&ndash;&gt;-->
+                                                    <!--</td>-->
+                                                    <!--<td></td>-->
+                                                <!--</tr>-->
+                                                <!--<t t-if="currency.id != o.currency_sin_obj">-->
+                                                    <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                        <!--<td colspan="3"></td>-->
+                                                        <!--<td>-->
+                                                            <!--<span>SGD</span>-->
+                                                        <!--</td>-->
+                                                        <!--<t t-set="currency_rate" t-value="0"/>-->
+                                                        <!--<t t-set="currency_rate_sin" t-value="0"/>-->
+                                                        <!--<t t-foreach="o.curency_rate_ids" t-as="currency_rate_id">-->
+                                                            <!--<t t-if="currency_rate_id.currency_id.id == currency.id">-->
+                                                                <!--<t t-set="currency_rate" t-value="currency_rate_id.rate"/>-->
+                                                            <!--</t>-->
+                                                            <!--<t t-if="currency_rate_id.currency_id.id == o.currency_sin_obj">-->
+                                                                <!--<t t-set="currency_rate_sin" t-value="currency_rate_id.rate"/>-->
+                                                            <!--</t>-->
+                                                        <!--</t>-->
+                                                        <!--<td>-->
+                                                            <!--<t t-if="currency_rate != 0 and currency_rate_sin != 0">-->
+                                                                <!--<span>$</span><span t-esc="'{0:,.2f}'.format(float(float(total_planned_currency / currency_rate) * currency_rate_sin))"></span>-->
+                                                            <!--</t>-->
+                                                        <!--</td>-->
+                                                        <!--<td>-->
+                                                            <!--<t t-if="currency_rate != 0 and currency_rate_sin != 0">-->
+                                                                <!--<span>$</span><span t-esc="'{0:,.2f}'.format(float(float(annual_planned_currency / currency_rate) * currency_rate_sin))"></span>-->
+                                                            <!--</t>-->
+                                                        <!--</td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                    <!--</tr>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                        <!--</t>-->
+                                        <!--<t t-set="fla" t-value="0"/>-->
+                                        <!--<t t-set="count" t-value="0"/>-->
+                                        <!--<t t-foreach="o.currency_ids" t-as="currency">-->
+                                            <!--<t t-set="count" t-value="count + 1"/>-->
+                                            <!--<t t-set="total_planned_currency" t-value="0"/>-->
+                                            <!--<t t-set="annual_planned_currency" t-value="0"/>-->
+                                            <!--<t t-foreach="o.pipeline_ids" t-as="lead">-->
+                                                <!--<t t-if="lead.partner_id.country_id.id == country.id and lead.invoice_type == 'trading_dzh' and lead.currency_id.id == currency.id and lead.probability != 100">-->
+                                                    <!--<t t-set="total_planned_currency" t-value="total_planned_currency + lead.planned_revenue"/>-->
+                                                    <!--<t t-set="annual_planned_currency" t-value="annual_planned_currency + lead.annual_revenue"/>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                            <!--<t t-if="total_planned_currency == 0 and annual_planned_currency == 0">-->
+                                                <!--<t t-if="count == len(o.currency_ids) and fla == 0">-->
+                                                    <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                        <!--<td colspan="3">-->
+                                                                <!--<span t-esc="o.date_filter[0]"></span>-->
+                                                        <!--</td>-->
+                                                        <!--<td>SGD</td>-->
+                                                        <!--<td>$ 0</td>-->
+                                                        <!--<td>$ 0</td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                    <!--</tr>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                            <!--<t t-if="total_planned_currency != 0 or annual_planned_currency !=0">-->
+                                                <!--<t t-set="fla" t-value="fla + 1"/>-->
+                                                <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                    <!--<t t-if="fla == 1">-->
+                                                        <!--<td colspan="3">-->
+                                                            <!--<span t-esc="o.date_filter[0]"></span>-->
+                                                        <!--</td>-->
+                                                    <!--</t>-->
+                                                    <!--<t t-if="fla != 1">-->
+                                                        <!--<td colspan="3">-->
+                                                        <!--</td>-->
+                                                    <!--</t>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.name"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.symbol"> </span><span t-esc="'{0:,.2f}'.format(int(total_planned_currency))"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.symbol"></span><span t-esc="'{0:,.2f}'.format(int(annual_planned_currency))"></span>-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--&lt;!&ndash;<span>SGD</span>&ndash;&gt;-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--&lt;!&ndash;<span>SGD</span>&ndash;&gt;-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                        <!--&lt;!&ndash;<span>SGD</span>&ndash;&gt;-->
+                                                    <!--</td>-->
+                                                    <!--<td></td>-->
+                                                <!--</tr>-->
+                                                <!--<t t-if="currency.id != o.currency_sin_obj">-->
+                                                    <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                        <!--<td colspan="3"></td>-->
+                                                        <!--<td>-->
+                                                            <!--<span>SGD</span>-->
+                                                        <!--</td>-->
+                                                        <!--<t t-set="currency_rate" t-value="0"/>-->
+                                                        <!--<t t-set="currency_rate_sin" t-value="0"/>-->
+                                                        <!--<t t-foreach="o.curency_rate_ids" t-as="currency_rate_id">-->
+                                                            <!--<t t-if="currency_rate_id.currency_id.id == currency.id">-->
+                                                                <!--<t t-set="currency_rate" t-value="currency_rate_id.rate"/>-->
+                                                            <!--</t>-->
+                                                            <!--<t t-if="currency_rate_id.currency_id.id == o.currency_sin_obj">-->
+                                                                <!--<t t-set="currency_rate_sin" t-value="currency_rate_id.rate"/>-->
+                                                            <!--</t>-->
+                                                        <!--</t>-->
+                                                        <!--<td>-->
+                                                            <!--<t t-if="currency_rate != 0 and currency_rate_sin != 0">-->
+                                                                <!--<span>$</span><span t-esc="'{0:,.2f}'.format(float(float(total_planned_currency / currency_rate) * currency_rate_sin))"></span>-->
+                                                            <!--</t>-->
+                                                        <!--</td>-->
+                                                        <!--<td>-->
+                                                            <!--<t t-if="currency_rate != 0 and currency_rate_sin != 0">-->
+                                                                <!--<span>$</span><span t-esc="'{0:,.2f}'.format(float(float(annual_planned_currency / currency_rate) * currency_rate_sin))"></span>-->
+                                                            <!--</t>-->
+                                                        <!--</td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td></td>-->
+                                                    <!--</tr>-->
+                                                <!--</t>-->
+                                            <!--</t>-->
+                                        <!--</t>-->
+                                        <!--</t>-->
+                                        <!--<t t-else="">-->
+                                            <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                <!--<td colspan="3">-->
+                                                        <!--<span t-esc="o.date_filter2[0]"></span>-->
+                                                <!--</td>-->
+                                                <!--<td>SGD</td>-->
+                                                <!--<td>$ 0</td>-->
+                                                <!--<td>$ 0</td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                            <!--</tr>-->
+                                            <!--<tr style="page-break-inside:avoid;background-color:#00b0f0;">-->
+                                                <!--<td colspan="3">-->
+                                                        <!--<span t-esc="o.date_filter[0]"></span>-->
+                                                <!--</td>-->
+                                                <!--<td>SGD</td>-->
+                                                <!--<td>$ 0</td>-->
+                                                <!--<td>$ 0</td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                            <!--</tr>-->
+                                        <!--</t>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="view_pipeline_trading_report" model="ir.ui.view">
+            <field name="name">pipeline.trading.report.form</field>
+            <field name="model">pipeline.trading.report</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		        <form string="Sales Pipeline Trading Report" version="10.0" style="height:240px">
+
+		            	<group>
+		            		<group>
+		            			<field name="country_id" string="Country"/>
+                                <field name="start_date" string="Start Date" required="1"/>
+		            		</group>
+		            		<group>
+		            			<field name="user_id" string="Sales Person"/>
+                                <field name="end_date" string="End Date"/>
+		            		</group>
+		        		</group>
+
+		            <footer>
+						<button string="Print" name="print_trading_report" type="object" class="oe_highlight"/>
+		                or
+		                <button string="Cancel" class="oe_link" special="cancel" />
+		            </footer>
+		        </form>
+            </field>
+        </record>
+
+        <record id="action_pipeline_trading_report" model="ir.actions.act_window">
+            <field name="name">Sales DZH Trading Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pipeline.trading.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="pipeline_trading_report_menu"
+            name="Sales Pipeline Trading Report"
+            parent="sales_team.menu_sale_report"
+            action="action_pipeline_trading_report"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+        <report 
+            id="report_student_detail_id"
+            string="Student Detail"
+            model="student.student" 
+            report_type="qweb-pdf" 
+            file="atts_student_fields.report_studentdetail" 
+            name="atts_student_fields.report_studentdetail"
+            menu="False" />
+        
+       <report 
+            id="report_student_enrolment_by_nationality_id"
+            string="Student Nationality" 
+            model="student.student" 
+            report_type="qweb-pdf" 
+            file="atts_student_fields.report_student_nationality_enrolment" 
+            name="atts_student_fields.report_student_nationality_enrolment"
+            menu="False" /> 
+            
+        <report 
+            id="action_report_enrolment_by_gender"
+            model="enrolment.by.gender"
+            string="Enrolment By Gender"
+            report_type="qweb-pdf"
+            name="atts_student_fields.enrolment_by_gender_report_temp"
+            file="atts_student_fields.enrolment_by_gender_report_temp"
+            menu="False" />
+            
+        <report 
+            id="action_report_health_datasheet"
+            model="student.student"
+            string="Health Datasheet"
+            report_type="qweb-pdf"
+            name="atts_student_fields.health_datasheet_report_temp"
+            file="atts_student_fields.health_datasheet_report_temp"
+            /> 
+            	
+        <report 
+            id="action_report_enrolment_by_religion"
+            model="student.student"
+            string="Enrolment By Religion"
+            report_type="qweb-pdf"
+            name="atts_student_fields.report_student_religion_enrolment"
+            file="atts_student_fields.report_student_religion_enrolment"
+            menu="False" />
+        
+
+        <report 
+            id="action_report_enrolment_by_race"
+            model="student.student"
+            string="Enrolment By Race"
+            report_type="qweb-pdf" 
+            name="atts_student_fields.report_student_race_enrolment"
+            file="atts_student_fields.report_student_race_enrolment" 
+            menu="False" />  
+            	
+     	<report 
+            id="action_report_monthly_enrolment"
+            model="student.student"
+            string="Monthly Withdrawl"
+            report_type="qweb-pdf"  
+            name="atts_student_fields.report_monthly_withdrawl"
+            file="atts_student_fields.report_monthly_withdrawl" 
+            menu="False" />    	            
+            
+</odoo>

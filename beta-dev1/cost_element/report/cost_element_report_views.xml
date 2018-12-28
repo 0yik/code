@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="action_cost_element_report_pivot">
+        <field name="name">project.cost_element.report.pivot</field>
+        <field name="model">project.cost_element.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Cost Element" disable_linking="True">
+                <field name="name" type="row"/>
+                <field name="parent_cost_element" type="row"/>
+                <field name="level" type="row"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="action_cost_element_report_graph">
+        <field name="name">project.cost_element.report.graph</field>
+        <field name="model">project.cost_element.report</field>
+        <field name="arch" type="xml">
+            <graph string="Cost Element" type="pivot">
+                <field name="name" type="row"/>
+                <field name="parent_cost_element" type="row"/>
+                <field name="level" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_cost_element_report">
+        <field name="name">Cost Element Report</field>
+        <field name="res_model">project.cost_element.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="help" type="html">
+          <p>
+            From this report, you can have an overview on all depreciations. The
+            search bar can also be used to personalize your assets depreciation reporting.
+          </p>
+        </field>
+    </record>
+
+    <menuitem name="Cost Element Report" action="action_cost_element_report"
+              id="menu_action_cost_element_report"
+              parent="sales_team.menu_sale_report" sequence="21"/>
+</odoo>

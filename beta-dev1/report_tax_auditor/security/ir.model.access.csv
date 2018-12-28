@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_report_pos_order_auditor,group_report_pos_order_auditor,point_of_sale.model_report_pos_order,group_auditor,1,1,1,0
+access_pos_details_wizard_auditor,group_pos_details_wizard_auditor,point_of_sale.model_pos_details_wizard,group_auditor,1,1,1,0
+access_pos_combo_pack_report_auditor,group_pos_combo_pack_report_auditor,pos_combo.model_pos_combo_pack_report,group_auditor,1,1,1,0
+access_pos_config_auditor,group_pos_config_auditor,point_of_sale.model_pos_config,group_auditor,1,1,0,0

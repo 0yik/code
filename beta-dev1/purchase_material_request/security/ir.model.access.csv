@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+purchase_material_request_purchase_user,purchase.material.request.purchase.user,model_purchase_material_request,purchase.group_purchase_user,1,1,1,1
+purchase_material_request_purchase_manager,purchase.material.request.purchase.manager,model_purchase_material_request,purchase.group_purchase_manager,1,1,1,0
+
+purchase_material_request_purchase_line_user,purchase.material.request.purchase.line.user,model_purchase_material_request_line,purchase.group_purchase_user,1,1,1,1
+purchase_material_request_purchase_line_manager,purchase.material.request.purchase.line.manager,model_purchase_material_request_line,purchase.group_purchase_manager,1,1,1,0

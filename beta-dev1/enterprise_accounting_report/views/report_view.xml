@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--         <record id="enterprise_user_group_id" model="res.groups">
+            <field name="name">Enterprise User Group</field>
+        </record>
+        <record model="ir.ui.menu" id="account.menu_partner_ledger">
+            <field name="groups_id" eval="[(6, 0, [ref('enterprise_user_group_id')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="account.menu_general_ledger">
+            <field name="groups_id" eval="[(6, 0, [ref('enterprise_user_group_id')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="account.menu_account_report_bs">
+            <field name="groups_id" eval="[(6, 0, [ref('enterprise_user_group_id')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="account.menu_account_report_pl">
+            <field name="groups_id" eval="[(6, 0, [ref('enterprise_user_group_id')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="account.menu_aged_trial_balance">
+            <field name="groups_id" eval="[(6, 0, [ref('enterprise_user_group_id')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="account.menu_account_report">
+            <field name="groups_id" eval="[(6, 0, [ref('enterprise_user_group_id')])]"/>
+        </record>
+
+        <menuitem id="enterprise_accounting_report.account_reports_legal_statements_menu" name="Legal Statements" parent="account.menu_finance_receivables" sequence="100" groups="account.group_account_user"/>
+        <menuitem id="account.account_reports_business_intelligence_menu" name="Business Intelligence" parent="account.menu_finance_receivables" sequence="101" groups="account.group_account_invoice"/>
+ -->
+        <template id="account_reports_backend" inherit_id="web.assets_backend" active="True">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/enterprise_accounting_report/static/src/js/account_reports_widgets.js"></script>
+                <script type="text/javascript" src="/enterprise_accounting_report/static/src/js/account_reports_followup_widgets.js"></script>
+                <script type="text/javascript" src="/enterprise_accounting_report/static/src/js/account_reports_backend.js"></script>
+                <script type="text/javascript" src="/enterprise_accounting_report/static/src/js/account_reports_followup_backend.js"></script>
+                <link rel="stylesheet" href="/enterprise_accounting_report/static/src/less/account_financial_report.less" />
+            </xpath>
+        </template>
+        <template id="assets_common" name="account_reports_assets_common" inherit_id="web.assets_common">
+            <xpath expr="." position="inside">
+                <!-- <script type="text/javascript" src="/sg_account_report/static/src/js/account_reports_tours.js"></script> -->
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="snippet_style_two" inherit_id="honos_snippets.honos_snippets"
+		name="Style 2" priority="2">
+		<xpath
+			expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']"
+			position="inside">
+			<t t-snippet="honos_snippet_style_2.snippet_style_2_template" t-thumbnail="/honos_snippet_style_2/static/src/img/Style2.jpg" />
+		</xpath>
+	</template>
+	<template id="snippet_style_2_template" name="Style 2">
+		<section class="snippet_design">
+			<section class="c_offer_common">
+				<!-- <div class="c_offer_sub_common"> -->
+				<section class="left_container_parent">
+							<div class="snippet_sale_icon">15%<span>off</span></div>
+							<div class="snippet_left_container">
+								<div class="snippet_left_content">
+									<h3 class="content_title">Spring Collection</h3>
+									<p class="desc_para">We have lots of styles for spring collection that makes you feel wow! Update yourself with latest trends now.
+									</p>
+									<a class="b_fashion_btn" href="#">Shop now</a>
+								</div>
+								<div class="snippet_right_timer_div">
+									<p id="date_timer">
+										<div class="timer_common">
+											<div id="days"></div>
+											<p id="d_lbl"></p>
+										</div>
+
+										<p class="colon">:</p>
+
+										<div class="timer_common">
+											<div id="hours"></div>
+											<p id="h_lbl"></p>
+										</div>
+										<p class="colon">:</p>
+
+										<div class="timer_common">
+											<div id="minutes"></div>
+											<p id="m_lbl"></p>
+										</div>
+										<p class="colon">:</p>
+
+										<div class="timer_common">
+											<div id="seconds"></div>
+											<p id="s_lbl"></p>
+										</div>
+									</p>
+								</div>
+							</div>
+						</section>
+				<section>
+				<section class="right_container_parent"
+					style="background-image:url('/honos_snippet_style_2/static/src/img/img.jpg')">
+				</section>
+				</section>
+			</section>
+		</section>
+
+
+	</template>
+
+
+</odoo>

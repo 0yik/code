@@ -1,0 +1,68 @@
+<odoo>
+	<data>
+		<record id="hr_attendance_list_form_view" model="ir.ui.view">
+			<field name="name">hr.attendance.list.form.view</field>
+			<field name="model">hr.attendance.list</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<field name="employee_id" />
+						</group>
+						<group string="Attendance List">
+							<field name="attendance_list_line" nolabel="1">
+								<tree string="Attendance List Line" create="false"
+									editable="bottom">
+									<field name="date_dt" />
+									<field name="day" />
+									<field name="emp_remark" />
+									<field name="lev_remark" />
+									<field name="sup_remark" />
+									<field name="check_in" invisible="1" />
+									<field name="check_out" invisible="1" />
+									<field name="o_timein" string="O Timein" widget="float_time" />
+									<field name="o_timeout" string="O Timeout" widget="float_time" />
+									<field name="adj_timein" string="Adj Timein" widget="float_time" />
+									<field name="adj_timeout" string="Adj Timeout" widget="float_time" />
+									<field name="total_hours" widget="float_time" />
+									<field name="over_time" widget="float_time" invisible="1"/>
+									<field name="ot_1_0" widget="float_time" />
+									<field name="ot_1_5" widget="float_time" />
+									<field name="ot_2_0" widget="float_time" />
+									<field name="hod_id" invisible="1" />
+									<field name="state" attrs="{'readonly': [('hod_id', '=', False)]}" />
+								</tree>
+							</field>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="hr_attendance_list_tree_view" model="ir.ui.view">
+			<field name="name">hr.attendance.list.tree.view</field>
+			<field name="model">hr.attendance.list</field>
+			<field name="arch" type="xml">
+				<tree string="Attendance List">
+					<field name="employee_id" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_hr_attendance_list" model="ir.actions.act_window">
+			<field name="name">Attendance List</field>
+			<field name="res_model">hr.attendance.list</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p>
+					Attendance List for All Employee.
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_hr_attendance_list" name="Attendance List"
+			parent="hr_attendance.menu_hr_attendance_root" action="action_hr_attendance_list"
+			sequence="16" />
+	</data>
+</odoo>

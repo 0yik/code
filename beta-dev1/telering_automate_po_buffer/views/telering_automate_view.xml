@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	 <record id="telering_automate_form" model="ir.ui.view">
+          <field name="name">telering.automate.form</field>
+          <field name="model">telering.automate</field>
+          <field name="arch" type="xml">
+              <form>
+              	 <header>
+              	 	<button name="get_salesdata" type="object" string="Get Sales data" states='draft' class="oe_hightlight" />
+			<button name="pr_requqest" type="object" string="Generate PR Requests" states='confirm' class="oe_hightlight"/>
+              	 	<field name="state" widget="statusbar"/>
+              	 </header>
+              	 <sheet>
+	                 <h1>
+	                 	<field name="name" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+	                 </h1>
+	                 <group>
+	                 	<group>
+	                 		<field name="month" required='True' attrs="{'readonly':[('state','!=','draft')]}"/>
+	                 		<field name="week" attrs="{'readonly':[('state','!=','draft')]}"/>
+	                 		<field name="year" invisible='1'/>
+	                 	</group>
+	                 	<group>
+	                 		<field name="start_date" attrs="{'readonly':[('state','!=','draft')]}"/>
+	                 		<field name="end_date" attrs="{'readonly':[('state','!=','draft')]}"/>
+	                 	</group>
+	                 </group>
+	                 <label for="sales_lines"/>
+	                 <field name="sales_lines" nolabel='1' attrs="{'readonly':[('state','!=','draft')]}">
+	                 	<tree editable='bottom' nocreate='1'>
+		                 	<field name="sale_number"/>
+		                 	<field name="product_id"/>
+		                 	<field name="qty"/>
+	                 	</tree>
+	                 </field>
+	             </sheet>
+              </form>
+          </field>
+     </record>
+     
+     <record id="telering_automate_tree" model="ir.ui.view">
+          <field name="name">telering.automate.tree</field>
+          <field name="model">telering.automate</field>
+          <field name="arch" type="xml">
+              <tree>
+              	<field name="name"/>
+              	<field name="year"/>
+              </tree>
+          </field>
+     </record>
+     
+     <record id="telering_automate_search" model="ir.ui.view">
+          <field name="name">telering.automate.search</field>
+          <field name="model">telering.automate</field>
+          <field name="arch" type="xml">
+              <search>
+              	<field name="name"/>
+              	<group expand="0" string="Group By..." colspan="6" col="4">
+                    <filter string="Year" name="year" context="{'group_by':'year'}"/>
+                    <filter string="Month" name="month" context="{'group_by':'month'}"/>
+                    <filter string="Week" name="week" context="{'group_by':'week'}"/>
+                </group>
+              </search>
+          </field>
+     </record>
+     
+     <record id="telering_automate_action" model="ir.actions.act_window">
+         <field name="name">Telering Automate</field>
+         <field name="res_model">telering.automate</field>
+         <field name="view_type">form</field>
+	 <field name="context">{'group_by': ['year','month','week']}</field>
+         <field name="view_mode">tree,form</field>
+     </record>
+     
+     <menuitem id='menu_telering_automate' string="Buffer Stock Per Product" action='telering_automate_action'
+     			parent="stock.menu_stock_inventory_control"/>
+</odoo>	

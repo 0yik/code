@@ -1,0 +1,14 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="arkco_custom_view_purchase_requisition_form">
+      <field name="name">custom.purchase.requisition.form</field>
+      <field name="model">purchase.requisition</field>
+      <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='vendor_id']" position="after">
+          <field name="min_order"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

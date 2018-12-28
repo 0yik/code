@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="loading queue assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/loading_unloading_queue/static/src/js/loading_queue.js"></script>
+        </xpath>
+   </template>
+
+</odoo>

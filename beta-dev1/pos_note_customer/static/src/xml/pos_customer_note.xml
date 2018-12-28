@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+	<t t-extend="PaymentScreenWidget">
+		<t t-jquery=".payment-buttons" t-operation="append">
+			<div class='button' id='customer_note'>
+				<i class='fa fa-user' /> 
+                <span class='js_note_customer_name'>
+                        Customer(only Note)
+                </span>
+			</div>			
+		</t>
+	</t>
+    <t t-name="TextFieldCustomerPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput">
+                <p class="title"><t t-esc=" widget.options.title || '' " /></p>
+                <input type='text' placeholder="Customer Name" id="customer_note_name" t-att-value="widget.options.value || ''"></input>
+                <div class="footer">
+                    <div class="button confirm">
+                        Ok 
+                    </div>
+                    <div class="button cancel">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-extend="PosTicket">
+        <t t-jquery='tr:contains("Bill No")' t-operation='after'>
+            <tr><td>Customer</td><td>:</td><td><t t-esc="order.customer_note_name || ''"/></td>
+            </tr>
+        </t>
+        <t t-jquery='.receipt-billno' t-operation='after'>
+            Customer   : <t t-esc="order.customer_note_name || ''"/>
+        </t>
+        
+    </t>
+        <t t-extend="XmlReceipt">
+         <t t-jquery='.receipt-billno' t-operation='after'>
+            Customer   : <t t-esc="order.customer_note_name || ''"/>
+        </t>
+        <t t-jquery='line:contains("Bill No")' t-operation='after'>
+            <line>
+                <left>
+                    Customer : <t t-esc="order.customer_note_name"/>
+                </left>
+            </line>
+        </t>
+    </t>
+
+</templates>

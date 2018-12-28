@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="my_assets_backend" name="crm_custom_benham assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/crm_custom_benham/static/src/css/crm_custom_benham.css"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

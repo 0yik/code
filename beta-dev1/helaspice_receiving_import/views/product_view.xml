@@ -1,0 +1,47 @@
+<odoo>
+
+    <record id="product_template_form_rack_location" model="ir.ui.view">
+        <field name="name">Product Template - Rack Location</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <field name="barcode" position="after">
+                <field name="rack_location"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_repack" model="ir.ui.view">
+        <field name="name">Product Template - Repack</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='description']/separator[1]" position="before">
+                <separator string="Repacking Label" colspan="4"/>
+                <field name="repack_label" colspan="4" nolabel="1"/>
+                <separator string="Repacking Art No" colspan="4"/>
+                <field name="art_no" colspan="4" nolabel="1"/>
+                <separator string="Repacking Contents" colspan="4"/>
+                <field name="contents" colspan="4" nolabel="1"/>
+                <separator string="Repacking Directions of Use" colspan="4"/>
+                <field name="directions_of_use" colspan="4" nolabel="1"/>
+                <separator string="Repacking Ingredients" colspan="4"/>
+                <field name="ingredients" colspan="4" nolabel="1"/>
+                <separator string="Repacking Storage Instructions" colspan="4"/>
+                <field name="storage_place" colspan="4" nolabel="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_form_rack_location" model="ir.ui.view">
+        <field name="name">Product - Rack Location</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="barcode" position="after">
+                <field name="rack_location"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

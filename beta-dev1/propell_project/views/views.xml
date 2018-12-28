@@ -1,0 +1,41 @@
+<odoo>
+  <data>
+
+   <record id="project_edit_project_inherit" model="ir.ui.view">
+
+      <field name="name">project.edit.project.inherit</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.edit_project" />
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='user_id']" position="replace">
+          <field name="user_id" widget="many2many_tags" required="1" />
+        </xpath>
+
+        <xpath expr="//field[@name='user_id']" position="after">
+          <field name="supervisor_id" widget="many2many_tags"/>
+        </xpath>
+
+        <xpath expr="//page[1]" position="before">
+          <page name="Team Members" string="Team Members">
+            <field name="teammember_line">
+
+              <tree  editable="top">
+                <field name="team_member" widget="many2many_tags"/>
+                <field name="role"/>
+
+              </tree>
+
+            </field>
+
+          </page>
+        </xpath>
+
+
+      </field>
+
+   </record>
+
+
+  </data>
+</odoo>

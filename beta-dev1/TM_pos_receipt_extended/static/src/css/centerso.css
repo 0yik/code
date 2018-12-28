@@ -1,0 +1,14 @@
+.salesname {
+	float: left;
+    color: #DDD;
+    font-size: 16px;
+    line-height: 48px;
+    font-style: italic;
+    cursor: pointer;
+}
+.salesperson{
+	color: #6EC89B;
+}
+.pos .pos-branding .username {
+	margin-right: 100px !important;
+}

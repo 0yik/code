@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="helpdesk_ticket_form_inherit" model="ir.ui.view">
+            <field name="name">id.helpdesk.ticket.form.inherit</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet" position="after">
+                    <sheet>
+                        <group col="10">
+                            <group colspan="6">
+                                <table class="table-condensed" style="border:1px solid white;" width="80%">
+                                    <tr>
+                                        <td>
+                                            <strong>1) Name</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="name"></field>
+                                                <field name="ticket_number" invisible="True"/>
+                                                <field name="date_create" invisible="True"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>
+                                            <strong>2) Customer Name</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="customer_name"></field>
+                                            </strong>
+                                        </td>
+                                    </tr> -->
+                                    <tr>
+                                        <td>
+                                            <strong>2) Employer Name</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="employer_name"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>3) Company Name</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="company_name"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>4) Contact Person</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="contract_person"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>5) Contact No (Mobile)</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="contract_mobile"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>6) Contact No (Home)</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="contract_hom"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>7) Contact No (Work)</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="contract_work"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>8) Email Address</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="email"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>9) Nature of Business</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="nature_of_business"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>10) Mailing Address</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="mailling"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>11) Postal Code</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="postal_code"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>12) Nature of Call</strong>
+                                        </td>
+                                        <td>
+                                            <field name="nature_of_call"></field>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </group>
+                            <group colspan="4">
+                                <table class="table-condensed" style="border:1px solid white;">
+                                    <tr>
+                                        <td>
+                                            <strong>13) NRIC/FIN</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="nric_fin"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>14) Passport No</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="passpost_no"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>15) ROC No</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="roc_no"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>16) Nationality</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="nationality"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>17) Date of Birth</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="date_birth"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>18) Age</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="age"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>19) Gender</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="gender"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>20) Marital Status</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="marital_status"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>21) Occupation</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="occupation"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>22) License Pass Date</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="license_pass_date"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>23) Driving Experience</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="driving_experience"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>24) Years with ARF</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="years_arf"></field>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>
+                                            <strong>25) Customer ID</strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <field name="partner_id"></field>
+                                            </strong>
+                                        </td>
+                                    </tr> -->
+
+                                </table>
+                            </group>
+                            <group colspan="8" col="8">
+                                <group colspan="8">
+                                    <table class="table-condensed" width="80%">
+                                        <tr>
+                                            <td>
+                                                <strong>25)</strong>
+                                            </td>
+                                            <td>
+                                                <strong>DNC</strong>
+                                            </td>
+                                            <td>
+                                                <strong>
+                                                    <field name="dnc"></field>
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong>PDPA Opt Out</strong>
+                                            </td>
+                                            <td>
+                                                <strong>
+                                                    <field name="pdpa_opt_out"></field>
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong>Completely</strong>
+                                            </td>
+                                            <td>
+                                                <strong>
+                                                    <field name="completely"></field>
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong>SMS</strong>
+                                            </td>
+                                            <td>
+                                                <strong>
+                                                    <field name="sms"></field>
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong>FAX</strong>
+                                            </td>
+                                            <td>
+                                                <strong>
+                                                    <field name="fax"></field>
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong>CALL</strong>
+                                            </td>
+                                            <td>
+                                                <strong>
+                                                    <field name="call"></field>
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong>No Form</strong>
+                                            </td>
+                                            <td>
+                                                <strong>
+                                                    <field name="no_form"></field>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </group>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Email History">
+                                <field name="history_ids">
+                                    <tree editable="bottom">
+                                        <field name="body" invisible="1"/>
+                                        <field name="email_id" domain="[('author_id', '=', False)]" required="True"/>
+                                        <field name="subject"/>
+                                        <field name="date"/>
+                                        <!-- <field name="status"/> -->
+                                        <button string="Reply" type="object" name="action_reply" class="oe_highlight"/>
+                                        <button string="Forward" type="object" name="action_forward"
+                                                class="oe_highlight"/>
+                                    </tree>
+                                </field>
+                                <!--<button string="Reply" type="object" name="action_reply" class="oe_highlight"/>-->
+                                <!--<button string="Forward" type="object" name="action_forward" class="oe_highlight"/>-->
+                            </page>
+                            <page string="Completed Form">
+                                <field name="completed_ids">
+                                    <tree editable="bottom">
+                                        <field name="received_date" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Renewal Notice">
+                                <field name="renewal_ids">
+                                    <tree editable="bottom">
+                                        <field name="renewal_notice" readonly="1"/>
+                                        <field name="date" readonly="1"/>
+                                        <field name="status" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Cover Note">
+                                <field name="cover_ids">
+                                    <tree editable="bottom">
+                                        <field name="cover_note" readonly="1"/>
+                                        <field name="date" readonly="1"/>
+                                        <field name="status" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Policy">
+                                <field name="policy_ids">
+                                    <tree editable="bottom">
+                                        <field name="policy" readonly="1"/>
+                                        <field name="date" readonly="1"/>
+                                        <field name="status" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notes History">
+                                <field name="notes_ids">
+                                    <tree editable="bottom">
+                                        <field name="description_id"/>
+                                        <field name="user_id" readonly="1"/>
+                                        <field name="date" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="helpdesk_tickets_view_tree_inherit" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.tree</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree"/>
+            <field name="arch" type="xml">
+                <!-- find field description and add the field
+                     idea_ids after it -->
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="ticket_number"/>
+                </xpath>
+                <xpath expr="//field[@name='stage_id']" position="after">
+                    <field name="date_create"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

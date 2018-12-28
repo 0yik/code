@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="printouts_appraisal_document">
+            <t t-set="o" t-value="o.with_context({})"/>
+                <div class="page">
+                    <div class="col-xs-12" style="text-align:center;font-size:20px;">
+                        <strong>PERFORMANCE APPRAISAL FORM</strong>
+                    </div>
+                    <div class="col-xs-12" style="padding-top:30px;padding-bottom:10px;font-size:12px;">
+                        <table style="width:100%;border:1px solid black;">
+                            <tr style="width:100%;border:1px solid black;">
+                                <td style="collapse;width:20%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span >Employee Name</span>
+                                </td>
+                                <td style="collapse;width:30%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span style="">&#160;:</span>
+                                    <span >&#160;<t t-esc="o.employee_id.name"/></span>
+                                </td>
+                                <td style="collapse;width:20%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span>Position</span>
+                                </td>
+                                <td style="collapse;width:30%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span>&#160;:</span>
+                                    <span>&#160;</span>
+                                </td>
+                            </tr>
+                            <tr style="width:100%;border:1px solid black;">
+                                <td style="collapse;width:20%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span>Company</span>
+                                </td>
+                                <td style="collapse;width:30%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span>&#160;:</span>
+                                    <span>&#160;<t t-esc="o.employee_id.company_id.name"/></span>
+                                </td>
+                                <td style="collapse;width:20%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span>Department</span>
+                                </td>
+                                <td style="collapse;width:30%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span>&#160;:</span>
+                                    <span>&#160;<t t-esc="o.employee_id.department_id.name"/></span>
+                                </td>
+                            </tr>
+                            <tr style="width:100%;border:1px solid black;">
+                                <td style="collapse;width:20%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span>Date</span>
+                                </td>
+                                <td style="collapse;width:30%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span>&#160;:</span>
+                                    <span>&#160;</span>
+                                </td>
+                                <td style="collapse;width:20%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span>Evaluation Period</span>
+                                </td>
+                                <td style="collapse;width:30%;padding-top:5px;padding-bottom:5px;padding-left:3px">
+                                    <span>&#160;:</span>
+                                    <span>&#160;</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="padding-top:10px;padding-bottom:10px;font-size:12px;">
+                       <div style="padding-left: 15px">
+                            <strong>PERFORMANCE EVALUATION</strong>
+                       </div>
+                    </div>
+                    <div class="col-xs-12" style="font-size:12px;">
+                        <table style="width:100%;border:1px solid black;">
+                            <tr>
+                                <th style="padding-left:2px">APPRAISAL RATINGS</th>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:15px;padding-bottom:15px;padding-left:2px">
+                                    <i>1: Unsatisfactory &#160;&#160;2: Needs Improvement &#160;&#160;3: Meets Expectations &#160;&#160;4: Exceeds Expectations &#160;&#160;5: Outstanding</i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left:2px">
+                                    <span>The ratings must be used to ensure commonality of language and consistency on overall ratings.</span>
+                                    <br/>
+                                    <span>There should be justifications for ratings of “Outstanding”, “Needs Improvement” and “Unsatisfactory”.</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-xs-12" style="font-size:12px;">
+                        <table style="width:100%;border:1px solid black;">
+                            <tr style="width:100%;border:1px solid black;">
+                                <th style="text-align:center;collapse;width:45%;border:1px solid black;">Performance Factors</th>.
+                                <th style="text-align:center;collapse;width:35%;border:1px solid black;">Rating</th>
+                                <th style="text-align:center;collapse;width:20%;border:1px solid black;">Weight</th>
+                            </tr>
+                            <t t-foreach="o.data_list" t-as="data">
+                                <tr style="width:100%;border:1px solid black;height:85px;">
+                                    <td style="padding-top:10px;padding-left:2px;collapse;width:45%;border:1px solid black;">
+                                        <i><t t-esc="data['rating_name']"/></i><br/>
+                                        <t t-foreach="data['rating_description']" t-as="description">
+                                            <span><t t-esc="description"/></span><br/>
+                                        </t>
+                                    </td>
+                                    <td style="collapse;width:35%;border:1px solid black;">
+                                    &#160;
+                                    </td>
+                                    <td style="collapse;width:20%;text-align:center;border:1px solid black;vertical-align: middle;">
+                                        <span><t t-esc="data['rating_value']"/> %</span>
+                                    </td>
+                                </tr>
+                            </t>
+                            <!--<tr style="width:100%;border:1px solid black;height:85px;">-->
+                                <!--<td style="padding-top:10px;padding-left:2px;collapse;width:45%;border:1px solid black;">-->
+                                    <!--<i>Contribution (Sales/ Admin Achievement)</i><br/>-->
+                                    <!--<span>- Sales target achievement</span><br/>-->
+                                    <!--<span>- Measures effectiveness in planning, organizing and efficiently handling activities and eliminating unnecessary activities</span><br/>-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:35%;border:1px solid black;">-->
+                                    <!--&#160;-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:20%;text-align:center;border:1px solid black;vertical-align: middle;">-->
+                                    <!--<t t-foreach="o.employee_id.department_id.weightage_line_ids" t-as="weightage">-->
+                                        <!--<t t-if="weightage.rating_id.name == 'Contribution (Sales/Admin Achievement)'">-->
+                                            <!--<t t-esc="weightage.weightage"/>-->
+                                        <!--</t>-->
+                                    <!--</t>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr style="width:100%;border:1px solid black;height:85px;">-->
+                                <!--<td style="padding-top:10px;padding-left:2px;collapse;width:45%;border:1px solid black;">-->
+                                    <!--<i>Timelines</i><br/>-->
+                                    <!--<span>- Attendance and punctuality</span><br/>-->
+                                    <!--<span></span><br/>-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:35%;border:1px solid black;">-->
+                                    <!--&#160;-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:20%;text-align:center;border:1px solid black;vertical-align: middle;">-->
+                                    <!--10%-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr style="width:100%;border:1px solid black;height:85px;">-->
+                                <!--<td style="padding-top:10px;padding-left:2px;collapse;width:45%;border:1px solid black;">-->
+                                    <!--<i>Improvement</i><br/>-->
+                                    <!--&lt;!&ndash;<span>- Sales target achievement</span><br/>&ndash;&gt;-->
+                                    <!--<span>- Discuss future growth, specific activities to improve performance and/or areas growth, specific activities to improve performance and/or areas</span><br/>-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:35%;border:1px solid black;">-->
+                                    <!--&#160;-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:20%;text-align:center;border:1px solid black;vertical-align: middle;">-->
+                                    <!--25%-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr style="width:100%;border:1px solid black;height:85px;">-->
+                                <!--<td style="padding-top:10px;padding-left:2px;collapse;width:45%;border:1px solid black;">-->
+                                    <!--<i>Teamwork</i><br/>-->
+                                    <!--&lt;!&ndash;<span>- Sales target achievement</span><br/>&ndash;&gt;-->
+                                    <!--<span>- Measures how well this individual gets along with fellow employees, respects the rights of other employees and shows a cooperative spirit</span><br/>-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:35%;border:1px solid black;">-->
+                                    <!--&#160;-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:20%;text-align:center;border:1px solid black;vertical-align: middle;">-->
+                                    <!--25%-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr style="width:100%;border:1px solid black;height:85px;">-->
+                                <!--<td style="padding-top:10px;padding-left:2px;collapse;width:45%;border:1px solid black;">-->
+                                    <!--<i>Potential</i><br/>-->
+                                    <!--&lt;!&ndash;<span>- Sales target achievement</span><br/>&ndash;&gt;-->
+                                    <!--<span>- Development for career advancement plans identified by the manager and individual to enhance the promotion opportunity of a staff member</span><br/>-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:35%;border:1px solid black;">-->
+                                    <!--&#160;-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:20%;text-align:center;border:1px solid black;vertical-align: middle;">-->
+                                    <!--5%-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr style="width:100%;border:1px solid black;">-->
+                                <!--<td style="padding-top:10px;padding-bottom:8px;padding-left:2px;collapse;width:45%;border:1px solid black;">-->
+                                    <!--<span>Overall Evaluation</span><br/>-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:35%;border:1px solid black;">-->
+                                    <!--&#160;-->
+                                <!--</td>-->
+                                <!--<td style="collapse;width:20%;text-align:center;border:1px solid black;">-->
+                                    <!--&#160;-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        </table>
+                    </div>
+                    <div class="col-xs-12" style="font-size:12px;padding-top:20px">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <th style="collapse;width:33%;padding-left:3px">Acknowledged</th>
+                                <th style="collapse;width:34%;padding-left:3px">Evaluated by</th>
+                                <th style="collapse;width:33%;padding-left:3px">Reviewed by</th>
+                            </tr>
+                            <tr style="width:100%;">
+                                <td style="collapse;width:33%;border:1px solid black;padding-left:3px">
+                                    <span>Name:</span>
+                                    <br/>
+                                    <br/>
+                                    <span>Designation :</span>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <span>Signature &amp; Date :</span>
+                                </td>
+                                <td style="collapse;width:34%;border:1px solid black;padding-left:3px">
+                                    <span>Name:</span>
+                                    <br/>
+                                    <br/>
+                                    <span>Designation :</span>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <span>Signature &amp; Date :</span>
+                                </td>
+                                <td style="collapse;width:33%;border:1px solid black;padding-left:3px">
+                                    <span>Name:</span>
+                                    <br/>
+                                    <br/>
+                                    <span>Designation :</span>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <span>Signature &amp; Date :</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <span style="font-size:10px;padding-right:15px;padding-left:3px">
+                            (Employee’s signature does not necessarily denote agreement with official reviewand means only that the employee was given the opportunity to discuss the official reviewwith the supervisor.)
+                        </span>
+                    </div>
+                    <div class="col-xs-4 pull-right">
+                        <div style="font-size:10px;text-align:center;">
+                            <span>Updated: June 2017</span>
+                        </div>
+                    </div>
+                </div>
+        </template>
+
+
+        <template id="report_appraisal">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="aikchin_modifier_printouts.printouts_appraisal_document"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- QWeb Reports -->
+        <report
+                id="appraisal_report"
+                model="aikchin.appraisal"
+                string="Appraisal"
+                report_type="qweb-pdf"
+                name="aikchin_modifier_printouts.report_appraisal"
+                file="aikchin_modifier_printouts.report_appraisal"
+        />
+        <record id="appraisal_qweb_paperformat" model="report.paperformat">
+            <field name="name">Appraisal</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">20.00</field>
+            <field name="margin_bottom">10.00</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="appraisal_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="appraisal_qweb_paperformat"/>
+        </record>
+
+    </data>
+</odoo>

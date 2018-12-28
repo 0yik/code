@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--Email template reservation confirm send joining information -->
+        <record id="email_template_reserve" model="mail.template">
+            <field name="name">Reservation Confirm - Send by Email</field>
+            <field name="email_from"><![CDATA["${ctx['company_name']|safe}" <${ctx['send_email']|safe}>]]></field>
+            <field name="email_to" >${ctx['reservation_email']|safe}</field>
+            <field name="subject">ATTS: Reservation Confirmation</field>
+            <field name="model_id" ref="theme_atts.model_class_registration"/>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="report_joining_information"/>
+            <field name="report_name">Joining Information</field> -->
+            <field name="body_html"><![CDATA[
+                % set o = ctx.get('registration_id')
+                % set is_individual = o.registration_type and o.registration_type == 'individual'
+                % set is_corporate = o.registration_type and o.registration_type == 'corporate'
+                % set delegate_lines = o.delegate_lines
+                % set start_time = o.get_start_time(o.class_id.time_start)
+                % set end_time = o.get_end_time(o.class_id.time_end)
+                %set location = o.class_id.location or ''
+                % set index = 1
+                <table width="100%">
+                    <tr>
+                        <td width="13%" class="mt16">
+                            <img src="http://attsuat.equip-test.co/logo" title="atts" alt="ATTS" style="max-height: 100px;" />
+                        </td>
+                        <td width="87%" style="text-align: center;">
+                            <h3><span style="margin-bottom: -10px;">ASSETS TRAINING &amp; TECHNICAL SERVICES PTE LTD </</h3><br/>
+                            No.3, Buroh Street, JTC Space One @ Buroh Street, Singapore 627566<br/>
+                            Tel : (65) 6265 2838   Fax : (65) 6265 3138<br/>
+                            Co. Reg. No : 200411848C | GST Reg. No : 200411848C
+                        </td>
+                    </tr>
+                </table>
+                <br/><br/>
+                <p>Dear client,</p>
+                <b/>
+                <p>Thank you for showing interest.</p>
+                <h2>Joining Information</h2>
+                <p> Thank you for choosing ATTS, Singapore as your preferred training Centre.</p>
+                <p style="margin: -10px 0px 0px 0px; !important">We are very pleased to confirm the details as follows:</p>
+                <br/>
+                <table width="100%">
+                    <tr>
+                        <td width="20%">Reservation Number</td>
+                        <td width="2%">:</td>
+                        <td>${o.display_name}</td>
+                    </tr>
+                    <tr>
+                        <td>Course Title</td>
+                        <td width="2%">:</td>
+                       <td>${o.class_id.course_title}</td>
+                   </tr>
+                   <tr>
+                       <td>Course Date</td>
+                       <td width="2%">:</td>
+                       <td>${o.class_id.date_start}</td>
+                   </tr>
+                   <tr>
+                       <td>Training Venue</td>
+                       <td width="2%">:</td>
+                        <td>${location}</td>
+                    </tr>
+                </table>
+                <br/>
+                <table width="100%" class="mt32 mb32">
+                    <tr>
+                        <td width="40%"><b>Delegate(s) Name</b></td>
+                        <td width="20%"><b>DOB</b></td>
+                        <td><b>Nationality</b></td>
+                    </tr>
+                    % if is_individual:
+                        <tr>
+                            %set dob = o.date_of_birth or ''
+                            %set nationality = o.get_nationality() or ''
+                            <td>1. ${o.name}</td>
+                            <td>${dob}</td>
+                            <td>${nationality}</td>
+                        </tr>
+                    % endif
+                    % if is_corporate:
+                        % for delegate in delegate_lines:
+                            <tr>
+                                % set name = delegate.delegate_name
+                                % if name:
+                                    %set dob = delegate.delegate_date or ''
+                                    %set nationality = delegate.get_nationality() or ''
+                                    <td>${index}. ${delegate.delegate_name}</td>
+                                    <td>${dob}</td>
+                                    <td>${nationality}</td>
+                                    % set index = index + 1
+                                % endif
+                            </tr>
+                        % endfor
+                    % endif
+                </table>
+                <p style="font-size:14px;" class="mb8"> COURSE INFORMATION</p>
+
+                <h5><b>1. Course Timing</b></h5>
+                <div style="font-size:12px" class="mb8">
+                    <p class="ml16" style="margin-top: -10px">Course registration will take place at ${start_time}hrs on the first day of training.</p>
+                    <p class="ml16" style="margin-top: -10px">On arrival at ATTS, delegates should report to reception on the ground floor to mark attendance. </p>
+                    <p class="ml16" style="margin-top: -10px">Delegates must ensure that they are medically fit and in possession of appropriate pre-requisite documents required for the course. </p>
+                    <p class="ml16" style="margin-top: -10px">Classes begin at <t ${start_time}hrs — ${end_time}hrs daily.</p>
+                    <p class="ml16" style="margin-top: -10px">Daily lunches and snacks are provided at the training site. </p>
+                </div>
+                <h5><b>2. TRAINING LOCATION </b></h5>
+                <div style="font-size:12px" class="mb8">
+                    <p class="ml16" style="margin-top: -10px">${location}</p>
+                    <br/>
+                    <p class="ml16" style="margin-top: -10px">By Public Transport</p>
+                    <p class="ml16" style="margin-top: -10px">By Public Transport Train &amp; Bus</p>
+                    <p class="ml16" style="margin-top: -10px">Nearest train station - Boon Lay MRT Station (Boon Lay Interchange) </p>
+                    <p class="ml16" style="margin-top: -10px">From Boon Lay Bus Interchange =&gt; Bus no. 249 -&gt; alight at Aft Buroh Street #22059</p>
+                    <br/>
+                    <p class="ml16" style="margin-top: -10px">By Car</p>
+                    <p class="ml16" style="margin-top: -10px">On AYE take exit 17 toward Jln Boon Lay / Jurong Pier Rd /Jurong Island • Merge into tip Ahmad Ibrahim • </p>
+                    <p class="ml16" style="margin-top: -10px">Turn left onto Jurong Pier Rd • Take the ramp to Jl. Buroh • Continue Straight on to Jl. Buroh • Destination will be on the left</p>
+                </div>
+                <h5><b>3. IMPORTANT NOTE—ITEMS TO BRING </b></h5>
+                <div style="font-size:12px" class="mb8">
+                    <p class="ml16" style="margin-top: -10px">✓ Bring along Joining instruction letter</p>
+                    <p class="ml16" style="margin-top: -10px">✓ Passport Size photo in scanned copy (applicable for MPA Course only)</p>
+                    <p class="ml16" style="margin-top: -10px">✓ All delegates are required to supply their own PPE (coveralls, goggles. hand gloves and safety shoes.)</p>
+                    <br/>
+                    <p class="ml16" style="margin-top: -10px"><b>Evidence of current experience and certification required</b> </p>
+                    <p class="ml16" style="margin-top: -10px">✓ Formal Electrical/Instrument Qualifications (Diploma/Degree/ trade certificate)</p>
+                    <p class="ml16" style="margin-top: -10px">✓ Employer Letter from current employer indicating the candidate designation. Place of employment and confirmation that he has the relevant trade skill. </p>
+                </div>
+                <h5><b>4. CODE OF CONDUCT</b></h5>
+                <div style="font-size:12px" class="mb8">
+                    <p class="ml16" style="margin-top: -10px">ATTIRE</p>
+                    <p class="ml16" style="margin-top: -10px">Appropriate classroom attire — Bermuda shorts, sleeveless top and slippers are not permitted. Delegate attending practical workshops must wear proper attire (Coveralls) and safety shoes.</p>
+                    <br/>
+                    <p class="ml16" style="margin-top: -10px">SMOKING</p>
+                    <p class="ml16" style="margin-top: -10px">There is a NO SMOKING policy in operation in public areas of the building. Designated smoking areas will be pointed out to the delegates during the course registration. </p>
+                </div>
+                <h5><b>5. CANCELLATION/ NO SHOW POLICY</b></h5>
+                <div style="font-size:12px" class="mb8">
+                    <p class="ml16" style="margin-top: -10px">Once registration is confirmed, any cancellation must be made in writing.</p>
+                    <p class="ml16" style="margin-top: -10px">Substitution: At least 05 working days' notice is received via email (enquiry@ats-asia.com) for the substitution of candidate for the same course and same date.</p>
+                    <br/>
+                    <p class="ml16" style="margin-top: -10px">No refund will be made for non-attendance on the course. Non-attendance includes, failure to cancel your booking: cancelling your booking after the close of normal office hours on the last working day before the course; failure to attend the course, and; informing us of cancellation following the start of the course. </p>
+                </div>
+                <h5><b>6. CERTIFICATE </b></h5>
+                <div style="font-size:12px" class="mb8">
+                    <p class="ml16" style="margin-top: -10px">ATTS certificate of completion will be issued on the last training date. Accredited certificate processing time is within A-6 weeks after completion of course.</p>
+                    <p class="ml16" style="margin-top: -10px">Candidates taking the CompEx course must ensure that copies of their electrical qualification are provided together with the certificate of employment</p>
+
+                    <p class="ml16" style="margin-top: -10px">ATTS reserved the right to HOLD candidates' certificate if there is a pending amount in the account Once there are no outstanding matters. Result slips or certificates will be issued. </p>
+                </div>
+                ]]></field>
+        </record>
+
+        <!--Email send invoice -->
+        <record id="email_template_reservation_invoice" model="mail.template">
+            <field name="name">Reservation Invoice - Send by Email</field>
+            <field name="email_from"><![CDATA["${ctx['company_name']|safe}" <${ctx['send_email']|safe}>]]></field>
+            <field name="email_to" >${ctx['student_email']|safe}</field>
+            <field name="subject">ATTS: Reservation Invoice</field>
+            <field name="model_id" ref="model_student_fees_invoice"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="report_template" ref="report_fee_invoice"/>
+            <field name="report_name">Invoice</field>
+            <field name="body_html"><![CDATA[
+                <b><p>Dear client,</p><b/>
+                <br/>
+                <p>Thank you for showing interest.</p>
+                <p>Please find attachment for Invoice.</p>
+
+                ]]></field>
+        </record>
+
+        <!--Email template reservation confirm -->
+        <record id="email_template_payment_reminder" model="mail.template">
+            <field name="name">ATTS Reminder: Payment Required</field>
+            <field name="email_from"><![CDATA["${ctx['company_name']|safe}" <${ctx['send_email']|safe}>]]></field>
+            <field name="email_to" >${ctx['reminder_fee_email']|safe}</field>
+            <field name="subject">ATTS Reminder: Payment Required</field>
+            <field name="model_id" ref="theme_atts.model_class_registration"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+<p>Dear client,</p>
+<b/>
+<p>Thank you for showing your interest for ATTS.</p>
+<p>Kindly please make payment before the start of class.</p>
+]]></field>
+        </record>
+
+        <!--Email template fee registered -->
+        <record id="email_template_fee_register" model="mail.template">
+            <field name="name">ATTS : Fee Registere</field>
+            <field name="email_from"><![CDATA["${ctx['company_name']|safe}" <${ctx['send_email']|safe}>]]></field>
+            <field name="email_to" >${ctx['marketing_managers']|safe}</field>
+            <field name="subject">ATTS : Fee Registere</field>
+            <field name="model_id" ref="atts_school_fees.model_student_fees_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+            <b><p>Dear Marketing Manager/Director,</p>
+            <b/>
+            <p>${object.class_registration_id.display_name} Fee Registere created.</p>
+            <p> To Confirm Fee Registere, click on the following link:</p>
+            <div style="text-align: center; margin-top: 16px;">
+                 <a href="${ctx['action_url']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">Confirm Fee Registere</a>
+            </div>
+            <p>Best regards,</p>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

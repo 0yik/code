@@ -1,0 +1,5 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+access_official_travel_user,access_official_travel_user,model_official_travel,hr.group_hr_user,1,1,1,1
+access_official_travel_emp,access_official_travel_emp,model_official_travel,base.group_user,1,1,1,0
+

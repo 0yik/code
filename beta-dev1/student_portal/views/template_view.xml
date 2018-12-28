@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="Student Portal">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/student_portal/static/src/js/student_portal.js"></script>
+            <!-- <link rel="stylesheet" href="/student_portal/static/src/css/portal.css"/> -->
+        </xpath>
+    </template>
+    
+    <!-- Student Portal Menu like exam, invoice, student etc -->
+    <template id="student_portal_layout" name="Student Portal Layout">
+        <t t-call="website.layout">
+            <div class="container mt16">
+                <div class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#oe-help-navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/student/portal/home">
+                            Student Portal
+                        </a>   
+                    </div>
+                    <div class="collapse navbar-collapse" id="oe-help-navbar-collapse">
+                        <ul class="nav navbar-nav o_portal_submenu">
+                            <li>
+                                <a href="/student/portal/profile">Student Profiles</a>
+                            </li>
+                            <li>
+                                <a href="/student/portal/invoices">Invoice</a>
+                            </li>
+                            <li>
+                                <a href="/student/portal/schedulers">Classes Schedules</a>
+                            </li>
+                            <li>
+                                <a href="/student/portal/exam">Exams</a>
+                            </li>
+                            <li>
+                                <a href="/student/portal/exam/result">Exam Results</a>
+                            </li>
+                            <li>
+                                <a href="/student/portal/assignment">Student Assignment</a>
+                            </li>
+                            <li>
+                                <a href="/student/portal/reminders">Reminders</a>
+                            </li>
+                            <li>
+                                <a href="/student/portal/attendance">Monthly Attendance Sheet</a>
+                            </li>
+                            <li>
+                                <a href="/student/portal/grades">View Grades</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="wrap">
+                    <div class="container mb64">
+                        <div class="col-md-12">
+                            <t t-raw="0"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="student_portal_my_home" name="Student Portal">
+        <t t-call="student_portal.student_portal_layout">
+            <div class="o_my_home_content">
+                <div class="oe_structure"></div>
+            </div>
+            <div class="col-md-12 oe_structure"/>
+        </t>
+    </template>
+</odoo>

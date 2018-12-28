@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+
+    <t t-name="RePrintXml">
+        <receipt align='left' width='48' value-thousands-separator='' >
+            <h1>Table <t t-esc="widget.pos.table.name"/></h1>
+            <div>Customer: <t t-esc="widget.pos.get_client()? widget.pos.get_client().name : ''"/></div>
+            <div>================================================</div>
+            <div><t t-esc="order.get_date_create_format()"/></div>
+            <div>------------------------------------------------</div>
+            <t t-set="orderlines" t-value="order.get_orderlines()"/>
+            <t t-foreach="orderlines" t-as="orderline" t-if="orderline.state == 'Confirmed'">
+                <div>
+                    <div><t t-esc="orderline.quantity"/> x <t t-esc="orderline.get_product().display_name"/></div>
+                    <div t-if="orderline.is_complimentary">
+                        [Compl]
+                    </div>
+                </div>
+            </t>
+            <div>------------------------------------------------</div>
+            <t t-esc="widget.pos.user.name"/>/ <t t-esc="order.name" />
+            <div>------------------------------------------------</div>
+            <div>Mohon tidak memindahkan kertas ini agar pesanan cepat diantar</div>
+        </receipt>
+    </t>
+</template>
+

@@ -1,0 +1,15 @@
+<odoo>
+
+    <template id="assets_backend" name="absolutepiano assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/absolutepiano_reusable_poscustomer/static/src/css/pos_customer.css"/>
+            <script type="text/javascript" src="/absolutepiano_reusable_poscustomer/static/src/js/pos_customer.js"></script>
+        </xpath>
+    </template>
+
+    <template id="inherit_sale_of_point" name="POS Template Inherit" inherit_id="point_of_sale.assets">
+        <xpath expr="//script[@src='/point_of_sale/static/src/js/models.js']" position="replace">
+            <script type="text/javascript" src="/absolutepiano_reusable_poscustomer/static/src/js/pos_models.js"></script>
+        </xpath>
+    </template>
+</odoo>

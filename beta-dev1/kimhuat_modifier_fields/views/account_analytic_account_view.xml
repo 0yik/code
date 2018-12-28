@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="stable_account_analytic_analysis.account_analytic_account_form_form" model="ir.ui.view">
+            <field name="name">account.analytic.account.invoice.form.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field eval="40" name="priority"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name=&quot;project&quot;]" position="inside">
+                    <field name="is_installation"/>
+                    <label for="is_installation"/>
+                    <field name="is_servicing"/>
+                    <label for="is_servicing"/>
+                </xpath>
+                <xpath expr="//div[@class='oe_title']" position="replace">
+                    <group>
+                        <label for="name" string="Contract Name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Project XYZ"/>
+                        </h1>
+                    </group>
+                </xpath>
+                <field name="partner_id" position="replace">
+                    <field name="customer_id"/>
+                    <field name="partner_id" domain="[('is_company', '=',True)]" string="Company" />
+                </field>
+                <xpath expr="/form/sheet" position='before'>
+                    <header>
+                        <button name="set_pending" string="To Renew" type="object" states="open"/>
+                        <button name="set_close" string="Close Contract" type="object" states="open,pending"/>
+                        <button name="set_open" string="Set In Progress" type="object"
+                                states="pending,close,cancelled,draft"/>
+                        <button name="set_cancel" string="Cancel Contract" type="object" states="open,pending"/>
+                        <field name="state" readonly="1" widget="statusbar"
+                               statusbar_visible="open,pending,close"
+                               statusbar_colors='{"pending":"red", "template":"blue"}'/>
+                    </header>
+                </xpath>
+                <field name="partner_id" position="after">
+                    <field name="contact_name" context="{'contact_name': 1}"/>
+                    <label for="street" string="Address"/>
+                    <div class="o_address_format">
+                        <field name="street" placeholder="Street..." class="o_address_street"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="city" placeholder="City" class="o_address_city"/>
+                        <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}' context="{'country_id': country_id, 'zip': zip}"/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                    </div>
+                    <field name="customer_contact" string="Tel"/>
+                    <field name="mobile"/>
+                    <field name="type"/>
+                    <field name="manager_id" string="Project Manager"/>
+                </field>
+                <field name="partner_id" position="attributes">
+                    <attribute name="attrs">{'required':
+                        [('type','=','contract'),'|','|',('fix_price_invoices','=',True), ('invoice_on_timesheets', '=',
+                        True), ('recurring_invoices', '=', True)]}
+                    </attribute>
+                </field>
+                <xpath expr='//group[@name="invoice_on_timesheets"]' position="replace">
+                </xpath>
+                <field name="code" position="replace"/>
+                <field name="tag_ids" position="before">
+                    <field name="code"/>
+                </field>
+                <field name="tag_ids" position="after">
+                    <field name="contract_amount"/>
+                </field>
+                <xpath expr='//div[@name="project"]' position='inside'>
+                    <field name="use_timesheets"/>
+                    <label for="use_timesheets"/>
+                </xpath>
+                <group name="main" position="after">
+                    <notebook>
+                        <page name="account_ana_product" string="Products">
+                            <field name="product_line_ids">
+                                <tree editable="bottom">
+                                    <field name="brand"/>
+                                    <field name="type"/>
+                                    <field name="product_id" string="Product/Model No."/>
+                                    <field name="ordered_qty"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Contract Information">
+                            <group>
+                                <group>
+									<field name="no_of_routines"/>
+                                    <field name="date_start"/>
+                                    <field name="date_end" string="Date End" widget="date"/>
+                                </group>
+                                <group>
+                                    <field name="warranty_start"/>
+                                    <field name="warranty_end"/>
+                                </group>
+                            </group>
+                            <separator name="toinvoice" string="Invoicing" invisible="1"/>
+                            <table class="oe_form_analytic_account" invisible="1">
+                                <tr>
+                                    <th class="oe_timesheet_grey" width="160px"></th>
+                                    <th class="oe_timesheet_grey" width="25px"></th>
+                                    <th class="oe_timesheet_grey" width="100px">
+                                        <label string="Expected"/>
+                                    </th>
+                                    <th class="oe_timesheet_grey" width="100px">
+                                        <label string="Invoiced"/>
+                                    </th>
+                                    <th class="oe_timesheet_grey" width="100px">
+                                        <label string="Remaining"/>
+                                    </th>
+                                    <th class="oe_timesheet_grey" width="100px">
+                                        <label string="To Invoice"/>
+                                    </th>
+                                    <th width="30px"></th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td class="oe_timesheet_grey">
+                                        <label for="fix_price_invoices"/>
+                                    </td>
+                                    <td class="oe_timesheet_grey">
+                                        <field name="fix_price_invoices" class="oe_inline"/>
+                                    </td>
+                                    <td>
+                                        <field class="oe_inline" name="amount_max"
+                                               attrs="{'invisible': [('fix_price_invoices','=',False)]}"/>
+                                    </td>
+                                    <td>
+                                        <field class="oe_inline" name="ca_invoiced"
+                                               attrs="{'invisible': [('fix_price_invoices','=',False)]}"/>
+                                    </td>
+                                    <td>
+                                        <field class="oe_inline" name="remaining_ca"
+                                               attrs="{'invisible': [('fix_price_invoices','=',False)]}"/>
+                                    </td>
+                                    <td>
+                                        <field class="oe_inline" name="fix_price_to_invoice"
+                                               attrs="{'invisible': [('fix_price_invoices','=',False)]}"/>
+                                    </td>
+                                    <td attrs="{'invisible': [('fix_price_invoices','=',False)]}"
+                                        class="oe_timesheet_action">
+                                        <span attrs="{'invisible': [('fix_price_to_invoice','=',0.0)]}" class="oe_grey">
+                                            <button name="open_sale_order_lines"
+                                                    class="oe_link"
+                                                    string="⇒ Invoice" type="object"
+                                                    context="{'default_partner_id': [partner_id],'default_project_id': active_id,'search_default_uninvoiced': 1,'search_default_project_id': active_id,'search_default_partner_id': [partner_id]}"/>
+                                            or view
+                                        </span>
+
+                                        <span attrs="{'invisible': [('fix_price_to_invoice','&lt;&gt;',0.0 )]}"
+                                              class="oe_grey">
+                                            No order to invoice, create
+                                        </span>
+                                        <button name="%(stable_account_analytic_analysis.action_sales_order)d"
+                                                string="Sales Orders"
+                                                type="action"
+                                                class="oe_link"
+                                                context="{'default_partner_id': [partner_id], 'search_default_project_id': [active_id],'default_project_id': [active_id], 'default_pricelist_id': pricelist_id}"
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="oe_timesheet_grey">
+                                        <label for="invoice_on_timesheets"/>
+                                    </td>
+                                    <td class="oe_timesheet_grey">
+                                        <field name="invoice_on_timesheets"/>
+                                    </td>
+                                    <td>
+                                        <field class="oe_inline" name="hours_qtt_est"
+                                               attrs="{'invisible': [('invoice_on_timesheets','=',False)]}"/>
+                                        <!--</td><tfix_price_to_invoiceld class="oe_inline" name="timesheet_ca_invoiced" attrs="{'invisible': [('invoice_on_timesheets','=',False)]}"/>-->
+                                    </td>
+                                    <td>
+                                        <field class="oe_inline" name="remaining_hours_to_invoice"
+                                               attrs="{'invisible': [('invoice_on_timesheets','=',False)]}"/>
+                                    </td>
+                                    <td>
+                                        <field class="oe_inline" name="ca_to_invoice"
+                                               attrs="{'invisible': [('invoice_on_timesheets','=',False)]}"/>
+                                    </td>
+                                    <td class="oe_timesheet_action"
+                                        attrs="{'invisible': ['|',('invoice_on_timesheets','=',False),('type','=','template')]}">
+                                        <span attrs="{'invisible': [('ca_to_invoice','=',0.0)]}" class="oe_grey">
+                                            <button name="hr_to_invoice_timesheets"
+                                                    type="object"
+                                                    class="oe_link"
+                                                    string="⇒ Invoice"/>
+                                            or view
+                                        </span>
+                                        <span attrs="{'invisible': [('ca_to_invoice','&lt;&gt;',0.0)]}" class="oe_grey">
+                                            Nothing to invoice, create
+                                        </span>
+                                        <button name="%(stable_account_analytic_analysis.account_analytic_line_action)d"
+                                                string="Timesheets" type="action" class="oe_link"
+                                                context="{'default_account_id': active_id,'search_default_account_id': active_id}"/>
+                                    </td>
+                                </tr>
+                                <tr name='total'>
+                                    <th class="oe_timesheet_grey">
+                                        <label string="Total"/>
+                                    </th>
+                                    <td class="oe_timesheet_grey">
+                                    </td>
+                                    <td class="oe_timesheet_grey">
+                                        <field name="est_total" class="oe_inline"
+                                               attrs="{'invisible': [('invoice_on_timesheets','=',False)]}"/>
+                                    </td>
+                                    <td class="oe_timesheet_grey">
+                                        <field name="invoiced_total" class="oe_inline"/>
+                                    </td>
+                                    <td class="oe_timesheet_grey">
+                                        <field name="remaining_total" class="oe_inline"/>
+                                    </td>
+                                    <td class="oe_timesheet_grey">
+                                        <field name="toinvoice_total" class="oe_inline"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <group name='invoice_on_timesheets' invisible="1">
+                                <p name='invoice_on_timesheets_label' class="oe_grey oe_edit_only" colspan="2"
+                                   attrs="{'invisible': [('invoice_on_timesheets','=',False)]}">
+                                    When reinvoicing costs, Odoo uses the
+                                    pricelist of the contract which uses the price
+                                    defined on the product related (e.g timesheet
+                                    products are defined on each employee).
+                                </p>
+                                <group>
+                                    <field name="pricelist_id"
+                                           class="oe_inline"
+                                           attrs="{'required': [('invoice_on_timesheets', '=', True)]}"
+                                    /> <!-- domain="[('type', '=', 'sale')]" -->
+                                    <field name="to_invoice"
+                                           class="oe_inline"
+                                           widget="selection"
+                                           attrs="{'required': [('invoice_on_timesheets', '=', True)], 'invisible': [('invoice_on_timesheets','=',False)]}"/>
+                                </group>
+                            </group>
+                            <separator string="Recurring Invoices"
+                                       attrs="{'invisible': [('recurring_invoices','!=',True)]}"/>
+                            <div>
+                                <div attrs="{'invisible': [('type','!=', 'contract'), ('recurring_invoices', '=', False)]}">
+                                    <field name="recurring_invoices" class="oe_inline"/>
+                                    <label for="recurring_invoices"/>
+                                </div>
+                                <button class="oe_link" name="recurring_create_invoice"
+                                        attrs="{'invisible': [('recurring_invoices','!=',True)]}"
+                                        string="⇒ create invoices" type="object" groups="base.group_no_one"/>
+                            </div>
+                            <group attrs="{'invisible': [('recurring_invoices','!=',True)]}">
+                                <label for="recurring_interval"/>
+                                <div>
+                                    <field name="recurring_interval" class="oe_inline"
+                                           attrs="{'required': [('recurring_invoices', '=', True)]}"/>
+                                    <field name="recurring_rule_type" class="oe_inline"
+                                           attrs="{'required': [('recurring_invoices', '=', True)]}"/>
+                                </div>
+                                <field name="recurring_next_date"/>
+                            </group>
+                            <label for="recurring_invoice_line_ids"
+                                   attrs="{'invisible': [('recurring_invoices','=',False)]}"/>
+                            <div attrs="{'invisible': [('recurring_invoices','=',False)]}">
+                                <field name="recurring_invoice_line_ids">
+                                    <tree string="Account Analytic Lines" editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="price_unit"/>
+                                        <field name="price_subtotal"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <separator string="Remarks"/>
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </group>
+            </field>
+        </record>
+
+    </data>
+</odoo>

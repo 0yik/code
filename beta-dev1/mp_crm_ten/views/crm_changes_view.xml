@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="crm_activity_log_view_form_extebded" model="ir.ui.view">
+        <field name="name">Log an Activity</field>
+        <field name="model">crm.activity.log</field>
+        <field name="inherit_id" ref="crm.crm_activity_log_view_form"/>        
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lead_id']" position="replace">
+            </xpath>
+            <xpath expr="//group" position="before">
+                <group col="4">
+                    <field name="lead_id"/>
+                    <field name="phone"/>
+                    <field name="partner_id"/>
+                    <field name="email_from"/>
+                    <label for="street" string="Address"/>
+                    <div class="o_address_format">
+                        <field name="street" placeholder="Street..." class="o_address_street"/>
+<!--                         <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="city" placeholder="City" class="o_address_city"/>
+                        <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/> -->
+                    </div>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='note']" position="before">
+                <notebook>
+                    <page string='Logged Calls'>
+<!--                         <field name="phonecall_ids" context="{'opportunity_id':lead_id}">
+                            <tree>
+                                <field name="date"/>
+                                <field name="partner_id"/>
+                                <field name="name"/>
+                                <field name="description"/>
+                                <field name="partner_phone"/>
+                                <field name="partner_mobile"/>
+                                <field name="user_id"/>
+                                <field name="duration"/>
+                            </tree>
+                        </field> -->
+                    </page>
+                    <page string="Meetings">
+                        <field name="meeting_ids" context="{'opportunity_id':lead_id}">
+                            <tree>
+                                <field name="name" string="Subject"/>
+                                <field name="allday" invisible="True"/>
+                                <field name="start" string="Start Date"/>
+                                <field name="stop" string="End Date"/>
+                                <field name="partner_ids"/>
+                                <field name="location"/>
+                                <field name="state" invisible="True"/>
+                                <field name="duration"/>
+                                <field name="message_needaction" invisible="1"/>
+                            </tree>                            
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

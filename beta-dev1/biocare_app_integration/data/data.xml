@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="res_users_user_for_app" model="res.users">
+            <field name="name">Hash_Micro_App</field>
+            <field name="email">hashmicro@mail.com</field>
+            <field name="login">hashmicro@mail.com</field>
+            <field name="password">Hash22733Micro#</field>
+            <field eval="[(4, ref('booking_service_V2.group_teamleader'))]" name="groups_id"/>
+        </record>
+
+    </data>
+</odoo>

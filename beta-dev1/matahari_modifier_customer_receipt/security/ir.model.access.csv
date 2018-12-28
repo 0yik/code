@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_receipt_payment_line_all,account_receipt_payment_line,matahari_modifier_customer_receipt.model_receipt_payment_line,,1,1,1,1
+access_receipt_payment_wizard_all,account_receipt_payment_wizard,matahari_modifier_customer_receipt.model_receipt_payment_wizard,,1,1,1,1
+access_receipt_payment_wizard_line_all,account_receipt_payment_wizard_line,matahari_modifier_customer_receipt.model_receipt_payment_wizard_line,,1,1,1,1

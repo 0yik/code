@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_labor_mrp,access_labor_mrp,model_labor_mrp,,1,0,0,0
+access_employee_department,access_employee_department,model_employee_department,,1,0,0,0
+access_machine_management,access_machine_management,model_machine_management,,1,0,0,0
+access_product_consume,access_product_consume,model_product_consume,,1,0,0,0
+access_machine_management,access_machine_management,model_machine_management,,1,0,0,0
+access_mrp_workcenter_productivity,access_mrp_workcenter_productivity,model_mrp_workcenter_productivity,,1,0,0,0

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="HomeDelivery">
+        <div class='control-button'>
+            <i class="fa fa-home"/> Home Delivery
+        </div>
+    </t>
+
+    <t t-name="DeliveryOrderWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-delivery">
+                <p class="title"><t t-esc=" widget.options.title || 'Home Delivery Order' " /></p>
+                <section>
+                    <div class="body">
+                        <div class='delivery-detail required-field'>
+                            <span class='label'>Name</span>
+                            <input class='detail d_name' name='d_name' t-att-value='widget.options.name || ""' placeholder='Name' required="required"></input>
+                        </div>
+                        <div class='delivery-detail required-field'>
+                            <span class='label'>Mobile</span>
+                            <input type='text' class='detail d_mobile' name='mobile' t-att-value='widget.options.mobile || ""' pattern='[0-9]' title='Only enter integer value' placeholder='9090909090' required="required"></input>
+                        </div>
+                        <div class='delivery-detail'>
+                            <span class='label'>Email</span>
+                            <input  type='email' class='detail d_email' name='email' t-att-value='widget.options.email || ""' placeholder='Email (Optional)'></input>
+                        </div>
+                        <span class='label'>Address</span>
+                        <div class='delivery-detail required-field'>
+                            <span class='label'>Locality</span>
+                            <input class='detail d_location' name='address' t-att-value=' widget.options.address || ""' placeholder='Society or Building' required="required"></input>
+                        </div>
+                        <div class='delivery-detail required-field'>
+                            <span class='label'>Street</span>
+                            <input class='detail d_street' name='street' t-att-value=' widget.options.street || ""' placeholder='Street' required="required"></input>
+                        </div>
+                        <div class='delivery-detail'>
+                            <span class='label'>City</span>
+                            <input class='detail d_city' name='city' t-att-value='widget.options.city || ""' placeholder='City/Area/Town (Optional)'></input>
+                        </div>
+                        <div class='delivery-detail required-field'>
+                            <span class='label'>Zip</span>
+                            <input type='text' class='detail d_zip' name='zip' t-att-value='widget.options.zip || ""' pattern='[0-9]' placeholder='Zip Code' required="required"></input>
+                        </div>
+                        <span class='label'>Other Info</span>
+                        <div class='delivery-detail required-field'>
+                            <span class='label'>Date</span>
+                            <input type="datetime-local" class='detail d_date' name='delivery_date' t-att-value='widget.options.delivery_date || ""' placeholder='12/01/2017,12:12' required="required"></input>
+                        </div>
+                        <div class='delivery-detail required-field'>
+                            <span class='label'>Server</span>
+                            <select class="detail person_id" name='person_id' required="required">
+                                <option class="s_small" value=''>Set Delivery Person</option>
+                                <t t-foreach='widget.pos.executives' t-as='person'>
+                                    <option t-att-value='person.id' t-att-selected='widget.options.person_id == person.id or None'> 
+                                        <t t-esc='person.name'/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class='delivery-note'>
+                            <input class="detail order_note" name='order_note' placeholder='Add a Order Note...' t-att-value='widget.options.order_note || ""'></input>
+                        </div>
+                    </div>
+                </section>
+                <div class="footer">
+                    <div class="button create" style="margin-right: 30px;">
+                        Create
+                    </div>
+                    <div class="button cancel" style="margin-right: 30px;">
+                        Cancel
+                    </div>
+                    <div class="button clear " style="margin-right: 30px;">
+                        Clear
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-extend="PosTicket">
+        <t t-jquery=".receipt-orderlines" t-operation="before">
+            <t t-if="order.delivery">
+                <t t-set='p_name' t-value=''/>
+                <t t-foreach='widget.pos.executives' t-as='person'>
+                    <t t-if='person.id == order.person_id'>
+                        <t t-set='p_name' t-value='person.name'/>
+                    </t>
+                </t>
+                <div class="emph"><span> Delivery Info: </span></div>
+                Name: <t t-esc="order.d_name || ''"/><br />
+                Mobile: <t t-esc="order.mobile || ''"/><br />
+                Deliver By: <t t-esc="p_name"/><br />
+                Date: <t t-esc="moment(order.delivery_date).format('LLL') || ''"/><br />
+                Address: <t t-esc="order.address || ''"/><br />
+                        <t t-esc="order.street || ''"/><br />
+                        <t t-esc="order.city || ''"/>,
+                        <t t-esc="order.zip || ''"/><br />
+               <br />
+            </t>
+        </t>
+        <t t-jquery=".receipt-paymentlines" t-operation="replace">
+            <t t-if="order.delivery">
+                <table></table>
+            </t>
+        </t>
+        <t t-jquery=".receipt-change" t-operation="before">
+            <t t-if="order.delivery">
+                <table>
+                    <tr class="emph">
+                        <td>Due:</td>
+                        <td class="pos-right-align">
+                            <t t-foreach='paymentlines' t-as='line'>
+                                <t t-esc="widget.format_currency(line.get_amount())"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </t>
+            <br />
+        </t>
+    </t>
+</templates>

@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="view_move_form_inherited" model="ir.ui.view">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr ="//field[@name='debit']" position="attributes">
+                    <attribute name="string">Base Debit</attribute>
+                </xpath>
+                <xpath expr ="//field[@name='credit']" position="attributes">
+                    <attribute name="string">Base Credit</attribute>
+                </xpath>
+                <xpath expr ="//field[@name='amount_currency']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr ="//field[@name='debit']" position="before">
+                    <field name="user_debit"/>
+                    <field name="user_credit"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

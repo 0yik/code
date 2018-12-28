@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_laborindo_report_invoice_soc_laborindo_report_invoice_soc,laborindo_report_invoice_soc.laborindo_report_invoice_soc,model_laborindo_report_invoice_soc_laborindo_report_invoice_soc,,1,0,0,0

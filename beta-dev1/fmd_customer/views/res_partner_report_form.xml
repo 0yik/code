@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<odoo>
+			<template id="res_partner_report_customer_form">
+
+				<t t-call="report.external_layout">
+
+					<div class="page">
+							
+						<style>
+								table, td {
+								    border: 1px solid black;
+								    vertical-align: middle;
+								}
+
+						
+						</style>
+
+						<div class="col-xs-12" style="padding-top:5px; padding-bottom:3px;">
+
+							<h4 >
+								<strong> CURRENT INFORMATION</strong>
+							</h4>
+						
+						</div>
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:160px; width:100%">
+								<tbody>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Name of Company</td>
+										<td  style="padding-left:+10px"><t t-esc="doc.name"></t></td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Registration No.</td>
+										<td style="padding-left:+10px"> <t t-esc="doc.roc"></t> </td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Industry Type</td>
+										<td style="padding-left:+10px"> <t t-esc="doc.business_type_id.name"></t></td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Registered Address</td>
+										<td style="padding-left:+10px"><t t-esc="doc.reg_address"></t></td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Business Address</td>
+										<td style="padding-left:+10px"><t t-esc="doc.business_address"></t></td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Office Tel No.</td>
+										<td style="padding-left:+10px"><t t-esc="doc.phone"></t></td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Fax No.</td>
+										<td style="padding-left:+10px"><t t-esc="doc.fax"></t></td>
+									</tr>
+								</tbody>
+						</table>
+
+						<span> &#160; </span>
+						
+						<div class="col-xs-12">
+							<div class="col-xs-8">
+
+								<h4  class="text-left">
+									<strong> Authorised Contact Person</strong>
+								
+								</h4>
+							</div>
+
+							<div class="col-xs-4">
+
+								<h4 style="padding-left:20px">
+									<strong> For all matters on:</strong>
+								
+								</h4>
+							</div>		
+						
+						</div>
+
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%; vertical-align:top;padding-top:5px;">1</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td style="padding-left:+10px"> <t t-esc="doc.auth_person_f"></t></td>
+										<td rowspan="4" style="width:30%;padding-left:+10px;">
+											<t t-esc="doc.other_f"></t>
+											
+										</td>
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Tel / Mobile No.</td>
+										<td style="padding-left:+10px">
+											<t t-esc="doc.mobile_f"></t></td>
+										
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td style="padding-left:+10px">
+											<t t-esc="doc.email_f"></t></td>
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Reside Oversea</td>
+										<td style="padding-left:+10px; text-transform: capitalize;">
+											<t t-esc="doc.reside_overseas_f"></t></td>
+										
+									</tr>
+								</tbody>
+						</table>
+						<span> &#160; </span>
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%; vertical-align:top;padding-top:5px;">2</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td style="padding-left:+10px"> <t t-esc="doc.auth_person_s"></t></td>
+										<td rowspan="4" style="width:30%;padding-left:+10px;">
+											<t t-esc="doc.other_s"></t>
+										</td>
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Tel / Mobile No.</td>
+										<td style="padding-left:+10px">
+											<t t-esc="doc.mobile_s"></t></td>
+										
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td style="padding-left:+10px">
+											<t t-esc="doc.email_s"></t></td>
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Reside Oversea</td>
+										<td style="padding-left:+10px; text-transform: capitalize;">
+											<t t-esc="doc.reside_overseas_s"></t></td>
+										
+									</tr>
+								</tbody>
+						</table>
+
+						<span> &#160; </span>
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%; vertical-align:top;padding-top:5px;">3</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td style="padding-left:+10px"> <t t-esc="doc.auth_person_t"></t></td>
+										<td rowspan="4" style="width:30%;padding-left:+10px;">
+											<t t-esc="doc.other_th" />
+										</td>
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Tel / Mobile No.</td>
+										<td style="padding-left:+10px">
+											<t t-esc="doc.mobile_t"></t></td>
+										
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td style="padding-left:+10px">
+											<t t-esc="doc.email_t"></t></td>
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Reside Oversea</td>
+										<td style="padding-left:+10px; text-transform: capitalize;">
+											<t t-esc="doc.reside_overseas_t"></t></td>
+										
+									</tr>
+								</tbody>
+						</table>
+
+						<hr style="height:1px;border:none;color:#333;background-color:#333;padding:0;"/>
+
+						<div class="col-xs-12">
+							
+
+								<h4  class="text-left">
+									<strong>REVISED INFORMATION</strong>
+								</h4>
+								<h5  class="text-left">
+									<span>Please fill <b>ONLY</b> when there is changes in above detail.</span>
+								</h5>
+											
+						
+						</div>
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:140px; width:100%">
+								<tbody>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Name of Company</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Registration No.</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Industry Type</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Registered Address</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Business Address</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Office Tel No.</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td style="width:25%;padding-left:+10px"> Fax No.</td>
+										<td></td>
+									</tr>
+								</tbody>
+						</table>
+                        <br/>
+                        <span> &#160; </span>
+						<div class="col-xs-12">
+							<div class="col-xs-8">
+
+								<h4  class="text-left">
+									<strong> Authorised Contact Person</strong>
+								
+								</h4>
+							</div>
+
+							<div class="col-xs-4">
+
+								<h4 style="padding-left:20px">
+									<strong> For all matters on:</strong>
+								
+								</h4>
+							</div>		
+						
+						</div>
+						<br/>
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%; vertical-align:top;padding-top:5px;">1</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td ></td>
+										<td rowspan="4" style="width:2%"></td>
+										<td style="width:3%"></td>
+										<td rowspan="4" style="width:23%">
+											
+											<table border="0" style="border: 0px solid !important;width: 100%;height: 100%;border-left:0px;border-right:0px;">
+												<tr>
+													<td style="border:0;padding-left:+10px">Secretarial</td>
+												</tr>
+												<tr>
+													<td style="border:0;padding-left:+10px">Billing</td>
+												</tr>
+												<tr>
+													<td style="border:0;padding-left:+10px">Accounts/Tax/Report/Audit</td>
+												</tr>
+												<tr>
+													<td style="border:0;padding-left:+10px">Others</td>
+												</tr>	
+											</table>	
+										</td>
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Tel / Mobile No.</td>
+										<td ></td>
+										<td style="width:5%"></td>
+										
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td ></td>
+										<td style="width:5%"></td>
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Reside Oversea</td>
+										<td ></td>
+										<td style="width:5%"></td>
+										
+									</tr>
+								</tbody>
+						</table>
+
+                         <span> &#160; </span>
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%; vertical-align:top;padding-top:5px;">2</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td ></td>
+										<td rowspan="4" style="width:2%"></td>
+										<td style="width:3%"></td>
+										<td rowspan="4" style="width:23%">
+											
+											<table border="0" style="border: 0px solid !important;width: 100%;height: 100%;border-left:0px;border-right:0px;">
+												<tr>
+													<td style="border:0;padding-left:+10px">Secretarial</td>
+												</tr>
+												<tr>
+													<td style="border:0;padding-left:+10px">Billing</td>
+												</tr>
+												<tr>
+													<td style="border:0;padding-left:+10px">Accounts/Tax/Report/Audit</td>
+												</tr>
+												<tr>
+													<td style="border:0;padding-left:+10px">Others</td>
+												</tr>	
+											</table>	
+										</td>
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Tel / Mobile No.</td>
+										<td ></td>
+										<td style="width:5%"></td>
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td ></td>
+										<td style="width:5%"></td>
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Reside Oversea</td>
+										<td ></td>
+										<td style="width:5%"></td>
+										
+									</tr>
+								</tbody>
+						</table>
+
+						 <span> &#160; </span>
+						 <p style="page-break-after:always;">   </p>
+                        <br/>
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%; vertical-align:top;padding-top:5px;">3</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td ></td>
+										<td rowspan="4" style="width:2%"></td>
+										<td style="width:3%"></td>
+										<td rowspan="4" style="width:23%">
+											
+											<table border="0" style="border: 0px solid !important;width: 100%;height: 100%;border-left:0px;border-right:0px;">
+												<tr>
+													<td style="border:0;padding-left:+10px">Secretarial</td>
+												</tr>
+												<tr>
+													<td style="border:0;padding-left:+10px">Billing</td>
+												</tr>
+												<tr>
+													<td style="border:0;padding-left:+10px">Accounts/Tax/Report/Audit</td>
+												</tr>
+												<tr>
+													<td style="border:0;padding-left:+10px">Others
+													</td>
+												</tr>	
+											</table>	
+										</td>
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Tel / Mobile No.</td>
+										<td ></td>
+										<td style="width:5%"></td>
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td ></td>
+										<td style="width:5%"></td>
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Reside Oversea</td>
+										<td ></td>
+										<td style="width:5%"></td>
+										
+									</tr>
+								</tbody>
+						</table>
+						<br/>
+
+						<div class="col-xs-12" style="border-top:1px solid;padding-top:3px; padding-bottom:3px;">
+
+							<h4 >
+								<strong> DECLARATION BY DIRECTORS </strong>
+							</h4>
+							<br/>
+							<p>
+								I/We majority of the board of directors, hereby represent the board of directors to confirm that the revised information given above is true and correct.
+							</p>
+							<p>
+								I/We, hereby authorize FMD Management Consultants Pte Ltd/LW Ong &amp; Associates LLP/FMD 2008 Pte. Ltd./ FMD Pte.
+								Ltd./Advance Secretaries Pte. Ltd. to liase with the above contact person as per instruction indicated on this form. I/We will keep you
+								inform in writing for any changes in the information/instruction given above.
+							</p>	
+							
+						</div>
+
+						<span> &#160; </span>
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%; vertical-align:top;padding-top:5px;">1</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td ></td>
+										<td  rowspan="4" style="width:30%;vertical-align:bottom;text-align:center;">Signature</td>
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Mobile</td>
+										<td ></td>
+										
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td ></td>
+										
+										
+									</tr>
+									
+									<tr>
+										<td style="width:20%;padding-left:+10px">Address</td>
+										<td ></td>
+										
+									</tr>
+								</tbody>
+						</table>
+
+						<span> &#160; </span>
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%; vertical-align:top;padding-top:5px;">2</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td ></td>
+										<td  rowspan="4" style="width:30%;vertical-align:bottom;text-align:center;">Signature</td>
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Mobile</td>
+										<td ></td>
+										
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td ></td>
+										
+										
+									</tr>
+									
+									<tr>
+										<td style="width:20%;padding-left:+10px">Address</td>
+										<td ></td>
+										
+									</tr>
+								</tbody>
+						</table>
+
+
+						<span> &#160; </span>
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%; vertical-align:top;padding-top:5px;">3</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td ></td>
+										<td  rowspan="4" style="width:30%;vertical-align:bottom;text-align:center;">Signature</td>
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Mobile</td>
+										<td ></td>
+										
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td ></td>
+										
+										
+									</tr>
+									
+									<tr>
+										<td style="width:20%;padding-left:+10px">Address</td>
+										<td ></td>
+										
+									</tr>
+								</tbody>
+						</table>
+
+						<span> &#160; </span>
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%; vertical-align:top;padding-top:5px;">4</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td ></td>
+										<td  rowspan="4" style="width:30%;vertical-align:bottom;text-align:center;">Signature</td>
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Mobile</td>
+										<td ></td>
+										
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td ></td>
+										
+										
+									</tr>
+									
+									<tr>
+										<td style="width:20%;padding-left:+10px">Address</td>
+										<td ></td>
+										
+									</tr>
+								</tbody>
+						</table>
+
+						<span> &#160; </span>
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%; vertical-align:top;padding-top:5px;">5</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td ></td>
+										<td  rowspan="4" style="width:30%;vertical-align:bottom;text-align:center;">Signature</td>
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Mobile</td>
+										<td ></td>
+										
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td ></td>
+										
+										
+									</tr>
+									
+									<tr>
+										<td style="width:20%;padding-left:+10px">Address</td>
+										<td ></td>
+										
+									</tr>
+								</tbody>
+						</table>
+
+
+						<span> &#160; </span>
+
+						<table border="1 solid" cellpadding="1" cellspacing="1" style="height:120px; width:100%">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%;vertical-align:top;padding-top:5px;">6</td>
+										<td style="width:20%;padding-left:+10px">Name</td>
+										<td ></td>
+										<td  rowspan="4" style="width:30%;vertical-align:bottom;text-align:center;">Signature</td>
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Mobile</td>
+										<td ></td>
+										
+										
+									</tr>
+									<tr>
+										<td style="width:20%;padding-left:+10px">Email</td>
+										<td ></td>
+										
+										
+									</tr>
+									
+									<tr>
+										<td style="width:20%;padding-left:+10px">Address</td>
+										<td ></td>
+										
+									</tr>
+								</tbody>
+						</table>
+						<div style="float:right;margin-right:10px;margin-top:25px;">
+
+                            <label>Date:_________________________</label>
+                           </div>	
+
+
+
+
+					</div>	
+
+
+				</t>		
+
+
+			</template>	
+
+
+			<template id="fmd_customer.res_partner_report_form">
+				<t t-call="report.html_container">
+					<t t-foreach="docs" t-as="doc">
+						<t t-call="fmd_customer.res_partner_report_customer_form" t-lang="doc.lang" />
+					</t>
+				</t>
+			</template>
+
+
+	</odoo>

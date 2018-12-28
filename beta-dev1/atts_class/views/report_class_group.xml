@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<odoo>
+
+    <!--Template Class Group -->
+    <template id="report_class_group">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <div class="page">
+                	<div class="row">
+                	<span><left>Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></left></span>
+          
+                    </div>
+                    <table class="table table-condensed">
+                    	<tr>
+                            <td><strong>Class Level</strong></td>
+                            <td><strong>English Level and Math Level </strong></td>
+                            <td><strong>Number Of Students</strong></td>
+                        </tr>
+                        <tr>
+                        	<td>Kindness</td>
+                        	<td></td>
+                        	<td></td>
+                        </tr>
+                        <tr t-foreach="level_data_kindness" t-as="a">
+                            <td></td>
+                            <td>
+                            	<span t-esc="a['name']"/> <span t-esc="a['number']"/></td>
+                            <td><span t-esc="a['no_student']"/></td>
+                        </tr>
+                        <tr>
+                        	<td>Joy</td>
+                        	<td></td>
+                        	<td></td>
+                        </tr>
+                        <tr t-foreach="level_data_joy" t-as="a">
+                            <td></td>
+                            <td><span t-esc="a['name']"/> <span t-esc="a['number']"/></td>
+                            <td><span t-esc="a['no_student']"/></td>
+                        </tr>
+                        <tr>
+                        	<td>Love</td>
+                        	<td></td>
+                        	<td></td>
+                        </tr>
+                        <tr t-foreach="level_data_love" t-as="a">
+                            <td></td>
+                            <td><span t-esc="a['name']"/> <span t-esc="a['number']"/></td>
+                            <td><span t-esc="a['no_student']"/></td>
+                        </tr>
+                        <tr>
+                        	<td>Hope</td>
+                        	<td></td>
+                        	<td></td>
+                        </tr>
+                        <tr t-foreach="level_data_hope" t-as="a">
+                            <td></td>
+                            <td><span t-esc="a['name']"/> <span t-esc="a['number']"/></td>
+                            <td><span t-esc="a['no_student']"/></td>
+                        </tr>
+                        <tr>
+                        	<td>Peace</td>
+                        	<td></td>
+                        	<td></td>
+                        </tr>
+                        <tr t-foreach="level_data_peace" t-as="a">
+                            <td></td>
+                            <td><span t-esc="a['name']"/> <span t-esc="a['number']"/></td>
+                            <td><span t-esc="a['no_student']"/></td>
+                        </tr>
+                        <tr>
+                        	<td>Glory</td>
+                        	<td></td>
+                        	<td></td>
+                        </tr>
+                        <tr t-foreach="level_data_glory" t-as="a">
+                            <td></td>
+                            <td><span t-esc="a['name']"/> <span t-esc="a['number']"/></td>
+                            <td><span t-esc="a['no_student']"/></td>
+                        </tr>
+                        <tr>
+                        	<td>Victory</td>
+                        	<td></td>
+                        	<td></td>
+                        </tr>
+                        <tr t-foreach="level_data_victory" t-as="a">
+                            <td></td>
+                            <td><span t-esc="a['name']"/> <span t-esc="a['number']"/></td>
+                            <td><span t-esc="a['no_student']"/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    
+                   
+                </div>
+            </t>
+        </t>
+    </template>
+
+    
+
+</odoo>

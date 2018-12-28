@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='sales_person']" position="after">
+                    <group></group>
+                    <group>
+                        <group>
+                            <div class="oe_inline">
+                                <label for="commission"/>
+                            </div>
+                            <field name="commission" nolabel="1"/>
+                        </group>
+                        <group></group>
+                    </group>
+                </xpath>     
+                <xpath expr="//field[@name='user_id']" position="before">
+                    <field name="employee_id"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

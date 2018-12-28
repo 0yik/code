@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="products_form_view">
+            <field name="name">marketplaces.data.product.form</field>
+            <field name="model">marketplaces.data.product</field>
+            <field name="arch" type="xml">
+                <form string="Products Form">
+                    <header>
+                        <button string="Update" type="object" name="action_update" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="line_ids">
+                                <tree>
+                                    <field name="attribute_name"/>
+                                    <field name="value"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="products_tree_view">
+            <field name="name">marketplaces.data.product.tree</field>
+            <field name="model">marketplaces.data.product</field>
+            <field name="arch" type="xml">
+                <tree string="Products List">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="products_list_action">
+            <field name="name">Products</field>
+            <field name="res_model">marketplaces.data.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create the first product
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="main_marketplaces_menu" name="Marketplaces"/>
+        <menuitem id="marketplaces_menu" name="Marketplaces"
+                  parent="main_marketplaces_menu"/>
+        <menuitem id="products_list_menu" name="Products" parent="marketplaces_menu"
+                  action="products_list_action" sequence="10"/>
+    </data>
+</odoo>

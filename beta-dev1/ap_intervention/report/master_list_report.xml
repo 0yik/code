@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<template id="master_list_report">
+			<t t-call="report.html_container">
+				<t t-call="report.external_layout">
+					<div class="page">
+						<style>
+							.line tr, .line
+							th, .line td{
+							border:1px solid;
+							}
+						</style>
+						<t t-foreach="data['get_data']" t-as="da">
+							<div class="row">
+								<table class="table line" style="page-break-inside: avoid;">
+									<thead>
+										<tr style="background-color:#D3D3D3;">
+											<th class="text-center" rowspan="2">S/N</th>
+											<th class="text-center" rowspan="2">Name of Students</th>
+											<th class="text-center" rowspan="2">Class</th>
+											<th class="text-center" rowspan="2">Class Teacher</th>
+											<th class="text-center" t-if="da['lines'][0]['sp_id']" t-att-colspan="len(da['lines'][0]['sp_id'])">Speech Therapist
+											</th>
+											<th class="text-center" t-if="da['lines'][0]['ot_id']" t-att-colspan="len(da['lines'][0]['ot_id'])">Occupational
+												Therapist
+											</th>
+											<th class="text-center" t-if="da['lines'][0]['ap_id']" t-att-colspan="len(da['lines'][0]['ap_id'])">Art Psychotherapist
+											</th>
+											<th class="text-center" t-if="da['lines'][0]['pc_id']" t-att-colspan="len(da['lines'][0]['pc_id'])">Psychologist</th>
+											<th class="text-center" t-if="da['lines'][0]['sw_id']" t-att-colspan="len(da['lines'][0]['sw_id'])">Social Worker</th>
+											<th class="text-center" t-if="da['lines'][0]['tc_id']" t-att-colspan="len(da['lines'][0]['tc_id'])">Teacher Counsellor
+											</th>
+											<th class="text-center" rowspan="2">Financial Assistance</th>
+											<th class="text-center" rowspan="2">Remarks</th>
+										</tr>
+										<tr style="background-color:#D3D3D3;">
+											<t t-foreach="da['lines'][0]['sp_id']" t-as="sp">
+												<th class="text-center">
+													<t t-esc="sp['sp_id']" />
+												</th>
+											</t>
+											<t t-foreach="da['lines'][0]['ot_id']" t-as="ot">
+												<th class="text-center">
+													<t t-esc="ot['ot_id']" />
+												</th>
+											</t>
+											<t t-foreach="da['lines'][0]['ap_id']" t-as="ap">
+												<th class="text-center">
+													<t t-esc="ap['ap_id']" />
+												</th>
+											</t>
+											<t t-foreach="da['lines'][0]['pc_id']" t-as="pc">
+												<th class="text-center">
+													<t t-esc="pc['pc_id']" />
+												</th>
+											</t>
+											<t t-foreach="da['lines'][0]['sw_id']" t-as="sw">
+												<th class="text-center">
+													<t t-esc="sw['sw_id']" />
+												</th>
+											</t>
+											<t t-foreach="da['lines'][0]['tc_id']" t-as="tc">
+												<th class="text-center">
+													<t t-esc="tc['tc_id']" />
+												</th>
+											</t>
+										</tr>
+									</thead>
+									<tbody>
+										<t t-set='srn' t-value='1' />
+										<t t-foreach="da['lines']" t-as="dl">
+											<tr>
+												<td class="text-center">
+													<span t-esc="srn" />
+												</td>
+												<td class="text-center">
+													<span t-esc="dl['student_id']" />
+												</td>
+												<td class="text-center">
+													<span t-esc="dl['class_id']" />
+												</td>
+												<td class="text-center">
+													<span t-esc="dl['class_teacher_id']" />
+												</td>
+												<t t-foreach="dl['sp_id']" t-as="dsp">
+													<td class="text-center">
+														<span t-esc="dsp['number']" />
+													</td>
+												</t>
+												<t t-foreach="dl['ot_id']" t-as="dot">
+													<td class="text-center">
+														<span t-esc="dot['number']" />
+													</td>
+												</t>
+												<t t-foreach="dl['ap_id']" t-as="dap">
+													<td class="text-center">
+														<span t-esc="dap['number']" />
+													</td>
+												</t>
+												<t t-foreach="dl['pc_id']" t-as="dpc">
+													<td class="text-center">
+														<span t-esc="dpc['number']" />
+													</td>
+												</t>
+												<t t-foreach="dl['sw_id']" t-as="dsw">
+													<td class="text-center">
+														<span t-esc="dsw['number']" />
+													</td>
+												</t>
+												<t t-foreach="dl['tc_id']" t-as="dtc">
+													<td class="text-center">
+														<span t-esc="dtc['number']" />
+													</td>
+												</t>
+												<td class="text-center">
+													<span t-esc="dl['financial_assistance']" />
+												</td>
+												<td class="text-center">
+													<span t-esc="dl['remarks']" />
+												</td>
+											</tr>
+											<t t-set='srn' t-value='srn+1' />
+										</t>
+										<tr style="background-color:#D3D3D3;">
+											<td class="text-center">
+											</td>
+											<td class="text-center">
+											</td>
+											<td class="text-center">
+											</td>
+											<td class="text-center">
+											</td>
+											<t t-foreach="da['sp_total']" t-as="dast">
+												<td class="text-center">
+													<strong><span t-esc="dast" /></strong>
+												</td>
+											</t>
+											<t t-foreach="da['ot_total']" t-as="daot">
+												<td class="text-center">
+													<strong><span t-esc="daot" /></strong>
+												</td>
+											</t>
+											<t t-foreach="da['ap_total']" t-as="daap">
+												<td class="text-center">
+													<strong><span t-esc="daap" /></strong>
+												</td>
+											</t>
+											<t t-foreach="da['pc_total']" t-as="dapc">
+												<td class="text-center">
+													<strong><span t-esc="dapc" /></strong>
+												</td>
+											</t>
+											<t t-foreach="da['sw_total']" t-as="dasw">
+												<td class="text-center">
+													<strong><span t-esc="dasw" /></strong>
+												</td>
+											</t>
+											<t t-foreach="da['tc_total']" t-as="datc">
+												<td class="text-center">
+													<strong><span t-esc="datc" /></strong>
+												</td>
+											</t>
+											<td class="text-center">
+												<strong><span t-esc="da['fa_sa']" /></strong>
+											</td>
+											<td class="text-center">
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</t>
+					</div>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

@@ -1,0 +1,30 @@
+<odoo>
+   <data>
+      <record id="crm_team_view_form_inherit" model="ir.ui.view">
+          <field name="name">crm.team.form.inherit</field>
+          <field name="model">crm.team</field>
+          <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+          <field name="arch" type="xml">
+              <field name="alias_contact" position="replace">
+                  <field name="start_date" style="width:25%"/>
+                  <field name="end_date" style="width:25%"/>
+                  <field name="team_target" style="width:25%"/>
+                  <field name="team_achievement" style="width:25%"/>
+              </field>
+		  </field>
+      </record>
+
+
+       <record id="res_users_simplified_form_inherit" model="ir.ui.view">
+           <field name="name">res.users.simplified.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_simple_form"/>
+            <field name="arch" type="xml">
+                <field name="fax" position="after">
+                  <field name="sale_target" style="width:25%"/>
+                  <field name="achievement" style="width:25%"/>
+              </field>
+		    </field>
+      </record>
+  </data>
+</odoo>

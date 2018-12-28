@@ -1,0 +1,12 @@
+<odoo>
+	<data>
+	
+		<menuitem id="zone_and_postal_code_configuration.menu_partner_form_zones" name="Zones and Postal code Management"
+			parent="hilti_modifier_company.menu_admin_configuration" groups='hilti_modifier_accessrights.group_hilti_admin' sequence="10"
+			action="zone_and_postal_code_configuration.action_zone_zone_view" />
+	
+		<!-- <menuitem id="zone_and_postal_code_configuration.menu_partner_form_postal_code" name="Postal Code"
+			parent="hilti_modifier_company.menu_admin_configuration" groups='hilti_modifier_accessrights.group_hilti_admin' sequence="11"
+			action="zone_and_postal_code_configuration.action_postal_code_view" /> -->
+	</data>
+</odoo>

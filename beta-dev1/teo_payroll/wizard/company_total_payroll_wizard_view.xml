@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="cmp_total_payroll_wiz" model="ir.ui.view">
+            <field name="name">cmp.total.payroll.wiz</field>
+            <field name="model">cmp.total.payroll.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Company Total Payroll">
+                    <group col="4" colspan="2">
+                        <field name="date_from" required="1"/>
+                        <field name="date_to" required="1"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print" type="object" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+	                </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_print_cmp_total_payroll" model="ir.actions.act_window">
+            <field name="name">Company Total Payroll</field>
+            <field name="res_model">cmp.total.payroll.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+       </record>
+
+       <menuitem action="action_print_cmp_total_payroll" id="menu_print_cmp_total_payroll" parent="sg_hr_report.menu_report_payroll1_summary" sequence="2"/>
+
+    </data>
+</odoo>

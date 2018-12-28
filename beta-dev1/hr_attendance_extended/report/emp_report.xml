@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="Full_time_employee_report_emp"
+            string="Employee Attendance"
+            model="emp.report_full" 
+            report_type="qweb-pdf"
+            file="hr_attendance_extended.Report_hr_attendance_full_time_emp" 
+            name="hr_attendance_extended.Report_hr_attendance_full_time_emp" 
+        />
+
+       <report 
+        id="Full_time_employee_report"
+        string="Employee Attendance"
+        model="emp.report_part" 
+        report_type="qweb-pdf"
+        file="hr_attendance_extended.Report_hr_attendance_part_time" 
+        name="hr_attendance_extended.Report_hr_attendance_part_time" 
+        />
+    </data>
+</odoo>

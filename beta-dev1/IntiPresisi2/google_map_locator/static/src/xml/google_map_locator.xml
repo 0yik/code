@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="map">
+        <div style="height:500px;">
+            <div id="tour-map-canvas" style="float:left;width:865px; height:500px">
+            </div>
+        </div>
+    </t>
+    <t t-name="leadmap">
+        <div id="directionsPanel" style="float:left;width:27%;height 100%;padding:5px;">
+            <p id="start" style="color:red;"></p>
+            <p id="end"></p>
+            <p id="dist"></p>
+            <p id="durat"></p>
+        </div>
+        <div style="height:500px;">
+            <div id="map-canvas" style="float:left;width:865px; height:500px">
+            </div>
+        </div>
+    </t>
+</templates>
+

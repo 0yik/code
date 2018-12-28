@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_pos_config_syncing">
+            <field name="name">pos.config.sync</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="pos_orders.view_pos_config_form_inherit"/>
+            <field name="arch" type="xml">
+               <xpath expr="//group/group/field[@name='order_loading_options']" position="after">
+                   <field name="time_order" widget="float_time"/>
+                    <field name="number_of_order"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

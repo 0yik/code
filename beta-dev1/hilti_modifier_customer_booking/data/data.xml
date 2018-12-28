@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+		<!-- <record id="dashboard_1" model="project.booking.dashboard">
+            <field name="name">Bookings</field>
+        </record>
+        
+        <record id="dashboard_2" model="project.booking.dashboard">
+            <field name="name">Customers</field>
+        </record>
+        
+        <record id="dashboard_3" model="project.booking.dashboard">
+            <field name="name">Zones</field>
+        </record> -->
+
+        <record id="menu_make_a_booking" model="website.menu">
+            <field name="name">Make a Booking</field>
+            <field name="url">/booking</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_tester'), ref('hilti_modifier_accessrights.group_hilti_admin')])]"/>
+            <field name="sequence" type="int">1</field>
+        </record>
+        
+        <record id="menu_project_booking" model="website.menu">
+            <field name="name">My Bookings</field>
+            <field name="url">/my_booking</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_tester'), ref('hilti_modifier_accessrights.group_hilti_admin'), ref('hilti_modifier_accessrights.group_hilti_account_manager'), ref('hilti_modifier_accessrights.group_hilti_cs_engineer')])]"/>
+            <field name="sequence" type="int">2</field>
+        </record>
+        
+        <record id="menu_customer_booking_admin" model="website.menu">
+            <field name="name">Customer Bookings</field>
+            <field name="url">/customer_bookings_admin</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_tester'), ref('hilti_modifier_accessrights.group_hilti_customer'), ref('hilti_modifier_accessrights.group_hilti_account_manager'), ref('hilti_modifier_accessrights.group_hilti_cs_engineer')])]"/>
+            <field name="sequence" type="int">2</field>
+        </record>
+        
+        <record id="menu_customer_booking_staff" model="website.menu">
+            <field name="name">Customer Bookings</field>
+            <field name="url">/customer_bookings_staff</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_tester'), ref('hilti_modifier_accessrights.group_hilti_customer'), ref('hilti_modifier_accessrights.group_hilti_admin')])]"/>
+            <field name="sequence" type="int">1</field>
+        </record>
+        
+        <!--record id="menu_project_booking_customer" model="website.menu">
+            <field name="name">My Bookings</field>
+            <field name="url">/my_booking_customer</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_customer'), ref('hilti_modifier_accessrights.group_hilti_admin')])]"/>
+            <field name="sequence" type="int">6</field>
+        </record-->
+
+        <record id="menu_my_tasks" model="website.menu">
+            <field name="name">My Tasks</field>
+            <field name="url">/my_tasks</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_customer'), ref('hilti_modifier_accessrights.group_hilti_admin'), ref('hilti_modifier_accessrights.group_hilti_account_manager'), ref('hilti_modifier_accessrights.group_hilti_cs_engineer')])]"/>
+            <field name="sequence" type="int">2</field>
+        </record>
+
+        <!--record id="menu_my_customer" model="website.menu">
+            <field name="name">My Tasks</field>
+            <field name="url">/my_tasks_customer</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_customer'), ref('hilti_modifier_accessrights.group_hilti_admin')])]"/>
+            <field name="sequence" type="int">2</field>
+        </record-->
+
+
+        <record id="menu_my_dashboard" model="website.menu">
+            <field name="name">Dashboard</field>
+            <field name="url">/my_dashboard</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_tester'), ref('hilti_modifier_accessrights.group_hilti_admin'), ref('hilti_modifier_accessrights.group_hilti_account_manager'), ref('hilti_modifier_accessrights.group_hilti_cs_engineer')])]"/>
+            <field name="sequence" type="int">4</field>
+        </record>
+
+        <record id="menu_my_dashboard_customer_new" model="website.menu">
+            <field name="name">Dashboard</field>
+            <field name="url">/my_dashboard_customer</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_customer'), ref('hilti_modifier_accessrights.group_hilti_admin'), ref('hilti_modifier_accessrights.group_hilti_account_manager'), ref('hilti_modifier_accessrights.group_hilti_cs_engineer')])]"/>
+            <field name="sequence" type="int">4</field>
+        </record>
+
+
+    </data>
+</odoo>

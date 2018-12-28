@@ -1,0 +1,15 @@
+.pos .clientlist-screen .client-details-left{
+    width: 60%;
+    float: left;
+}
+.pos .clientlist-screen .client-details-right{
+    width: 40%;
+    float: right;
+}
+.pos .clientlist-screen .client-detail > .label {
+    font-weight: bold;
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 8px;
+}

@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="honos_layout1_homepage" name="honos_home">
+		<t t-call="website.layout">
+			<div class="oe_structure">
+			<section class="cat_img_content_snippet_wrap">
+				<div class="cat_img_content_snippet_container">
+
+					<div class="daily_deals_img_section">
+						<section>
+							<a href="#">
+							<img src="/honos_snippet_style_9/static/src/img/style_9_img_1.jpg"></img>
+							</a>
+						</section>
+					</div>
+					<div class="daily_deals_content_class">
+						<div class="content_subclass">
+						<p class="hr_before_heading"></p>
+						<h1 class="content_heading">daily deals</h1>
+						<div class="daily_deals_para">
+							<p class="">You can select a product to buy without leaving
+								current page,instantly add product to basket. Increase user
+								experiance and sales.</p>
+						</div>
+						<a class="b_fashion_btn" href="#">shop now</a>
+						
+						</div>
+					</div>
+
+					<div class="daily_deals_snippet_category">
+						<div class="category_row_container">
+						<div class="category_row">
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c1.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Lipstick</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c2.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Mascara</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c3.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Foundation</a>
+							</div>
+						</div>
+						</div>
+							<div class="category_row_container">
+						<div class="category_row">
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c4.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Makeup box</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c5.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Brushes</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c6.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Lotion</a>
+							</div>
+						</div>
+						</div>
+							<div class="category_row_container">
+						<div class="category_row">
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c7.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Cream</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c8.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Nail paint</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+									<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c9.png"></img>
+									</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Eyeliner</a>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			</div>
+		<div class="oe_structure">
+            <section class="section_sub_class_category_two_banner">
+              <section class="section_class_category">
+                <section class="section_class_category_banner_left">
+                  <section class="section_sub_class_category_banner_left">
+                    <section class="section_class_category_banner_img_left">
+                      <section class="section_sub_class_category_banner_img_left">
+						  <a href="#">
+                        <section>
+                          <img  class="s_image_common"  src="/honos_snippet_style_18/static/src/img/style_18_img_1.png"></img>
+                        </section>
+                        </a>
+                      </section>
+                    </section>
+                    <section class="section_class_category_banner_list_right">
+                      <section class="section_sub_class_category_banner_list_right">
+                        <div class="div_class_category_brand_list">
+                          <ul class="ul_class_category_brand_list common_font_style_category_banner">
+                            <li class="li_class_brand_name_heading">
+                              <h3>Shop For Men</h3>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">T-shirts </a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">Shirts</a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">Jeans</a>
+                            </li>
+                             <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">blazers</a>
+                            </li>
+                             <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">formals</a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#"> See All </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </section>
+                    </section>
+                  </section>
+                </section>
+                <section class="section_class_category_banner_right">
+                  <section class="section_sub_class_category_banner_left">
+                    <section class="section_class_category_banner_img_left">
+                      <section class="section_sub_class_category_banner_img_right">
+						  <a href="#">
+                        <section>
+                          <img  class="s_image_common" src="/honos_snippet_style_18/static/src/img/style_18_img_2.png"></img>
+                        </section>
+                        </a>
+                      </section>
+                    </section>
+                    <section class="section_class_category_banner_list_right">
+                      <section class="section_sub_class_category_banner_list_right">
+                        <div class="div_class_category_brand_list">
+                          <ul class="ul_class_category_brand_list common_font_style_category_banner">
+                            <li class="li_class_brand_name_heading">
+                              <h3>Shop For Women</h3>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">Tops</a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">T-shirts</a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">Jeans</a>
+                            </li>
+                             <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">skirts</a>
+                            </li>
+                             <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">shirts</a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#"> See All </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </section>
+                    </section>
+                  </section>
+                </section>
+              </section>
+            </section>
+          </div>
+          <div class="oe_structure">
+          <section class="b_three_column_wrap">
+			  <div class="b_three_column_container">
+					<div class="b_ind_column_div">
+						<a href="#"><section class="hover_before"><img  class="s_image_common" src="/honos_snippet_style_19/static/src/img/style_19_img_1.png"></img></section></a>
+					</div>
+					<div class="b_ind_column_div">
+						<a href="#"><section class="hover_before"><img  class="s_image_common" src="/honos_snippet_style_19/static/src/img/style_19_img_2.jpg"></img></section></a>
+					</div>
+					<div class="b_ind_column_div">
+						<a href="#"><section class="hover_before"><img  class="s_image_common" src="/honos_snippet_style_19/static/src/img/style_19_img_3.jpg"></img></section></a>
+					</div>
+			  </div>
+          </section>
+              </div>      
+     		<div class="oe_structure">
+			<section class="honos_fashion_snippet_wrap">
+				<div class="honos_fasion_snippet_container">
+					<div class="b_fashion_part_one">
+						<div class="b_fashion_part_img_div part_one_bg">
+							<section>
+								<a href="#">
+									<img class="s_image_common" src="/honos_snippet_style_20/static/img/style_20_img_1.png"></img>
+								</a>
+							</section>
+						</div>
+						<div class="b_fashion_catg_info">
+					<div class="bf_text-row">
+								<p class="b_fashion_sub_heading">wear</p>
+							</div>
+							<div class="bf_text-row">
+								<span class="b_fashion_para">
+									Lorem Ipsum is simply dummy
+									<br/>
+										text of the printing and typesetting industry.
+									<br/>
+									Lorem Ipsum has
+								</span>
+							</div>
+							<div class="bf_text-row">
+								<a href="#" class="b_fashion_btn f_btn_margin">shop now</a>
+							</div>
+						</div>
+					</div>
+					<div class="b_fashion_part_two">
+						<div class="b_fashion_part_img_div part_two_bg">
+							<section>
+								<a href="#">
+									<img class="s_image_common" src="/honos_snippet_style_20/static/img/style_20_img_2.png"></img>
+								</a>
+							</section>
+						</div>
+						<div class="b_fashion_catg_info">
+							<div class="bf_text-row">
+								<p class="b_fashion_sub_heading">style</p>
+							</div>
+							<div class="bf_text-row">
+								<span class="b_fashion_para">
+									Lorem Ipsum is simply dummy
+									<br/>
+										text of the printing and typesetting industry.
+									<br/>
+									Lorem Ipsum has
+								</span>
+							</div>
+							<div class="bf_text-row">
+								<a href="#" class="b_fashion_btn f_btn_margin">shop now</a>
+							</div>
+						</div>
+					</div>
+					<div class="b_fashion_part_three">
+						<div class="b_fashion_part_img_div part_three_bg">
+							<section>
+								<a href="#">
+									<img class="s_image_common" src="/honos_snippet_style_20/static/img/style_20_img_3.png"></img>
+								</a>
+							</section>
+						</div>
+						<div class="b_fashion_catg_info">
+							<div class="bf_text-row">
+								<p class="b_fashion_sub_heading">new</p>
+							</div>
+							<div class="bf_text-row">
+								<span class="b_fashion_para">
+									Lorem Ipsum is simply dummy
+									<br/>
+										text of the printing and typesetting industry.
+									<br/>
+									Lorem Ipsum has
+								</span>
+							</div>
+							<div class="bf_text-row">
+								<a href="#" class="b_fashion_btn f_btn_margin">shop now</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>	
+			</div>
+			<div class="oe_structure" />
+		
+		
+		
+			
+			
+		</t>
+	</template>
+</odoo>
+		

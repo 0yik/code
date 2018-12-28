@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	    <delete model="website.menu" search="[('name','=','Beauty'),('parent_id','=',ref('website.main_menu'))]"/>
+	    <delete model="website.menu" search="[('name','=','Skincare'),('parent_id','=',ref('website.main_menu'))]"/>
+	    <delete model="website.menu" search="[('name','=','categ'),('parent_id','=',ref('website.main_menu'))]"/>
+	    <delete model="website.menu" search="[('name','=','Make Up'),('parent_id','=',ref('website.main_menu'))]"/>
+	    <delete model="website.menu" search="[('name','=','Blog'),('parent_id','=',ref('website.main_menu'))]"/>
+		<!-- <delete model="website.menu" id="honos_layout.honos_diningroom" />
+		<delete model="website.menu" id="honos_layout.honos_livingroom" />
+		<delete model="website.menu" id="honos_layout.honos_fashion" />
+		<delete model="website.menu" id="honos_layout.honos_style_4_menu" />
+		<delete model="website.menu" id="website_blog.menu_news" /> -->
+		<record id="ccm_aboutus" model="website.menu">
+			<field name="name">About Us</field>
+			<field name="url">/about_us</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="sequence" type="int">12</field>
+		</record>
+		<record id="website_sale.menu_shop" model="website.menu">
+            <field name="name">Rental</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="dynamic_menu" eval="True"></field>
+            <field name="sequence" type="int">20</field>
+        </record>
+		<record id="ccm_custom_made" model="website.menu">
+			<field name="name">Custom-Made</field>
+			<field name="url">/custom_made</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="sequence" type="int">30</field>
+		</record>
+		<record id="ccm_merchandise" model="website.menu">
+			<field name="name">Merchandise</field>
+			<field name="url">/merchandise</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="sequence" type="int">40</field>
+		</record>
+		<record id="ccm_portfolio" model="website.menu">
+			<field name="name">Portfolio</field>
+			<field name="url">/portfolio</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="sequence" type="int">50</field>
+		</record>
+		<record id="ccm_portfolio_brand" model="website.menu">
+            <field name="name">Brands</field>
+            <field name="url">/portfolio?Brands</field>
+            <field name="parent_id" ref="modifier_honos_theme.ccm_portfolio" />
+            <field name="sequence" type="int">1</field>
+        </record>
+        <record id="ccm_portfolio_licensed" model="website.menu">
+            <field name="name">Licensed</field>
+            <field name="url">/portfolio?Licensed</field>
+            <field name="parent_id" ref="modifier_honos_theme.ccm_portfolio" />
+            <field name="sequence" type="int">2</field>
+        </record>
+        <record id="ccm_portfolio_parade" model="website.menu">
+            <field name="name">Parade</field>
+            <field name="url">/portfolio?Parade</field>
+            <field name="parent_id" ref="modifier_honos_theme.ccm_portfolio" />
+            <field name="sequence" type="int">3</field>
+        </record>
+        <record id="ccm_portfolio_children" model="website.menu">
+            <field name="name">Children</field>
+            <field name="url">/portfolio?Children</field>
+            <field name="parent_id" ref="modifier_honos_theme.ccm_portfolio" />
+            <field name="sequence" type="int">4</field>
+        </record>
+        <record id="ccm_portfolio_performance" model="website.menu">
+            <field name="name">Performance</field>
+            <field name="url">/portfolio?Performance</field>
+            <field name="parent_id" ref="modifier_honos_theme.ccm_portfolio" />
+            <field name="sequence" type="int">5</field>
+        </record>
+        <record id="ccm_portfolio_cosplay" model="website.menu">
+            <field name="name">Cosplay</field>
+            <field name="url">/portfolio?Cosplay</field>
+            <field name="parent_id" ref="modifier_honos_theme.ccm_portfolio" />
+            <field name="sequence" type="int">6</field>
+        </record>
+        <record id="ccm_portfolio_others" model="website.menu">
+            <field name="name">Others</field>
+            <field name="url">/portfolio?Others</field>
+            <field name="parent_id" ref="modifier_honos_theme.ccm_portfolio" />
+            <field name="sequence" type="int">7</field>
+        </record>
+		<record id="website.menu_contactus" model="website.menu">
+            <field name="name">Contact</field>
+            <field name="url">/page/contactus</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">60</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <!-- update stripe image and name -->
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'payment'), ('model', '=', 'payment.acquirer'), ('name', '=', 'payment_acquirer_stripe')]"/>
+            </function>
+            <value eval="{'noupdate': False}"/>
+        </function>
+        <record id="payment.payment_acquirer_stripe" model="payment.acquirer">
+            <field name="name">Stripe (Visa/Master Card)</field>
+            <field name="image" type="base64" file="modifier_honos_theme/static/src/img/data_img/visa_master_icon.png"/>
+        </record>
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'payment'), ('model', '=', 'payment.acquirer'), ('name', '=', 'payment_acquirer_stripe')]"/>
+            </function>
+            <value eval="{'noupdate': True}"/>
+        </function>
+	</data>
+</odoo>

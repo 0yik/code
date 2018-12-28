@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acess_subject_subject,access_subject_subject,model_subject_subject,,1,0,0,0
+access_class_registration,access_class_registration,model_class_registration,,1,1,1,1
+access_registration_delegate_lines,access_registration_delegate_lines,model_registration_delegate_lines,,1,1,1,1
+access_registration_files,access_registration_files,model_registration_files,,1,1,1,1

@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sign_in_history_tree">
+            <field name="name">sign.in_history.tree</field>
+            <field name="model">sign_in.history</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="subject"/>
+                    <field name="sign_in_time"/>
+                    <field name="latitude_in"/>
+                    <field name="longitude_in"/>
+                    <field name="sign_out_time"/>
+                    <field name="latitude_out"/>
+                    <field name="longitude_out"/>
+                    <field name="meeting_sumary"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sign_in_history_form">
+            <field name="name">sign.in.history.form</field>
+            <field name="model">sign_in.history</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="subject"/>
+                                <field name="author_user"/>
+                            </group>
+                            <group colspan="4">
+                                <group colspan="2">
+                                    <field name="author_in"/>
+                                    <field name="sign_in_time"/>
+                                    <field name="latitude_in"/>
+                                    <field name="longitude_in"/>
+                                </group>
+                                <group colspan="2">
+                                    <field name="author_out"/>
+                                    <field name="sign_out_time"/>
+                                    <field name="latitude_out"/>
+                                    <field name="longitude_out"/>
+                                </group>
+                            </group>
+                        </group>
+                        <separator string="Sumary" colspan="4"/>
+                        <field name="meeting_sumary"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sign_in_history_action">
+            <field name="name">History</field>
+            <field name="res_model">sign_in.history</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

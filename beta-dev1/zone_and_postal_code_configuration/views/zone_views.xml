@@ -1,0 +1,125 @@
+<odoo>
+	<data>
+		<record id="zone_zone_view" model="ir.ui.view">
+			<field name="name">zone.zone.view.form</field>
+			<field name="model">zone.zone</field>
+			<field name="arch" type="xml">
+				<form string="Zones">
+					<sheet string="Zones">
+						<group>
+							<group>
+								<field name="name" required="1" />
+								<field name="remark" string="Remarks" />
+							</group>
+							<group>
+							</group>
+						</group>
+						<notebook colspan="4">
+							<page string="Allocated Postal Codes" name="all_testers" autofocus="autofocus">
+								<field name="postal_code_ids" required="1"/>
+							</page>
+							<page string="Allocated Testers" name="all_testers">
+								<field name="tester_ids" options="{'no_create_edit': True, 'no_create': True, 'no_edit': True}" required="1">
+									<tree>
+										<field name="sequence" widget="handle" />
+										<field name="name" string="Tester Name"/>
+									</tree>
+								</field>
+							</page>
+							<page string="Sequence Details" name="seq_detail">
+								<field name="seq_ids">
+									<tree editable="bottom">
+										<field name="zone_id" invisible="1" />
+										<field name="name" />
+										<field name="postal_code_id"
+											domain="[('id', 'in', parent.postal_code_ids[0][2])]" options="{'no_create_edit': True, 'no_create': True, 'no_edit': True}" required="1"/>
+										<field name="zone_ids" widget="many2many_tags" required="1" options="{'no_create_edit': True, 'no_create': True, 'no_edit': True}"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="zone_zone_view_tree" model="ir.ui.view">
+			<field name="name">zone.zone.view.tree</field>
+			<field name="model">zone.zone</field>
+			<field name="arch" type="xml">
+				<tree string="Zone Tree">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_zone_zone_view" model="ir.actions.act_window">
+			<field name="name">Zones</field>
+			<field name="res_model">zone.zone</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Create Zones
+				</p>
+				<p>
+				</p>
+			</field>
+		</record>
+
+		<!-- <menuitem id="menu_partner_form_zones" parent="sales_team.menu_sales" 
+			action="zone_and_postal_code_configuration.action_zone_zone_view" name="Zones" 
+			sequence="5" /> -->
+		<menuitem id="menu_partner_form_zones" name="Zones and Postal code Management"
+			parent="sales_team.menu_sale_config" sequence="0"
+			action="zone_and_postal_code_configuration.action_zone_zone_view" />
+
+
+		<record id="postal_code_view" model="ir.ui.view">
+			<field name="name">postal.code.view.form</field>
+			<field name="model">postal.code</field>
+			<field name="arch" type="xml">
+				<form string="Postal Code">
+					<sheet string="Postal Code">
+						<group>
+							<group>
+								<field name="name" required="1" />
+							</group>
+							<group>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="postal_code_view_tree" model="ir.ui.view">
+			<field name="name">postal.code.view.tree</field>
+			<field name="model">postal.code</field>
+			<field name="arch" type="xml">
+				<tree string="Postal Code Tree">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_postal_code_view" model="ir.actions.act_window">
+			<field name="name">Postal Code</field>
+			<field name="res_model">postal.code</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Create Postal Code
+				</p>
+				<p>
+				</p>
+			</field>
+		</record>
+
+		<!-- <menuitem id="menu_partner_form_postal_code" parent="sales_team.menu_sales" 
+			action="zone_and_postal_code_configuration.action_postal_code_view" name="Postal 
+			Code" sequence="6" /> -->
+		<!-- <menuitem id="menu_partner_form_postal_code" name="Postal Code" parent="sales_team.menu_sale_config" 
+			sequence="0" action="zone_and_postal_code_configuration.action_postal_code_view" 
+			/> -->
+	</data>
+</odoo>

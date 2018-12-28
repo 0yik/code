@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	    <delete model="website.menu" search="[('name','=','Home'),('parent_id','=',ref('website.main_menu'))]"/>
+	    <delete model="website.menu" search="[('name','=','Contact us'),('parent_id','=',ref('website.main_menu'))]"/>
+	</data>
+</odoo>

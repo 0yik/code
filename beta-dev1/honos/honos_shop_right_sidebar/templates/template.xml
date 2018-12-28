@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="honos_shop_right_sidebar_right_view" inherit_id="honos_shop.honos_shop_products"
+		active="False" customize_show="True" name="Right Sidebar">
+		<xpath expr="//div[@id='products_grid']//table" position="replace">
+			<table id="product-grid-table" width="100%">
+				<tr>
+					<td>
+						<t t-foreach="products" t-as="product">
+							<div class="oe_product oe_shop_right oe_product_cart">
+								<t t-call="honos_shop.honos_shop_products_item">
+								</t>
+							</div>
+						</t>
+					</td>
+				</tr>
+			</table>
+		</xpath>
+	</template>
+</odoo>

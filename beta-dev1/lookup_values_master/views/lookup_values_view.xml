@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="lookup_master_form_view" model="ir.ui.view">
+        <field name="name">lookup master form view</field>
+        <field name="model">lookup.master</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <label for="name" string="Name"/>
+                            <field name="name" placeholder="Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="code"/>
+                    </group>
+                    <notebook>
+                        <page string="Values">
+                                <!--<tree>-->
+                            <field name="master_line_ids" context="{'master_line_ids':master_line_ids}">
+                                <tree name="Values" editable="top">
+                                    <field name="seq_number"/>
+                                    <field name="value"/>
+                                    <field name="line_code"/>
+                                </tree>
+                                <form name="Values">
+                                    <field name="seq_number" invisible="1"/>
+                                    <field name="lookup_master_id" invisible="1"/>
+                                    <field name="value"/>
+                                    <field name="line_code"/>
+                                </form>
+                            </field>
+                                <!--</tree>-->
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="lookup_master_tree_view" model="ir.ui.view">
+        <field name="name">lookup master tree view</field>
+        <field name="model">lookup.master</field>
+        <field name="arch" type="xml">
+            <tree name="Master Lookup">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="lookup_master_line_form_view" model="ir.ui.view">
+        <field name="name">lookup master line form view</field>
+        <field name="model">lookup.master.line</field>
+        <field name="arch" type="xml">
+            <form name="Master Lookup">
+                <sheet>
+                    <group>
+                        <field name="value"/>
+                        <field name="line_code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_lookup_master" model="ir.actions.act_window">
+        <field name="name">List of Values</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lookup.master</field>
+            <field name="view_type">form</field>
+            <!--<field name="domain">[]</field>-->
+            <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="menu_master_lookup"
+        name="List of Values"
+        action='action_lookup_master'
+        parent='base.menu_administration'
+    />
+</odoo>

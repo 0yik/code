@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="promotion_sunday" model="pos.promotion.days">
+            <field name="name">Sunday</field>
+        </record>
+        <record id="promotion_monday" model="pos.promotion.days">
+            <field name="name">Monday</field>
+        </record>
+        <record id="promotion_tuesday" model="pos.promotion.days">
+            <field name="name">Tuesday</field>
+        </record>
+        <record id="promotion_wednesday" model="pos.promotion.days">
+            <field name="name">Wednesday</field>
+        </record>
+        <record id="promotion_thursday" model="pos.promotion.days">
+            <field name="name">Thursday</field>
+        </record>
+        <record id="promotion_friday" model="pos.promotion.days">
+            <field name="name">Friday</field>
+        </record>
+        <record id="promotion_saturday" model="pos.promotion.days">
+            <field name="name">Saturday</field>
+        </record>
+
+    </data>
+
+</odoo>
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="report_repack_label"
+            string="Repacking Label"
+            model="product.repacking" 
+            report_type="qweb-pdf"
+            file="helaspice_receiving_import.report_repacking_label" 
+            name="helaspice_receiving_import.report_repacking_label" 
+        />
+    </data>
+</odoo>

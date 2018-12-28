@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<record id="custome_view_sale_order_form_inherit_new" model="ir.ui.view">
+            <field name="name">Sale Order Inherit view</field>
+            <field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			
+            <field name="arch" type="xml">
+				<!--xpath expr="//notebook/page/field/form/group/group/field[@name='product_id']" position="after"-->
+				<xpath expr="//notebook/page/field/form/group" position="after">
+				<group>
+					<group string="Stock Detail on Current/Display Shop">
+						<field name="location_id" domain="[('is_shop', '=', True),('usage', '=', 'internal')]"/>
+						<field name="current_qty_shop"/>
+						<field name="standard_qty_shop"/>
+					</group>
+					<group string="Stock Detail on Current/Display W/H">
+						<field name="warehouse_id" domain="[('is_shop', '!=', True),('usage', '=', 'internal')]"/>
+						<field name="current_qty_warehouse"/>
+						<field name="standard_qty_warehouse"/>
+					</group>
+				</group>
+				<br/>
+				</xpath>
+			</field>
+		</record>
+</odoo>

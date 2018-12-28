@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--<record id="view_order_form_inherit_shipper_driver" model="ir.ui.view">-->
+            <!--<field name="name">sale.order.form.add.shipper</field>-->
+            <!--<field name="model">sale.order</field>-->
+            <!--<field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="picking_policy" position="after">-->
+                    <!--<field name="driver_id"/>-->
+                    <!--<field name="shipper_id"/>-->
+                <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
+    </data>
+</odoo>

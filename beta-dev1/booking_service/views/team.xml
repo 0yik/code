@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<record id="view_booking_team_filter" model="ir.ui.view">
+            <field name="name">booking.team.search</field>
+            <field name="model">team.management</field>
+            <field name="arch" type="xml">
+                <search string="Search Team">
+                    <field name="name" string="Team" filter_domain="[('name','ilike',self)]"/>
+                    <field name="leader_id"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Leader" domain="[]" context="{'group_by':'leader_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+		<record id="team_management_list" model="ir.ui.view">
+            <field name="name">team.list</field>
+            <field name="model">team.management</field>
+            <field name="arch" type="xml">
+            	<tree string="Team Management" >
+            		<field name="name" />
+            		<field name="leader_id" />
+            	</tree>
+            </field>
+        </record>
+		<record id="team_management_form" model="ir.ui.view">
+            <field name="name">team.form</field>
+            <field name="model">team.management</field>
+            <field name="arch" type="xml">
+                <form string="Team Management">
+	                <sheet>
+	                    <div class="oe_title">
+	                        <h1>
+	                            <field name="name" />
+	                        </h1>
+	                    </div>
+	                    <group>
+	                    	<field name="leader_id" />
+						</group>
+						<group string="Employees"> 
+	                    	<field name="team_employees" nolabel="1">
+	                    		<tree string="Employees" editable="bottom">
+	                    			<field name="name" /> 
+	                    		</tree> 
+	                    	</field>							
+						</group>
+						<group string="Equipments">
+		                    <field name="team_equipments" nolabel="1" context="{'tree_view_ref':'booking_service.team_equipements_list'}">
+		                    	<!--<tree string="Equipments" editable="bottom">
+		                    		<field name="product_id" required="1"/>
+		                    		<field name="serial_no" required="1"/>
+		                    	</tree>-->
+		                    </field>							 
+						</group>		                    	
+	                </sheet>
+                </form>
+            </field>
+        </record>
+
+		<record id="team_equipements_list" model="ir.ui.view">
+            <field name="name">equipment.list</field>
+            <field name="model">team.equipmemnts</field>
+            <field name="arch" type="xml">
+            	<tree string="Equipements" editable="bottom">
+            		<field name="product_id" required="1" />
+            		<field name="serial_no" required="1" domain="[('product_id','=',product_id)]" />
+            	</tree>
+            </field>
+        </record>                
+        
+        <record id="action_team_management" model="ir.actions.act_window">
+            <field name="name">Team</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">team.management</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="team_management_list"/>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_booking_team_filter"/>
+            <field name="context">{}</field>
+        </record>
+        
+        <menuitem 
+        	action="action_team_management"
+            id="menu_team_management" 
+        	parent="menu_booking_main"
+            sequence="12" />
+            
+</odoo>        

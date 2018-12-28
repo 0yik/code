@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    
+<record id="action_booking_orders" model="ir.actions.act_window">
+            <field name="name">Booking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="context">{'default_is_booking':True}</field>
+            <field name="help" type="html">
+              <p>
+                You will find here all orders that are ready to be invoiced.
+              </p><p>
+                You can select all orders and invoice them in batch, or check
+                every order and invoice them one by one.
+              </p>
+            </field>
+
+        </record>
+
+
+ <menuitem id="menu_booking_order" name="Booking" parent="sales_team.menu_base_partner" sequence="5"/>
+
+ <menuitem  id= "menu_booking_order_sub_menu"
+            parent= "menu_booking_order"
+            sequence= "1"
+            name= "Booking Order"
+            action="action_booking_orders"/>
+ 
+ </data>
+</odoo>

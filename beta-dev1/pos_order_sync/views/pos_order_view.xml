@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_pos_pos_form_inherit_pos_sync" model="ir.ui.view">
+            <field name="name">pos.order.form</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="pos_sync"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="pos_order_sync_action" model="ir.actions.server">
+            <field name="name">Sync POS</field>
+            <field name="model_id" ref="model_pos_order"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.update_pos_sync()
+            </field>
+        </record>
+
+        <record id="pos_sync_action_server" model="ir.values">
+            <field name="model_id" ref="point_of_sale.model_pos_order" />
+            <field name="name">Sync POS</field>
+            <field name="key2">client_action_multi</field>
+            <field name="key">action</field>
+            <field name="model">pos.order</field>
+            <field name="value" eval="'ir.actions.server,' + str(ref('pos_order_sync_action'))" />
+        </record>
+    </data>
+</odoo>

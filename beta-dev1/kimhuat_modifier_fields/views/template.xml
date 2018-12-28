@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="account assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">                
+            <script type="text/javascript" src="/kimhuat_modifier_fields/static/src/js/partner_name_widget.js"></script>
+			<script type="text/javascript" src="/kimhuat_modifier_fields/static/src/js/easy_autocomplete.js"></script>
+			<link rel="stylesheet" href="/kimhuat_modifier_fields/static/src/css/easy_autocomplete.css"/>
+			<link rel="stylesheet" href="/kimhuat_modifier_fields/static/src/css/move_line_quickadd.css"/>
+        </xpath>
+    </template>        
+</odoo>

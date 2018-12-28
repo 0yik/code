@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="labpal_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/vit_kelurahan/static/lib/sticky_table_header/sticky_table_headers.js"/>
+                <script type="text/javascript" src="/vit_kelurahan/static/src/js/web_list_view_sticky.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

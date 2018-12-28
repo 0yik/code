@@ -1,0 +1,73 @@
+<odoo>
+    <data>        <!-- Inherited Form View in HR Employee -->
+        <record id="view_employee_form_parent3" model="ir.ui.view">
+            <field name="name">hr.employee.form.parent3</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="sg_hr_employee.view_employee_form_parent2"/>
+            <field name="priority">18</field>
+            <field name="arch" type="xml">
+                <field name="joined_year" position="attributes">
+                    <attribute name="string">Years in Service</attribute>
+                </field>
+                <field name="join_date" position="after">
+                    <field name="months_in_service"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_holiday_new_calendar_inherit_1" model="ir.ui.view">
+            <field name="name">view.holiday.new.calendar.1</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.view_holiday_new_calendar"/>
+            <field name="arch" type="xml">
+                <calendar position="attributes">
+                    <attribute name="all_day">allday</attribute>
+                </calendar>
+                <field name="display_name" position="after">
+                    <field name="leave_code"/>
+                </field>
+            </field>
+        </record>
+        <record id="hr_contract_view_form_inherit_1" model="ir.ui.view">
+            <field name="name">view.hr.contract.form.1</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="priority">18</field>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='trial_date_start']" position="attributes">
+                    <attribute name="string">Probation Duration</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Working time action-->
+        <record id="action_config_resource_calendar_form" model="ir.actions.act_window">
+            <field name="name">Working Time</field>
+            <field name="res_model">resource.calendar</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="False"/>
+            <field name="search_view_id" ref="resource.view_resource_calendar_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Define working hours and time table that could be scheduled to your project members
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="sg_hr_report.hr_export_employee_summary_action" id="sg_hr_report.hr_export_employee_summary_menu"
+			sequence="92" groups="hr.group_hr_manager" parent="hr.menu_hr_root" />
+
+        <menuitem
+            id="hm_hr_sg_standardization.menu_expiring_document"
+            name="Expiring Documents"
+            action="hm_hr_sg_standardization.action_expiring_document"
+            parent="hr.menu_hr_root"
+            sequence="91"/>
+
+        <menuitem id="menu_configuration_working_time"
+                action="action_config_resource_calendar_form"
+				parent="hr.menu_human_resources_configuration"
+				sequence="0"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+    	
+    	<record model="res.groups" id="group_hide_menu">
+            <field name="name">Hide Menu</field>
+        </record>
+    
+    </data>
+</openerp>

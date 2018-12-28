@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<delete model="website.menu" id="honos_layout.honos_diningroom" />
+		<delete model="website.menu" id="honos_layout.honos_livingroom" />
+		<delete model="website.menu" id="honos_layout.honos_fashion" />
+		<delete model="website.menu" id="honos_layout.honos_style_4_menu" />
+		<delete model="website.menu" id="website_blog.menu_news" />
+		<record id="ccm_aboutus" model="website.menu">
+			<field name="name">About Us</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="sequence" type="int">12</field>
+		</record>
+		<record id="website_sale.menu_shop" model="website.menu">
+            <field name="name">Rental</field>
+            <field name="url">/shop</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">20</field>
+        </record>
+		<record id="ccm_custom_made" model="website.menu">
+			<field name="name">Custom-Made</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="sequence" type="int">30</field>
+		</record>
+		<record id="ccm_merchandise" model="website.menu">
+			<field name="name">Merchandise</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="sequence" type="int">40</field>
+		</record>
+		<record id="ccm_portfolio" model="website.menu">
+			<field name="name">Portfolio</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="sequence" type="int">50</field>
+		</record>
+		<record id="website.menu_contactus" model="website.menu">
+            <field name="name">Contact</field>
+            <field name="url">/page/contactus</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">60</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+	</data>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--&lt;!&ndash; Maternity Leave &ndash;&gt;-->
+        <!--<record id="holiday_status_maternity" model="hr.holidays.status">-->
+            <!--<field name="name2">Maternity Leave</field>-->
+            <!--<field name="name">ML</field>-->
+            <!--<field name="limit" eval="True"/>-->
+            <!--<field name="color_name">red</field>-->
+        <!--</record>-->
+
+        <!--&lt;!&ndash; Paternity Leave&ndash;&gt;-->
+        <!--<record id="holiday_status_Paternity" model="hr.holidays.status">-->
+            <!--<field name="name2">Paternity Leave</field>-->
+            <!--<field name="name">PL</field>-->
+            <!--<field name="limit" eval="True"/>-->
+            <!--<field name="color_name">red</field>-->
+        <!--</record>-->
+        <!--&lt;!&ndash; Shared Parental Leave&ndash;&gt;-->
+        <!--<record id="holiday_status_Shared" model="hr.holidays.status">-->
+            <!--<field name="name2">Shared Parental Leave</field>-->
+            <!--<field name="name">SPL</field>-->
+            <!--<field name="limit" eval="True"/>-->
+            <!--<field name="color_name">red</field>-->
+        <!--</record>-->
+
+        <!--&lt;!&ndash; Off-in Lieu&ndash;&gt;-->
+        <!--<record id="holiday_status_Off" model="hr.holidays.status">-->
+            <!--<field name="name2">off_in_lieu</field>-->
+            <!--<field name="name">OIL</field>-->
+            <!--<field name="limit" eval="True"/>-->
+            <!--<field name="color_name">red</field>-->
+        <!--</record>-->
+    </data>
+</odoo>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	<record id="view_return_request_form" model="ir.ui.view">
+		<field name="name">return.request.form</field>
+		<field name="model">return.request</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+		<form string="Return Request">
+		    <header>
+				<button name="btn_to_be_approval" states="draft" string="Request approval" type="object" class="btn-primary"/>
+				<button name="btn_approved" states="tobeapproved" string="Approved" type="object" class="btn-primary"/>
+				<button name="btn_rejected" states="tobeapproved" string="Rejected" type="object" class="btn-primary"/>
+				
+    			<field name="state" widget="statusbar"/>
+    		</header>
+			<sheet>
+				<div class="oe_title">
+                    <h1>
+                    	<field name="name"/>
+                    </h1>
+				</div>
+				<group>
+		            <group>
+		                <field name="partner_id" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+		                <field name="location_id" domain="[('usage','=','internal')]" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+						<field name="location_dest_id" domain="[('usage','=','internal')]" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+						<field name="picking_type_id" attrs="{'readonly': [('state', 'in', ('approved','rejected','tobeapproved'))]}" domain="[('code','=','internal')]"/>
+		            </group>
+		            <group>
+		                <field name="min_date" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+		                <field name="origin" placeholder="e.g. PO0032" class="oe_inline" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+		                <field name="new_user_id" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+		                <field name="user_id" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+		            </group>
+				</group>
+				<notebook>
+		            <page string="Return Request Operations">
+					<field name="return_request_lines" mode="tree" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}">
+						<form string="Request Return" editable="bottom">
+							
+							<group string="Product Detail">
+								<group>
+						            <field name="product_id"/>
+									<field name="product_code"/>
+									<field name="product_uom_id"/>
+									<!--field name="owner_id"/-->
+								</group>
+								<group>
+						            
+									<field name="product_qty"/>
+								</group>
+							</group>
+							<group string="Inventory Detail">
+								<group>
+									<field name="location_id"/>
+									<!-- field name="location_dest_id"/-->
+									<field name="last_request_date"/>
+									<field name="last_request_qty"/>
+								</group>
+								<group>
+
+									<field name="stock_current_toko"/>
+									<field name="stock_display_toko"/>
+									<field name="return_type"/>
+								</group>
+							</group>
+						 
+						</form>
+						<tree string="Product Detail">
+				            <field name="product_id"/>
+							<field name="product_code"/>
+							<field name="product_uom_id"/>
+							<!--field name="owner_id"/-->
+							<field name="product_qty"/>
+						</tree>
+					</field>
+					</page>
+				</notebook>
+			</sheet>
+		</form>
+		</field>
+	</record>
+
+	<record id="view_return_request_tree" model="ir.ui.view">
+		<field name="name">return.request.tree</field>
+		<field name="model">return.request</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+		<tree string="Return Request">
+			<field name="name"/>
+            <field name="partner_id"/>
+            <field name="location_id"/>
+			<field name="location_dest_id"/>
+            <field name="min_date"/>
+            <field name="origin" placeholder="e.g. PO0032" class="oe_inline"/>
+			<field name="state" string="Status"/>
+            <!--field name="owner_id"/-->
+		</tree>
+		</field>
+	</record>
+
+	<record id="action_return_request" model="ir.actions.act_window">
+		<field name="name">Return Request</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">return.request</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'readonly_by_pass': True}</field>
+	</record>
+	
+	<menuitem id="return_request" name="Return Request" parent="stock.menu_stock_warehouse_mgmt"  action="action_return_request"/>
+	
+	</data>
+</odoo>

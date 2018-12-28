@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_testing_timeslot" model="ir.ui.view">
+		<field name="name">Tester Free Timeslot</field>
+		<field name="model">testing.timeslot</field>
+		<field name="arch" type="xml">
+			<form string="Tester Availability">
+				<sheet>
+					<group>
+						<group>
+							<field name="booking_date" />
+							<field name="time_slot" widget="many2many_tags" readonly="1" />
+						</group>
+						<group>
+						</group>
+					</group>
+				</sheet>
+				<footer>
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_view_testing_timeslot" model="ir.actions.act_window">
+		<field name="name">Tester Availability</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">testing.timeslot</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+		<field name="groups_id" eval="[]" />
+	</record>
+
+	<record id="view_testing_timeslot_admin" model="ir.ui.view">
+		<field name="name">Tester Free Timeslot</field>
+		<field name="model">testing.timeslotadmin</field>
+		<field name="arch" type="xml">
+			<form string="Tester Availability">
+				<sheet>
+					<group>
+						<group>
+							<field name="tester_id" options='{"no_open": True, "no_create_edit": True}'/>
+							<field name="booking_date" />
+							<field name="time_slot" widget="many2many_tags" readonly="1" />
+						</group>
+						<group>
+						</group>
+					</group>
+				</sheet>
+				<footer>
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_view_testing_timeslot_admin" model="ir.actions.act_window">
+		<field name="name">Tester Availability</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">testing.timeslotadmin</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_testing_timeslot_admin" />
+		<field name="target">new</field>
+		<field name="groups_id" eval="[]" />
+	</record>
+
+	<menuitem name="Tester Availability" id="menu_action_view_testing_timeslot_admin"
+		parent="hilti_modifier_company.menu_admin_bookings" action="action_view_testing_timeslot_admin"
+		sequence="5" groups='hilti_modifier_accessrights.group_hilti_admin'/>
+
+</odoo>

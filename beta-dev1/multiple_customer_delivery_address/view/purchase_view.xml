@@ -1,0 +1,14 @@
+<odoo>
+	<data>
+		<record id="purchase_order_form_inherit_delivery_address" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+				<field name="partner_id" position="after">
+					<field name="partner_delivery_address_id" context="{'partner_id':partner_id}" domain="[('partner_id', '=', partner_id)]" modifiers="{'readonly': [['state', 'not in', ['draft', 'sent']]], 'required': true}"/>
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

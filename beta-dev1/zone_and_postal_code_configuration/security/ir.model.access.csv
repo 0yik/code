@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zonepostal_code,access_zonepostal_code,model_zonepostal_code,,1,1,1,0
+access_zone_zone,access_zone_zone,model_zone_zone,,1,1,1,0
+access_postal_code,access_postal_code,model_postal_code,,1,1,1,0
+access_sequence_details,access_sequence_details,model_sequence_details,,1,1,1,0
+access_location_location,access_location_location,model_location_location,,1,1,1,0

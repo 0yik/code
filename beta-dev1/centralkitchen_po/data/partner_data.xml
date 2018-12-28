@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+    	<record id="partner_central_kitchen" model="res.partner">
+            <field name="name">Central Kitchen</field>
+            <field name="supplier">True</field>
+            <field name="customer">False</field>
+            <field name="is_company">True</field>
+        </record>
+    </data>
+</odoo>

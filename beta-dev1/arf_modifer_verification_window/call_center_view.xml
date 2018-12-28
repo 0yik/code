@@ -1,0 +1,71 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_verification_window_form">
+			<field name="name">view.verification.window.form</field>
+			<field name="model">verification.window</field>
+			<field name="arch" type="xml">
+				<form string="Verification Window Form" create="false">
+					<sheet string="Verification WIndows">
+						<h1>Verification Window</h1>
+						<group>
+							<group col="3">
+								<field name="partner_id" colspan="3" invisible="1"/>
+								<field name="name" readonly="1"/>
+								<field name="name_tickmark" nolabel="1" attrs="{'readonly':[('verification_complete','=',True)]}"/>
+								<field name="date_birth" readonly="1"/>
+								<field name="date_birth_tickmark" nolabel="1" attrs="{'readonly':[('verification_complete','=',True)]}"/>
+								<field name="phone" readonly="1"/>
+								<field name="phone_tickmark" nolabel="1" attrs="{'readonly':[('verification_complete','=',True)]}"/>
+								<field name="email" readonly="1"/>
+								<field name="email_tickmark" nolabel="1" attrs="{'readonly':[('verification_complete','=',True)]}"/>
+							</group>
+							<group col="3">
+								<field name="nric" readonly="1"/>
+								<field name="nric_tickmark" nolabel="1" attrs="{'readonly':[('verification_complete','=',True)]}"/>
+								<field name="passport" readonly="1"/>
+								<field name="passport_tickmark" nolabel="1" attrs="{'readonly':[('verification_complete','=',True)]}"/>
+								<field name="policy_number" readonly="1"/>
+								<field name="policy_number_tickmark" nolabel="1" attrs="{'readonly':[('verification_complete','=',True)]}"/>
+								<field name="vehicle_number" readonly="1"/>
+								<field name="vehicle_number_tickmark" nolabel="1" attrs="{'readonly':[('verification_complete','=',True)]}"/>
+							</group>
+							<group>
+								<button name="open_history" type="object" string="Call History" class="oe_link"/>
+								<!-- <button name="%(helpdesk.helpdesk_ticket_action_main_tree)d" type="action" string="Call History" class="oe_link"/> -->
+							</group>
+							<group>
+								<div>
+									<field name="verification_complete" readonly="1" nolabel="1" class="oe_inline"/>
+									<label string="Verification Complete" class="oe_inline"/>
+								</div>
+								<newline/>
+								<button name="open_profile" type="object" string="Open Profile" class="oe_highlight" attrs="{'invisible': [('verification_complete','=',False)]}"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record id="action_verification_window" model="ir.actions.act_window">
+            <field name="name">Verification Window</field>
+            <field name="res_model">verification.window</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">inline</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Propose Verification Window.
+              </p>
+            </field>
+        </record>
+		
+		<menuitem id="menu_verification_window_root" name="Verification Window"/>
+		<menuitem id="menu_verification_window_sub" name="Verification Window" parent="menu_verification_window_root"/>
+      	<menuitem action="action_verification_window" 
+       		id="menu_verification_window" 
+       		parent="menu_verification_window_sub"
+       		sequence="100"/>
+		
+	</data>
+</odoo>

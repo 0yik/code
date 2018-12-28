@@ -1,0 +1,616 @@
+<odoo>
+	<data>
+		<record id="ap_intervention_form_view" model="ir.ui.view">
+			<field name="name">ap.intervention.form.view</field>
+			<field name="model">ap.intervention</field>
+			<field name="arch" type="xml">
+				<form string="AP Intervention">
+					<header>
+						<button string='Approved' name="approved_by_principal"
+							attrs="{'invisible': [('principal_id', '=', False)]}" type="object"
+							class="btn-primary" icon="fa-archive" />
+						<field name="state" widget="statusbar"
+							statusbar_visible="draft,ap_assigned,assessment_uploaded,approved" />
+					</header>
+					<sheet>
+						<group col="4" colspan="4">
+							<field name="referrel_type" required="1" />
+							<field name="date_referrel" required="1" />
+							<field name="student_id" required="1" />
+							<field name="hod_id" invisible="1" />
+							<field name="principal_id" invisible="1" />
+							<field name="teacher_id" invisible="1" />
+							<field name="ap_assigned" attrs="{'readonly': ['|','|',('teacher_id', '=', True),('hod_id', '=', False),('attachment','=',False)]}"/>
+							<field name="attachment" filename="file_name"
+								attrs="{'readonly': ['|',('hod_id', '=', True)]}" />
+							<field name="file_name" invisible="1" />
+						</group>
+						<notebook>
+							<page string="OT"
+								attrs="{'invisible': [('referrel_type', '!=', 'ot')]}">
+								<group>
+									<group>
+										<field name="ot_assessment" filename="ot_assessment_file_name" attrs="{'readonly':[('ap_assigned','=',False)]}"/>
+										<field name="ot_assessment_file_name" invisible="1" />
+										<field name="ot_discharge_transfer" filename="ot_discharge_transfer_file_name" />
+										<field name="ot_discharge_transfer_file_name" invisible="1" />
+										<field name="ot_presenting_issue" />
+										<field name="ot_underlying_issue" invisible="1"/>
+									</group>
+									<group>
+										<field name="ot_intervention_summary" filename="ot_intervention_summary_file_name" />
+										<field name="ot_intervention_summary_file_name"
+											invisible="1" />
+										<field name="ot_miscellaneous" filename="ot_miscellaneous_file_name" />
+										<field name="ot_miscellaneous_file_name" invisible="1" />
+										<field name="ot_termly_updates" />
+									</group>
+								</group>
+								<field name="ot_ap_list_line">
+									<form string="AP List">
+										<group col="4" colspan="4">
+											<field name="ap_id" />
+											<field name="remarks" />
+											<field name="therapy_goals" />
+											<field name="date_planned" />
+											<field name="date_achieved" />
+											<field name="type_intervention" />
+											<field name="frequency_therapy" widget="radio" />
+											<field name="date" />
+											<field name="activities" />
+											<field name="miscellaneous" filename="miscellaneous_file_name" />
+											<field name="miscellaneous_file_name" invisible="1" />
+										</group>
+									</form>
+									<tree string="AP List">
+										<field name="ap_id" />
+										<field name="remarks" />
+										<field name="therapy_goals" />
+										<field name="date_planned" />
+										<field name="date_achieved" />
+										<field name="type_intervention" />
+										<field name="frequency_therapy" />
+										<field name="date" />
+										<field name="activities" />
+									</tree>
+								</field>
+							</page>
+
+							<page string="ST"
+								attrs="{'invisible': [('referrel_type', '!=', 'st')]}">
+								<group>
+									<group>
+										<field name="st_assessment" filename="st_assessment_file_name" attrs="{'readonly':[('ap_assigned','=',False)]}"/>
+										<field name="st_assessment_file_name" invisible="1" />
+										<field name="st_discharge_transfer" filename="st_discharge_transfer_file_name" />
+										<field name="st_discharge_transfer_file_name" invisible="1" />
+										<field name="st_presenting_issue" />
+										<field name="st_underlying_issue" invisible="1" />
+									</group>
+									<group>
+										<field name="st_intervention_summary" filename="st_intervention_summary_file_name" />
+										<field name="st_intervention_summary_file_name"
+											invisible="1" />
+										<field name="st_miscellaneous" filename="st_miscellaneous_file_name" />
+										<field name="st_miscellaneous_file_name" invisible="1" />
+										<field name="st_termly_updates" />
+									</group>
+								</group>
+								<field name="st_ap_list_line">
+									<form string="AP List">
+										<group col="4" colspan="4">
+											<field name="ap_id" />
+											<field name="remarks" />
+											<field name="therapy_goals" />
+											<field name="date_planned" />
+											<field name="date_achieved" />
+											<field name="type_intervention" />
+											<field name="frequency_therapy" />
+											<field name="date" />
+											<field name="activities" />
+											<field name="miscellaneous" filename="miscellaneous_file_name" />
+											<field name="miscellaneous_file_name" invisible="1" />
+										</group>
+									</form>
+									<tree string="AP List">
+										<field name="ap_id" />
+										<field name="remarks" />
+										<field name="therapy_goals" />
+										<field name="date_planned" />
+										<field name="date_achieved" />
+										<field name="type_intervention" />
+										<field name="frequency_therapy" />
+										<field name="date" />
+										<field name="activities" />
+									</tree>
+								</field>
+							</page>
+
+							<page string="CM"
+								attrs="{'invisible': [('referrel_type', '!=', 'cm')]}">
+								<group>
+									<group>
+										<field name="cm_assessment" filename="cm_assessment_file_name" attrs="{'readonly':[('ap_assigned','=',False)]}"/>
+										<field name="cm_assessment_file_name" invisible="1" />
+										<field name="cm_discharge_transfer" filename="cm_discharge_transfer_file_name_cm" />
+										<field name="cm_discharge_transfer_file_name_cm" invisible="1" />
+										<field name="cm_presenting_issue" />
+										<field name="cm_presenting_issue2" />
+										<field name="cm_presenting_issue3" />
+										<field name="cm_intervention_goal" />
+										<field name="cm_intervention_goal2" />
+										<field name="cm_intervention_goal3" />
+									</group>
+									<group>
+										<field name="cm_intervention_summary" filename="cm_intervention_summary_file_name" />
+										<field name="cm_intervention_summary_file_name"
+											invisible="1" />
+										<field name="cm_miscellaneous" filename="cm_miscellaneous_file_name" />
+										<field name="cm_miscellaneous_file_name" invisible="1" />
+										<field name="cm_termly_updates" />
+										<field name="cm_pre_sdq_score" />
+										<field name="cm_post_sdq_score" />
+										<field name="cm_underlying_issue" />
+										<field name="cm_underlying_issue2" />
+										<field name="cm_underlying_issue3" />
+									</group>
+								</group>
+								<field name="cm_ap_list_line">
+									<form string="AP List">
+										<group>
+											<group>
+												<field name="ap_id" />
+												<field name="remarks" />
+												<field name="therapy_goals" />
+												<field name="counselling_psychotherapy" />
+												<field name="play_therapy" />
+												<field name="art_psychotherapy" />
+											</group>
+											<group>
+												<field name="date_planned" />
+												<field name="date_achieved" />
+												<field name="type_intervention" />
+												<field name="sandplay" />
+												<field name="behaviour_therapy" />
+												<field name="others" />
+												<field name="comments" attrs="{'invisible': [('others', '=', False)]}"/>
+											</group>
+										</group>
+										<group string="Counselling &amp; Psychotherapy"
+											attrs="{'invisible': [('counselling_psychotherapy', '=', False)]}">
+											<group>
+												<field name="cp_session_no" />
+												<field name="cp_date_time" />
+												<field name="cp_themes" />
+												<field name="cp_comments" />
+											</group>
+											<group>
+												<field name="cp_process" />
+												<field name="cp_follow_up" />
+												<field name="cp_affect_behaviour" />
+												<field name="cp_miscellaneous" filename="cp_miscellaneous_file_name" />
+												<field name="cp_miscellaneous_file_name" invisible="1" />
+											</group>
+										</group>
+										<group string="Affect / Behaviour"
+											attrs="{'invisible': ['|',('counselling_psychotherapy', '=', False),('cp_affect_behaviour', '=', False)]}">
+											<group>
+												<field name="ab_afraid" />
+												<field name="ab_sad" />
+												<field name="ab_angry" />
+												<field name="ab_happy" />
+											</group>
+											<group>
+												<field name="ab_confident" />
+												<field name="ab_hesitant" />
+												<field name="ab_curious" />
+												<field name="ab_flat" />
+											</group>
+										</group>
+										<group string="Sandplay"
+											attrs="{'invisible': [('sandplay', '=', False)]}">
+											<group>
+												<field name="sp_session_no" />
+												<field name="sp_date_time" />
+												<field name="sp_type_sandtray" widget="radio" />
+												<field name="sp_time_sandtray" />
+											</group>
+											<group>
+												<field name="sp_miniatures" />
+												<field name="sp_overall_theme" />
+												<field name="sp_subject_affect" />
+												<field name="sp_process_description" />
+											</group>
+										</group>
+										<group attrs="{'invisible': [('sandplay', '=', False)]}">
+											<field name="sp_observations_session" />
+											<field name="sp_sand_comments" />
+											<field name="sp_follow_up" />
+										</group>
+										<group string="Miniatures" col="6" colspan="4"
+											attrs="{'invisible': ['|',('sp_miniatures', '=', False),('sandplay', '=', False)]}">
+											<field name="mn_people_hero" />
+											<field name="mn_people_occu" />
+											<field name="mn_people_histo" />
+											<field name="mn_people_family" />
+											<field name="mn_fantasy_magical" />
+											<field name="mn_fantasy_animals" />
+											<field name="mn_fantasy_monsters" />
+											<field name="mn_fantasy_folk" />
+											<field name="mn_fantasy_cartoon" />
+											<field name="mn_fantasy_movie" />
+											<field name="mn_animals_farm" />
+											<field name="mn_animals_wild" />
+											<field name="mn_animals_prehistoric" />
+											<field name="mn_insects" />
+											<field name="mn_sea_animals" />
+											<field name="mn_buildings" />
+											<field name="mn_transportation_cars" />
+											<field name="mn_transportation_trucks" />
+											<field name="mn_transportation_flight" />
+											<field name="mn_transportation_nautical" />
+											<field name="mn_transportation_others" />
+											<field name="mn_plants_vegetation" />
+											<field name="mn_fences" />
+											<field name="mn_brigdes" />
+											<field name="mn_signs" />
+											<field name="mn_natural" />
+											<field name="mn_landscaping" />
+											<field name="mn_landscaping_topo" />
+											<field name="mn_household" />
+											<field name="mn_other" />
+										</group>
+										<group string="Overall Theme" col="6" colspan="4"
+											attrs="{'invisible': ['|',('sp_overall_theme', '=', False),('sandplay', '=', False)]}">
+											<field name="ovt_revenge" />
+											<field name="ovt_abandonment" />
+											<field name="ovt_bridging" />
+											<field name="ovt_aggression" />
+											<field name="ovt_death" />
+											<field name="ovt_empty" />
+											<field name="ovt_exploratory" />
+											<field name="ovt_good_bad" />
+											<field name="ovt_helpless" />
+											<field name="ovt_mastery" />
+											<field name="ovt_healing" />
+											<field name="ovt_power_control" />
+											<field name="ovt_protection" />
+											<field name="ovt_relationships" />
+											<field name="ovt_reparative" />
+											<field name="ovt_security" />
+											<field name="ovt_buried" />
+											<field name="ovt_sexualized" />
+											<field name="ovt_other" />
+										</group>
+										<group string="Subject Affect"
+											attrs="{'invisible': ['|',('sp_subject_affect', '=', False),('sandplay', '=', False)]}">
+											<group>
+												<field name="sa_afraid" />
+												<field name="sa_sad" />
+												<field name="sa_angry" />
+												<field name="sa_happy" />
+											</group>
+											<group>
+												<field name="sa_confident" />
+												<field name="sa_hesitant" />
+												<field name="sa_curious" />
+												<field name="sa_flat" />
+											</group>
+										</group>
+										<group string="Play Therapy"
+											attrs="{'invisible': [('play_therapy', '=', False)]}">
+											<group>
+												<field name="pt_session_no" />
+												<field name="pt_date_time" />
+												<field name="pt_intial_obs" />
+												<field name="pt_objective_play_themes" />
+												<field name="pt_clinical_imp" />
+											</group>
+											<group>
+												<field name="pt_toys" />
+												<field name="pt_desc_play" />
+												<field name="pt_subjective_affect" />
+												<field name="pt_follow_up" />
+												<field name="pt_miscellaneous" filename="pt_miscellaneous_file_name" />
+												<field name="pt_miscellaneous_file_name" invisible="1" />
+											</group>
+										</group>
+										<group
+											string="Session Dynamics (Rate Client's Overall Play Behaviour)"
+											attrs="{'invisible': [('play_therapy', '=', False)]}">
+											<field name="pt_session_dynamics" nolabel="1">
+												<tree editable="bottom">
+													<field name="activity_low" />
+													<field name="prio_1" widget="radio" />
+													<field name="prio_2" widget="radio" />
+													<field name="prio_3" widget="radio" />
+													<field name="prio_4" widget="radio" />
+													<field name="prio_5" widget="radio" />
+													<field name="no" widget="radio" />
+													<field name="activity_high" />
+												</tree>
+											</field>
+										</group>
+										<group col="6" colspan="3"
+											attrs="{'invisible': [('play_therapy', '=', False)]}">
+											<field name="pt_protect_child" />
+											<field name="pt_protect_child_text" nolabel="1"
+												attrs="{'invisible': [('pt_protect_child', '=', False)]}" />
+											<field name="pt_protect_therapist" />
+											<field name="pt_protect_therapist_text" nolabel="1"
+												attrs="{'invisible': [('pt_protect_therapist', '=', False)]}" />
+											<field name="pt_protect_toys" />
+											<field name="pt_protect_toys_text" nolabel="1"
+												attrs="{'invisible': [('pt_protect_toys', '=', False)]}" />
+											<field name="pt_structuring" />
+											<field name="pt_structuring_text" nolabel="1"
+												attrs="{'invisible': [('pt_structuring', '=', False)]}" />
+										</group>
+										<group string="Objective Play Themes" col="6" colspan="4"
+											attrs="{'invisible': ['|',('play_therapy', '=', False),('pt_objective_play_themes', '=', False)]}">
+											<field name="opt_revenge" />
+											<field name="opt_abandonment" />
+											<field name="opt_bridging" />
+											<field name="opt_aggression" />
+											<field name="opt_death" />
+											<field name="opt_empty" />
+											<field name="opt_exploratory" />
+											<field name="opt_good_bad" />
+											<field name="opt_helpless" />
+											<field name="opt_mastery" />
+											<field name="opt_healing" />
+											<field name="opt_power_control" />
+											<field name="opt_protection" />
+											<field name="opt_relationships" />
+											<field name="opt_reparative" />
+											<field name="opt_security" />
+											<field name="opt_buried" />
+											<field name="opt_sexualized" />
+										</group>
+										<group col="6" colspan="3" string="Toys"
+											attrs="{'invisible': ['|',('play_therapy', '=', False),('pt_toys', '=', False)]}">
+											<field name="toys_animal_domestic" />
+											<field name="toys_animal_domestic_text" nolabel="1"
+												attrs="{'invisible': [('toys_animal_domestic', '=', False)]}" />
+											<field name="toys_animal_scary" />
+											<field name="toys_animal_scary_text" nolabel="1"
+												attrs="{'invisible': [('toys_animal_scary', '=', False)]}" />
+											<field name="toys_char_superhero" />
+											<field name="toys_char_superhero_text" nolabel="1"
+												attrs="{'invisible': [('toys_char_superhero', '=', False)]}" />
+											<field name="toys_char_scary" />
+											<field name="toys_char_scary_text" nolabel="1"
+												attrs="{'invisible': [('toys_char_scary', '=', False)]}" />
+											<field name="toys_puppets" />
+											<field name="toys_puppets_text" nolabel="1"
+												attrs="{'invisible': [('toys_puppets', '=', False)]}" />
+											<field name="toys_soldiers" />
+											<field name="toys_soldiers_text" nolabel="1"
+												attrs="{'invisible': [('toys_soldiers', '=', False)]}" />
+											<field name="toys_barbie_doll" />
+											<field name="toys_barbie_doll_text" nolabel="1"
+												attrs="{'invisible': [('toys_barbie_doll', '=', False)]}" />
+											<field name="toys_art" />
+											<field name="toys_art_text" nolabel="1"
+												attrs="{'invisible': [('toys_art', '=', False)]}" />
+											<field name="toys_ball_games" />
+											<field name="toys_ball_games_text" nolabel="1"
+												attrs="{'invisible': [('toys_ball_games', '=', False)]}" />
+											<field name="toys_bobo_doll" />
+											<field name="toys_bobo_doll_text" nolabel="1"
+												attrs="{'invisible': [('toys_bobo_doll', '=', False)]}" />
+											<field name="toys_blocks" />
+											<field name="toys_blocks_text" nolabel="1"
+												attrs="{'invisible': [('toys_blocks', '=', False)]}" />
+											<field name="toys_money" />
+											<field name="toys_money_text" nolabel="1"
+												attrs="{'invisible': [('toys_money', '=', False)]}" />
+											<field name="toys_transportation" />
+											<field name="toys_transportation_text" nolabel="1"
+												attrs="{'invisible': [('toys_transportation', '=', False)]}" />
+											<field name="toys_cleaning" />
+											<field name="toys_cleaning_text" nolabel="1"
+												attrs="{'invisible': [('toys_cleaning', '=', False)]}" />
+											<field name="toys_doctor_kit" />
+											<field name="toys_doctor_kit_text" nolabel="1"
+												attrs="{'invisible': [('toys_doctor_kit', '=', False)]}" />
+											<field name="toys_doll_house" />
+											<field name="toys_doll_house_text" nolabel="1"
+												attrs="{'invisible': [('toys_doll_house', '=', False)]}" />
+											<field name="toys_baby_doll" />
+											<field name="toys_baby_doll_text" nolabel="1"
+												attrs="{'invisible': [('toys_baby_doll', '=', False)]}" />
+											<field name="toys_pretend" />
+											<field name="toys_pretend_text" nolabel="1"
+												attrs="{'invisible': [('toys_pretend', '=', False)]}" />
+											<field name="toys_coking" />
+											<field name="toys_coking_text" nolabel="1"
+												attrs="{'invisible': [('toys_coking', '=', False)]}" />
+											<field name="toys_games" />
+											<field name="toys_games_text" nolabel="1"
+												attrs="{'invisible': [('toys_games', '=', False)]}" />
+											<field name="toys_guns" />
+											<field name="toys_guns_text" nolabel="1"
+												attrs="{'invisible': [('toys_guns', '=', False)]}" />
+											<field name="toys_sword" />
+											<field name="toys_sword_text" nolabel="1"
+												attrs="{'invisible': [('toys_sword', '=', False)]}" />
+											<field name="toys_tools_kit" />
+											<field name="toys_tools_kit_text" nolabel="1"
+												attrs="{'invisible': [('toys_tools_kit', '=', False)]}" />
+											<field name="toys_phone" />
+											<field name="toys_phone_text" nolabel="1"
+												attrs="{'invisible': [('toys_phone', '=', False)]}" />
+											<field name="toys_camera" />
+											<field name="toys_camera_text" nolabel="1"
+												attrs="{'invisible': [('toys_camera', '=', False)]}" />
+											<field name="toys_sandtray" />
+											<field name="toys_sandtray_text" nolabel="1"
+												attrs="{'invisible': [('toys_sandtray', '=', False)]}" />
+										</group>
+										<group string="Subjective Affect"
+											attrs="{'invisible': ['|',('play_therapy', '=', False),('pt_subjective_affect', '=', False)]}">
+											<group>
+												<field name="ptsa_afraid" />
+												<field name="ptsa_sad" />
+												<field name="ptsa_angry" />
+												<field name="ptsa_happy" />
+											</group>
+											<group>
+												<field name="ptsa_confident" />
+												<field name="ptsa_hesitant" />
+												<field name="ptsa_curious" />
+												<field name="ptsa_flat" />
+											</group>
+										</group>
+										<group string="Art Psychotherapy"
+											attrs="{'invisible': [('art_psychotherapy', '=', False)]}">
+											<group>
+												<field name="ap_session_no" />
+												<field name="ap_date_time" />
+												<field name="ap_medium" />
+												<field name="ap_artworks" />
+											</group>
+											<group>
+												<field name="ap_themes" />
+												<field name="ap_process" />
+												<field name="ap_follow_up" />
+												<field name="ap_affect_behaviour" />
+												<field name="ap_miscellaneous" filename="ap_miscellaneous_file_name" />
+												<field name="ap_miscellaneous_file_name" invisible="1" />
+											</group>
+										</group>
+										<group string="Affective Behaviour"
+											attrs="{'invisible': ['|',('art_psychotherapy', '=', False),('ap_affect_behaviour', '=', False)]}">
+											<group>
+												<field name="apab_afraid" />
+												<field name="apab_sad" />
+												<field name="apab_angry" />
+												<field name="apab_happy" />
+											</group>
+											<group>
+												<field name="apab_confident" />
+												<field name="apab_hesitant" />
+												<field name="apab_curious" />
+												<field name="apab_flat" />
+											</group>
+										</group>
+										<group string="Behaviour Therapy"
+											attrs="{'invisible': [('behaviour_therapy', '=', False)]}">
+											<group>
+												<field name="bt_date_time" />
+												<field name="bt_session" />
+											</group>
+											<group>
+												<field name="bt_comments" />
+												<!-- <field name="bt_programme" /> -->
+											</group>
+										</group>
+										<group string="Programme" col="3"
+											attrs="{'invisible': ['|',('behaviour_therapy', '=', False)]}">
+											<group>
+												<field name="btp_programme" />
+												<field name="btp_programme1"/>
+												<field name="btp_programme2"/>
+												<field name="btp_programme3"/>
+												<field name="btp_programme4"/>
+												<field name="btp_data" />
+											</group>
+											<group>
+												<field name="btp_remarks" />
+												<field name="btp_remarks1"/>
+												<field name="btp_remarks2"/>
+												<field name="btp_remarks3"/>
+												<field name="btp_remarks4"/>
+												<field name="btp_miscellaneous" filename="btp_miscellaneous_file_name" />
+												<field name="btp_miscellaneous_file_name" invisible="1" />
+											</group>
+											<group>
+												<field name="btp_percentage"/>
+												<field name="btp_percentage1"/>
+												<field name="btp_percentage2"/>
+												<field name="btp_percentage3"/>
+												<field name="btp_percentage4"/>
+
+											</group>
+										</group>
+									</form>
+									<group>
+										<field name="ap_id" />
+										<field name="remarks" />
+										<field name="therapy_goals" />
+										<field name="counselling_psychotherapy" />
+										<field name="play_therapy" />
+									</group>
+									<group>
+										<field name="date_planned" />
+										<field name="date_achieved" />
+										<field name="type_intervention" />
+										<field name="sandplay" />
+									</group>
+									<tree string="AP List">
+										<field name="ap_id" />
+										<field name="remarks" />
+										<field name="therapy_goals" />
+										<field name="date_planned" />
+										<field name="date_achieved" />
+										<field name="type_intervention" />
+										<field name="counselling_psychotherapy" />
+										<field name="play_therapy" />
+										<field name="sandplay" />
+									</tree>
+								</field>
+							</page>
+							<page string="Out of Session Report">
+								<field name="report_line" context="{'report_line':report_line}">
+									<tree string="Out of Session Report" editable="bottom">
+										<field name="sr_no" readonly="1" />
+										<field name="date_time" />
+										<field name="people_involved" />
+										<field name="remarks"/>
+										<field name="miscellaneous" filename="miscellaneous_file_name" />
+										<field name="miscellaneous_file_name" invisible="1" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="ap_intervention_tree_view" model="ir.ui.view">
+			<field name="name">ap.intervention.tree.view</field>
+			<field name="model">ap.intervention</field>
+			<field name="arch" type="xml">
+				<tree string="AP Intervention">
+					<field name="referrel_type" />
+					<field name="date_referrel" />
+					<field name="student_id" />
+					<field name="ap_assigned" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_ap_intervention" model="ir.actions.act_window">
+			<field name="name">AP Intervention</field>
+			<field name="res_model">ap.intervention</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p>
+					Create AP Intervention Record on click of Create Button.
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_ap_intervention_main" name="AP Intervention"
+			parent="school.menu_ems" sequence="8"
+			groups="school.group_school_administration,school.group_school_student,school.group_school_teacher,school.group_school_parent" />
+
+		<menuitem id="menu_ap_intervention" name="AP Intervention"
+			parent="menu_ap_intervention_main" action="action_ap_intervention"
+			sequence="5" />
+
+	</data>
+</odoo>

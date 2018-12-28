@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_product_cookinglist_doc">
+	    <div style="padding:0;">
+	        <center>
+	        <div>
+                <h4><span style="text-align:center;"><strong>Cooking List</strong></span></h4>
+            </div>
+            </center>
+            <br/><br/>
+            <div>
+                <h4><strong>Order Date : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>  </strong></h4>
+            </div>
+            <br/><br/>
+	        <table class="table table-bordered" border="1">
+	            <tbody>
+	                <tr style="border:1px solid">
+	                   <td style="border:1px solid"><span><strong>Product</strong></span></td>
+                       <td style="border:1px solid"><span><strong>Qty to Produce</strong></span></td>
+                       <td style="border:1px solid"> <span><strong>Materials</strong></span></td>
+                       <td style="border:1px solid"><span><strong>Qty</strong></span></td>
+                       <td style="border:1px solid"><span><strong>UoM</strong></span></td>
+	                </tr>
+                    <t t-foreach="docs" t-as="product">
+                        <t t-foreach="product.getDetails(product)" t-as="line">
+                            <t t-if="line">
+				                <tr style="border:1px solid">
+				                    <td style="border:1px solid">
+			                            <span t-esc="line['name']"/>
+				                    </td>
+			                        <td style="border:1px solid">
+			                            <span t-esc="line['qty_to_produce']"/>
+			                        </td>
+			                        <td style="border:1px solid">
+			                            <t t-foreach="line['bom_products']" t-as="bom_products">
+			                                <span t-esc="bom_products"/><br/>
+			                            </t>
+			                        </td>
+			                        <td style="border:1px solid">
+	                                    <t t-foreach="line['bom_qty']" t-as="bom_qty">
+	                                        <span t-esc="bom_qty"/><br/>
+	                                    </t>
+			                        </td>
+			                        <td style="border:1px solid">
+	                                    <t t-foreach="line['bom_uom']" t-as="bom_uom">
+	                                        <span t-esc="bom_uom"/><br/>
+	                                    </t>
+			                        </td>
+				                </tr>
+			                </t>
+		                </t>
+                    </t>
+	            </tbody>
+	        </table>
+	    </div>
+</template>
+
+<template id="cooking_list.report_product_cookinglist">
+    <t t-call="report.html_container">
+        <div class="page">
+             <t t-call="cooking_list.report_product_cookinglist_doc">
+             </t>
+        </div>
+    </t>
+</template>
+
+</data>
+</openerp>

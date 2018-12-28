@@ -1,0 +1,82 @@
+.options-dialog {
+	background-color: #383535 !important;
+}
+.popup-options {
+	background-color: #383535 !important;
+	height: 480px !important;
+	width: 600px !important;
+}
+.popup-options .title {
+	background-color:#555555 !important;
+	font-size: 25px !important;
+	color: #ffffff !important;
+	font-weight: bold !important;
+}
+.popup-option.frst{
+    margin-top: 100px;
+    margin-right: 10px;
+    margin-left: 72px;
+}
+.popup-option.scnd{
+    margin-top: 120px;
+    margin-left: 172px;
+}
+.button.icon{
+	width: 22% !important;
+	height: 82px !important;
+	float: left !important;
+    background: transparent !important;
+    border: none !important;
+    margin: 10px 20px !important;
+}
+.button.icon img{
+    width: 70px !important;
+    margin-bottom: -20px !important;
+}
+.button.icon span{
+	color: #ffffff !important;
+	font-size:15px !important;
+    position: static;
+    top: 75px;
+    left: 21px;
+}
+#tabs li.ui-state-default, #tabs li.ui-widget-content .ui-state-default, #tabs li.ui-widget-header .ui-state-default {
+	background: #f6f6f6 !important;
+    width: auto !important;
+    height: auto !important;
+    border-radius: 0% !important;
+    box-shadow: none !important;
+}
+#tabs li.ui-state-active, #tabs li.ui-widget-content .ui-state-active, #tabs li.ui-widget-header .ui-state-active {
+	background: #007fff !important;
+}
+.pos .pos-branding .username{
+	margin-right: 0px !important;
+}
+.back_home_screen_button{
+	height: 80%;
+    vertical-align: middle !important;
+    margin-top: 11px;
+    margin-left:20px;
+    background: #8b8b8b !important;
+    color: #f0f0f0; 
+    font-size: 12px;
+    /* font-style: oblique; */
+    /*font: bold !important;*/
+    font-weight: bold !important;
+    border-color: #8b8b8b;
+}
+.options-dialog  .popup .button{
+    position: relative;
+    color: white;
+    background-color: black;
+}
+.options-dialog .popup .footer{
+    background-color: #555555 !important;
+}
+
+.options-dialog  .popup .button.icon{
+    text-align: center;
+    min-width: 120px;
+    text-align: center
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <!--EDIT INVOICE CUSTOMER-->
+        <record id="kimhuat_modifier_fields_edit_invoice_customer_view" model="ir.ui.view">
+            <field name="name">invoice customer form view</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//form/sheet/group/group/field[@name='payment_term_id']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/group/group/field[@name='payment_term_id']" position="after">
+                    <field name="sales_category" string="Job Category"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page/field/tree/field[@name='product_id']" position="before">
+                    <field name="brand" string="Brand"/>
+                    <field name="type" string="Type"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page/field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="string">Product/Model No.</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page/field[@name='invoice_line_ids']/tree/field[@name='uom_id']" position="attributes">
+                    <attribute name="string">UOM</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page/field[@name='invoice_line_ids']/tree/field[@name='analytic_tag_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--EDIT INVOICE CUSTOMER-->
+        <record id="kimhuat_modifier_fields_edit_invoice_supplier_view" model="ir.ui.view">
+            <field name="name">invoice supplier form view</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page/field[@name='invoice_line_ids']/tree/field[@name='uom_id']" position="attributes">
+                    <attribute name="string">UOM</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[2]/field[@name='date_due']" position="after">
+                    <field name="sales_category"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page/field/tree/field[@name='product_id']" position="before">
+                    <field name="brand" string="Brand"/>
+                    <field name="type" string="Type"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--EDIT ACCOUNT INVOICE LINE FORM VIEW-->
+        <record id="kimhuat_modifier_fields_edit_account_invoice_line_view" model="ir.ui.view">
+            <field name="name">account invoice line form view</field>
+            <field name="model">account.invoice.line</field>
+            <field name="inherit_id" ref="account.view_invoice_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/group/group/field[@name='price_unit']" position="after">
+                    <field name="brand" string="Brand"/>
+                    <field name="type" string="Type"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

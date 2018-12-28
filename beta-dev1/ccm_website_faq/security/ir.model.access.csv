@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_website_faq_tag,website.faq.tag,model_website_faq_tag,,1,1,1,0
+access_website_question_answer,website.question.answer,model_website_question_answer,,1,1,1,0
+access_website_faq_type,website.faq.type,model_website_faq_type,,1,1,1,0
+access_website_faq,website.faq,model_website_faq,,1,1,1,0

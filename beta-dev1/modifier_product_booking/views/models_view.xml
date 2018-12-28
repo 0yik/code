@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+	    <record id="product_template_form_view_ccm" model="ir.ui.view">
+            <field name="name">product.template.form.ccm</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="attributes">
+                	<attribute name="string">RFID Code</attribute>
+	            </xpath>
+        	</field>
+	    </record>
+	    
+	    <record id="product_product_form_view_ext_ccm" model="ir.ui.view">
+            <field name="name">product.product.form.ext.ccm</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="attributes">
+                	<attribute name="string">RFID Code</attribute>
+	            </xpath>
+        	</field>
+	    </record>
+	    
+	    <record id="view_booking_order_form_ccm" model="ir.ui.view">
+            <field name="name">booking.order.form.ccm</field>
+            <field name="model">booking.order</field>            
+            <field name="inherit_id" ref="product_booking_ccm.view_booking_order_view"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position="replace"></div>
+                <button name="validate_booking" position="replace"></button>
+                <button name="sell_product" position="replace"></button>
+                <field name="state" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+        	</field>
+	    </record>
+    </data>
+</odoo>

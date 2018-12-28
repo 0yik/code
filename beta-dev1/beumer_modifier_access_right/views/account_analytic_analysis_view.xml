@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="account_analytic_account_form_inherited" model="ir.ui.view">
+            <field name="name">account.analytic.account.invoice.inherited</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="beumer_modifier_fields.account_analytic_account_form_form2_inherit"/>
+            <field name="groups_id" eval="[(4, ref('accsess_user_ap_manager'))]"/>
+            <field name="arch" type="xml">
+                <button name="set_close" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="set_cancel" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record id="analytic_account_budget_log_button_inherited" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherited.budget</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.analytic_account_budget_log_button_inherit"/>
+            <field name="groups_id" eval="[(4, ref('accsess_user_ap_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[5]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//header/button[6]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="analytic_account_progress_button_inherited" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherited.progress</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"/>
+            <field name="groups_id" eval="[(4, ref('accsess_user_ap_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='set_open']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--_________________-->
+
+        <record id="multi_category_analytic_account_form_inherit_not_access_ar_ap" model="ir.ui.view">
+            <field name="name">account.analytic.category.form.no.access.ap.ar</field>
+            <field name="model">account.analytic.category</field>
+            <field name="inherit_id" ref="multi_category_analytic_account.multi_category_analytic_account_form"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+            </xpath>
+            </field>
+        </record>
+        <record id="multi_category_analytic_account_tree_not_access_ar_ap" model="ir.ui.view">
+            <field name="name">account.analytic.category.no.access.ar.ap</field>
+            <field name="model">account.analytic.category</field>
+            <field name="inherit_id" ref="multi_category_analytic_account.multi_category_analytic_account_tree"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!--&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+        <record id="view_payment_term_form_inherit_not_access_ar_ap" model="ir.ui.view">
+            <field name="name">account.payment.term.form.no.access.ap.ar</field>
+            <field name="model">account.payment.term</field>
+            <field name="inherit_id" ref="account.view_payment_term_form"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+            </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

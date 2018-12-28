@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<record id="custome_view_picking_form" model="ir.ui.view">
+            <field name="name">Stock Picking Inherit view</field>
+            <field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+				<xpath expr="//header/field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,partially_available,assigned,inprogess,done"/>
+				</xpath>
+				<xpath expr="//header/button[@name='do_new_transfer']" position="replace">
+                    <button name="do_new_transfer" states="draft,partially_available,assigned,inprogess" string="Validate" groups="stock.group_stock_user" type="object" class="oe_highlight"/>
+				</xpath>
+
+				<xpath expr="//header/button[@name='do_print_picking']" position="replace">
+                    <button name="do_print_picking" string="Print" groups="stock.group_stock_user" type="object" attrs="{'invisible': [('state', 'not in', ('assigned', 'partially_available', 'inprogess'))]}"/>
+				</xpath>
+		
+				<xpath expr="//header/button[@name='action_cancel']" position="replace">
+                    <button name="action_cancel" states="assigned,confirmed,partially_available,draft,waiting,inprogess" string="Cancel" groups="base.group_user" type="object"/>
+				</xpath>
+				<xpath expr="//group/group/field[@name='partner_id']" position="after">
+                    <field name="request_type"/>
+                    <field name="inventory_request_id" domain="[('state', '=', 'approved')]" attrs="{'invisible': [('request_type', 'in', ('return_request', 'tester_request', False))]}"/>
+					<field name="return_request_id" domain="[('state','=','approved')]" attrs="{'invisible': [('request_type', 'in', ('inventory_request', 'tester_request', False))]}"/>
+					<field name="tester_request_id" domain="[('state','=','approved')]" attrs="{'invisible': [('request_type', 'in', ('return_request', 'inventory_request', False))]}"/>
+				</xpath>
+
+				<xpath expr="//notebook" position="before">
+                    <div>
+                        <button name="inventory_request_load_data" string="Load Data" type="object" class="btn-primary" attrs="{'invisible': [('inventory_request_id', '=', False )]}"/>
+						<button name="return_request_load_data" string="Load Data" type="object" class="btn-primary" attrs="{'invisible': [('return_request_id', '=', False )]}"/>
+						<button name="tester_request_load_data" string="Load Data" type="object" class="btn-primary" attrs="{'invisible': [('tester_request_id', '=', False )]}"/>
+                    </div>
+                </xpath>
+
+			</field>
+		</record>
+
+</odoo>

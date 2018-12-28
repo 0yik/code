@@ -1,0 +1,222 @@
+<odoo>
+	<data>
+		<record id="itemize_expense_form_view" model="ir.ui.view">
+			<field name="name">itemize.expense.form</field>
+			<field name="model">itemize.expense</field>
+			<field name="arch" type="xml">
+				<form string="Itemize Expense">
+					<sheet>
+						<group>
+							<field name="name" />
+							<field name="account_id" domain="[('internal_type', '=', 'other')]"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="hr_expense_form_view" model="ir.ui.view">
+			<field name="name">hr.expense.form</field>
+			<field name="model">hr.expense</field>
+			<field name="inherit_id" ref="hr_expense.hr_expense_form_view" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='reference']" position="attributes">
+					<attribute name="invisible">1</attribute>
+					<attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+				</xpath>
+				<field name="employee_id" position="attributes">
+					<attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+				</field>
+				<field name="account_id" position="attributes">
+					<attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+				</field>
+				<field name="date" position="attributes">
+					<attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+				</field>
+				<field name="analytic_account_id" position="attributes">
+					<attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+				</field>
+				<field name="name" position="attributes">
+					<attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+				</field>
+				<xpath expr="//label[@for='payment_mode']" position="attributes">
+					<attribute name="invisible">1</attribute>
+					<attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+				</xpath>
+				<xpath expr="//field[@name='payment_mode']" position="attributes">
+					<attribute name="invisible">1</attribute>
+					<attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+				</xpath>
+				<xpath expr="//field[@name='currency_id']" position="attributes">
+					<attribute name="string">Payment Currency</attribute>
+					<attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/group/group" position="replace">
+					<group>
+						<field name="product_id" context="{'default_can_be_expensed': 1}"
+							string="Claim Type" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+						<field name="description" placeholder="Notes..." attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+						<field name="unit_amount" required="0" widget="monetary"
+							options="{'currency_field': 'currency_id'}" invisible="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+						<label for="quantity" invisible="1" />
+						<div invisible="1">
+							<field name="quantity" class="oe_inline" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+							<field name="product_uom_id" widget="selection" class="oe_inline"
+								groups="product.group_uom" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+						</div>
+						<field name="tax_ids" domain="[('type_tax_use', '=', 'purchase')]"
+							widget="many2many_tags" groups="base.group_no_one" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+					</group>
+				</xpath>
+				<xpath expr="//form/sheet/div[last()]" position="replace">
+				</xpath>
+				<xpath expr="//form/sheet/group" position="after">
+					<field name="expense_line" nolabel="1" attrs="{'readonly': [('state', '!=', 'draft')]}">
+						<tree string="Expense Line" editable="bottom">
+							<field name="itemize_expense_id" />
+							<field name="amount" />
+							<field name="bill_reference" />
+							<field name="account_id" domain="[('internal_type', '=', 'other')]"/>
+							<field name="currency_id" />
+							<field name="rate" />
+							<field name="subtotal" />
+						</tree>
+					</field>
+					<group>
+						<group>
+							<field name="is_travel_expense" invisible="1"/>
+							<field name="boarding_pass_filename" invisible="1" />
+							<field name="boarding_pass" filename="boarding_pass_filename"
+								attrs="{'required': [('is_travel_expense', '=', True)]}" />
+						</group>
+						<group>
+							<field name="dtd_form_filename" invisible="1" />
+							<field name="dtd_form" filename="dtd_form_filename"
+								attrs="{'required': [('is_travel_expense', '=', True)]}" />
+							<field name="meeting_agenda_filename" invisible="1" />
+							<field name="meeting_agenda" filename="meeting_agenda_filename"
+								attrs="{'required': [('is_travel_expense', '=', True)]}" />
+						</group>
+					</group>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_hr_expense_sheet_form" model="ir.ui.view">
+			<field name="name">hr.expense.sheet.form</field>
+			<field name="model">hr.expense.sheet</field>
+			<field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form" />
+			<field name="arch" type="xml">
+				<field name="state" position="attributes">
+					<attribute name="statusbar_visible">draft,check,submit,approve,post,done
+					</attribute>
+				</field>
+				<xpath expr="//form/header/button[@name='approve_expense_sheets']"
+					position="before">
+					<!--bject<button name="review_expense_sheets" states="review" string="Review"-->
+						<!--type="o" class="oe_highlight o_expense_sheet_review" groups="modifier_teo_hr.group_teo_expense_manager" />-->
+					<button name="check_expense_sheets" states="check" string="Check"
+						type="object" groups="account.group_account_user" class="oe_highlight o_expense_sheet_check" />
+				</xpath>
+				<field name="responsible_id" position="after">
+					<field name="boss_id" invisible="1" />
+				</field>
+			</field>
+		</record>
+
+		<record id="view_hr_expense_sheet_form_expense_to_submit" model="ir.ui.view">
+			<field name="name">View Hr Expense Sheet Form Expense To Submit</field>
+			<field name="model">hr.expense.sheet</field>
+			<field name="inherit_id" ref="expense_masking.view_hr_expense_sheet_form_inherit"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/field[@name='expense_line_ids']/tree/field[@name='product_id']" position="before">
+					<!--<field name="expense_submit_id" domain="[('state', '=', 'draft'),('employee_id', '=', parent.employee_id)]"/>-->
+					<field name="expense_report"/>
+				</xpath>
+				<xpath expr="//form/sheet/field[@name='expense_line_ids']/tree/field[@name='quantity']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/field[@name='expense_line_ids']/tree/field[@name='unit_amount']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/field[@name='expense_line_ids']/tree/field[@name='product_id']" position="attributes">
+					<attribute name="string">Claim Type</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/field[@name='expense_line_ids']/tree/field[@name='total_amount']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/field[@name='expense_line_ids']/tree/field[@name='currency_id']" position="before">
+					<field name="total_amount"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_hr_expense_sheet_filter" model="ir.ui.view">
+			<field name="name">hr.expense.sheet.filter</field>
+			<field name="model">hr.expense.sheet</field>
+			<field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//search/filter[@name='submitted']" position="before">
+					<filter domain="[('state', '=', 'review')]" string="To Review"
+						name="reviewed" help="Review Expenses" />
+					<filter domain="[('state', '=', 'check')]" string="To Check"
+						name="checked" help="Checking Expenses" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="hr_expense.action_hr_expense_sheet_all_to_approve"
+			model="ir.actions.act_window">
+			<field name="name">Expense Reports to Approve</field>
+			<field name="res_model">hr.expense.sheet</field>
+			<field name="domain">[('boss_id', '=', uid)]</field>
+		</record>
+
+		<record id="action_hr_expense_sheet_all_to_review" model="ir.actions.act_window">
+			<field name="name">Expense Reports to Review</field>
+			<field name="res_model">hr.expense.sheet</field>
+			<field name="view_mode">tree,kanban,form,pivot,graph</field>
+			<field name="search_view_id" ref="hr_expense.view_hr_expense_sheet_filter" />
+			<field name="domain">[('responsible_id','=',uid)]</field>
+			<field name="context">{'search_default_reviewed': 1}</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click here to create a new expense report.
+				</p>
+				<p>
+					Once you have created your expense, submit it to your manager who
+					will
+					validate it.
+				</p>
+			</field>
+		</record>
+
+		<!--<menuitem id="menu_hr_expense_to_review" name="To Review"-->
+			<!--sequence="2" parent="hr_expense.menu_hr_expense_root" groups="hr_expense.group_hr_expense_user" />-->
+		<!--<menuitem id="menu_hr_expense_sheet_all_to_review" name="Expense Reports To Review"-->
+			<!--sequence="1" parent="menu_hr_expense_to_review" action="action_hr_expense_sheet_all_to_review" />-->
+
+		<record id="action_hr_expense_sheet_all_to_check" model="ir.actions.act_window">
+			<field name="name">Expense Reports to Check</field>
+			<field name="res_model">hr.expense.sheet</field>
+			<field name="view_mode">tree,kanban,form,pivot,graph</field>
+			<field name="search_view_id" ref="hr_expense.view_hr_expense_sheet_filter" />
+			<field name="domain">[('state', '=', 'check')]</field>
+			<field name="context">{'search_default_checked': 1}</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click here to create a new expense report.
+				</p>
+				<p>
+					Once you have created your expense, submit it to your manager who
+					will
+					validate it.
+				</p>
+			</field>
+		</record>
+
+		<!--<menuitem id="menu_hr_expense_to_check" name="To Check"-->
+			<!--sequence="2" parent="hr_expense.menu_hr_expense_root" groups="account.group_account_user" />-->
+		<!--<menuitem id="menu_hr_expense_sheet_all_to_check" name="Expense Reports To Check"-->
+			<!--sequence="1" parent="menu_hr_expense_to_check" action="action_hr_expense_sheet_all_to_check" />-->
+	</data>
+</odoo>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PosTicket" t-extend="PosTicket">
+        <t t-jquery=".pos-center-align" t-operation="replace">
+            <div class="pos-center-align"><t t-esc="moment().format('L LT')"/>
+            </div>
+        </t>
+        <t t-jquery=".pos-center-align" t-operation="after">
+            <div class="receipt-invoice" t-if="order.to_invoice">
+                Invoice No: <t t-esc="order.invoice_id and order.invoice_id[1] and order.invoice_id[1].split(' ')[0] or '-'"/>
+            </div>
+        </t>
+        <t t-jquery=".receipt-user" t-operation="after">
+            <div class="receipt-customer">
+                Customer Name: <t t-esc="order.get_client_name()"/><br />
+            </div>
+            <div class="receipt-collection">
+                Collection Date: <t t-esc="order.start_date"/><br />
+            </div>
+        </t>
+        <t t-jquery="td:contains('Points Won:')" t-operation="replace">
+            <td class="pos-left-align">Points Earned</td>
+        </t>
+        <t t-jquery="td:contains('Total Points:')" t-operation="replace">
+            <td class="pos-left-align">Redeemable Points</td>
+        </t>
+    </t>
+    <!-- show NRIC/Passport instead of NRIC -->
+    <t t-name="ClientListScreenWidget" t-extend="ClientListScreenWidget">
+        <t t-jquery=".client-list thead tr th:contains('NRIC')" t-operation="replace">
+            <th>NRIC/Passport</th>
+        </t>
+    </t>
+    <t t-name="ClientLine" t-extend="ClientLine">
+        <t t-jquery=".client-line td t[t-if='partner.nric_no']:parent" t-operation="replace">
+            <t t-if="partner.citizenship == 'singaporean' and partner.nric_no">
+                <t t-esc='partner.nric_no'/>
+            </t>
+            <t t-if="partner.citizenship == 'foreigner' and partner.passport_no">
+                <t t-esc='partner.passport_no'/>
+            </t>
+        </t>
+    </t>
+    <!-- Replace Tax ID with NRIC/Passport No. -->
+    <t t-name="ClientDetailsEdit" t-extend="ClientDetailsEdit">
+        <t t-jquery="span:contains('Tax ID')" t-operation="replace">
+            <span class='label'>NRIC/ Passport</span>
+        </t>
+        <t t-jquery=".vat" t-operation="replace">
+            <t t-if="partner.citizenship == 'passport_no'">
+                <input class='detail client-passport_no' name='passport_no' t-att-value='partner.passport_no || ""'></input>
+            </t>
+            <t t-else="">
+                <input class='detail client-nric_no' name='nric_no' t-att-value='partner.nric_no || ""'></input>
+            </t>
+        </t>
+    </t>
+    <t t-name="ClientDetails" t-extend="ClientDetails">
+        <t t-jquery="span:contains('Tax ID')" t-operation="replace">
+            <span class='label'>NRIC/ Passport</span>
+        </t>
+        <t t-jquery=".vat" t-operation="replace">
+            <t t-if="partner.citizenship == 'singaporean' and partner.nric_no">
+                <span class='detail nric_no'><t t-esc='partner.nric_no'/></span>
+            </t>
+            <t t-else="">
+                <t t-if="partner.citizenship == 'foreigner' and partner.passport_no">
+                    <span class='detail passport_no'><t t-esc='partner.passport_no'/></span>
+                </t>
+                <t t-else="">
+                    <span class='detail nric_passport_no empty'>N/A</span>
+                </t>
+            </t>
+        </t>
+    </t>
+</templates>

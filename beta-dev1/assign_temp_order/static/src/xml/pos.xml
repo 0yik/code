@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="AssignOrders">
+        <button class="btn btn-default btn-fill btn-wd control-button assign-order oe_hidden"><i class="pe-7s-check"/> Manual Assign Orders</button>
+    </t>
+    <t t-name="TempCustomerName">
+        <!-- background: #e2e2e2; border: solid 1px #bfbfbf; -->
+        <input placeholder="Customer Name" type="text" id="temp_customer_name" class="temp_customer_name" name="temp_customer_name" style="flex-grow: 1;  display: inline-block; line-height: 38px; min-width: 80px; text-align: center; border-radius: 3px; padding: 0px 10px; font-size: 18px; margin-left: 6px; margin-bottom: 6px; cursor: pointer; overflow: hidden; transition: all linear 150ms; "/>
+    </t>
+    <t t-name="sendTempOrder">
+        <button class="btn btn-default btn-fill btn-wd control-button sendTempOrder oe_hidden"><i class="pe-7s-check"/>Send</button>
+    </t>
+	<t t-name="AutoAssignOrders">
+        <t t-if="widget.pos.config.screen_type != 'e_menu'">
+            <button class="btn btn-default btn-fill btn-wd control-button autoassign-order"><i class="pe-7s-check"/> Auto Assign Orders</button>
+        </t>
+    </t>
+    <t t-name="TempOrdersScreenWidget">
+        <div class="clientlist-screen screen">
+            <div class="orders-screen-content">
+                <section class="top-content">
+                    <span class='button back temp_orders_back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                </section>
+                <span class="searchbox">
+                    <input placeholder="Search Orders" class="order_search"/>
+                    <span class="search-clear"></span>
+                </span>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix order-details-contents'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='temp_table_back subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y' style="background-color: rgb(240, 238, 238);overflow-y: scroll;">
+                                    <table class='client-list temp_order_list'>
+                                        <thead>
+                                            <tr style="background-color: rgb(135, 160, 166);color: white;">
+                                                <th>Order Ref.</th>
+                                                <th>Receipt Ref.</th>
+                                                <th>Customer</th>
+                                                <th>Order Date</th>                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody class='temp-order-list-contents'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+    
+    <t t-name="tempOrderLine"> 
+        <tr class='temp-order-line' t-att-data-id='order.id' t-att-data-index='index' style="cursor:pointer;">
+            <td><t t-esc='order.name' /></td>
+            <td><t t-esc='order.pos_reference' /></td>
+            <td><t t-esc="order.get_client_name() || '-'" /></td>
+            <td><t t-esc='order.creation_date' /></td>
+        </tr>
+    </t>
+<!--     <t t-extend='ClientListScreenWidget'>
+        <t t-jquery='.client-list thead tr' t-operation='append'>
+            <th>Orders</th>
+        </t>
+    </t>
+
+    <t t-extend='ClientLine'>
+        <t t-jquery='.client-line' t-operation='append'>
+            <td>
+                <button class="view_all_order" t-att-id='partner.id'><i class="fa fa-filter"></i> View orders</button>
+            </td>
+        </t>
+    </t> -->
+    <t t-name="ChooseTable">    
+        <div class="modal-dialog">
+            <div class="popup popup-number" style="height:450px; width: 370px;">
+                <p class="title">
+                    <t t-esc=" widget.options.title || '' " />
+                </p>
+                <select>
+                    <t t-if="widget.options.tables"> 
+                        <t t-foreach="widget.options.tables" t-as="table">
+                            <option t-att-value="table[0]"><t t-esc="table[1]"/></option>
+                        </t>
+                    </t>
+                </select>
+                <div class="footer centered">
+                    <div class="button cancel">Cancel </div>
+                    <div class="button confirm">Ok</div>
+                </div>
+            </div>
+        </div>
+    </t>
+<!--     <t t-name="KitchenKanban">
+        <div class="client-card">
+            <div class="order-details">
+                <span> <t t-esc="new Date(lines[0].order.creation_date).getHours() +':'+new Date(lines[0].order.creation_date).getMinutes()"/></span><br/>
+                <span>Floor  : <t t-esc="lines[0].order.table.floor.name"/></span>
+                <span>Table  : <t t-esc="lines[0].order.table.name"/></span>
+            </div>
+                <div t-foreach="lines" t-as="line" class="product-line">
+                    <span class="product-name">
+                        <t t-esc="line.product.display_name" />
+                        <t t-esc="line.session_info.created.date" />
+                       
+                    </span>
+                    <span class="product-qty">
+                        <t t-esc="line.quantity"/>
+                    </span>
+                </div>
+            <div>
+                <button class='done-all' t-att-data-done='done_lines'>Done</button>
+            </div>
+        </div>
+    </t>
+    <t t-name="SubmitOrderButton1" t-extend="SubmitOrderButton">
+        <t t-jquery=">span" t-operation="replace">
+         <button class="control-button btn btn-default btn-fill btn-wd control-button order-submit1"><i class="pe-7s-share"/> Order</button>
+        </t>
+    </t> -->
+
+   <!--  <t t-extend="OrderSelectorWidget">
+        <t t-jquery="span[class='orders touch-scrollable']" t-operation="replace">
+            <span class="orders touch-scrollable">
+
+                <t t-foreach="widget.pos.get_order_list()" t-as="order">
+                    <t t-esc='order.sequence_number' /><t t-esc="order.dine_is_assign_order"/>
+                    <t t-if="widget.pos.config.screen_type == 'e_menu'">
+                        <t t-if='order === widget.pos.get_order() and order.emenu_order'>
+                            <span class="order-button select-order selected" t-att-data-uid="order.uid">
+                                <span class='order-sequence'>
+                                    <t t-esc='order.sequence_number' />
+                                </span>
+                                <t t-esc="moment(order.creation_date).format('hh:mm')"/>
+                            </span>
+                        </t>
+                        
+                        <t t-if='order !== widget.pos.get_order() and order.emenu_order and !order.dine_is_assign_order'>
+                            <span class="order-button select-order" t-att-data-uid="order.uid">
+                                <span class='order-sequence'>
+                                    <t t-esc='order.sequence_number' />
+                                </span>
+                            </span>
+                        </t>
+                    </t>
+                    <t t-if="widget.pos.config.screen_type != 'e_menu'">
+                        <t t-if='order === widget.pos.get_order()'>
+                            <span class="order-button select-order selected" t-att-data-uid="order.uid">
+                                <span class='order-sequence'>
+                                    <t t-esc='order.sequence_number' />
+                                </span>
+                                <t t-esc="moment(order.creation_date).format('hh:mm')"/>
+                            </span>
+                        </t>
+                        
+                        <t t-if='order !== widget.pos.get_order()'>
+                            <span class="order-button select-order" t-att-data-uid="order.uid">
+                                <span class='order-sequence'>
+                                    <t t-esc='order.sequence_number' />
+                                </span>
+                            </span>
+                        </t>
+                    </t>
+                </t>
+            </span>
+
+        </t>
+      
+    </t> -->
+
+     <t t-extend="ActionpadWidget">
+        <t t-jquery="div[class='actionpad']" t-operation="replace">
+            <div class="actionpad">
+                <t t-if="widget.pos.config.screen_type != 'e_menu'">
+                    <button t-attf-class='button set-customer #{ ( widget.pos.get_client() and widget.pos.get_client().name.length > 10) ? "decentered" : "" }' >
+                        <i class='fa fa-user' /> 
+                        <t t-if="widget.pos.get_client()">
+                            <t t-esc="widget.pos.get_client().name" />
+                        </t>
+                        <t t-if="!widget.pos.get_client()">
+                            Customer
+                        </t>
+                    </button>
+                    <button class='button pay'>
+                        <div class='pay-circle'>
+                            <i class='fa fa-chevron-right' /> 
+                        </div>
+                        Payment
+                    </button>
+                </t>
+            </div>
+        </t>
+    </t>
+
+</templates>

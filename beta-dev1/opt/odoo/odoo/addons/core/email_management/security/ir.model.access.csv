@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mail_inbox,main.inbox,model_mail_inbox,base.group_user,1,1,1,1
+access_mail_server_source,main.server_source,model_mail_server_source,base.group_user,1,1,1,1
+access_mail_server_source_read,main.server_source_read,model_mail_server_source,base.group_user,1,1,1,1
+access_fetchmail_server_inbox,fetchmail.server.inbox,model_fetchmail_server_inbox,base.group_user,1,1,1,1
+access_outgoing_server_inbox,outgoing.ir.mail_server,model_ir_mail_server_outgoing,base.group_user,1,1,1,1
+access_outgoing_server_line,outgoing.ir.mail_server.email.line,model_ir_mail_server_email_line,base.group_user,1,1,1,1

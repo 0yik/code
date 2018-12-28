@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="Report assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+				<link rel="stylesheet" type="text/css" href="/report_field_manager/static/src/css/custom_field.css"/>
+                <script type="text/javascript" src="/report_field_manager/static/src/js/custom_fields_report.js"></script>
+                <script type="text/javascript" src="/report_field_manager/static/src/js/custom_fields.js"></script>
+				<script type="text/javascript" src="/report_field_manager/static/src/js/custom_report.js"></script>
+            </xpath>
+        </template>
+</odoo>

@@ -1,0 +1,87 @@
+<odoo>
+  <data>
+        <record model="ir.ui.view" id="view_product_template_inherited_custom">
+            <field name="name">product.template.inherited.form.custom</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="room_flag"/>
+                    <field name="nup_price" attrs="{'invisible': [('room_flag', '=', False)]}"/>
+                    <field name="booking_price" attrs="{'invisible': [('room_flag', '=', False)]}"/>
+                    <field name="unit_floor" attrs="{'invisible': [('room_flag', '=', False)]}"/>
+                    <field name="unit_column" attrs="{'invisible': [('room_flag', '=', False)]}"/>
+                    <field name="unit_status" attrs="{'invisible': [('room_flag', '=', False)]}"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_product_template_inherited_procurement_custom">
+            <field name="name">product.template.inherited.procurement.form.custom</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='%(stock.act_make_procurement)d']" position="replace">
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="custom_product_template_form_view">
+            <field name="name">product.template.common.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='purchase_ok']" position="replace">
+                    <field name="purchase_ok" attrs="{'readonly': [('room_flag', '=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_product_product_inherited_custom">
+            <field name="name">product.product.inherited.form.custom</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="room_flag"/>
+                    <field name="nup_price" attrs="{'invisible': [('room_flag', '=', False)]}"/>
+                    <field name="booking_price" attrs="{'invisible': [('room_flag', '=', False)]}"/>
+                    <field name="unit_floor" attrs="{'invisible': [('room_flag', '=', False)]}"/>
+                    <field name="unit_column" attrs="{'invisible': [('room_flag', '=', False)]}"/>
+                    <field name="unit_status" attrs="{'invisible': [('room_flag', '=', False)]}"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="custom_product_product_form_view">
+            <field name="name">product.product.common.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='purchase_ok']" position="replace">
+                    <field name="purchase_ok" attrs="{'readonly': [('room_flag', '=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="product_form_view_procurement_button_custom">
+            <field name="name">product.product.procurement.custom</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock.product_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='%(stock.act_make_procurement)d']" position="replace">
+                </xpath>
+            </field>
+        </record>
+         <record model="ir.ui.view" id="view_product_template_stock_inherited_procurement_custom">
+            <field name="name">product.template.inherited.stock.form.custom</field>
+            <field name="model">stock.change.product.qty</field>
+            <field name="inherit_id" ref="stock.view_change_product_quantity"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//header/button[@name='309']" position="replace">
+                </xpath> -->
+                <field name="location_id" position="replace">
+                  <field name="location_id" widget="selection"  groups="stock.group_stock_multi_locations"/>
+                </field>
+            </field>
+        </record>     
+  </data>
+</odoo>
+
+

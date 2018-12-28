@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"></field>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//tree//field[@name='name']" position="before">
+                    <field name="code"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//form//field[@name='name']" position="before">
+                    <field name="code" invisible="1"/>
+                </xpath>
+                <xpath expr="//notebook" position="before">
+                    <div>
+                        <button name="%(import_order_line_wizard_action)d" string="Import Product" type="action" class="btn-primary"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

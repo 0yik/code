@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="external_layout_offer_modifier_option">
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <!--<t t-if="o and 'company_id' in o">-->
+            <!--<t t-set="company" t-value="o.company_id"></t>-->
+            <!--</t>-->
+            <!--<t t-if="not o or not 'company_id' in o">-->
+            <!--<t t-set="company" t-value="res_company"></t>-->
+            <!--</t>-->
+            <t t-call="kimhuat_modifier_printouts.layout_header_offer_modifier_option"/>
+            <t t-raw="0"/>
+            <t t-call="kimhuat_modifier_printouts.layout_footer_offer_modifier_option"/>
+        </template>
+        <!--create header-->
+        <template id="layout_header_offer_modifier_option">
+            <div class="header">
+
+                <!--<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:60px;width:240px;float:right"/>-->
+                <!--<span  class ="text-center" style="font-size: 24px;font-weight:bold ">Summary Retail - DZH</span>-->
+                <img src="kimhuat_modifier_printouts/static/src/image/kimhuat_header_1.jpg"
+                     style="width:90%;margin-left:-20px;"/>
+                <!--<span>sdfsdf</span>-->
+
+            </div>
+        </template>
+
+        <template id="layout_footer_offer_modifier_option">
+            <div class="footer">
+                <div class="row">
+                    <!--<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:60px;width:240px;float:right"/>-->
+                    <!--<span  class ="text-center" style="font-size: 24px;font-weight:bold ">Summary Retail - DZH</span>-->
+                    <img src="kimhuat_modifier_printouts/static/src/image/kimhuat_footer_1.jpg"
+                         style="width:98%;margin-top:-6px;"/>
+                    <!--<span>cjhort</span>-->
+                </div>
+            </div>
+        </template>
+
+
+        <template id="report_quotation_order_option_document">
+            <t t-call="kimhuat_modifier_printouts.external_layout_offer_modifier_option">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <div class="page">
+                    <div class="col-xs-5 pull-right text-left" style="font-size:22px;">
+                        <span>QUOTATION</span>
+                    </div>
+                    <div class="col-xs-8">
+                        <t t-if="o.partner_id.company_type=='company' ">
+                            <span t-field="o.partner_id.name" style="font-weight:bold"></span>
+                            <br/>
+                        </t>
+
+                        <span t-field="o.partner_id.parent_id"></span>
+                        <br t-if="o.partner_id.parent_id"/>
+                        <span t-field="o.partner_id.street"></span>
+                        <br t-if="o.partner_id.street"/>
+                        <span t-field="o.partner_id.street2"></span>
+                        <br t-if="o.partner_id.street2"/>
+                        <span t-field="o.partner_id.city"></span>
+                        <br t-if="o.partner_id.city"/>
+                        <span t-field="o.partner_id.state_id.name"></span>
+                        <br t-if="o.partner_id.state_id"/>
+                        <span t-field="o.partner_id.country_id.name"></span>
+                        <t t-if="o.partner_id.country_id">
+                            <span t-field="o.partner_id.zip"></span>
+                        </t>
+                        <br/>
+                        <br/>
+                        <!--<span>Attn: </span><span t-if="o.partner_id.child_ids" t-esc="o.partner_id.child_ids[0].name"></span><br/><br/>-->
+                        <span>Attn:</span>
+                        <t t-if="o.partner_id.company_type !='company' ">
+                            <span t-field="o.partner_id.name" style="font-weight:bold"></span>
+                        </t>
+                        <br/>
+                        <br/>
+
+                    </div>
+                    <div class="col-xs-4">
+                        <span>Quote No:</span>
+                        <span t-field="o.name"></span>
+                        <br/>
+                        <span>Date:</span>
+                        <span t-field="o.date_order" t-options ='{"format": "MM/dd/yyyy"}'></span>
+                        <br/>
+                        <!--'{0:06}'.format(o.partner_id.id)-->
+                        <span>Expiration Date</span>
+                        <span t-esc="o.validity_date"></span>
+                        <br/>
+                        <span>Job Site:</span>
+                        <br/>
+                        <span t-field="o.job_street"></span>
+                        <br t-if="o.job_street"/>
+                        <span t-field="o.job_street2"></span>
+                        <br t-if="o.job_street2"/>
+                        <span t-field="o.job_city"></span>
+                        <br t-if="o.job_city"/>
+                        <span t-field="o.job_state_id.name"></span>
+                        <br t-if="o.job_state_id"/>
+                        <span t-field="o.job_country_id.name"></span>
+                        <t t-if="o.job_country_id">
+                            <span t-field="o.job_zip"></span>
+                        </t>
+                    </div>
+                    <div class="col-xs-10" style="margin-bottom:15px">
+                        <span style="font-weight:bold">Re: Quotation for Installation of Wall mounted System 3 at
+                            [Address]
+                        </span>
+                        <br/>
+                        <!--<span>Thank you for inviting us to quote. We are pleased to submit the following</span>-->
+                    </div>
+                    <t t-set="No" t-value="0"/>
+                    <t t-foreach="o.order_line" t-as="line">
+                        <table class="table table-condensed mt48"
+                               style="collapse; border:1px solid black ;margin-left:15px;width:96%;">
+                            <thead>
+                                <tr style="collapse; border:1px solid black">
+                                    <th style="collapse; border:1px solid black;width:4%;">
+                                        <strong>No.</strong>
+                                    </th>
+                                    <!--<th style="collapse; border:1px solid black;width:10%">-->
+                                    <!--<strong>Brand</strong>-->
+                                    <!--</th>-->
+                                    <!--<th style="collapse; border:1px solid black;width:10%">-->
+                                    <!--<strong>Type</strong>-->
+                                    <!--</th>-->
+                                    <!--<th style="collapse; border:1px solid black;width:15%">-->
+                                    <!--<strong>Product</strong>-->
+                                    <!--</th>-->
+                                    <th style="collapse; border:1px solid black;width:57%;">
+                                        <strong>Description</strong>
+                                    </th>
+                                    <th style="collapse; border:1px solid black;width:5%; text-align:center">
+                                        <strong>Qty</strong>
+                                    </th>
+                                    <th style="collapse; border:1px solid black;width:8%; text-align:center">
+                                        <strong>UOM</strong>
+                                    </th>
+                                    <th style="collapse; border:1px solid black;width:13%; text-align:center">
+                                        <strong>Unit Price</strong>
+                                    </th>
+                                    <th style="collapse; border:1px solid black;width:13%; text-align:center">
+                                        <strong>Amount</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="collapse; border:1px solid black">
+                                    <t t-set="No" t-value="No + 1"/>
+                                    <td style="collapse; border:1px solid black ;text-align:center">
+                                        <span t-esc="No"/>
+                                    </td>
+                                    <!--<td style="collapse; border:1px solid black">-->
+                                    <!--<t t-if="line.brand"> <span t-esc="line.brand.name"/></t>-->
+                                    <!--</td>-->
+                                    <!--<td style="collapse; border:1px solid black">-->
+                                    <!--<t t-if="line.type"><span t-esc="line.type.name"/></t>-->
+                                    <!--</td>-->
+                                    <!--<td style="collapse; border:1px solid black">-->
+                                    <!--<span t-esc="line.product_id.name"/>-->
+                                    <!--</td>-->
+                                    <td style="collapse; border:1px solid black">
+                                        <t t-if="line.brand"><span t-esc="line.brand.name"/>,
+                                        </t>
+                                        <t t-if="line.type"><span t-esc="line.type.name"/>,
+                                        </t>
+                                        <span t-esc="line.product_id.name"/>,
+                                        <span t-esc="line.description"/>
+                                    </td>
+                                    <td style="collapse; border:1px solid black;text-align:center">
+                                        <span t-esc="int(line.product_uom_qty)"/>
+                                    </td>
+                                    <td style="collapse; border:1px solid black;text-align:center">
+                                        <span t-field="line.product_uom"/>
+                                    </td>
+                                    <td style="collapse; border:1px solid black" class="text-center">
+                                        <span>$</span>
+                                        <span t-esc="'%.2f'% line.price_unit"/>
+                                    </td>
+                                    <td style="collapse; border:1px solid black" class="text-center">
+                                        <span>$</span>
+                                        <span t-esc="'%.2f'% line.price_subtotal"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                    <!--<div class="col-xs-4 pull-right">-->
+                    <!--<table style="border:0;">-->
+                    <!--<tr>-->
+                    <!--<th class="col-xs-3 col-xs-offset-6">Total Price:</th>-->
+                    <!--<td class="col-xs-3" style="padding-left: 0px;">-->
+                    <!--<span>$ </span><span t-esc="o.amount_untaxed"/>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr style="border-bottom:1px solid black">-->
+                    <!--<td class="col-xs-3 col-xs-offset-6"><span>7% GST:</span></td>-->
+                    <!--<td>-->
+                    <!--<span>$ </span><span t-esc="o.amount_tax"/>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr style="border-bottom:1px solid black">-->
+                    <!--<th class="col-xs-3 col-xs-offset-6" style="padding-right:1px">Grand Total:</th>-->
+                    <!--<td>-->
+                    <!--<span>$ </span><span t-esc="o.amount_total"/>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--</table>-->
+                    <!--</div>-->
+                    <br/>
+                    <!--<table class="col-xs-3 pull-right text-left mt40">-->
+                    <!--<tr>-->
+                    <!--<td><span>  </span><span>Total Price &#160;&#160;&#160;:</span></td>-->
+                    <!--<td><span>$ </span><span t-esc="o.amount_untaxed"></span></td>-->
+                    <!--</tr>-->
+                    <!--<tr style="border-bottom:1px solid black">-->
+                    <!--<td><span>  </span><span>7% GST &#160;&#160;&#160;&#160;&#160;&#160;:</span></td>-->
+                    <!--<td><span>$ </span><span t-esc="o.amount_tax"></span></td>-->
+                    <!--</tr>-->
+                    <!--<tr style="border-bottom:1px solid black">-->
+                    <!--<td><span>  </span><span>Grand Total&#160;&#160;:</span></td>-->
+                    <!--<td><span>$ </span><span t-esc="o.amount_total"></span></td>-->
+                    <!--</tr>-->
+                    <!--</table>-->
+                    <div class="col-xs-12">
+                        <span style="font-weight:bold;text-decoration: underline;">Job Scope</span>
+                        <t t-foreach="o.job_scope" t-as="scope">
+                            <br/>
+                            <span t-esc="scope.job_scope_id.name"></span>
+                        </t>
+                        <br/>
+                        <!--<span>Remarks: </span><span t-field="o.note"></span><br/><br/>-->
+                        <span style="font-weight:bold;">Terms &amp; Conditions:</span>
+
+                        <t t-if="o.note">
+                            <t t-set="notes" t-value="o.get_html_note(o.note)"/>
+                            <t t-foreach="notes" t-as="note">
+                                <br/>
+                                <span t-esc="note"/>
+                            </t>
+                        </t>
+
+                    </div>
+                    <div class="col-xs-12" style="margin-top:30px">
+                        <div class="col-xs-4" style="margin-left :0px;padding-left :0px">
+                            <span class="text-left">Yours Faithfully</span>
+                            <br/>
+                            <div style="margin-top:90px; border-top:1px solid black">
+                                <br/>
+                                <!--<span>atyrty</span><br/>-->
+                                <span>
+                                    <t t-esc="o.user_id.name"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-xs-offset-4">
+                            <span class="text-left">Accepted by</span>
+                            <br/>
+                            <div class="text-left" style="margin-top:90px;border-top:1px solid black">
+                                <br/>
+                                <!--<span>djkfhg</span>-->
+                                <span>Company Stamp &amp; Signature</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_quotation_order_option">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="kimhuat_modifier_printouts.report_quotation_order_option_document"
+                       t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- QWeb Reports -->
+        <report
+                id="picking_quotation_order_option"
+                model="sale.order"
+                string="Quotation (Option)"
+                report_type="qweb-pdf"
+                name="kimhuat_modifier_printouts.report_quotation_order_option"
+                file="kimhuat_modifier_printouts.report_quotation_order_option"
+        />
+
+    </data>
+</odoo>

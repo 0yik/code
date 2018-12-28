@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="modifier_vit_efaktur_form" model="ir.ui.view">
+            <field name="name">modifier.vit.efaktur.form</field>
+            <field name="model">vit.efaktur</field>
+            <field name="inherit_id" ref="vit_efaktur.view_vit_efaktur_form"></field>
+            <field name="arch" type="xml">
+                <field name="is_used" position="after">
+                    <field name="is_reserved"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_vit_efaktur_tree_reserve" model="ir.ui.view">
+            <field name="name">vit.efaktur.reserve.tree</field>
+            <field name="model">vit.efaktur</field>
+            <field name="inherit_id" ref="vit_efaktur.view_vit_efaktur_tree"></field>
+            <field name="arch" type="xml">
+                <field name="is_used" position="after">
+                    <field name="is_reserved"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="invoice_efaktur_inherit" model="ir.ui.view">
+            <field name="name">account_invoice_efaktur</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='efaktur_id']" position="replace">
+                    <field name="efaktur_id" domain="[('is_used','=',False),('is_reserved','=',False)]"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

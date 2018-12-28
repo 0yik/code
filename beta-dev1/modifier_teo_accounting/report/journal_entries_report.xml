@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_header">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <img t-if="company.report_header" t-att-src="'data:image/png;base64,%s' % company.report_header" />
+                        <img t-if="not company.report_header" src="/modifier_teo_accounting/static/src/img/logo.png" />
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="report_layout">
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="modifier_teo_accounting.report_header" />
+            <t t-raw="0" />
+            <t t-call="report.external_layout_footer" />
+        </template>
+
+        <template id="journal_entries_report_document">
+            <t t-call="modifier_teo_accounting.report_layout">
+                <div class="page" style="padding-left:30px;">
+                    <div class="row">
+                        <div class="col-xs-12" style="border-top:2px solid;border-bottom:2px solid;">
+                            <h3 class="text-center mt8 mb8">
+                                <strong>JOURNAL VOUCHER</strong>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="row mt8" style="padding-top:3px;border-top:1px solid;">
+                        <div class="col-xs-2">
+                            <strong>VOUCHER NO</strong>
+                        </div>
+                        <div class="col-xs-2">
+                            <span t-field="o.j_name" />
+                        </div>
+                        <div class="col-xs-2">
+                            <strong>DATE</strong>
+                        </div>
+                        <div class="col-xs-6">
+                            <span t-field="o.date" />
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:3px;border-top:1px solid;">
+                        <div class="col-xs-2">
+                            <strong>REMARK</strong>
+                        </div>
+                        <div class="col-xs-10">
+                            <span t-field="o.remark" />
+                        </div>
+                    </div>
+                    <br />
+                    <strong>Voucher Detail</strong>
+                    <t t-set="sum_credit" t-value="0"/>
+                    <t t-set="sum_debit" t-value="0"/>
+                    <t t-set="total_bcr" t-value="0"/>
+                    <t t-set="total_bdr" t-value="0"/>
+                    <div style="height: 800px;">
+                        <table class="table mt8">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">AcctID</th>
+                                    <th class="text-center">Acct Name</th>
+                                    <th class="text-center">Description</th>
+                                    <th class="text-center">CurID</th>
+                                    <th class="text-center">Dr</th>
+                                    <th class="text-center">Cr</th>
+                                    <th class="text-center">BDr</th>
+                                    <th class="text-center">BCr</th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody">
+                                <t t-foreach="o.line_ids" t-as="l">
+                                    <tr>
+                                        <td class="text-center">
+                                            <span t-field="l.account_id.code" />
+                                        </td>
+                                        <td>
+                                            <span t-field="l.account_id.name" />
+                                        </td>
+                                        <td>
+                                            <span t-field="l.name" />
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="l.currency_id.name" />
+                                        </td>
+
+                                        <td class="text-right">
+                                            <span t-field="l.user_debit" /><span t-esc="l.currency_id.symbol" /> 
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="l.user_credit" /><span t-esc="l.currency_id.symbol" /> 
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="l.debit" />
+                                            <t t-set="total_bdr" t-value="l.debit + total_bdr"/>
+                                            <t t-set="sum_debit" t-value="l.debit + sum_debit"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="l.credit" />
+                                            <t t-set="sum_credit" t-value="l.credit + sum_credit"/>
+                                            <t t-set="total_bcr" t-value="l.credit + total_bcr"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                    <table style="width:100%;" valign="bottom" >
+                        <tbody>
+                            <tr style="margin-top:20px;">
+                                <td colspan="8" align="right" >
+                                    Total
+                                </td>
+                                <td align="right" width="15%">
+                                    <hr style="border-top:1px solid ;width:90px; margin-top:1px;padding-top:1px;margin-bottom:0px;padding-bottom:0px;"/>
+
+                                    <t  t-esc="sum_debit"/>
+
+                                    <hr style="border-top:1px solid ;width:90px; margin-top:1px;padding-top:1px;margin-bottom:0px;padding-bottom:0px;"/>
+                                    <hr style="border-top:1px solid ;width:90px; margin-top:2px;padding-top:2px;margin-bottom:0px;padding-bottom:0px;"/>
+
+                                </td>
+                                <td align="right" width="15%">
+                                    <hr style="border-top:1px solid ;width:90px; margin-top:1px;padding-top:1px;margin-bottom:0px;padding-bottom:0px;"/>
+                                    <t t-esc="sum_credit"/>
+                                    <hr style="border-top:1px solid ;width:90px; margin-top:1px;padding-top:1px;margin-bottom:0px;padding-bottom:0px;"/>
+                                    <hr style="border-top:1px solid ;width:90px; margin-top:2px;padding-top:2px;margin-bottom:0px;padding-bottom:0px;"/>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" align="right">BDR/BCR(-) Balance </td>
+                                <td align="right"></td>
+                                <td align="right">
+                                    <hr style="border-top:1px solid ;width:90px; margin-top:1px;padding-top:1px;margin-bottom:0px;padding-bottom:0px;"/>
+                                    <span>
+                                        <!-- <t t-esc="total_bdr"/> -->
+                                        <!-- <t t-esc=" total_bcr"/> -->
+                                        <t t-esc="total_bdr - total_bcr"/>
+                                        
+                                    </span>
+                                    <hr style="border-top:1px solid ;width:90px; margin-top:1px;padding-top:1px;margin-bottom:0px;padding-bottom:0px;"/>
+                                    <hr style="border-top:1px solid ;width:90px; margin-top:2px;padding-top:2px;margin-bottom:0px;padding-bottom:0px;"/>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <div> -->
+                    <div class="row" style="margin-top:80px;">
+                        <div class="col-xs-1"></div>
+                        <div class="col-xs-4 text-center" style="border-top: 1px solid;">Prepared By</div>
+                        <div class="col-xs-2"></div>
+                        <div class="col-xs-4 text-center" style="border-top: 1px solid;">Approving Manager</div>
+                        <div class="col-xs-1"></div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="journal_entries_report">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="modifier_teo_accounting.journal_entries_report_document"
+                        t-lang="o.partner_id.lang" />
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

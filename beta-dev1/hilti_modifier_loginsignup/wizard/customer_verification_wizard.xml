@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="customer_verification_wizard_view" model="ir.ui.view">
+            <field name="name">Customer Verification Wizard</field>
+            <field name="model">customer.verification.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Customers">
+                    <field name="user_ids" readonly='1'/>
+                    <footer>
+                        <button string="Approve" name="verify_button" type="object" class="btn-primary" invisible='not context.get("approve")'/>
+                        <button string="Reject" name="verify_button" type="object" class="btn-primary" invisible='context.get("approve")'/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

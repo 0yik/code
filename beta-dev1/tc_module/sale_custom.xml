@@ -1,0 +1,76 @@
+<odoo>
+    <data>
+        <record id="view_tc_form" model="ir.ui.view">
+            <field name="name">tc.module.form</field>
+            <field name="model">tc.module</field>
+            <field name="arch" type="xml">
+                <form string="terms" >
+                    <sheet>
+                        <div style="width:100%">
+                            <group>
+                                <field name="name" string="Name" style="width:50%"/>
+                            </group>
+                        </div>
+
+                        <div style="width:100%">
+                            <div style="width:48%;float:left;">
+                                <group>
+                                    <field name="sale_ord"/>
+                                    <field name="purchase_ord"/>
+                                    <field name="accnt_ord"/>
+                                </group>
+                            </div>
+                            <div style="width:48%;float:left;">
+                                <group>
+                                    <field name="active"/>
+                                </group>
+                            </div>
+                        </div>
+                        <div style="width=100%;margin-top:15%">
+                            <label for="terms"/>
+                        </div>
+
+                        <field name="terms" placeholder="Enter the Terms and Conditions here"/>
+                        <!--widget="html"-->
+                    </sheet>
+                </form>
+            </field>
+         </record>
+
+        <record id="view_tc_tree" model="ir.ui.view">
+            <field name="name">tc.module.tree</field>
+            <field name="model">tc.module</field>
+            <field name="arch" type="xml">
+                <tree string="Terms tree">
+                    <field name="name"/>
+                    <field name="terms"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+
+        </record>
+        <record id="action_tc_tree" model="ir.actions.act_window">
+                <field name="name">Tc Module</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">tc.module</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+        </record>
+        <record id="action_tc_filter" model="ir.ui.view">
+                <field name="name">Tc Module</field>
+                <field name="model">tc.module</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="search">
+                        <filter name="all" string="all" domain="['|',('active','=',True),('active','=',False)]" help="Invoices Open"/>
+                    </search>
+                </field>
+
+
+        </record>
+
+        <!--<menuitem  id="menu_tc_main"  name="Terms" />-->
+        <menuitem  id="menu_tc1"  name="Terms" parent="base.menu_custom" />
+        <menuitem id="menu_tc2" name="T&amp;C" parent="menu_tc1" action="action_tc_tree"/>
+    </data>
+</odoo>

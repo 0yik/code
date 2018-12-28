@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<record model="ir.ui.view" id="view_invoice_form_custom_inherit">
+            <field name="name">invoice.custom.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_tax']" position="replace">
+                    <field name="amount_tax" attrs="{'invisible':[('amount_tax_downpayment', '&lt;=', 0)]}"/>
+                    <field name="amount_tax_downpayment" attrs="{'invisible':[('amount_tax_downpayment', '&gt;', 0)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

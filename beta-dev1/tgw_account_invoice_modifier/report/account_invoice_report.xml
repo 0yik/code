@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<report id="action_report_tgw_account_invoice"
+			model="account.invoice"
+			name="tgw_account_invoice_modifier.report_tgw_account_invoice"
+			file="tgw_account_invoice_modifier.report_tgw_account_invoice"
+			string="TGW Invoice Print"
+			attachment="(object.state in ('open','paid')) and ('TGW_INV_'+(object.number or '').replace('/','_')+'.pdf')"
+			report_type="qweb-pdf"/>
+
+	</data>
+</openerp>

@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Headers and Footers for Trial Account Advisory Report -->		
+	<template id="external_trail_advisory_replort_layout">
+	    <!-- Multicompany -->
+	    <t t-if="not o and doc">
+	        <t t-set="o" t-value="doc"/>
+	    </t>
+	    <t t-if="o and 'company_id' in o">
+	        <t t-set="company" t-value="o.company_id"></t>
+	    </t>
+	    <t t-if="not o or not 'company_id' in o">
+	        <t t-set="company" t-value="res_company"></t>
+	    </t>
+	    <t t-if="o and 'partner_id' in o">
+	        <t t-set="partner" t-value="o.partner_id"></t>
+	    </t>
+	    <t t-if="not o or not 'partner_id' in o">
+	        <t t-set="partner" t-value="res_partner"></t>
+	    </t>
+
+	    <t t-call="dzh_support_report.external_layout_header_advisory_replort" />
+	    <t t-raw="0" />
+	</template>
+
+
+
+	<template id="external_layout_header_advisory_replort">
+	     <div class="header">
+	        <div class="row">
+	            <div class="col-xs-12 text-center">
+	                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 46px;width: 208px;"/>
+	            </div>
+	        </div>
+	    </div>
+	</template>
+
+
+	<template id="report_dzh_account_trial_advisory">
+		<t t-foreach="docs" t-as="o">
+		    <t t-call="report.html_container">
+		        <t t-call="dzh_support_report.external_trail_advisory_replort_layout">
+		            <div class="page">
+		                <div class="row" style="border:1px solid black;padding:5px;">
+		                    <div class="col-xs-12 text-center" style="font-size:12px;">
+		                        <span><strong>TRIAL ACCOUNT ADVISORY</strong></span>
+		                    </div>
+		                </div>
+		                <div class="row" style="border:1px solid black;border-top:1px solid white;">
+		                	<div class="col-xs-12 text-center" style="margin-top:5px;margin-bottom:10px;font-size:12px;padding:0px;padding-bottom:10px;margin-left:0px;margin-right:0px;border-bottom:1px solid black;">
+			                    <div class="col-xs-6 pull-left" style="padding:0px;">
+			                        <table style="width:100%;max-height: 250px;">
+		                               <tr>
+		                                   <th style="width:40%;padding:5px;">COUNTRY</th>
+		                                   <td>:</td>
+		                                   <td style="padding:5px;border-bottom:1px solid black;">
+		                                       <span t-if="o.partner_id" t-field="o.partner_id.country_id.name"></span>
+		                                   </td>
+		                               </tr>
+		                               <tr>
+		                                   <th style="width:40%;padding:5px;">MEMBER TYPE</th>
+		                                   <td>:</td>
+		                                   <td style="padding:5px;border-bottom:1px solid black;">
+		                                       &#10063; <span t-if="o.member_type_id" t-field="o.member_type_id.name"/>
+		                                   </td>
+		                               </tr>
+<!-- 		                               <tr>
+		                                   <th style="width:40%;padding:5px;"><span style="color:white">.</span></th>
+		                                   <td>:</td>
+		                                   <td style="padding:5px;border-bottom:1px solid black;">
+		                                       &#10063; Individual Retail 
+		                                   </td>
+		                               </tr> -->
+		                               <tr>
+		                                   <th style="width:40%;padding:5px;">TYPE OF USER</th>
+		                                   <td>:</td>
+		                                   <td style="padding:5px;border-bottom:1px solid black;">
+		                                       &#10063; Professional User
+		                                   </td>
+		                               </tr>
+		                               <tr>
+		                                   <th style="width:40%;padding:5px;"><span style="color:white">.</span></th>
+		                                   <td>:</td>
+		                                   <td style="padding:5px;border-bottom:1px solid black;">
+		                                       &#10063; Non-Professional User
+		                                   </td>
+		                               </tr>
+			                        </table>
+			                    </div>
+
+			                    <div class="col-xs-6 pull-right">
+			                        <table style="width:100%;max-height: 250px;">
+			                            <tr>
+			                                <th style="width:40%;padding:5px;">ACCOUNT MANAGER</th>
+			                                <td>:</td>
+			                                <td style="padding:5px;border-bottom:1px solid black;">
+			                                    <span t-if="o.user_id" t-field="o.user_id.name"></span>
+			                                </td>
+			                            </tr>
+<!-- 			                            <tr>
+			                                <th style="width:40%;padding:5px;">RESELLER</th>
+			                                <td>:</td>
+			                                <td style="padding:5px;border-bottom:1px solid black;">
+			                                   
+			                                </td>
+			                            </tr> -->
+			                            <tr>
+			                                <th style="width:40%;padding:5px;">DATE</th>
+			                                <td>:</td>
+			                                <td style="padding:5px;border-bottom:1px solid black;">
+			                                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m/%d/%Y')"/>
+			                                </td>
+			                            </tr>
+			                            <tr>
+			                                <th style="width:40%;padding:5px;">MARKET SEGMENT</th>
+			                                <td>:</td>
+			                                <td style="padding:5px;border-bottom:1px solid black;">
+			                                    <span t-if="o.market_segment_id" t-field="o.market_segment_id.name"></span>
+			                                </td>
+			                            </tr>
+			                            <tr>
+			                                <th style="width:40%;padding:5px;"><span style="color:white">.</span></th>
+			                                <td><span style="color:white">.</span></td>
+			                                <td style="padding:5px;">
+			                                    <span style="color:white">.</span>
+			                                </td>
+			                            </tr>
+			                        </table>
+			                    </div>
+			                </div>
+
+			                <div clsss="col-xs-12" style="margin-top:5px;margin-bottom:10px;font-size:12px;padding:0px;margin-left:0px;margin-right:0px;padding-right:10px;padding-bottom:10px;">
+			                	<span style="padding:15px;"><strong><u>CUSTOMER DETAILS</u></strong></span>
+			                	<table style="width:100%;">
+			                		<tr>
+			                			<th style="width:20%;padding:5px;">COMPANY NAME</th>
+			                			<td>:</td>
+			                			<td colspan="7" style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.partner_name" t-field="o.partner_name"></span>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;">SUBSCRIBER NAME</th>
+			                			<td>:</td>
+			                			<th style="width:10%;padding:4px;">FIRST NAME</th>
+			                			<td>:</td>
+			                			<td colspan="5" style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.contact_name" t-field="o.contact_name"></span>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;"></th>
+			                			<td>:</td>
+			                			<th style="width:10%;padding:5px;">LAST NAME</th>
+			                			<td>:</td>
+			                			<td colspan="5" style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.contact_name" t-field="o.contact_name"></span>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;">COMPANY/SUBSCRIBER ADDRESS</th>
+			                			<td>:</td>
+			                			<td colspan="7" style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.street" t-field="o.street"></span>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;"></th>
+			                			<td>:</td>
+			                			<td colspan="7" style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.street2" t-field="o.street2"></span>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;"></th>
+			                			<td>:</td>
+			                			<td colspan="7" style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.country_id" t-field="o.country_id.name">-</span>
+			                				<span t-if="o.zip" t-field="o.zip"></span>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;">CONTACT DETAILS</th>
+			                			<td>:</td>
+			                			<th style="width:5%;padding:5px;">NAME</th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.partner_name" t-field="o.partner_name"></span>
+			                			</td>
+			                			<th colspan="2" style="width:5%;padding:5px;">OFC</th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.phone" t-field="o.phone"></span>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;"></th>
+			                			<td>:</td>
+			                			<th style="width:5%;padding:5px;">EMAIL</th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.email_from" t-field="o.email_from"></span>
+			                			</td>
+			                			<th colspan="2" style="width:5%;padding:5px;">HP</th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.partner_id" t-field="o.partner_id.mobile"></span>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;">USERID/USERNAME</th>
+			                			<td>:</td>
+			                			<td colspan="7" style="padding:5px;border-bottom:1px solid black;">
+											<span t-if="o.dzh_user_id" t-field="o.dzh_user_id"></span>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;">TRIAL START DATE</th>
+			                			<td>:</td>
+			                			<td colspan="3" style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.start_date" t-field="o.start_date"></span>
+			                			</td>
+			                			<th colspan="2" style="width:15%;padding:5px;">TRIAL END DATE</th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.end_date" t-field="o.end_date"></span>
+			                			</td>
+			                		</tr>
+			                	</table>
+			                	<div style="padding:10px;"><strong><u>SERVICE COMPONENTS</u></strong></div>
+				                
+				                <div class="col-xs-12">
+				                	<div class="col-xs-2">
+				                		<tr>
+				                			<th><b>PRODUCTS</b></th>
+				                		</tr>
+				                	</div>
+				                	<div class="col-xs-10" style="padding:5px;">
+					                	<table>
+					                		<tr t-foreach="o.product_id" t-as="line">
+					                			<th></th>
+					                			<td>:</td>
+					                			<th style="padding:5px;border-bottom:1px solid black;">
+					                				<span t-field="line.name"/>
+					                			</th>
+					                		</tr>
+					                	</table>
+					                </div>
+			                	</div>
+
+			                </div>
+			                <!-- 			                		<tr>
+			                			                			<th style="width:20%;padding:5px;">DATA (EXCHANGES)</th>
+			                			                			<td>:</td>
+			                			                			<th style="padding:5px;border-bottom:1px solid black;">
+			                			                				TOCOM
+			                			                			</th>
+			                			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                			                				DZH news
+			                			                			</td>
+			                			                		</tr>
+			                			                		<tr>
+			                			                			<th style="width:20%;padding:5px;"></th>
+			                			                			<td>:</td>
+			                			                			<th style="padding:5px;border-bottom:1px solid black;">
+			                			                				SICOM
+			                			                			</th>
+			                			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                			                				PR newswire
+			                			                			</td>
+			                			                		</tr>
+			                			                		<tr>
+			                			                			<th style="width:20%;padding:5px;"></th>
+			                			                			<td>:</td>
+			                			                			<th style="padding:5px;border-bottom:1px solid black;">
+			                			                				SHFE
+			                			                			</th>
+			                			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                			                				ACN news
+			                			                			</td>
+			                			                		</tr>
+			                			                		<tr>
+			                			                			<th style="width:20%;padding:5px;"></th>
+			                			                			<td>:</td>
+			                			                			<th style="padding:5px;border-bottom:1px solid black;">
+			                			                				Forex RT
+			                			                			</th>
+			                			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                			                				EQS news
+			                			                			</td>
+			                			                		</tr>
+			                			                		<tr>
+			                			                			<th style="width:20%;padding:5px;"></th>
+			                			                			<td>:</td>
+			                			                			<th style="padding:5px;border-bottom:1px solid black;">
+			                			                				Futures delayed
+			                			                			</th>
+			                			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                			                				SGX announcement
+			                			                			</td>
+			                			                		</tr>
+			                			                		<tr>
+			                			                			<th style="width:20%;padding:5px;"></th>
+			                			                			<td>:</td>
+			                			                			<th style="padding:5px;border-bottom:1px solid black;">
+			                			                				World indices delayed
+			                			                			</th>
+			                			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                			                				KL announcement
+			                			                			</td>
+			                			                		</tr>
+			                			                		<tr>
+			                			                			<th style="width:20%;padding:5px;"></th>
+			                			                			<td>:</td>
+			                			                			<th colspan="2" style="padding:5px;border-bottom:1px solid black;">
+			                			                				I2Matrix
+			                			                			</th>
+			                			                		</tr>
+			                			                		<tr>
+			                			                			<th style="width:20%;padding:5px;"></th>
+			                			                			<td>:</td>
+			                			                			<th colspan="2" style="padding:5px;border-bottom:1px solid black;">
+			                			                				Trading Central
+			                			                			</th>
+			                			                		</tr>
+			                			                		<tr>
+			                			                			<th style="width:20%;padding:5px;">TRIAL CONVERTED TO SALES ORDER</th>
+			                			                			<td>:</td>
+			                			                			<th colspan="2" style="padding-left:5px;padding-right:5px;border-bottom:1px solid black;">
+			                			                			&#10063;  Yes - Raise Start Advisory as per attached Contract.
+			                			                			</th>
+			                			                		</tr>
+			                			                		<tr>
+			                			                			<th style="width:20%;padding:5px;"></th>
+			                			                			<td>:</td>
+			                			                			<th colspan="2" style="padding:5px;border-bottom:1px solid black;">
+			                			                			&#10063;  No - Reason :  FX rate not close to Reuters FX rate
+			                			                			</th>
+			                			                		</tr> -->
+<!-- 			                <div clsss="col-xs-12" style="margin-bottom:10px;font-size:12px;padding:0px;margin-left:0px;margin-right:0px;padding-right:10px;border-bottom:1px solid black;padding-bottom:10px;">
+			                	<div style="padding:5px;"><strong><u>TRIAL FORM GIVEN TO SG SUPPORT</u></strong></div>
+			                	<table style="width:100%;">
+			                		<tr>
+			                			<th style="width:20%;padding:5px;">TO</th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.partner_id" t-field="o.partner_id.name"></span>
+			                			</td>
+			                			<th style="width:20%;padding:5px;">DATE</th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m/%d/%Y')"/>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;">USERID PERMISSIONED BY</th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.user_id" t-field="o.user_id.name"></span>
+			                			</td>
+			                			<th style="width:20%;padding:5px;"></th>
+			                			<td></td>
+			                			<td style="padding:5px;">
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;">USERID/USERNAME</th>
+			                			<td>:</td>
+			                			<td colspan="4" style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.user_id" t-field="o.user_id.name"></span>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;">TRIAL START DATE</th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.start_date" t-field="o.start_date"></span>
+			                			</td>
+			                			<th style="width:10%;padding:5px;">TRIAL END DATE</th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.end_date" t-field="o.end_date"></span>
+			                			</td>
+			                		</tr>
+			                	</table>
+			                </div>
+
+			                <div clsss="col-xs-12" style="margin-top:5px;font-size:12px;padding:0px;margin-left:0px;margin-right:0px;padding-right:10px;border-bottom:1px solid black;padding-bottom:10px;">
+			                	<table style="width:100%;">
+			                		<tr>
+			                			<th style="width:20%;padding:5px;"><u>CC : TRIAL FORM TO SALES ADMIN</u></th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-if="o.company_id" t-field="o.company_id.name"></span>
+			                			</td>
+			                			<th style="width:10%;padding:5px;">DATE</th>
+			                			<td>:</td>
+			                			<td style="padding:5px;border-bottom:1px solid black;">
+			                				<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m/%d/%Y')"/>
+			                			</td>
+			                		</tr>
+			                		<tr>
+			                			<th style="width:20%;padding:5px;">REPORT TO FINANCE</th>
+			                			<td>:</td>
+			                			<td colspan="4" style="padding:5px;border-bottom:1px solid black;">
+			                				&#10063; <span>Converted to Sales Order</span>     &#10063;   <span>Aborted/Rejected</span>
+			                			</td>
+			                		</tr>
+			                	</table>
+			                </div> -->
+		                </div>
+		                <div class="row" style="border:1px solid black;padding:5px;margin-top:10px;">
+		                    <div class="col-xs-12 text-center" style="font-size:12px;">
+		                        <span t-field="o.description"></span>
+		                    </div>
+		                </div>
+		                <div class="oe_structure"/>
+		            </div>
+		        </t>
+		    </t>
+		</t>
+	</template>
+
+	<record id="dhz_custom_paper_4" model="report.paperformat">
+	    <field name="name">Bee Choo European A4 - Normal</field>
+	    <field name="default" eval="True"/>
+	    <field name="format">A4</field>
+	    <field name="page_height">0</field>
+	    <field name="page_width">0</field>
+	    <field name="orientation">Portrait</field>
+	    <field name="margin_top">25</field>
+	    <field name="margin_bottom">10</field>
+	    <field name="margin_left">10</field>
+	    <field name="margin_right">10</field>
+	    <field name="header_line" eval="False"/>
+	    <field name="header_spacing">20</field>
+	    <field name="dpi">90</field>
+	</record>
+
+	<report id="trial_account_advisory_report"
+	        model="crm.lead"
+	        string="Trial Account Advisory"
+	        report_type="qweb-pdf"
+	        name="dzh_support_report.dzh_account_trial_advisory_report"
+	        file="dzh_support_report.dzh_account_trial_advisory_report"
+	/>
+
+	<record id="trial_account_advisory_report" model="ir.actions.report.xml">
+	    <field name="paperformat_id" ref="dhz_custom_paper_4"/>
+	</record>
+
+	<template id="dzh_account_trial_advisory_report">
+	    <t t-call="report.html_container">
+	        <t t-foreach="docs" t-as="doc">
+	            <t t-call="dzh_support_report.report_dzh_account_trial_advisory" t-lang="doc.partner_id.lang"/>
+	        </t>
+	    </t>
+	</template>
+
+</odoo>

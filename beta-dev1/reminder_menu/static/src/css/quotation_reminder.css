@@ -1,0 +1,17 @@
+.o_reminder_counter {
+  background-color: #fa3e3e;
+  border-radius: 2px;
+  color: white;
+ 
+  padding: 1px 3px;
+  font-size: 10px;
+  
+  position: absolute; /* Position the badge within the relatively positioned button */
+  top: 0;
+  right: 0;
+}
+.recorddata{
+	padding: 4px 18px;
+	border-bottom: 1px solid #f0eeee;
+	cursor: pointer;
+}

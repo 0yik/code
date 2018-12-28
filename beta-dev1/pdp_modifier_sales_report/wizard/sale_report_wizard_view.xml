@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+         <record id="global_sale_report_wizard_view" model="ir.ui.view">
+            <field name="name">Print Global Sales Order Customer</field>
+            <field name="model">global.sale.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Global Sales Order Customer">
+                    <group col="4">
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                        <field name="partner_id"/>
+                        <field name="format"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-default"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="global_sale_wizard_action" model="ir.actions.act_window">
+            <field name="name">Global Sales Order Customer</field>
+            <field name="res_model">global.sale.report.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem id="menu_sales_reports_main" name="Sales Reports" parent="sales_team.menu_sale_report"/>
+        <menuitem id="menu_global_sale_report_wizard" action="global_sale_wizard_action" parent="menu_sales_reports_main"/>
+
+    </data>
+</odoo>

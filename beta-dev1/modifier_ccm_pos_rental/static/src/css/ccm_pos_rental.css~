@@ -1,0 +1,17 @@
+.fc-event {
+    background-color: #3a87ad !important;
+	border: 1px solid #3a87ad !important;
+}
+.fc th {
+	color: #000 !important;
+}
+.fc-header-title h2{
+	margin: 17px 0 15px;
+}
+.wk_main h2 {
+	font-size: 18px;
+    font-weight: 600;
+}
+.screen .screen-content {
+    max-width: 1024px !important;
+}

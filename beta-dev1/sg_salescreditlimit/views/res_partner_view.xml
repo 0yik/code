@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="res_partner_form_inherit" model="ir.ui.view">
+            <field name="name">Res Partner Form Inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <field name="debit" position="after">
+                    <field name="credit_limit" attrs="{'invisible':[('customer','=',False)]}"/>
+                    <field name="available_credit" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

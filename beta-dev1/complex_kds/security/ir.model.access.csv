@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_category_mapping_line,complex_kds.category_mapping_line,model_category_mapping_line,,1,1,1,1
+access_order_history,access_order_history,model_order_history,,1,1,1,1

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="paperformat_sale_order_labo" model="report.paperformat">
+            <field name="name">Sale Order Labo</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+            id="report_sale_order_labo"
+            string="Print Sale Order"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="laborindo_report_sales_order.report_saleorder_labo"
+            name="laborindo_report_sales_order.report_saleorder_labo"
+        />
+        <record id="report_sale_order_labo" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="paperformat_sale_order_labo"/>
+        </record>
+
+        <report id="menu_sale_report_labo"
+				string="Print Sale Order Report"
+				model="sale.order.report.labo"
+				report_type="qweb-pdf"
+				file="laborindo_report_sales_order.sale_report_labo"
+				name="laborindo_report_sales_order.sale_report_labo"/>
+
+        <record id="menu_sale_report_labo" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="paperformat_sale_order_labo"/>
+        </record>
+    </data>
+</odoo>

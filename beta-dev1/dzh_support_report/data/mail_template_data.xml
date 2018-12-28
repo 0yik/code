@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--Email template -->
+        <record id="email_template_dzh_support_report" model="mail.template">
+            <field name="name">Support Report - Send by Email</field>
+            <field name="email_from">${(object.user_id.email_from and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field>
+            <field name="subject">${object.name}</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="report_template" ref="dzh_support_report.trial_account_advisory_report"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}</field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<p>Hello Dear,
+
+<p>Please Find the Attachment. You can reply to this email if you have any questions.</p>
+<p>You Can Find Link Below.</p>
+<a href="/web#id=${object.id}&view_type=form&model=crm.lead&action=${'action_id' in ctx and ctx['action_id'] or ''}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">View</a>
+<p>Thank you,</p>
+
+<p style="color:#eeeeee;">
+% if object.user_id and object.user_id.signature:
+    ${object.user_id.signature | safe}
+% endif
+</p>
+]]></field>
+        </record>
+
+
+        <record id="email_template_dzh_trial_notification" model="mail.template">
+            <field name="name">Notification Trial Account - Send by Email</field>
+            <field name="email_from">${(object.user_id.email_from and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field>
+            <field name="subject">${object.name}</field>
+            <field name="email_to">${object.user_id.email}</field>
+            <field name="partner_to">${object.user_id.partner_id.id or object.user_id.id}</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+                <p>Hello,
+
+                <p>The trial account has been created for this lead.</p>
+                <p>You Can Find Link Below.</p>
+                <a href="/web#id=${object.id}&view_type=form&model=crm.lead&action=${'action_id' in ctx and ctx['action_id'] or ''}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">View</a>
+                <p>Thank you,</p>
+
+                <p style="color:#eeeeee;">
+                % if object.user_id and object.user_id.signature:
+                    ${object.user_id.signature | safe}
+                % endif
+                </p>
+                ]]></field>
+        </record>
+
+    </data>
+</odoo>

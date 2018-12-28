@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="blog_snippets" inherit_id="honos_snippets.honos_snippets">
+		<xpath expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']"
+			position="inside">
+			<t t-snippet="honos_latest_blogs.blog_snippet_body"
+				t-thumbnail="/honos_latest_blogs/static/src/img/blog.jpg" />
+		</xpath>
+	</template>
+
+	<!-- ======== E-Commerce Product Carousel Snippets ======== E-Commerce Product 
+		Carousel Snippet's Body -->
+	<template id="blog_snippet_body" name="Latest Blogs">
+		<section class="blog_container">
+			<div class="blog_container_sub">
+				<div class="js_get_blog" data-loading="true"
+					data-template="honos_latest_blogs.blog_showcase" />
+			</div>
+		</section>
+	</template>
+	<template id="blog_showcase">
+		<div class="blog_carousel" t-if="object">
+			<div class="blog_sub_carousel">
+			<div class="read_more">
+			<p class="ch_h1_class">Latest Blogs</p>
+			</div>
+				<t t-foreach="object" t-as="blog">
+					<div id="latest_post_img_div">
+							<div class="image_blog_homepage"
+								t-attf-style="background-image:#{json.loads(blog.cover_properties).get('background-image','none')};" />
+								<div class="blog_name">
+									<div class="col-md-4 l_Blog_detail">
+								<h4 class="l-blog-name">
+							<p class="p_blog" t-esc="blog.name"></p>
+							</h4>
+							<div class="text-muted">
+									<span t-field="blog.post_date" t-options='{"format": "MMMM dd, yyyy"}'
+										class="l-blog-date"></span>
+									<p class="l_before_hr"></p>
+									<p t-field="blog.teaser" class="mb12 mt12 o_blog_post_teaser"
+										id="l_blog_teaser_style" />
+								</div>
+							<p class="para_class_blog_homepage"> <t t-esc="blog.website_meta_description 
+									[0:150] if blog.website_meta_description and len ( blog.website_meta_description 
+									)> 10 else blog.website_meta_description"></t> <span class="para_subtitle_blog_post_short">[...]</span> 
+									</p>
+
+								
+									<a class="readmore_arrow" href="/blog">
+										<h6 id="l_blog_readmore">
+											Read More
+											<i class="fa fa-long-arrow-right"></i>
+										</h6>
+									</a>
+							
+
+							</div>
+							</div>
+					</div>
+					
+				</t>
+			</div>
+		</div>
+	</template>
+
+	<!-- For Snippent Option its mandatory -->
+	<template id="blog_snippets_option" inherit_id="website.snippet_options">
+		<xpath expr="//div[@data-js='background']" position="after">
+			<div data-js="js_get_blog" data-selector=".js_get_blog" />
+		</xpath>
+	</template>
+</odoo>

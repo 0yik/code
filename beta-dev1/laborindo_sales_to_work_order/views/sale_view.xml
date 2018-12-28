@@ -1,0 +1,31 @@
+<odoo>
+
+    <record id="sale_order_form_inherit_labo11" model="ir.ui.view">
+        <field name="name">Sale Order Form Inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_workorder" type="object" class="oe_stat_button" icon="fa-cogs" attrs="{'invisible':['|',('work_order_count','=',0),('state','in',['draft','sent'])]}">
+                    <field name="work_order_count" widget="statinfo" string="Work Order"/>
+                </button>
+            </xpath>
+            <field name="partner_id" position="after">
+                 <field name="is_work_order" invisible="1"/>
+             </field>
+            <xpath expr="//notebook" position="inside">
+                <page string="Work Order" attrs="{'invisible': [('is_work_order','=', False)]}">
+                    <field name="work_order_ids" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}">
+                        <tree string="Sales Order Lines" editable="bottom">
+                            <field name="name" string="Work Order"/>
+                            <field name="sale_order_id" readonly="1"/>
+                            <field name="start_date" required="1"/>
+                            <field name="end_date" required="1"/>
+                            <field name="worker_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

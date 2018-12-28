@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!--GL Manager Access-->
+
+        <!-- Accounting/Configuration/Settings -->
+        <record id="account.menu_account_config" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('general_leger_manager_group')),(4,ref('account_receivable_manager_group')),(4,ref('account_payable_manager_group'))]"/>
+        </record>
+
+        <!-- Module Board menu -->
+        <record id="module_board.menu_module_board" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('access_module_board_group')),(3,ref('base.group_system'))]"/>
+        </record>
+
+        <!--Accounting/Configuration/Accounting-->
+        <record id="account.account_account_menu" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('general_leger_manager_group')),(4,ref('account_receivable_manager_group')),(4,ref('account_payable_manager_group'))]"/>
+        </record>
+
+
+        <record id="account.menu_account_reports" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('general_leger_manager_group')),(4,ref('account_receivable_manager_group')),(4,ref('account_payable_manager_group'))]"/>
+        </record>
+
+
+        <record id="account.account_management_menu" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('general_leger_manager_group')),(4,ref('account_receivable_manager_group')),(4,ref('account_payable_manager_group'))]"/>
+        </record>
+
+        <!-- Accounting/Configuration -->
+        <record id="account.menu_finance_configuration" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('general_leger_manager_group')),(4,ref('account_receivable_manager_group')),(4,ref('account_payable_manager_group'))]"/>
+        </record>
+
+        <!-- TODO Branch Manager no create, edit Inventory -->
+        <!-- Reordering Rules -->
+        <record id="view_warehouse_orderpoint_tree_BRM_inherit" model="ir.ui.view">
+            <field name="name">stock.warehouse.orderpoint.tree</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.view_warehouse_orderpoint_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_warehouse_orderpoint_form_BRM_inherit" model="ir.ui.view">
+            <field name="name">stock.warehouse.orderpoint.form</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.view_warehouse_orderpoint_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Warehouse -->
+        <record id="view_warehouse_tree_BRM_inherit" model="ir.ui.view">
+            <field name="name">stock.warehouse.tree</field>
+            <field name="model">stock.warehouse</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.view_warehouse_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_warehouse_form_BRM_inherit" model="ir.ui.view">
+            <field name="name">stock.warehouse.form</field>
+            <field name="model">stock.warehouse</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.view_warehouse"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Stock Location -->
+        <record id="view_location_tree2_BRM_inherit" model="ir.ui.view">
+            <field name="name">stock.location.tree</field>
+            <field name="model">stock.location</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.view_location_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_location_form_BRM_inherit" model="ir.ui.view">
+            <field name="name">stock.location.form</field>
+            <field name="model">stock.location</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Operation Types -->
+        <record id="view_picking_type_tree_BRM_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.type.tree</field>
+            <field name="model">stock.picking.type</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.view_picking_type_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_type_form_BRM_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.type.form</field>
+            <field name="model">stock.picking.type</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.view_picking_type_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Operation Types -->
+        <record id="view_picking_type_tree_BRM_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.type.tree</field>
+            <field name="model">stock.picking.type</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.view_picking_type_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_type_form_BRM_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.type.form</field>
+            <field name="model">stock.picking.type</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.view_picking_type_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Packaging -->
+        <record id="product_packaging_tree_view_BRM_inherit" model="ir.ui.view">
+            <field name="name">product.packaging.tree</field>
+            <field name="model">product.packaging</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="product.product_packaging_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_packaging_form_view_BRM_inherit" model="ir.ui.view">
+            <field name="name">product.packaging.form</field>
+            <field name="model">product.packaging</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="product.product_packaging_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Product Categories -->
+        <record id="product_category_list_view_BRM_inherit" model="ir.ui.view">
+            <field name="name">product.category.tree</field>
+            <field name="model">product.category</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="product.product_category_list_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_category_form_view_BRM_inherit" model="ir.ui.view">
+            <field name="name">product.category.form</field>
+            <field name="model">product.category</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Attributes -->
+        <record id="attribute_tree_view_BRM_inherit" model="ir.ui.view">
+            <field name="name">product.attribute.tree</field>
+            <field name="model">product.attribute</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="product.attribute_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Attributes value -->
+        <record id="variants_tree_view_BRM_inherit" model="ir.ui.view">
+            <field name="name">product.attribute.value.tree</field>
+            <field name="model">product.attribute.value</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="product.variants_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Units of Measure -->
+        <record id="product_uom_tree_view_BRM_inherit" model="ir.ui.view">
+            <field name="name">product.uom.tree</field>
+            <field name="model">product.uom</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group')),(4, ref('cashier_group')),(4, ref('head_of_sales_group')),(4, ref('sales_manager_group'))]"/>
+            <field name="inherit_id" ref="product.product_uom_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_uom_form_view_BRM_inherit" model="ir.ui.view">
+            <field name="name">product.uom.form</field>
+            <field name="model">product.uom</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group')),(4, ref('cashier_group')),(4, ref('head_of_sales_group')),(4, ref('sales_manager_group'))]"/>
+            <field name="inherit_id" ref="product.product_uom_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Units of Measure Categories-->
+        <record id="product_uom_categ_tree_view_BRM_inherit" model="ir.ui.view">
+            <field name="name">product.uom.categ.tree</field>
+            <field name="model">product.uom.categ</field>
+            <field name="arch" type="xml">
+                <tree string="Unit of Measure Categories">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_uom_categ_tree_view_BRM_inherit2" model="ir.ui.view">
+            <field name="name">product.uom.categ.tree</field>
+            <field name="model">product.uom.categ</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="product_uom_categ_tree_view_BRM_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_uom_categ_form_view_BRM_inherit" model="ir.ui.view">
+            <field name="name">product.uom.categ.form</field>
+            <field name="model">product.uom.categ</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="product.product_uom_categ_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Delivery Methods -->
+        <record id="view_delivery_carrier_tree_BRM_inherit" model="ir.ui.view">
+            <field name="name">delivery.carrier.tree</field>
+            <field name="model">delivery.carrier</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="delivery.view_delivery_carrier_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_delivery_carrier_form_BRM_inherit" model="ir.ui.view">
+            <field name="name">delivery.carrier.form</field>
+            <field name="model">delivery.carrier</field>
+            <field name="groups_id" eval="[(4,ref('branch_manager_group'))]"/>
+            <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Fixed not access accoutant billing will error when click customer menu -->
+        <record id="partner_credit_limit.view_category_property_form" model="ir.ui.view">
+            <field name="groups_id" eval="[(4,ref('account.group_account_invoice'))]"/>
+        </record>
+
+        <!-- TODO Sales order -->
+        <!-- Invisible pricelist_id fields -->
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale order form inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="pricelist_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="required">0</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!-- Access can see pricelist fields -->
+        <record id="view_order_form_inherit_access" model="ir.ui.view">
+            <field name="name">sale order form inherit</field>
+            <field name="model">sale.order</field>
+            <field name="groups_id" eval="[(4, ref('access_pricelist_field'))]"/>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="pricelist_id" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                    <attribute name="required">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!-- The following users cannot “Update Qty On Hand” for all products -->
+        <record id="product_template_form_view_procurement_button_inherit" model="ir.ui.view">
+            <field name="name">product.template.product.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="groups_id" eval="[(4, ref('cashier_group')),(4, ref('head_of_sales_group')),(4, ref('sales_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='%(stock.action_view_change_product_quantity)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_form_view_procurement_button_inherit" model="ir.ui.view">
+            <field name="name">product.template.product.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="groups_id" eval="[(4, ref('cashier_group')),(4, ref('head_of_sales_group')),(4, ref('sales_manager_group'))]"/>
+            <field name="inherit_id" ref="stock.product_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='%(stock.action_view_change_product_quantity)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

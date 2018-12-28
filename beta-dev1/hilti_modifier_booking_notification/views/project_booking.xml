@@ -1,0 +1,32 @@
+<odoo>
+	<data>
+
+		<record id="project_booking_view_tester_inherit" model="ir.ui.view">
+			<field name="name">project.booking.view.tester.inherit</field>
+			<field name="model">project.booking</field>
+			<field name="inherit_id" ref="hilti_modifier_customer_booking.project_booking_view_tester_inherit" />
+			<field name="arch" type="xml">
+				<button name="cancel_booking_from_reminder" position='before'>
+					<button name="tester_reminder" string="Reminder"
+						type="object" class="btn-primary"
+						attrs="{'invisible': ['|','|','|',('add_accept_button', '=', True),('status', '=', 'completed'),('status', '=', 'cancelled'),('testing_start_time', '!=', False)]}" />
+				</button>
+				<button name="stop_testing" position='before'>
+					<button name="%(action_view_testing_delay_inv)d" string="Delay"
+						type="action" class="btn-primary"
+						attrs="{'invisible': ['|','|','|','|',('add_accept_button', '=', True),('status', '=', 'cancelled'),('status', '=', 'completed'),('testing_end_time', '!=', False),('testing_start_time', '=', False)]}" />
+					<button name="book_for_delay" class="btn-primary" type="object" string="Book for Delay"
+						attrs="{'invisible': ['|','|','|','|',('add_accept_button', '=', True),('status', '=', 'cancelled'),('status', '=', 'completed'),('testing_end_time', '!=', False),('testing_start_time', '=', False)]}"/>
+				</button>
+				<button name="stop_testing" position='after'>
+					<button name="%(action_view_testing_feedback_inv)d" string="Feedback"
+						type="action" class="btn-primary"
+						attrs="{'invisible': ['|','|' ,'|',('add_accept_button', '=', True),('status', '=', 'completed'), ('status', '=', 'cancelled'), ('testing_end_time', '=', False)]}" />
+					<button name="accept_dedicated_booking" string="Accept" type="object"
+                        class="btn-primary" attrs="{'invisible': [('add_accept_button', '=', False)]}" />
+				</button>
+			</field>
+		</record>
+		
+	</data>
+</odoo>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+
+        <record id="debit_bca_account" model="account.account">
+            <field name="code">1001</field>
+            <field name="name">Debit BCA</field>
+            <field name="reconcile">True</field>
+            <field name="user_type_id" ref="account.data_account_type_receivable"/>
+        </record>
+
+        <record id="debit_bca_journal" model="account.journal">
+            <field name="name">DEBIT BCA</field>
+            <field name="code">DBCA</field>
+            <field name="type">bank</field>
+            <field name="journal_user">True</field>
+            <field name="default_credit_account_id" ref="debit_bca_account"/>
+            <field name="default_debit_account_id" ref="debit_bca_account"/>
+        </record>
+
+        <record id="ccard_bca_account" model="account.account">
+            <field name="code">1002</field>
+            <field name="name">C.Card BCA</field>
+            <field name="reconcile">True</field>
+            <field name="user_type_id" ref="account.data_account_type_receivable"/>
+        </record>
+
+        <record id="ccard_bca_journal" model="account.journal">
+            <field name="name">C.CARD BCA</field>
+            <field name="code">CCBCA</field>
+            <field name="type">bank</field>
+            <field name="journal_user">True</field>
+            <field name="default_credit_account_id" ref="ccard_bca_account"/>
+            <field name="default_debit_account_id" ref="ccard_bca_account"/>
+        </record>
+
+        <record id="debit_mandiri_account" model="account.account">
+            <field name="code">1003</field>
+            <field name="name">Debit Mandiri</field>
+            <field name="reconcile">True</field>
+            <field name="user_type_id" ref="account.data_account_type_receivable"/>
+        </record>
+
+        <record id="debit_mandiri_journal" model="account.journal">
+            <field name="name">DEBIT MANDIRI</field>
+            <field name="code">DMAN</field>
+            <field name="type">bank</field>
+            <field name="journal_user">True</field>
+            <field name="default_credit_account_id" ref="debit_mandiri_account"/>
+            <field name="default_debit_account_id" ref="debit_mandiri_account"/>
+        </record>
+
+        <record id="ccard_mandiri_account" model="account.account">
+            <field name="code">1004</field>
+            <field name="name">C.Card Mandiri</field>
+            <field name="reconcile">True</field>
+            <field name="user_type_id" ref="account.data_account_type_receivable"/>
+        </record>
+
+        <record id="ccard_mandiri_journal" model="account.journal">
+            <field name="name">C.CARD MANDIRI</field>
+            <field name="code">CMAN</field>
+            <field name="type">bank</field>
+            <field name="journal_user">True</field>
+            <field name="default_credit_account_id" ref="debit_mandiri_account"/>
+            <field name="default_debit_account_id" ref="debit_mandiri_account"/>
+        </record>
+
+        <record id="debit_bni_account" model="account.account">
+            <field name="code">1005</field>
+            <field name="name">Debit BNI</field>
+            <field name="reconcile">True</field>
+            <field name="user_type_id" ref="account.data_account_type_receivable"/>
+        </record>
+
+        <record id="debit_bni_journal" model="account.journal">
+            <field name="name">DEBIT BNI</field>
+            <field name="code">DBNI</field>
+            <field name="type">bank</field>
+            <field name="journal_user">True</field>
+            <field name="default_credit_account_id" ref="debit_bni_account"/>
+            <field name="default_debit_account_id" ref="debit_bni_account"/>
+        </record>
+
+        <record id="ccard_bni_account" model="account.account">
+            <field name="code">1006</field>
+            <field name="name">C.Card BNI</field>
+            <field name="reconcile">True</field>
+            <field name="user_type_id" ref="account.data_account_type_receivable"/>
+        </record>
+
+        <record id="ccard_bni_journal" model="account.journal">
+            <field name="name">C.CARD BNI</field>
+            <field name="code">CBNI</field>
+            <field name="type">bank</field>
+            <field name="journal_user">True</field>
+            <field name="default_credit_account_id" ref="ccard_bni_account"/>
+            <field name="default_debit_account_id" ref="ccard_bni_account"/>
+        </record>
+
+    </data>
+
+</odoo>

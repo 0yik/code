@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<record id="project_edit_project_for_engineer" model="ir.ui.view">
+		<field name="name">project.edit.project.inherit</field>
+		<field name="model">project.project</field>
+		<field name="inherit_id" ref="propell_project.project_edit_project_inherit" />
+		<field name="arch" type="xml">
+			<field name="supervisor_id" position="after">
+				<field name="engineer_ids" widget="many2many_tags" required="1" />
+				<field name="allow_eng" />
+			</field>
+		</field>
+	</record>
+
+</odoo>

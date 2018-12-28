@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="kimhuat_modifier_fields_edit_sales_order_view" model="ir.ui.view">
+            <field name="name">sales order form view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                 <button name="action_view_delivery" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|',('delivery_count', '=', 0),('is_booking', '=', True)]}</attribute>
+                </button>
+                <xpath expr="//form/sheet/div" position="inside">
+                     <button type="object"
+                            name="action_view_work_order"
+                            class="oe_stat_button"
+                            icon="fa-truck"
+                            attrs="{'invisible': ['|',('work_order_count', '=', 0),('is_booking', '=', False)]}" groups="base.group_user">
+                            <field name="work_order_count" widget="statinfo" string="Work Order"/>
+                        </button>
+                </xpath>
+                <field name="user_id" position="replace">
+                </field>
+                <button name="print_quotation" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <xpath expr="//form/header/button[7]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//group[@name='sales_person']/field[@name='client_order_ref']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//form/sheet/group/group/field[@name='partner_id']" position="after">
+                    <label for="street" string="Address"/>
+                            <div class="o_address_format">
+                                <!--<field name="house_no" style="width: 40%" placeholder="House No" class="oe_inline"/>
+                                <field name="level_no" style="width: 37%" placeholder="Level No" class="oe_inline"/>
+                                <field name="unit_no" style="width: 20%" placeholder="Unit No" class="oe_inline"/>
+                                <field name="street" placeholder="Street..." class="o_address_street"/>-->
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                                <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}' context="{'country_id': country_id, 'zip': zip}"/>
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}" />-->
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                                <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                            </div>
+                    <field name="phone" string="Phone"/>
+                    <field name="email" string="Email"/>
+                    <field name="client_order_ref2" attrs="{'readonly': [('state_booking', 'in', ['cancel','done'])]}"/>
+                </xpath>
+
+                <xpath expr="//form/sheet/group/group[2]/field[@name='date_order']"  position="replace">
+                    <field name="date_order" widget="date" invisible="1" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
+                </xpath>
+
+                <xpath expr="//form/sheet/group/group[2]/field[@name='payment_term_id']" position="after">
+                    <group colspan="4">
+                    <label for="job_street" string="Job Site"/>
+                            <div class="o_address_format">
+                                <!--<field name="job_house_no" style="width: 40%" placeholder="House No" class="oe_inline"/>
+                                <field name="job_level_no" style="width: 37%" placeholder="Level No" class="oe_inline"/>
+                                <field name="job_unit_no" style="width: 20%" placeholder="Unit No" class="oe_inline"/>-->
+                                <field name="job_street" placeholder="Street..." class="o_address_street"/>
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                                <field name="job_street2" placeholder="Street 2..." class="o_address_street"/>
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                                <field name="job_city" placeholder="City" class="o_address_city"/>
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                                <field name="job_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}' context="{'country_id': country_id, 'zip': zip}"/>
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}" />-->
+                                <field name="job_zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                                <field name="job_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                    <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                            </div>
+                        <field name="job_location" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                        <field name="sales_category" string="Job Category" attrs="{'invisible': [('is_booking', '=', True)]}"/>
+                        <field name="quotation_title"/>
+                        <field name="user_id"/>
+                        <field name="contract_id" string="Contract" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                        <field name="job_category_id" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                        <field name="job_detail" attrs="{'invisible': [('is_booking', '=', False)],'required':[('is_booking','=',True)]}"/>
+                        <field name="reminder" attrs="{'invisible': [('is_booking', '=', False)]}" widget="many2many_tags"/>
+                        <field name="remarks" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                    </group>
+                </xpath>
+
+                <!--<xpath expr="//form/sheet/notebook/page[2]/group/group/field[@name='project_id']" position="after">-->
+                    <!--<field name="sales_category"/>-->
+                <!--</xpath>-->
+                <xpath expr="//form/sheet/notebook/page[2]" position="before">
+                    <page string="Job Scope" attrs="{'invisible': [('is_booking', '=', True)]}">
+                        <field name="job_scope" string="Job Scope">
+                            <tree editable="bottom">
+                                <field name="job_scope_id" string="Job Scope" required="True"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="job_scope_id" string="Job Scope"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//form/sheet/notebook" position="inside">
+                    <page string="Customer History" attrs="{'invisible': [('is_booking', '=', False)]}">
+                        <field name="customer_history_ids">
+                            <tree create="0" delete="0" edit="0">
+                                <field name="order_number" string="Order Number"/>
+                                <field name="date_order" string="Order Date"/>
+                                <field name="salesperson" string="Salesperson"/>
+                                <field name="amount_total" string="Total"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//form/sheet/notebook/page/field/tree/field[@name='product_id']" position="before">
+                    <field name="option"/>
+                    <field name="brand" attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}"/>
+                    <field name="type" attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}"/>
+                </xpath>
+
+                <xpath expr="//form/sheet/notebook/page/field/form/group/group[2]/div[2]" position="after">
+                    <field name="option"/>
+                    <field name="brand"/>
+                    <field name="type"/>
+                </xpath>
+
+                <!--<xpath expr="//form/sheet/notebook/page/field/tree/field[@name='product_id']" position="attributes">-->
+                    <!--<attribute name="domain">[('product_brand','=',brand),('product_type','=',type)]</attribute>-->
+                <!--</xpath>-->
+
+                <xpath expr="//form/sheet/group/group/field[@name='partner_id']" position="attributes">
+                    <attribute name="context">{'show_address': 0}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="replace">
+                    <field name="product_id" string="Product/Model No." attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='analytic_tag_ids']" position="replace">
+                    <field name="product_uom" attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}" string="UOM"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="replace">
+                    <field name="product_uom_qty" string="Quantity"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
+                    <field name="sor_ref"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="replace">
+                    <field name="payment_term_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="string">Customer</attribute>
+                </xpath>
+                <xpath expr="//field[@name='email']" position="after">
+                    <field name="sale_person" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='type']" position="attributes">
+                    <attribute name="string">Product Type</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='qty_delivered']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='qty_invoiced']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="string">Model No</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="before">
+                    <field name="description" string="Description"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                    <attribute name="string">UOM</attribute>
+                </xpath>
+                <field name="confirmation_date" position="attributes">
+                    <attribute name="widget">date</attribute>
+                </field>
+                <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='validity_date']" position="replace">
+                    <group colspan="4" style="margin-top : 0px">
+                        <group style="margin-top : 0px">
+                            <field name="date_order" widget="date"  attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
+                            <field  name="validity_date" attrs="{'invisible': [('state', 'in', ['sale', 'done'])]}" modifiers="{'invisible': [['state', 'in', ['sale', 'done']]], 'readonly': [['state', 'not in', ['draft', 'sent']]]}"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!--SALES CATEGORY VIEW-->
+
+        <record id="kimhuat_modifier_fields_sales_category_view_tree" model="ir.ui.view">
+			<field name="name">Sale Category Tree</field>
+			<field name="model">sales.category</field>
+			<field name="arch" type="xml">
+				<tree>
+                    <field name="name"/>
+                </tree>
+			</field>
+		</record>
+
+         <record id="kimhuat_modifier_fields_sales_category_view_form" model="ir.ui.view">
+			<field name="name">Sale Category Form</field>
+			<field name="model">sales.category</field>
+			<field name="arch" type="xml">
+				<form>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </form>
+			</field>
+		</record>
+
+        <record model="ir.actions.act_window" id="kimhuat_modifier_fields_sales_category_actions">
+            <field name="name">Sale Category</field>
+            <field name="res_model">sales.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Sales Category" action="kimhuat_modifier_fields_sales_category_actions" id="kimhuat_modifier_sales_category_menu"
+                  parent="sale.menu_sales_config" sequence="7"/>
+
+        <!--&lt;!&ndash;ADD ORDER LINE&ndash;&gt;-->
+        <!--<record id="kimhuat_modifier_fields_edit_sales_order_line_tree_view" model="ir.ui.view">-->
+            <!--<field name="name">sales order line tree view</field>-->
+            <!--<field name="model">sale.order.line</field>-->
+            <!--<field name="inherit_id" ref="sale.view_order_line_tree"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="field[@name='name']" position="after">-->
+                    <!--<field name="option"/>-->
+                    <!--<field name="brand"/>-->
+                    <!--<field name="type"/>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--SALES JOB SCOPE VIEW-->
+
+        <record id="kimhuat_modifier_fields_sales_job_scope_view_tree" model="ir.ui.view">
+			<field name="name">Sale Job Scope Tree</field>
+			<field name="model">job.scope</field>
+			<field name="arch" type="xml">
+				<tree>
+                    <field name="name"/>
+                </tree>
+			</field>
+		</record>
+
+         <record id="kimhuat_modifier_fields_sales_job_scope_view_form" model="ir.ui.view">
+			<field name="name">Sale Job Scope Form</field>
+			<field name="model">job.scope</field>
+			<field name="arch" type="xml">
+				<form>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </form>
+			</field>
+		</record>
+
+        <record model="ir.actions.act_window" id="kimhuat_modifier_fields_sales_job_scope_actions">
+            <field name="name">Sale Job Scope</field>
+            <field name="res_model">job.scope</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Job Scope" action="kimhuat_modifier_fields_sales_job_scope_actions" id="kimhuat_modifier_sales_job_scope_menu"
+                  parent="sale.menu_sales_config" sequence="8"/>
+
+        <!--JOB CATEGORY VIEW-->
+
+        <record id="kimhuat_job_category_booking_view_tree" model="ir.ui.view">
+			<field name="name">job Category Tree</field>
+			<field name="model">booking.job.category</field>
+			<field name="arch" type="xml">
+				<tree>
+                    <field name="name"/>
+                </tree>
+			</field>
+		</record>
+
+         <record id="kimhuat_job_category_booking_view_form" model="ir.ui.view">
+			<field name="name">Job Category Form</field>
+			<field name="model">booking.job.category</field>
+			<field name="arch" type="xml">
+				<form>
+                    <group>
+                        <field name="name"/>
+                        <field name="job_detail" required="True"/>
+                    </group>
+                </form>
+			</field>
+		</record>
+
+        <record model="ir.actions.act_window" id="kimhuat_job_category_booking_actions">
+            <field name="name">Job Category</field>
+            <field name="res_model">booking.job.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="view_product_template_purchase_currency" model="ir.ui.view">
+            <field name="name">product.template.purchase.button.currency</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='group_standard_price']/field[@name='currency_id']" position="replace">
+                </xpath>
+                  <xpath expr="//field[@name='list_price']" position="before">
+                      <field name="currency_id" invisible="1" can_create="true" can_write="true" modifiers="{'invisible': true, 'readonly': true}"/>
+                  </xpath>
+                <field name="default_code" position="after">
+                    <field name="product_description"/>
+                </field>
+                <field name="default_code" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_normal_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.product.purchase.button.currency</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="default_code" position="after">
+                    <field name="product_description"/>
+                </field>
+                <field name="default_code" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="account_invoice_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_invoice_sent']" position="replace">
+                </xpath>
+            </field>
+        </record>
+        <menuitem name="Job Category" action="kimhuat_job_category_booking_actions" id="kimhuat_job_category_booking_menu"
+                  parent="sale.menu_sales_config" sequence="9"/>
+
+    </data>
+    <function model="product.template" name="change_position_currency"/>
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="analytic_account_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Budget">
+                        <field name="cost_element_ids">
+                            <tree string="Cost Element Tree" editable="bottom" colors ="red:actual_budget > total_budget">
+                                <field name="level"/>
+                                <field name="cost_element_id"/>
+                                <field name="total_budget" sum="total"/>
+                                <field name="actual_budget" sum="actual"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="analytic_account_budget_log_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Budget Log Changes">
+                        <field name="budget_log_ids" modifiers="{'readonly': true}">
+                            <tree string="Cost Element Tree">
+                                <field name="budge_change_number"/>
+                                <field name="old_budget"/>
+                                <field name="new_budget"/>
+                                <field name="cost_element_id"/>
+                                <field name="remarks"/>
+                                <field name="date"/>
+                                <field name="user_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="analytic_account_budget_log_button_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"/>
+            <field name="arch" type="xml">
+                <header position="inside">
+                    <button name="%(budget_change_action)d" states="open" string="Budget Change" type="action"/>
+                </header>
+            </field>
+        </record>
+    </data>
+</odoo>

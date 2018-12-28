@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<template id="report_footer">
+			<div class="footer">
+				<div class="row">
+					<div class="not-last-page">
+						<div class="col-xs-1"></div>
+						<div class="col-xs-4">
+							<span style="border-top: 1px solid black; font-size:22px;">Approved By Sign/Date</span>
+						</div>
+						<div class="col-xs-2"></div>
+						<div class="col-xs-4">
+							<span style="border-top: 1px solid black; font-size:22px;">Received By Sign/Date</span>
+						</div>
+						<div class="col-xs-1"></div>
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="voucher_layout">
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+
+			<t t-call="modifier_teo_accounting.report_header" />
+			<t t-raw="0" />
+			<t t-call="modifier_teo_accounting.report_footer" />
+		</template>
+
+		<template id="account_voucher_report_document">
+			<t t-call="modifier_teo_accounting.voucher_layout">
+				<div class="page">
+					<style>
+						.detailed tr, .detailed td{
+						border:1px solid;
+						}
+						.nettotal tr,
+						.nettotal td{
+						border: 2px
+						solid black !important;
+						}
+					</style>
+					<div class="row">
+						<div class="col-xs-12">
+							<h3 class="text-center mt8 mb8">
+								<t t-if="o.voucher_type != 'sale'"><strong>PAYMENT VOUCHER</strong></t>
+								<t t-if="o.voucher_type == 'sale'"><strong>CUSTOMER RECEIPT</strong></t>
+							</h3>
+						</div>
+					</div>
+					<div class="row mt8"
+						style="padding-top:3px;border-top:1px solid;border-bottom:1px solid;">
+						<div class="col-xs-2">
+							<strong>ORDER NO</strong>
+						</div>
+						<div class="col-xs-2">
+							<span t-field="o.av_number" />
+						</div>
+						<div class="col-xs-2">
+							<strong>DATE</strong>
+						</div>
+						<div class="col-xs-6">
+							<span t-field="o.date" />
+						</div>
+					</div>
+					<div class="row mt8">
+						<table class="table detailed">
+							<tr>
+								<td>
+									<strong>Payee</strong>
+								</td>
+								<td colspan="3">
+									<span t-field="o.partner_id.name" />
+								</td>
+								<td>
+									<strong>Prepared By</strong>
+								</td>
+								<td>
+									<span t-field="o.create_uid.name" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>PayeeID</strong>
+								</td>
+								<td>
+									<span t-field="o.partner_id.customer_id" />
+								</td>
+								<td>
+									<strong>Chq No</strong>
+								</td>
+								<td>
+									<span t-field="o.cheque_number" />
+								</td>
+								<td>
+									<strong>Chq Date</strong>
+								</td>
+								<td>
+									<span t-field="o.cheque_date" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Cash/Bank AcctID</strong>
+								</td>
+								<td>
+									<span t-field="o.account_id.code" />
+								</td>
+								<td>
+									<strong>Acct Name</strong>
+								</td>
+								<td>
+									<span t-field="o.account_id.name" />
+								</td>
+								<td>
+									<strong>CurrencyID</strong>
+								</td>
+								<td>
+									<span t-field="o.currency_id.name" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Remark</strong>
+								</td>
+								<td colspan="5">
+									<span t-field="o.remarks" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="row mt8">
+						<table class="table">
+							<thead>
+								<tr>
+									<th style="border:1px solid;" class="text-center">Item</th>
+									<th style="border:1px solid;" class="text-center">Description</th>
+									<th style="border:1px solid;" class="text-center">Tran Date</th>
+									<th style="border:1px solid;" class="text-center">Acct Description</th>
+									<th style="border:1px solid;" class="text-center">Total</th>
+								</tr>
+							</thead>
+							<tbody class="invoice_tbody">
+								<t t-set='srn' t-value='1' />
+								<t t-foreach="o.line_ids" t-as="l">
+									<tr>
+										<td class="text-center">
+											<span t-esc="srn" />
+										</td>
+										<td>
+											<span t-field="l.name" />
+										</td>
+										<td class="text-center">
+											<span t-field="o.account_date" />
+										</td>
+										<td>
+											<span t-field="l.account_id.name" />
+										</td>
+										<td class="text-right">
+											<span t-field="l.price_subtotal" />
+										</td>
+									</tr>
+									<t t-set='srn' t-value='srn+1' />
+								</t>
+							</tbody>
+						</table>
+					</div>
+					<div class="row mt0">
+						<div class="col-xs-4 pull-right">
+							<table class="table table-condensed nettotal">
+								<tr>
+									<td>
+										<strong>
+											TOTAL
+											<span t-field="o.currency_id.name" />
+										</strong>
+									</td>
+									<td class="text-right">
+										<strong>
+											<span t-field="o.amount"
+												t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+										</strong>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<strong>
+											Bank Total
+											<span t-field="o.currency_id.name" />
+										</strong>
+									</td>
+									<td class="text-right">
+										<strong>
+											<span t-field="o.amount"
+												t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+										</strong>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<strong>
+											Bank Charges
+										</strong>
+									</td>
+									<td class="text-right">
+										<strong>
+											<!-- <span t-field="o.amount_total" -->
+											<!-- t-options='{"widget": "monetary", "display_currency": o.currency_id}' 
+												/> -->
+										</strong>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</t>
+		</template>
+
+		<template id="account_voucher_report">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="modifier_teo_accounting.account_voucher_report_document"
+						t-lang="o.partner_id.lang" />
+				</t>
+			</t>
+		</template>
+
+	</data>
+</odoo>

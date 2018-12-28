@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--<record id="quotation_form_view_inherit" model="ir.ui.view">-->
+            <!--<field name="name">Quotations</field>-->
+            <!--<field name="model">sale.order</field>-->
+            <!--<field name="inherit_id" ref="booking_service_V2.view_order_form_inherit"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//form/header/button[3]" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//form/header/button[8]" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+                <!--<field name="state" position="attributes">-->
+                    <!--<attribute name="statusbar_visible">draft,sale</attribute>-->
+                <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
+    </data>
+</odoo>

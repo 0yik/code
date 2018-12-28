@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="view_users_form_inherit_remove_pin" model="ir.ui.view">
+            <field name="name">res.users.form.inherit1</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="staff_meal.view_users_form_inherit"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='pin_number']" position="replace">
+                </xpath>
+                <xpath expr="//br" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='pin_number']" position="replace">
+                </xpath>
+            </field>
+        </record>
+        <record id="view_users_form_inherit_remove_pin2" model="ir.ui.view">
+            <field name="name">res.users.form.inherit2</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="pos_modifier_order_return.view_users_form_inherit"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='pin_number']" position="replace">
+                </xpath>
+                <xpath expr="//br" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='pin_number']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_users_form_inherit" model="ir.ui.view">
+            <field name="name">res.users.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"></field>
+            <field name="arch" type="xml">
+                <field name="login" position="after">
+					<h1>
+		                <label for="pin_number" string="PIN Number"/><br/>
+		                <field name="pin_number" required="1" class="pinnumber" password="True"/>
+					</h1>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_journal_pos_user_form" model="ir.ui.view">
+            <field name="name">account.journal.pos.user.form.inherit</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <field name="amount_authorized_diff" position="after">
+                        <field name="need_input"/>
+                        <field name="max_digits" attrs="{'invisible': [('need_input', '=', False)]}"/>
+                        <field name="min_digits" attrs="{'invisible': [('need_input', '=', False)]}"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_move_form" model="ir.ui.view">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="payment_ref"/>
+                </field>
+            </field>
+        </record>
+	<record id="view_pos_pos_form" model="ir.ui.view">
+            <field name="name">pos.order.form</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <field name="pos_reference" position="after">
+                    <field name="payment_ref"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

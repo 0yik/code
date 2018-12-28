@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="purchase_request_delivery_address_form_view" model="ir.ui.view">
+			<field name="name">purchase request delivery address form view</field>
+			<field name="model">purchase.request.delivery.address</field>
+			<field name="arch" type="xml">
+				<form>
+                    <group>
+                        <field name="name" string="Address Delivery"/>
+                    </group>
+                </form>
+			</field>
+		</record>
+    </data>
+</odoo>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+		<record id="view_hr_employee_form_view_inherit" model="ir.ui.view">
+			<field name="name">hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="employee_appraisal.hr_employee_view" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='emp_id']" position="after">
+					<field name="salesmen_code"/>
+				</xpath>
+				<xpath expr="/form/sheet/notebook/page[1]/group/group[1]/field[@name='mobile_phone']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath> 
+				<xpath expr="/form/sheet/notebook/page[2]/group/group[1]/field[@name='education_qual_id']" position="attributes">
+					<attribute name="required">0</attribute>
+				</xpath> 
+			</field>
+		</record>
+		<record id="view_employee_form_view_inherit" model="ir.ui.view">
+			<field name="name">hr.employee.form.parent2</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="sg_hr_employee.view_employee_form_parent2" />
+			<field name="arch" type="xml">
+				<field name="dialect" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+			</field>
+		</record>
+		<record id="hr_timesheet_employee_extd_form_inherit" model="ir.ui.view">
+		    <field name="name">hr.timesheet.employee.extd_form</field>
+		    <field name="model">hr.employee</field>
+		    <field name="inherit_id" ref="sale_timesheet.hr_timesheet_employee_extd_form"/>
+		    <field name="arch" type="xml">
+		        <field name="timesheet_cost" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+				<field name="account_id" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+		    </field>
+    	</record>
+		<record id="view_employee_form_inherit" model="ir.ui.view">
+		    <field name="name">hr.timesheet.employee.extd_form</field>
+		    <field name="model">hr.employee</field>
+		    <field name="inherit_id" ref="hr.view_employee_form"/>
+		    <field name="arch" type="xml">
+				<xpath expr="//form/sheet/notebook/page[@name='hr_settings']/group/group[1]" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+			</field>
+		</record>
+		<record id="hr_hr_employee_view_form2_view_inherit" model="ir.ui.view">
+			<field name="name">hr.employee.form.parent2</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2" />
+			<field name="arch" type="xml">
+				<field name="vehicle_distance" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_payslip_extended_form_view_inherit">
+			<field name="name">hr.payslip.extended.form</field>
+			<field name="model">hr.payslip</field>
+			<field name="priority">1</field>
+			<field name="inherit_id" ref="l10n_sg_hr_payroll.hr_payslip_extended_form_view" />
+			<field name="arch" type="xml">
+				<field name="cheque_number" position="before">
+					<field name="payment_by"/>
+				</field>
+			</field>
+		</record>
+		<record id="hr_holidays.action_open_ask_holidays_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+		</record>
+		<record id="hr_holidays.action_open_ask_holidays_calendar" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+		</record>
+		<record id="hr_holidays.action_open_ask_holidays_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="3"/>
+		</record>
+	</data>
+</odoo>

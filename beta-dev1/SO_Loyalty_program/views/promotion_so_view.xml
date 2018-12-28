@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+
+        <record id="view_promotion_on_order_form_inherit" model="ir.ui.view">
+            <field name="name">promotion.on.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="%(import_promotion_line_wizard_action)d" string="Apply Promotion" type="action" class="btn-primary"/>
+                </xpath>
+                <xpath expr="//form/sheet/group/group/field[@name='partner_shipping_id']" position="after">
+                   <field name="pos_promotion_selected_ids" widget="many2many_tags" invisible="1"/>
+                </xpath>
+                <xpath expr="//form/sheet/group/group/field[@name='partner_shipping_id']" position="after">
+                    <field name="use_promo" invisible="1"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[2]" position="before">
+                    <page string="Gift">
+                        <field name="gift_order_line" mode="tree">
+                            <form string="Gift Order Line">
+                                <group>
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="product_uom_qty"/>
+                                    <field name="product_uom"/>
+                                </group>
+                                <group>
+                                    <field name="price_unit"/>
+                                    <field name="tax_id"/>
+                                    <field name="discount"/>
+                                    <field name="price_total"/>
+                                </group>
+                            </form>
+                            <tree string="Gift Order Line" editable="bottom">
+                                <field name="product_id"/>
+                                <field name="name"/>
+                                <field name="product_uom_qty"/>
+                                <field name="product_uom"/>
+                                <field name="price_unit"/> 
+                                <field name="tax_id"/>
+                                <field name="discount"/>
+                                <field name="price_total"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_res_partner_on_order_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.on.order.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='website']" position="after">
+                    <field name="cus_birthday"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_pos_promotion_form_inherit" model="ir.ui.view">
+            <field name="name">pos.promotion.form.inherit</field>
+            <field name="model">pos.promotion</field>
+            <field name="inherit_id" ref="pos_promotion_program.view_pos_promotion_program_inherit_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='buyer_type']" position="after">
+                    <field name='apply_so'/>
+                    <field name='to_valid' invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- inherit action -->
+        <record model="ir.actions.act_window" id="custom_action_pos_promotion_with_filter">
+            <field name="name">Sales Program</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.promotion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('apply_so', '=', True)]</field>
+        </record>
+       
+        <menuitem id="menu_promotion_main" name="Promotion" parent="sales_team.menu_sale_config" sequence="4"/>
+        <menuitem action="custom_action_pos_promotion_with_filter" id="menu_custom_action_pos_promotion_with_filter" parent="menu_promotion_main" sequence="1" name="Sales Program"/>
+        
+        <!-- change sequence -->          
+        <menuitem id="sales_team.menu_config_address_book" parent="sales_team.menu_sale_config" name="Contacts" sequence="5" groups="base.group_system"/>  
+        <!-- sale order inherit -->
+        <!--<record id="view_order_form_change_add_discount_lable" model="ir.ui.view">-->
+            <!--<field name="name">sale.order.form.change.add.discount.lable</field>-->
+            <!--<field name="model">sale.order</field>-->
+            <!--<field name="inherit_id" ref="TM_Sale_modifier_extend.view_order_form_view_add_discount"/>-->
+            <!--<field name="arch" type="xml">-->
+				<!--&lt;!&ndash; Are you sure no Promo replace&ndash;&gt;-->
+                <!--<xpath expr="//button[@name='action_confirm'][3]" position="replace">-->
+                    <!--<button name="action_confirm" string="Confirm Sale" class="o_sale_confirm" type="object"-->
+                            <!--attrs="{'invisible': ['|','|',('have_promo_line', '=', 'False'), ('state', '!=', 'draft'), ('use_promo', '=', True)]}" confirm="Are you sure not appliying Promo Program?"/>-->
+                <!--</xpath>-->
+                <!--&lt;!&ndash; Are you sure you want apply promo replace -->
+                <!--<xpath expr="//button[@name='action_confirm'][2]" position="replace">-->
+                    <!--<button name="action_confirm" string="Confirm Sale" class="o_sale_confirm" type="object"-->
+                            <!--attrs="{'invisible': ['|',('have_promo_line', '=', 'True'), ('state', '!=', 'draft')]}"-->
+                            <!--confirm="Are you sure you want apply promo?"/> -->
+                <!--</xpath>&ndash;&gt;-->
+            <!--</field>-->
+        <!--</record>-->
+        
+    </data>
+</odoo>

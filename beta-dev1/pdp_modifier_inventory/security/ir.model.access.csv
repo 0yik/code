@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_group_shipper_user,group_shipper_user,pdp_modifier_inventory.model_shipper,,1,1,1,1
+access_group_driver_user,group_driver_user,pdp_modifier_inventory.model_driver,,1,1,1,1

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!-- Proposal Report -->
+        <record id="proposal_report_paperformate" model="report.paperformat">
+            <field name="name">Proposal Report</field>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True"/>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_right">7</field>
+            <field name="margin_left">7</field>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report 
+            string="Proposal Report" 
+            id="proposal_report_report" 
+            model="sale.order" 
+            report_type="qweb-pdf"
+            name="avanta_fields_modifier.proposal_template"
+            file="avanta_fields_modifier.proposal_template"
+        />
+        <record id="proposal_report_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="proposal_report_paperformate"/>
+        </record> 
+
+</odoo>

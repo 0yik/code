@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<record id="budget_aa_allocation_sequence" model="ir.sequence">
+        <field name="name">Budget AA Allocation Sequence</field>
+        <field name="code">budget.aa.allocation.sequence</field>
+        <field name="prefix">ABAR/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="implementation">no_gap</field>
+    </record>
+    
+	    <record id="view_budget_aa_allocation_request_tree" model="ir.ui.view">
+        <field name="name">Budget AA Allocation Request Tree</field>
+        <field name="model">budget.analytic.account.allocation</field>
+        <field name="arch" type="xml">
+            <tree string="Budget Analytic Account Allocation Request">
+                <field name="name"/>
+                <field name="requester_id"/>
+                <field name="budget_id"/>
+                <field name="budget_position_id"/>
+                <field name="analytic_account_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_budget_aa_allocation_request_form" model="ir.ui.view">
+        <field name="name">Budget AA Allocation Request Form</field>
+        <field name="model">budget.analytic.account.allocation</field>
+        <field name="arch" type="xml">
+            <form string="Budget Analytic Account Allocation Request">
+                <header>
+                    <button name="submit_for_approval" states="draft" string="Submit for Approval" type="object" class="btn btn-primary"/>
+                    <button name="button_cancel" states="draft" string="Cancel" type="object" class="btn btn-default"/>
+                    <button name="button_approve" states="waiting_for_approval" string="Approve" type="object" class="btn btn-primary"/>
+                    <button name="button_reject" states="waiting_for_approval" string="Reject" type="object" class="btn btn-default"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting_for_approval,approved"/>
+                </header>
+                <sheet>
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="requester_id" attrs="{'readonly':[('state','!=','draft')]}" required="1"/>
+                            <field name="date" attrs="{'readonly':[('state','!=','draft')]}" required="1"/>
+                            <field name="budget_id" domain="[('state','=','validate')]" attrs="{'readonly':[('state','!=','draft')]}" required="1"/>
+                        </group>
+                        <group>
+                            <field name="budget_position_id" attrs="{'readonly':[('state','!=','draft')]}" required="1"/>
+                            <field name="analytic_account_id" attrs="{'readonly':[('state','!=','draft')]}" required="1"/>
+                            <field name="allocation_budget" attrs="{'readonly':[('state','!=','draft')]}" required="1"/>
+                        </group>
+                    </group>
+                    <separator string="Reason"/>
+                    <field name="reason" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+	<record id="action_budget_analytic_account_allocation" model="ir.actions.act_window">
+		<field name="name">Budget Analytic Account Allocation</field>
+		<field name="res_model">budget.analytic.account.allocation</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'readonly_by_pass': True}</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+				Click here to create a Budget Analytic Account Allocation
+			</p>
+		</field>
+	</record>
+
+	<menuitem id="menu_budget_analytic_account_allocation" name="Budget Analytic Account Allocation"
+		action="action_budget_analytic_account_allocation" parent="budget_management.menu_budget"
+		sequence="81" />
+
+</odoo>

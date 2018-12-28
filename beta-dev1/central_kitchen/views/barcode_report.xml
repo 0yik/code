@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<odoo>
+    <data>
+
+        <report
+            id="product_dynamicbarcode"
+            string="Product Barcode Labels"
+            model="product.product"
+            report_type="qweb-pdf"
+            name="central_kitchen.report_dynamic_barcode"
+            file="central_kitchen.report_dynamic_barcode"
+            menu="False"
+         />
+
+    </data>
+</odoo>

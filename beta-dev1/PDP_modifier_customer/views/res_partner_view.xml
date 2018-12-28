@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_res_partner_inherited">
+            <field name="name">res.partner.inherited.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='o_row']" position="inside">
+                    <field name="customer_code" placeholder="Customer Code"/>
+                </xpath>
+                <field name="category_id" position="after">
+                    <field name="credit_limit"/>
+                    <field name="tax_number"/>
+                </field>
+                <field name="street2" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="fax" position="attributes">
+                    <attribute name="string">Fax 1</attribute>
+                </field>
+                <field name="phone" position="attributes">
+                    <attribute name="string">Phone 1</attribute>
+                </field>
+                <field name="mobile" position="attributes">
+                    <attribute name="string">Phone 2</attribute>
+                </field>
+                <xpath expr="//form/sheet/div[2]/div" position="after">
+                    <label for="is_member" string="Member" attrs="{'invisible':[('supplier','=',True)]}"/>
+                    <field name="is_member" string="Member" nolabel="1" attrs="{'invisible':[('supplier','=',True)]}"/>
+                </xpath>
+                <field name="city" position="after">
+                    <field name="city_code" placeholder="City Code" class="o_address_city oe_inline"/>
+                </field>
+                <field name="state_id" position="attributes">
+                    <attribute name="class">o_address_city oe_inline</attribute>
+                </field>
+                <field name="zip" position="attributes">
+                    <attribute name="class">o_address_country oe_inline</attribute>
+                </field>
+                <field name="country_id" position="attributes">
+                    <attribute name="class">o_address_country oe_inline</attribute>
+                </field>
+                <field name="credit_limit" position="attributes">
+                    <attribute name="attrs">{'invisible':[('supplier','=',True)]}</attribute>
+                </field>
+                <field name="credit_limit" position="after">
+                    <field name="debit_limit" attrs="{'invisible':[('supplier','=',False)]}"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_partner_inherit_customer_tree_view_customer" model="ir.ui.view">
+            <field name="name">res.partner.tree.view.inherited</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                 <field name="email" position="after">
+                     <field name="creation_date"/>
+                     <field name="create_by"/>
+                 </field>
+            </field>
+        </record>
+
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="context">{"search_default_customer":1, 'customer_form': True}</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="ir_cron_reminder_send_mail" model="ir.cron">
+            <field name="name">Send Mai Reminder</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'sale.order'" name="model"/>
+            <field eval="'cron_reminder_send_mail'" name="function"/>
+        </record>
+        <record id="seq_employee" model="ir.sequence">
+            <field name="name">Employee</field>
+            <field name="code">hr.employee</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

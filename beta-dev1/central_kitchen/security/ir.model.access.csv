@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_portal_sale_order,sale.order,sale.model_sale_order,base.group_portal,1,1,1,0
+access_portal_sale_order_line,sale.order.line,sale.model_sale_order_line,base.group_portal,1,1,1,0
+access_portal_res_partner,res.partner,base.model_res_partner,base.group_portal,1,1,1,0
+access_portal_stock_picking,stock.picking,stock.model_stock_picking,base.group_portal,1,1,0,0
+access_portal_stock_move,stock.move,stock.model_stock_move,base.group_portal,1,0,0,0
+mrp.access_mrp_bom,mrp.bom,mrp.model_mrp_bom,mrp.group_mrp_user,1,1,1,0
+mrp.access_mrp_bom_line,mrp.bom.line,mrp.model_mrp_bom_line,mrp.group_mrp_user,1,1,1,0

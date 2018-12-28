@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_fund_relization_tree" model="ir.ui.view">
+            <field name="name">fund.relization.tree</field>
+            <field name="model">fund.relization</field>
+            <field name="arch" type="xml">
+                <tree string="Fund Relization">
+                    <field name="docuemnt"/>
+                    <field name="fr_number"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_fund_relization_form" model="ir.ui.view">
+            <field name="name">fund.relization.form</field>
+            <field name="model">fund.relization</field>
+            <field name="arch" type="xml">
+                <form string="Fund Relization">
+                    <header>
+                        <button name="fund_post" string="Post" type="object" states="unposted" class="btn-primary"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        <button name="open_journal_entry"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            string="-> View Journal Entry"
+                            attrs="{'invisible': [('move_id', '=', False)]}">
+                        </button>
+                    </div>
+                        <group>
+                            <group>
+                                <field name="docuemnt" required="1"/>
+                                <field name="fr_number" required="1" domain="[('state','=','approved')]"/>
+                                <field name="amount_transfer" invisible="1"/>
+                                <field name="move_id" invisible="1"/>
+                                                                <field name="company_id" invisible="1"/>
+
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Relization Line">
+                                <field name="fun_relization_line">
+                                    <tree string="Fund Relization" editable="bottom">
+                                        <field name="emp_id"/>
+                                        <field name="designation"/>
+                                        <field name="department_id"/>
+                                        <field name="currency"/>
+                                        <field name="total_amount" sum="Total Amount"/>
+                                        <field name="remaning_amount" sum="Remaning Amount"/>
+                                        <field name="bank_account" required="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_fund_relization" model="ir.actions.act_window">
+            <field name="name">Fund Relization</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fund.relization</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+         <menuitem id="menu_child_fund_relization"
+                action="action_fund_relization" parent="menu_fund_request"
+                sequence="12"/>
+
+
+</odoo>

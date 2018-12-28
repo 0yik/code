@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--<record id="invoice_supplier_form_add_pph" model="ir.ui.view">-->
+            <!--<field name="name">account.invoice.form.inherit.add.pph</field>-->
+            <!--<field name="model">account.invoice</field>-->
+            <!--<field name="inherit_id" ref="account.invoice_supplier_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="amount_total" position="after">-->
+                  <!--<label for="pph_total" style="font-style:italic"/>-->
+                  <!--<field name="pph_total" attrs="{'invisible':[('pph_total','=',0)]}" style="font-style: italic;" nolabel="1"/>-->
+                  <!--<label for="po_total" style="font-style:italic"/>-->
+                  <!--<field name="po_total" attrs="{'invisible':[('pph_total','=',0)]}" style="font-style: italic;" nolabel="1"/>-->
+                <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <record id="view_tax_form_add_partner" model="ir.ui.view">
+            <field name="name">account.tax.form.inherit.add.pph</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="partner_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="pph_vendor_invoice_action" model="ir.actions.act_window">
+            <field name="name">PPH Vendor Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('partner_id.name', '=', 'Kantor Pajak')]</field>
+        </record>
+
+        <menuitem id="pph_vendor_invoice" name="PPH Vendor Invoice" parent="account.menu_finance_payables" sequence="105" action="pph_vendor_invoice_action"/>
+    </data>
+</odoo>

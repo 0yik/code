@@ -1,0 +1,105 @@
+<odoo>
+	<data>
+
+		<record id="project_booking_view_admin" model="ir.ui.view">
+			<field name="name">project.booking.view</field>
+			<field name="model">project.booking</field>
+			<field name="arch" type="xml">
+				<form string="Booking">
+					<header>
+						<field name="status" widget="statusbar" statusbar_visible="pending,reconfirmed,completed,cancelled" />
+					</header>
+					<sheet string="Booking">
+						<h1>
+							<field name="booking_no" readonly="1" />
+						</h1>
+						<group>
+							<group>
+								<field name="company_id" widget="selection" required="1"/>
+								<field name="partner_id" widget="selection" required="1"/>
+								<field name="contact_id"/>
+								<field name="contact_number" />
+								<field name="project_id" required="1" widget="selection"/>
+								<field name="sid_required" />
+								<field name="location_id" string="Address" required="1"/>
+								<field name="postal_code" required="1"/>
+								<field name="is_final" invisible="1"/>
+							</group>
+							<group>
+								<field name="create_date" />
+								<field name="tester_id" context="{'parent_project_tester_id': project_id}" readonly="1" />
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="project_booking_view_admin_re_booking" model="ir.ui.view">
+			<field name="name">project.booking.view</field>
+			<field name="model">project.booking</field>
+			<field name="arch" type="xml">
+				<form string="Booking">
+					<sheet string="Booking">
+						<h1>
+							<field name="booking_no" readonly="1" />
+						</h1>
+						<group>
+							<group>
+								<field name="company_id" widget="selection" invisible="1"/>
+								<field name="partner_id" widget="selection" invisible="1"/>
+								<field name="contact_id"/>
+								<field name="contact_number" />
+								<field name="project_id" required="1" widget="selection"/>
+								<field name="sid_required" />
+								<field name="location_id" string="Address" required="1"/>
+								<field name="postal_code" required="1"/>
+								<field name="is_final" invisible="1"/>
+							</group>
+							<group>
+								<field name="create_date" readonly="1"/>
+								<field name="tester_id" context="{'parent_project_tester_id': project_id}" readonly="1" />
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="project_booking_view_tree_admin" model="ir.ui.view">
+			<field name="name">project.booking.view.tree</field>
+			<field name="model">project.booking</field>
+			<field name="arch" type="xml">
+				<tree string="My First Tree View">
+					<field name="booking_no" />
+					<field name="contact_id" />
+					<field name="project_id" />
+					<field name="sid_required" />
+					<field name="tester_id" />
+					<field name="status" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_admin_booking_view" model="ir.actions.act_window">
+			<field name="name">Customer Booking</field>
+			<field name="res_model">project.booking</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[]</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Customer Booking
+				</p>
+				<p>
+				</p>
+			</field>
+			<field name="view_ids"
+				eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('project_booking_view_tree_admin')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('project_booking_view_admin')})]" />
+		</record>
+
+		<menuitem id="menu_action_admin_booking_view" parent="sales_team.menu_sales"
+			action="hilti_modifier_company.action_admin_booking_view" sequence="5" groups='hilti_modifier_accessrights.group_hilti_admin'/>
+
+	</data>
+</odoo>

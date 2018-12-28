@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="pos_discount_product" model="product.product">
+            <field name="name">Discount</field>
+            <field name="available_in_pos" eval="True"/>
+            <field name="taxes_id" eval="False"/>
+            <field name="supplier_taxes_id" eval="False"/>
+            <field name="is_discount_product" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

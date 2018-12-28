@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="assets" inherit_id="point_of_sale.assets">
+		<xpath expr="." position="inside">
+			<script type="text/javascript" src="/pdp_modifier_printout_receipt/static/src/js/modifier_receipt.js"></script>
+		</xpath>
+	</template>
+</odoo>

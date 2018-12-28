@@ -1,0 +1,2 @@
+UPDATE account_tax SET parent_id = (select res_id from ir_model_data where name = 'parent_purchases') where type_tax_use = 'purchase';
+UPDATE account_tax SET parent_id = (select res_id from ir_model_data where name = 'parent_sales') where type_tax_use = 'sale';

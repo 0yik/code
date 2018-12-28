@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+         <report 
+            id="action_class_summary" 
+            model="class.class" 
+            string="Class Summary Report"
+            report_type="qweb-pdf"
+            name="atts_class.report_class_summary" 
+            file="atts_class.report_class_summary"
+            menu="False"
+        />
+        
+        <report 
+            id="action_class_group" 
+            model="class.class" 
+            string="Class Group Report"
+            report_type="qweb-pdf"
+            name="atts_class.report_class_group" 
+            file="atts_class.report_class_group"
+            menu="False"
+        />
+        
+        <report 
+            id="action_class_list" 
+            model="class.class" 
+            string="Class List Report"
+            report_type="qweb-pdf"
+            name="atts_class.report_class_list" 
+            file="atts_class.report_class_list"
+            menu="False"
+        />
+        
+</odoo>

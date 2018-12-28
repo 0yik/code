@@ -1,0 +1,30 @@
+from odoo import api, fields, models, _
+
+class MgmMultiAssignAnalytics(models.TransientModel):
+    _inherit = 'mgm.multi.assign.analytics'
+    
+    @api.multi
+    def save_multi_analytics_accounting_line(self):
+        account_analytic_line = self.env['account.analytic.line']
+        active_id = self._context.get('active_id')
+        current_record_total = 0.0
+        if self._context.get('active_model') == 'sale.order':
+            current_record = self.env['sale.order'].browse(active_id)
+            current_record_total = current_record.amount_total
+            for record in self.multi_analytics_accounting_line:
+                account_analytic_line.create({'name': record.analytic_account_level_id.name,
+                                              'account_id': record.analytic_account_id.id or False,
+                                              'amount': current_record_total,})
+                print"account_analytic_line====>>>>",account_analytic_line
+       
+        if self._context.get('active_model') == 'sale.requisition':
+            current_record = self.env['sale.requisition'].browse(active_id)
+            current_record_total = current_record.amount_total
+            for record in self.multi_analytics_accounting_line:
+                account_analytic_line.with_context(is_created = True).create({'name': record.analytic_account_level_id.name,
+                                              'account_id': record.analytic_account_id.id or False,
+                                              'amount': current_record_total,})
+        
+        return True
+        
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="attendance_button">
+        <button class="control-button btn btn-default btn-fill btn-wd"><i class="pe-7s-check"/> Attendance </button>
+    </t>
+
+    <t t-name="attendance_popup">
+        <div class="modal-dialog">
+            <div class="popup">
+                <p class="title">Attendance</p>
+                <br/><br/>
+                <input id="login" placeholder="Login"></input><br/><br/>
+                <input id="password" placeholder="Password" type="password"></input>
+                <div class="button button_confirm_attendance " style="float:none; display:inline-block; width:120px;margin-top:40px;">
+                    Confirm
+                </div>
+                <div class="button cancel" style="float:none; display:inline-block; width:120px;margin-top:40px;">
+                    Cancel
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="welcome_popup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput">
+                <h1><p class="title"><t t-esc=" widget.options.title || '' " /></p></h1>
+                <h2> <t t-esc="widget.options.action || ''"></t><t t-esc="widget.options.check_time || ''"></t></h2>
+                <h2><t t-esc="widget.options.msg || ''"></t><t t-esc="widget.options.user || ''"></t></h2>
+                <div class="button cancel" style="color:white; background:#6EC89B; border-color:transparent;margin-top:30px;margin-right:190px">
+                    Ok 
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

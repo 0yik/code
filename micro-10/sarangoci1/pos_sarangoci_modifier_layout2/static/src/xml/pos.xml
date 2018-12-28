@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+    <t t-extend="ButtonDoneAll">
+        <t t-jquery="button" t-operation="replace">
+            <button class="btn btn-default btn-fill btn-wd control-button hide_priority"><i class="pe-7s-check"/> Done all</button>
+        </t>
+    </t>
+
+    <t t-extend="ButtonExitHighPriority">
+        <t t-jquery="button" t-operation="replace">
+            <button class="btn btn-default btn-fill btn-wd control-button hide_priority"><i class="pe-7s-bottom-arrow"/> Exit priority</button>
+        </t>
+    </t>
+
+    <t t-extend="ButtonHighPriority">
+        <t t-jquery="button" t-operation="replace">
+            <button class="btn btn-default btn-fill btn-wd control-button hide_priority"><i class="pe-7s-gleam"/> High Priority</button>
+        </t>
+    </t>
+
+    <t t-name="PrioButton">
+        <button class="control-button btn btn-default btn-fill btn-wd prio-button"><i class="pe-7s-add-user"/> Priority</button>
+    </t>
+
+    <t t-name="CancelPrioButton">
+        <button class="control-button btn btn-default btn-fill btn-wd cancelprio-button"><i class="pe-7s-add-user"/> Cancel Priority</button>
+    </t>
+
+    <t t-name="ReprintButton">
+        <button class="control-button btn btn-default btn-fill btn-wd reprint-button"><i class="pe-7s-add-user"/> Re-Print</button>
+    </t>
+	<t t-extend="NewOrderlineNoteButton">
+		<t t-jquery="button" t-operation="replace">
+			 <button class="control-button btn btn-default btn-fill btn-wd note-button"><i class="pe-7s-note2"/> Note</button>
+		</t>
+	</t>
+
+    <t t-name="NumpadWidget">
+        <div class="numpad">
+            <button class="input-button number-char">1</button>
+            <button class="input-button number-char">2</button>
+            <button class="input-button number-char">3</button>
+            <button class="input-button number-char">4</button>
+            <button class="input-button number-char">5</button>
+            <button class="input-button number-char">6</button>
+            <button class="input-button number-char">7</button>
+            <button class="input-button number-char">8</button>
+            <button class="input-button number-char">9</button>
+            <button class="input-button number-char">0</button>
+            <button class="input-button numpad-reset-qty">clear</button>
+        </div>
+    </t>
+
+
+    <t t-extend="OrderWidget">
+        <t t-jquery="ul.orderlines" t-operation="replace">
+            <div class="orderlines">
+            <div style="display: -webkit-flex;display: flex;    padding-top: 3px;
+            padding-bottom: 10px;
+            padding-left: 15px;
+            padding-right:0px;
+            font-weight: bold;">
+                <div style="flex:3">Product</div>
+                <div style="flex:1;text-align: center;">Qty</div>
+                <div style="flex:2;text-align: right;">Unit Price</div>
+                <div style="flex:3;text-align: right;"><div style="padding-right: 10px;">Total Price</div></div>
+                <div style="flex:1.3;text-align: center;">Status</div>
+            </div>
+            </div>
+        </t>
+    </t>
+    <t t-extend="ProductScreenWidget">
+        <t t-jquery=".leftpane" t-operation="after">
+            <div class="topcenterpane">
+                <div class='subwindow collapsed'>
+                <div class='subwindow-container'>
+                    <div class='subwindow-container-fix pads'>
+                        <div class="placeholder-NumpadWidget"></div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </t>
+    </t>
+
+    <t t-name="CategoryButton">
+        <span class='category-button js-category-switch' t-att-data-category-id="category.id" >
+            <div class="product_div " style="position: absolute; word-wrap: break-word; white-space: normal !important;
+                                 line-height: 20px; color: white; padding: 5px; margin: 1px;text-align: center;
+    width: 99% !important;
+    height: 80px !important; background: #9a9a9a !important;">
+                    <span class="product_span category-name" style="position: relative; top: 7px; font-size: 18px !important; word-wrap: break-word; color: white;
+    font-weight: bold;">
+                        <t t-esc="category.name"/>
+                    </span>
+               </div>
+        </span>
+    </t>
+    
+    <t t-extend="Template">
+    	<t t-jquery=".product" t-operation="replace">
+    		<span class='product' t-att-data-product-id="product.id">
+	            <div class="product-img">
+	                <!-- <img t-att-src='image_url' /> --> 
+	                <span class="price-tag" style="line-height:17px;">
+	                    <t t-esc="product.product_variant_count"/> Variants
+	                </span>
+	                <div class="product-name" style="position: absolute; word-wrap: break-word; white-space: normal !important;
+                                 line-height: 20px; color: white; padding: 5px; margin: 1px;text-align: center;
+    width: 99% !important;
+    height: 80px !important; background: #9a9a9a !important;">
+    					<span style="position: relative; top: 7px; font-size: 18px !important; word-wrap: break-word; color: white;
+    font-weight: bold;">
+		                	<t t-esc="product.name"/>
+		                </span>
+		            </div>
+	            </div>
+	        </span>
+    	</t>
+    </t>
+    
+    <t t-extend="CreateSalesOrderWidget">
+		<t t-jquery=".control-button" t-operation="replace">
+			<!-- <button class="control-button btn btn-default btn-fill btn-wd create-so"><i class='fa fa-star'/>Create Sales Order 
+        </button> -->
+		</t>
+	</t>
+	
+	<t t-extend="KitchenView">
+		<t t-jquery="div[t-if='orderline.get_note()']" t-operation="replace">
+			<div t-if="orderline.get_displaynote()" style="text-align:left;font-size: 18px;margin-left: 4%;">
+                <t t-foreach="orderline.get_displaynote()" t-as="note">
+                	<t t-esc="note" /><br/>
+                </t>
+            </div>
+		</t>
+		<t t-jquery="[t-esc='orderline.get_quantity_str_with_unit()']" t-operation="replace">
+			<t t-esc="orderline.get_quantity()"/> 
+		</t>
+		<t t-jquery="h4:first" t-operation="after">
+			<div t-if="widget.pos.category == 'dine_in'">-----------DINE IN-----------</div>
+		</t>
+	</t>
+	
+	<t t-extend="KitchenReceipt">
+		<t t-jquery="div[t-if='orderline.get_note()']" t-operation="replace">
+			<div t-if="orderline.get_displaynote()" style="text-align:left;font-size: 18px;margin-left: 4%;">
+                <t t-foreach="orderline.get_displaynote()" t-as="note">
+                	<t t-esc="note" /><br/>
+                </t>
+            </div>
+		</t>
+		<t t-jquery="[t-esc='orderline.get_quantity_str_with_unit()']" t-operation="replace">
+			<t t-esc="orderline.get_quantity()"/> 
+		</t>
+		<t t-jquery="h4:first" t-operation="after">
+			<div t-if="widget.pos.category == 'dine_in'">-----------DINE IN-----------</div>
+		</t>
+	</t>
+	
+</template>
+

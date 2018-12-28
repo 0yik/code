@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<template id="snippet_style_ninteen" inherit_id="honos_snippets.honos_snippets"
+		name="honos snippet" priority="19">
+		<xpath
+			expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']"
+			position="inside">
+			<t t-snippet="honos_snippet_style_19.snippet_style_19_template"
+			t-thumbnail="/honos_snippet_style_19/static/src/img/style_19.jpg" />
+		</xpath>
+	</template>
+	
+	<template id="snippet_style_19_template" name="Style 19">
+		  <section class="b_three_column_wrap">
+			  <div class="b_three_column_container">
+					<div class="b_ind_column_div">
+						<a href="#"><section class="hover_before"><img  class="s_image_common" src="/honos_snippet_style_19/static/src/img/style_19_img_1.png"></img></section></a>
+					</div>
+					<div class="b_ind_column_div">
+						<a href="#"><section class="hover_before"><img  class="s_image_common" src="/honos_snippet_style_19/static/src/img/style_19_img_2.jpg"></img></section></a>
+					</div>
+					<div class="b_ind_column_div">
+						<a href="#"><section class="hover_before"><img  class="s_image_common" src="/honos_snippet_style_19/static/src/img/style_19_img_3.jpg"></img></section></a>
+					</div>
+			  </div>
+          </section>
+	</template>
+	</odoo>

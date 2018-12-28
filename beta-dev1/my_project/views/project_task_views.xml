@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record id="task_view_form_inherit_my_project" model="ir.ui.view">
+            <field name="name">my.task.view.form.inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="priority">32</field>
+            <field name="arch" type="xml">
+                <field name="date_deadline" position="after">
+                    <field name="date_startdate"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

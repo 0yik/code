@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--record id="view_warehouse_inherit" model="ir.ui.view">
+        <field name="name">View Warehouse Inherit</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="is_shop" invisible="1" />
+            </field>
+        </field>
+    </record-->
+
+	<!-- add checck box in stock location -->
+	<record id="view_view_location_form_inherit" model="ir.ui.view">
+        <field name="name">View Stock Location Inherit</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <field name="location_id" position="after">
+				<group>
+	                <field name="is_shop"/>
+				</group>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_warehouse_orderpoint_form_type_inherit" model="ir.ui.view">
+        <field name="name">View Warehouse Orderpoint Form Type Inherit</field>
+        <field name="model">stock.warehouse.orderpoint</field>
+        <field name="inherit_id" ref="stock.view_warehouse_orderpoint_form"/>
+        <field name="arch" type="xml">
+            <field name="warehouse_id" position="before">
+                <field name="location_type" required="1" on_change="onchange_location_type(location_type)"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,83 @@
+<odoo>
+	<data>
+		<record id="view_view_loyalty_rule_form_inherit_form" model="ir.ui.view">
+			<field name="name">pos.loyalty.rule.otion.inherit.form</field>
+			<field name="model">loyalty.rule</field>
+			<field name="inherit_id" ref="pos_loyalty.view_loyalty_rule_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='rule_type']" position="after">
+					<field name="spending_amount" attrs="{'invisible':[('rule_type','!=','spend_amount')],  'required':[('rule_type','==','spend_amount')]}"/>
+				</xpath>
+				<xpath expr="//group[2]" position="replace">
+					<group col="6" attrs="{'invisible':[('rule_type','==','spend_amount')]}">
+					    <field name="pp_product" />
+					    <field name="pp_currency" />
+					    <field name="cumulative" />
+					</group>
+					<group col="4" attrs="{'invisible':[('rule_type','!=','spend_amount')]}">
+						<field name="pp_currency" string="Points per Amount"/>
+						<field name="cumulative" />
+					</group>
+				</xpath>
+			</field>
+		</record>
+
+
+		<record id="view_view_loyalty_program_formherit_form" model="ir.ui.view">
+			<field name="name">pos.view.loyalty.program.form.inherit.form</field>
+			<field name="model">loyalty.program</field>
+			<field name="inherit_id" ref="pos_loyalty.view_loyalty_program_form"/>
+			<field name="arch" type="xml">
+<!-- 				<xpath expr="//div" position="after">
+					<div>
+						<field name="loyalty_option" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>
+					</div>
+				</xpath> -->
+				<!-- <xpath expr="//p[2]" position="replace"></xpath> -->
+				<xpath expr="//field[@name='reward_ids']" position="after">
+				<!-- <xpath expr="//separator[2]" position="replace"> -->
+<!-- 					<separator string="Rewards" colspan="4" attrs="{'invisible':[('loyalty_option','==','membership')]}"/>
+					<p attrs="{'invisible':[('loyalty_option','==','membership')]}">Reward the customer with gifts or discounts for loyalty points</p>
+					<field name="reward_ids" colspan="4" nolabel="1" attrs="{'invisible':[('loyalty_option','==','membership')]}">
+					    <tree string="Rewards">
+					        <field name="name"/>
+					        <field name="reward_type"/>
+					    </tree>
+					</field> -->
+					<separator string="Membership Points" colspan="4"/>
+					<field name="membership_ids" colspan="4" nolabel="1">
+					    <tree string="Membership Points">
+					        <field name="name"/>
+					        <field name="membership_point"/>
+					    </tree>
+					</field>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_loyalty_membership_form" model="ir.ui.view">
+		    <field name="name">loyalty.membership.form</field>
+		    <field name="model">loyalty.membership</field>
+		    <field name="arch" type="xml">
+		        <form string="Loyalty Membership Points">
+		            <div class="oe_title">
+		                <label class="oe_edit_only" for="name" string="Membership Name"/>
+		                <h1><field name="name"/></h1>
+		            </div>
+		            <group>
+		            	<group>
+		                	<field name="membership_point" />
+		            	</group>
+		            </group>
+		        </form>
+		    </field>
+		</record>
+
+
+		<template id="assets_loyalty_membership" inherit_id="point_of_sale.assets" priority="20">
+		  <xpath expr="//script[last()]" position="after">
+			  <script type="text/javascript" src="/loyality_point_modifier_membership/static/src/js/loyality_point.js"></script>
+		  </xpath>
+		</template>
+	</data>
+</odoo>

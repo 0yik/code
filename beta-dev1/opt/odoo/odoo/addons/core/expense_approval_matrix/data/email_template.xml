@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<data noupdate="0">
+
+        <!--Email template for submit request -->
+        <record id="email_template_edi_expense_request" model="mail.template">
+            <field name="name">Expense Request - Send by Email</field>
+            <field name="email_from">${(object.employee_id.user_id.email and '%s &lt;%s&gt;' % (object.employee_id.user_id.name, object.employee_id.user_id.email) or '')|safe}</field>
+            <!--field name="email_from">${ctx['email_from']|safe}</field-->
+            <field name="subject">Expense Request ${object.name or 'n/a' } need Approval</field>
+            <!--field name="partner_to">${object.partner_id.id}</field-->
+            <field name="email_to">${ctx['email_to']|safe}</field>
+            <field name="model_id" ref="expense_approval_matrix.model_hr_expense"/>
+            <field name="auto_delete" eval="True"/>
+            <!--field name="report_template" ref="report_sale_order"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field-->
+            <!--field name="lang">${object.partner_id.lang}</field-->
+            <field name="body_html"><![CDATA[
+<p>Dear ${ctx['approval_name']|safe},
+<p>
+${ctx['emp_name']|safe} has applied for expense kindly approve it.
+</p>
+<p>
+Kindly review the</strong> <a href="${ctx['url']|safe}" target="_blank">(${object.name})</a>
+</p>
+    <br/><br/>
+
+]]></field>
+        </record>
+</data>
+
+        <!--Email template for submit request Approved-->
+            <!--field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field-->
+            <!--field name="partner_to">${object.partner_id.id}</field-->
+                        <!--field name="report_template" ref="report_sale_order"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field-->
+            <!--field name="lang">${object.partner_id.lang}</field-->
+<data noupdate="1">
+            
+        <record id="email_template_edi_expense_request_approved" model="mail.template">
+            <field name="name">Expense Request Approved- Send by Email</field>
+            <field name="email_from">${ctx['email_from']|safe}</field>
+            <field name="subject">${object.name or 'n/a' } is Approved</field>
+            <field name="email_to">${ctx['email_to']|safe}</field>
+            <field name="model_id" ref="expense_approval_matrix.model_hr_expense"/>
+            <field name="auto_delete" eval="True"/>
+
+            <field name="body_html"><![CDATA[
+<p>Dear ${object.employee_id.name},
+<p>
+Your expense application for ${object.name} has been Approved.
+</p>
+    <br/><br/>
+
+]]></field>
+        </record>
+</data>
+
+        <!--Email template for submit request Reject-->
+            <!--field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field-->
+            <!--field name="partner_to">${object.partner_id.id}</field-->
+            <!--field name="email_to">${ctx['email_to']|safe}</field-->
+                        <!--field name="report_template" ref="report_sale_order"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field-->
+            <!--field name="lang">${object.partner_id.lang}</field-->
+<data noupdate="0">
+        <record id="email_template_edi_expense_request_reject" model="mail.template">
+            <field name="name">Expense Request Reject- Send by Email</field>
+            <field name="email_from">${ctx['email_from']|safe}</field>
+            <field name="subject">${object.name or 'n/a' } is Rejected</field>
+            <field name="email_to">${(object.employee_id.user_id.email and '%s &lt;%s&gt;' % (object.employee_id.user_id.name, object.employee_id.user_id.email) or '')|safe}</field>
+            <field name="model_id" ref="expense_approval_matrix.model_hr_expense"/>
+            <field name="auto_delete" eval="True"/>
+
+            <field name="body_html"><![CDATA[
+<p>Dear ${object.employee_id.name},
+<p>
+Your expense application for ${object.name} has been Rejected.
+</p>
+    <br/><br/>
+
+]]></field>
+        </record>
+</data>
+
+</odoo>

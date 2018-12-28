@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pos_tm_pos_sales_credit_assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/tm_pos_sales_credit/static/src/js/pos_credit.js"></script>
+            <link rel="stylesheet" href="/tm_pos_sales_credit/static/src/css/pos.css" />
+        </xpath>
+    </template>
+
+    <data>
+        <record id="account_journal_payment_debit" model="account.journal">
+            <field name="name">Payment debit</field>
+            <field name="type">sale</field>
+            <field name="code">PD</field>
+            <field name="journal_user">true</field>
+        </record>
+        <record id="account_bank_statement_temp" model="account.bank.statement">
+            <field name="journal_id" ref="account_journal_payment_debit"/>
+            <field name="name">POS Statement</field>
+            <field name="state">open</field>
+        </record>
+    </data>
+</odoo>

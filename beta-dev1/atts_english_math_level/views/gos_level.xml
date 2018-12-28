@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+        <!-- Level Form View -->
+        <record id="view_level_form" model="ir.ui.view">
+	        <field name="name">level.form</field>
+	        <field name="model">level.level</field>
+	        <field name="arch" type="xml">
+	        <form string="Level">
+	            <sheet>
+	                <group>
+	                <group>
+	                    <field name="name" required='1'/>
+	                    <field name="subject" widget="radio" />
+	                    <field name="no_levels" required='1'/>
+	                    <field name="min_student" required='1'/>
+	                    <!-- <field name="start_date"/> -->
+	                </group>
+	                <group>
+	                	<!-- <field name="code" required='1'/> -->
+	                    <!-- <field name="teacher_id" required='1'/> -->
+	                    <field name="passing_score" required='1'/>
+	                    <field name="max_student"/>
+	                    <!-- <field name="end_date"/> -->
+	                </group>
+	                </group>
+	                
+	                <field name="level_ids">
+	                <tree string="Level List" editable="bottom">
+	                   <field name="code" required='1'/>
+	                   <field name="name" required='1'/>
+	                   <field name="teacher_id" required='1'/>
+	                   <field name="start_date"/>
+	                   <field name="end_date"/>
+	                   <field name="level_no" invisible='1'/>
+	                </tree>
+	                </field>
+	                <field name="student_ids">
+	                <tree string="Student List" editable="bottom">
+	                   <field name="student_id" required='1'/>
+	                </tree>
+	                </field>
+	                
+	             </sheet>
+	        </form>
+	        </field>
+       </record>
+       
+       <!-- Level list view -->
+       <record id="view_level_tree" model="ir.ui.view">
+            <field name="name">level.tree</field>
+            <field name="model">level.level</field>
+            <field name="arch" type="xml">
+                <tree string="Level">
+                    <!-- <field name="code"/> -->
+                    <field name="name"/>
+                	<field name="subject"/>
+                	<field name="no_levels"/>
+                	<!-- <field name="teacher_id"/> -->
+                	<field name="passing_score"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Level action -->
+        <record id="action_level" model="ir.actions.act_window">
+            <field name="name">Level</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">level.level</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_level_tree"/>
+            <field name="help">Create and manage students level.</field>
+        </record>
+        
+        <!-- Menu item for level -->
+        <!-- <menuitem action="action_level" id="menu_action_level" parent="atts_course.menu_ems" sequence="3"/> -->
+        
+</odoo>

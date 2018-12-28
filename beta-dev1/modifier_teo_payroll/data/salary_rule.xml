@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="0">
+    
+     <record id="hr_salary_rule_mpf" model="hr.salary.rule">
+            <field name="code">MPF</field>
+            <field eval="801" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">MPF</field>
+            <field name="amount_python_compute">if employee.age &lt;= 55 and contract.wage &gt;= 750:
+    result =  math.floor(contract.wage * (37/100))
+elif employee.age &gt; 55 and employee.age &lt;= 60 and contract.wage &gt;= 750:
+    result =  math.floor(contract.wage * (26/100))
+elif employee.age &gt; 60 and employee.age &lt;= 65 and contract.wage &gt;= 750:
+    result =  math.floor(contract.wage * (16.5/100))
+elif employee.age &gt; 65 and contract.wage &gt;= 750:
+    result =  math.floor(contract.wage * (12.5/100))
+else :
+    result = 0</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+        </record>
+        
+       <record id="hr_salary_rule_cpf" model="hr.salary.rule">
+            <field name="code">CPF</field>
+            <field eval="802" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">CPF</field>
+            <field name="amount_python_compute">if employee.age &lt;= 55:
+    result =  math.floor(contract.wage * (27.75/100))
+elif employee.age &gt; 55 and employee.age &lt;= 60:
+    result =  math.floor(contract.wage * (19.5/100))
+elif employee.age &gt; 60 and employee.age &lt;= 65:
+    result =  math.floor(contract.wage * (12.375/100))
+elif employee.age &gt; 65:
+    result =  math.floor(contract.wage * (9.375/100))
+else :
+    result = 0</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+        </record>
+        
+        <record id="hr_salary_rule_ams" model="hr.salary.rule">
+            <field name="code">AMS</field>
+            <field name="name">AMS</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs.AMS.amount</field>
+            <field eval="0.0" name="amount_fix"/>
+            <field name="sequence" eval="803"/>
+        </record>
+        
+        
+        <record id="hr_salary_rule_pbms" model="hr.salary.rule">
+            <field name="code">PBMS</field>
+            <field eval="804" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">PBMS</field>
+            <field name="amount_python_compute">result =  math.floor(categories.GROSS*(1/100))
+if result &lt; 16:
+	result =  16
+else :
+    result = 0</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+        </record>
+        
+        <record id="hr_rule_input_ams" model="hr.rule.input">
+            <field name="code">AMS</field>
+            <field name="name">AMS</field>
+            <field name="input_id" ref="hr_salary_rule_ams"/>
+        </record>
+        
+  </data>
+</odoo>

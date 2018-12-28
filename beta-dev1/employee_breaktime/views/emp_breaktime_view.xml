@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- views -->
+
+    <!-- employee kanban view specifically for emp.breaktime (to check in/out) -->
+    <record id="hr_employees_view_kanban_breaktime" model="ir.ui.view">
+        <field name="name">hr.employee.kanban</field>
+        <field name="model">hr.employee</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <kanban class="o_hr_employee_breaktime_kanban" create="false">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('hr.employee', 'image_medium', record.id.value)"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <div id="textbox">
+                                    <div class="col-xs-11" style="padding:0px">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="col-xs-1" style="padding:0px">
+                                        <field name="breaktime_state"
+                                               widget="emp_breaktime_kanban_presence_indicator"/>
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li t-if="record.job_id.raw_value">
+                                        <field name="job_id"/>
+                                    </li>
+                                    <li t-if="record.work_location.raw_value">
+                                        <field name="work_location"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="hr_employee_breaktime_action_kanban" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="hr_employees_view_kanban_breaktime"/>
+        <field name="help" type="html">
+            <p>
+                Create a few employees to be able to select an employee here and perform his check in / check out.
+            </p>
+            <p>
+                To create employees go to the Employees menu.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_breaktime_tree" model="ir.ui.view">
+        <field name="name">emp.breaktime.tree</field>
+        <field name="model">emp.breaktime</field>
+        <field name="arch" type="xml">
+            <tree string="Employee Break Time">
+                <field name="employee_id"/>
+                <field name="check_in"/>
+                <field name="check_out"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="emp_breaktime_view_form" model="ir.ui.view">
+        <field name="name">emp.breaktime.form</field>
+        <field name="model">emp.breaktime</field>
+        <field name="arch" type="xml">
+            <form string="Employee Break Time">
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="check_in"/>
+                        <field name="check_out"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="emp_breaktime_view_filter" model="ir.ui.view">
+        <field name="name">emp_breaktime_view_filter</field>
+        <field name="model">emp.breaktime</field>
+        <field name="arch" type="xml">
+            <search string="Emp Break Time Search">
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <filter name="today" string="Today"
+                        domain="[('check_in', '&gt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0)),('check_in', '&lt;=', datetime.datetime.now().replace(hour=23, minute=59, second=59))]"/>
+                <filter string="Current Month"
+                        domain="[('check_in', '&gt;=', datetime.datetime.now().strftime('%Y-%m-01'))]"/>
+                <separator/>
+                <filter string="No Check Out" domain="[('check_out', '=', False)]"/>
+                <separator/>
+                <filter string="My Break Times" domain="[('employee_id.user_id.id', '=', uid)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="employee" string="Employee" context="{'group_by':'employee_id'}"/>
+                    <separator/>
+                    <filter name="groupby_name" string="Month" context="{'group_by':'check_in'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="emp_breaktime_view_pivot" model="ir.ui.view">
+        <field name="name">emp.breaktime.pivot</field>
+        <field name="model">emp.breaktime</field>
+        <field name="arch" type="xml">
+            <pivot string="Break Time">
+                <field name="employee_id" type="row"/>
+                <field name="check_in" type="col"/>
+                <field name="worked_hours" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="emp_breaktime_view_graph" model="ir.ui.view">
+        <field name="name">emp.breaktime.graph</field>
+        <field name="model">emp.breaktime</field>
+        <field name="arch" type="xml">
+            <graph string="Break Time">
+                <field name="employee_id"/>
+                <field name="check_in"/>
+                <field name="worked_hours" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- actions -->
+
+    <record id="emp_breaktime_action" model="ir.actions.act_window">
+        <field name="name">Break Times</field>
+        <field name="res_model">emp.breaktime</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{"search_default_today":1}</field>
+        <field name="search_view_id" ref="emp_breaktime_view_filter"/>
+        <field name="help" type="html">
+            <p>The break time records of your employees will be displayed here.</p>
+            <p>Please make sure you're using the correct filter if you expected to see any.</p>
+        </field>
+    </record>
+
+    <record id="emp_breaktime_action_graph" model="ir.actions.act_window">
+        <field name="name">Break Time Analysis</field>
+        <field name="res_model">emp.breaktime</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="view_id"></field>  <!-- force empty -->
+    </record>
+
+    <record id="emp_breaktime_action_graph_filtered" model="ir.actions.act_window">
+        <field name="name">Break Time Analysis</field>
+        <field name="res_model">emp.breaktime</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="context">{
+            'search_default_department_id': [active_id],
+            'default_department_id': active_id}
+        </field>
+        <field name="view_id"></field>  <!-- force empty -->
+    </record>
+
+    <record id="emp_breaktime_action_my_breaktimes" model="ir.actions.client">
+        <field name="name">Break Time</field>
+        <field name="tag">emp_breaktime_my_breaktimes</field>
+        <field name="target">main</field>
+    </record>
+
+    <record id="emp_breaktime_action_kiosk_mode" model="ir.actions.client">
+        <field name="name">Break Time</field>
+        <field name="tag">emp_breaktime_kiosk_mode</field>
+        <field name="target">fullscreen</field>
+    </record>
+
+    <record id="emp_breaktime_action_greeting_message" model="ir.actions.client">
+        <field name="name">Message</field>
+        <field name="tag">emp_breaktime_greeting_message</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_emp_breaktime_manage_breaktime" name="Manage Break time"
+              parent="hr_attendance.menu_hr_attendance_root"
+              sequence="110" groups="hr_attendance.group_hr_attendance_user"/>
+
+    <menuitem id="menu_emp_breaktime_my_breaktimes" name="My Breaktimes" parent="hr_attendance.menu_hr_attendance_root"
+              sequence="11" groups="hr.group_hr_attendance" action="emp_breaktime_action_my_breaktimes"/>
+
+
+    <menuitem id="menu_emp_breaktime_view_breaktimes" name="Break time" parent="menu_emp_breaktime_manage_breaktime"
+              sequence="10" groups="hr_attendance.group_hr_attendance_user" action="emp_breaktime_action"/>
+
+    <menuitem id="menu_emp_breaktime_kiosk_mode" name="Break time Kiosk Mode"
+              parent="menu_emp_breaktime_manage_breaktime"
+              sequence="20" groups="hr_attendance.group_hr_attendance_user" action="emp_breaktime_action_kiosk_mode"/>
+
+    <menuitem id="menu_emp_breaktime_report" name="Break time Reports" parent="menu_emp_breaktime_manage_breaktime"
+              sequence="30"
+              groups="hr_attendance.group_hr_attendance_user" action="emp_breaktime_action_graph"/>
+
+</odoo>

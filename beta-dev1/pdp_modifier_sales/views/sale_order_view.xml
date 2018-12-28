@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="sale_order_search_inherit_view">
+            <field name="name">sale.order.list.select.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="state"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="sale.action_quotations" model="ir.actions.act_window">
+            <!-- <field name="inherit_id" ref="sale.action_quotations"/>-->
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="sale.view_quotation_tree"/>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="context">{'search_default_state':'draft'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a Quotation, the first step of a new sale.
+                </p>
+                <p>
+                    Your next actions should flow efficiently: confirm the Quotation
+                    to a Sale Order, then create the Invoice and collect the Payment.
+                </p>
+                <p>
+                    Note that once a Quotation becomes a Sale Order, it will be moved
+                    from the Quotations list to the Sales Order list.
+                </p>
+            </field>
+        </record>
+
+
+        <record id="view_quotation_tree_inherit" model="ir.ui.view">
+            <field name="name">quotation.tree.add.shipper</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <field name="date_order" position="before">
+                    <field name="create_date" string="Create Date"/>
+                    <field name="create_uid" string ="Created by"/>
+                    <field name="write_date" string ="Update Date"/>
+                    <field name="write_uid" string ="Updated by"/>
+                </field>
+                <field name="date_order" position="after">
+                    <field name="note" string="Note"/>
+                </field>
+
+                <field name="user_id" position="replace">
+                    <field name="employee_id"/>
+                </field>
+
+                <field name="employee_id" position="after">
+                    <field name="total_bruto"/>
+                    <field name="total_netto"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_order_tree_inherit" model="ir.ui.view">
+            <field name="name">sale.order.tree.add.shipper</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="date_order" position="before">
+                    <field name="write_date" string ="Update Date"/>
+                    <field name="write_uid" string ="Updated by"/>
+                </field>
+                <field name="date_order" position="before">
+                    <field name="warehouse_id"/>
+                </field>
+                <field name="user_id" position="after">
+                    <field name="total_bruto"/>
+                    <field name="total_netto"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="attributes">
+                    <attribute name="context">{'search_supplier_order':1,'search_default_customer':1, 'show_address':
+                        1}
+                    </attribute>
+                </field>
+                <field name="price_unit" position="attributes">
+                    <attribute name="widget">integer</attribute>
+                </field>
+
+                <xpath expr="//field[@name='branch_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='analytic_tag_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/form/group/group[2]/div/field[@name='analytic_tag_ids']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/form/group/group/div" position="replace">
+                    <div>
+                        <field context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'uom_qty_change':True, 'company_id': parent.company_id}"
+                               name="product_uom_qty" class="oe_inline" style="width:50% !important;"/>
+                        <field style="width:50% !important;" name="product_uom" groups="product.group_uom"
+                               class="oe_inline oe_no_button"
+                               attrs="{'readonly': [('state', 'in', ('sale','done', 'cancel'))]}"/>
+                    </div>
+                </xpath>
+
+                <!-- custom fields add -->
+                <xpath expr="//sheet/notebook/page/field/form/group/group[1]/field[@name='price_unit']"
+                       position="after">
+                    <field name="custom_discount_type"/>
+                    <field name="custom_discount_rate"/>
+                </xpath>
+                <xpath expr="//form//label[@for='discount']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form//div[@name='discount']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//tree//field[@name='discount']" position="after">
+                    <field name="custom_discount_type"/>
+                    <field name="custom_discount_rate"/>
+                </xpath>
+
+                <xpath expr="//tree//field[@name='discount']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                    <attribute name="domain">[('pricelist_type','=','sale')]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_order_form_inherit_sale_stock1" model="ir.ui.view">
+            <field name="name">sale.order.form.sale.stock</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+            <field name="arch" type="xml">
+                <field name="warehouse_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="discount_sale_view_form" model="ir.ui.view">
+            <field name="name">discount.sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_discount_total.discount_sale_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='discount_rate']" position="after">
+                    <field name="additional_price"/>
+                    <!-- <field name="total_bruto"/>
+                    <field name="total_netto"/> -->
+                </xpath>
+                <field name="amount_tax" position="after">
+                    <field name="cal_add_price"/>
+                </field>
+            </field>
+        </record>
+
+        <!--<record id="view_order_form_inherit_button" model="ir.ui.view">-->
+            <!--<field name="name">sale.order.form.inherit</field>-->
+            <!--<field name="model">sale.order</field>-->
+            <!--<field name="inherit_id" ref="modifier_import_product.view_order_form_inherit"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//button[@name='%(modifier_import_product.import_order_line_wizard_action)d']" position="attributes">-->
+                    <!--<attribute name="class">btn-primary oe_inline</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//button[@name='%(modifier_import_product.import_order_line_wizard_action)d']" position="after">-->
+                    <!--<button name="%(import_order_line_row_wizard_action)d" string="Rows Showing" type="action" class="btn-primary oe_inline"/>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!-- custom modification
+        <record id="custom_view_order_form_inherit_discount_new" model="ir.ui.view">
+            <field name="name">sale.order.form.add.discount.custom</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//form//field[@name='price_unit']" position="after">
+                    <field name="custom_discount_type"/>
+                    <field name="custom_discount_rate"/>
+                </xpath> -->
+
+        <!-- invisible to old two custom fields for form view in module modifire discount type
+        <xpath expr="//form//field[@name='discount_type']" position="attributes">
+            <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//form//field[@name='discount_rate']" position="attributes">
+            <attribute name="invisible">1</attribute>
+        </xpath>-->
+
+
+        <!--xpath expr="//form//label[@for='discount']" position="attributes">
+                <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//form//div[@name='discount']" position="attributes">
+                <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//tree//field[@name='discount']" position="after">
+            <field name="custom_discount_type"/>
+            <field name="custom_discount_rate"/>
+        </xpath -->
+        <!-- invisible to old two custom fields for tree view in module modifire discount type
+        <xpath expr="//tree//field[@name='discount_type']" position="attributes">
+            <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//tree//field[@name='discount_rate']" position="attributes">
+            <attribute name="invisible">1</attribute>
+        </xpath>-->
+
+
+        <!--xpath expr="//tree//field[@name='discount']" position="attributes">
+            <attribute name="invisible">1</attribute>
+        </xpath>
+    </field>
+</record-->
+
+
+    </data>
+</odoo>

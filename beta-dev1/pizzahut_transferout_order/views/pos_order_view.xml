@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_pos_pos_form_inherit" model="ir.ui.view">
+            <field name="name">pos.order.form</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="model">pos.order</field>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Branch Details" name="branch_details" attrs="{'invisible': [('is_transfer_out','=', False)]}" >
+                        <group>
+                            <group>
+                                <field name="is_transfer_out" invisible="1"/>
+                                <field name="source_branch" readonly="1"/>
+                                <field name="destination_branch" readonly="1"/>
+                                <field name="transfer_order_address" readonly="1"/>
+                                <field name="is_order_proceed"/>
+                                <field name="bus_id"/>
+                                <field name="export_as_JSON_data"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

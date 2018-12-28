@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.actions.act_window" id="action_package_purchase_line_product_tree">
+            <field name="context">{}</field>
+            <field name="domain">[('product_id','in',active_ids)]</field>
+            <field name="name">Purchases</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="view_id" ref="purchase.purchase_order_line_tree"/>
+        </record>
+
+        <record model="ir.ui.view" id="view_sale_product_pack_form">
+            <field name="name">product.product.pack.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[2]" position="attributes">
+                    <attribute name="attrs">{'invisible': [('pack', '=', True)]}</attribute>
+                </xpath>
+                <div name="button_box" position="inside">
+                    <button class="oe_inline oe_stat_button" name="action_view_bookings"
+                            type="object" icon="fa-book">
+                        <field string="Bookings" name="bookings_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" name="%(action_package_purchase_line_product_tree)d"
+                       type="action" icon="fa-shopping-cart">
+                       <field string="Purchases" name="purchase_count" widget="statinfo"/>
+                   </button>
+                </div>
+                
+                <label for="name" position="replace">
+                    <label string="Package Name" attrs="{'invisible': [('pack', '=', False)]}" />
+                    <label string="Product Name" attrs="{'invisible': [('pack', '=', True)]}" />
+                </label>
+                <field name="type" position="replace" />
+                <field name="lst_price" position="replace" />
+                <field name="sale_ok" position="before">
+                    <field name="pack" invisible="1" />
+                    <label for="pack" invisible="1" />
+                </field>
+                <notebook position="before">
+                    <group attrs="{'invisible': [('pack', '=', False)]}" name="sale_tc">
+                        <field name="milestone_tmpl_id" />
+                        <field name="type" />
+                        <field name="sale_terms_conditions_template_id" />
+                        <field name="lst_price" string="Rental Price" />
+                        <field name="sell_price"/>
+                    </group>
+                </notebook>
+
+                <xpath expr="//page[@name='general_information']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('pack', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//page[@name='sales']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('pack', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//page[@name='notes']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('pack', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='attribute_value_ids']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('pack', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//page[@name='invoicing']" position="before">
+                    <page string="Products" attrs="{'invisible':[('pack', '=', False)]}" sequence="0">
+                        <field name="pack_line_ids">
+                            <tree string="Pack Product Lines" editable="bottom">
+                                <field name="product_id" />
+                                <field name="quantity" />
+                                <field name="type" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Payment Terms" attrs="{'invisible': ['|', ('product_variant_count', '>', 1), ('pack', '=', False)]}">
+                        <field name="payment_terms">
+                            <tree string="Payment Terms" editable="bottom">
+                                <field name="percentage" string="%" placeholder="%" />
+                                <field name="milestone_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='general_information']" position="after">
+                    <page string="Images">
+                        <field name="multi_product_image_ids">
+                            <tree editable="bottom">
+                                <field name="name"/> 
+                                <field name="product_image" widget='image' style="height:100px;width:100px;"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_product_product_tree_inherit">
+            <field name="name">product.product.pack.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lst_price']" position="attributes">
+                    <attribute name="string">Rental Price</attribute>                    
+                </xpath>
+                <xpath expr="//field[@name='lst_price']" position="after">
+                    <field name="sell_price"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="sale_product_package_tree_view" model="ir.ui.view">
+            <field name="name">sale.product.package.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <tree string="Product">
+                    <field name="name" />
+                    <field name="categ_id" />
+                </tree>
+            </field>
+        </record>
+        
+        <record id="sale_product_package_action" model="ir.actions.act_window">
+            <field name="name">Packages</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="sale_product_package_tree_view" />
+            <field name="context">{"default_pack":True}</field>
+            <field name="domain">[('pack', '=', True)]</field>
+        </record>
+        
+        <menuitem action="sale_product_package_action" id="menu_sale_product_package_action" parent="sales_team.menu_sales" sequence="15" />
+
+    </data>
+</odoo>

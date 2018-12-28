@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="modifier_student_portal_profile_template" name="Modifier Student Portal" inherit_id="student_portal.student_portal_profile_template">
+		<xpath expr="//div[@name='div_gender_detail']" position="after">
+            <div class="row" name="main_div_occupation">
+                <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_occupation">
+                    <label for="occupation" style="font-weight: 400;">Occupation</label>
+                    <input type="text" class="form-control o_website_form_input"
+                           style="border-radius: 5px; height:43px; width:350px;" id="occupation" name="occupation" required="1" t-attf-value="#{student_profile.occupation or ''}"/>
+                </div>
+                <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_income">
+                    <label style="font-weight: 400;">Income</label>
+                    <select name="income" id="income" style="border-radius: 5px; height:43px; width:350px;"
+                            class="form-control" required="1">
+                        <option value="select_income" name="select_income">Select Income</option>
+                        <option value="less_then_1500" name="less_then_1500" id="less_then_1500" t-att-selected="income == 'less_then_1500'">&lt; 1500</option>
+                        <option value="1500_2000" name="1500_2000" id="1500_2000" t-att-selected="income == '1500_2000'">1500 - 2000</option>
+                        <option value="2001_3000" name="2001_3000" id="2001_3000" t-att-selected="income == '2001_3000'">2001 - 3000</option>
+                        <option value="3001_above" name="3001_above" id="3001_above" t-att-selected="income == '3001_above'">3001 &gt;</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" style="margin: 0 0 20px 0;" name="div_nric">
+                <label for="nric" style="font-weight: 400;">NRIC</label>
+                <input type="text" class="form-control o_website_form_input"
+                       style="border-radius: 5px; height:43px; width:350px;" id="nric" name="nric" required="1" t-attf-value="#{student_profile.nric or ''}"/>
+            </div>
+            <div class="row" style="margin: 0 0 20px 0;" name="div_citizenship">
+                <label style="font-weight: 400;">Citizenship</label>
+                <input type="text" style="border-radius: 5px; height:43px; width:350px;"
+                       placeholder="Enter Citizenship.." class="form-control" name="citizenship" id="citizenship" t-attf-value="#{student_profile.citizenship or ''}"/>
+            </div>
+            <div class="row" style="margin: 0 0 20px 0;" name="div_hp_no">
+                <label for="hp_no" style="font-weight: 400;">Hp No</label>
+                <input type="text" class="form-control o_website_form_input"
+                       style="border-radius: 5px; height:43px; width:350px;" id="hp_no" name="hp_no" required="1" t-attf-value="#{student_profile.hp_no or ''}"/>
+                <span style="color:red;" id="hp_no_errmsg"/>
+            </div>
+        </xpath>
+        <xpath expr="//li[@name='li_general']" position="after">
+            <li class="nav-item" name="li_parents">
+                <a class="nav-link" id="parents_tab" name="parents_tab" href="#parents" role="tab" data-toggle="tab">
+                    Parents
+                </a>
+            </li>
+            <li class="nav-item" name="li_references">
+                <a class="nav-link" id="references_tab" name="references_tab" href="#references" role="tab"
+                   data-toggle="tab">References
+                </a>
+            </li>
+            <li class="nav-item" name="li_family_detail">
+                <a class="nav-link" id="family_detail_tab" name="family_detail_tab" href="#family_detail" role="tab"
+                   data-toggle="tab">Family Detail
+                </a>
+            </li>
+            <li class="nav-item" name="li_general_survey">
+                <a class="nav-link" href="#general_survey_form" id="general_survey_tab" name="general_survey_tab"
+                   role="tab" data-toggle="tab">General Survey
+                </a>
+            </li>
+            <li class="nav-item" name="li_education_background">
+                <a class="nav-link" id="education_background_tab" name="education_background_tab"
+                   href="#education_backgroUnd_form" role="tab" data-toggle="tab">Education Background
+                </a>
+            </li>
+        </xpath>
+        <xpath expr="//div[@id='general']" position="after">
+            <div role="tabpanel" class="tab-pane fade" id="parents" name="div_parents">
+                <div class="row">
+                    <t t-if="parent_ids">
+                        <div class="container">
+                            <table class="table">
+                                <thead name="table_header" id="table_header">
+                                    <tr>
+                                        <th style="text-align:center;">Name</th>
+                                        <th style="text-align:center;">Address</th>
+                                        <th style="text-align:center;">Phone</th>
+                                        <th style="text-align:center;">Email</th>
+                                        <th style="text-align:center;">City</th>
+                                        <th style="text-align:center;">Country</th>
+                                        <th style="text-align:center;">State</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="parent_ids" name="parent_ids" t-foreach="parent_ids" t-as="parent">
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_name" id="parent_name" t-attf-value="#{parent.name or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_address" id="parent_address" t-attf-value="#{parent.street or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_phone" id="parent_phone" t-attf-value="#{parent.phone or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_email" id="parent_email" t-attf-value="#{parent.email or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_city" id="parent_city" t-attf-value="#{parent.city or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_country_id" id="parent_country_id" t-attf-value="#{parent.country_id.name or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_state_id" id="parent_state_id" t-attf-value="#{parent.state_id.name or ''}" disabled="True"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                    <t t-if="not parent_ids">
+                        <p>There are currently no parent information available.</p>
+                    </t>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="references">
+                <div class="row">
+                    <t t-if="not references_ids">
+                        <p>There are currently no references information available.</p>
+                    </t>
+                    <t t-if="references_ids">
+                        <div class="container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">First Name</th>
+                                        <th style="text-align:center;">Middle Name</th>
+                                        <th style="text-align:center;">Surname</th>
+                                        <th style="text-align:center;">Designation</th>
+                                        <th style="text-align:center;">Phone</th>
+                                        <th style="text-align:center;">Gender</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="references_detail" name="references_detail" t-foreach="references_ids" t-as="reference">
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="references_first_name" id="references_first_name" t-attf-value="#{reference.name or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="references_middle_name" id="references_middle_name" t-attf-value="#{reference.middle or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="references_surname" id="references_surname" t-attf-value="#{reference.last or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="references_designation" id="references_designation" t-attf-value="#{reference.designation or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="references_phone" id="references_phone" t-attf-value="#{reference.phone or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <select name="gender" id="gender" style="border-radius: 5px; height:43px; width:350px;" class="form-control" disabled="True">
+                                                <option t-attf-value="#{reference.name or ''}" t-att-selected="reference.gender == ''">Select Gender</option>
+                                                <option t-attf-value="#{reference.name or ''}" t-att-selected="reference.gender == 'male'">Male</option>
+                                                <option t-attf-value="#{reference.name or ''}" t-att-selected="reference.gender == 'female'">Female</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="family_detail">
+                <div class="row">
+                    <t t-if="not family_ids">
+                        <p>There are currently no family information available.</p>
+                    </t>
+                    <t t-if="family_ids">
+                        <div class="container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">Related Student</th>
+                                        <th style="text-align:center;">Name</th>
+                                        <th style="text-align:center;">Phone</th>
+                                        <th style="text-align:center;">Email</th>
+                                        <th style="text-align:center;">Relation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="family_ids" name="family_ids" t-foreach="family_ids" t-as="family">
+
+                                        <td>
+                                            <select name="rel_name" id="rel_name" style="border-radius: 5px; height:43px; width:350px;" class="form-control" disabled="True">
+                                                <option t-attf-value="#{family.rel_name or ''}" t-att-selected="family.rel_name == 'exist'">Link to Existing Student</option>
+                                                <option t-attf-value="#{family.rel_name or ''}" t-att-selected="family.rel_name == 'new'">Create New Relative Name</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <t t-if="family.rel_name == 'new'">
+                                                <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="new_name" id="new_name" t-attf-value="#{family.name or ''}" disabled="True"/>
+                                            </t>
+                                            <t t-if="family.rel_name == 'exist'">
+                                                <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="exist_name" id="exist_name" t-attf-value="#{family.stu_name.name or ''}" disabled="True"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="family_phone" id="family_phone" t-attf-value="#{family.phone or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="family_email" id="family_email" t-attf-value="#{family.email or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="family_relation" id="family_relation" t-attf-value="#{family.relation.name or ''}" disabled="True"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="general_survey_form">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label style="font-weight: 400;">WHERE DID YOU OBTAINED THE INFORMATION ON PERGAS PROGRAMMES</label>
+                        <select name="general_survey_ids" id="general_survey_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1" disabled="True">
+                            <option value="select_general_survey">Select General Survey</option>
+                            <t t-foreach="general_survey_ids or []" t-as="survey">
+                                <option t-att-value="survey.id" t-att-selected="survey.id == general_survey_id.id">
+                                    <t t-esc="survey.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="education_backgroUnd_form">
+                <div class="row">
+                    <div class="container">
+                        <div class="col-md-12 mb16 text-left text-muted">
+                            <div class="#">
+                                <div class="#">
+                                    <h3 style="color:#0085ba;">Highest Qualification</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mt16">
+                    <label style="font-weight: 400;">Highest Qualification</label>
+                    <select name="highest_qualification_ids" id="highest_qualification_ids"
+                            style="border-radius: 5px; height:43px; width:350px;" class="form-control" disabled="True">
+                        <option value="select_highest_qualification">Select Highest Qualification</option>
+                        <t t-foreach="highest_qualification_ids or []" t-as="qualification">
+                            <option t-att-value="qualification.id" t-att-selected="qualification.id == highest_qualification_id.id">
+                                <t t-esc="qualification.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+                <div class="row">
+                    <t t-if="not education_background_ids">
+                        <br/><p>There are currently no education background information available.</p>
+                    </t>
+                    <t t-if="education_background_ids">
+                        <div class="col-md-12 mb16 text-left text-muted">
+                            <div class="#">
+                                <div class="#">
+                                    <h3 style="width:100%;clear: both;color:#0085ba;">Islamic Studies Highest Achievement</h3>
+                                </div>
+                            </div>
+                            <div style="font-weight: 400;">For SLPI and DPI only</div>
+                        </div>
+                        <div class="container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;">Institution</th>
+                                        <th style="text-align:center;">From Date</th>
+                                        <th style="text-align:center;">To Date</th>
+                                        <th style="text-align:center;">Achievement</th>
+                                        <th style="text-align:center;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="islamic_studies_highest_achievement_row" name="islamic_studies_highest_achievement_row" t-foreach="education_background_ids" t-as="education">
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_institution" id="eb_institution" t-attf-value="#{education.institution or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_from_date" id="eb_from_date" t-attf-value="#{education.from_date or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_to_date" id="eb_to_date" t-attf-value="#{education.to_date or ''}" disabled="True"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_achievement" id="eb_achievement" t-attf-value="#{education.achievement or ''}" disabled="True"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+	</template>
+</odoo>

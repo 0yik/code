@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_arkco_modifier__rfq_tendor_arkco_modifier__rfq_tendor,arkco_modifier__rfq_tendor.arkco_modifier__rfq_tendor,model_arkco_modifier__rfq_tendor_arkco_modifier__rfq_tendor,,1,0,0,0

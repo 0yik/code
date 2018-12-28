@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="import_product_line_form">
+            <field name="name">import.product.line.form</field>
+            <field name="model">import.product.line</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <group>
+                        <group>
+                            <field name="type" widget="radio"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="import_file" widget="binary" filename="file_name"/>
+                        </group>
+                        <group></group>
+                    </group>
+
+                    <footer>
+                        <button name="import_product_line" type="object" string="Import" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_import_product_line" model="ir.actions.act_window">
+            <field name="name">Import Product Line</field>
+            <field name="res_model">import.product.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="pdp_modifier_inventory_adjustments.import_product_line_form"/>
+            <!--<field name="context" eval="{'default_journal_user': 1, 'default_type': 'cash'}"/>-->
+            <field name="target">new</field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_inventory_form_inherit_import_product_line">
+            <field name="name">stock.inventory.form.inherits</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                    <button name="%(pdp_modifier_inventory_adjustments.action_import_product_line)d" string="Import Product" class="oe_highlight" type="action"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_multi_reordering_inherit_import_product_line">
+            <field name="name">stock.multi.reordering.form.inherits</field>
+            <field name="model">stock.multi.reordering</field>
+            <field name="inherit_id" ref="pdp_modifier_inventory_reordering_rules.view_multi_reordering_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                    <button name="%(pdp_modifier_inventory_adjustments.action_import_product_line)d" string="Import Product" class="oe_highlight" type="action"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

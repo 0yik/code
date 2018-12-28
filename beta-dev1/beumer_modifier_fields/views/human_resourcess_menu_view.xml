@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="hr_salary_rule_tree_view_inherit" model="ir.ui.view">
+            <field name="name">hr salary rule form view inherit</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="inherit_id" ref="l10n_sg_hr_payroll.hr_salary_rule_sequence_tree"/>
+            <field name="arch" type="xml">
+                <field name="sequence" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="hr_holidays.menu_hr_holidays_root" model="ir.ui.menu">
+            <field name="name">Leave</field>
+        </record>
+        <record id="hr_holidays.menu_hr_holidays_my_leaves" model="ir.ui.menu">
+            <field name="name">My Leave</field>
+        </record>
+        <record id="hr_holidays.menu_open_company_allocation" model="ir.ui.menu">
+            <field name="name">Leave Summary</field>
+        </record>
+        <record id="multiple_leave_application.menu_multiple_leave_request" model="ir.ui.menu">
+            <field name="name">Leave Request</field>
+        </record>
+        <record id="hr_holidays.menu_hr_holidays_approvals" model="ir.ui.menu">
+            <field name="name">Leave to Approve</field>
+        </record>
+        <record id="hr_holidays.menu_open_department_leave_approve" model="ir.ui.menu">
+            <field name="name">Leave</field>
+        </record>
+        <record id="hr_holidays.menu_open_department_leave_allocation_approve" model="ir.ui.menu">
+            <field name="name">Leave Allocation</field>
+        </record>
+        <!--<menuitem id="hr.menu_hr_root"-->
+				<!--name="Employees"-->
+				<!--web_icon="hr,static/description/icon.png"-->
+				<!--sequence="1"-->
+				<!--parent="sg_hr_employee.menu_root_hr_parent"-->
+				<!--groups="beumer_modifier_access_right.cfo_group,beumer_modifier_access_right.hr_manager_group,beumer_modifier_access_right.hr_executive_group"-->
+			<!--/>-->
+        <!--<menuitem id="hr_payroll.menu_hr_payroll_root"-->
+				<!--name="Payroll"-->
+				<!--web_icon="hr_payroll,static/description/icon.png"-->
+				<!--sequence="2"-->
+				<!--parent="sg_hr_employee.menu_root_hr_parent"-->
+                <!--groups="beumer_modifier_access_right.cfo_group,beumer_modifier_access_right.hr_manager_group"-->
+        <!--/>-->
+
+                <!--<menuitem action="hr_contract.action_hr_contract"-->
+                          <!--id="hr_contract.hr_menu_contract"-->
+                          <!--parent="hr_payroll.menu_hr_payroll_root"-->
+                          <!--name="Contracts" sequence="4"-->
+                          <!--groups="hr.group_hr_manager"-->
+                <!--/>-->
+    </data>
+</odoo>

@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_branch_link_googlemaps_branch_link_googlemaps,branch_link_googlemaps.branch_link_googlemaps,model_branch_link_googlemaps_branch_link_googlemaps,,1,0,0,0

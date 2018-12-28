@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="menu_inventory_request_web" model="website.menu">
+            <field name="name">Inventory Request</field>
+            <field name="url">/inventory</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">33</field>
+        </record>
+    </data>
+</odoo>

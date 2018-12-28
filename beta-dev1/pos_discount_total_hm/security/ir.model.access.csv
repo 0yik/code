@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_discount_total_hm_pos_discount_total_hm,pos_discount_total_hm.pos_discount_total_hm,model_pos_discount_total_hm_pos_discount_total_hm,,1,0,0,0

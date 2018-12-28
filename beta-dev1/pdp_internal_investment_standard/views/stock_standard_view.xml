@@ -1,0 +1,99 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_standard_form_view">
+            <field name="name">stock.standard.form</field>
+            <field name="model">stock.standard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done" readonly="1"/>
+                        <button name="action_confirm" states="draft" string="Comfirm" type="object" class="oe_highlight"/>
+                        <button name="action_button_done" states="confirm" string="Done" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        <button type="object" name="action_view_picking" class="oe_stat_button" icon="fa-truck" attrs="{'invisible':[('state', 'in', ('draft')),('picking_ids','=',[])]}">
+                            <field name="picking_count" widget="statinfo" string="Stock Operations"/>
+                            <field name="picking_ids" invisible="1"/>
+                        </button>
+                        <button type="object" name="action_view_move" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible':[('state', 'in', ('draft','confirm')),('move_count','=',0)]}">
+                            <field name="move_count" widget="statinfo" string="Stock Moves"/>
+                        </button>
+                    </div>
+                        <div class="oe_title">
+                            <label string="Name"/>
+                            <h1>
+                                <field name="name" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                 <field name="responsible_id"/>
+                                <field name="location_id" domain="[('is_shop','=',True)]"/>
+                            </group>
+                            <group>
+                                <field name="create_date" string="Created Date" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+
+                            <page string="Lines">
+                                <field name="stock_standard_line">
+                                     <tree string="Lines" editable="bottom">
+                                        <field name="product_id_code" />
+                                        <field name="product_id" />
+                                        <field name="investment_standard_amount"/>
+                                        <field name="stock_buffer_amount"/>
+                                         <field name="total_sold_a_month"/>
+                                        <field name="stock_current_shop_amount"/>
+                                        <field name="warehouse_id"  domain="[('is_shop','=',False)]"/>
+                                        <field name="stock_warehouse_amount" />
+                                        <field name="to_do_amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                             <page string="Addition information">
+                                 <group>
+                                     <field name="picking_type_id" domain="[('name','=','Internal Transfers')]"/>
+                                <field name="notes"/>
+                                 </group>
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_standard_tree_view">
+            <field name="name">stock.standard.tree</field>
+            <field name="model">stock.standard</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="location_id"/>
+                    <field name="create_date" string="Created Date"/>
+                    <field name="create_uid" string="Created by"/>
+                    <field name="write_date" string="Update Date"/>
+                    <field name="write_uid" string="Updated by"/>
+                    <field name="responsible_id"/>
+                    <field name="notes"/>
+                    <field name="total_to_do_amount"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="stock_standard_action">
+            <field name="name">Delivery Store by Investment Standard</field>
+            <field name="res_model">stock.standard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="delivery_investment_standard_menu" name="Delivery Store by Investment Standard"
+                  parent="stock.menu_stock_inventory_control"
+                  action="stock_standard_action"/>
+    </data>
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="paperformat_general" model="report.paperformat">
+			<field name="name">General Report</field>
+			<field name="format">A4</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">30</field>
+			<field name="margin_bottom">23</field>
+			<field name="margin_left">20</field>
+			<field name="margin_right">5</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">25</field>
+		</record>
+
+		<report string="General PO" id="report_general_po" model="purchase.order"
+			report_type="qweb-pdf" name="modifier_teo_purchase_order_report.general_po_report"
+			file="modifier_teo_purchase_order_report.general_po_report" 
+			paperformat="modifier_teo_purchase_order_report.paperformat_general" />
+
+		<report id="menu_po_fabric_report" string="PO (Fabric)" model="po.fabric.wizard"
+			report_type="qweb-pdf" file="modifier_teo_purchase_order_report.po_fabric_report"
+			name="modifier_teo_purchase_order_report.po_fabric_report" 
+			paperformat="modifier_teo_purchase_order_report.paperformat_general" />
+
+		<report string="Purchase Order" id="purchase.action_report_purchase_order"
+			model="purchase.order" report_type="qweb-pdf" name="purchase.report_purchaseorder"
+			file="purchase.report_purchaseorder" menu="False" />
+
+		<report string="Request for Quotation" id="purchase.report_purchase_quotation"
+			model="purchase.order" report_type="qweb-pdf"
+			name="purchase.report_purchasequotation" file="purchase.report_purchasequotation"
+			menu="False" />
+
+	</data>
+</openerp>

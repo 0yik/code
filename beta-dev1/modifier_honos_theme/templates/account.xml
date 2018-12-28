@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_with_booking_id" name="sale_with_booking_id" inherit_id="website_portal_sale.orders_followup">
+        <!-- Replace header with reference number -->
+        <xpath expr="//li[@class='li_class_op_details']" position="replace">
+            <!-- compute reference number -->
+            <t t-set="ord_ref"></t>
+            <t t-set="only_booking" t-value="false"/>
+            <t t-if="order.booking_id">
+                <t t-if="len(order.order_line.mapped('booking_line_id')) + len(order.order_line.filtered(lambda l: l.product_id.type == 'service')) == len(order.order_line)">
+                    <t t-set="ord_ref"><t t-esc="order.booking_id.name"/></t>
+                    <t t-set="only_booking" t-value="true"/>
+                </t>
+                <t t-else="">
+                    <t t-set="ord_ref"><t t-esc="order.name"/> (<t t-esc="order.booking_id.name"/>)</t>
+                </t>
+            </t>
+            <t t-else="">
+                <t t-set="ord_ref"><t t-esc="order.name"/></t>
+            </t>
+            <li class="li_class_op_details">Reference <t t-esc="ord_ref"/></li>
+        </xpath>
+        <!-- replace header with reference number -->
+        <xpath expr="//h4[@class='h4_class_qp_quotation_heading']" position="replace">
+            <h4 class="h4_class_qp_quotation_heading">
+                Reference <span t-esc="ord_ref"/>
+                <span class="ml16 div_class_op_date">
+                    Placed On:
+                    <span t-field="order.create_date" t-field-options='{"widget": "date"}' />
+                </span>
+            </h4>
+        </xpath>
+        <!-- hide shipping address if order is only for rent -->
+        <xpath expr="//div[@id='shipping_address']" position="attributes">
+            <attribute name="t-if">not only_booking and order.partner_shipping_id</attribute>
+        </xpath>
+        <!-- show product status (rented or purchased) -->
+        <xpath expr="//div[@id='product_name']/div/p" position="after">
+            <span>
+                <t t-if="ol.booking_line_id">
+                    <t t-if="ol.booking_line_id.start_date and ol.booking_line_id.end_date">
+                        (On rent from <t t-esc="ol.booking_line_id.start_date"/> to <t t-esc="ol.booking_line_id.end_date"/>)
+                    </t>
+                    <t t-else="">
+                        (Rented)
+                    </t>
+                </t>
+                <t t-else="">
+                    (Purchased)
+                </t>
+            </span>
+        </xpath>
+    </template>
+
+    <template id="portal_my_quotations_inherit_mod_honos_theme" inherit_id="website_portal_sale.portal_my_quotations" name="Quotations with booking ref">
+        <!-- Change Quotation # to Reference # -->
+        <xpath expr="//thead/tr/th[1]" position="replace">
+            <th>Reference #</th>
+        </xpath>
+        <!-- Remove Valid Until column-->
+        <xpath expr="//thead/tr/th[2]" position="replace"></xpath>
+        <xpath expr="//t[@t-foreach='quotations']/tr/td[2]" position="replace"></xpath>
+        <xpath expr="//td[@colspan='4']" position="attributes">
+            <attribute name="colspan">3</attribute>
+        </xpath>
+
+        <!-- Add status for quotation is sent or not -->
+        <xpath expr="//t[@t-foreach='quotations']/tr/td[2]" position="inside">
+            <t t-if="quotation.state == 'sent'">
+                <span class="label label-default btn_class_status_button_font">
+                    <i class="fa fa-fw fa-send" />
+                    Sent
+                </span>
+            </t>
+            <t t-else="">
+                <span class="label label-default btn_class_status_button_font">
+                    <i class="fa fa-fw fa-thumbs-down" />
+                    Not sent
+                </span>
+            </t>
+        </xpath>
+
+        <!-- Show reference number -->
+        <xpath expr="//t[@t-esc='quotation.name']" position="replace">
+            <t t-if="quotation.booking_id">
+                <t t-if="len(quotation.order_line.mapped('booking_line_id')) + len(quotation.order_line.filtered(lambda l: l.product_id.type == 'service')) == len(quotation.order_line)">
+                    <span t-esc="quotation.booking_id.name"/>
+                </t>
+                <t t-else="">
+                    <span t-esc="quotation.name" /> (<t t-esc="quotation.booking_id.name"/>)
+                </t>
+            </t>
+            <t t-else="">
+                <span t-esc="quotation.name" />
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_orders_inherit_mod_honos_theme" inherit_id="website_portal_sale.portal_my_orders" name="Sales Orders with booking ref">
+        <!-- Change Quotation # to Reference # -->
+        <xpath expr="//thead/tr/th[1]" position="replace">
+            <th>Reference #</th>
+        </xpath>
+
+        <!-- Show reference number -->
+        <xpath expr="//t[@t-esc='order.name']" position="replace">
+            <t t-if="order.booking_id">
+                <t t-if="len(order.order_line.mapped('booking_line_id')) + len(order.order_line.filtered(lambda l: l.product_id.type == 'service')) == len(order.order_line)">
+                    <span t-esc="order.booking_id.name"/>
+                </t>
+                <t t-else="">
+                    <span t-esc="order.name" /> (<t t-esc="order.booking_id.name"/>)
+                </t>
+            </t>
+            <t t-else="">
+                <span t-esc="order.name" />
+            </t>
+        </xpath>
+    </template>
+
+    <template id="confirmation_inherit_mod_honos_theme"  inherit_id="website_sale.confirmation">
+        <!-- Show reference number -->
+        <xpath expr="//em[@t-field='order.name']" position="replace">
+            <t t-if="order.booking_id">
+                <t t-if="len(order.order_line.mapped('booking_line_id')) + len(order.order_line.filtered(lambda l: l.product_id.type == 'service')) == len(order.order_line)">
+                    <t t-if="invoice">
+                        <em t-esc="invoice"/> Confirmed
+                    </t>
+                    <t t-if="not invoice">
+                        <em t-esc="order.booking_id.name"/> Confirmed
+                    </t>
+                </t>
+                <t t-else="">
+                    <t t-if="invoice">
+                        <em t-esc="invoice" /> (<t t-esc="order.booking_id.name"/>) Confirmed
+                    </t>
+                    <t t-if="not invoice">
+                        <em t-esc="order.name" /> (<t t-esc="order.booking_id.name"/>) Confirmed
+                    </t>
+                </t>
+            </t>
+            <t t-else="">
+                <em t-esc="order.name" /> Confirmed
+            </t>
+        </xpath>
+    </template>
+</odoo>

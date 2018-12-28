@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_testing_delay_inv" model="ir.ui.view">
+		<field name="name">Delay</field>
+		<field name="model">testing.delay</field>
+		<field name="arch" type="xml">
+			<form string="Testing Delay">
+				<sheet>
+					<group>
+						<field name="delay_time" widget="float_time"/>
+						<field name="delay_remark" />
+					</group>
+				</sheet>
+				<footer>
+					<button string="Cancel" class="btn-default" special="cancel" />
+					<button name="add_delay" string="Submit" type="object"
+						class="btn-primary" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_view_testing_delay_inv" model="ir.actions.act_window">
+		<field name="name">Delay</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">testing.delay</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+		<field name="groups_id" eval="[]" />
+	</record>
+
+	<record id="view_testing_feedback_inv" model="ir.ui.view">
+		<field name="name">Feedback</field>
+		<field name="model">testing.feedback</field>
+		<field name="arch" type="xml">
+			<form string="Testing Feedback">
+				<sheet>
+					<group>
+						<field name="anchor_ids" string="Anchor Details">
+							<tree editable="bottom">
+								<field name="name"/>
+								<field name="anchor_type_id" />
+								<field name="anchor_size_id" />
+								<field name="anchor_qty" />
+								<field name="failer_qty" />
+							</tree>
+						</field>
+						<field name="testing_remarks" />
+					</group>
+				</sheet>
+				<footer>
+					<button string="Cancel" class="btn-default" special="cancel" />
+					<button name="add_feedback" string="Submit" type="object"
+						class="btn-primary" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_view_testing_feedback_inv" model="ir.actions.act_window">
+		<field name="name">Feedback</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">testing.feedback</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+		<field name="groups_id" eval="[]" />
+	</record>
+
+	<record id="view_testing_reminder_inv" model="ir.ui.view">
+		<field name="name">Reminder</field>
+		<field name="model">testing.reminder</field>
+		<field name="arch" type="xml">
+			<form string="Testing Reminder">
+				<sheet>
+					<group>
+						<group>
+							<field name="partner_ids" widget="many2many_tags" options="{'no_create_edit': True}" required="1"/>
+						</group>
+						<group>
+						</group>
+					</group>
+				</sheet>
+				<footer>
+					<button string="Cancel" class="btn-default" special="cancel" />
+					<button name="tester_reminder" string="Send Reminder" type="object"
+						class="btn-primary" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_view_testing_reminder_inv" model="ir.actions.act_window">
+		<field name="name">Reminder</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">testing.reminder</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+		<field name="groups_id" eval="[]" />
+	</record>
+
+</odoo>

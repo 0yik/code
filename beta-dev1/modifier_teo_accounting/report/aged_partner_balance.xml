@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="aged_partner_balance" inherit_id="account.report_agedpartnerbalance">
+		<xpath expr="//table" position="replace">
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th>Partners</th>
+						<th class="text-right">
+							<span>Not due</span>
+						</th>
+						<th class="text-right">
+							<span t-esc="data['4']['name']" />
+						</th>
+						<th class="text-right">
+							<span t-esc="data['3']['name']" />
+						</th>
+						<th class="text-right">
+							<span t-esc="data['2']['name']" />
+						</th>
+						<th class="text-right">
+							<span t-esc="data['1']['name']" />
+						</th>
+						<th class="text-right">
+							<span t-esc="data['0']['name']" />
+						</th>
+						<th class="text-right">
+							Due Amount (<span t-esc="request.env.user.company_id.currency_id.name" />)
+						</th>
+						<th class="text-right">Invoice Amount</th>
+						<th>Currency</th>
+						<th class="text-right">Rate</th>
+					</tr>
+					<tr t-if="get_partner_lines">
+						<th>Account Total</th>
+						<th class="text-right">
+							<span t-esc="get_direction[6]"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</th>
+						<th class="text-right">
+							<span t-esc="get_direction[4]"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</th>
+						<th class="text-right">
+							<span t-esc="get_direction[3]"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</th>
+						<th class="text-right">
+							<span t-esc="get_direction[2]"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</th>
+						<th class="text-right">
+							<span t-esc="get_direction[1]"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</th>
+						<th class="text-right">
+							<span t-esc="get_direction[0]"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</th>
+						<th class="text-right">
+							<span t-esc="get_direction[5] * currency_id.rate"
+								t-options="{'widget': 'monetary', 'display_currency': request.env.user.company_id.currency_id}" />
+						</th>
+						<th class="text-right">
+							<span t-esc="get_direction[5]"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</th>
+						<th>
+							<span t-esc="currency_id.name" />
+						</th>
+						<th class="text-right">
+							<span t-esc="currency_id.rate" />
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr t-foreach="get_partner_lines" t-as="partner">
+						<td>
+							<span t-esc="partner['name']" />
+						</td>
+						<td class="text-right">
+							<span t-esc="partner['direction']"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</td>
+						<td class="text-right">
+							<span t-esc="partner['4']"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</td>
+						<td class="text-right">
+							<span t-esc="partner['3']"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</td>
+						<td class="text-right">
+							<span t-esc="partner['2']"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</td>
+						<td class="text-right">
+							<span t-esc="partner['1']"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</td>
+						<td class="text-right">
+							<span t-esc="partner['0']"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</td>
+						<td class="text-right">
+                            <span t-esc="partner['total'] * currency_id.rate"
+                                t-options="{'widget': 'monetary', 'display_currency': request.env.user.company_id.currency_id}" />
+                        </td>
+						<td class="text-right">
+							<span t-esc="partner['total']"
+								t-options="{'widget': 'monetary', 'display_currency': currency_id}" />
+						</td>
+						<td>
+                            <span t-esc="currency_id.name" />
+                        </td>
+                        <td class="text-right">
+                            <span t-esc="currency_id.rate" />
+                        </td>
+					</tr>
+				</tbody>
+			</table>
+		</xpath>
+	</template>
+</odoo>

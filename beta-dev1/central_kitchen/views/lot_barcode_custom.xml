@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<odoo>
+    <data>
+
+        <template id="report_lot_barcode_custom">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set= "count" t-value="o.count_for_print" />
+                    <t t-if ="o.count_for_print == 0" >
+                        <t t-set= "count" t-value="1" />
+                    </t>
+
+                    <t t-foreach="count" t-as="l" >
+                        <div class="page">
+                            <table width="100%" style="font-size: 10pt;table-layout: fixed;">
+                                <tr width="100%">
+                                    <td align="center" colspan="4">
+                                        <img t-att-src="'data:image/png;base64,%s' % o.barcode_image"/>
+                                    </td>
+                                </tr>
+                                <tr width="100%"><td><p></p></td></tr>
+                            </table>
+                            <table width="100%" style="font-size: 10pt;table-layout: fixed;">
+                                <tr width="100%">
+                                    <td style="width: 30%" align="left" >Name</td>
+                                    <td style="width: 70%" align="left"> : <span t-field="o.product_id.name"/></td>
+                                </tr>
+                            </table>
+                            <table width="100%" style="font-size: 10pt;table-layout: fixed;">
+                                <tr width="100%">
+                                    <td style="width: 30%" align="left">Produce Date</td>
+                                    <td style="width: 40%" align="left" rowspan="1"> : <t t-if="o.produce_date"> <span t-esc="time.strftime('%d %b %Y',time.strptime(o.produce_date,'%Y-%m-%d %H:%M:%S'))"/></t></td>
+                                    <td style="width: 10%" align="left" >SKU</td>
+                                    <td style="width: 20%" align="left"> : <span t-field="o.product_id.default_code"/></td>
+                                </tr>
+                                <tr width="100%">
+                                    <td style="width: 30%" align="left">Expired Date</td>
+                                    <td style="width: 40%" align="left" rowspan="1"> : <span t-esc="o.life_date and time.strftime('%d %b %Y',time.strptime(o.life_date,'%Y-%m-%d %H:%M:%S'))"/></td>
+                                    <td style="width: 10%" align="left" class="top" >SN</td>
+                                    <td style="width: 20%" align="left" class="top"> : <span t-field="o.name"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report id="action_report_lot_barcode_custom" model="stock.production.lot" report_type="qweb-pdf" name="central_kitchen.report_lot_barcode_custom" string="Lot BarCode Custom" file="central_kitchen.report_lot_barcode"/>
+
+        <record id="action_report_lot_barcode_custom" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="central_kitchen.paperformat_barcode_label"/>
+        </record>
+
+    </data>
+</odoo>

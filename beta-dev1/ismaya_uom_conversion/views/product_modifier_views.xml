@@ -1,0 +1,87 @@
+<odoo>
+    <data>
+        <!--<record id="view_product_supplier_inherit" model="ir.ui.view">-->
+            <!--<field name="name">product.template.supplier.form.inherit</field>-->
+            <!--<field name="model">product.template</field>-->
+            <!--<field name="inherit_id" ref="product.product_template_form_view"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="uom_po_id" position="after">-->
+                    <!--<field name="uom_receive_id"/>-->
+                <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <record id="view_inventory_form" model="ir.ui.view">
+            <field name="name">stock.inventory.inherit</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="arch" type="xml">
+                <field name="line_ids" position="before">
+                    <field name="type" invisible="1"/>
+                </field>
+                <field name="line_ids" position="attributes">
+                    <attribute name="context">{'default_location_id': location_id,  'default_product_id': product_id, 'default_prod_lot_id': lot_id, 'default_package_id': package_id, 'default_partner_id': partner_id, 'type': type, 'default_type': type}</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_stock_quant_form" model="ir.ui.view">
+            <field name="name">stock.quant.form.inherit</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock.view_stock_quant_form"/>
+            <field name="arch" type="xml">
+                <field name="history_ids" position="before">
+                    <field name="type"/>
+                </field>
+                <field name="history_ids" position="attributes">
+                    <attribute name="context">{'type': type, 'default_type': type}</attribute>
+                </field>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="quantsact_original"> <!-- Menu + python -->
+            <field name="name">Inventory Valuation (Original)</field>
+            <field name="res_model">stock.quant</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,pivot</field>
+            <field name="context">{'search_default_internal_loc': 1, 'group_by': ['product_id', 'location_id'], 'type': 'original', 'default_type': 'original'}</field>
+            <field name="help">This analysis gives you a fast overview on the current stock level of your products and their current inventory value.</field>
+        </record>
+
+        <menuitem id="menu_quant_origin" name="Inventory Valuation (Original)" parent="stock.menu_warehouse_report" sequence="125" action="quantsact_original"/>
+
+        <record id="view_inventory_tree_original" model="ir.ui.view">
+            <field name="name">stock.inventory.tree</field>
+            <field name="model">stock.inventory</field>
+            <field name="arch" type="xml">
+                <tree string="Lot/Serial Number Inventory" decoration-muted="state == 'cancel'" context="{'type': 'original', 'default_type': 'original'}">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_inventory_form_original" model="ir.actions.act_window">
+            <field name="name">Inventory Adjustments(Original)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.inventory</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_inventory_tree_original"/>
+            <field name="context">{'type': 'original', 'default_type': 'original'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to start an inventory.
+                </p><p>
+                    Periodical Inventories are used to count the number of products
+                    available per location. You can use it once a year when you do
+                    the general inventory or whenever you need it, to adapt the
+                    current inventory level of a product.
+                </p>
+            </field>
+        </record>
+        <menuitem action="action_inventory_form_original" name="Inventory Adjustments(Original)" id="menu_action_inventory_form" parent="stock.menu_stock_inventory_control" sequence="35"/>
+    </data>
+</odoo>

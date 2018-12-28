@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_res_branch_form_inherit" model="ir.ui.view">
+            <field name="name">View Res Branch Form Inherit</field>
+            <field name="model">res.branch</field>
+            <field name="inherit_id" ref="pdp_modifier_branch.view_res_branch_form_inherit_field"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_warehouse"/>
+                </field>
+                <field name="country_code" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+{
+    'name':"Product Booking for CCM",
+    'summary': """Manage the Product Booking""",
+    'description': 'Product Booking',
+    'author': "HashMicro / Kunal / Inkal",
+    'website':"http://www.hashmicro.com",
+    'depends': [ 'stock','product','sales_team','account'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/serial_no_form.xml',
+        'views/product.xml',
+        'views/booking_order.xml',
+        'views/product_serial_number_view.xml',
+        'data/ir_sequence_data.xml',
+        'wizard/sell_product_view.xml',
+    ],
+    'category': 'booking',
+    'version':'1.0',
+    'application': True,
+}

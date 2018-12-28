@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        
+         <!-- User Form Inherit -->
+    <record id="view_user_form_extend" model="ir.ui.view">
+        <field name="name">res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_id']" position="after">
+               <field name="locked" />
+        </xpath>
+        <xpath expr="//field[@name='partner_id']" position="before">
+               <field name="no_attempted" invisible='1'/>
+        </xpath>  
+        </field>
+    </record>
+    
+    <record id="view_user_tree_extend" model="ir.ui.view">
+        <field name="name">res.users.tree.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_tree" />
+        <field name="arch" type="xml">
+        <xpath expr="//field[@name='login_date']" position="after">
+               <field name="locked" />
+        </xpath> 
+        </field>
+    </record>
+        
+        <record id="view_password_form" model="ir.ui.view">
+            <field name="name">res.password.form</field>
+            <field name="model">res.password</field>
+            <field name="arch" type="xml">
+                <form string="Password">
+                <group>
+                <group>
+                 <label for="lock_after"/>
+                <div>
+                    <p><field name="lock_after" style="padding-top: 1px"/> failed attempts</p>
+                </div>
+                </group>
+                <group>
+                </group>
+                </group>
+        		</form>
+            </field>
+       </record>
+       
+       <record id="view_password_tree" model="ir.ui.view">
+            <field name="name">res.password.tree</field>
+            <field name="model">res.password</field>
+            <field name="arch" type="xml">
+                <tree string="Password">
+                    <field name="lock_after"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_res_password" model="ir.actions.act_window">
+            <field name="name">Password</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.password</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_password_tree"/>
+            <field name="help">Create and manage users login attempts.</field>
+        </record>
+        
+        <menuitem action="action_res_password" id="menu_action_res_password" parent="base.menu_users" sequence="1"/>
+
+        
+    </data>
+</openerp>

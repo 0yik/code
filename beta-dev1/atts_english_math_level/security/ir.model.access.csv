@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_level_level,level.level,model_level_level,,1,1,1,1
+access_level_list,level.list,model_level_list,,1,1,1,1
+access_level_student_list,level.student.list,model_level_student_list,,1,1,1,1

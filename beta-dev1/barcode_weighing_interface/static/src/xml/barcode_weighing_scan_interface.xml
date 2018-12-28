@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="BarcodeWeighingWidget">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="b_workorder_name">
+                    <h1>
+                        Work Orders No.
+                    </h1>
+                    <h1>
+                        <t t-esc="widget.order_name"/>
+                    </h1>
+                </div>
+                <div class="b_button_close">
+                    <button class="btn btn-danger navbar-btn js_barcode_weighing_close">Close</button>
+                </div>
+            </div>
+            <div class="b_material">
+                <h2>
+                    <span class="b_material_name"><t t-esc="widget.product_name"/>:</span>
+                    <span class="b_material_qty"><t t-esc="widget.product_qty"/></span>
+                    <span class="b_material_uom"><t t-esc="widget.product_uom"/></span>
+                </h2>
+            </div>
+            <div class="container b_table_product_info">
+                <table class='table table-condensed b_product_table'>
+                    <thead>
+                        <tr>
+                            <th class="text-left" style="font-size: initial;">Product</th>
+                            <th class='text-center' style="font-size: initial;">Lot Number</th>
+                            <th class="text-right" style="font-size: initial;">Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="container b_form_barcode_weighing">
+                <!--<input type="text" class="text-center b_barcode_input" placeholder="Barcode Input" id="id_barcode"/>-->
+                <input type="text" class="text-center b_weighing_input" t-attf-placeholder="Weighing Input #{widget.product_uom}" id="id_weighing"/>
+            </div>
+            <div class="container b_button_done">
+                <button disabled="true" class="btn btn-danger js_barcode_weighing_done"><t t-esc="widget.button_done_html"/></button>
+            </div>
+        </div>
+    </t>
+    <t t-name="BarcodeWeighingWidgetTableContent">
+        <tr>
+            <td class="text-left"><t t-esc="widget.product_name"/></td>
+            <td class="text-center"><t t-esc="widget.lot_number"/></td>
+            <td class="text-right"><t t-esc="widget.life_date"/></td>
+        </tr>
+    </t>
+
+</templates>

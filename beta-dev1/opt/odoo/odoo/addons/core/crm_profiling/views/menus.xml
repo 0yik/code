@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <menuitem id="product_pack.menu_product_pack_core" name="Product Pack" parent="sales_team.menu_sales_product" sequence="15" action="product_pack.action_product_pack"/>
+
+    </data>
+</odoo>

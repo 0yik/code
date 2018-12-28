@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_booking_order_form" model="ir.ui.view">
+            <field name="name">booking.order.form</field>
+            <field name="model">sale.order</field>
+            <field eval="100" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Booking Order" class="o_sale_order">
+                <header>
+                    <button name="action_todo"  string="Validate" type="object" states="draft" class="btn-primary"/>
+                    <button name="action_check" string="Check"   type="object" states="draft" class="btn-primary"/>
+                    <button name="action_cancel" string="Cancel" type="object" states="draft,sale" class="btn-primary o_sale_confirm" />
+                    <button name="action_done"  string="Lock"  type="object" states="sale" class="o_sale_confirm"
+                        help="If the sale is locked, you can not modify it anymore. However, you will still be able to invoice or deliver."/>
+                    <button name="action_set_to_draft" string="Set To Booking" states="cancel" type="object"/>
+                    <field name="state_booking" widget="statusbar" statusbar_visible="draft,sale,done"/>
+                </header>
+                <sheet>
+                     <div class="oe_button_box" name="button_box">
+                        <field name="picking_ids" invisible="1"/>
+                        <button type="object"
+                            name="action_view_work_order"
+                            class="oe_stat_button"
+                            icon="fa-truck"
+                            attrs="{'invisible': [('delivery_count', '=', 0)]}" groups="base.group_user">
+                            <field name="delivery_count" widget="statinfo" string="Work Order"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="state" invisible="1"/>
+                            <field name="is_booking" invisible="1" default="True"/>
+                            <field name="partner_id" domain="[('customer','=',True)]"  attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"
+                                   context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}'/>
+                            <field name="team" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                            <field name="team_leader" invisible="1"/>
+                            <field name="team_employees" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"  mode="tree">
+                                <tree editable="bottom">
+                                    <field name="employee_id"/>
+                                </tree>
+                                <form>
+                                    <field name="employee_id"/>
+                                </form>
+                            </field>
+                            <field name="equipment_ids" invisible="1" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="lot_id"/>
+                                </tree>
+                                <form>
+                                    <field name="product_id"/>
+                                    <field name="lot_id"/>
+                                </form>
+                            </field>
+                            <field name="start_date" widget="date" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" required="1"/>
+                            <field name="end_date" widget="date" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" required="1"/>
+                            <!--<label for="address" string="Address"/>-->
+                            <!--<div class="o_address_format">-->
+                                <!--<field name="street" placeholder="Street..." class="o_address_street"/>-->
+                                <!--<field name="street2" placeholder="Street 2..." class="o_address_street"/>-->
+                                <!--<field name="city" placeholder="City" class="o_address_city"/>-->
+                                <!--<field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}' context="{'country_id': country_id, 'zip': zip}"/>-->
+                                <!--<field name="zip" placeholder="ZIP" class="o_address_zip"/>-->
+                                <!--<field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>-->
+                            <!--</div>-->
+                            <field name="phone" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                            <field name="email" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                        </group>
+                        <group>
+                            <field name="date_order"
+                                   attrs="{'invisible': [('state_booking', 'not in', ['draft'])],'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                            <field name="validity_date" attrs="{'invisible': [('state_booking', 'not in', ['draft'])],'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                            <field name="confirmation_date" attrs="{'invisible': [('state_booking', 'in', ['draft', 'sent', 'cancel','sale'])]}"/>
+                            <field name="user_id" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                            <field name="pricelist_id" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" groups="product.group_sale_pricelist"/>
+                            <label for="job_street" string="Job Site"/>
+                            <div class="o_address_format">
+                                <field name="job_street" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" placeholder="Street..." class="o_address_street"/>
+                                <field name="job_street2" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="job_city" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" placeholder="City" class="o_address_city"/>
+                                <field name="job_state_id" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" class="o_address_state" placeholder="State" options='{"no_open": True}' context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="job_zip" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="job_country_id" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                            </div>
+                            <field name="job_location" invisible="1"/>
+                            <field name="sales_category" invisible="1" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                            <field name="quotation_title" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                            <!--<field name="user_id" attrs="{'readonly': [('state_booking', 'in', ['cancel','done'])]}"/>-->
+                            <field name="contract_id" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" string="Contract"/>
+                            <field name="job_category_id" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                            <field name="job_detail" required="1" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                            <field name="reminder" widget="many2many_tags" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                            <field name="remarks" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="payment_term_id" invisible="1" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order Lines">
+                            <field name="order_line" mode="tree,kanban"
+                                attrs="{'readonly': [('state_booking', 'in', ('done','cancel','sale'))]}">
+                                <form string="Sales Order Lines">
+                                    <group>
+                                        <group>
+                                            <field name="product_id"
+                                                context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+                                                attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}"
+                                               />
+                                            <field name="layout_category_id" groups="sale.group_sale_layout"/>
+                                            <field name="invoice_status" invisible="1"/>
+                                            <field name="qty_to_invoice" invisible="1"/>
+                                            <field name="qty_delivered_updateable" invisible="1"/>
+                                            <field name="procurement_ids" invisible="1"/>
+                                            <field name="price_subtotal" invisible="1"/>
+                                            <label for="product_uom_qty" string="Ordered Quantity"/>
+                                            <div>
+                                                <field
+                                                    context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'uom_qty_change':True, 'company_id': parent.company_id}"
+                                                    name="product_uom_qty" class="oe_inline"/>
+                                                <field name="product_uom" groups="product.group_uom" class="oe_inline oe_no_button"
+                                                    attrs="{'readonly': [('state', 'in', ('sale','done', 'cancel'))]}"/>
+                                            </div>
+                                            <label for="qty_delivered" string="Delivered Quantity" invisible="context.get('hide_sale')"/>
+                                            <div invisible="context.get('hide_sale')">
+                                                <field name="qty_delivered" attrs="{'readonly': [('qty_delivered_updateable', '=', False)]}"/>
+                                            </div>
+                                            <label for="qty_invoiced" string="Invoiced Quantity" invisible="context.get('hide_sale')"/>
+                                            <div invisible="context.get('hide_sale')">
+                                                <field name="qty_invoiced" invisible="context.get('hide_sale')"/>
+                                            </div>
+                                            <field name="price_unit"/>
+                                            <label for="discount" groups="sale.group_discount_per_so_line"/>
+                                            <div name="discount" groups="sale.group_discount_per_so_line">
+                                                <field name="discount" class="oe_inline"/> %%
+                                            </div>
+                                        </group>
+                                        <group>
+                                            <field name="tax_id" widget="many2many_tags" domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
+                                                attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"/>
+                                            <label for="customer_lead"/>
+                                            <div>
+                                                <field name="customer_lead" class="oe_inline"/> days
+                                            </div>
+                                            <label for="analytic_tag_ids" groups="analytic.group_analytic_accounting"/>
+                                            <div>
+                                                <field name="analytic_tag_ids" widget="many2many_tags" groups="analytic.group_analytic_accounting"/>
+                                            </div>
+                                        </group>
+                                    </group>
+                                    <label for="name"/>
+                                    <field name="name"/>
+                                    <div groups="base.group_no_one">
+                                        <label for="invoice_lines"/>
+                                        <field name="invoice_lines"/>
+                                    </div>
+                                    <field name="state" invisible="1"/>
+                                </form>
+                                <tree string="Sales Order Lines" editable="bottom">
+                                    <field name="option"/>
+                                    <field name="brand"/>
+                                    <field name="type"/>
+                                    <field name="product_id" string="Product/Model No."
+        context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"/>
+                                    <field name="product_uom_qty"
+                                        string="Quantity"
+                                        context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+                                    />
+                                    <field name="description" string="Description"/>
+                                    <field name="sor_ref"/>
+                                    <field name="product_uom"
+                                        attrs="{'readonly': [('state', 'in', ('sale','done', 'cancel'))]}"
+                                        context="{'company_id': parent.company_id}"
+                                        groups="product.group_uom" string="UOM" options='{"no_open": True}'/>
+                                    <field name="qty_delivered" invisible="1"
+                                        attrs="{'readonly': [('qty_delivered_updateable', '=', False)]}"/>
+                                    <field name="qty_invoiced"
+                                        invisible="1"/>
+                                    <field name="qty_to_invoice" invisible="1"/>
+                                    <field name="price_unit"/>
+                                    <field name="tax_id" widget="many2many_tags" domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"/>
+                                    <field name="discount" groups="sale.group_discount_per_so_line"/>
+                                    <field name="price_subtotal" widget="monetary" groups="sale.group_show_price_subtotal"/>
+                                    <field name="price_total" widget="monetary" groups="sale.group_show_price_total"/>
+                                    <field name="qty_delivered_updateable" invisible="1"/>
+                                    <field name="procurement_ids" invisible="1"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="invoice_status" invisible="1"/>
+                                    <field name="customer_lead" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="amount_total" />
+                                    <button name="button_dummy"
+                                        states="draft,sent" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                                </div>
+                                <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <field name="note" class="oe_inline" widget="html" placeholder="Setup default terms and conditions in your company settings."/>
+                            <div class="oe_clear"/>
+                        </page>
+
+                        <!--<other information tab-->
+                        <page string="Other Information">
+                            <group>
+                                <group string="Sales Information" name="sales_person">
+                                    <field name="team_id" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" options="{'no_create': True}"/>
+                                    <field name="client_order_ref" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                                    <field name="company_id" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" options="{'no_create': True}" groups="base.group_multi_company"/>
+                                </group>
+                                <group name="sale_pay" string="Invoicing">
+                                    <field name="fiscal_position_id" attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}" options="{'no_create': True}"/>
+                                    <field name="invoice_status"
+                                           attrs="{'invisible': [('state_booking', 'not in', ('sale','done'))],'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}"/>
+                                </group>
+                                <group string="Reporting" name="technical" groups="base.group_no_one">
+                                    <field groups="base.group_no_one" name="origin"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Customer History">
+                             <field name="customer_history_ids"  attrs="{'readonly': [('state_booking', 'in', ['cancel','done','sale'])]}">
+                                <tree create="0" delete="0" edit="0">
+                                    <field name="order_number" string="Order Number"/>
+                                    <field name="date_order" string="Order Date"/>
+                                    <field name="salesperson" string="Salesperson"/>
+                                    <field name="amount_total" string="Total"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="booking_order_tree" model="ir.ui.view">
+            <field name="name">booking.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="state_booking == 'cancel'" >
+                    <field name="name" string="Booking Order"/>
+                    <field name="partner_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state_booking" string="Status"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_booking_order_filter" model="ir.ui.view">
+            <field name="name">booking.order.list.select</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Booking Order">
+                    <field name="name" string="Booking Order" filter_domain="['|',('name','ilike',self),('client_order_ref','ilike',self)]"/>
+                    <field name="partner_id" operator="child_of"/>
+                    <field name="product_id"/>
+                    <separator/>
+                    <filter string="Draft" domain="[('state','=','draft')]" help="Booking Order Draft"/>
+                    <filter string="Booking Order" domain="[('state','=','sale')]" help="Booking Order"/>
+                    <filter string="Locked" domain="[('state','=','done')]" help="Booking Order done"/>
+                    <separator/>
+                    <filter string="Cancelled" domain="[('state','=','cancel')]" help="Booking Order done"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Salesperson" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Order Month" domain="[]" context="{'group_by':'date_order'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="booking_service_V2.booking_order_action">
+            <field name="name">Booking Order</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="context">{'form_view_ref':'kimhuat_modifier_fields.view_booking_order_form',
+                'tree_view_ref':'kimhuat_modifier_fields.booking_order_tree','default_is_booking':True,'search_view_ref':'kimhuat_modifier_fields.view_booking_order_filter'}</field>
+            <field name="view_id" ref="kimhuat_modifier_fields.booking_order_tree"/>
+            <field name="search_view_id" ref="kimhuat_modifier_fields.view_booking_order_filter"/>
+            <field name="domain">[('is_booking', '=',True)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first course
+                </p>
+            </field>
+
+
+        </record>
+
+         <!--<menuitem id="booking_service_V2.booking_order_menu" name="Booking Order23"-->
+                  <!--parent="booking_service_V2.main_booking_menu" action="booking_service_V2.booking_order_action" groups="booking_service_V2.group_manager"/>-->
+
+    </data>
+</odoo>

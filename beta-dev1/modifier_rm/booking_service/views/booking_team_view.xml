@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<record id="view_booking_team_filter" model="ir.ui.view">
+            <field name="name">booking.team.search</field>
+            <field name="model">booking.team</field>
+            <field name="arch" type="xml">
+                <search string="Search Team">
+                    <field name="name" string="Team" filter_domain="[('name','ilike',self)]"/>
+                    <field name="team_leader_id"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Leader" domain="[]" context="{'group_by':'team_leader_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+		<record id="view_booking_team_tree" model="ir.ui.view">
+            <field name="name">booking.team.tree</field>
+            <field name="model">booking.team</field>
+            <field name="arch" type="xml">
+            	<tree string="Team" >
+            		<field name="name" />
+            		<field name="team_leader_id" />
+            	</tree>
+            </field>
+        </record>
+		<record id="view_booking_team_form" model="ir.ui.view">
+            <field name="name">booking.team.form</field>
+            <field name="model">booking.team</field>
+            <field name="arch" type="xml">
+                <form string="Booking Team">
+	                <sheet>
+	                    <div class="oe_title">
+	                        <h1>
+	                            <field name="name" />
+	                        </h1>
+	                    </div>
+	                    <field name="team_leader_id" />
+	                    <field name="employee_ids"  nolable="1"/>
+	                    <field name="equipments_ids"  nolable="1">
+	                    	<tree string="Equpment" editable="bottom">
+	                    		<field name="product_id" required="1"/>
+	                    		<field name="serial_no_id" required="1"/>
+	                    	</tree>
+	                    </field>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_booking_team" model="ir.actions.act_window">
+            <field name="name">Team</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">booking.team</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_booking_team_tree"/>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_booking_team_filter"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Create a New Booking Team.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem action="action_booking_team"
+            id="menu_action_booking_team" parent="menu_booking_service_core"
+            sequence="12" />
+            
+</odoo>        

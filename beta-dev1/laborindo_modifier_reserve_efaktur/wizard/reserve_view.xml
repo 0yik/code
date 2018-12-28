@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_vit_reserve_efaktur_form" model="ir.ui.view">
+            <field name="name">vit.reserve.form</field>
+            <field name="model">vit.reserve_efaktur</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group colspan="4">
+                        <field name="start_id" required="0" domain="[('is_used', '=', False)]"/>
+                        <field name="end_id" required="0" domain="[('is_used', '=', False)]"/>
+                    </group>
+                    <footer>
+                        <button string="Confirm" name="confirm_button" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="act_open_vit_efaktur_reserve_wizard" model="ir.actions.act_window">
+            <field name="name">Reserve Faktur Pajak</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vit.reserve_efaktur</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_vit_efaktur_reserve_wizard"
+                  parent="vit_efaktur.menu_vit_efaktur"
+                  sequence="30"
+                  name="Reserve Faktur Pajak"
+                  action="act_open_vit_efaktur_reserve_wizard"/>
+    </data>
+</odoo>

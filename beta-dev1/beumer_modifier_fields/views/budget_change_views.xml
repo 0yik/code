@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="wizard_account_analytic_budget_change_view" model="ir.ui.view">
+            <field name="name">account.analytic.budget.change.form.inherit</field>
+            <field name="model">account.analytic.budget.change</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.wizard_account_analytic_budget_change_view"/>
+            <field name="arch" type="xml">
+                <field name="cost_element_id" position="before">
+                    <field name="project_id" invisible="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

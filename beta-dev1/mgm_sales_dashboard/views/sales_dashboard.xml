@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <!--
+        This template is the ribbon at the top of the salesteam dashboard that adds
+        some figures to it. We call this rubbon the "SalesDashboard".
+    -->
+    <t t-name="MgmSalesDashboard">
+        <br/>
+        <div class="col-xs-12" style="font-size: 18px;">Business Unit Recap</div>
+        <!-- FERRY -->
+        <div class="o_kanban_record">
+            <div class="o_kanban_card_header">
+                <div class="o_kanban_card_header_title">
+                    <div class="o_primary">Ferry</div>
+                    <div class="o_primary">
+                        <br/>
+                    </div>
+                </div>
+            </div>
+            <div class="container o_kanban_card_content o_visible">
+                <div class="row">
+                    <div class="col-xs-6 o_kanban_primary_left">
+                        <button type="object" name="action_create_new" class="btn btn-primary btn-sm o_invoice_new">
+                            <a href="#" style="color:white" class="o_dashboard_action"
+                               name="mgm_sales_contract.sale_requisition_ferry_action1_new">
+                                New Daily Rit
+                            </a>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.sale_requisition_ferry_action1" href="#"
+                                   class="o_dashboard_action">
+                                    <span title="Awaiting payments">Draft</span>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['ferry_draft']"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.sale_requisition_ferry_action_done" href="#"
+                                   class="o_dashboard_action">
+                                    <span title="Awaiting payments">Daily Rit</span>
+
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['ferry_daily_rit']"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.action_orders_ferry" href="#"
+                                   class="o_dashboard_action">
+                                    <span title="Awaiting payments">ASDP Final</span>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['ferry_asdp_final']"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 o_kanban_primary_bottom text-center">
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FLF -->
+        <div class="o_kanban_record">
+            <div class="o_kanban_card_header">
+                <div class="o_kanban_card_header_title">
+                    <div class="o_primary">FLF</div>
+                    <div class="o_primary">
+                        <br/>
+                    </div>
+                </div>
+            </div>
+            <div class="container o_kanban_card_content o_visible">
+                <div class="row">
+                    <div class="col-xs-6 o_kanban_primary_left">
+                        <button type="object" name="action_create_new" class="btn btn-primary btn-sm o_invoice_new">
+                            <a href="#" style="color:white" class="o_dashboard_action"
+                               name="mgm_sales_contract.sale_requisition_fls_action_new">
+                                New Quotation Contract
+                            </a>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.sale_requisition_fls_action" href="#"
+                                   class="o_dashboard_action">
+                                    <span title="Awaiting payments">Quotation Contract</span>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['fls_draft']"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.sale_requisition_fls_action_done" href="#"
+                                   class="o_dashboard_action">
+                                    <span title="Awaiting payments">Fixture Note</span>
+
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['fls_daily_rit']"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.action_orders_fls" href="#"
+                                   class="o_dashboard_action">
+                                    <span title="Awaiting payments">Sales Order</span>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['fls_asdp_final']"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 o_kanban_primary_bottom text-center">
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tug and Barge -->
+        <div class="o_kanban_record">
+            <div class="o_kanban_card_header">
+                <div class="o_kanban_card_header_title">
+                    <div class="o_primary">Tug and barge</div>
+                    <div class="o_primary">
+                        <br/>
+                    </div>
+                </div>
+            </div>
+            <div class="container o_kanban_card_content o_visible">
+                <div class="row">
+                    <div class="col-xs-6 o_kanban_primary_left">
+                        <button type="object" name="action_create_new" class="btn btn-primary btn-sm o_invoice_new">
+                            <a href="#" style="color:white" class="o_dashboard_action"
+                               name="mgm_sales_contract.sale_requisition_tug_barge_action_new">
+                                New Quotation Contract
+                            </a>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.sale_requisition_tug_barge_action" href="#"
+                                   class="o_dashboard_action">
+                                    <span title="Awaiting payments">Quotation Contract</span>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['tug_barge_draft']"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.sale_requisition_tug_action_done" href="#"
+                                   class="o_dashboard_action">
+                                    <span title="Awaiting payments">Fixture Note</span>
+
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['tug_barge_daily_rit']"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.action_orders_tug" href="#"
+                                   class="o_dashboard_action">
+                                    <span title="Awaiting payments">Sales Order</span>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['tug_barge_asdp_final']"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 o_kanban_primary_bottom text-center">
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stevedoring -->
+        <div class="o_kanban_record">
+            <div class="o_kanban_card_header">
+                <div class="o_kanban_card_header_title">
+                    <div class="o_primary">Stevedoring</div>
+                    <div class="o_primary">
+                        <br/>
+                    </div>
+                </div>
+            </div>
+            <div class="container o_kanban_card_content o_visible">
+                <div class="row">
+                    <div class="col-xs-6 o_kanban_primary_left">
+                        <button type="object" name="action_create_new" class="btn btn-primary btn-sm o_invoice_new">
+                            <a href="#" style="color:white" class="o_dashboard_action"
+                               name="mgm_sales_contract.sale_requisition_stevedoring_action_new">
+                                New Quotation Contract
+                            </a>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.sale_requisition_stevedoring_action" href="#"
+                                   class="o_dashboard_action">
+                                    <span title="Awaiting payments">Quotation Contract</span>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['stevedoring_draft']"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.sale_requisition_stevedoring_action_done"
+                                   href="#" class="o_dashboard_action">
+                                    <span title="Awaiting payments">Fixture Note</span>
+
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['stevedoring_daily_rit']"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a type="object" name="mgm_sales_contract.action_orders_stevedoring" href="#"
+                                   class="o_dashboard_action">
+                                    <span title="Awaiting payments">Sales Order</span>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>
+                                    <t t-if="sales_requisition" t-esc="sales_requisition['stevedoring_asdp_final']"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 o_kanban_primary_bottom text-center">
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--div class="o_sales_dashboard" style="margin-top:5px">
+            <div style="margin-left:10px"><h4>Sale to invoice</h4></div>
+        </div-->
+    </t>
+</templates>
+

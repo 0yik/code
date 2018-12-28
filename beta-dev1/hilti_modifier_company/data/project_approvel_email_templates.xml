@@ -1,0 +1,66 @@
+<odoo>
+	<data>
+
+        <record id="mail_template_approvel_project" model="mail.template">
+            <field name="name">Project Approve</field>
+            <field name="subject">Project Approve name ${object.name}</field>
+            <field name="model_id" ref="project.model_project_project"/>
+            <field name="email_from">${(object.user_id.company_id.email and '%s &lt;%s&gt;' % (object.user_id.company_id.name, object.user_id.company_id.email) or '')|safe}</field>
+            <field name="partner_to">${ctx.get('admin_email')}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[<html>
+                <head></head>
+                <body style="margin: 0; padding: 0;">
+                <table border="0" width="100%" cellpadding="0" bgcolor="#ededed" style="padding: 20px; background-color: #ededed" summary="o_mail_notification">
+                    <tbody>
+                      <!-- CONTENT -->
+                      <tr>
+                        <td align="center" style="min-width: 590px;">
+                          <table width="590" border="0" cellpadding="0" bgcolor="#ffffff" style="min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px;">
+                            <tbody>
+                              <td valign="top" style="font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;">
+								Please approve project.
+                              </td>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+                </body>
+                </html>
+            ]]></field>
+        </record>
+        <record id="mail_template_approvel_project_to_customer" model="mail.template">
+            <field name="name">Project Approved</field>
+            <field name="subject">Project Approved name ${object.name}</field>
+            <field name="model_id" ref="project.model_project_project"/>
+            <field name="email_from">${(object.user_id.company_id.email and '%s &lt;%s&gt;' % (object.user_id.company_id.name, object.user_id.company_id.email) or '')|safe}</field>
+            <field name="partner_to">${ctx.get('customer_email')}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[<html>
+                <head></head>
+                <body style="margin: 0; padding: 0;">
+                <table border="0" width="100%" cellpadding="0" bgcolor="#ededed" style="padding: 20px; background-color: #ededed" summary="o_mail_notification">
+                    <tbody>
+                      <!-- CONTENT -->
+                      <tr>
+                        <td align="center" style="min-width: 590px;">
+                          <table width="590" border="0" cellpadding="0" bgcolor="#ffffff" style="min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px;">
+                            <tbody>
+                              <td valign="top" style="font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;">
+								Your Project has been approved please make a booking for this project..
+                              </td>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+                </body>
+                </html>
+            ]]></field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="honos_compare_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<script src="/honos_compare/static/src/js/compare_script.js"
+				type="text/javascript"></script>
+			<link rel="stylesheet"
+				href="/honos_compare/static/src/less/honos_compare.less" />
+			<link rel="stylesheet"
+				href="/honos_compare/static/src/less/honos_compare_responsive.less" />
+		</xpath>
+	</template>
+</odoo>

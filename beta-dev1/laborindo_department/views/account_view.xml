@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_form_inherits" model="ir.ui.view">
+        <field name="name">Account Form Inherit</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <field name="deprecated" position="after">
+                <field name="department_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_account_voucher_department_form" model="ir.ui.view">
+        <field name="name">account.voucher.Project.extened</field>
+        <field name="model">account.voucher</field>
+        <field name="inherit_id" ref="account_voucher.view_purchase_receipt_form"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="department_id"/>
+                <field name="project"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

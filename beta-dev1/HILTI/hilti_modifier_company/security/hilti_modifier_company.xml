@@ -1,0 +1,13 @@
+<odoo>
+
+	<record id="rule_project_booking" model="ir.rule">
+		<field name="name">Rule for my booking</field>
+		<field name="model_id" ref="model_project_booking"/>
+		<field name="domain_force">[('user_id','=',user.id)]</field>
+		<field name="perm_read">True</field>
+		<field name="perm_write">True</field>
+		<field name="perm_create">True</field>
+		<field name="perm_unlink">True</field>
+	</record>
+
+</odoo>

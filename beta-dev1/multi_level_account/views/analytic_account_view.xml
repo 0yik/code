@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_analytic_account_inherit_form" model="ir.ui.view">
+            <field name="name">account.analytic.account.form</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//div[@name="project"]' position='inside'>
+                    <field name="is_multi_level" groups=""/>
+                    <label for="is_multi_level" groups=""/>
+                </xpath>
+                <xpath expr="//group[@name='main']" position="after">
+                    <group attrs="{'invisible': [('is_multi_level','=', False)]}">
+                        <group>
+                            <field name="analytic_id"/>
+                            <field name="analytic_level_id"/>
+                        </group>
+                        <group>
+                            <field name="parent_analytic_id"
+                                attrs="{'required': [('analytic_level_id','>=', 2)]}"/>
+                            <field name="unit"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

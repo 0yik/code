@@ -1,0 +1,309 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_in_progress_form" model="ir.ui.view">
+        <field name="name">in.progress.form</field>
+        <field name="model">in.progress</field>
+        <field name="arch" type="xml">
+            <form string="In Progress" create="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" domain="[('user_id','=',uid)]"/>
+                            <field name="primary_sales_person_id"/>
+                            <field name="secondary_sales_person_id"/>
+                            <field name="sales_won_date"/>
+                            <field name="product_name"/>
+                        </group>
+                        <group>
+                            <field name="project_start_date"/>
+                            <field name="project_end_date"/>
+                            <field name="project_phases_id" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order Line">
+                            <field name="order_line">
+                                <tree string="Order Line" editable="bottom">
+                                    <field name="pay_term"/>
+                                    <field name="invoice_status"/>
+                                    <field name="order_id" invisible="1"/>
+                                    <field name="payment_status"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" help="Follow this salesteam to automatically track the events associated to users of this team."/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_in_progress_form_inherit_1" model="ir.ui.view">
+        <field name="name">in.progress.form.simple</field>
+        <field name="model">in.progress</field>
+        <field name="inherit_id" ref="avanta_fields_modifier.view_in_progress_form"/>
+        <field name="groups_id" eval="[(6,0, [ref('sales_team.group_sale_manager')])]"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="replace">
+                <field name="partner_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_in_progress_search" model="ir.ui.view">
+        <field name="name">in.progress.filter</field>
+        <field name="model">in.progress</field>
+        <field name="arch" type="xml">
+            <search string="Search Inprogress">
+                <filter domain="[('status','=','pending')]" string="Pending"/>
+                <filter domain="[('status','=','invoiced')]" string="Invoiced"/>
+                <filter  context="{'group_by': 'partner_id'}" string="Customer"/>
+                <filter  context="{'group_by': 'project_start_date'}" string="Start date"/>
+                <filter  context="{'group_by': 'project_end_date'}" string="End date"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_in_progress_tree" model="ir.ui.view">
+        <field name="name">in.progress.tree</field>
+        <field name="model">in.progress</field>
+        <field name="arch" type="xml">
+            <tree string="In Progress" create="false">
+                <field name="partner_id"/>
+                <field name="primary_sales_person_id"/>
+                <field name="secondary_sales_person_id"/>
+                <field name="project_phases_id"/>
+                <field name="project_start_date"/>
+                <field name="project_end_date"/>
+            </tree>
+         </field>
+    </record>
+
+    <record id="action_in_progress" model="ir.actions.act_window">
+        <field name="name">In Progress</field>
+        <field name="res_model">in.progress</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_in_progress_search"/>
+    </record>
+
+    <menuitem action="action_in_progress" id="menu_in_progress" parent="sales_team.menu_sales" sequence="9" groups="sales_team.group_sale_manager,sales_team.group_sale_salesman,avanta_fields_modifier.group_management_representative,avanta_fields_modifier.group_crm_user"/>
+
+
+    <record id="view_avanta_status_form" model="ir.ui.view">
+        <field name="name">avanta.status.form</field>
+        <field name="model">avanta.status</field>
+        <field name="arch" type="xml">
+            <form string="Source">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" help="Follow this salesteam to automatically track the events associated to users of this team."/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_avanta_status_tree" model="ir.ui.view">
+        <field name="name">avanta.status.tree</field>
+        <field name="model">avanta.status</field>
+        <field name="arch" type="xml">
+            <tree string="Source">
+                <field name="name"/>
+            </tree>
+         </field>
+    </record>
+
+    <record id="action_avanta_status" model="ir.actions.act_window">
+        <field name="name">Avanta Status</field>
+        <field name="res_model">avanta.status</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem action="action_avanta_status" id="menu_avanta_status" parent="sales_team.menu_sale_config" sequence="22"/>
+
+     <record id="view_project_phases_form" model="ir.ui.view">
+        <field name="name">project.phases.form</field>
+        <field name="model">project.phases</field>
+        <field name="arch" type="xml">
+            <form string="Source">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" help="Follow this salesteam to automatically track the events associated to users of this team."/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_project_phases_tree" model="ir.ui.view">
+        <field name="name">project.phases.tree</field>
+        <field name="model">project.phases</field>
+        <field name="arch" type="xml">
+            <tree string="Source">
+                <field name="name"/>
+            </tree>
+         </field>
+    </record>
+
+    <record id="action_project_phases" model="ir.actions.act_window">
+        <field name="name">Project Phases</field>
+        <field name="res_model">project.phases</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem action="action_project_phases" id="menu_project_phases" parent="sales_team.menu_sale_config" sequence="23"/>
+
+    <record id="view_project_status_form" model="ir.ui.view">
+        <field name="name">project.status.form</field>
+        <field name="model">project.status</field>
+        <field name="arch" type="xml">
+            <form string="Source">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" help="Follow this salesteam to automatically track the events associated to users of this team."/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_project_status_tree" model="ir.ui.view">
+        <field name="name">project.status.tree</field>
+        <field name="model">project.status</field>
+        <field name="arch" type="xml">
+            <tree string="Source">
+                <field name="name"/>
+            </tree>
+         </field>
+    </record>
+
+    <record id="action_project_status" model="ir.actions.act_window">
+        <field name="name">Project Status</field>
+        <field name="res_model">project.status</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem action="action_project_status" id="menu_project_status" parent="sales_team.menu_sale_config" sequence="24"/>
+
+    <record id="view_avanta_company_address_form" model="ir.ui.view">
+        <field name="name">avanta.company.address.form</field>
+        <field name="model">avanta.company.address</field>
+        <field name="arch" type="xml">
+            <form string="Company Address">
+                <sheet>
+                    <group>
+                        <field name="name" requirder="1"/>
+                        <label for="street" string="Address" />
+                        <div class="o_address_format">
+                            <field name="street" placeholder="Street..." class="o_address_street"/>
+                            <field name="street2" placeholder="Street2..." class="o_address_street"/>
+                            <div class="address_format">
+                                <field name="city" placeholder="City" style="width: 40%" class="o_address_city"/>
+                                <field name="state_id" options='{"no_open": True}'  placeholder="State" style="width: 24%" class="o_address_state"/>
+                                <field name="zip" placeholder="ZIP"  style="width: 34%" class="o_address_zip"/>
+                            </div>
+                            <field name="country_id" placeholder="Country"  class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                        </div>
+                        <field name="email"/>
+                        <field name="phone"/>
+                        <field name="fax"/>
+                        <field name="website"/>
+                        <field name="vat"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" help="Follow this salesteam to automatically track the events associated to users of this team."/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_avanta_company_address_tree" model="ir.ui.view">
+        <field name="name">avanta.company.address.tree</field>
+        <field name="model">avanta.company.address</field>
+        <field name="arch" type="xml">
+            <tree string="Source">
+                <field name="name"/>
+            </tree>
+         </field>
+    </record>
+
+    <record id="action_avanta_company_address" model="ir.actions.act_window">
+        <field name="name">Company Address</field>
+        <field name="res_model">avanta.company.address</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem action="action_avanta_company_address" id="menu_avanta_company_address" parent="sales_team.menu_sale_config" sequence="25"/>
+
+    <record id="view_industry_type_form" model="ir.ui.view">
+        <field name="name">industry.type.form</field>
+        <field name="model">industry.type</field>
+        <field name="arch" type="xml">
+            <form string="Industry Type">
+                <sheet>
+                    <group>
+                        <field name="name" requirder="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" help="Follow this salesteam to automatically track the events associated to users of this team."/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_industry_type_tree" model="ir.ui.view">
+        <field name="name">industry.type.tree</field>
+        <field name="model">industry.type</field>
+        <field name="arch" type="xml">
+            <tree string="Industry Type">
+                <field name="name"/>
+            </tree>
+         </field>
+    </record>
+
+    <record id="action_industry_type" model="ir.actions.act_window">
+        <field name="name">Industry Type</field>
+        <field name="res_model">industry.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem action="action_industry_type" id="menu_industry_type" parent="sales_team.menu_sale_config" sequence="29"/>
+
+    <record id="view_in_progress_form_inherit" model="ir.ui.view">
+        <field name="name">view.order.form.inprogress.inherit</field>
+        <field name="model">in.progress</field>
+        <field name="inherit_id" ref="avanta_fields_modifier.view_in_progress_form"/>
+        <field name="groups_id" eval="[(6,0, [ref('avanta_fields_modifier.group_crm_user'), ref('avanta_fields_modifier.group_management_representative')])]"/>
+        <field name="arch" type="xml">
+            <field name="project_phases_id" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

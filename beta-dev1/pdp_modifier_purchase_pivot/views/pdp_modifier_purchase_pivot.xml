@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="purchase.view_purchase_order_pivot">
+        <field name="name">product.month.pivot</field>
+        <field name="model">purchase.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Purchase Orders Statistics" disable_linking="True">
+                <field name="partner_id" type="row"/>
+                <field name="date_order" interval="month" type="col"/>
+                <field name="price_total" type="measure"/>
+                <field name="unit_quantity" type="measure"/>
+                <field name="price_average" type="measure"/>
+                <field name="qty_invoiced" type="measure"/>
+                <field name="qty_received" type="measure"/>
+                <field name="product_qty" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    
+    <record id="purchase.view_purchase_order_search" model="ir.ui.view">
+        <field name="name">report.purchase.order.search</field>
+        <field name="model">purchase.report</field>
+        <field name="arch" type="xml">
+            <search string="Purchase Orders">
+                <filter string="Quotations" name="quotes" domain="[('state','=','draft')]"/>
+                <filter string="Orders" name="orders" domain="[('state','&lt;&gt;','draft'),('state','&lt;&gt;','cancel')]"/>
+                <filter string="Brand" name="brand" domain="[('brand_id','!=',False)]"/>
+                
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="brand_id"/>
+                <group expand="0" string="Extended Filters">
+                    <field name="user_id"/>
+                    <field name="picking_type_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="date_order"/>
+                    <field name="date_approve"/>
+                    <field name="category_id" filter_domain="[('category_id', 'child_of', self)]"/>
+                </group>
+                <group expand="1" string="Group By">
+                    <filter string="Vendor" name="group_partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Brand" name="group_brand_id" context="{'group_by':'brand_id'}"/>
+                    <filter string="Partner's Country" name="country_id" context="{'group_by':'country_id'}"/>
+                    <filter string="Responsible" name="Responsible" context="{'group_by':'user_id'}"/>
+                    <filter string="Product Category" name="group_category_id" context="{'group_by':'category_id'}"/>
+                    <filter string="Status" context="{'group_by':'state'}"/>
+                    <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                    <separator/>
+                    <filter string="Order Month" context="{'group_by':'date_order:month'}" help="Order of Day"/>
+                    <filter string="Fiscal Position" context="{'group_by':'fiscal_position_id'}" help="Purchase Order Fiscal Position"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE html>
+
+<odoo>
+
+    <!-- Form view for General Survey -->
+    <record id="general_survey_form_view" model="ir.ui.view">
+        <field name="name">general.survey.form.view</field>
+        <field name="model">general.survey</field>
+        <field name="arch" type="xml">
+            <form string="General Survey">
+                <sheet>
+                    <group>
+                        <field name="name" class="oe_inline"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view for General Survey -->
+    <record id="general_survey_tree_view" model="ir.ui.view">
+        <field name="name">general.survey.tree.view</field>
+        <field name="model">general.survey</field>
+        <field name="arch" type="xml">
+            <tree string="General Survey">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action view for General Survey -->
+    <record id="general_survey_action" model="ir.actions.act_window">
+        <field name="name">General Survey</field>
+        <field name="res_model">general.survey</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a General Survey.
+          </p>
+        </field>
+    </record>
+    
+
+    <menuitem id="menu_student_general_survey_sub_form" name="General Survey" parent="school_fees.menu_student_fees_structure_form"
+        action="general_survey_action"/>
+
+</odoo>

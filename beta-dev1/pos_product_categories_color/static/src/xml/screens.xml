@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="CategorySimpleButton">
+        <t t-jquery="span.category-simple-button" t-operation="replace">
+			<span class='category-simple-button js-category-switch' t-att-data-category-id="category.id" t-attf-style="background-color: #{category.background_color}">
+                <t t-esc="category.name"/>
+            </span>
+		</t>
+    </t>
+</templates>

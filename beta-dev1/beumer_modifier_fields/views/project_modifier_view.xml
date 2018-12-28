@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="project_baan_number_tree" model="ir.ui.view">
+            <field name="name">baan.number.form</field>
+            <field name="model">account.analytic.account.baan.number</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="project_number"/>
+                    <field name="project_name" domain="[('project_number','=','project_number')]"/>
+                    <field name="product"/>
+                    <field name="phase"/>
+                    <field name="baan"/>
+                    <field name="invoice_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="project_baan_number_form" model="ir.ui.view">
+            <field name="name">baan.number.form</field>
+            <field name="model">account.analytic.account.baan.number</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="project_number"/>
+                                <field name="project_name"/>
+                                <field name="product"/>
+                            </group>
+                            <group>
+                                <field name="phase"/>
+                                <field name="baan"/>
+                                <field name="invoice_type"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_project_baan_number" model="ir.actions.act_window">
+            <field name="name">Baan Number</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.analytic.account.baan.number</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="view_id" ref="project_baan_number_tree"/>-->
+        </record>
+
+        <menuitem id="main_menu_project" name="Projects" parent="" sequence="7" web_icon="project,static/description/icon.png"/>
+        <menuitem id="stable_account_analytic_analysis.menu_action_account_analytic_overdue_all" parent="main_menu_project" name="Projects" sequence="10"/>
+        <menuitem id="cost_element.menu_action_cost_element" name="Cost Element" parent="main_menu_project" sequence="20"/>
+        <menuitem id="cost_element.menu_action_cost_element_report" name="Cost Element Report" parent="main_menu_project" sequence="30"/>
+        <menuitem id="menu_project_configuration" name="Configuration" parent="main_menu_project" sequence="40"/>
+        <menuitem id="menu_project_configuration_baan_number" name="Baan Number" parent="menu_project_configuration" sequence="10" action="action_project_baan_number"/>
+
+
+        <record model="ir.ui.menu" id="project.menu_main_pm">
+            <field name="active" eval="0"/>
+        </record>
+
+        <record id="vo_change_form_view" model="ir.ui.view">
+            <field name="name">vo.change.form</field>
+            <field name="model">account.analytic.account.change.contract.amount</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group cols="4">
+                            <field name="current_contract_amount"/>
+                            <field name="new_contract_amount"/>
+                            <field name="remark"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Confirm" type="object" name="confirm_vo_change" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_vo_change" model="ir.actions.act_window">
+            <field name="name">VO Change</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.analytic.account.change.contract.amount</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="vo_change_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="analytic_account_inherit_modifier" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherit.modifer</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.analytic_account_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='level']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='cost_element_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='cost_element_id']" position="after">
+                    <field name="cost_element_code"/>
+                    <field name="cost_element_code_sub" invisible="1"/>
+                    <field name="cost_element_id1"/>
+                    <field name="cost_element_id2"/>
+                    <field name="cost_element_id3"/>
+                </xpath>
+                <!--<xpath expr="//form/field[@name='user_tasks']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='partner_id']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+                <button name="set_cancel" position="after">
+                    <button string="VO Change" name="%(action_vo_change)d" type="action" attrs="{'invisible': [('state', '!=', 'open')]}"/>
+                </button>
+                <xpath expr="//form/sheet/notebook" position="inside">
+                    <page string="VO Log Change">
+                        <field name="vo_log_change_ids">
+                            <tree>
+                                <field name="vo_change_number"/>
+                                <field name="old_value"/>
+                                <field name="new_value"/>
+                                <field name="remark"/>
+                                <field name="date"/>
+                                <field name="user_id"/>
+                            </tree>
+                            <form>
+                                <group cols="4">
+                                    <field name="old_value"/>
+                                    <field name="new_value"/>
+                                    <field name="remark"/>
+                                    <field name="date"/>
+                                    <field name="user_id"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="analytic_account_inherited_form_modifier" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherit.modifer</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="project.analytic_account_inherited_form"/>
+            <field name="arch" type="xml">
+                <field name="use_tasks" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <!--<attribute name="nolabel">1</attribute>-->
+                </field>
+                <label for="use_tasks" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </label>
+                <!--<xpath expr="//form/sheet/div[@name=&quot;project&quot;]/label[@name='user_tasks']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+                <field name="partner_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

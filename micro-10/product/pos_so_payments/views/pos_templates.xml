@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <template id="assets" inherit_id="point_of_sale.assets">
+			<xpath expr="." position="inside">
+				<script type="text/javascript" src="/pos_so_payments/static/src/js/so_payment_btn.js"></script>
+				<script type="text/javascript" src="/pos_so_payments/static/src/js/delivery_man.js"></script>
+				<script type="text/javascript" src="/pos_so_payments/static/src/js/so_payment.js"></script>
+				<script type="text/javascript" src="/pos_so_payments/static/src/js/so_payment_widget.js"></script>
+				<link rel="stylesheet" href="/pos_so_payments/static/src/css/style.css"/>
+			</xpath>
+		</template>
+    </data>
+</odoo>

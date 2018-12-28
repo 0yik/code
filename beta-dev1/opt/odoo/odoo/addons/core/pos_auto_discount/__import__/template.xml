@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="pos_auto_discount" inherit_id="point_of_sale.assets">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/pos_auto_discount/static/src/css/pos_auto_discount.css"/>
+                <script type="text/javascript" src="/pos_auto_discount/static/src/js/pos_auto_discount.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

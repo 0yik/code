@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="account_common_report_view_inherit">
+			<field name="name">account common report view inherit</field>
+			<field name="model">account.report.partner.ledger</field>
+			<field name="inherit_id" ref="account.account_common_report_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/footer" position="before">
+					<!--<separator string="Partners"/>-->
+					<field name="partner_ids" context="{'result_selection' : result_selection}" invisible="1" required="0">
+                        <tree editable="bottom">
+							<field name="result_selection" invisible="1"/>
+                            <field name="name" options="{'no_create': True}"/>
+                            <field name="payment_term" widget="many2many_tags" options="{'no_create': True}"/>
+                        </tree>
+                    </field>
+				</xpath>
+			</field>
+		</record>
+    </data>
+</odoo>

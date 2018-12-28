@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+	 <menuitem id="hr_expense.menu_hr_expense_sheet_my_reports" name="Expense to Submit" sequence="3" parent="hr_expense.menu_hr_expense_my_expenses" action="hr_expense.action_hr_expense_sheet_my_all" load_xmlid="True"/>
+	<record id="hr_expense.action_hr_expense_sheet_my_all" model="ir.actions.act_window">
+            <field name="name">Expenses</field>
+	</record>
+	<record id="make_invisible" model="res.groups">
+            <field name="name">Invisible</field>
+	</record>
+	<record id="hr_expense.menu_hr_expense_my_expenses_to_submit" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+	</record>
+    </data>
+</odoo>

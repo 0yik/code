@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_case_form_view_oppor_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.form.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@class='oe_stat_button']" position="after">
+                	<button class="oe_stat_button" type="object"
+                        name="action_schedule_phonecall" icon="fa-phone">
+                        <div class="o_stat_info">
+                            <field name="phonecall_count" class="o_stat_value"/>
+                            <span class="o_stat_text" attrs="{'invisible': [('phonecall_count', '&lt;', 2)]}">Schedule/Log Call</span>
+                            <span class="o_stat_text" attrs="{'invisible': [('phonecall_count', '&gt;', 1)]}">Schedule/Log Calls</span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

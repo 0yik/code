@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_generate_queue_tree">
+        <field name="name">Generate queue</field>
+        <field name="model">generate.queue</field>
+        <field name="arch" type="xml">
+            <tree string="Generate Queue">
+                <field name="queue_number"/>
+                <field name="reference"/>
+                <field name="created_date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="form_action_generate_queue" model="ir.actions.act_window">
+        <field name="name">Generate Queue</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">generate.queue</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.ui.view" id="view_generate_queue_form">
+        <field name="name">Generate queue</field>
+        <field name="model">generate.queue</field>
+        <field name="arch" type="xml">
+            <form string="Generate Queue">
+                <header>
+                    <button name='generate_number' type='object' string='Generate Number' states="draft"/>
+                    <field name='state' widget='statusbar' statusbar_visible='draft,queue_generated,done'/>
+                </header>
+                <sheet>
+                    <div name="button_box" position="inside" class="oe_right oe_button_box ">
+                        <button class="or_inside oe_stat_button" type="action"
+                                name="%(form_action_generate_queue)d"
+                                icon="fa-align-justify" string="View">
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="queue_number"/>
+                            <field name="check" invisible='1'/>
+                            <field name="company_id" invisible='1'/>
+                            <field name="reference" attrs="{'required':[('check','=', True)]}"
+                                   domain="[('picking_type_code','=','outgoing')]"/>
+                            <field name="created_date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <menuitem id="menu_generate_queue" name="Generate Queue" parent="stock.menu_stock_warehouse_mgmt" sequence="3"
+              action="form_action_generate_queue"/>
+
+</odoo>

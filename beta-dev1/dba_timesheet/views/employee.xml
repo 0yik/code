@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Inherit Employee Form-->
+    <record id="hr_employee_form_dba" model="ir.ui.view">
+        <field name="name">hr.employee.form.dba</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+        	<field name="parent_id" position="attributes">
+        	    <attribute name="string">Timesheet Manager</attribute>
+        	</field>
+        </field>
+    </record>
+</odoo>

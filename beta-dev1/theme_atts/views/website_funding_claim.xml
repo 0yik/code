@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="funding_claim_page_bradcum">
+        <div class="container">
+            <h1>
+                <span><span>Funding &amp; Claims</span></span>
+            </h1>
+            <ul class="breadcrumb">
+                <li><a href="/page/homepage">Home</a></li>
+                <li><a href="/page/funding_claims">Funding &amp; Claims</a></li>
+                <li><a t-attf-href="/page/#{bread_cum_submenu_url}"><t t-esc="bread_cum_submenu_name"/></a></li>
+            </ul>
+        </div>
+    </template>
+
+    <template id="website.funding_claims" name="Funding &amp; Claims" page="True">
+        <t t-call="website.layout">
+            <t t-if="not website.is_breadcum">
+                <t t-if="website.bread_cum_image">
+                    <t t-set="bread_cum" t-value="website.image_url(website,'bread_cum_image')"/>
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs" t-attf-style="background-image:url(#{bread_cum}#)">
+                            <t t-call="theme_atts.funding_claim_page_bradcum" />
+                        </nav>
+                    </t>
+                    <t t-if="not website.bread_cum_image">
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs">
+                            <t t-call="theme_atts.funding_claim_page_bradcum" />
+                        </nav>
+                    </t>
+                <!-- </t>-->
+            </t>
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <section class="as-feature-t" style="background: none !important;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="ab-feature clearfix">
+                                    <a href="/page/skills_future_credit">
+                                        <div class="feature-icon">
+                                            <i class="fa fa-eyedropper"></i>
+                                        </div>
+                                        <h3 class="title funding_feature">Skills Future Credit</h3>
+                                        <span style="margin: 0px 0 5px 20px !important;">Lorem ipsum dolor sit amet,</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="ab-feature clearfix">
+                                    <a href="/page/e2i">
+                                        <div class="feature-icon">
+                                            <i class="fa fa-cog"></i>
+                                        </div>
+                                        <h3 class="title funding_feature">e2i</h3>
+                                        <span style="margin: 0px 0 5px 20px !important;">Lorem ipsum dolor sit amet,</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="ab-feature clearfix">
+                                    <a href="/page/maritime_cluster_fund">
+                                        <div class="feature-icon">
+                                            <i class="fa fa-expand"></i>
+                                        </div>
+                                        <h3 class="title funding_feature">Maritime Cluster Fund (MCF)</h3>
+                                        <span style="margin: 0px 0 5px 20px !important;">Lorem ipsum dolor sit amet,</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="website.skills_future_credit" name="Skills Future Credit" page="True">
+        <t t-call="website.layout">
+            <t t-if="not website.is_breadcum">
+                <t t-set="bread_cum_submenu_name" t-value="'Skills Future Credis'"/>
+                <t t-set="bread_cum_submenu_url" t-value="'skills_future_credit'"/>
+                <t t-if="website.bread_cum_image">
+                    <t t-set="bread_cum" t-value="website.image_url(website,'bread_cum_image')"/>
+                    <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs" t-attf-style="background-image:url(#{bread_cum}#)">
+                        <t t-call="theme_atts.funding_claim_page_bradcum" />
+                    </nav>
+                </t>
+                <t t-if="not website.bread_cum_image">
+                    <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs">
+                        <t t-call="theme_atts.funding_claim_page_bradcum" />
+                    </nav>
+                </t>
+            </t>
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <section class="as-feature-t" style="background: none !important;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                Skills Future Credis
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="website.e2i" name="Skills Future Credit" page="True">
+        <t t-call="website.layout">
+            <t t-if="not website.is_breadcum">
+                <t t-set="bread_cum_submenu_name" t-value="'E2I'"/>
+                <t t-set="bread_cum_submenu_url" t-value="'e2i'"/>
+                <t t-if="website.bread_cum_image">
+                    <t t-set="bread_cum" t-value="website.image_url(website,'bread_cum_image')"/>
+                    <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs" t-attf-style="background-image:url(#{bread_cum}#)">
+                        <t t-call="theme_atts.funding_claim_page_bradcum" />
+                    </nav>
+                </t>
+                <t t-if="not website.bread_cum_image">
+                    <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs">
+                        <t t-call="theme_atts.funding_claim_page_bradcum" />
+                    </nav>
+                </t>
+            </t>
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <section class="as-feature-t" style="background: none !important;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                E2I
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="website.maritime_cluster_fund" name="Skills Future Credit" page="True">
+        <t t-call="website.layout">
+            <t t-if="not website.is_breadcum">
+                <t t-set="bread_cum_submenu_name" t-value="'Maritime Cluster Fund (MCF)'"/>
+                <t t-set="bread_cum_submenu_url" t-value="'maritime_cluster_fund'"/>
+                <t t-if="website.bread_cum_image">
+                    <t t-set="bread_cum" t-value="website.image_url(website,'bread_cum_image')"/>
+                    <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs" t-attf-style="background-image:url(#{bread_cum}#)">
+                        <t t-call="theme_atts.funding_claim_page_bradcum" />
+                    </nav>
+                </t>
+                <t t-if="not website.bread_cum_image">
+                    <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs">
+                        <t t-call="theme_atts.funding_claim_page_bradcum" />
+                    </nav>
+                </t>
+            </t>
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <section class="as-feature-t" style="background: none !important;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                Maritime Cluster Fund (MCF)
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+</odoo>

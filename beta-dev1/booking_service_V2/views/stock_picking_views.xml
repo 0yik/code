@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_picking_form_booking" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='priority']" position="after">
+                    <field name="is_booking" invisible="1"/>
+                    <field name="is_validated" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="scheduled_start" attrs="{'invisible': [('is_booking', '=', False)],'required': [('is_booking', '=', True)]}"/>
+                    <field name="scheduled_end" attrs="{'invisible': [('is_booking', '=', False)],'required': [('is_booking', '=', True)]}"/>
+                    <field name="actual_start" attrs="{'invisible': [('is_booking', '=', False)]}" />
+                    <field name="actual_end" attrs="{'invisible': [('is_booking', '=', False)]}" />
+                    <field name="team" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                    <field name="team_leader" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                    <field name="team_employees" attrs="{'invisible': [('is_booking', '=', False)]}">
+                       <tree editable="bottom">
+                            <field name="employee_id"/>
+                        </tree>
+                        <form>
+                            <field name="employee_id"/>
+                        </form>
+                    </field>
+                    <field name="product_ids" attrs="{'invisible': [('is_booking', '=', False)]}">
+                        <tree editable="bottom">
+                            <field name="product_id"/>
+                            <field name="lot_id"/>
+                        </tree>
+                        <form>
+                            <field name="product_id"/>
+                            <field name="lot_id"/>
+                        </form>
+                    </field>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="replace">
+                    <button name="action_todo" attrs="{'invisible': ['|',('is_booking', '=', False),('state', 'in', ('assigned'))]}" string="Mark as TODO" type="object" groups="hr.group_hr_user,booking_service_V2.group_user,booking_service_V2.group_manager" class="oe_stat_button" />
+                    <button name="action_check" attrs="{'invisible': ['|',('is_booking', '=', False),('state', 'in', (['assigned', 'pending']))]}" string="Check" type="object" groups="hr.group_hr_user,booking_service_V2.group_user,booking_service_V2.group_manager" class="oe_stat_button" />
+                    <button name="action_check" attrs="{'invisible': ['|',('is_booking', '=', False),('state', '!=', ('pending'))]}" string="Check" type="object" groups="hr.group_hr_user,booking_service_V2.group_user,booking_service_V2.group_manager" class="oe_stat_button" />
+                    <button name="action_start" attrs="{'invisible': ['|',('is_booking', '=', False),'|',('is_validated', '=', False),('state','!=','pending')]}" string="Start" type="object" groups="hr.group_hr_user,booking_service_V2.group_user,booking_service_V2.group_manager" class="oe_stat_button"/>
+                    <button name="action_validate" attrs="{'invisible': ['|',('is_booking', '=', False),('state', '!=', ('assigned'))]}" string="Validate" type="object" groups="hr.group_hr_user,booking_service.group_user,booking_service.group_manager" class="oe_stat_button"/>
+                </xpath>
+                <field name="state" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,partially_available,pending,assigned,done"/>
+                </field>
+                 <button name="do_new_transfer" position="replace">
+                     <button name="do_new_transfer" string="Validate" groups="stock.group_stock_user,booking_service_V2.group_user,booking_service_V2.group_manager" type="object" class="oe_highlight" attrs="{'invisible':['|',('is_booking','=',True),('state', 'in', (['draft', 'partially_available']))]}"/>
+                 </button>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="work_order_action">
+            <field name="name">Work Order</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="context">{'default_is_booking':True}</field>
+            <field name="domain">[('is_booking', '=',True)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first Work Order
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="work_order_menu" name="Work Order"
+                  parent="main_booking_menu" action="work_order_action"/>
+    </data>
+</odoo>

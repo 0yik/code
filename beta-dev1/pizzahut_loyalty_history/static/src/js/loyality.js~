@@ -1,0 +1,29 @@
+odoo.define('loyality_point_history.loyality_point_history', function (require) {
+"use strict";
+	var pos_orders = require('pos_orders.pos_orders');
+	var core = require('web.core');
+	var gui = require('point_of_sale.gui');
+	var QWeb = core.qweb;
+	var screens = require('point_of_sale.screens');
+	var models = require('point_of_sale.models');
+	var PopupWidget = require('point_of_sale.popups');
+	var _t = core._t;
+	var SuperOrder = models.Order;
+	var SuperOrderline =  models.Orderline.prototype;
+	var SuperPosModel = models.PosModel.prototype;
+	var formats = require('web.formats');
+	
+	models.load_fields('product.product','not_returnable');
+	var order_model = null;
+	var order_line_model = null;
+	var model_list = models.PosModel.prototype.models
+	for(var i = 0,len = model_list.length;i<len;i++){
+		if(model_list[i].model == "pos.order")
+			order_model = model_list[i];
+		else if(model_list[i].model == "pos.order.line")
+			order_line_model = model_list[i];
+	}
+	order_model.fields.push('return_order_id','statement_ids','is_return_order','return_status','amount_total','loyalty_points');
+	
+});
+

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--MODIFY CALENDAR FORM VIEW-->
+        <record id="kimhuat_modifier_fields_calendar_form_view" model="ir.ui.view">
+            <field name="name">calendar form view</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[2]" position="after">
+                    <page string="Customer History">
+                        <field name="sales_order_ids">
+                            <tree create="0" delete="0" edit="0">
+                                <field name="order_number" string="Order Number"/>
+                                <field name="date_order" string="Order Date"/>
+                                <field name="salesperson" string="Salesperson"/>
+                                <field name="amount_total" string="Total"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Kim Huat Service Chit">
+                        <field name="service_chit">
+                            <tree editable="bottom">
+                                <field name="no_number"/>
+                                <field name="brand"/>
+                                <field name="model_make"/>
+                                <field name="serial"/>
+                                <field name="type"/>
+                                <field name="on_coil_temp"/>
+                                <field name="off_coil_temp"/>
+                                <field name="suctn"/>
+                            </tree>
+                            <group>
+                                <group>
+                                    <field name="no_number"/>
+                                    <field name="brand"/>
+                                    <field name="model_make"/>
+                                    <field name="serial"/>
+                                </group>
+                                <group>
+                                    <field name="type"/>
+                                    <field name="on_coil_temp"/>
+                                    <field name="off_coil_temp"/>
+                                    <field name="suctn"/>
+                                </group>
+                            </group>
+                        </field>
+                        <group>
+                            <group>
+                                <field name="symptoms_observations"/>
+                                <field name="service_rendered"/>
+                                <field name="recommendations"/>
+                            </group>
+                            <group>
+                                <label for="id" string="Routine Service"/>
+                                <div>
+                                    <div>
+                                        <field name="air_filter_cleaned"/>
+                                        <label for="air_filter_cleaned"/>
+                                    </div>
+                                    <div>
+                                        <field name="bearings_oiled"/>
+                                        <label for="bearings_oiled"/>
+                                    </div>
+                                    <div>
+                                        <field name="coils_cleaned"/>
+                                        <label for="coils_cleaned"/>
+                                    </div>
+                                    <div>
+                                        <field name="condenser_coil_cleaned"/>
+                                        <label for="condenser_coil_cleaned"/>
+                                    </div>
+                                    <div>
+                                        <field name="controls_checked"/>
+                                        <label for="controls_checked"/>
+                                    </div>
+
+                                    <div>
+                                        <field name="discharged_pressure_checked"/>
+                                        <label for="discharged_pressure_checked"/>
+                                    </div>
+                                    <div>
+                                        <field name="drain_tray_drain_pipe_cleaned"/>
+                                        <label for="drain_tray_drain_pipe_cleaned"/>
+                                    </div>
+                                    <div>
+                                        <field name="drives_checked"/>
+                                        <label for="drives_checked"/>
+                                    </div>
+                                    <div>
+                                        <field name="evaporator_coil"/>
+                                        <label for="evaporator_coil"/>
+                                    </div>
+                                    <div>
+                                        <field name="fan_blower_cleaned"/>
+                                        <label for="fan_blower_cleaned"/>
+                                    </div>
+
+                                    <div>
+                                        <field name="fan_coil_cover_cleaned"/>
+                                        <label for="fan_coil_cover_cleaned"/>
+                                    </div>
+                                    <div>
+                                        <field name="flushed_drainage"/>
+                                        <label for="flushed_drainage"/>
+                                    </div>
+                                    <div>
+                                        <field name="suction_pressure_checked"/>
+                                        <label for="suction_pressure_checked"/>
+                                    </div>
+                                    <div>
+                                        <field name="thermostat_checked"/>
+                                        <label for="thermostat_checked"/>
+                                    </div>
+                                    <div>
+                                        <field name="pumps_checked"/>
+                                        <label for="pumps_checked"/>
+                                    </div>
+                                </div>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="payment_mode"/>
+                            </group>
+                            <group>
+                                <field name="payment_made"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="PCF Service Chit">
+                        <field name="pcf_service_chit_tree_1_ids" string="PCF Service Chit">
+                            <tree editable="bottom">
+                                <field name="type_of_aircon"/>
+                                <field name="units_to_service"/>
+                                <field name="units_serviced"/>
+                            </tree>
+                            <group>
+                                <group>
+                                    <field name="type_of_aircon"/>
+                                </group>
+                                <group>
+                                    <field name="units_to_service"/>
+                                    <field name="units_serviced"/>
+                                </group>
+                            </group>
+                        </field>
+                        <field name="pcf_service_chit_tree_2_ids" string="PCF Service Chit">
+                            <tree editable="bottom">
+                                <field name="type_of_fan"/>
+                                <field name="units_to_service"/>
+                                <field name="units_serviced"/>
+                            </tree>
+                            <group>
+                                <group>
+                                    <field name="type_of_fan"/>
+                                    <field name="units_to_service"/>
+                                    <field name="units_serviced"/>
+                                </group>
+                                <group>
+                                    <field name="time_in"/>
+                                    <field name="time_out"/>
+                                </group>
+                            </group>
+                        </field>
+                        <group>
+                            <group>
+                                <field name="time_in_pcf"/>
+                            </group>
+                            <group>
+                                <field name="time_out_pcf"/>
+                            </group>
+                        </group>
+                        <!--<lable for="pcf_service_chit_tree_3_ids" string="Type of Equipment"/>-->
+                        <div>
+                            <h4>Type of Equipment</h4>
+                            <field name="pcf_service_chit_tree_3_ids" string="Type of Equipment">
+                                <tree editable="bottom">
+                                    <field name="brand"/>
+                                    <field name="model_no"/>
+                                    <field name="type"/>
+                                    <field name="serial_no"/>
+                                    <field name="location"/>
+                                </tree>
+                                <group>
+                                    <group>
+                                        <field name="brand"/>
+                                        <field name="model_no"/>
+                                        <field name="type"/>
+                                        <field name="serial_no"/>
+                                    </group>
+                                    <group>
+                                        <field name="location"/>
+                                        <field name="header"/>
+                                    </group>
+                                </group>
+                            </field>
+                            <group>
+                                <field name="header"/>
+                            </group>
+                        </div>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

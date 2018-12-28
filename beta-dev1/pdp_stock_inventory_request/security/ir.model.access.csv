@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_inventory_request_line,access_inventory_request_line,model_inventory_request_line,,1,1,1,1
+access_return_request,access_return_request,model_return_request,,1,1,1,1
+access_return_request_line,access_return_request_line,model_return_request_line,,1,1,1,1
+access_tester_request,access_tester_request,model_tester_request,,1,1,1,1
+access_tester_request_line,access_tester_request_line,model_tester_request_line,,1,1,1,1
+access_inventory_request,access_inventory_request,model_inventory_request,,1,1,1,1
+access_master_reason,access_master_reason,model_master_reason,,1,1,1,1
+access_sale_order_reference,access_sale_order_reference,model_sale_order_reference,,1,1,1,1

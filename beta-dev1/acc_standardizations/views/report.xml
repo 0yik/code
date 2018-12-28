@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <report 
+            id="account_payments"
+            model="account.payment"
+            string="Receipt"
+            report_type="qweb-pdf"
+            name="acc_standardizations.report_payment"
+            file="acc_standardizations.report_payment"
+            />
+    </data>
+</odoo>

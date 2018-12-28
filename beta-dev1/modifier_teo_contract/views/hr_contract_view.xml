@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="hr_contract_form_view_new" model="ir.ui.view">
+            <field name="name">hr.contract.form.new</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="l10n_sg_hr_payroll.view_hr_contract_commission_form_inherited"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active_employee']" position="before">
+                    <field name="increment"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="hr_contract_tree_view_new" model="ir.ui.view">
+            <field name="name">hr.contract.tree.new</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="l10n_sg_hr_payroll.hr_contract_view_tree_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='wage']" position="after">
+                    <field name="increment"/>
+                </xpath>
+            </field>
+        </record>
+
+        
+    </data>
+</odoo>

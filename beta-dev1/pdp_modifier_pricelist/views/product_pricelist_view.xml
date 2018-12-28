@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem action="puchase_pricelist.product_pricelist_action3" id="puchase_pricelist.menu_product_pricelist_action3"
+                  parent="purchase.menu_purchase_config" sequence="1" groups="product.group_sale_pricelist"/>
+
+
+        <record model="ir.ui.view" id="product_pricelist_view_search_status_search_inherit">
+            <field name="name">product.pricelist.inherit.search</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='inactive']" position="after">
+                    <filter name="purchase_pricelist" string='Pricelist Type is “Purchase Pricelist”' domain="[('pricelist_type','=','purchase')]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="puchase_pricelist.product_pricelist_action3" model="ir.actions.act_window">
+            <field name="name">Purchase Pricelists</field>
+            <field name="domain">[]</field>
+            <field name="context">{"search_default_purchase_pricelist":1,"default_base":'list_price', 'default_pricelist_type':'purchase'}</field>
+        </record>
+
+        <record id="puchase_pricelist.menu_product_pricelist_main" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="ccm_custommade" name="custom_made">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <!-- ********************************************* breadcrumb start *********************************************  -->
+	            <section>
+	                <div class="bs_margin"></div>
+	            </section>
+	            <div class="breadcrumb_main">
+	                <div class="breadcrumb_container">
+	                    <section>
+	                        <div class="breadcrumb_inner">
+	                            <ol class="breadcrumb">
+	                                <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+	                                <li class="breadcrumb-item active">Custom-Made</li>
+	                            </ol>
+	                        </div>
+	                    </section>
+	                </div>
+	            </div>
+	            <!--********************************************* breadcrumb start *********************************************  -->
+	
+	            <!--********************************************* Custom-Made start *********************************************  -->
+	            <div class="custom_made_main">
+	                <div class="custom_made_container">
+	                    <div class="col-md-12 custom_made_heading">
+	                        <h3>Customizing of costumes</h3>
+	                    </div>
+	                    <div class="row">
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="custom_made_inner">
+	                                <p>CCM prides in being able to customise the look of the Mascot to the look that you desire. Our utmost priority is ensuring that you receive your desired costume the way you asked for it. We are confident in the capabilities of our production side that we will create the best costumes for you, up to the finest of details. Every inch will be measured, every detail will be followed, and because we pride in customizing as our forte, we will take the extra mile so that you will look perfect for your special occasion.</p>
+	                                <!-- <p>CCM prides in being able to customise the look of the Mascot to the look that you desire.</p>
+	                                <p> Our utmost priority is ensuring that you receive your desired costume the way you asked for it.</p> 
+	                                <p>We are confident in the capabilities of our production side that we will create the best costumes for you, up to the finest of details.</p> 
+	                                <p>Every inch will be measured, every detail will be followed, and because we pride in customizing as our forte,</p> 
+	                                <p>we will take the extra mile so that you will look perfect for your special occasion.</p> -->
+	                            </div>
+	                        </div>
+	                        <div class="custom_made_enquiry">
+	                            <div class="enquiry_heading">
+	                                <h1>ENQUIRY FORM FOR CUSTOMIZATION</h1>
+	                            </div>
+	                            <div t-if="success" class="alert alert-reservation" style="color: red; font-size: 20px;">
+                                    Your Inquiry is submitted Successfully. We will get back to you shortly.
+                                </div>
+	                            <div class="enquiry_form">
+	                                <form name="custom_made" action="/custom_made" enctype="multipart/form-data" method="POST">
+	                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+	                                    <div class="form-group">
+	                                        <label class="col-md-3 col-sm-4 control-label">Name</label>
+	
+	                                        <div class="col-md-7 col-sm-8 cinput">
+	                                            <input name="name" type="text" class="form-control" required="" value=""/>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label class="col-md-3 col-sm-4 control-label">Email</label>
+	
+	                                        <div class="col-md-7 col-sm-8 cinput">
+	                                            <input name="email" type="email" class="form-control" required="" value=""/>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group cphone">
+	                                        <label class="col-md-3 col-sm-4 control-label">Phone</label>
+	
+	                                        <div class="col-md-7 col-sm-8 cinput">
+	                                            <input name="phone" type="number" class="form-control" required="" value=""/>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label class="col-md-3 col-sm-4 control-label">Quantity</label>
+	
+	                                        <div class="col-md-7 col-sm-8 cinput">
+	                                            <input name="qty" type="number" class="form-control" required="" value=""/>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label class="col-md-3 col-sm-4 control-label">Fabric</label>
+	
+	                                        <div class="col-md-7 col-sm-8 cinput">
+	                                            <input name="fabric" type="text" class="form-control" required="" value=""/>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label class="col-md-3 col-sm-4 control-label">Budget</label>
+	
+	                                        <div class="col-md-7 col-sm-8 cinput">
+	                                            <input name="budget" type="text" class="form-control" required="" value=""/>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label class="col-md-3 col-sm-4 control-label">Deadline</label>
+	
+	                                        <div class="col-md-7 col-sm-8 cinput">
+	                                            <input name="deadline" type="text" class="form-control" required="" value=""/>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label class="col-md-3 col-sm-4 control-label">Upload Image</label>
+	
+	                                        <div class="col-md-7 col-sm-8 cinput">
+	                                            <input type="file" name="upload" required="" class="form-control" id="fileupload"/>
+	                                            <p class="filetype">
+	                                                <strong>JPEG</strong> or <strong>PDF</strong> formats only. 
+	                                                Maximum file size of <strong>2mb</strong>.
+	                                            </p>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label class="col-md-3 col-sm-4 control-label">Remarks</label>
+	
+	                                        <div class="col-md-7 col-sm-8 cinput">
+	                                            <input name="remarks" type="text" class="form-control" required="" value=""/>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <span class="col-md-3 col-sm-4 control-label"></span>
+	
+	                                        <div class="col-md-7 col-sm-8 cinput">
+	                                        <input id="custom_made" class="btn btn-primary common_btn" type="submit" value="Submit">
+                                                            </input>
+	                                        </div>
+	                                    </div>
+	                                </form>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <!--********************************************* Custom-Made section end *********************************************  -->
+            </div>
+        </t>
+    </template>
+</odoo>

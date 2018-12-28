@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_sale_requisition_form_inherit">
+            <field name="name">sale.requisition.form</field>
+            <field name="model">sale.requisition</field>
+            <field name="inherit_id" ref="so_blanket_order.view_sale_requisition_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="pricelist_id"/>
+                    <field name="currency_id"/>
+                </field>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='price_unit']" position="after">
+                    <field name="sub_total"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='price_unit']" position="before">
+                    <field name="currency_id" invisible="1"/>
+                    <field name="tax_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name='widget'>monetary</attribute>
+                    <attribute name='options'>{'currency_field': 'currency_id'}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']" position="after">
+                    <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                        <field name="amount_total" nolabel="0" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

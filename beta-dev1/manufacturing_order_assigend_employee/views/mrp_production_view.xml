@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Manufacturing Order -->
+    <record id="mrp_production_inherit_form_view" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[4]" position="after">
+                <page string="Assigned Employee">
+                     <field name="assinged_employee_ids">
+                        <tree editable='bottom'>
+                            <field name="employee_id"/>
+                            <field name="department_id"/>
+                            <field name="job_id"/>
+                            <field name="project_id"/>
+                            <field name="calendar_id"/>
+                            <field name="total_working_hour" widget="float_time"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="assigned_employee_tree_view" model="ir.ui.view">
+        <field name="name">assigned.employee.tree</field>
+        <field name="model">assigned.employee</field>
+        <field name="arch" type="xml">
+            <tree editable='bottom'>
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="job_id"/>
+                <field name="project_id"/>
+                <field name="calendar_id"/>
+                <field name="total_working_hour" widget="float_time"/>
+            </tree>
+
+        </field>
+    </record>
+
+</odoo>

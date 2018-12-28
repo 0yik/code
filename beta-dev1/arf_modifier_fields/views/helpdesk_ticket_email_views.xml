@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="assets_backend" name="static_resources_demo assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="arf_modifier_fields/static/js/helpdesk_ticket.js"></script>
+            </xpath>
+        </template>
+    <data>
+
+        <record model="ir.ui.view" id="view_ticket_email_history_form">
+            <field name="name">helpdesk.ticket.email.form</field>
+            <field name="model">helpdesk.ticket.email</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <form string="Email History">
+                    <field name="email_id"/>
+                    <group>
+                        <field name="date" string="Sent Date"/>
+                        <field name="subject" string="Subject"/>
+                        <field name="body" widget="html"/>
+                        <field name="status" string="Status"/>
+                    </group>
+                    <group>
+
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_nature_of_call_form">
+            <field name="name">helpdesk.ticket.notes.form</field>
+            <field name="model">helpdesk.ticket.notes</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <form string="Nature of call">
+                    <group colspan="2">
+                        <field name="nature" string="Nature of call"/>
+                        <field name="description_id" string="Description"/>
+                    </group>
+                    <group>
+
+                    </group>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

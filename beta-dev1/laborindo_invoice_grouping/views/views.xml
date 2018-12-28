@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <data>
+    <!--Inherit quotations search view-->
+    <record id="view_account_invoice_filter_inherit" model="ir.ui.view">
+      <field name="name">view.account.invoice.filter.inherit</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//search" position="inside">
+              <field name="downpayment"/>
+              <filter domain="[('downpayment','!=',False)]" help="Down payment"/>
+                      </xpath>
+        <xpath expr="//search/group" position="inside">
+
+          <filter string="Down payment" context="{'group_by':'downpayment'}"/>
+
+
+        </xpath>    
+
+      </field>
+    </record>
+  </data>
+</odoo>

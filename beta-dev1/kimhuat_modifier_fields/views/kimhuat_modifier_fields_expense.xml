@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--<record id="kimhuat_modifier_fields_edit_expense_view" model="ir.ui.view">-->
+            <!--<field name="name">hr.expense.sheet.form.inherit</field>-->
+            <!--<field name="model">hr.expense.sheet</field>-->
+            <!--<field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--&lt;!&ndash;xpath expr="//field[@name='description']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath&ndash;&gt;-->
+                <!--<xpath expr="//field[@name='name']" position="attributes">-->
+                    <!--&lt;!&ndash;<field name="name"/>&ndash;&gt;-->
+                    <!--<attribute name="placeholder"></attribute>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+        <record id="hr_hr_employee_view_form3" model="ir.ui.view">
+            <field name="name">hr.hr.employee.view.form3</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='manager']" position="replace">
+                </xpath>
+                <field name="barcode" position="attributes">
+                	<attribute name="invisible">1</attribute>
+                </field>
+                <field name="pin" position="attributes">
+                	<attribute name="invisible">1</attribute>
+                </field>
+                <field name="manual_attendance" position="attributes">
+                	<attribute name="invisible">1</attribute>
+                </field>
+               	<field name="coach_id" position="attributes">
+                	<attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="hr_employee_form_parent3" model="ir.ui.view">
+            <field name="name">hr.employee.form.parent3</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="sg_hr_employee.view_employee_form_parent2"/>
+            <field name="arch" type="xml">
+                <!--xpath expr="//page[3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[4]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[6]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//page[7]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//page[10]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath-->
+                <xpath expr="//field[@name='emp_state_id']" position="attributes">
+                	<attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//page/group/field[@name='job_id']" position="replace">
+                	<field name="job_id" string="Job Title" domain="[('state','=','open')]" />
+                </xpath>
+            </field>
+        </record>
+        <!--record id="inherit_hr_employee_form_parent2" model="ir.ui.view">
+            <field name="name">inherir_hr.employee.form.parent2</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="sg_holiday_extended.hr_employee_inherit_form_extended"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='Dependents']" position="replace">
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit_hr_employee_form4" model="ir.ui.view">
+            <field name="name">hr.employee.form2</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='hr_settings']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record-->
+    </data>
+</odoo>

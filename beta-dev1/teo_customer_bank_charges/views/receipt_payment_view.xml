@@ -1,0 +1,18 @@
+<odoo>
+	<record id="receipt_payment_form_inherited_bank_charges" model="ir.ui.view">
+		<field name="name">receipt.payment.form.inherited.bank.charges</field>
+		<field name="model">receipt.payment</field>
+		<field name="inherit_id" ref="sg_partner_payment.view_customer_receipt_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//page" position="after">
+				<page name="bank_charges" string="Bank Charges">
+				    <group>
+					<field name="description"/>
+					<field name="charge_amount"/>
+					<field name="expense_account"/>
+				    </group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

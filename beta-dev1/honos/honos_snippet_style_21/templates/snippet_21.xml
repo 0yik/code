@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<template id="snippet_style_tewntyone" inherit_id="honos_snippets.honos_snippets"
+		name="honos snippet" priority="21">
+		<xpath
+			expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']"
+			position="inside">
+			<t t-snippet="honos_snippet_style_21.snippet_style_21_template"
+			t-thumbnail="/honos_snippet_style_21/static/src/img/style_21.jpg" />
+		</xpath>
+	</template>
+	
+	<template id="snippet_style_21_template" name="Style 21">
+						<section class="h3_style_21_snippet_wrap">
+					<section class="style_21_bg_container" style="background-image:url('/honos_snippet_style_21/static/src/img/style_21_img_1.jpg')">
+						<div class="style_21_snippet_main_container">
+							<div class="style_21_heading_main_div">
+								<div class="s_21_title_main">
+								ENJOY THE NEW<span class="title_span_text">FASHION EXPERIENCE</span>
+								</div>
+								<p class="s_21_sub_title">New look of 2017</p>
+							</div>
+							
+							<div class="s_21_empty_content_div">
+							</div>
+							<section>
+							<div class="s_21_content_row_div">
+								<div class="s_21_content_div content1_align">
+								<div class="s_21_sub_content_1">
+									<div class="s_21_pointer">
+									<section><img src="/honos_snippet_style_21/static/src/img/pointer_line_left.png"></img></section>
+									</div>
+									<div class="s_21_content_name">
+										top
+									</div>
+									<span class="s21_sep_line"></span>
+									<div class="s_21_price">
+										$89.99
+									</div>
+									
+									<a class="b_fashion_btn" href="#">shop now</a>
+									</div>
+								</div>
+							</div>
+							</section>
+							<section>
+							<div class="s_21_content_row_div">
+								<div class="s_21_content_div content2_align">
+								<div class="s_21_sub_content_2">
+									<div class="s_21_pointer">
+									<section><img src="/honos_snippet_style_21/static/src/img/pointer_line_right.png"></img></section>
+									</div>
+									<div class="s_21_content_name">
+										Blue Jacket
+									</div>
+									<span class="s21_sep_line"></span>
+									<div class="s_21_price">
+										$89.99
+									</div>
+									
+									<a class="b_fashion_btn" href="#">shop now</a>
+									</div>
+								</div>
+							</div>
+							</section>
+							<section>
+							<div class="s_21_content_row_div">
+								<div class="s_21_content_div content3_align">
+									<div class="s_21_sub_content_3">
+									<div class="s_21_pointer">
+									<section><img  src="/honos_snippet_style_21/static/src/img/pointer_line_left.png"></img></section>
+									</div>
+									<div class="s_21_content_name">
+										pants
+									</div>
+									<span class="s21_sep_line"></span>
+									<div class="s_21_price">
+										$89.99
+									</div>
+									<a class="b_fashion_btn" href="#">shop now</a>
+									</div>
+								</div>
+							</div>
+						</section>
+						</div>
+					</section>
+				</section>
+	</template>
+</odoo>

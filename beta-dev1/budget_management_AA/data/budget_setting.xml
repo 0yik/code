@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+
+		<record id="default_budget_setting" model="ir.config_parameter">
+			<field name="key">Budget.Setting</field>
+			<field name="value">False</field>
+		</record>
+
+	</data>
+</odoo>

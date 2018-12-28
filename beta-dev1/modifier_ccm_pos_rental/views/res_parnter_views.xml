@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- NRIC/Passport No -->
+    <record id="view_partner_form_inherit_pos_rental_modifier" model="ir.ui.view">
+        <field name="name">ccm_pos.rental.res.partner.form.inherit.modifier</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="pos_rental.view_partner_form_inherit_pos_rental"/>
+        <field name="arch" type="xml">
+            <field name="nric_no" position="replace">
+                <field name="citizenship" widget="radio"/>
+                <field name="nric_no" attrs="{'required': [('citizenship', '=', 'singaporean')], 'invisible': ['|', ('citizenship', '=', False), ('citizenship', '=', 'foreigner')]}"/>
+                <field name="passport_no" attrs="{'required': [('citizenship', '=', 'foreigner')], 'invisible': ['|', ('citizenship', '=', False), ('citizenship', '=', 'singaporean')]}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_partner_form_inherit_modifier_ccm_pos_rental" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.modifier.ccm_pos.rental</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="remark_tag_ids" widget="many2many_tags"/>
+                <field name="size_id" options="{'no_create_edit': True}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="res_partner_size_view_tree" model="ir.ui.view">
+        <field name="name">res.partner.size.view.tree</field>
+        <field name="model">res.partner.size</field>
+        <field name="arch" type="xml">
+            <tree string="Partner Size">
+                <field name="size_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="res_partner_size_view_form" model="ir.ui.view">
+        <field name="name">res.partner.size.view.form</field>
+        <field name="model">res.partner.size</field>
+        <field name="arch" type="xml">
+            <form string="Partner Size">
+                <sheet>
+                    <group>
+                        <field name="size_name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="res_partner_remark_tags_view_tree" model="ir.ui.view">
+        <field name="name">res.partner.remark.tags.view.tree</field>
+        <field name="model">res.partner.remark.tags</field>
+        <field name="arch" type="xml">
+            <tree string="Remark Tags">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="res_partner_remark_tags_view_form" model="ir.ui.view">
+        <field name="name">res.partner.remark.tags.view.form</field>
+        <field name="model">res.partner.remark.tags</field>
+        <field name="arch" type="xml">
+            <form string="Remark Tags">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="color"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_partner_size" model="ir.actions.act_window">
+        <field name="name">Partner Size</field>
+        <field name="res_model">res.partner.size</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to define a new partner size.
+            </p>
+        </field>
+    </record>
+    <record id="action_sale_remark_tags" model="ir.actions.act_window">
+        <field name="name">Remark Tags</field>
+        <field name="res_model">res.partner.remark.tags</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to define a new remark tag.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_sale_partner_size" name="Partner Size" parent="sales_team.menu_sale_config"
+            sequence="50" action="action_sale_partner_size"/>
+    <menuitem id="menu_sale_remark_tags" name="Remark Tags" parent="sales_team.menu_sale_config"
+            sequence="60" action="action_sale_remark_tags"/>
+</odoo>

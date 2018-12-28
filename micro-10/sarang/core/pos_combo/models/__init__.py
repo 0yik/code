@@ -1,0 +1,4 @@
+import product
+import pos_config
+import stock_picking
+import pos_order

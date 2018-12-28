@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <template id="assets_backend" name="inventory_focus" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <!--Adding new js file-->
+                <script type="text/javascript" src="/pdp_modifier_inventory/static/src/js/style.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

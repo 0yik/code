@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="sequence_stock_scrap_assets" model="ir.sequence">
+            <field name="name">Scrap Fixed Assets</field>
+            <field name="code">stock.scrap.assets</field>
+            <field name="prefix">SFA/</field>
+            <field name="padding">6</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="location_scrap_fixed_assets" model="stock.location">
+            <field name="name">ScapFixedAsset</field>
+            <field name="location_id" ref="stock.stock_location_locations_virtual"/>
+            <field name="usage">inventory</field>
+            <field name="company_id"></field>
+        </record>
+
+        <record id="stock_scrap_account_asset_ext" model="ir.ui.view">
+            <field name="name">stock.scrap.account.asset.ext</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_asset_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="scrap_asset_id" widget="selection"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_scrap_form_view" model="ir.ui.view">
+            <field name="name">stock.scrap.assets.form</field>
+            <field name="model">stock.scrap.assets</field>
+            <field name="arch" type="xml">
+                <form string="Scrap">
+                    <header>
+                        <button name="action_confirm_scrap_asset" string="Confirm" type="object" states="draft" class="btn-primary"/>
+                        <button name="action_done_scrap_asset" string="Done" type="object" states="confirm" class="btn-primary"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done" />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="action_get_stock_assets" string="Assets" type="object" icon="fa-cogs" context="{'default_scrap_asset_id':active_id,'default_code':product_id}"/>
+                            <button class="oe_stat_button" name="action_get_stock_picking"
+                                    string="Stock Operation" type="object"
+                                    attrs="{'invisible':[('picking_id','=',False)]}" icon="fa-cogs"/>
+                            <field name="picking_id" invisible="1"/>
+                            <button class="oe_stat_button" name="action_get_stock_move"
+                                    string="Inventory Move" type="object"
+                                    attrs="{'invisible':[('move_id','=',False)]}" icon="fa-arrows-v"/>
+                            <field name="move_id" invisible="1"/>
+                            <button type="object" name="action_view_account_move" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible':[('state','!=','done'),('account_move_count','=',0)]}">
+                                <field name="account_move_count" widget="statinfo" string="Stock Journals"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1><field name="name" nolabel="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="po_ids" />
+                                <field name="product_id"/>
+                                <label for="scrap_qty"/>
+                                <div class="o_row">
+                                    <field name="scrap_qty"/>
+                                    <field name="product_uom_id" groups="product.group_uom"/>
+                                </div>
+                                <field name="scrap_price" />
+                                <field name="journal_id"/>
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="lot_id" attrs="{'invisible': [('tracking', '=', 'none')]}" groups="stock.group_production_lot"/>
+                                <field name="tracking" invisible="1"/>
+                                <field name="package_id" groups="stock.group_tracking_lot"/>
+                                <field name="owner_id" groups="stock.group_tracking_owner"/>
+                                <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                                <field name="scrap_location_id" groups="stock.group_stock_multi_locations"/>
+                                <field name="origin"/>
+                                <field name="date_expected"/>
+                                <field name="picking_id" attrs="{'invisible': [('picking_id', '=', False)]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="stock_scrap_tree_view" model="ir.ui.view">
+            <field name="name">stock.scrap.assets.tree</field>
+            <field name="model">stock.scrap.assets</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="state == 'draft'">
+                    <field name="name"/>
+                    <field name="create_date" string="Create Date"/>
+                    <field name="product_id"/>
+                    <field name="scrap_qty"/>
+                    <field name="product_uom_id" groups="product.group_uom"/>
+                    <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                    <field name="scrap_location_id" groups="stock.group_stock_multi_locations"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="scrap_fixed_assets_action" model="ir.actions.act_window">
+            <field name="name">Scrap Fixed Asset</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.scrap.assets</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to scrap products.
+              </p><p>
+                Products you scrap will be removed from the stock and moved to a specific scrap location, for reporting purposes.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="scrap_fixed_assets_menu" parent="stock.menu_stock_warehouse_mgmt" action="scrap_fixed_assets_action"/>
+    </data>
+</odoo>

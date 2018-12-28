@@ -1,0 +1,42 @@
+<odoo>
+	<data>
+		<record id="res_partner_form_view_account" model="ir.ui.view">
+			<field name="name">res.partner.form.view.account</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="account.view_partner_property_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//page[@name='accounting']/group" position="inside">
+					<group string="Extra" name="extra">
+						<field name="tax_id" />
+						<field name="currency_id" />
+						<field name="sales_term_id" />
+					</group>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="res_partner_form_view_teo" model="ir.ui.view">
+			<field name="name">res.partner.form.view.teo</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='phone']" position="before">
+					<field name="department_id" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="res_partner_sg_account_interit" model="ir.ui.view">
+			<field name="name">res.partner.sg.account.interit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="sg_account_report.view_partner_form_inherited" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='customer_id']" position="after">
+					<field name="customer_name" attrs="{'invisible':[('customer','=',False)]}" />
+					<field name="supplier_name" attrs="{'invisible':[('supplier','=',False)]}" />
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

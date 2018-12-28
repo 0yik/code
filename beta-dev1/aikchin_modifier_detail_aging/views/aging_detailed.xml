@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <template id="report_agedpartnerbalance_inherited" inherit_id="account.report_agedpartnerbalance">
+            <xpath expr="//h2" position="replace">
+		<h2>Detail Aging Report</h2>
+            </xpath>
+	</template>
+    </data>
+</odoo>

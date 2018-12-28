@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Sequences -->
+        <record id="custom_sequence_inherit_form" model="ir.ui.view">
+            <field name="name">ir.sequence.form</field>
+            <field name="model">ir.sequence</field>
+            <field name="inherit_id" ref="base.sequence_view"/>
+            <field name="arch" type="xml">
+                <field name="implementation" position="after">
+                    <field name="start_no" attrs="{'invisible': [('code','!=', 'stock.lot.serial')]}"/>
+                    <field name="end_no" attrs="{'invisible': [('code','!=', 'stock.lot.serial')]}"/>
+                    <field name="category" attrs="{'invisible': [('code','!=', 'stock.lot.serial')]}"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="custom_sequence_view_tree" model="ir.ui.view">
+            <field name="model">ir.sequence</field>
+            <field name="inherit_id" ref="base.sequence_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="colors">red:end_no&lt;number_next_actual</attribute>
+                </xpath>
+                <field name="implementation" position="after">
+                    <field name="start_no" />
+                    <field name="end_no" />
+                    <field name="category" />
+                </field>
+            </field>
+        </record>
+
+        <record id="base.ir_sequence_form" model="ir.actions.act_window">
+            <field name="view_id" ref="custom_sequence_view_tree"/>
+            <field name="domain">[('code','=','stock.lot.serial')]</field>
+        </record>
+
+
+    </data>
+</odoo>

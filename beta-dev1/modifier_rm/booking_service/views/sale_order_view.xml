@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	<record id="booking_order_view_search_sale" model="ir.ui.view">
+            <field name="name">booking.order.search.sale</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+            	<search string="Search Booking Order">
+                    <field name="name" string="Booking Order" filter_domain="['|',('name','ilike',self),('client_order_ref','ilike',self)]"/>
+                    <field name="partner_id" operator="child_of"/>
+                    <field name="booking_team_id"/>
+                    <field name="team_leader_id"/>
+                    <field name="user_id"/>
+                    <field name="team_id" string="Sales Team"/>
+                    <field name="project_id"/>
+                    <field name="product_id"/>
+                    <filter string="My Booking Orders" domain="[('user_id','=',uid)]" name="my_sale_orders_filter"/>
+                    <separator/>
+                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Salesperson" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Team" domain="[]" context="{'group_by':'booking_team_id'}"/>
+                        <filter string="Team Leader" domain="[]" context="{'group_by':'team_leader_id'}"/>
+                        <filter name="customer" string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Order Month" domain="[]" context="{'group_by':'date_order'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        
+    	<record id="view_sale_order_form_booking" model="ir.ui.view">
+            <field name="name">view.sale.order.form.booking</field>
+            <field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+            	<button name="action_confirm" position="after">
+            		<button name="action_check_booking" states="draft,sent" string="Check" class="btn-primary o_sale_confirm" type="object" />
+            	</button>
+            	<field name="user_id" position="before">
+            		<field name="is_booking" />
+            	</field>
+            	<xpath expr="//group/group[2]" position="after">
+            		<group>
+            			<field name="employee_ids" nolabel="1" attrs="{'invisible':[('is_booking','!=',True)]}">	
+            				<tree string="Employees" >
+            					<field name="name" string="Employee"/>
+            				</tree>
+            			</field>
+            			<newline />
+            			<field name="equipments_ids" nolabel="1" attrs="{'invisible':[('is_booking','!=',True)]}">
+            				<tree string="Equpment" editable="bottom">
+	                    		<field name="product_id" required="1"/>
+	                    		<field name="serial_no_id" required="1"/>
+	                    	</tree>
+            			</field>	
+            		</group>
+            	</xpath>
+            	<field name="partner_shipping_id" position="after">
+            		<field name="booking_team_id" attrs="{'invisible':[('is_booking','!=',True)]}"/>
+            		<field name="team_leader_id" attrs="{'invisible':[('is_booking','!=',True)]}"/>
+            	</field>
+            	<field name="payment_term_id" position="after">
+            		<field name="booking_start_date" attrs="{'invisible':[('is_booking','!=',True)],'required':[('is_booking','=',True)]}"/>
+            		<field name="booking_end_date" attrs="{'invisible':[('is_booking','!=',True)],'required':[('is_booking','=',True)]}"/>
+            	</field>
+			</field>
+		</record>
+		
+		<record id="action_booking_orders" model="ir.actions.act_window">
+            <field name="name">Booking Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="search_view_id" ref="booking_order_view_search_sale"/>
+            <field name="context">{'default_is_booking':True}</field>
+            <field name="domain">[('is_booking','=',True)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a Booking Order, the first step of a new Booking.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="action_booking_orders" name="Booking Order"
+            id="menu_sale_order" parent="menu_booking_service_core"
+            sequence="10" groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"/>
+            
+		
+		<record id="sale.action_quotations" model="ir.actions.act_window">
+			<field name="domain">[('is_booking','!=',True)]</field>
+		</record>
+		
+		<record id="sale.action_orders" model="ir.actions.act_window">
+			<field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel')),('is_booking','!=',True)]</field>
+		</record>
+		
+		
+		
+    </data>
+</odoo>    

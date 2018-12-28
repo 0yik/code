@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hr_holiday_multiple_form_start_date_inherit" model="ir.ui.view">
+        <field name="name">Leave Request</field>
+        <field name="model">hr.holidays.multiple</field>
+        <field name="inherit_id" ref="multiple_leave_application.hr_holiday_multiple_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='holiday_line_ids']//form//field[@name='date_from']" position="before">
+        		<field name="start_date_time" invisible="1"/>
+        	</xpath>
+        </field>
+    </record>
+
+    <record id="view_sg_leave_contract_form_inherit" model="ir.ui.view">
+        <field name="name">holiday.group.config.form</field>
+        <field name="model">holiday.group.config</field>
+        <field name="inherit_id" ref="sg_holiday_extended.view_sg_leave_contract_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='default_leave_allocation']" position="attributes">
+                <attribute name="string">Default Leave Days</attribute>
+        	</xpath>
+        </field>
+    </record>
+
+
+</odoo>

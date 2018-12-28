@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_paper_format_selection" model="ir.ui.view">
+        <field name="name">Report Paper Format Change</field>
+        <field name="model">report.paper.format.selection</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="paper_format" widget="selection"/>
+                        <field name="format" />
+                        <field name="page_height" attrs="{'invisible': [('format','!=','custom')]}" />
+                        <field name="page_width" attrs="{'invisible': [('format','!=','custom')]}" />
+                        <field name="orientation" />
+                        <field name="margin_top" />
+                        <field name="margin_bottom" />
+                        <field name="margin_left" />
+                        <field name="margin_right" />
+                        <field name="header_line"/>
+                        <field name="header_spacing"/>
+                        <field name="dpi" />
+                    </group>
+                    <footer>
+                        <button name="set_paper_format" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="report_paper_format_selection_action" model="ir.actions.act_window">
+        <field name="name">Report Paper Format Selection</field>
+        <field name="res_model">report.paper.format.selection</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+</odoo>

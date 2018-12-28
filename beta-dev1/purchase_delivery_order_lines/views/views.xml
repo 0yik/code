@@ -1,0 +1,104 @@
+<odoo>
+  <data>
+      <record id="stock_picking_purchase_tree_view" model="ir.ui.view">
+        <field name="name">stock.picking.purchase</field>
+        <field name="model">stock.picking</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <!--purchase order-->
+                <field name="origin" string="Purchase Order"/>
+                <field name="partner_id"/>
+                <field name="location_id" string="Location"/>
+                <field name="min_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+      <record id="stock_picking_purchase_calendar_view" model="ir.ui.view">
+        <field name="name">stock.picking.purchase.calendar</field>
+        <field name="model">stock.picking</field>
+        <field name="arch" type="xml">
+            <calendar date_start="min_date" color="partner_id" avatar_model="res.partner" event_open_popup="%(stock.view_picking_form)s">
+                <field name="name"/>
+                <field name="origin"/>
+                <field name="location_id"/>
+            </calendar>
+        </field>
+    </record>
+
+      <record id="stock_picking_purchase_calendar_view" model="ir.ui.view">
+        <field name="name">stock.picking.purchase.calendar</field>
+        <field name="model">stock.picking</field>
+        <field name="arch" type="xml">
+            <kanban>
+                    <field name="name"/>
+                    <field name="origin"/>
+                    <field name="partner_id"/>
+                    <field name="min_date"/>
+                    <field name="location_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <strong ><field name="name"/></strong>
+                                    <ul>
+                                        <!--<li t-if="record.parent_id.raw_value and !record.function.raw_value"><field name="name"/></li>-->
+                                        <li t-if="!record.parent_id.raw_value and record.function.raw_value"><field name="origin"/></li>
+                                        <li t-if="record.parent_id.raw_value and record.function.raw_value"><field name="partner_id"/></li>
+                                        <li t-if="record.city.raw_value and !record.country_id.raw_value"><field name="min_date"/></li>
+                                        <li t-if="!record.city.raw_value and record.country_id.raw_value"><field name="location_id"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </t>
+                    </templates>
+                </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_purchase_delivery_order_lines">
+        <field name="name">Delivery Order Lines</field>
+        <field name="res_model">stock.picking</field>
+        <field name="view_mode">kanban,calendar,tree,form</field>
+        <field name="view_id" ref="stock_picking_purchase_tree_view"/>
+        <field name="domain">[('origin','ilike','PO')]</field>
+    </record>
+    <menuitem id="menu_purchase_delivery_order_lines" parent="purchase.menu_procurement_management"
+              action="action_purchase_delivery_order_lines" sequence="10"/>
+
+              <!--Arrange Puchase Submenu-->
+    <record id="purchase_request.menu_purchase_request_pro_mgt" model="ir.ui.menu">
+        <field name="sequence" eval="2"/>
+    </record>
+    <record id="purchase_request.menu_purchase_request_line" model="ir.ui.menu">
+        <field name="sequence" eval="4"/>
+    </record>
+    <record id="purchase.menu_purchase_rfq" model="ir.ui.menu">
+        <field name="sequence" eval="6"/>
+    </record>
+    <record id="purchase.menu_purchase_form_action" model="ir.ui.menu">
+        <field name="sequence" eval="8"/>
+    </record>
+    <record id="purchase_order_lines.menu_purchase_order_lines" model="ir.ui.menu">
+        <field name="sequence" eval="10"/>
+    </record>
+    <record id="purchase_requisition.menu_purchase_requisition_pro_mgt" model="ir.ui.menu">
+        <field name="sequence" eval="12"/>
+    </record>
+    <record id="purchase_delivery_order_lines.menu_purchase_delivery_order_lines" model="ir.ui.menu">
+        <field name="sequence" eval="14"/>
+    </record>
+    <record id="purchase.menu_procurement_management_supplier_name" model="ir.ui.menu">
+        <field name="sequence" eval="16"/>
+    </record>
+    <record id="purchase.menu_procurement_partner_contact_form" model="ir.ui.menu">
+        <field name="sequence" eval="18"/>
+    </record>
+    <record id="purchase.product_product_menu" model="ir.ui.menu">
+        <field name="sequence" eval="20"/>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="barcode_showsn.view_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="recommend_sn" position="replace">
+                    <field name="recommended_rfid"/>
+                </field>
+                <field name="scaned_sn" position="replace">
+                    <field name="scanned_rfid"/>
+                </field>
+            </field>
+        </record>
+
+        <!--<record id="view_pack_operation_lot_form" model="ir.ui.view">-->
+            <!--<field name="name">stock.pack.operation.lots.form</field>-->
+            <!--<field name="model">stock.pack.operation</field>-->
+            <!--<field name="inherit_id" ref="stock.view_pack_operation_lot_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<button name="save" position="after">-->
+                    <!--<button name="action_get_stock_logs" type="object" state="assigned" string="Get Data"-->
+                            <!--class="oe_highlight"/>-->
+                <!--</button>-->
+            <!--</field>-->
+        <!--</record>-->
+
+    </data>
+</odoo>

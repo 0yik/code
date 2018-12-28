@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="saleorder_view_order_form" model="ir.ui.view">
+			<field name="name">saleorder.view.order.form.inherited</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//sheet/group/group/field[@name='partner_shipping_id']" position="after">
+					<field name="business_unit_id"/>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="chng_mother_ves_so_view" model="ir.ui.view">
+			<field name="name">chng.mother.ves.view.order.form.inherited</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="mgm_modifier_sales.view_order_form_additional_price_inherit"/>
+			<field name="arch" type="xml">
+				<xpath expr="//sheet/group/group/field[@name='mother_vessel']" position="attributes">
+					<attribute name="string">Mother Vessel / Route</attribute>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="view_order_form_add_start_and_end_date_field" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.add.source</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="mgm_modifier_sales.view_order_form_add_asset_field"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group/group[2]/field[@name='asset']" position="after">source_document
+					<field name="start_date" invisible="1"/>
+					<field name="end_date" invisible="1"/>
+				</xpath>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

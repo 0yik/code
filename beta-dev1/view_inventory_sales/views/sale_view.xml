@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        
+        <!--record id="view_sale_view_xml_inherit_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page//field//form//field[@name='product_id']" position="after">
+                    <field name="qty_store"/>
+                    <field name="qty_stock"/>
+                    <field name="current_qty_store"/>
+                    <field name="standard_qty_warehouse"/>
+                </xpath>
+            </field>
+        </record-->
+
+        <record id="view_sale_discount_inherit_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="modifier_discount_type.view_order_form_inherit_discount"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='discount_rate']" position="after">
+                    <field name="view_stock_line_ids" mode="tree">
+                        <tree editable="bottom">
+                            <field name="qty_store"/>
+                            <field name="qty_stock"/>
+                            <field name="current_qty_store"/>
+                            <field name="standard_qty_warehouse"/>
+                            <field name="sale_line_id" invisible="1" />
+                        </tree>
+                        <form string="View Stock">
+                            <group>
+                                <group>
+                                    <field name="qty_store"/>
+                                    <field name="qty_stock"/>
+                                </group>
+                                <group>
+                                    <field name="current_qty_store"/>
+                                    <field name="standard_qty_warehouse"/>
+                                    <field name="sale_line_id" invisible="1" />
+                                </group>
+                            </group>
+
+                        </form>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+        <record id="pos_promotion_form_inherited_view" model="ir.ui.view">
+            <field name="name">pos.promotion.form</field>
+            <field name="model">pos.promotion</field>
+            <field name="inherit_id" ref="pos_promotion.pos_promotion_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='end_date']" position="after">
+                    <field name="week_days_ids" widget="many2many_tags" />
+                    <label for="starting_hours" string="Hours" />
+                    <div>
+                        <label string="S" />
+                        <field name="starting_hours" nolable="1" style="width: 70px;margin-right:5px;"/>
+                        <label string=" F" />
+                        <field name="ending_hours" nolable="1" style="width: 70px;margin-right:5px;"/>
+                        <button class="btn btn-primary btn-sm" type="object" name="calculat_hours_set" string="Add"/>
+                        <br/>
+                        <field name="hours"  nolable="1"/>
+                    </div>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

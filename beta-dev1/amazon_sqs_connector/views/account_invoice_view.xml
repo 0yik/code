@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="custom_account_invoice_form_view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field eval="7" name="priority"/>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='amount_untaxed']" position="replace">
+                    <field name="amount_untaxed" string="Subtotal"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_tax']" position="replace">
+                    <field name="amount_tax" invisible="1"/>
+                    <field name="shipping_charges" widget='monetary'/>
+                    <field name="discount_amount" widget='monetary'/>
+                </xpath>
+                 <xpath expr="//group/field[@name='payment_term_id']" position="after">
+                    <field name="number" string="Running Number"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="custom_account_invoice_line_form_view">
+            <field name="name">account.invoice.line.form</field>
+            <field name="model">account.invoice</field>
+            <field eval="7" name="priority"/>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='invoice_line_tax_ids']" position="replace">
+                    <field name="invoice_line_tax_ids" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="after">
+                    <field name="sqs_product_id"/>
+                    <field name="suppliers"/>
+                    <field name="sqs_supplier_id"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="replace">
+                    <field name="name" invisible="1"/>
+                </xpath>
+
+            </field>
+        </record>
+        <!--  <record model="ir.ui.view" id="custom_account_invoice_tree_view">
+            <field name="name">account.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field eval="7" name="priority"/>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="number" />
+                </xpath>
+               
+
+            </field>
+        </record> -->
+    </data>
+</odoo>
+

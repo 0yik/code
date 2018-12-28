@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets" inherit_id="pos_restaurant.assets">
+            <xpath expr="." position="inside">
+                <script type="text/javascript"
+                        src="/pizzahut_takeaway_order/static/src/js/take_away_order.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

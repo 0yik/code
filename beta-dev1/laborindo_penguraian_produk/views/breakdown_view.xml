@@ -1,0 +1,113 @@
+<odoo>
+    <data>
+        <record id="view_breakdown_breakdown_form" model="ir.ui.view">
+            <field name="name">view.breakdown.breakdown.form</field>
+            <field name="model">breakdown.breakdown</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Breakdown">
+                    <header>
+                        <button string="Validate" name="action_validate" type="object" class="oe_highlight"/>
+                        <!-- <field name="state" widget="statusbar"/> -->
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box ">
+                            <button name="breakdown_history" type="object" icon="fa-sitemap" class="oe_stat_button">
+                                <field string="breakdown" name="breakdown_history_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="product_id" required="1"
+                                       domain="[('qty_available','!=',0),('is_breakdown','=', True)]"
+                                       />
+                                <field name="product_desc" context="{'breakdown_product_id': product_id}" readonly="1"/>
+                                <field name="product_uom_id" required="1" readonly="1"/>
+                                <field name="location_id" required="1"
+                                       domain="[('usage','=','internal')]"
+                                       />
+                                <field name="qty" readonly="1"/>
+                            </group>
+                        </group>
+                        <label for="breakdown_ids" style="margin-bottom: 15px; font-size: 16px; color: #7c7bad;"/>
+                        <field name="breakdown_ids" >
+                            <tree string="Breakdown Lines" editable="bottom">
+                                <field name="product_id" required="1" domain="[('type','=', 'product')]"/>
+                                <field name="product_uom_id" required="1" readonly="1"/>
+                                <field name="sale_uom_id" readonly="1"/>
+                                <field name="location_id" required="1"/>
+                                <field name="qty" required="1"/>
+                                <field name="date_creation" required="1"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_breakdown_breakdown_tree" model="ir.ui.view">
+            <field name="name">view.breakdown.breakdown.tree</field>
+            <field name="model">breakdown.breakdown</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Breakdown">
+                    <field name="product_id"/>
+                    <field name="product_desc"/>
+                    <field name="product_uom_id"/>
+                    <field name="qty"/>
+                    <field name="location_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_breakdown_lines_tree" model="ir.ui.view">
+            <field name="name">view.breakdown.lines.tree</field>
+            <field name="model">breakdown.lines</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Breakdown History" create="false">
+                    <field name="product_id" />
+                    <field name="product_uom_id"/>
+                    <field name="sale_uom_id" />
+                    <field name="location_id" />
+                    <field name="qty" />
+                    <field name="date_creation"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_breakdown">
+            <field name="name">Product Breakdown</field>
+            <field name="res_model">breakdown.breakdown</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_breakdown_breakdown_tree" />
+        </record>
+
+        <menuitem id="menu_breakdown_main" name="Product Breakdown"
+                  parent="stock.menu_stock_root" />
+
+        <menuitem action="action_breakdown" id="menu_product_breakdown"
+                  parent="menu_breakdown_main" sequence="1"/>
+
+
+        <record model="ir.ui.view" id="produk_confirm_wizard_form">
+            <field name="name">produk.confirm.wizard.form</field>
+            <field name="model">produk.confirm.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Confirm">
+                    <group>
+                        <span>Are you sure?</span>
+                    </group>
+                    <footer>
+                        <button name="confirm" type="object"
+                                string="Confirm" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

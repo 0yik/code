@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+        <record id="booking_service_configuration" model="ir.ui.view">
+            <field name="name">booking.service</field>
+            <field name="model">booking.settings</field>
+            <field name="arch" type="xml">
+                <form string="Booking configuration" class="oe_form_configuration">
+                    <header>
+                        <button string="Save" type="object"
+                            name="execute" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" type="object"
+                            name="cancel" class="oe_link"/>
+                    </header>
+                    <sheet>
+                        <group string="Booking">
+                            <group>
+                                <field name="pre_booking_time"/>
+                                <field name="post_booking_time"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="booking_settings_action" model="ir.actions.act_window">
+            <field name="name">Booking configuration</field>
+            <field name="res_model">booking.settings</field>
+            <field name="view_id" ref="booking_service_configuration"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <menuitem id="booking_settings_menu" name="Settings"
+            parent="main_booking_menu" action="booking_settings_action" groups="group_manager"/>
+    </data>
+</odoo>

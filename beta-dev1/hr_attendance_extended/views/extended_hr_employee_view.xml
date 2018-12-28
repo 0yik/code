@@ -1,0 +1,236 @@
+<odoo>
+	<record id="hr_dashboard.hr_emp_form_view_inherit" model="ir.ui.view">
+        <field name="name">hr.emp.form.view.inherited</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="sg_hr_employee.view_employee_form_parent2"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='join_date']" position="after">
+                    <field name="emp_id"  />
+                </xpath> 
+            </data>
+        </field>
+    </record>
+	<record model="ir.ui.view" id="view_attendance_report">
+        <field name="name">hr.employee.attendance</field>
+        <field name="model">emp.report_part</field>
+        <field name="arch" type="xml">
+            <form>
+            	<group>
+            		<field name = "file_txt" file_name="file_name" />
+            		<field name = "file_name" invisible="1"/>
+            	</group>
+            	<footer>
+					<button name="create_attendance"  string="Save" type="object" />
+				</footer>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_window" model="ir.actions.act_window">
+        <field name="name">Hr Attendance </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">emp.report_part</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_attendance_report"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+	<record model="ir.ui.view" id="view_attendance_report_part_time">
+        <field name="name">hr.employee.attendance</field>
+        <field name="model">emp.report_full</field>
+        <field name="arch" type="xml">
+            <form>
+            	<group>
+            		<group>
+		                <field name="start_date" />
+		                <field name="end_date" />
+		            </group>
+		            <group>
+		            	<field name ="employee_id" />
+		            </group>
+		        </group>
+		        <group>
+		        	<field name = "attendance_ids" invisible="1" >
+		        		<tree editable="bottom">
+		        			<field name = "employee_id" />
+		        			<field name = "check_in" />
+		        			<field name = "check_out" />
+		        		</tree>
+		        	</field>
+		        </group>
+		        <footer>
+		        	<button name="generate_report" class="oe_heighlight" string="Print" type="object" />
+		        </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="partime_action_window" model="ir.actions.act_window">
+        <field name="name">Hr Attendance </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">emp.report_full</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_attendance_report_part_time"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+<!-- 
+    <record id="hr_attendance.view_attendance_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.tree</field>
+        <field name="model">hr.attendance</field>
+        <field name="arch" type="xml">
+            <tree string="Employee attendances">
+            	<field name = "state" />
+            	<field name = "type_id" />
+            	<field name = "day" />
+            	<field name = "emp_remark" />
+            	<field name = "lev_remark" />
+            	<field name = "sup_remark" />
+                <field name="employee_id"/>
+                <field name="check_in"/>
+                <field name="check_out"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_attendance.hr_attendance_view_form" model="ir.ui.view">
+        <field name="name">hr.attendance.form</field>
+        <field name="model">hr.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Employee attendances">
+	           	<header>
+	           		<button string = "Approve" />
+                    <field name="state" widget="statusbar" />
+            	</header>
+                <sheet>
+                	<group>
+                		
+                		<group>
+	                        <field name="employee_id"/>
+	                        <field name="check_in"/>
+	                        <field name="check_out"/>
+	                    </group>
+
+                		<group>
+			            	<field name = "type_id" />
+			            	<field name = "day" />
+			            	<field name = "emp_remark" />
+			            	<field name = "lev_remark" />
+			            	<field name = "sup_remark" />
+                		</group>
+	                    
+	                </group>
+                </sheet>
+            </form>
+        </field>
+    </record> -->
+    <record id="hr_dashboard.hr_attendance_view_form_inherited" model="ir.ui.view">
+        <field name="name">hr.attendance.form</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form" />
+        <field name="arch" type="xml">
+            <!-- <xpath expr = "//sheet" position="before">
+            	<header>
+            		<field name ="state" widget="statusbar" />
+            	</header>
+            </xpath> -->
+            <xpath expr="/form/sheet/group[1]" position="after">
+            	<group>
+	            	<field name = "state" />
+<!-- 	            	<field name = "type_id" />
+ -->	            	<field name = "day" />
+	            	<field name = "emp_remark" />
+	            	<field name = "lev_remark" />
+	            	<field name = "sup_remark" />
+        		</group>
+                <group>
+                    <field name="checkin_status" readonly="1"/>
+                    <field name="checkin_diff" widget="float_time" readonly="1"
+                        attrs="{'invisible':[('checkin_status','=','ontime')]}"/>
+                    <field name="checkout_status" readonly="1" />
+                    <field name="checkout_diff" widget="float_time" readonly="1"
+                        attrs="{'invisible':[('checkout_status','=','ontime')]}"/>
+                </group>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="hr.view_attendance_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.tree</field>
+        <field name="model">hr.attendance</field>
+        <field name="arch" type="xml">
+            <tree string="Employee attendances">
+                <field name="employee_id" invisible="1"/>
+                <field name="check_in" invisible="1"/>
+                <field name="check_out" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_dashboard.view_attendance_tree_inherited_ex" model="ir.ui.view">
+        <field name="name">hr.attendance.tree</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='check_out']" position="after">
+                <field name="checkin_status" invisible="1"/>
+                <field name="checkin_diff"  widget="float_time" invisible="1"/>
+                <field name="checkout_status" invisible="1"/>
+                <field name="checkout_diff"  widget="float_time" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="hr_dashboard.view_attendance_tree_inherited_ex" model="ir.ui.view">
+        <field name="name">hr.attendance.tree</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='check_out']" position="after">
+            	<field name = "state" />
+            	<field name = "shift" string="Shift"/>
+            	<field name = "date_dt" string = "Date" />
+            	<field name = "day" />
+            	<field name = "emp_remark" />
+            	<field name = "lev_remark" string="LV Remark"/>
+            	<field name = "sup_remark" />
+            	<field name = "o_timein" string="O Timein" widget="float_time" />
+            	<field name = "o_timeout" string="O Timeout" widget="float_time"/>
+				<field name = "adj_timein" string="Adj Timein" widget="float_time"/>
+            	<field name = "adj_timeout" string="Adj Timeout" widget="float_time"/>
+                <!-- <field name="checkin_status" />
+                <field name="checkin_diff"  widget="float_time"/>
+                <field name="checkout_status" />
+                <field name="checkout_diff"  widget="float_time"/> -->
+            </xpath>
+            <xpath expr ="//field[@name='check_in']" position="attributes">
+            	<attribute name="invisible"> True</attribute>
+            </xpath>
+            <xpath expr ="//field[@name='check_out']" position="attributes">
+            	<attribute name="invisible"> True</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- actions -->
+
+    <record id="hr_attendance.hr_attendance_action" model="ir.actions.act_window">
+        <field name="name">Attendances</field>
+        <field name="res_model">hr.attendance</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>The attendance records of your employees will be displayed here.</p>
+            <p>Please make sure you're using the correct filter if you expected to see any.</p>
+        </field>
+    </record>
+
+	<menuitem id="menu_hr_attendance_part_report_extended" name="Upload" parent="hr_attendance.menu_hr_attendance_root" sequence="15" action="action_window"/>
+	<!-- <menuitem id="menu_hr_attendance_report_extended" name="Full Time Employee Attendance Report" parent="hr_attendance.menu_hr_attendance_root" sequence="17" action="partime_action_window"/> -->
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="Open Mobile Assets" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link rel="stylesheet" href="/hilti_web_responsive_modifier/static/src/less/main.less"/>
+            <link rel="stylesheet" href="/hilti_web_responsive_modifier/static/src/less/form_view.less"/>
+            <link rel="stylesheet" href="/hilti_web_responsive_modifier/static/src/css/modification_branding.css"/>
+        </xpath>
+    </template>
+</odoo>

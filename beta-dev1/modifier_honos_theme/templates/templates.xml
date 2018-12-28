@@ -1,0 +1,1170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="assets_frontend" inherit_id="website.assets_frontend" name="ccm">
+		<xpath expr="." position="inside">
+		    <link rel="stylesheet" href="/modifier_honos_theme/static/src/css/responsive.css" type="text/css"/>
+		    <link rel="stylesheet" href="/modifier_honos_theme/static/src/css/owl.carousel.css" type="text/css"/>
+			<link rel="stylesheet" href="/modifier_honos_theme/static/src/lib/animate.min.css" media="all"/>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <link rel="stylesheet" href="/modifier_honos_theme/static/src/lib/jquery-date-range-picker/dist/daterangepicker.min.css" type="text/css"/>
+			<link rel="stylesheet" href="/modifier_honos_theme/static/src/lib/jquery-ui.css" type="text/css"/>
+			<link rel="stylesheet" href="/modifier_honos_theme/static/src/css/style.css" type="text/css"/>
+
+            <script src="/modifier_honos_theme/static/src/lib/moment.min.js"></script>
+            <script src="/modifier_honos_theme/static/src/lib/jquery-date-range-picker/dist/jquery.daterangepicker.min.js"></script>
+			<script src="/modifier_honos_theme/static/src/js/owl.carousel.min.js"></script>
+    		<script src="/modifier_honos_theme/static/src/js/banner.js"></script>
+    		<script type="text/javascript" src="/modifier_honos_theme/static/src/js/front-page.js"></script>
+			<script type="text/javascript" src="/modifier_honos_theme/static/src/js/ccm_frontend.js"></script>
+			<!-- <script src="/modifier_honos_theme/static/src/lib/jquery-ui.js"></script> -->
+			<script type="text/javascript" src="/modifier_honos_theme/static/src/js/book_date.js"></script>
+            <script type="text/javascript" src="/modifier_honos_theme/static/src/js/ccm_offer.js"></script>
+        </xpath>
+    </template>
+    <template inherit_id="honos_snippet_style_2.style2_assets_frontend" name="remove timer">
+        <xpath expr="//script[last()]" position="replace">
+        </xpath>
+    </template>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/modifier_honos_theme/static/src/js/load_pos_order.js"></script>
+        </xpath>
+    </template>
+	<!-- Assets Editor -->
+    <template id="assets_editor" inherit_id="website.assets_editor" name="CCM website Theme Editor">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/modifier_honos_theme/static/src/js/ccm_website_editor.js"></script>
+        </xpath>
+    </template>
+	
+	<!-- ********************** header code depend on honos theme ******************************* -->
+	<template id="ccm_header" inherit_id="honos_layout.honos_header_main">
+        <xpath expr="//div[@class='header_main_top']" position="replace">
+	        <div class="header_top">
+	            <div class="header_top_sub">
+	                <div class="search-bar col-md-6">
+	                    <form action="/shop" method="get" t-att-class="search_class">
+	                        <div class="input-group">
+	                            <div class="oe_search">
+	                                <input type="text" name="search"
+	                                    class="search-query form-control oe_search_box honos_search_border"
+	                                    placeholder="I am looking for..." t-att-value="search" required="required" />
+	                            </div>
+	                            <span class="input-group-btn">
+	                                <button type="submit" class="btn btn-default oe_search_button">
+	                                    <i class="fa fa-search" />
+	                                </button>
+	                            </span>
+	                            <a class="honos_close" href="">
+	                                <span>x</span>
+	                            </a>
+	                        </div>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+        </xpath>
+        <xpath expr="//div[@class='main-header']" position="replace">
+            <div class="main-header">
+                <div class="main-header-maxW">
+                    <div class="wish_compare_header">
+                        <li id="header-compare" class="mr-common compare-menu"></li>
+                        <li id="header-wishlist" class="mr-common wish-menu"></li>
+                    </div>
+                    <div class="main-header-left">
+                          <a href="/" class="navbar-brand logo">
+                                <img src="/modifier_honos_theme/static/src/img/logo.png" t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
+                            </a>
+                    </div>
+                    <div class="main-header-right">
+                        <div class="company-phone-div">
+                            <ul class="hsocial_icon">
+	                            <li>
+	                                <a href="https://www.facebook.com/pages/CCM-Customade-Costume/264374230364457" target="_BLANK"><img src="/modifier_honos_theme/static/src/img/fb_icon.png" alt="facebook"/></a>
+	                            </li>
+	                            <li>
+	                                <a href="https://www.instagram.com/customadecostume" target="_BLANK"><img src="/modifier_honos_theme/static/src/img/insta_icon.png" alt="instagram"/></a>
+	                            </li>
+	                        </ul>
+                            <div class="pricelist_right">
+                                <t t-call="website_sale.pricelist_list"></t>
+                            </div>
+                            <ul id="logout_ul" class="sign_in_and_administrtor_link header-main-signin">
+                                <li groups="base.group_public">
+                                    <a t-attf-href="/web/login">
+                                        <b>Sign in</b>
+                                    </a>
+                                </li>
+                                <li class="dropdown" id="login_user_name" t-ignore="true"
+                                    t-if="website.user_id != user_id">
+                                    <a href="#" class="dropdown-toggle header_admin_border"
+                                        data-toggle="dropdown">
+                                        <b>
+                                            <span>My Account</span>
+                                            <span class="caret"></span>
+                                        </b>
+                                    </a>
+                                    <ul class="dropdown-menu js_usermenu account-ul" role="menu">
+                                        <li id="o_logout">
+                                            <a t-attf-href="/web/session/logout?redirect=/" role="menuitem">Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div id="header-social">
+                                <li id="header-cart" class="mr-common"></li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+	<template id="honos_layout.fashion_style_4_dynamic_category">
+        <ul class="custom-menu-inside-div custom-menu-inside-div-nth dropdown-menu rental_sub_menu block-none">
+            <div class="style_4_toggel_div">
+                <div class="style_4_center">
+                    <div class="style_4_content_center">
+                        <t t-set="category_fetch" t-value="website.category_check()"></t>
+                        <t t-foreach="category_fetch" t-as="category_individual">
+                            <t t-if="not category_individual.parent_id">
+                                <div class="style_4_main_wrap">
+	                                <div class="style_4_sub_content nav-dropdown">
+	                                    <div class="row">
+	                                        <div class="seprate_div_for_categ dropdown-submenu">
+	                                            <a class="style_4_menu_name"  t-att-id="'genrate_style_4_categ_id-%s' % category_individual.id" 
+	                                                t-att-href="'/shop/category/%s' %slug(category_individual)" t-field="category_individual.display_name"/>
+	                                            <span tabindex="-1" class="submenu-a second-level-category-caret fa fa-chevron-right" />
+	                                            <ul class="style_4_menu_list" t-att-id="'genrate_style_4_categ_id-%s' % category_individual.id">
+	                                                <t t-if="category_individual.child_id">
+	                                                    <t t-foreach="category_individual.child_id" t-as="c">
+	                                                        <li>
+	                                                            <a class="second-level-a menu_heading " t-att-href="'/shop/category/%s' %slug(c)"
+	                                                                t-field="c.name" ></a>
+	                                                        </li>
+	                                                    </t>
+	                                                </t>
+	                                            </ul>
+	                                        </div>
+	                                    </div>
+	                                </div>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </ul>
+    </template>
+    <!-- ********************* end of Header code depend on honos theme ******************************** -->
+	<!-- ********************* footer code depend on honos theme ******************************** -->
+	<template id="ccm_footer" inherit_id="honos_layout.honos_layout_footer_default">
+        <xpath expr="//section" position="replace">
+            <section>
+                <div class="three_Column_offer_adv">
+                    <div class="three_Column_offer_adv_container">
+                        <div class="col-md-4 col-sm-4 col-xs-12 tcs_column1">
+                            <div class="tcs_icon">
+                                <a href="#"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="tcs_bold_text_wrap tcs_bold">
+                                <a href="#">FREE SHIPPING</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 tcs_column2">
+                            <div class="tcs_icon">
+                                <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="tcs_bold_text_wrap tcs_bold">
+                                <a href="#">CUSTOMER SERVICE</a>
+                            </div>
+                            <div class="tcs_normal_text_wrap">
+                                Get Help When You Need It.
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 tcs_column3">
+                            <div class="tcs_icon">
+                                <a href="#"><i class="fa fa-repeat" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="tcs_bold_text_wrap tcs_bold">
+                                <a href="#">MONEY BACK</a>
+                            </div>
+                            <div class="tcs_normal_text_wrap">
+                                Money Back Guarantee.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </xpath>
+        <xpath expr="//div[@class='ftr_main']" position="replace">
+            <div class="footer_main">
+                <div id="footer" class="footer_container">
+                    <div class="row">
+                        <div class="f_theme_title">
+                            <div class="theme_name">
+                               <span t-field="res_company.name" itemprop="name">Company name
+                                </span>
+                            </div>
+                        </div>
+                        <div class="f_details_wrapper">
+                            <div class="f_contact_details col-lg-3 col-md-3">
+                                <ul class="cust_contact_ul">
+                                    <li>
+                                        <div class="add_detail_para">
+                                            <p class="add_lbl">Add</p>
+                                            :
+                                            <p class="add_field">3 Kelantan Lane #01-01 Singapore 208625</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="add_detail_para">
+                                            <p class="add_lbl">Tel</p>
+                                            :
+                                            <p class="add_field">(+65) 6333 9440 / 92999064</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="add_detail_para">
+                                            <p class="add_lbl">Email</p>
+                                            :
+                                            <p class="add_field">rental.ccm@gmail.com</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-2  col-lg-2">
+                                <div class="footer_heading">
+                                    <ul class="cust_service_ul">
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="/about_us">About Us</a></li>
+                                        <li><a href="/shop">Rental</a></li>
+                                        <li><a href="/custom_made">Custom Made</a></li>
+                                        <li><a href="/merchandise">Merchandise</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-2  col-lg-2">
+                                <div class="footer_heading">
+                                    <ul class="help_ul">
+                                        <li><a href="/portfolio">Portfolio</a></li>
+                                        <li><a href="/page/contactus">Contact</a></li>
+                                        <li><a href="/sitemap">Sitemap</a></li>
+                                        <li><a href="/page/faq">Faq</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-2  col-lg-2">
+                                <h3 class="footer_rental_heading">Rental Periods</h3>
+                                <div class="rental_desc_footer">
+                                    <p>Our rental period includes 7 Hrs, 1 Day, 3 Days and 1 Week. For a longer period, please call 6333 9440.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3  col-lg-3">
+                                <h3 class="footer_payment_heading">Payment methods</h3>
+                                <div class="payment_img_footer">
+                                    <img src="/modifier_honos_theme/static/src/img/payment2.png"/>
+                                </div>
+                            </div>
+                            <div class="col-md-4  col-lg-2" id="info">
+                                <h3 class="footer_connect_on_heading">Connect On:</h3>
+                                <div class="f_coonect_on_icon">
+                                    <a href="https://www.facebook.com/pages/CCM-Customade-Costume/264374230364457" target="_BLANK"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                                    <a href="https://www.instagram.com/customadecostume" target="_BLANK"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="scrollup-div">
+	                <a href="#" class="scrollup-a">
+	                    <i class="fa fa-angle-up scrollup-i"></i>
+	                </a>
+	            </div>
+            </div>
+        </xpath>
+    </template>
+	<template id="ccm_footer_copyright" inherit_id="honos_layout.honos_layout_footer_copyright" name="Footer Copyright">
+        <xpath expr="//div[@class='container mt16 mb8']" position="replace">
+            <div class="container mt16 mb8">
+                <div class="pull-center text-muted" itemscope="itemscope"
+                    itemtype="http://schema.org/Organization">
+                    Copyright © 2015 <span class="ccm_color" t-field="res_company.name" itemprop="name">Company name</span>, All Rights Reserved.
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <!-- ======== E-Commerce Product Carousel Snippets ========  -->
+        <template id="honos_category.honos_category_showcase_snippet_body" name="Categories">
+	        <section class="s_image" data-multi-categ-slider-type="">
+	            <div class="ss_container f_categories_container">
+	                <div class="cat_showcase_heading">
+	                    <h3 class="cat_title">Our Featured Categories</h3>
+	                </div>
+	                <div id="all_categ" class="custom_js_get_category" data-loading="true"
+	                    data-objects_limit="10" data-template="honos_category.honos_category_category_showcase" />
+	            </div>
+	        </section>
+	    </template>
+        <template id="honos_category.honos_category_category_showcase">
+            <ul id="owl-fcat" class="owl-theme f_categories_wrapper">
+                <t t-as="category" t-foreach="object">
+                    <t t-call="honos_category.honos_category_category_show" />
+                </t>
+	        </ul>
+	    </template>
+        <template id="honos_category.honos_category_category_show" name="Category_image_with_name">
+            <li class="item">
+                <div class="feature_inner">
+                    <div class="feature_img">
+                        <a t-att-href="'/shop/category/%s' %slug(category)">
+	                       <span itemprop="image" t-field="category.image" t-options="{'widget': 'image'}" t-att-alt="category.name" />
+	                    </a>
+                        <!-- <div itemprop="image" t-field="product.products_id.image" t-options='{"widget": "image", "style":"width: 100%; height:100%;", "alt-field": "name"}'></div> -->
+                        <div class="f_ribbon_wrapper">
+                            <div class="ribbon btn btn-danger f_sale_btn">Exclusive</div>
+                        </div>
+                        <!-- <div class="feature_img_hover_wrapper">
+                            <div class="fsearch_icon">
+                                <a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="fsearch_icon">
+                                <a t-att-href="'/shop/category/%s' %slug(category)"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="fsearch_icon">
+                                <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="feature_desc">
+                        <div class="f_rating_star_card">
+                            <div class="f_stars disabled">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="feature_title">
+                            <a class="#" t-att-href="'/shop/category/%s' %slug(category)"><t t-esc="category.name"/></a>
+                        </p>
+                        <div class="#">
+                            <!-- <del class="text-danger" style="white-space: nowrap;"><span class="#">1,599.00</span>&amp;nbsp;$</del> -->
+                            <span class="feature_prise">
+                               <!-- span class="#">
+                                   <span t-field="product.products_id.lst_price" t-options='{
+                                                                   "widget": "monetary",
+                                                                   "display_currency": website.currency_id
+                                                               }'/>
+                                </span-->
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </template>
+    <!-- ======== end porduct Carousel snippets -->
+    <!-- ====================== Start top banner slider Homepage block ================================== -->
+    <template id="theme_ccm_top_banner_slider_view" name="Top Banner Snippet">
+        <div id="bootstrap-touch-slider" class="carousel bs-slider control-round indicators-line" data-ride="carousel" data-pause="hover" data-interval="5000">
+            <div id="slide" class="carousel-inner" role="listbox">
+                <t t-set="slid_count" t-value="0"/>
+                <t t-as="slides" t-foreach="slider_page">
+                    <t t-set="slid_count" t-value="slid_count + 1"/>
+                    <t t-if="not slides['slidepage'].video">
+                        <div class="item bg-alpha oe_img_bg oe_custom_bg o_animate o_anim_fade_in" alt="Bootstrap Touch Slider">
+                            <div t-field="slides['slidepage'].pro_banner_img" t-options='{"widget": "image","style":"width: 100%; animation-play-state: paused; visibility:visible;"}'></div>
+                            <div class="container">
+                                <div class="row content">
+                                    <t t-if="slid_count == 1">
+                                        <div class="slide-text slide_style_left">
+                                            <p>
+                                                <h1 class="o_default_snippet_text o_animate o_anim_zoom_in_right"><t t-esc="slides['slidepage'].product_id.name"/></h1>
+                                                <p class="o_default_snippet_text o_animate o_anim_fade_in_left"><t t-esc="slides['slidepage'].text_content"/></p>
+                                                <a t-att-href="'/shop/product/%s' %slug(slides['slidepage'].product_id.product_tmpl_id)" class="btn btn-default o_default_snippet_text o_animate o_anim_fade_in_left">Rent</a>
+                                                <t t-if="slides['slidepage'].product_id.qty_available == 0.0">
+                                                    <a id="booked_buy" href="#" data-toggle="modal" data-target="#myModal" class="btn btn-primary o_default_snippet_text o_animate o_anim_fade_in_right">Buy</a>
+                                                </t>
+                                                <t t-if="slides['slidepage'].product_id.qty_available > 0.0 and not slides['booked']">
+                                                    <a t-att-href="'/shop/cart/update/%s'%(slides['slidepage'].product_id.id)" class="btn btn-primary o_default_snippet_text o_animate o_anim_fade_in_right">Buy</a>
+                                                </t>
+                                                <t t-if="slides['slidepage'].product_id.qty_available > 0.0 and slides['booked']">
+                                                    <a id="booked_buy" href="#" data-toggle="modal" data-target="#myModal" class="btn btn-primary o_default_snippet_text o_animate o_anim_fade_in_right">Buy</a>
+                                                </t>
+                                            </p>
+                                        </div>
+                                    </t>
+                                    <t t-if="slid_count == 2">
+                                        <div class="slide-text slide_style_center">
+                                            <p>
+                                                <h1 class="o_default_snippet_text o_animate o_anim_flip_in_x"><t t-esc="slides['slidepage'].product_id.name"/></h1>
+                                                <p class="o_default_snippet_text o_animate o_anim_fade_in_right"><t t-esc="slides['slidepage'].text_content"/></p>
+                                                <a t-att-href="'/shop/product/%s' %slug(slides['slidepage'].product_id.product_tmpl_id)" class="btn btn-default o_default_snippet_text o_animate o_anim_fade_in_up">Rent</a>
+                                                <t t-if="slides['slidepage'].product_id.qty_available == 0.0">
+                                                    <a id="booked_buy" href="#" data-toggle="modal" data-target="#myModal" class="btn btn-primary o_default_snippet_text o_animate o_anim_fade_in_down">Buy</a>
+                                                </t>
+                                                <t t-if="slides['slidepage'].product_id.qty_available > 0.0 and not slides['booked']">
+                                                    <a t-att-href="'/shop/cart/update/%s'%(slides['slidepage'].product_id.id)" class="btn btn-primary o_default_snippet_text o_animate o_anim_fade_in_down">Buy</a>
+                                                </t>
+                                                <t t-if="slides['slidepage'].product_id.qty_available > 0.0 and slides['booked']">
+                                                    <a id="booked_buy" data-toggle="modal" data-target="#myModal" href="#" class="btn btn-primary o_default_snippet_text o_animate o_anim_fade_in_down">Buy</a>
+                                                </t>
+                                            </p>
+                                        </div>
+                                    </t>
+                                    <t t-if="slid_count == 3">
+                                        <div class="slide-text slide_style_right">
+                                            <p>
+                                                <h1 class="o_default_snippet_text o_animate o_anim_zoom_in_left"><t t-esc="slides['slidepage'].product_id.name"/></h1>
+                                                <p class="o_default_snippet_text o_animate o_anim_fade_in_right"><t t-esc="slides['slidepage'].text_content"/></p>
+                                                <a t-att-href="'/shop/product/%s' %slug(slides['slidepage'].product_id.product_tmpl_id)" class="btn btn-default o_default_snippet_text o_animate o_anim_fade_in_left">Rent</a>
+                                                <t t-if="slides['slidepage'].product_id.qty_available == 0.0">
+                                                    <a id="booked_buy" href="#" data-toggle="modal" data-target="#myModal" class="btn btn-primary o_default_snippet_text o_animate o_anim_fade_in_right">Buy</a>
+                                                </t>
+                                                <t t-if="slides['slidepage'].product_id.qty_available > 0.0 and not slides['booked']">
+                                                    <a t-att-href="'/shop/cart/update/%s'%(slides['slidepage'].product_id.id)" class="btn btn-primary o_default_snippet_text o_animate o_anim_fade_in_right">Buy</a>
+                                                </t>
+                                                <t t-if="slides['slidepage'].product_id.qty_available > 0.0 and slides['booked']">
+                                                    <a id="booked_buy" href="#" data-toggle="modal" data-target="#myModal" class="btn btn-primary o_default_snippet_text o_animate o_anim_fade_in_right">Buy</a>
+                                                </t>
+		                                   </p>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                        <t t-if="slid_count == 3">
+                            <t t-set="slid_count" t-value="0"/>
+                        </t>
+                    </t>
+                    <t t-if="slides['slidepage'].video">
+                        <div class="item">
+                            <div id="video_overlays1"></div>
+                            <video width="100%" controls="controls" autoplay="autoplay" loop="loop">
+                                <source t-att-src="'/web/content/top.banner/'+str(slides['slidepage'].id)+'/pro_banner_video'"/>
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </t>
+                </t>
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&amp;times;</button>
+                          <h4 class="modal-title">IMPORTANT!</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>Product is not available at the moment you can get on Rent.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                </div>
+                <!-- <div class="item">
+                    <div id="video_overlays1"></div>
+                    <video width="100%" controls="controls" autoplay="autoplay" loop="loop">
+                        <source src="/modifier_honos_theme/static/src/img/video1.mp4" type="video/mp4"></source>
+                      Your browser does not support the video tag.
+                    </video>
+                </div> -->
+             <a class="left carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="prev">
+                 <span class="fa fa-angle-left" aria-hidden="true"></span>
+                 <span class="sr-only">Previous</span>
+             </a>
+             <a class="right carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="next">
+                 <span class="fa fa-angle-right" aria-hidden="true"></span>
+                 <span class="sr-only">Next</span>
+             </a>
+            </div>
+        </div>
+    </template>
+    <!-- ====================== end of top banner slider Homepage block ================================== -->
+    <!-- ====================== New Arrival Homepage block ================================== -->
+    <template id="theme_ccm_new_arrival_slider_view" name="New Arrivals Snippet">
+            <div class="f_categories_main">
+                <section>
+                    <div class="bs_margin"></div>
+                </section>
+                <section>
+                    <div class="f_categories_container">
+                        <div class="f_categories_heading">
+                            <t t-if="not slider_header">
+                                <h3>New Arrivals</h3>
+                            </t>
+                            <t t-if="slider_header">
+                                <h3><t t-esc="slider_header.name"/></h3>
+                            </t>
+                        </div>
+                        <t t-if="slider_details">
+                        <ul id="owl-new_arrival" class="owl-theme f_categories_wrapper">
+                            <t t-as="product" t-foreach="slider_details.new_arrival_products_line_ids">
+                                <li class="item">
+                                    <div class="feature_inner">
+                                        <div class="feature_img">
+                                            <div itemprop="image" t-field="product.products_id.image" t-options='{"widget": "image", "alt-field": "name"}'></div>
+                                            <div class="f_ribbon_wrapper">
+                                                <div class="ribbon btn btn-danger f_sale_btn">Exclusive</div>
+                                            </div>
+                                            <div class="feature_img_hover_wrapper">
+                                                <div class="fsearch_icon">
+                                                    <a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+                                                </div>
+                                                <div class="fsearch_icon">
+                                                    <a t-att-href="'/shop/product/%s' % (product.products_id.id)"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                </div>
+                                                <div id="wishlist_icon_carousel" class="fsearch_icon">
+                                                    <a class="add2wish_SC wishlist-heart" t-att-data-id="'%s' % product.products_id.id " title="Add To Wishlist">
+									                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+										            </a>
+										            <a class="in2wish wishlist-heart" t-att-data-id="'%s' % product.products_id.id " title="In Wishlist">
+										                <i class="fa fa-heart" aria-hidden="true"></i>
+										            </a>
+                                                    <!-- <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="feature_desc">
+                                            <div class="f_rating_star_card">
+                                                <div class="f_stars disabled">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p class="feature_title">
+                                                <a class="#" href="#"><t t-esc="product.products_id.name"/></a>
+                                            </p>
+                                            <div class="#">
+                                                <span class="feature_prise">
+                                                   <span class="#">
+                                                       <span t-field="product.products_id.lst_price" t-options='{
+                                                                                       "widget": "monetary",
+                                                                                       "display_currency": website.currency_id
+                                                                                   }'/>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </t>
+                        </ul>
+                        </t>
+                    </div>
+                </section>
+            </div>
+    </template>
+    <!-- ========================================== End of new arrival homepage block ============================================= -->
+    <template id="website.company_description" name="Company Description">
+	    <address itemscope="itemscope" itemtype="http://schema.org/Organization">
+	        <!-- TODO widget contact must add itemprop attributes -->
+	        <!-- div t-field="res_company.partner_id" t-options='{
+	                "widget": "contact",
+	                "fields": ["name", "address", "phone", "mobile", "fax", "email"]}'/-->
+	        <div><t t-esc="res_company.partner_id.name"/></div>
+	        <div><i class="fa fa-map-marker"></i> <t t-esc="res_company.partner_id.street"/> <t t-esc="res_company.partner_id.street2"/>
+	               <t t-esc="res_company.partner_id.country_id.name"/> <t t-esc="res_company.partner_id.zip"/>
+	        </div>
+	        <div class="mt8">
+	           <p style="font-size:12.5px;">
+	               Please note we are still in the midst of shifting and renovating.
+	               Not all costumes would be there yet.
+	               <br/>
+	               Contact us to check for availability and arrange for costumes to view!
+	           </p>
+	        </div>
+	        <div class="mt4" style="font-size:12.5px;"><i class="fa fa-phone"></i> <t t-esc="res_company.partner_id.phone or '(+65) 6333 9440 / 92999064'"/></div>
+	        <div><span style="font-size:12.5px;"><i class="fa fa-envelope"></i> Costume Rental - rental.ccm@gmail.com</span></div>
+	        <div><span style="font-size:12.5px;"><i class="fa fa-envelope"></i> Customization - sanee.ccm@gmail.com</span></div>
+	        <div><span style="font-size:12.5px;"><i class="fa fa-envelope"></i> Marketing - kathy.tam@ccm.com.sg</span></div>
+	        <t t-if="not res_company.google_map_img()">
+	            <span class="fa fa-map-marker fa-fw mt16"/> <a t-att-href="res_company.google_map_link()" target="_BLANK"> Google Maps</a>
+	        </t>
+	    </address>
+        <img class="thumbnail img-responsive" src="/modifier_honos_theme/static/src/img/map.jpg" />
+	</template>
+    <template id="website_crm.contactus_form" inherit_id="website.contactus" name="Contact Us">
+        <xpath expr="//div[@name='mail_button']" position="replace">
+            <div>
+                <form action="/website_form/" method="post" data-model_name="crm.lead"
+                    data-success_page="/page/website_crm.contactus_thanks"
+                    class="s_website_form form-horizontal container-fluid mt32"
+                    enctype="multipart/form-data">
+                    <div class="form-group form-field o_website_form_required_custom">
+                        <label class="col-md-3 col-sm-4 control-label clabel" for="contact_name">Name
+                        </label>
+
+                        <div class="col-md-7 col-sm-8">
+                            <input type="text" class="form-control o_website_form_input cinput"
+                                name="contact_name" t-att-value="request.params.get('contact_name', '')"
+                                required="" />
+                        </div>
+                    </div>
+                    <div class="form-group form-field o_website_form_required_custom">
+                        <label class="col-md-3 col-sm-4 control-label clabel" for="email_from">Email
+                        </label>
+                        <div class="col-md-7 col-sm-8">
+                            <input type="text" class="form-control o_website_form_input cinput"
+                                name="email_from" required=""
+                                t-att-value="request.params.get('email_from', '')" />
+                        </div>
+                    </div>
+                    <div class="form-group form-field">
+                        <label class="col-md-3 col-sm-4 control-label clabel" for="phone">Number
+                        </label>
+                        <div class="col-md-7 col-sm-8">
+                            <input type="text" class="form-control o_website_form_input cinput"
+                                name="phone" t-att-value="request.params.get('phone', '')" />
+                        </div>
+                    </div>
+                    <!-- <div class="form-group form-field o_website_form_required_custom">
+                        <label class="col-md-3 col-sm-4 control-label clabel" for="partner_name">Your
+                            Company
+                        </label>
+
+                        <div class="col-md-7 col-sm-8">
+                            <input type="text" class="form-control o_website_form_input cinput"
+                                name="partner_name" required=""
+                                t-att-value="request.params.get('partner_name', '')" />
+                        </div>
+                    </div> -->
+                    <div class="form-group form-field o_website_form_required">
+                        <label class="col-md-3 col-sm-4 control-label clabel" for="name">Subject
+                        </label>
+                        <div class="col-md-7 col-sm-8">
+                            <input type="text" class="form-control o_website_form_input cinput"
+                                name="name" required="" t-att-value="request.params.get('name', '')" />
+                        </div>
+                    </div>
+                    <div class="form-group form-field o_website_form_required_custom">
+                        <label class="col-md-3 col-sm-4 control-label clabel" for="description">Message
+                        </label>
+                        <div class="col-md-7 col-sm-8">
+                            <textarea class="form-control o_website_form_input cinput"
+                                name="description" required="">
+                                <t t-esc="request.params.get('description', '')" />
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                            <span
+                                class="btn btn-primary btn-lg o_website_form_send common-btn">Send</span>
+                            <span id="o_website_form_result"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </xpath>
+    </template>
+    <!-- Shop Top Banner image block hide from Honos Shop -->
+    <template id="ccm_shop_products" inherit_id="honos_shop.honos_shop_products" name="ccm Shop Products">
+        <xpath expr="//div[@class='cover-img-div']" position="replace">
+            
+            
+        </xpath>
+    </template>
+    <!-- Replace banner image from Shop Cart of honos Cart-->
+    <template id="ccm_cart" inherit_id="honos_cart.honos_cart">
+        <xpath expr="//div[@class='cart-cover-img-div']" position="replace">
+
+        </xpath>
+    </template>
+    <!-- Replace Top Banner image from Wishlist page of Honos wishlist -->
+    <template id="ccm_wishlist" inherit_id="honos_wishlist.honos_wishlist_wishlist_template">
+        <xpath expr="//div[@class='oe_structure']//img[@class='wishlist-cover-img']" position="replace">
+        
+        </xpath>
+    </template>
+    <!--  Showing from date and to date in product page before add to cart -->
+    <template id="ccm_honos_product_product" inherit_id="honos_product.honos_product_product">
+        <xpath expr="//div[@class='price_comman_sub_class']" position="replace">
+            <div class="price_comman_sub_class">
+                <t
+                    t-if="(compute_currency(product.lst_price) - product.website_price ) &gt; 0.01  and website.get_current_pricelist().discount_policy=='with_discount'">
+                    <del class="text-danger mr8 strike-through strike-price"
+                        style="white-space: nowrap;" t-esc="compute_currency(product.website_public_price)"
+                        t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}" />
+                </t>
+                <b>
+                    <t
+                        t-if="(compute_currency(product.lst_price) - product.website_price ) &gt; 0.01  and website.get_current_pricelist().discount_policy=='without_discount'">
+
+                        <del class="text-danger mr8 " style="white-space: nowrap;"
+                            t-esc="compute_currency(product.website_public_price)"
+                            t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}" />
+                    </t>
+                    <span class="text-danger oe_default_price"
+                        style="text-decoration: line-through; white-space: nowrap;"
+                        t-esc="compute_currency(product.website_public_price)"
+                        t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"
+                        t-att-style="'text-decoration: line-through; white-space: nowrap; ' + '' if (compute_currency(product.lst_price) - product.website_price) &gt; 0.01 and website.get_current_pricelist().discount_policy == 'without_discount' else 'display: none;'" />
+
+                    <b class="oe_price" style="white-space: nowrap;" t-esc="product.website_price"
+                        t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" /> for Buy <br/>
+                    <br/>
+                    <t t-if="product.rent_disc_available">
+                       <b class="oe_price" id="rentp" style="white-space: nowrap;" t-esc="product.rent_disc_price"
+                           t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                       <del class="text-danger mr8 " style="white-space: nowrap;"
+                            t-esc="compute_currency(product.rent_price)"
+                            t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/> for Rent
+                        <span itemprop="rent_price" style="display:none;" t-esc="product.rent_disc_price" />
+                    </t>
+                    <t t-else="">
+                       <b class="oe_price" id="rentp" style="white-space: nowrap;" t-esc="product.rent_price"
+                           t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" /> for Rent
+                        <span itemprop="rent_price" style="display:none;" t-esc="product.rent_price" />
+                    </t>
+                    <span itemprop="price" style="display:none;" t-esc="product.website_price" />
+                    <span itemprop="priceCurrency" style="display:none;"
+                        t-esc="website.currency_id.name" />
+                </b>
+
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='4_btns_combo']" position="replace">
+            <div class="4_btns_combo">
+                <div class="4_btns_combo_sub">
+                    <p t-if="len(product.product_variant_ids) &gt; 1" class="css_not_available_msg bg-danger"
+                        style="padding: 15px;">Product not available</p>
+                    <div class="product_wish_compare">
+                        <div class="wishlink" id="wishicon_div"></div>
+                        <div class="compare_btn" id="compare_div"></div>
+                        <div class="shop_the_look" id="shopmylook"></div>
+                    </div>
+                    <div class="col-sm-8 stock">
+                        <t t-if="len(product.product_variant_ids) &gt; 1">
+                            <span class="label label-danger outstock hidden">Out Of Stock!</span>
+                        </t>
+                        <t t-if="len(product.product_variant_ids) == 1">
+	                        <t t-if="product.qty_available == 0.0 or product.qty_available == 0">
+	                            <span class="label label-danger outstock">Out Of Stock!</span>
+	                        </t>
+                        </t>
+                    </div>
+                    <div class="col-sm-8 btn-group rent_buy" data-toggle="buttons">
+					      <label t-att-class="'btn btn-primary rent active disabled' if product.qty_available == 0.0 or product.qty_available == 0 else 'btn btn-primary rent active'">
+					        <input type="radio" name="options" checked="checked" id="rent" value="rent"/> Rent
+					      </label>
+	<label t-att-class="'btn btn-primary js_check_product disabled' if product.qty_available == 0.0 or product.qty_available == 0 else 'btn btn-primary js_check_product buy-submit'">
+					        <input type="radio" name="options" id="buy" value="buy"/> Buy
+					      </label>
+					</div>
+					<div class="modal fade" id="warningModal" role="dialog">
+	                    <div class="modal-dialog">
+	                      <!-- Modal content-->
+	                      <div class="modal-content">
+	                        <div class="modal-header">
+	                          <button type="button" class="close" data-dismiss="modal">&amp;times;</button>
+	                          <h4 class="modal-title">IMPORTANT!</h4>
+	                        </div>
+	                        <div class="modal-body">
+	                          <p>Product is not available at the moment you can get on Rent.</p>
+	                        </div>
+	                        <div class="modal-footer">
+	                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                        </div>
+	                      </div>
+	                      
+	                    </div>
+	                </div>
+                    <div class="col-sm-12 rentdate">
+                        <label class="">For How Many Days?</label>
+                        <input type="hidden" name="days" id="days" value=""></input>
+                        <input name="rent_days" id="rent_days" t-att-disabled="product.qty_available == 0.0 or product.qty_available == 0" value="" placeholder="Select Period"/>
+                        <input type="hidden" name="rental_price" id="rental_price"/>
+                        <div id="warn_msg" class="warn_msg">* Please select period.</div>
+                    </div>
+                    <div t-att-class="'p_ad2cart disabled' if product.qty_available == 0.0 or product.qty_available == 0 else 'p_ad2cart'">
+                        <a id="add_to_cart" href="#"
+                            class="btn btn-primary btn-lg mt8 js_check_product">Add to Cart</a>
+                    </div>
+                    <div class="d_ad2cart disabled hidden">
+                        <a id="d_to_cart" href="#" class="btn btn-primary btn-lg mt8 disabled">Add to Cart</a>
+                    </div>
+                    <div id="warningModal" style="display: none; float:none; text-align:center;" class="col-sm-12">
+                        <p class="dia_content">
+                            Product is not available at the moment.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <!-- Cart Lines -->
+    <template id="ccm_honos_cart_lines" inherit_id="honos_cart.honos_cart_lines">
+        <xpath expr="//table[@id='cart_products']/thead/tr/th[3]" position="after">
+            <th width="20">Days</th>
+        </xpath>
+        <xpath expr="//table[@id='cart_products']/tbody/t/tr/td[@id='td-price']" position="before">
+            <td id="td-days">
+                <t t-if="line.booking_line_id.total_days">
+                    <span><t t-esc="line.booking_line_id.total_days"/></span>
+                </t>
+                <t t-if="not line.booking_line_id.total_days">
+                    <t t-if="line.product_id.name == 'Refundable Deposit'">
+                        <span class="adv_depo" id="adv_depo">-</span>
+                    </t>
+                    <t t-if="not line.product_id.name == 'Refundable Deposit'">
+                        <span>-</span>
+                    </t>
+                </t>
+            </td>
+        </xpath>
+        <xpath expr="//table[@id='cart_products']/tbody/t/tr/td[8]" position="replace">
+            <td>
+	            <t t-if="line.product_id.name == 'Refundable Deposit'">
+	                <a href="#"></a>
+	            </t>
+	            <t t-if="not line.product_id.name == 'Refundable Deposit'">
+	                <a href="#" class="js_delete_product no-decoration remove-cart-product-icon"> 
+	                    <i class="fa fa-times" aria-hidden="true"></i>
+	                </a>
+	            </t>
+	        </td>
+        </xpath>
+    </template>
+    <template id="website_portal_sale.portal_my_invoices" name="Invoices and Payments">
+        <t t-call="website_portal.portal_layout">
+
+            <h3 class="page-header h3_class_account_heading">Your Invoices and Payments</h3>
+            <t t-if="not invoices">
+                <p class="para_class_quotation_warning">There are currently no invoices for your account.</p>
+            </t>
+            <t t-if="invoices">
+                <div class="table-responsive">
+                    <table class="table o_my_status_table table_portal_sale">
+                        <thead>
+                            <tr class="active">
+                                <th>Invoice #</th>
+                                <th>Invoice Date</th>
+                                <th>Due Date</th>
+                                <th class="th_class_status_column_width">Status</th>
+                                <th></th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <t t-foreach="invoices" t-as="invoice">
+                            <tr
+                                t-att-class="'hidden to_hide' if invoice.state!='open' and invoice_index &gt; 4 else ''">
+                                <td>
+                                    <a target="_blank" class="anch_class_ma_quotation_id"
+                                        t-att-href="'/report/pdf/modifier_account_invoice_report.custom_report_invoice/'+str(invoice.id)">
+                                        <t t-esc="invoice.number" />
+                                    </a>
+                                </td>
+                                <td>
+                                    <span class="span_class_map_date" t-field="invoice.date_invoice" />
+                                </td>
+                                <td>
+                                    <span class="span_class_map_date" t-field="invoice.date_due" />
+                                </td>
+                                <td>
+                                    <t t-if="invoice.state == 'open'">
+                                        <span class="label label-info btn_class_status_button_font">
+                                            <i class="fa fa-fw fa-clock-o" />
+                                            Waiting for Payment
+                                        </span>
+                                    </t>
+                                    <t t-if="invoice.state == 'paid'">
+                                        <span class="label label-default btn_class_status_button_font">
+                                            <i class="fa fa-fw fa-check" />
+                                            Paid
+                                        </span>
+                                    </t>
+                                    <t t-if="invoice.state == 'cancel'">
+                                        <span class="label label-default btn_class_status_button_font">
+                                            <i class="fa fa-fw fa-remove" />
+                                            Cancelled
+                                        </span>
+                                    </t>
+                                </td>
+                                <td>
+                                    <a t-if="invoice.state == 'open'"
+                                        t-attf-href="/website_payment/pay?reference=#{invoice.number}&amp;amount=#{invoice.amount_total}&amp;currency_id=#{invoice.currency_id.id}&amp;country_id=#{invoice.partner_id.country_id.id}"
+                                        alt="Pay Now" class="btn btn-xs btn-primary btn_class_ma_paynow">
+                                        <i class="fa fa-arrow-circle-right icon_class_invoice_status" />
+                                        Pay Now
+                                    </a>
+                                </td>
+                                <td>
+                                    <span class="span_class_map_amount" t-esc="invoice.amount_total"
+                                        t-esc-options='{"widget": "monetary", "display_currency": "invoice.currency_id"}' />
+                                </td>
+                            </tr>
+                        </t>
+                        <tr t-att-class="'hidden' if len(invoices) &lt; 6 else ''">
+                            <td colspan="5">
+                                <a class="o_my_show_more btn btn-sm btn-primary">
+                                    <span>
+                                        Show more
+                                        <i class="fa fa-plus i_class_show_more_btn_icon"
+                                            aria-hidden="true"></i>
+                                    </span>
+                                    <span class="hidden">
+                                        Show less
+                                        <i class="fa fa-minus i_class_show_more_btn_icon"
+                                            aria-hidden="true"></i>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="honos_quick_view.honos_quick_view_fetch-record">
+        <div class="mask"></div>
+        <!-- <div class="model-main-div"> -->
+        <div class="product_quick_view_class oe_website_sale">
+            <form action="/shop/cart/update" method="post">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                <div itemscope="itemscope" itemtype="http://schema.org/Product">
+                    <div class="product_quick_view_subclass">
+                        <div class="close_btn common-close-btn">
+                            <span>x</span>
+                        </div>
+                        <div id="wishlist_in_quick_view"></div>
+                        <div class="quick_view_img_div_container">
+                            <div class="quick_view_image_div">
+                                <img t-att-src="'data:image/png;base64,%s' % product.image"></img>
+                            </div>
+
+                        </div>
+
+                        <div class="quick_view_product_details">
+                            <div class="quick_view_product_sub_details">
+                                <span itemprop="url" style="display:none;"
+                                    t-esc="'/shop/product/%s' % slug(product)" />
+                                <form action="pro/shop/cart/update" class="js_add_cart_variants"
+                                    t-att-data-attribute_value_ids="product.product_variant_ids.ids"
+                                    method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                    <div class="js_product" t-if="product.product_variant_ids">
+                                        <h3 class="quick_view_p_name">
+                                            <a t-field="product.name" t-att-href="'/shop/product/%s' %slug(product)"></a>
+                                        </h3>
+                                        <div class="q_rating-block">
+                                            <t t-set="rating_stat" t-value="rating_product" />
+                                            <t t-call="rating.rating_star_card">
+                                                <t t-set="rating_default_value"
+                                                    t-value="'%.2f' % (rating_stat[product.id].get('avg', 0.0),)" />
+                                                <t t-set="rating_disabled" t-value="True" />
+                                            </t>
+                                        </div>
+                                        <div t-if="product.description_sale" />
+                                        <div class="prod_des">
+                                            <p t-field="product.description_sale" class="text-muted res_pera_description" />
+
+                                        </div>  
+                                        
+                                        <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer"
+                                            class="product_price" t-if="product.product_variant_ids">
+                                            <h4 class="oe_price_h4 css_editable_mode_hidden">
+                                                <div class="price_comman_class">
+                                                    <div class="price_comman_sub_class">
+                                                        <t
+                                                            t-if="(compute_currency(product.lst_price) - product.website_price ) &gt; 0.01  and website.get_current_pricelist().discount_policy=='with_discount'">
+                                                            <del class="text-danger mr8 strike-through strike-price"
+                                                                style="white-space: nowrap;" t-esc="compute_currency(product.website_public_price)"
+                                                                t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}" />
+                                                        </t>
+                                                        <b>
+                                                            <t
+                                                                t-if="(compute_currency(product.lst_price) - product.website_price ) &gt; 0.01  and website.get_current_pricelist().discount_policy=='without_discount'">
+
+                                                                <del class="text-danger mr8 " style="white-space: nowrap;"
+                                                                    t-esc="compute_currency(product.website_public_price)"
+                                                                    t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}" />
+                                                            </t>
+                                                            <span class="text-danger oe_default_price"
+                                                                style="text-decoration: line-through; white-space: nowrap;"
+                                                                t-esc="compute_currency(product.website_public_price)"
+                                                                t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"
+                                                                t-att-style="'text-decoration: line-through; white-space: nowrap; ' + '' if (compute_currency(product.lst_price) - product.website_price) &gt; 0.01 and website.get_current_pricelist().discount_policy == 'without_discount' else 'display: none;'" />
+                                                            <b class="oe_price" style="white-space: nowrap;" t-esc="product.website_price"
+                                                                t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" /> for Buy <br/>
+                                                            <br/>
+                                                            <t t-if="product.rent_disc_available">
+                                                               <b class="oe_price" id="rentp" style="white-space: nowrap;" t-esc="product.rent_disc_price"
+                                                                   t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                                                               <del class="text-danger mr8 " style="white-space: nowrap;"
+                                                                    t-esc="compute_currency(product.rent_price)"
+                                                                    t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/> for Rent
+                                                                <span itemprop="rent_price" style="display:none;" t-esc="product.rent_disc_price" />
+                                                            </t>
+                                                            <t t-else="">
+                                                               <b class="oe_price" id="rentp" style="white-space: nowrap;" t-esc="product.rent_price"
+                                                                   t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" /> for Rent
+                                                                <span itemprop="rent_price" style="display:none;" t-esc="product.rent_price" />
+                                                            </t>
+                                                            <span itemprop="price" style="display:none;" t-esc="product.website_price" />
+                                                            <span itemprop="priceCurrency" style="display:none;"
+                                                                t-esc="website.currency_id.name" />
+                                                        </b>
+                                                    </div>
+                                                </div>
+                                            </h4>
+                                            <h4 class="css_non_editable_mode_hidden decimal_precision"
+                                                t-att-data-precision="product.currency_id.decimal_places">
+                                                <span t-field="product.lst_price"
+                                                    t-options='{
+                                       "widget": "monetary",
+                                       "display_currency": product.currency_id,
+                                   }' />
+                                            </h4>
+                                            <h4 class="hidden oe_not_available bg-warning">Product not available</h4>
+
+                                        </div>
+                                        <div class="sku_container"  t-if="product.default_code">
+                                            <p class="sku_label">
+
+                                                SKU:
+                                                <t t-esc="product.default_code" />
+                                            </p>
+                                        </div>
+                                        <div class="product_avail">
+                                            <div t-if="product.availability == 'in_stock'" class="in-stock">
+                                                <span>In Stock</span>
+                                            </div>
+                                            <div t-if="product.availability == 'warning'" class="in-stock">
+                                                <span class="warning">Warning</span>
+                                            </div>
+                                            <hr id="hr_style" />
+                                        </div>
+                                        <t t-placeholder="select">
+                                            <input type="hidden" class="product_id" name="product_id"
+                                                t-att-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'" />
+                                            <t t-call="website_sale.variants">
+                                                <t t-set="ul_class" t-value="'nav-stacked'" />
+                                            </t>
+                                        </t>
+                                        <div class="Quick_product_wish_compare">
+                                            <div class="wishlink" id="wishlist_icon_div_quick_view"></div>
+                                            <div class="compare_btn" id="compare_icon_div_quick_view"></div>
+                                            <div class="shop_the_look" id="shop_look_div_quick_view"></div>
+                                        </div>
+                                        <div class="col-sm-8 stock">
+					                        <t t-if="len(product.product_variant_ids) &gt; 1">
+					                            <span class="label label-danger outstock hidden">Out Of Stock!</span>
+					                        </t>
+					                        <t t-if="len(product.product_variant_ids) == 1">
+					                            <t t-if="product.qty_available == 0.0 or product.qty_available == 0">
+					                                <span class="label label-danger outstock">Out Of Stock!</span>
+					                            </t>
+					                        </t>
+					                    </div>
+					                    <div class="col-sm-8 btn-group rent_buy" data-toggle="buttons">
+					                          <label t-att-class="'btn btn-primary active disabled' if product.qty_available == 0.0 or product.qty_available == 0 else 'btn btn-primary active'">
+					                            <input type="radio" name="options" checked="checked" id="rent" value="rent"/> Rent
+					                          </label>
+					                          <label t-att-class="'btn btn-primary js_check_product disabled' if product.qty_available == 0.0 or product.qty_available == 0 else 'btn btn-primary js_check_product buy-submit'">
+					                            <input type="radio" name="options" id="buy" value="buy"/> Buy
+					                          </label>
+					                    </div>
+					                    <div class="col-sm-12 rentdate">
+					                        <label class="">For How Many Days?</label>
+					                        <input type="hidden" name="days" id="days" value=""></input>
+					                        <input name="rent_days" id="rent_days" t-att-disabled="product.qty_available == 0.0 or product.qty_available == 0" value="" placeholder="Select Period"/>
+					                        <input type="hidden" name="rental_price" id="rental_price"/>
+					                        <div id="warn_msg" class="warn_msg">* Please select period.</div>
+					                    </div>
+                                        <p t-if="len(product.product_variant_ids) &gt; 1" class="css_not_available_msg bg-danger"
+                                            style="padding: 15px;">Product not available</p>
+                                        <div t-att-class="'p_ad2cart disabled' if product.qty_available == 0.0 or product.qty_available == 0 else 'p_ad2cart'">
+					                        <a id="add_to_cart" href="#"
+					                            class="btn btn-primary btn-lg mt8 js_check_product">Add to Cart</a>
+					                        <div class="shopmylook_quick_view"></div>
+					                    </div>
+					                    <div class="d_ad2cart disabled hidden">
+					                        <a id="d_to_cart" href="#" class="btn btn-primary btn-lg mt8 disabled">Add to Cart</a>
+					                    </div>
+					                    <div id="quickwarningModal" style="display: none; float:none; text-align:center;" class="col-sm-12">
+					                        <p class="dia_content">
+					                            Product is not available at the moment.
+					                        </p>
+					                    </div>
+                                        <!-- <div class="qv_ad2cart">
+	                                        <a id="add_to_cart"
+	                                            class="btn quickview-btn btn-primary btn-lg mt8 js_check_product a-submit"
+	                                            href="#">Add to Cart
+	                                        </a>
+                                            <div class="shopmylook_quick_view"></div>
+                                        </div> -->
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- </div> -->
+            </form>
+        </div>
+    </template>
+    <!-- show ship to/self collection on confirmation page -->
+    <template id="honos_cart.honos_bill_to" inherit_id="website_sale.bill_to">
+        <xpath expr="//div[@class='panel-heading']" position="attributes">
+            <attribute name="class">bill-ship-heading panel-heading</attribute>
+        </xpath>
+        <!-- <xpath expr="//t[@t-if='not order.only_services']/div/div[@class='panel-heading']" position="attributes">
+            <attribute name="class">bill-ship-heading panel-heading</attribute>
+        </xpath> -->
+        <xpath expr="//div[@class='panel panel-info']" position="attributes">
+            <attribute name="class">panel panel-info bill-panel</attribute>
+        </xpath>
+        <xpath expr="//div[@class='panel panel-info']" position="attributes">
+            <attribute name="class">panel panel-info bill-panel</attribute>
+        </xpath> 
+    </template>
+    
+    <template id='website_sale.bill_to' name="Bill to">
+        <div class="panel panel-info">
+          <div class="panel-heading">Bill To:</div>
+          <div class="panel-body">
+            <div class='o_div_text_overflow' t-field="order.partner_invoice_id" t-options="{'widget': 'contact','fields': ['address', 'name', 'phone', 'email']}" />
+          </div>
+        </div>
+        <t t-if="not order.only_services">
+            <t t-if="not order.booking_id.booking_lines">
+	            <div class="panel panel-info">
+	              <div class="panel-heading bill-ship-heading panel-heading">Ship To:</div>
+	              <div class="panel-body">
+	                <div class='o_div_text_overflow' t-field="order.partner_shipping_id" t-options="{'widget': 'contact','fields': ['address', 'name', 'phone']}" />
+	              </div>
+	            </div>
+            </t>
+        </t>
+        <t t-if="order.booking_id.booking_lines">
+            <div class="panel panel-info panel panel-info bill-panel">
+              <div class="panel-heading bill-ship-heading panel-heading">Self Collection:</div>
+              <div class="panel-body">
+                <t t-esc="order.company_id.name"/><br/>
+                <t t-esc="order.company_id.street"/><br/>
+                <t t-esc="order.company_id.street2"/><br/>
+                <t t-esc="order.company_id.city"/> <t t-esc="order.company_id.state_id.name"/> <t t-esc="order.company_id.zip"/><br/>
+                <t t-esc="order.company_id.country_id.name"/>
+              </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- show email in shipping address -->
+    <template id="address" inherit_id="website_sale.address">
+        <xpath expr="//form[@class='checkout_autoformat']/t" position="attributes">
+            <attribute name="t-if">mode[1] in ('billing', 'shipping')</attribute>
+        </xpath>
+    </template>
+</odoo>

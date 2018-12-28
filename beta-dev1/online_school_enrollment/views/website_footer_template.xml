@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="footer_default_modifier" inherit_id="website.footer_custom" customize_show="True" name="Automatic Footer">
+		<xpath expr="//div[@id='footer']" position="replace">
+        <div id="footer" class="container hidden-print">
+            <div class="row">
+                <div class="col-md-4 col-lg-3">
+                    <h4>Our Products &amp; Services</h4>
+                    <ul class="list-unstyled" id="products">
+                        <li><a href="http://ipip.sg/">Home</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4  col-lg-3" id="info">
+                    <h4>Connect with us</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="http://ipip.sg/hubungi-kami/">Contact us</a></li>
+                    </ul>
+                    <ul class="list-unstyled">
+                        <li t-ignore="true"><i class="fa fa-phone"></i> <span t-field="res_company.phone"></span></li>
+                        <li t-ignore="true"><i class="fa fa-envelope"></i>  <span t-field="res_company.email"></span></li>
+                    </ul>
+                    <h2>
+                    	<i class="fa fa-facebook-square"/>
+                        <!-- <a t-att-href="website.social_facebook" t-if="website.social_facebook"></a> -->
+                        <i class="fa fa-twitter"/>
+                        <!-- <a t-att-href="website.social_twitter" t-if="website.social_twitter"></a> -->
+                        <i class="fa fa-linkedin"/>
+                        <!-- <a t-att-href="website.social_linkedin" t-if="website.social_linkedin"></a> -->
+                        <i class="fa fa-youtube-play"/>
+                        <!-- <a t-att-href="website.social_youtube" t-if="website.social_youtube"></a> -->
+                        <!-- <a t-att-href="website.social_googleplus" t-if="website.social_googleplus" rel="publisher"></a> -->
+                        <i class="fa fa-google-plus-square"/>
+                        <!-- <a t-att-href="website.social_github" t-if="website.social_github"></a> -->
+                        <i class="fa fa-github"/>
+                    </h2>
+                </div>
+                <div class="col-md-4 col-lg-5 col-lg-offset-1">
+                    <h4>
+                        <span t-field="res_company.name" />
+                        <small> - <a href="http://ipip.sg/">About us</a></small>
+                    </h4>
+                    <t t-call="website.language_selector"/>
+                </div>
+            </div>
+        </div>
+    </xpath>
+	</template>
+</odoo>

@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="view_partner_country_code_form" model="ir.ui.view">
+            <field name="name">partner.country.code</field>
+            <field name="model">partner.country.code</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="country"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_partner_country_code_tree" model="ir.ui.view">
+            <field name="name">partner.country.code.tree</field>
+            <field name="model">partner.country.code</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="country"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_partner_country_code">
+            <field name="name">partner.country.code.action</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">partner.country.code</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="country_code_partner" name="Country Phone Code" action="action_partner_country_code"
+                  parent="sales_team.menu_localisation" sequence="15"/>
+
+    </data>
+</odoo>

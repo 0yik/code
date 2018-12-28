@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<odoo>
+    <template id="report_student_nationality_enrolment">
+             <t t-call="report.html_container">
+            <div class="page"> 
+            	<table class="table table-condensed"  style="border: 1px solid black;">
+                    <thead>
+                    	<tr style="background-color: slategray;">
+                            <th style = 'align:centre'>Count Of Nationality</th>
+                            <th colspan='4'>Programme</th>
+                        </tr>
+                        <tr style="background-color: slategray;">
+                            <th style = 'align:centre'>Nationality</th>
+                            <th style="border: 1px solid black;">ASD</th>
+                            <th style="border: 1px solid black;">Integrated MID</th>
+                            <th style="border: 1px solid black;">MID</th>
+                            <th style="border: 1px solid black;">Grand Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="nationality_dict.get('school_dict')" t-as="line"  style="background-color: lavender;">
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="line"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre"> 
+                                <span t-esc="nationality_dict.get('school_dict') and nationality_dict.get('school_dict').get(line) and nationality_dict.get('school_dict').get(line).get('ASD')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="nationality_dict.get('school_dict')  and nationality_dict.get('school_dict').get(line) and nationality_dict.get('school_dict').get(line).get('Integrated',' ')"></span> 
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="nationality_dict.get('school_dict') and nationality_dict.get('school_dict').get(line) and nationality_dict.get('school_dict').get(line).get('MID',' ')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="nationality_dict.get('school_dict') and nationality_dict.get('school_dict').get(line) and nationality_dict.get('school_dict').get(line).get('total_programme',' ')"></span>
+                            </td>
+                        </tr>
+                        <tr style="background-color: slategray;">
+                            <td style="border: 1px solid black;align:centre">
+                                <span>Grand Total</span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre"> 
+                                <span t-esc="nationality_dict.get('total_dict',' ') and nationality_dict.get('total_dict',' ').get('total_asd',' ')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="nationality_dict.get('total_dict',' ') and nationality_dict.get('total_dict',' ').get('total_integrated',' ')"></span> 
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="nationality_dict.get('total_dict',' ') and nationality_dict.get('total_dict',' ').get('total_mid',' ')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="nationality_dict.get('total_dict',' ') and nationality_dict.get('total_dict',' ').get('grand_total',' ')"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        	</div>
+	</t>
+    </template>
+    
+</odoo>

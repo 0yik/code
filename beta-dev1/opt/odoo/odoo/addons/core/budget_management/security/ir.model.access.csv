@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_budget_change_history,budget_management.budget_change_history,model_budget_change_history,,1,1,1,1
+access_budget_change_request,budget_management.budget_change_request,model_budget_change_request,,1,1,1,1
+access_budget_change_lines,budget_management.budget_change_lines,model_budget_change_lines,,1,1,1,1
+access_budget_reserve_request,budget_management.budget_reserve_request,model_budget_reserve_request,,1,1,1,1

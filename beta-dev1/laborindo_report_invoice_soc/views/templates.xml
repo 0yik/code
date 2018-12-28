@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+       <report
+            id="account_invoices_1"
+            model="account.invoice"
+            string="Print Invoice"
+            report_type="qweb-pdf"
+            multi="True"
+            name="laborindo_report_invoice_soc.report_invoice2"
+            file="laborindo_report_invoice_soc.report_invoice2"
+
+        />
+
+        <record id="choose_signature_form" model="ir.ui.view">
+            <field name="name">report.invoice.signature</field>
+            <field name="model">report.invoice.signature</field>
+            <field name="arch" type="xml">
+            <form string="Signature">
+                <div>
+                    <label for="signature"/>
+                    <field name="signature" widget="radio" nolabel="1"/>
+                </div>
+                <footer>
+                    <button name="print_invoice" string="Print Invoice" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_choose_signature" model="ir.actions.act_window">
+            <field name="name">Print Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">report.invoice.signature</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="choose_signature_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.values" id="report_invoice_soc_action">
+            <field name="model_id" ref="account.model_account_invoice" />
+            <field name="name">report.invoice.signature</field>
+            <field name="key2">client_print_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_choose_signature'))" />
+            <field name="key">action</field>
+            <field name="model">account.invoice</field>
+        </record>
+    </data>
+</odoo>

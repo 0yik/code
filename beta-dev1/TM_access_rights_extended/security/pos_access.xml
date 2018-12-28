@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	<!-- POS - Home Delivery Menu 
+    	<record id="pos_home_delivery.menu_pos_home_delivery_id" model="ir.ui.menu">
+    	    <field name="groups_id" eval="[(4, ref('TM_access_rights_extended.group_tm_operations_kasir')),(4,ref('TM_access_rights_extended.group_tm_operations_delivery')),(4, ref('TM_access_rights_extended.group_tm_operations_manager')),(4, ref('TM_access_rights_extended.group_tm_operations_admin')),(4, ref('point_of_sale.group_pos_manager'))]"></field>
+    	</record> -->
+ 
+<record id="pos_home_delivery.menu_pos_home_delivery_id" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('base.group_user'))]"></field>
+        </record>
+    	<!-- POS - POS Promotion Program Menu   -->
+    	<record id="pos_promotion.menu_action_pos_promotion" model="ir.ui.menu">
+    		<field name="groups_id" eval="[(4, ref('TM_access_rights_extended.group_tm_operations_kasir')),(4, ref('TM_access_rights_extended.group_tm_operations_manager')),(4, ref('TM_access_rights_extended.group_tm_operations_admin')),(4, ref('point_of_sale.group_pos_manager'))]"></field>
+    	</record>
+
+    	<!-- POS - POS ORDER REPORT MENU -->
+    	<record id="point_of_sale.menu_point_rep" model="ir.ui.menu">
+    		<field name="groups_id" eval="[(4, ref('TM_access_rights_extended.group_tm_operations_kasir')),(4, ref('TM_access_rights_extended.group_tm_operations_manager')),(4, ref('TM_access_rights_extended.group_tm_operations_admin')),(4, ref('point_of_sale.group_pos_manager'))]"></field>
+    	</record>
+
+    	<!-- POS - POS Configuration Menu -->
+    	<record id="point_of_sale.menu_point_config_product" model="ir.ui.menu">
+    		<field name="groups_id" eval="[(4, ref('TM_access_rights_extended.group_tm_operations_kasir')),(4, ref('TM_access_rights_extended.group_tm_operations_manager')),(4, ref('TM_access_rights_extended.group_tm_operations_admin')),(4, ref('point_of_sale.group_pos_manager'))]"></field>
+    	</record>
+
+    	<!-- POS - POS Configuration Settings Menu -->
+    	<record id="point_of_sale.menu_pos_global_settings" model="ir.ui.menu">
+			<field name="groups_id" eval="[(4, ref('TM_access_rights_extended.group_tm_operations_kasir')),(4, ref('TM_access_rights_extended.group_tm_operations_manager')),(4, ref('TM_access_rights_extended.group_tm_operations_admin')),(4, ref('point_of_sale.group_pos_manager'))]"></field>
+		</record>
+
+		<!-- POS - POS Configuration Point of sales -->
+    	<record id="point_of_sale.menu_pos_config_pos" model="ir.ui.menu">
+			<field name="groups_id" eval="[(4, ref('TM_access_rights_extended.group_tm_operations_kasir')),(4, ref('TM_access_rights_extended.group_tm_operations_manager')),(4, ref('TM_access_rights_extended.group_tm_operations_admin')),(4, ref('point_of_sale.group_pos_manager'))]"></field>
+		</record>
+
+		<!-- POS : POS Configuration Payment Methods -->
+    	<record id="point_of_sale.menu_action_account_journal_form_open" model="ir.ui.menu">
+			<field name="groups_id" eval="[(4, ref('TM_access_rights_extended.group_tm_operations_kasir')),(4, ref('TM_access_rights_extended.group_tm_operations_manager')),(4, ref('TM_access_rights_extended.group_tm_operations_admin')),(4, ref('point_of_sale.group_pos_manager'))]"></field>
+		</record>
+
+		<!-- Purchase : Configuration > Settings Menu -->
+    	<record id="purchase.menu_purchase_general_settings" model="ir.ui.menu">
+			<field name="groups_id" eval="[(4, ref('TM_access_rights_extended.group_tm_operations_manager')),(4, ref('TM_access_rights_extended.group_tm_operations_admin'))]"></field>
+		</record>
+
+		<!-- Inventory : Inventory Setting Menu -->
+		<record id="stock.menu_stock_general_settings" model="ir.ui.menu">
+			<field name="groups_id" eval="[(4, ref('TM_access_rights_extended.group_tm_operations_inventory')),(4, ref('TM_access_rights_extended.group_tm_operations_receiver')),(4, ref('TM_access_rights_extended.group_tm_operations_manager')),(4, ref('TM_access_rights_extended.group_tm_operations_admin'))]"></field>
+		</record>
+
+		<!-- Suppier invoice form for AR -->
+		<record id="account_invoice_extended_form_view" model="ir.ui.view">
+			<field name="name">Account invoice_form_view</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_restrict_supplier')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//form' position="attributes">
+						<attribute name="create">false</attribute>
+						<attribute name="edit">false</attribute>
+						<attribute name="delete">false</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<!-- Supplier invoice tree for ar -->
+		<record id="account_invoice_extended_tree_view" model="ir.ui.view">
+			<field name="name">Account invoice_treeview</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_tree" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_restrict_supplier')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//tree' position="attributes">
+						<attribute name="create">false</attribute>
+						<attribute name="edit">false</attribute>
+						<attribute name="delete">false</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<!-- Customer invoice form view for ap -->
+		<record id="account_invoice_extended_ap_form_view" model="ir.ui.view">
+			<field name="name">Account invoice_form_view</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_restrict_customer')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//form' position="attributes">
+						<attribute name="create">false</attribute>
+						<attribute name="edit">false</attribute>
+						<attribute name="delete">false</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<!-- Customer invoice tree view for ap -->
+		<record id="account_invoice_extended_ap_tree_view" model="ir.ui.view">
+			<field name="name">Account invoice_treeview</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_tree" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_restrict_customer')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//tree' position="attributes">
+						<attribute name="create">false</attribute>
+						<attribute name="edit">false</attribute>
+						<attribute name="delete">false</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<!-- Customer invoice form for Ap -->
+		<record id="account_invoice_extendedap_form_view" model="ir.ui.view">
+			<field name="name">Account invoice_form_view</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_restrict_customer')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//form' position="attributes">
+						<attribute name="create">true</attribute>
+						<attribute name="edit">true</attribute>
+						<attribute name="delete">true</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<!-- Customer invoice tree for ap -->
+		<record id="account_invoice_extendaped_tree_view" model="ir.ui.view">
+			<field name="name">Account invoice_treeview</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_tree" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_restrict_customer')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//tree' position="attributes">
+						<attribute name="create">true</attribute>
+						<attribute name="edit">true</attribute>
+						<attribute name="delete">true</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+
+		<!-- Supplier invoice and customer invoice for accountant -->
+
+		<record id="account_invoice_extended_accoint_form_view" model="ir.ui.view">
+			<field name="name">Account invoice_form_view</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_accountant')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//form' position="attributes">
+						<attribute name="create">true</attribute>
+						<attribute name="edit">true</attribute>
+						<attribute name="delete">true</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+<!-- Supplier invoice and customer invoice for accountant -->
+
+		<record id="account_invoice_extended_aczcczcount_tree_view" model="ir.ui.view">
+			<field name="name">Account invoice_treeview</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_tree" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_accountant')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//tree' position="attributes">
+						<attribute name="create">true</attribute>
+						<attribute name="edit">true</attribute>
+						<attribute name="delete">true</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+<!-- Supplier invoice and customer invoice for accountant -->
+		<record id="account_invoice_extended_accountform_view" model="ir.ui.view">
+			<field name="name">Account invoice_form_view</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_accountant')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//form' position="attributes">
+						<attribute name="create">true</attribute>
+						<attribute name="edit">true</attribute>
+						<attribute name="delete">true</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+<!-- Supplier invoice and customer invoice for accountant -->
+		<record id="account_invoice_extended_account_tree_view" model="ir.ui.view">
+			<field name="name">Account invoice_treeview</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_tree" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_accountant')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//tree' position="attributes">
+						<attribute name="create">true</attribute>
+						<attribute name="edit">true</attribute>
+						<attribute name="delete">true</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+
+		<!-- customer payment for ap -->
+		<record id="account_invoice_payment_extended_ap_form_view" model="ir.ui.view">
+			<field name="name">Account invoicepayment_form_view</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id" ref="account.view_account_payment_form" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_restrict_customer')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//form' position="attributes">
+						<attribute name="create">false</attribute>
+						<attribute name="edit">false</attribute>
+						<attribute name="delete">false</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<!-- customer payment tree for ap -->
+		<record id="account_invoice_payment_extended_ap_tree_view" model="ir.ui.view">
+			<field name="name">Account invoicepayment_treeview</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id" ref="account.view_account_payment_tree" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_restrict_customer')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//tree' position="attributes">
+						<attribute name="create">false</attribute>
+						<attribute name="edit">false</attribute>
+						<attribute name="delete">false</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<!-- Payment for accountant -->
+
+		<record id="account_invoicepayment_extended_accountform_view" model="ir.ui.view">
+			<field name="name">Account invoicepayment_form_view</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id" ref="account.view_account_payment_form" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_accountant')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//form' position="attributes">
+						<attribute name="create">true</attribute>
+						<attribute name="edit">true</attribute>
+						<attribute name="delete">true</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<!-- Payment for accountant -->
+		<record id="account_invoicepayment_extended_account_tree_view" model="ir.ui.view">
+			<field name="name">Account invoicepayment_treeview</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id" ref="account.view_account_payment_tree" />
+			<field name="groups_id" eval="[(4, [ref('TM_access_rights_extended.group_tm_operations_accountant')])]" />
+			<field name="arch" type="xml"> 
+				<data>
+					<xpath expr='//tree' position="attributes">
+						<attribute name="create">true</attribute>
+						<attribute name="edit">true</attribute>
+						<attribute name="delete">true</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+
+		<!-- Adviser menu for ap and ar -->
+		<record id="account.menu_finance_entries" model="ir.ui.menu">
+			<field name="groups_id" eval="[(4, ref('TM_access_rights_extended.group_tm_operations_ap')),(4, ref('TM_access_rights_extended.group_tm_operations_ar'))]"></field>
+		</record>
+
+		<!-- Account config setting for ap and ar -->
+		<record id="account.menu_account_config" model="ir.ui.menu">
+			<field name="groups_id" eval="[(4, ref('TM_access_rights_extended.group_tm_operations_ap')),(4, ref('TM_access_rights_extended.group_tm_operations_ar'))]"></field>
+		</record>
+	</data>
+</odoo>

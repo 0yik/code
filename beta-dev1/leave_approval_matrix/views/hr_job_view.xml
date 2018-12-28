@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_employee_form_parent2_modifier" model="ir.ui.view">
+            <field name="name">hr.employee.form.parent2.modifier</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="sg_hr_employee.view_employee_form_parent2" />
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[5]/group/field[@name='job_id']" position="attributes">
+                    <attribute name="domain">[]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_job_tree_inherit" model="ir.ui.view">
+            <field name="name">hr.job.tree.inherit</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_tree" />
+            <field name="arch" type="xml">
+                <field name="department_id" position="after">
+                    <field name="approving_manager_id"/>
+                </field>
+                <field name="no_of_recruitment" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="state" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_hr_job_form_inherit" model="ir.ui.view">
+            <field name="name">hr.job.form.inherit</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form" />
+            <field name="arch" type="xml">
+                <field name="no_of_recruitment" position="after">
+                    <field name="approving_manager_id"/>
+                </field>
+                <field name="no_of_recruitment" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="state" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <button name="set_open" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="set_recruit" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record id="action_job_title" model="ir.actions.act_window">
+            <field name="name">Job Title</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.job</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Job Title" id="menu_job_title" parent="sg_hr_employee.sg_hr_leaves_configuration" action="action_job_title" />
+    </data>
+</odoo>

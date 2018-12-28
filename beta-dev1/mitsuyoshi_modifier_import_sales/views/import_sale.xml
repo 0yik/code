@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="import_sale_form">
+            <field name="name">import.sale.form</field>
+            <field name="model">import.sale</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <group>
+                        <group>
+                            <field name="type" widget="radio"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="import_file" widget="binary" filename="file_name"/>
+                        </group>
+                        <group></group>
+                    </group>
+
+                    <footer>
+                        <button name="import_sale" type="object" string="Import" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_import_sale" model="ir.actions.act_window">
+            <field name="name">Import Sale Order Line</field>
+            <field name="res_model">import.sale</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="mitsuyoshi_modifier_import_sales.import_sale_form"/>
+            <!--<field name="context" eval="{'default_journal_user': 1, 'default_type': 'cash'}"/>-->
+            <field name="target">new</field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_order_form_inherit_import_sale">
+            <field name="name">sale.order.form.inherits</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                    <button name="%(mitsuyoshi_modifier_import_sales.action_import_sale)d" string="Import Product" class="oe_highlight" type="action"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_sale_requisition_inherit_import_sale">
+            <field name="name">sale.requisition.form.inherits</field>
+            <field name="model">sale.requisition</field>
+            <field name="inherit_id" ref="so_blanket_order.view_sale_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                    <button name="%(mitsuyoshi_modifier_import_sales.action_import_sale)d" string="Import Product" class="oe_highlight" type="action"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

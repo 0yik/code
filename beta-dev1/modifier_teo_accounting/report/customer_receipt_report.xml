@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="customer_receipt_header">
+			<div class="header">
+				<div class="row">
+					<div class="col-xs-12">
+						<img t-if="company.report_header" t-att-src="'data:image/png;base64,%s' % company.report_header" />
+						<img t-if="not company.report_header" src="/modifier_teo_accounting/static/src/img/logo.png" />
+					</div>
+				</div>
+			</div>
+		</template>
+		<template id="customer_receipt_footer">
+			<div class="footer">
+			</div>
+		</template>
+
+		<template id="customer_receipt_layout">
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+			<t t-call="modifier_teo_accounting.customer_receipt_header" />
+			<t t-raw="0" />
+			<t t-call="modifier_teo_accounting.customer_receipt_footer" />
+		</template>
+
+		<template id="customer_receipt_report_document">
+			<t t-call="modifier_teo_accounting.customer_receipt_layout">
+				<t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+				<div class="page">
+					<style>
+						.detailed tr, .detailed td{
+						border:2px solid;
+						}
+						.line tr, .line
+						th, .line td{
+						border:1px solid;
+						}
+						.nettotal tr, .nettotal td{
+						border-top: 1px solid black !important;
+						}
+					</style>
+					<div class="oe_structure" />
+					<div class="row">
+						<div class="col-xs-12" style="border-top:2px solid; border-bottom:2px solid;">
+							<h3 class="text-center mt8">
+								<strong>OFFICIAL RECEIPT</strong>
+							</h3>
+						</div>
+					</div>
+					<div class="row mt4" style="border-top:1px solid; border-bottom:1px solid;">
+						<div class="col-xs-2">
+							<strong>RECEIPT NO</strong>
+						</div>
+						<div class="col-xs-3">
+							<span t-field="o.name" />
+						</div>
+						<div class="col-xs-1">
+							<strong>DATE</strong>
+						</div>
+						<div class="col-xs-2">
+							<span t-field="o.date" />
+						</div>
+						<div class="col-xs-2">
+							<strong>CURRENCY</strong>
+						</div>
+						<div class="col-xs-2">
+							<span t-field="o.currency_id.name" />
+						</div>
+					</div>
+					<strong>Billing Address:</strong>
+					<div class="row mt4">
+						<div class="col-xs-6" style="border:2px solid; border-radius:5px;height:150px;">
+							<div t-if="o.partner_id">
+								<div t-field="o.partner_id"
+									t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True, "phone_icons": True}' />
+							</div>
+						</div>
+					</div>
+					<div class="row mt8">
+						<table class="table detailed">
+							<tr>
+								<td width="15%">
+									<strong>Customer</strong>
+								</td>
+								<td width="50%">
+									<span t-field="o.partner_id.name" />
+								</td>
+								<td width="15%">
+									<strong>Sales Rep.</strong>
+								</td>
+								<td width="20%">
+									<span t-field="o.payment_ref" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Remark</strong>
+								</td>
+								<td colspan="3">
+									<span t-field="o.memo" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					<strong>Receipt Details</strong>
+					<div class="row mt16">
+						<table class="table line">
+							<thead>
+								<tr>
+									<th>
+										<strong>Item</strong>
+									</th>
+									<th>
+										<strong>Invoice ID</strong>
+									</th>
+									<th class="text-center">
+										<strong>Type</strong>
+									</th>
+									<th>
+										<strong>Bank</strong>
+									</th>
+									<th>
+										<strong>Chq No</strong>
+									</th>
+									<th class="text-right">
+										<strong>Total</strong>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<t t-set='srn' t-value='1' />
+								<t t-foreach="o.line_dr_ids" t-as="line">
+									<tr>
+										<td class="text-center">
+											<span t-esc="srn" />
+										</td>
+										<td>
+											<span t-field="line.move_line_id.name" />
+										</td>
+										<td>
+											<span t-field="line.name" />
+										</td>
+										<td class="text-center">
+											<span t-field="line.product_id.name" />
+										</td>
+										<td class="text-center">
+											<span t-field="line.size" />
+										</td>
+										<td class="text-center">
+											<span t-field="line.colour_name" />
+										</td>
+									</tr>
+									<t t-set='srn' t-value='srn+1' />
+								</t>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</t>
+		</template>
+
+		<template id="receipt_payment_report">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="modifier_teo_accounting.customer_receipt_report_document"
+						t-lang="o.partner_id.lang" />
+				</t>
+			</t>
+		</template>
+
+	</data>
+</odoo>

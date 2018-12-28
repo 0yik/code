@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+        <record id="view_supplier_payment_form_inherit" model="ir.ui.view">
+            <field name="name">receipt.payment.supplier.payment.form.inherit</field>
+            <field name="model">receipt.payment</field>
+            <field name="inherit_id" ref="sg_partner_payment.view_supplier_payment_form"/>
+            <field name="arch" type="xml">
+                <field name="memo" position="after">
+                    <field name="cheque_number"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="view_tax_form_inherit" model="ir.ui.view">
+            <field name="name">account.tax.form.inherit</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                <field name="description" position="attributes">
+                    <attribute name="string">Short Name</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_hr_employee_grade_form_inherit" model="ir.ui.view">
+            <field name="name">hr.payroll.structure.inherit</field>
+            <field name="model">hr.payroll.structure</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_employee_grade_form"/>
+            <field name="arch" type="xml">
+                <field name="code" position="replace">
+                    <field name="code" required="False"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="view_model_line_tree_inherit" model="ir.ui.view">
+            <field name="name">account.model.line.tree.inherit</field>
+            <field name="model">account.model.line</field>
+            <field name="inherit_id" ref="acc_recurring_entries.view_model_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="cost_element_id1"/>
+                    <field name="cost_element_id2"/>
+                    <field name="cost_element_id3"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,49 @@
+<odoo>
+	<data>
+		<record id="account_invoice_form_view" model="ir.ui.view">
+			<field name="name">account.invoice.form.view</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='payment_term_id']" position="after">
+					<field name="actual_crd" />
+					<field name="attention" />
+					<field name="your_po" />
+					<field name="reference_no" />
+					<field name="remark" attrs="{'invisible': [('type','not in',['out_invoice','out_refund'])]}"/>
+				</xpath>
+				<xpath expr="//field[@name='number']" position="replace">
+				    <field name="number" class="oe_inline" attrs="{'invisible': [('state','in',('draft',))]}"/>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="account_invoice_supplier_form_view1" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form.view1</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='reference']" position="after">
+                    <field name="attention" />
+                    <field name="your_po" />
+                    <field name="reference_no" />
+					<field name="dd_invoice_num" />
+					<field name="vendor_season"/>
+                    <field name="remark" attrs="{'invisible': [('type','!=','in_refund')]}"/>
+					<field name="invoice_date"/>
+					<field name="commission_payable_to"/>
+                </xpath>
+				<xpath
+					expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']"
+					position="before">
+					<field name="po_no"/>
+					<field name="style_no"/>
+					<field name="margin_required"/>
+					<field name="commission_payable"/>
+				</xpath>
+            </field>
+        </record>
+
+		<menuitem id="vendor_bill_report_menu" name="Vendor Bill Report" parent="account.menu_finance_payables" action="modifier_teo_sale_order.action_view_form_vendor_bill_report"/>
+	</data>
+</odoo>

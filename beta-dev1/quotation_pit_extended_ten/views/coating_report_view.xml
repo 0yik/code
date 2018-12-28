@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+	
+		<template id="custom_coating_report_layout">
+			<!-- Multicompany -->
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+
+			<t t-call="quotation_pit_extended_ten.coating_header_layout" />
+			<t t-raw="0" />
+			<t t-call="quotation_pit_extended_ten.coating_footer_layout" />
+		</template>
+
+		<template id="coating_header_layout">
+			<div class="header">
+			</div>
+		</template>
+
+		<template id="coating_footer_layout">
+			<div class="footer">
+			</div>
+		</template>
+		
+		
+		<template id="coating_report_template">
+			<t t-foreach="docs" t-as="o">
+				<!-- <t t-call="quotation_pit_extended_ten.custom_coating_report_layout"> -->
+				<t t-call="report.external_layout">
+					<div class="page">
+						<h2>Part Code (Coating) Report</h2>
+
+						<div class="row mt32 mb32">
+						    <div class="col-xs-3">
+						        <strong>Date From:</strong>
+						        <p t-field="o.start_date"/>
+						    </div>
+						    <div class="col-xs-3">
+						        <strong>Date To:</strong>
+						        <p t-field="o.end_date"/>
+						    </div>
+						</div>
+						
+						<table class="table table-condensed">
+						    <thead>
+						        <tr style="border:1px solid black;">
+						            <th><strong>No.</strong></th>
+						            <th><strong>SO No.</strong></th>
+						            <th><strong>Product</strong></th>
+						            <th><string>Coating</string></th>
+						            <th class="text-right"><strong>Qty</strong></th>
+						            <th class="text-right"><strong>Unit Price</strong></th>
+						            <th class=""><strong>Summary</strong></th>
+						            <th class="text-right"><strong>Total Amount</strong></th>
+						        </tr>
+						    </thead>
+						    <tbody class="invoice_tbody">
+						        <t t-set="i" t-value="0"/>
+						        <tr t-if="o.get_order_line(o)" t-foreach="o.get_order_line(o)" t-as="l">
+						            <t t-set="i" t-value="i+1"/>
+						            <td><span t-esc="i"/></td>
+						            <td><span t-esc="l.order_id.name"></span></td>
+						            <td><span t-if="l.product_id" t-field="l.product_id.name"/></td>
+						            <td><span t-esc="l.coating_en.name"></span></td>
+						            <td class="text-right">
+						                <span t-field="l.product_uom_qty"/> <span t-field="l.product_uom.name"/>
+						            </td>
+						            <td class="text-right"><span t-field="l.price_unit"/></td>
+						            <td><span t-field="l.name"/></td>
+						            <td class="text-right"><span t-field="l.price_subtotal"/></td>
+						        </tr>
+						    </tbody>
+						</table>
+						
+						<div class="row">
+						    <div class="col-xs-4 pull-right">
+						        <table class="table table-condensed">
+						            <tr class="border-black">
+						                <td><strong>Total</strong></td>
+						                <td class="text-right">
+						                    <span t-esc="o.get_total(o)['total']" t-esc-options="{'widget': 'monetary', 'display_currency': o.get_total(o)['currency_id']}"/>
+						                </td>
+						            </tr>
+						        </table>
+						    </div>
+						</div>
+					</div>
+				</t>
+			</t>
+		</template>
+
+
+		<report id="part_name_report_menu_id" string="Part Name Report" 
+			model="sale.order"  report_type="qweb-pdf"
+		    name="quotation_pit_extended_ten.coating_report_template"
+		    file="quotation_pit_extended_ten.coating_report_template" menu="False"/>
+	</data>
+</openerp>

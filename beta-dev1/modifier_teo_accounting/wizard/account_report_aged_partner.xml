@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="account_aged_balance_form_view" model="ir.ui.view">
+		<field name="name">Aged Partner Balance Form</field>
+		<field name="model">account.aged.trial.balance</field>
+		<field name="inherit_id" ref="account.account_aged_balance_view" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='target_move']" position="after">
+				<field name="currency_id" groups="base.group_multi_currency"/>
+			</xpath>
+		</field>
+	</record>
+
+</odoo>

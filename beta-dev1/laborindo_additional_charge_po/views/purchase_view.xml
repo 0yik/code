@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_order_purchase_order_form_labo" model="ir.ui.view">
+        <field name="name">purchase.order.form.sale.image</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@class='oe_subtotal_footer oe_right']" position="replace"/>
+            <xpath expr="//field[@name='order_line']" position="after">
+                <label for="additional_charges_ids" string="Additional Charges" style="font-size: 16px; color: #7c7bad;"/>
+                <group>
+                    <group>
+                        <field name="additional_charges_ids" nolabel="1">
+                            <tree string="Purchase Order Lines" editable="bottom">
+                                <field name="name" required="1"/>
+                                <field name="description" required="1"/>
+                                <field name="amount" required="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group class="oe_subtotal_footer oe_right">
+                        <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        <div class="oe_subtotal_footer_separator oe_inline">
+                            <label for="amount_total"/>
+                        </div>
+                        <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                </group>
+            </xpath>
+            <field name="amount_tax" position="after">
+                <field name="amount_additional_charge" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

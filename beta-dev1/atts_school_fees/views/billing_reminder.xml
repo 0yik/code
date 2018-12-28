@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Email template -->
+        <record id="email_template_student_billing" model="mail.template">
+            <field name="name">Student Fee Outstanding - Send by Email(Parent)</field>
+            <field name="model_id" ref="atts_school_fees.model_register_student_list"/>
+            <field name="email_from">admin@example.com</field>
+            <field name="subject">Reminder for outstanding fees</field>
+            <field name="email_to">${object.student_id.email_address}</field>
+            <field name="auto_delete" eval="True"/>
+            <!-- <field name="report_template" ref="school_fees.billing_report_letter"/> -->
+            <field name="report_name">Outstanding Fee Letter</field>
+           
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+    <p>Dear parent/guardian,</p>
+
+    <p>Please find attached for the outstanding fee.</p>
+    <p>Thank you.</p>
+
+</div>            
+            ]]></field>
+        </record>
+    
+         <record id="action_email_reminder_student" model="ir.actions.server">
+            <field name="name">Reminder to Parents</field>
+            <field name="model_id" ref="atts_school_fees.model_register_student_list"/>
+            <field name="condition">True</field>
+            <field name="type">ir.actions.server</field>
+            <field name="state">email</field>
+            <field name="template_id" ref="atts_school_fees.email_template_student_billing"/>
+        </record>
+        
+       <record id="rule_set_reminder_student" model="base.action.rule">
+            <field name="name">Set Auto Reminder on student for outstanding fees.</field>
+            <field name="model_id" ref="atts_school_fees.model_register_student_list"/>
+            <field name="sequence">1</field>
+            <field name="kind">on_time</field>
+            <field name="trg_date_id" ref="atts_school_fees.field_register_student_list_name"/>
+            <field name="trg_date_range">6</field>
+            <field name="trg_date_range_type">month</field>
+            <field name="server_action_ids" eval="[(6,0,[ref('action_email_reminder_student')])]"/>
+        </record>
+        
+    </data>
+</odoo>

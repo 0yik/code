@@ -1,0 +1,78 @@
+<odoo>
+	<data>
+		<record id="custome_project_project_view" model="ir.ui.view">
+			<field name="name">project.project.view</field>
+			<field name="model">project.project</field>
+			<field name="arch" type="xml">
+				<form string="Project">
+					<header>
+						<button name="approve_project" type="object" string="Approve"
+							attrs="{'invisible': [('status', '=', 'approved')]}" groups='hilti_modifier_accessrights.group_hilti_admin'/>
+						<field name="status" widget="statusbar" statusbar_visible="draft,approved" />
+					</header>
+					<sheet string="Project">
+						<group>
+							<group>
+								<field name="name" required="1" string="Project Name"/>
+								<field name="required_sic" invisible="1"/>
+								<field name="location_id" />
+							</group>
+							<group>
+								<field name="postal_code"/>
+								<field name="account_manager_id" invisible="1"/>
+								<field name="partner_ids" widget="many2many_tags" invisible="1"/>
+								<field name="tester_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="custome_project_project_view_tree" model="ir.ui.view">
+			<field name="name">project.project.view.tree</field>
+			<field name="model">project.project</field>
+			<field name="arch" type="xml">
+				<tree string="Project Tree View">
+					<field name="name" string="Project Name"/>
+					<field name="location_id" />
+					<field name="postal_code" />
+					<field name="required_sic" invisible="1"/>
+					<field name="account_manager_id" invisible="1"/>
+					<field name="partner_ids" widget="many2many_tags" invisible="1"/>
+					<field name="tester_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_custome_project_project_view" model="ir.actions.act_window">
+			<field name="name">Project</field>
+			<field name="res_model">project.project</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Project
+				</p>
+				<p>
+				</p>
+			</field>
+		</record>
+		
+		<record id="action_project_form_view2" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="custome_project_project_view"/>
+            <field name="act_window_id" ref="action_custome_project_project_view"/>
+        </record>
+        <record id="action_project_tree_view1" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="custome_project_project_view_tree"/>
+            <field name="act_window_id" ref="action_custome_project_project_view"/>
+        </record>
+
+		<menuitem id="menu_action_custome_project_project_view" parent='hilti_modifier_company.menu_customer_admin'
+			sequence="3" action="hilti_modifier_company.action_custome_project_project_view" groups='hilti_modifier_accessrights.group_hilti_admin'/>
+
+	</data>
+</odoo>

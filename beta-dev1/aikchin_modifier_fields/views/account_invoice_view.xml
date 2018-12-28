@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+		<record model="ir.ui.view" id="account_invoice_form_inherited">
+			<field name="name">account.invoice.form.inherited</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<field name="analytic_tag_ids" position="after">
+					<field name="location_id" domain="[('usage','=','customer')]"/>
+				</field>
+				<field name="payment_term_id" position="after">
+					<field name="customer_po"/>
+					<field name="sales_order"/>
+					<field name="delivery_order"/>
+				</field>
+				<xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='account_analytic_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='analytic_tag_ids']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="account_invoice_supplier_form_inherited">
+				<field name="name">account.invoice.supplier.form.inherited</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="arch" type="xml">
+				<field name="analytic_tag_ids" position="after">
+					<field name="location_id" domain="[('usage','=','supplier')]"/>
+				</field>
+				<xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='account_analytic_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='analytic_tag_ids']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+			</field>
+		</record>
+    </data>
+</odoo>
+

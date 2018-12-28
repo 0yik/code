@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="machine_management_inherit_form_view" model="ir.ui.view">
+        <field name="name">machine.management.form.inherit</field>
+        <field name="model">machine.management</field>
+        <field name="inherit_id" ref="labor_manufacturing_view.view_machine_management_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header/button[@name='button_mark_start']" position="after">
+                <button name="button_scrap" type="object" string="Scrap"
+                        attrs="{'invisible': [('state', 'in', ('pending', 'ready', 'cancel', 'progress'))]}"/>
+            </xpath>
+            <xpath expr="//form/sheet/group" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button class="oe_stat_button" name="action_see_move_scrap" type="object" icon="fa-arrows-v"
+                            attrs="{'invisible': [('scrap_count', '=', 0)]}">
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="scrap_count"/>
+                            </span>
+                            <span class="o_stat_text">Scraps Manufacturing</span>
+                        </div>
+                    </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="Report_hr_attendance_full_time_emp">
+<t t-foreach="docs" t-as="o">
+<!--     <t t-call="report.external_layout">
+ -->        <div class="page" >
+            <div>
+                <h3 class="text-left" style="top-margin:-2cm;"><b>TEO GARMENTS CORPORATION PTE LTD</b></h3>
+            </div>
+            <h5 class="text-left"><b>Attendance In Details</b></h5>
+            
+            <div style="display: inline;">
+                <h5 class="text-left"> <b>Date Range:</b>
+                <span t-field="o.start_date" t-options ='{"format": "dd/MM/yyyy"}'/>&#160;&#160;-&#160;&#160;<span t-field="o.end_date" t-options ='{"format": "dd/MM/yyyy"}'/>
+                </h5>
+            </div>
+
+            <div style="display: inline;">
+                <h5 class="text-left"><b>Department:</b>
+                    <span t-field="o.employee_id.department_id"/> &#160;&#160;
+                    <b>Employee Name:</b>
+                    <span t-field="o.employee_id.name" />
+                </h5>
+            </div>
+
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Shift</th>
+                        <th>Date</th>
+                        <th>Emp Remark</th>
+                        <th>Lv Remark</th>
+                        <th>Sup Remark</th>
+                        <th>O Timein</th>
+                        <th>O Timeout</th>
+                        <th>Adj Timein</th>
+                        <th>Adj Timeout</th>
+                        <th>Working Hrs.</th>
+                        <th>Normal Hrs.</th>
+                        <th>Late Hrs.</th>
+                        <th>UT Hrs.</th>
+                        <th>OT #1.0 </th>
+                        <th>OT #1.5 </th>
+                        <th>OT #2.0 </th>
+                    </tr>
+                </thead>
+                <tbody style="border: 1px solid #4c4c4c;">
+                    <t t-set="i" t-value="1" /> 
+                        <tr t-foreach="o.attendance_ids" t-as="l">
+                            <td>
+                                <span t-field = "l.employee_id.emp_status" />
+                            </td>
+                            <td>
+                                <span t-field = "l.employee_id.calendar_id.name" />            
+                            </td>
+                            <td>
+                                <span t-field ="l.check_in" t-options ='{"format": "dd/MM/yyyy"}' />
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span t-field ="l.check_in" t-options ='{"format": "hh:mm:ss"}'/>
+                            </td>
+                            <td>
+                                <span t-field ="l.check_out" t-options ='{"format": "hh:mm:ss"}' />
+                            </td>
+                            <td>
+                                <span t-field ="l.check_in" t-options ='{"format": "hh:mm:ss"}'/>
+                            </td>
+                            <td>
+                                <span t-field ="l.check_out" t-options ='{"format": "hh:mm:ss"}' />
+                            </td>
+                            <td>
+                                <span>8.00</span>
+                            </td>
+                            <td>
+                                <span>8.00</span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                        </tr>
+                    
+                </tbody>
+
+            </table>
+        </div>
+    </t>
+</template>
+
+
+<template id="Report_hr_attendance_full_time">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="hr_attendance_extended.Report_hr_attendance_full_time_emp" />
+        </t>
+    </t>
+</template>
+
+
+<template id="Report_for_part_time_emp">
+<!--     <t t-call="report.html_container"> -->
+    <t t-foreach="docs" t-as="s">
+<!--     <t t-call="report.external_layout">
+ -->        <div class="page" >
+            <div>
+                <h3 class="text-left" style="top-margin:-2cm;"><b>TEO GARMENTS CORPORATION PTE LTD</b></h3>
+            </div>
+            <p t-field = "s.current_date" class="text-right" />
+            <div>
+                
+                <h5 class="text-left"><b>Attendance In Details</b></h5>
+            </div>
+            <div style="display: inline;">
+                <h5 class="text-left"> <b>Date Range:</b>
+                <span t-field="s.start_date" t-options ='{"format": "dd/MM/yyyy"}' />&#160;&#160;-&#160;&#160;<span t-field="s.end_date" t-options ='{"format": "dd/MM/yyyy"}' />
+                </h5>
+            </div>
+
+            <div style="display: inline;">
+                <h5 class="text-left"><b>Department:</b>
+                    <span t-field="s.employee_id.department_id"/> &#160;&#160;
+                    <b>Employee Name:</b>
+                    <span t-field="s.employee_id.name" />
+                </h5>
+            </div>
+
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Shift</th>
+                        <th>Date</th>
+                        <th>Emp Remark</th>
+                        <th>Lv Remark</th>
+                        <th>Sup Remark</th>
+                        <th>O Timein</th>
+                        <th>O Timeout</th>
+                        <th>Adj Timein</th>
+                        <th>Adj Timeout</th>
+                        <th>Working Hrs.</th>
+                        <th>Normal Hrs.</th>
+                        <th>Late Hrs.</th>
+                        <th>UT Hrs.</th>
+                        <th>OT #1.0 </th>
+                        <th>OT #1.5 </th>
+                        <th>OT #2.0 </th>
+                    </tr>
+                </thead>
+                <tbody style="border: 1px solid #4c4c4c;">
+                    <t t-set="i" t-value="1" /> 
+                        <tr t-foreach="s.attendee_ids" t-as="k">
+                            <td>
+                                <span t-field = "k.employee_id.emp_status" />
+                            </td>
+                            <td>
+                                <span t-field = "k.employee_id.calendar_id.name" />            
+                            </td>
+                            <td>
+                                <span t-field ="k.check_in" t-options ='{"format": "dd/MM/yyyy"}' />
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span t-field ="k.check_in" t-options ='{"format": "hh:mm:ss"}' />
+                            </td>
+                            <td>
+                                <span t-field ="k.check_out" t-options ='{"format": "hh:mm:ss"}' />
+                            </td>
+                            <td>
+                                <span t-field ="k.check_in" t-options ='{"format": "hh:mm:ss"}' />
+                            </td>
+                            <td>
+                                <span t-field ="k.check_out" t-options ='{"format": "hh:mm:ss"}' />
+                            </td>
+                            <td>
+                                <span>8.00</span>
+                            </td>
+                            <td>
+                                <span>8.00</span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                        </tr>
+                    
+                </tbody>
+
+            </table>
+        </div>
+    </t>
+</template>
+
+<template id="Report_hr_attendance_part_time">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="hr_attendance_extended.Report_for_part_time_emp" />
+        </t>
+    </t>
+</template>
+
+
+</data>
+</openerp>
+    

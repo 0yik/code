@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="our_partner_page_bradcum">
+        <div class="container">
+            <h1>    
+                <span><span>Our Partner</span></span>
+            </h1>
+            <ul class="breadcrumb">
+                <li><a href="/page/homepage">Home</a></li>
+                <li><a href="#">ABOUT US</a></li>
+                <li><a href="/page/our_partners">Our Partners</a></li>
+            </ul>
+        </div>
+    </template>
+
+    <template id="website.our_partners" name="Mission &amp; Vision" page="True">
+        <t t-call="website.layout">
+            <t t-if="not website.is_breadcum">
+                <t t-if="website.bread_cum_image">
+                    <t t-set="bread_cum" t-value="website.image_url(website,'bread_cum_image')"/>
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs" t-attf-style="background-image:url(#{bread_cum}#)">
+                            <t t-call="theme_atts.our_partner_page_bradcum" />  
+                        </nav>
+                    </t>
+                    <t t-if="not website.bread_cum_image">
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs">
+                            <t t-call="theme_atts.our_partner_page_bradcum" />  
+                        </nav>
+                    </t>  
+                <!-- </t>  -->
+            </t>  
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <section class="as-feature-t" style="background: none !important;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-4 col-xs-12 pull-right" id="products_grid_before">
+                                <h2>Course Category</h2>
+                                <ul class="nav nav-pills nav-stacked mt16" id="o_shop_collapse_category">         
+                                    <li class="active">
+                                        <i class="text-primary fa fa-chevron-down"></i>
+                                        <a href="#">About Us</a>
+                                        <ul class="nav nav-pills nav-stacked nav-hierarchy" style="display:block;">
+                                            <li><a href="/page/mission_vision">Mission &amp; Vision</a></li>
+                                            <li><a href="/page/our_profile">Our Profile</a></li>
+                                            <li><a href="#">Accrediatation</a></li>
+                                            <li class="active">
+                                                <a href="/page/our_partners">Our Partners</a>
+                                            </li>
+                                            <li><a href="#">Our Team</a></li>
+                                            <li><a href="#">Our Clients</a></li>
+                                            <li><a href="#">Testimonials</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <i class="text-primary fa fa-chevron-right"></i>
+                                        <a href="#">Courses</a>
+                                        <ul class="nav nav-pills nav-stacked nav-hierarchy" style="display:none;">
+                                            <li t-foreach="website.get_courses()" t-as="course">
+                                                <a t-attf-href="/course/#{course.id}"><span t-esc="course.name"/></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <i class="text-primary fa fa-chevron-right"></i>
+                                        <a href="#">Course Calendar</a>
+                                        <ul class="nav nav-pills nav-stacked nav-hierarchy" style="display:none;">
+                                            <li t-foreach="website.get_course_class()" t-as="course_calendar">
+                                                <a href="#"><span t-esc="course_calendar.class_schedule"/></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Search Certificate</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-9 col-sm-8 list-view-box" id="products_grid">      
+                                <div class="products_pager" style="padding: 0 0 10px 0 !important;">         
+                                    <div class="row" style="width: 100%;color: #000;font-size: 17px;font-family: 'Roboto', sans-serif;">
+                                        <div style="text-align: initial;">Our Partner</div>
+                                    </div>
+                                </div>
+                                <section class="mb16">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img src="/theme_stoneware/static/src/img/asbrd5.jpg" title="" alt="" />
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="asbb-info">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt. consectetur adipisicing elit, sed do eiusmod tempor incididunt. consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt. consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                                                <div class="asbb-more">
+                                                    <a class="asb-btn" href="#">Visit Site</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section class="mb16">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img src="/theme_stoneware/static/src/img/asbrd5.jpg" title="" alt="" />
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="asbb-info">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt. consectetur adipisicing elit, sed do eiusmod tempor incididunt. consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt. consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                                                <div class="asbb-more">
+                                                    <a class="asb-btn" href="#">Visit Site</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+</odoo>

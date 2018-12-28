@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="product_sale_report_form" model="ir.ui.view">
+            <field name="name">product.sale.report.form</field>
+            <field name="model">product.sale.report</field>
+            <field name="arch" type="xml">
+                <form string="Report Product Sales">
+                    <sheet>
+                        <group>
+                            <group>
+                            	<field name="branch_id"/>
+                                <field name="category_id"/>
+                            </group>
+                            <group>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                            </group>
+                        </group>
+                        <group>
+                        	<group>
+                        		<field name="category_subfirst_id" domain="[('category_id','=',category_id)]"/>
+                        		<field name="category_subsecond_id" domain="[('first_categ_id','=',category_subfirst_id)]"/>
+                        		<field name="product_brand_id" domain="[('second_categ_id','=',category_subsecond_id)]"/>
+                        	</group>
+                        </group>
+                        <footer>
+                            <button name="product_sale_report_print" string="Print" type="object" class="oe_highlight"/>
+                             or
+                            <button string="Cancel" class="oe_link" special="cancel" />
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="stock_card_action" model="ir.actions.act_window">
+            <field name="name">Report Product Sales</field>
+            <field name="res_model">product.sale.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="stock_card_menu" name="Report Product Sales" parent="stock.menu_warehouse_report" action="stock_card_action" sequence="20"/>
+
+        <template id="tm_product_sale.external_layout_product_sale_report">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="tm_product_sale.external_layout_header_product_sale_report" />
+            <t t-raw="0" />
+            <t t-call="tm_product_sale.external_layout_footer_product_sale_report" />
+        </template>
+
+        <template id="tm_product_sale.external_layout_header_product_sale_report">
+             <div class="header">
+                <div class="text-center">
+                    <strong style="font-size:21px;color:#00BFFF;">Kartu Stok - <span t-esc="doc.category_id.name or ''"/> </strong>
+                    <br/>
+                    <div class="text-center" style="font-size:12px;color:red;">
+                        <span t-if="doc.date_from" t-esc="datetime.datetime.strptime(doc.date_from,'%Y-%m-%d').strftime('%A, %B %d,%Y')" /> -
+                        <span t-if="doc.date_to" t-esc="datetime.datetime.strptime(doc.date_to,'%Y-%m-%d').strftime('%A, %B %d,%Y')" />
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="tm_product_sale.external_layout_footer_product_sale_report">
+             <div class="footer">
+                <div class="text-right" style="font-size:10px;">
+                    <ul class="list-inline">
+                        <li>Page:</li>
+                        <li><span class="page"/></li>
+                        <li>/</li>
+                        <li><span class="topage"/></li>
+                    </ul>
+                </div>
+            </div>
+        </template>
+
+        <report
+            id="tm_product_sale.product_sale_report_report"
+            model="product.sale.report"
+            string="Report Product Sales"
+            report_type="qweb-pdf"
+            name="tm_product_sale.product_sale_report"
+            file="tm_product_sale.product_sale_report"
+        />
+
+        <record id="tm_product_sale.paper_product_sale_report" model="report.paperformat">
+                <field name="name">Report Product Sales</field>
+                <field name="default" eval="True"/>
+                <field name="format">A4</field>
+                <field name="page_height">0</field>
+                <field name="page_width">0</field>
+                <field name="orientation">Landscape</field>
+                <field name="margin_top">30</field>
+                <field name="margin_bottom">10</field>
+                <field name="margin_left">10</field>
+                <field name="margin_right">10</field>
+                <field name="header_line" eval="False"/>
+                <field name="header_spacing">20</field>
+                <field name="dpi">90</field>
+        </record>
+
+        <record id="tm_product_sale.product_sale_report_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="tm_product_sale.paper_product_sale_report"/>
+        </record>
+
+        <template id="tm_product_sale.product_sale_report">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="tm_product_sale.external_layout_product_sale_report">
+                <div class="page" style="font-size:10px;">
+
+                    <div t-foreach="products" t-as="product">
+                        <div class="col-xs-6 text-left" style="border-top:1px solid black;font-size:12px;color:#00BFFF;">
+                            <span t-esc="product.product_code"/> | <span t-esc="product.name"/>
+                        </div>
+                        <div class="col-xs-6 text-right" style="border-top:1px solid black;font-size:12px;color:red;">
+                            <span t-esc="product.category_main_id.name or ''"/>
+                        </div>
+                        <table class="table table-condensed mt48" style="width:100%;">
+                            <tr style="background-color:#DCDCDC;">
+                                <th>Tanggal</th>
+                                <th>Nomor Referensi</th>
+                                <th>Unit</th>
+                                <th>Masuk</th>
+                                <th>Keluar</th>
+                                <th>Saldo</th>
+                            </tr>
+                            <t t-set="total_masuk" t-value="0"/>
+                            <t t-set="total_keluar" t-value="0"/>
+                            <t t-set="last_saldo" t-value="0"/>
+                            <tr t-foreach="product_data.get(product.id,False)" t-as="line">
+                                <td><span t-esc="line.get('date','')"/></td>
+                                <td><span t-esc="line.get('reference','')"/></td>
+                                <td><span t-esc="line.get('unit','')"/></td>
+                                <td><span t-esc="line.get('masuk',0)"/></td>
+                                <td><span t-esc="line.get('keluar',0)"/></td>
+                                <td><span t-esc="line.get('saldo',0)"/></td>
+                                <t t-set="total_masuk" t-value="total_masuk + (line.get('masuk',0) if line.get('masuk',0) else 0)"/>
+                                <t t-set="total_keluar" t-value="total_keluar + (line.get('keluar',0) if line.get('keluar',0) else 0)"/>
+                                <t t-set="last_saldo" t-value="line.get('saldo',0)"/>
+
+                            </tr>
+                            <tr style="background-color:#DCDCDC;">
+                                <td colspan="3" class="text-right"><strong>Total <span t-esc="product.name"/> :</strong></td>
+                                <td><span t-esc="total_masuk"/></td>
+                                <td><span t-esc="total_keluar"/></td>
+                                <td><span t-esc="last_saldo"/></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                </t>
+            </t>
+        </template>
+        
+    </data>
+</odoo>

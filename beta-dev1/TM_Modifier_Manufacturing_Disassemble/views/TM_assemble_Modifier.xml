@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="res_assemble_form_view_modifier" model="ir.ui.view">
+       <field name="name">Assemble Form</field>
+        <field name="model">res.assemble</field>
+        <field name="inherit_id" ref="simple_assemble_disassemble.res_assemble_form_view"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='date_assemble']" position="after">
+				<field name="total_cost" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="currency_id" invisible="1" />
+			 </xpath>
+            <xpath expr="//field[@name='material_id']/tree/field[@name='qty_pro']" position="before">
+                <field name="attribute_value_ids" widget="many2many_tags" />
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>
+

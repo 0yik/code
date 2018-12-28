@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="VariantPopup">
+        <div class="modal-dialog customize">
+            <div class="popup popup-selection">
+                <p class="title">Please select variant</p>
+                <div class='selection scrollable-y touch-scrollable'>
+                    <div class='body'>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm confirm-variant">
+                    Add to Order
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="VariantList">
+        <t t-if="variants" >
+            <t t-foreach="variants" t-as="variant">
+                <span class='product' t-att-data-id="variant.id">
+                    <div class="product-img">
+                        <img t-att-src='image_url + variant.product_id[0]' />
+                    </div>
+                    <span class="price-tag">
+                        Price: <t t-esc="widget.format_currency(variant.price_extra,'Product Price')"/>
+                    </span>
+                    <div class="product-name">
+                        <t t-esc="variant.product_id[1]"/>
+                        <t t-if="variant.value_id1">
+                            / <t t-esc="variant.value_id1[1]"/>
+                        </t>
+                        <t t-if="variant.value_id2">
+                            / <t t-esc="variant.value_id2[1]"/>
+                        </t>
+                        <t t-if="variant.value_id3">
+                            / <t t-esc="variant.value_id3[1]"/>
+                        </t>
+                    </div>
+                </span>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="Product">
+        <t t-jquery=".product" t-operation="replace">
+            <t t-if="product.pos_type == 'none'">
+                <span class='product' t-att-data-product-id="product.id">
+                    <div class="product-img">
+                        <img t-att-src='image_url' />
+                        <t t-if="!product.to_weight">
+                            <span class="price-tag">
+                                <t t-esc="widget.format_currency(product.price,'Product Price')"/>
+                            </span>
+                        </t>
+                        <t t-if="product.to_weight">
+                            <span class="price-tag">
+                                <t t-esc="widget.format_currency(product.price,'Product Price')+'/'+widget.pos.units_by_id[product.uom_id[0]].name"/>
+                            </span>
+                        </t>
+                    </div>
+                    <div class="product-name">
+                        <t t-esc="product.display_name"/>
+                    </div>
+                </span>
+            </t>
+            <t t-if="product.pos_type == 'is_combo'">
+                <span class='product product-combo-variant' t-att-data-product-id="product.id">
+                    <div class="product-img">
+                        <img t-att-src='image_url' />
+                        <t t-if="!product.to_weight">
+                            <span class="price-tag">
+                                <t t-esc="widget.format_currency(product.price,'Product Price')"/>
+                            </span>
+                        </t>
+                        <t t-if="product.to_weight">
+                            <span class="price-tag">
+                                <t t-esc="widget.format_currency(product.price,'Product Price')+'/'+widget.pos.units_by_id[product.uom_id[0]].name"/>
+                            </span>
+                        </t>
+                    </div>
+                    <div class="product-name">
+                        <t t-esc="product.display_name"/> / is combo
+                    </div>
+                </span>
+            </t>
+            <t t-if="product.pos_type == 'multi_variant'">
+                <span class='product product-combo-variant' t-att-data-product-id="product.id">
+                    <div class="product-img">
+                        <img t-att-src='image_url' />
+                        <t t-if="!product.to_weight">
+                            <span class="price-tag">
+                                <t t-esc="widget.format_currency(product.price,'Product Price')"/>
+                            </span>
+                        </t>
+                        <t t-if="product.to_weight">
+                            <span class="price-tag">
+                                <t t-esc="widget.format_currency(product.price,'Product Price')+'/'+widget.pos.units_by_id[product.uom_id[0]].name"/>
+                            </span>
+                        </t>
+                    </div>
+                    <div class="product-name">
+                        <t t-esc="product.display_name"/> / is variants
+                    </div>
+                </span>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="Orderline">
+        <t t-jquery=".info-list" t-operation="after">
+            <t t-if="line.variant">
+                <span class="combo-item">
+                    <t t-if="line.variant.value_id1">
+                        <t t-esc="line.variant.value_id1[1]"/>
+                    </t>
+                    <t t-if="line.variant.value_id2">
+                        / <t t-esc="line.variant.value_id2[1]"/>
+                    </t>
+                    <t t-if="line.variant.value_id3">
+                        / <t t-esc="line.variant.value_id3[1]"/>
+                    </t>
+                </span>
+            </t>
+        </t>
+        <t t-jquery=".product-name" t-operation="after">
+            <t t-if="line.product_combo">
+                <span class="combo-item">
+                    / Combo of <t t-esc="line.product_combo"/>
+                </span>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="PosTicket">
+        <t t-jquery=".receipt-orderlines>tr>td:first-child" t-operation="append">
+            <t t-if="orderline.product_combo">
+                Combo of <t t-esc="orderline.product_combo"/>
+            </t>
+            <t t-if="orderline.variant">
+                <div class="pos-disc-font">
+                    <t t-if="orderline.variant.value_id1">
+                        <t t-esc="orderline.variant.value_id1[1]"/>
+                    </t>
+                    <t t-if="orderline.variant.value_id2">
+                        / <t t-esc="orderline.variant.value_id2[1]"/>
+                    </t>
+                    <t t-if="orderline.variant.value_id3">
+                        / <t t-esc="orderline.variant.value_id3[1]"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="XmlReceipt">
+        <t t-jquery=".orderlines >t" t-operation="append">
+            <line t-if="line.variant">
+                <left>
+                    <div class="pos-disc-font">
+                        <t t-if="line.variant.value_id1">
+                            <t t-esc="line.variant.value_id1[1]"/>
+                        </t>
+                        <t t-if="line.variant.value_id2">
+                            / <t t-esc="line.variant.value_id2[1]"/>
+                        </t>
+                        <t t-if="line.variant.value_id3">
+                            / <t t-esc="line.variant.value_id3[1]"/>
+                        </t>
+                    </div>
+                </left>
+            </line>
+            <line t-if="line.product_combo">
+                <left>
+                    Combo of <t t-esc="line.product_combo"/>
+                </left>
+            </line>
+        </t>
+    </t>
+
+</templates>

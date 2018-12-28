@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_estimate_form_job" model="ir.ui.view">
+        <field name="name">view.sale.estimate.form.job</field>
+        <field name="model">sale.estimate.job</field>
+        <field name="inherit_id" ref="job_cost_estimate_customer.view_sale_estimate_form_job"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+            <field name="reference" position="after">
+                <label for="expected_margin" string="Expected Margin"/>
+                <div class="o_address_format">
+                    <div class="row">
+                        <div class='col-md-4' style="padding-left: 16px;padding-right: 0px;">
+                            <field name="expected_margin" attrs="{'readonly': [('state', 'in', ['approve','quotesend','cancel','reject'])]}"/>
+                        </div>
+                        <div class='col-md-6' style="padding-left: 0px;">
+                            <label for="days" string="%"/>
+                        </div>
+                    </div>
+                </div>
+            </field>
+            <field name="job_type_ids" position="after">
+                <label for="days" string="Duration"/>
+                <div class="o_address_format">
+                    <div class="row">
+                        <div class='col-md-6' style="padding-left: 16px;padding-right: 0px;">
+                            <field name="duration" attrs="{'readonly': [('state', 'in', ['approve','quotesend','cancel','reject'])]}"/>
+                        </div>
+                        <div class='col-md-6' style="padding-left: 0px;">
+                            <field name="duration_type" attrs="{'readonly': [('state', 'in', ['approve','quotesend','cancel','reject'])]}"/>
+                        </div>
+                    </div>
+                </div>
+            </field>
+        </field>
+    </record>
+</odoo>
+
+

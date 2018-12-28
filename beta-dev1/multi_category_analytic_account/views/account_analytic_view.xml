@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <record id="account_analytic_account_form_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="analytic_ctg"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_account_analytic_account_tree_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.account.list.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_list"/>
+            <field name="arch" type="xml">
+                <field name="display_name" position="after">
+                    <field name="analytic_ctg"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_account_analytic_account_distribution_tree_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.distribution.form.inherit</field>
+            <field name="model">account.analytic.distribution</field>
+            <field name="inherit_id" ref="beumer_modifier_fields.account_analytic_distribution_form_ext"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']/tree" position="attributes">
+					<attribute name="create">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+         <record id="pdp_purchase_reports_wizard_view" model="ir.ui.view">
+            <field name="name">Print Purchase Reports</field>
+            <field name="model">purchase.reports.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Sales Reports Wizard">
+                    <group col="4">
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                        <field name="report" required="1"/>
+                        <field name="format" required="1"/>
+                        <field name="partner_id" domain="[('supplier','=',True)]"/>
+                        <field name="category_id"/>
+                        <field name="movement"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-default"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="pdp_purchase_wizard_action" model="ir.actions.act_window">
+            <field name="name">Other Purchase Reports</field>
+            <field name="res_model">purchase.reports.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem id="menu_all_purchase_reports_wizard" action="pdp_purchase_wizard_action" name="Other Purchase Reports" parent="pdp_summary_purchase_report.main_purchase_report"/>
+        
+    </data>
+</odoo>

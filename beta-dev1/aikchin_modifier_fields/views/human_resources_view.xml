@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+        <!--<record model="ir.ui.view" id="hr_expense_form_view_inherit">-->
+			<!--<field name="name">hr.expense.form.inherited</field>-->
+			<!--<field name="model">hr.expense</field>-->
+			<!--<field name="inherit_id" ref="hr_expense.hr_expense_form_view" />-->
+			<!--<field name="arch" type="xml">-->
+                <!--<field name="analytic_account_id" position="attributes">-->
+                    <!--<attribute name="required">1</attribute>-->
+                <!--</field>-->
+			<!--</field>-->
+		<!--</record>-->
+
+        <!--<record model="ir.ui.view" id="view_hr_expense_sheet_form_inherit_view_inherit">-->
+			<!--<field name="name">hr.expense.sheet.inherited</field>-->
+			<!--<field name="model">hr.expense.sheet</field>-->
+			<!--<field name="inherit_id" ref="expense_masking.view_hr_expense_sheet_form_inherit"/>-->
+			<!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//field[@name='expense_line_ids']/tree/field[@name='analytic_account_id']" position="attributes">-->
+                    <!--<attribute name="required">1</attribute>-->
+                <!--</xpath>-->
+			<!--</field>-->
+		<!--</record>-->
+
+        <record id="employee_appraisal.report_memo_history" model="ir.actions.report.xml">
+            <field name="name">Employee Memo History</field>
+        </record>
+
+        <record id="employee_appraisal.report_salary_history" model="ir.actions.report.xml">
+            <field name="name">Salary History</field>
+        </record>
+
+    </data>
+</odoo>

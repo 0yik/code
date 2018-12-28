@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_res_users_pos_access_form" model="ir.ui.view">
+        <field name="name">view.res.users.pos.access.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="pos_user_access_mac5.view_res_users_pos_access_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='user_access2']" position="inside">
+                <field name="pos_access_minus" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

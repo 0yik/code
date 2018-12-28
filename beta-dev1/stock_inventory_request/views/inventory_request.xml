@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	<record id="view_inventory_request_form" model="ir.ui.view">
+		<field name="name">pos.inventory.request.form</field>
+		<field name="model">pos.inventory.request</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+		<form string="Inventory Request">
+		    <header>
+				<button name="btn_to_be_approval" states="draft" string="Request approval" type="object" class="btn-primary"/>
+				<button name="btn_approved" string="Approved" type="object" class="btn-primary" attrs="{'invisible': [('approval_access', '!=', True)]}"/>
+				<button name="btn_rejected" string="Rejected" type="object" class="btn-primary" attrs="{'invisible': [('approval_access', '!=', True)]}"/>
+				
+    			<field name="state" widget="statusbar"/>
+    		</header>
+			<sheet>
+				<div class="oe_title">
+                    <h1>
+                    	<field name="name"/>
+                    </h1>
+				</div>
+				<group>
+		            <group>
+		                <field name="partner_id" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+		                <field name="location_id" domain="[('usage','=','internal')]" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+						<field name="location_dest_id" domain="[('usage','=','internal')]" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+						<field name="picking_type_id" attrs="{'readonly': [('state', 'in', ('approved','rejected','tobeapproved'))]}" domain="[('code','=','internal')]"/>
+		            </group>
+		            <group>
+		                <field name="min_date" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+		                <field name="origin" placeholder="e.g. PO0032" class="oe_inline" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}"/>
+		                <field name="user_id" attrs="{'readonly': [('state', 'in', ('approved','rejected','tobeapproved'))]}"/>
+						<field name="approval_access" /><!-- attrs="{'invisible': True}" -->
+
+		            </group>
+				</group>
+				<notebook>
+		            <page string="Inventory Request Operations">
+					<field name="inventory_request_lines" mode="tree" attrs="{'readonly': [('state', 'in', ('approved','rejected'))]}">
+						<form string="Inventory Detail" editable="bottom">
+							
+							<group string="Product Detail">
+								<group>
+						            <field name="product_id"/>
+									<field name="product_code"/>
+									<field name="product_uom_id"/>
+									<!--field name="owner_id"/-->
+								</group>
+								<group>
+						            
+									<field name="product_qty"/>
+								</group>
+							</group>
+							<group string="Inventory Detail">
+								<group>
+									<field name="location_id" domain="[('usage','=','internal')]" />
+									<field name="last_purchase_history"/>
+									<field name="last_purchase_qty"/>
+
+								</group>
+								<group>
+									<field name="location_id2"/>
+									<field name="stock_current_toko"/>
+									<field name="stock_display_toko"/>
+									<field name="stock_current_gudang"/>
+									<field name="stock_display_gudang"/>
+								</group>
+							</group>
+						 <field name="pos_order_reference_lines" mode="tree" >
+							<tree create="false">
+								<field name="pos_order_number"/>
+								<field name="pos_order_date"/>
+								<field name="pos_order_quantity"/>
+							</tree>
+						 </field>
+						</form>
+						<tree string="Product Detail">
+				            <field name="product_id"/>
+							<field name="product_code"/>
+							<field name="product_uom_id"/>
+							<!--field name="owner_id"/-->
+							<field name="product_qty"/>
+						</tree>
+					</field>
+					</page>
+				</notebook>
+			</sheet>
+		</form>
+		</field>
+	</record>
+
+	<record id="view_inventory_request_tree" model="ir.ui.view">
+		<field name="name">pos.inventory.request.tree</field>
+		<field name="model">pos.inventory.request</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+		<tree string="Inventory Request">
+			<field name="name"/>
+            <field name="partner_id"/>
+            <field name="location_id"/>
+			<field name="location_dest_id"/>
+            <field name="min_date"/>
+            <field name="origin" placeholder="e.g. PO0032" class="oe_inline"/>
+            <!--field name="owner_id"/-->
+		</tree>
+		</field>
+	</record>
+
+	<record id="action_inventory_request" model="ir.actions.act_window">
+		<field name="name">Inventory Request</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">pos.inventory.request</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'readonly_by_pass': True}</field>
+	</record>
+
+	<menuitem id="inventory_request_operation" name="Inventory Request" sequence="4" parent="stock.menu_stock_warehouse_mgmt"  action="action_inventory_request"/>
+	
+	</data>
+</odoo>

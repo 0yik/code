@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    
+    <t t-name="complimentaryOrderButton">
+        <div class='btn btn-default btn-fill btn-wd button-section control-button Complimentary-orderline-button'>
+            <i class='fa fa-minus-square-o' />Complimentary
+        </div>
+    </t>
+
+    <t t-name="ServiceChargeButton">
+        <div class='btn btn-default btn-fill btn-wd button-section control-button service-charge-button'>
+            <i class="fa fa-cogs"/>Service Charge
+        </div>
+    </t>
+
+    <t t-name="AllFreeOrderButton">
+        <div class='btn btn-default btn-fill btn-wd button-section control-button all-free-button'>
+            <i class="fa fa-gift"/><span>Complementary</span> <br></br><span>All</span>
+        </div>
+    </t>
+
+    <t t-extend="ProductScreenWidget">
+        <t t-jquery="div.control-buttons" t-operation="after">
+            <div class="all-free-buttons-section">
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="Orderline">
+        <t t-jquery="span.price" t-operation="replace">
+            <t t-if="line.order.all_free">
+                <span class="price">
+                    <t>Comp</t>
+                   <t t-if="!line.order.all_free"><t t-esc="widget.format_currency(line.get_display_price())"/></t>
+                </span>
+            </t>
+            <t t-if="line.get_complimentary() and !line.order.all_free">
+                <span class="price">
+                    <!-- Complimentary -->
+                    <t>Comp</t>
+                </span>
+            </t>
+            <t t-if="!line.get_complimentary() and !line.order.all_free">
+                <span class="price">
+                    <t t-esc="widget.format_currency(line.get_display_price())"/>
+                </span>
+            </t>
+        </t>
+    </t>
+
+
+</templates>

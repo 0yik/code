@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="product_pricelist_item_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.pricelist.item.form.inherit</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//form/group[2]/group/div/div[1]" position="attributes">
+                    <attribute name="attrs">{'invisible':[('compute_price', 'not in', ('fixed','price_induction','price_discount'))]}</attribute>
+                </xpath>
+                <xpath expr="//form/group[2]/group/div/div[2]" position="attributes">
+                    <attribute name="attrs">{'invisible':[('compute_price', 'not in', ('percentage','discount_induction'))]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

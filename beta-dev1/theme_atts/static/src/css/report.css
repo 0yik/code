@@ -1,0 +1,4 @@
+.course_calendar .th{border: 1px solid black;}
+.course_calendar .td{border: 1px solid black; border-top: none;}
+.course_calendar .row {display: table;}
+.course_calendar [class*="col-"] {float: none; display: table-cell; vertical-align: top;}

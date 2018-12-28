@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+
+        <record id="inherit_call_log_form_view" model="ir.ui.view">
+            <field name="name">crm.callog.tree.view</field>
+            <field name="model">crm.phonecall</field>
+            <field name="inherit_id" ref="crm_phonecall.crm_case_inbound_phone_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='user_id']" position="after">
+                    <field name="source_id"/>
+                    <field name="market_segment"/>
+                    <field name="member_type"/>
+                    <field name="product" widget="many2many_tags"/>
+                    <field name="country"/>
+                </xpath>
+                <xpath expr="//tree/field[@name='partner_id']" position="attributes">
+                    <attribute name="string">Customer</attribute>
+                </xpath>
+                <xpath expr="//tree/field[@name='user_id']" position="attributes">
+                    <attribute name="string">Salesperson</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!--<record id="inherit_call_log_rename_form_view" model="ir.ui.view">-->
+            <!--<field name="name">crm.callog.tree.view</field>-->
+            <!--<field name="model">crm.phonecall</field>-->
+            <!--<field name="inherit_id" ref="dzh_modifier_fields.inherit_crm_case_inbound_phone_tree_view"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//tree/field[@name='partner_id']" position="attributes">-->
+                    <!--<attribute name="string">Customer</attribute>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+    </data>
+</odoo>

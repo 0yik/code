@@ -1,0 +1,49 @@
+<odoo>
+    <data>
+
+        <record id="view_resource_calendar_attendance_tree_inherit" model="ir.ui.view">
+            <field name="name">resource.calendar.attendance.tree.inherit</field>
+            <field name="model">resource.calendar.attendance</field>
+            <field name="inherit_id" ref="resource.view_resource_calendar_attendance_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="replace">
+                    <tree string="Working Time" editable="top">
+                        <field name="name"/>
+                        <field name="day_seq"/>
+                        <field name="hour_from" widget="float_time"/>
+                        <field name="hour_to" widget="float_time"/>
+                        <field name="off_day"/>
+                        <field name="date_from" invisible="1"/>
+                        <field name="date_to" invisible="1"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_resource_calendar_attendance_form_inherit" model="ir.ui.view">
+            <field name="name">resource.calendar.attendance.form.inherit</field>
+            <field name="model">resource.calendar.attendance</field>
+            <field name="inherit_id" ref="resource.view_resource_calendar_attendance_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="replace">
+                    <form string="Working Time">
+                        <group>
+                            <field name="name"/>
+                            <field name="day_seq"/>
+                            <field name="off_day"/>
+                            <label for="hour_from" string="Hours"/>
+                            <div>
+                                <field name="hour_from" widget="float_time" class="oe_inline"/>
+                                -
+                                <field name="hour_to" widget="float_time" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <field name="date_from" invisible="1"/>
+                        <field name="date_to" invisible="1"/>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

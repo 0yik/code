@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+        <template id="assets_backend_new_reminder" name="quotation_reminder" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/reminder_menu/static/src/js/quotation_reminder.js"/>
+                <link rel="stylesheet" href="/reminder_menu/static/src/css/quotation_reminder.css"/>
+            </xpath>
+        </template>
+	</data>
+</openerp>

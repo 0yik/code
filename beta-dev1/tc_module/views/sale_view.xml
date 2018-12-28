@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+    
+    	<!-- inherit sale.order form -->
+    	<record id="view_order_form_tc_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.tc</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"></field>
+            <field name="arch" type="xml">
+            	<field name="note" position="before">
+            		<group>
+            			<field name="term_tmpl_id" domain="[('sale_ord','=',True)]"/>
+            		</group>
+            	</field>
+            </field>
+        </record>
+        <!--on_change="onchange_term_tmpl_id(term_tmpl_id)-->
+    
+    </data>
+</odoo>

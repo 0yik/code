@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_partner_property_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.property.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='accounting']" position="attributes">
+                 <attribute name="invisible">True</attribute>
+            </xpath>
+            <field name="property_payment_term_id" position="replace"/>
+            <xpath expr="/form/sheet/notebook/page[@name='sales_purchases']/group" position="inside">
+                <group string="Payment Terms">
+                    <field name="property_payment_term_id" widget="selection"/>
+                </group>
+            </xpath>
+            <field name="property_account_receivable_id" position="attributes">
+                <attribute name="required">False</attribute>
+            </field>
+            <field name="property_account_payable_id" position="attributes">
+                <attribute name="required">False</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <!--<field name="street" position="attributes">-->
+                <!--<attribute name="attrs">{'required': [('company_type', '=', 'company')]}</attribute>-->
+            <!--</field>-->
+            <field name="zip" position="attributes">
+                 <attribute name="attrs">{'required': [('company_type', '=', 'company')]}</attribute>
+            </field>
+            <field name="phone" position="attributes">
+                 <attribute name="attrs">{'required': [('company_type', '=', 'company')]}</attribute>
+            </field>
+            <field name="mobile" position="attributes">
+                 <attribute name="attrs">{'required': [('company_type', '=', 'person')]}</attribute>
+            </field>
+            <field name="email" position="attributes">
+                <attribute name="attrs">{'required': [('company_type', '=', 'company')]}</attribute>
+                <attribute name="widget">email</attribute>
+            </field>
+            <field name="category_id"  position="replace">
+                <field name="source"/>
+                <field name="industry_type"/>
+            </field>
+            <xpath expr="/form/sheet/notebook/page[1]/field[@name='child_ids']/form/sheet/group/group[2]/field[@name='function']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <field name="user_id" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_partner_tree_inherit" model="ir.ui.view">
+        <field name="name">res.partner.tree.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="country_id" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </field>
+            <field name="country_id" position="after">
+                <field name="industry_type"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_users_simple_form_inherit" model="ir.ui.view">
+        <field name="name">res.users.simplified.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_simple_form"/>
+        <field name="arch" type="xml">
+            <field name="fax" position="after">
+                <field name="services"/>
+            </field>
+        </field>
+    </record>
+
+    <menuitem id="sales_team.menu_partner_form" parent="sales_team.menu_sales" action="base.action_partner_form" sequence="3" groups="sales_team.group_sale_manager"/>
+</odoo>

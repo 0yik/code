@@ -1,0 +1,59 @@
+<odoo>
+    <data>
+        <record id="payment_installment_type_form" model="ir.ui.view">
+            <field name="name">Payment Installment Type</field>
+            <field name="model">payment.installment.type</field>
+            <field name="arch" type="xml">
+                <form string="Payment Installment">
+                    <sheet>
+                        <div class="oe_edit_only">
+                            <label for="name" class="oe_inline"/>
+                            <!-- <label for="origin" class="oe_inline"/> -->
+                        </div>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="no_of_installment" required="1"/>
+                                <field name="duration" placeholder="Total of month" required="1"/>
+                            </group>
+                            <group>
+                                <field name="days_to_pay" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="payment_installment_type_tree" model="ir.ui.view">
+            <field name="name">Payment Installment Type</field>
+            <field name="model">payment.installment.type</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Installment">
+                    <field name="name"/>
+                    <field name="duration"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="payment_installment_type_action">
+            <field name="name">Payment Installment Type</field>
+            <field name="res_model">payment.installment.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="payment_installment_type_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create the first Payment Installment Type
+                </p>
+            </field>
+        </record>
+        <menuitem id="sale_payment_config_label_menu" name="Payment" parent="sale.prod_config_main" sequence="100"/>
+        <menuitem id="payment_installment_type_menu" name="Payment Installment Type" parent="sale_payment_config_label_menu" sequence="1"
+                  action="payment_installment_type_action"/>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+         <!--tug & barge sale order order gantt view-->
+        <record id="so_tug_barge_schedule_job_gantt_view" model="ir.ui.view">
+            <field name="name">tug.barge.sale.order.schedule.gantt</field>
+            <field name="model">sale.order</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <gantt date_start="start_date" date_stop="end_date" string="Schedule Job"
+                       default_group_by="asset,mother_vessel">
+                </gantt>
+            </field>
+        </record>
+        
+        <!-- custom groupby -->
+        <record id="view_sales_order_filter_custom" model="ir.ui.view">
+            <field name="name">sale.order.list.select</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Sales Order">
+                    <field name="name" string="Sales Order" filter_domain="['|',('name','ilike',self),('client_order_ref','ilike',self)]"/>
+                    <field name="partner_id" operator="child_of"/>
+                    <field name="user_id"/>
+                    <field name="team_id" string="Sales Team"/>
+                    <field name="project_id"/>
+                    <field name="product_id"/>
+                    <filter string="My Orders" domain="[('user_id','=',uid)]" name="my_sale_orders_filter"/>
+                    <separator/>
+                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Salesperson" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter name="customer" string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Order Month" domain="[]" context="{'group_by':'date_order'}"/>
+                        <filter string="Asset" domain="[]" context="{'group_by':'asset'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        
+        <!-- custom search -->
+        <record id="sale_order_view_search_inherit_sale_custom" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit.sale</field>
+            <field name="model">sale.order</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="view_sales_order_filter_custom"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='my_sale_orders_filter']" position="after">
+                    <separator/>
+                    <filter string="Sales" name="sales" domain="[('state','in',('progress','done'))]" />
+                    <separator/>
+                    <filter string="To Invoice" domain="[('invoice_status','=','to invoice')]" />
+                    <filter string="Upselling" domain="[('invoice_status','=','upselling')]" />
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- Action -->
+        <record id="action_so_tug_barge_schedule_job_gantt_view" model="ir.actions.act_window">
+            <field name="name">Schedule Job Tug and barge</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">gantt</field>
+            <field name="search_view_id" ref="sale_order_view_search_inherit_sale_custom"/>
+            <field name="view_id" ref="so_tug_barge_schedule_job_gantt_view"/>
+            <field name="context">{'gantt_pass': True}</field>
+            <field name="domain">[('business_unit_id.name', '=', 'Tug and Barge'),('state', 'not in', ('draft', 'sent', 'cancel'))]</field>
+        </record>
+        
+        <menuitem name="Schedule Job Tug and barge" action="action_so_tug_barge_schedule_job_gantt_view"
+         id="menu_action_so_tug_barge_schedule_job_gantt_view" parent="sales_team.menu_sale_report"/>
+
+    </data>
+</odoo>

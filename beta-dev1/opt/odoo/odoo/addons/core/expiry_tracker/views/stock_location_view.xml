@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	<record id="view_stock_location_expiry_tracker" model="ir.ui.view">
+            <field name="name">view.stock.location.form.expiry.tracker</field>
+            <field name="model">stock.location</field>
+			<field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//group" position="after">
+            		<group>
+            			<field name="expiry_days" />
+            			<field name="notification_recipients" widget='many2many_tags'/>
+            		</group>
+            		<separator colspan="4" string="Special Alerts" />
+            		<field name="product_expiry_line" nolabel="1">
+            			<tree string="Expiry Line" editable="bottom">
+            				<field name="product_id" required="1"/>
+            				<field name="expiry_days" required="1"/>
+            				<field name="notification_recipients" widget='many2many_tags' required="1"/>
+            				<!-- <field name="serial_number" required="1"/> -->
+            			</tree>
+            		</field>
+            	</xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

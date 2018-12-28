@@ -1,0 +1,22 @@
+<odoo>
+	<data>
+		<record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+				<field name="title" position="replace"/>
+				<field name="function" position="before">
+					<field name="title" string="Salutation"/>		
+				</field>
+				<xpath expr="//form/sheet/notebook/page/field[@name='child_ids']/form/sheet/group/group/field[@name='title']" position="attributes">
+					<attribute name="string">Salutation</attribute>
+				</xpath>
+				<field name="lang" position="attributes">
+					<attribute name="attrs">{'invisible': [('company_type', '=', 'person')]}</attribute>
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>
+

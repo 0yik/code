@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_custom_TM_pos_receipt_extended" inherit_id="point_of_sale.assets" name="TM TM_pos_receipt_extended assets">
+        <xpath expr="//script[last()]" position="after">
+        	<link rel="stylesheet" href="/TM_pos_receipt_extended/static/src/css/datetimepicker.css" />
+        	<script type="text/javascript" src="/TM_pos_receipt_extended/static/src/js/datetimepicker.js"></script>
+        	<link rel="stylesheet" href="/TM_pos_receipt_extended/static/src/css/centerso.css"></link>
+        	<script type="text/javascript" src="/TM_pos_receipt_extended/static/src/js/pos_receipt.js"></script>
+        </xpath>
+    </template>
+</odoo>

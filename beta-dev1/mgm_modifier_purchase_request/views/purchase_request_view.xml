@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_purchase_request_form_inherit_modifier">
+            <field name="name">purchase.request.form.inherit.modifier</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
+            <field name="arch" type="xml">
+
+                <field name="date_start" position="replace"/>
+                <field name="picking_type_id" position="replace"/>
+                <field name="company_id" position="replace"/>
+
+                <field name="assigned_to" position="after">
+                    <field name="date_start" readonly="1" string="Ordering Date"/>
+                    <field name="request_date" string="Request Date From User"/>
+                    <field name="due_date"/>
+                    <field name="picking_type_id" attrs="{'readonly': [('is_editable','=', False)]}" required="1"/>
+                    <field name="company_id" attrs="{'readonly': [('is_editable','=', False)]}" required="1"/>
+                    <field name="asset_id" required="1"/>
+                </field>
+
+                <field name="name" position="after">
+                    <field name="pr_number" style="margin-left:50px" class="oe_inline" required="1"
+                           attrs="{'readonly': [('is_editable','=', False)]}"/>
+                </field>
+
+                <xpath expr="//sheet/div[1]/label[1]" position="after">
+                    <label for="pr_number" style="margin-left:250px" class="oe_inline"/>
+                </xpath>
+
+                <field name="description" position="attributes">
+                    <attribute name="string">Information</attribute>
+                </field>
+
+                <field name="description" position="after">
+                    <field name="department_id" required="1"/>
+                    <field name="sub_department_id" required="1"/>
+                </field>
+
+                <xpath expr="//notebook/page[1]/field[@name='line_ids']/tree/field[@name='product_id']"
+                       position="attributes">
+                    <attribute name="string">Product Name</attribute>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='line_ids']/form//group/field[@name='product_id']"
+                       position="attributes">
+                    <attribute name="string">Product Name</attribute>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='line_ids']/tree/field[@name='product_uom_id']"
+                       position="after">
+                    <field name="asset_id" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='line_ids']/form//group/field[@name='analytic_account_id']"
+                       position="before">
+                    <field name="asset_id" attrs="{'readonly': [('is_editable','=', False)]}" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='line_ids']/tree/field[@name='product_id']"
+                       position="before">
+                    <field name="product_code" invisible="1"/>
+                    <!--<field name="product_code_id"/>-->
+                </xpath>
+
+                <!--<xpath expr="//notebook/page[1]/field[@name='line_ids']/form//group/field[@name='product_id']"
+                       position="before">
+                    <field name="product_code" attrs="{'readonly': [('is_editable','=', False)]}"/>
+                </xpath>-->
+
+                <xpath expr="//notebook/page[1]/field[@name='line_ids']/form//group/field[@name='product_id']"
+                       position="before">
+                    <field name="product_code" attrs="{'readonly': [('is_editable','=', False)]}" invisible="1"/>
+                    <!--<field name="product_code_id"/>-->
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='line_ids']/tree/field[@name='analytic_account_id']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='line_ids']/form//group/field[@name='analytic_account_id']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='line_ids']/form//field[@name='date_required']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='line_ids']/tree//field[@name='date_required']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_purchase_request_tree_inherit_pr">
+            <field name="name">purchase.request.tree</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_tree"/>
+            <field name="arch" type="xml">
+                <field name="date_start" position="after">
+                    <field name="pr_number"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sub_dept_master_list">
+            <field name="name">sub.dept.master.list</field>
+            <field name="model">sub.dept.master</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sub_dept_master_form">
+            <field name="name">sub.dept.master.form</field>
+            <field name="model">sub.dept.master</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sub_dept_master_action">
+            <field name="name">Sub department</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sub.dept.master</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem name="Sub Department" id="sub_department_master_submenu"
+                  parent="purchase.menu_purchase_config" sequence="120"/>
+        <menuitem name="Sub Department" id="sub_department_master_menu" parent="sub_department_master_submenu"
+                  action="sub_dept_master_action"/>
+
+    </data>
+</odoo>

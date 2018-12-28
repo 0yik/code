@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- Headers and Footers for Invoice Report -->		
+<template id="external_layout_invoice_receipt">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-if="o and 'partner_id' in o">
+        <t t-set="partner" t-value="o.partner_id"></t>
+    </t>
+    <t t-if="not o or not 'partner_id' in o">
+        <t t-set="partner" t-value="res_partner"></t>
+    </t>
+
+    <t t-call="dzh_modifier_printout.external_layout_header_invoice_dzh" />
+    <t t-raw="0" />
+    <t t-call="dzh_modifier_printout.external_layout_footer_invoice_dzh" />
+</template>
+
+
+
+<template id="external_layout_header_invoice_dzh">
+     <div class="header">
+        <div class="row">
+            <div class="col-xs-4 text-left" style="font-size:14px;">
+                <b>
+                    <span t-field="company.name"/>
+                </b><br/>
+                <t t-if="company.street">
+                    <span t-field="company.street"/>
+                </t>
+                <t t-if="company.street2">
+                    <span t-field="company.street2"/><br/>
+                </t>
+                <t t-if="company.city">
+                    <span t-field="company.city"/><br/>
+                </t>
+                <t t-if="company.state_id">
+                    <span t-field="company.state_id.name"/><br/>
+                </t>
+                <t t-if="company.country_id">
+                    <span t-field="company.country_id.name"/>
+                </t>
+                <t t-if="company.zip">
+                    <span t-field="company.zip"/>
+                </t><br/>
+                <t t-if="company.company_registry">
+                    GST Registration No. : <span t-field="company.company_registry"/>
+                </t>
+            </div>
+            <div class="col-xs-8 text-right">
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 46px;width: 208px;"/>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="external_layout_footer_invoice_dzh">
+    <div class="footer">
+    	<div class="row" style="font-size:14px;">
+    	    <center>
+    	        <span t-if="company.street" t-field="company.street"/> <span t-if="company.street2" t-field="company.street2"/> <span t-if="company.country_id" t-field="company.country_id.name"/> <span t-if="company.zip" t-field="company.zip"/> <br/>
+    	        GST Reg No: <span t-if="company.company_registry" t-field="company.company_registry"/> <br/>
+    	        Tel No: <span t-if="company.phone" t-field="company.phone"/>; Fax No: <span t-if="company.fax" t-field="company.fax"/> 
+    	    </center>
+         </div>
+    </div>      
+</template>
+
+<template id="dzh_invoice_receip_template">
+    <t t-foreach="docs" t-as="o">
+        <t t-call="dzh_modifier_printout.external_layout_invoice_receipt">
+            <div class="page" style="font-size:14px;">
+                <div class="oe_structure" />
+                <div class="row">
+                    <div class="col-xs-6">
+                        <span><b>INVOICE TO</b></span><br/>
+                        <div t-field="o.partner_id" 
+                            t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/>
+                    </div>
+                    <div class="col-xs-6 pull-right">
+                        <div style="background-color:#EEEEEE; font-size:21px;">
+                            <strong style="margin-top:15px; margin-bottom:15px; margin-left:7px;">Tax Invoice <span t-if="o.number" t-field="o.number"/></strong>
+                        </div>
+                        <br/>
+                        <div style="background-color:#EEEEEE; font-size:14px;">
+                            <strong style="margin-top:22px; margin-bottom:22px; margin-left:7px;">DATE </strong> <span t-if="o.date_invoice" t-field="o.date_invoice"/> <strong style="margin-left:7px;">TERMS</strong> <span t-if="o.payment_term_id" t-field="o.payment_term_id.name"/>
+                        </div>
+                        <br/>
+                        <div style="background-color:#EEEEEE; font-size:14px;">
+                            <strong style="margin-top:22px; margin-bottom:22px; margin-left:7px;">DUE DATE </strong><span t-if="o.date_due" t-field="o.date_due"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div style="background-color:#EEEEEE;">
+                            <span style="color:#EEEEEE">.</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div style="background-color:#EEEEEE;">
+                            <span style="color:#EEEEEE">.</span>
+                        </div>
+                    </div>
+                </div><br/>
+                <div class="row mt32 mb32" id="informations">
+                    <div t-if="o.user_id" class="col-xs-4">
+                        <strong>SALES PERSON</strong>
+                        <p t-field="o.user_id.name"/>
+                    </div>
+                    <div t-if="o.currency_id" class="col-xs-4">
+                        <strong>CURRENCY</strong>
+                        <p t-field="o.currency_id.name"/>
+                    </div>
+                    <div t-if="o.user_id" class="col-xs-4">
+                        <strong>SUB PERIOD</strong>
+                        <p t-field="o.user_id.name"/>
+                    </div>
+                </div>
+                
+                <table class="table table-condensed" style="border:1px solid #BFBFBF;">
+				    <thead>
+				        <tr>
+				            <th style="background-color:#EEEEEE; border:1px solid #BFBFBF;">ACTIVITY</th>
+				            <th class="text-right" style="background-color:#EEEEEE; border:1px solid #BFBFBF;">QTY</th>
+				            <th class="text-right" style="background-color:#EEEEEE; border:1px solid #BFBFBF;">RATE</th>
+				            <th class="text-right" style="background-color:#EEEEEE; border:1px solid #BFBFBF;">GST</th>
+				            <th class="text-right" style="background-color:#EEEEEE; border:1px solid #BFBFBF;">AMOUNT</th>
+				        </tr>
+				   </thead>
+				   <tbody class="sale_tbody">
+				        <tr t-foreach="o.invoice_line_ids" t-as="l">
+				            <td>
+				               <span t-field="l.name"/>
+				            </td>
+				            <td class="text-right">
+				                <span t-field="l.quantity"/>
+				                <span groups="product.group_uom" t-field="l.uom_id.name"/>
+				            </td>
+				            <td class="text-right">
+				                <span t-field="l.price_unit"/>
+				            </td>
+				            <td class="text-right">
+				                <span t-esc="l.get_tax_name(l.invoice_line_tax_ids)"/>
+				            </td>
+				            <td class="text-right">
+				                <span t-field="l.price_subtotal"/>
+				            </td>
+				        </tr>
+				    </tbody>
+				</table>
+				<br/>
+				<div class="row">
+				    <div class="col-xs-7">
+				        <t t-foreach="o.company_id.bank_ids" t-as="bank">
+                            Account Name: <span t-field="bank.partner_id" t-if="bank.partner_id.name"/> <br/>
+                            Account No: <span t-field="bank.acc_number" t-if="bank.acc_number"/> <br/>
+                            Bank Name: <span t-field="bank.bank_id" t-if="bank.bank_id.name"/> <br/>
+                            Branche: FEB MAIN <br/>
+                            Bank Address: <span t-field="bank.bank_id.street" t-if="bank.bank_id.street"/> <span t-field="bank.bank_id.street2" t-if="bank.bank_id.street2"/><br/>
+                            <span t-field="bank.bank_id.city" t-if="bank.bank_id.city"/> <span t-field="bank.bank_id.zip" t-if="bank.bank_id.zip"/><br/>
+                            Swift Code: <span t-field="bank.bank_id.bic" t-if="bank.bank_id.bic"/> <br/>
+                        </t>
+                    </div>
+                    <div class="col-xs-5 pull-right">
+                        <table class="table table-condensed">
+                            <tr class="border-black">
+                                <td><strong>SUB TOTAL</strong></td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_untaxed"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>GST TOTAL</td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_tax"/>
+                                </td>
+                            </tr>
+                            <tr class="border-black">
+                                <td><strong>TOTAL</strong></td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_total"/>
+                                </td>
+                            </tr>
+                            <tr class="border-black">
+                                <td style="background-color:#EEEEEE;"><strong>TOTAL DUE</strong></td>
+                                <td style="background-color:#EEEEEE;" class="text-right">
+                                    <span t-field="o.residual"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </t>
+</template>           
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="pdp_stock_inventory_request.custome_view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div/button[@name='tester_request_load_data']" position="after">
+                    <button name="%(import_picking_line_wizard_action)d" string="Import Product" style="margin-left:10px;" type="action" class="btn-primary"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_move_picking_tree_inherit_view" model="ir.ui.view">
+            <field name="name">stock.move.inherit</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="code"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

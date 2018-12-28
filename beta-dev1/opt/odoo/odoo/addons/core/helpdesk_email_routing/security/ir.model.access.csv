@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_heldpesk_email_routing,heldpesk_email_routing.heldpesk_email_routing,model_helpdesk_email_routing,,1,1,1,1
+access_heldpesk_team_line_email_routing,heldpesk_email_routing.heldpesk_team_line_email_routing,model_routing_helpdesk_team_line,,1,1,1,1
+access_heldpesk_user_line_email_routing_,heldpesk_email_routing.heldpesk_user_line_email_routing,model_routing_res_users_line,,1,1,1,1

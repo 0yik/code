@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="admin_configuration_view" model="ir.ui.view">
+        <field name="name">admin.configuration.view</field>
+        <field name="model">admin.configuration</field>
+        <field name="arch" type="xml">
+            <form string="Parameters" class="oe_form_configuration">
+                <header>
+                    <button string="Apply" type="object" name="execute_configuration" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="cancel" class="oe_link" special="cancel"/>
+                </header>
+                <separator string="Parameters"/>
+                <group>
+                    <field name="total_reminder" />
+                    <label for="reminder_duration"/>
+                    <div>
+                        <field name="reminder_duration" />
+                        <span> minutes </span>
+                    </div>
+                    <label for="delay_time"/>
+                    <div>
+                        <field name="delay_time"/>
+                        <span> minutes </span>
+                    </div>
+                    <label for="customer_booking_days"/>
+                    <div>
+                        <field name="customer_booking_days"/>
+                        <span> days </span>
+                    </div>
+                    <label for="ot_start_time"/>
+                    <div>
+                        <field name="ot_start_time" widget="float_time"/>
+                        <span> Hours </span>
+                    </div>
+                    <label for="ot_end_time"/>
+                    <div>
+                        <field name="ot_end_time" widget="float_time"/>
+                        <span> Hours </span>
+                    </div>
+                    <field name="hours_before_send_notification_for_dedicated_bookings"/>
+                    <field name="send_notification_on_cancel"/>
+                    <field name="reminder_sent_before_hours"/>
+                    <field name="action_needed_before_hours"/>
+                    <label for="booking_before_time"/>
+                    <div>
+                        <field name="booking_before_time" widget="float_time"/>
+                        <span> Hours </span>
+                    </div>
+                    <label for="booking_after_time"/>
+                    <div>
+                        <field name="booking_after_time" widget="float_time"/>
+                        <span> Hours </span>
+                    </div>
+                    <label for="calendar_display"/>
+                    <div>
+                        <field name="calendar_display" />
+                        <span> months </span>
+                    </div>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_admin_configuration_view" model="ir.actions.act_window">
+        <field name="name">Parameters Management</field>
+        <field name="res_model">admin.configuration</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <menuitem id="menu_action_admin_configuration_view_tree"
+        parent="hilti_modifier_company.menu_admin_configuration" groups='hilti_modifier_accessrights.group_hilti_admin' sequence="7"
+        action="action_admin_configuration_view" />
+
+</odoo>

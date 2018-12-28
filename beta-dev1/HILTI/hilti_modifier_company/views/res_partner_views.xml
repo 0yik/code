@@ -1,0 +1,271 @@
+<odoo>
+	<data>
+
+		<!-- <record id="view_res_partner_filter_tester" model="ir.ui.view">
+			<field name="name">res.partner.select</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_res_partner_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//search/filter[@name='customer']" position="after">
+					<filter string="Testers" name="is_tester"                                                                                                  
+						domain="[('type_of_user','=','hilti_tester')]" />
+				</xpath>
+			</field>
+		</record> -->
+		
+		<!-- <record id="view_my_profile_form" model="ir.ui.view">
+           <field name="name">res.partner.form</field>
+           <field name="model">res.partner</field>
+           <field name="priority" eval="1"/>
+           <field name="arch" type="xml">
+               <form string="Partners">
+               <sheet>
+               		<field name="is_company" invisible="1"/>
+                   <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium", "size": [90, 90]}'/>
+                   <div class="oe_title">
+                       <h1>
+                           <field name="name" default_focus="1" placeholder="Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                       </h1>
+						<div class="o_row">
+                            <field name="parent_id"
+                                placeholder="Company" invisible='1'
+                                domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'default_supplier': supplier, 'default_customer': customer}"
+                                attrs="{'invisible': ['|', '&amp;', ('is_company','=', True),('parent_id', '=', False),('company_name', '!=', False),('company_name', '!=', '')]}"/>
+                                <field name="company_name" invisible='1' attrs="{'invisible': ['|', '|', ('company_name', '=', False), ('company_name', '=', ''), ('is_company', '=', True)]}"/>
+                                <button name="create_company" invisible='1' type="object" string="Create company" class="btn btn-sm oe_edit_only fa fa-external-link btn btn-link " attrs="{'invisible': ['|', '|', ('is_company','=', True), ('company_name', '=', ''), ('company_name', '=', False)]}"/>
+                        </div>
+                   </div>
+
+                   <group>
+                       <group>
+                       		<field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
+                           <label for="street" string="Address"/>
+                           <div class="o_address_format">
+                               <div class="oe_edit_only">
+                                   <button name="open_parent" type="object" string="(edit)" class="oe_link"
+                                       attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"/>
+                               </div>
+                               <field name="street" placeholder="Street..." class="o_address_street"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                               <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                               <field name="city" placeholder="City" class="o_address_city"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                               <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
+                               <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                               <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                           </div>
+                       </group>
+                       <group>
+                           <field name="phone" widget="phone"/>
+                           <field name="mobile" widget="phone"/>
+                           <field name="fax"/>
+                           <field name="user_ids" invisible="1"/>
+                           <field name="email" widget="email" attrs="{'required': [('user_ids','!=', [])]}"/>
+                           <label for="title" string="Job Title"/>
+                       	   <field name="title" nolabel="1"/>
+                           <field name="account_manager_id"/>
+                           <label for="project_ids" string="SIC Address"/>
+                       	   <field name="project_ids" nolabel="1" widget='many2many_tags'/>
+                       </group>
+                       
+                   </group>
+               </sheet>
+               </form>
+           </field>
+       </record>
+
+ -->		<record id="view_partner_form_inherit_company" model="ir.ui.view">
+			<field name="name">res.partner.form.inherit.company</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/group/group/field[@name='function']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/div[@class='oe_button_box']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/div[@class='oe_button_box']"
+					position="after">
+					<div class="oe_button_box" name="button_box_final">
+						<button name="toggle_active" type="object" class="oe_stat_button"
+							icon="fa-archive">
+							<field name="active" widget="boolean_button" options='{"terminology": "archive"}' />
+						</button>
+					</div>
+				</xpath>
+				<xpath expr="//form/sheet/group/group/field[@name='fax']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/group/group/field[@name='title']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/group/group/field[@name='lang']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/group/group/field[@name='category_id']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/group/group/field[@name='mobile']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/group/group/field[@name='website']"
+					position="replace">
+					<field name="website"
+						attrs="{'invisible': [('company_type', '=', 'person')]}" />
+				</xpath>
+				<xpath expr="//form/sheet/group/group/field[@name='email']"
+					position="after">
+					<field name="job_title"
+						attrs="{'invisible': [('company_type', '!=', 'person')]}" />
+					<field name="is_vip" />
+					<field name="account_manager_id" attrs="{'invisible': [('type_of_user', '=', 'hilti_tester')]}"/>
+					<field name="is_tester" invisible="1" />
+				</xpath>
+				<xpath expr="//div[@class='o_row']" position="after">
+					<field name="account_number" placeholder="Account Number" />
+				</xpath>
+				<xpath expr="//form/sheet/notebook" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/notebook" position="after">
+					<notebook colspan="4" attrs="{'invisible': [('company_type', '=', 'person'), ('type_of_user', '=', 'hilti_tester')]}">
+						<page string="Contacts" autofocus="autofocus"
+							attrs="{'invisible': [('company_type', '=', 'person')]}">
+							<field name="child_ids" mode="kanban"
+								context="{'default_parent_id': active_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang,}">
+								<kanban>
+									<field name="name" />
+									<field name="job_title" />
+									<templates>
+										<t t-name="kanban-box">
+											<div class="oe_kanban_vignette oe_semantic_html_override">
+												<a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right" />
+												<div class="oe_kanban_details">
+													<a type="open">
+														<field name="name" />
+													</a>
+												</div>
+												<div class="oe_kanban_details">
+													<a type="open">
+														<field name="job_title" />
+													</a>
+												</div>
+											</div>
+										</t>
+									</templates>
+								</kanban>
+								<form string="Contact / Address">
+									<sheet>
+										<h5>Contact</h5>
+										<field name="type" required="1" widget="radio"
+											options="{'horizontal': true}" invisible="1" />
+										<hr />
+										<group>
+											<group>
+												<field name="name" string="Contact Name"
+													attrs="{'required' : [('type', '=', 'contact')]}" />
+
+												<label for="street" string="Address" />
+												<div>
+													<div class="o_address_format" name="div_address">
+														<field name="street" placeholder="Street..." class="o_address_street" />
+														<field name="street2" placeholder="Street 2..."
+															class="o_address_street" />
+														<field name="city" placeholder="City" class="o_address_city" />
+														<field name="state_id" class="o_address_state"
+															placeholder="State" options='{"no_open": True}'
+															context="{'country_id': country_id, 'zip': zip}" />
+														<field name="zip" placeholder="ZIP" class="o_address_zip" />
+														<field name="country_id" placeholder="Country"
+															class="o_address_country" options='{"no_open": True, "no_create": True}' />
+													</div>
+												</div>
+												<field name="function" placeholder="e.g. Sales Director"
+													invisible="1" />
+												<field name="job_title" />
+												<field name="email" />
+												<field name="phone" widget="phone" />
+											</group>
+											<group>
+												<field name="mobile" widget="phone" invisible="1" />
+												<field name="comment" placeholder="internal note..."
+													invisible="1" />
+											</group>
+										</group>
+										<field name="customer" invisible="True" />
+										<field name="lang" invisible="True" />
+										<field name="image" invisible="True" />
+									</sheet>
+								</form>
+							</field>
+						</page>
+						<page string="Projects" autofocus="autofocus" attrs="{'invisible': [('type_of_user', '=', 'hilti_tester')]}">
+							<field name="project_ids" mode="kanban"
+								context="{'default_partner_id': active_id, 'form_view_ref': 'hilti_modifier_company.project_project_view_for_booking'}">
+								<kanban>
+									<field name="name" />
+									<templates>
+										<t t-name="kanban-box">
+											<div class="oe_kanban_vignette oe_semantic_html_override">
+												<a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right" />
+												<div class="oe_kanban_details">
+													<a type="open">
+														<field name="name" />
+													</a>
+												</div>
+											</div>
+										</t>
+									</templates>
+								</kanban>
+							</field>
+						</page>
+						<page string="Booking" autofocus="autofocus" attrs="{'invisible': [('type_of_user', '=', 'hilti_tester')]}">
+							<field name="booking_ids" mode="kanban"
+								context="{'default_partner_id': active_id}">
+								<kanban>
+									<field name="booking_no" />
+									<field name="project_id" />
+									<field name="location_id" />
+									<templates>
+										<t t-name="kanban-box">
+											<div class="oe_kanban_vignette oe_semantic_html_override">
+												<a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right" />
+												<div class="oe_kanban_details">
+													<a type="open">
+														<field name="booking_no" />
+													</a>
+												</div>
+												<div class="oe_kanban_details">
+													<a type="open">
+														<field name="project_id" />
+													</a>
+												</div>
+												<div class="oe_kanban_details">
+													<a type="open">
+														<field name="location_id" />
+													</a>
+												</div>
+											</div>
+										</t>
+									</templates>
+								</kanban>
+							</field>
+						</page>
+					</notebook>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

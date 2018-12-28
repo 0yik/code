@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_stock_picking_code_search_inherit">
+            <field name="name">stock.picking.code.inherit.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_type_id']" position="after">
+                    <field name="code" string="Picking Type"/>
+                    <filter name="receipt_code" string='Picking Type Contains “Receipt”' domain="[('picking_type_id.name','ilike','Receipts')]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_picking_tree_all_internal" model="ir.actions.act_window">
+            <field name="name">Internal Stock Operations</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_code':'internal'}</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a new transfer.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_picking_tree_receipt" model="ir.actions.act_window">
+            <field name="name">Receipt</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_receipt_code':1}</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a new receipt.
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem id="menu_delivery_store" name="Delivery Store" sequence="3" parent="stock.menu_stock_root"/>
+
+        <menuitem id="internal_transfer" name="Internal Transfer Store" sequence="1"
+                  parent="pdp_modifier_stock_menuitem.menu_delivery_store"
+                  action="pdp_modifier_stock_menuitem.action_picking_tree_all_internal"/>
+
+        <menuitem id="internal_transfer_receipt" name="Receipt" sequence="5"
+                  parent="pdp_modifier_stock_menuitem.menu_delivery_store"
+                  action="pdp_modifier_stock_menuitem.action_picking_tree_receipt"/>
+
+        <menuitem id="tester_request" name="Tester Request" sequence="2"
+                  parent="pdp_modifier_stock_menuitem.menu_delivery_store"
+                  action="pdp_stock_inventory_request.action_tester_request"/>
+
+        <menuitem id="return_request" name="Return Request" sequence="3"
+                  parent="pdp_modifier_stock_menuitem.menu_delivery_store"
+                  action="pdp_stock_inventory_request.action_return_request"/>
+
+        <menuitem id="inventory_request" name="Inventory Request" sequence="4"
+                  parent="pdp_modifier_stock_menuitem.menu_delivery_store"
+                  action="pdp_stock_inventory_request.action_inventory_request"/>
+
+
+        <record id="action_picking_tree_all_outgoing" model="ir.actions.act_window">
+            <field name="name">Internal Stock Operations</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_code':'outgoing'}</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a new transfer.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_internal_transfer" name="Delivery Customer" sequence="3"
+                  parent="stock.menu_stock_warehouse_mgmt"
+                  action="pdp_modifier_stock_menuitem.action_picking_tree_all_outgoing"/>
+
+    </data>
+</odoo>

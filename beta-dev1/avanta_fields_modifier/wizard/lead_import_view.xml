@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="lead_import_view_form" model="ir.ui.view">
+            <field name="name">Lead Import View Form</field>
+            <field name="model">lead.import</field>
+            <field name="arch" type="xml">
+                <form string="Lead Import">
+                    <group>
+                        <group>
+                            <field name="file" required="1" filename="filename"/>
+                            <field name="filename" invisible="1"/>
+                        </group>
+                    </group>
+                    <separator string="Instructions"/>
+                    <div style="color:grey">
+                        <b>File Ext :</b> .XLS, .XLSX<br/>
+                        <b>Columns Sequence :</b> Date, Services, Product, Title, Customer, Address, ZIP, Country, Job Position, Industry Type, Mobile, Email, Source, Status<br/>
+                        <b>Note :</b><br/>
+                        <ol>
+                            <li>All columns should be in above sequence.</li>
+                            <li>First row of excel sheet will be excluded while importing. It is considered as a header.</li>
+                        </ol>
+                    </div>
+                    <footer>
+                        <button name="action_lead_import" string="Import Leads" type="object" icon="fa-upload" class="btn-primary"/>
+                        or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_lead_import" model="ir.actions.act_window">
+            <field name="name">Lead Import - Individual</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lead.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="lead_import_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="action_lead_import" name="Lead Import - Individual" id="submenu_lead_import_individual" parent="sales_team.menu_sales" sequence="13" groups="sales_team.group_sale_manager,sales_team.group_sale_salesman,group_management_representative,group_crm_user,group_crm_admin"/>
+
+        <record id="lead_import_view_form2" model="ir.ui.view">
+            <field name="name">Lead Import View Form2</field>
+            <field name="model">lead.import</field>
+            <field name="arch" type="xml">
+                <form string="Lead Import">
+                    <group>
+                        <group>
+                            <field name="file" required="1" filename="filename"/>
+                            <field name="filename" invisible="1"/>
+                        </group>
+                    </group>
+                    <separator string="Instructions"/>
+                    <div style="color:grey">
+                        <b>File Ext :</b> .XLS, .XLSX<br/>
+                        <b>Columns Sequence :</b> Date, Services, Product, Company, Title, Customer, Address, ZIP, Country, Job Position, Industry Type, Mobile/Phone, Email, Source, Status<br/>
+                        <b>Note :</b><br/>
+                        <ol>
+                            <li>All columns should be in above sequence.</li>
+                            <li>First row of excel sheet will be excluded while importing. It is considered as a header.</li>
+                        </ol>
+                    </div>
+                    <footer>
+                        <button name="action_lead_import2" string="Import Leads" type="object" icon="fa-upload" class="btn-primary"/>
+                        or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_lead_import2" model="ir.actions.act_window">
+            <field name="name">Lead Import - Company</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lead.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="lead_import_view_form2"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="action_lead_import2" name="Lead Import - Company" id="submenu_lead_import_company" parent="sales_team.menu_sales" sequence="14" groups="sales_team.group_sale_manager,sales_team.group_sale_salesman,group_management_representative,group_crm_user,group_crm_admin"/>
+
+    </data>
+</odoo>

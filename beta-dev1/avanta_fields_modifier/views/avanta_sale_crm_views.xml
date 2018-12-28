@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.actions.act_window" id="crm.crm_lead_opportunities_tree_view">
+        <field name="name">Leads</field>
+    </record>
+
+    <record id="crm.crm_lead_menu_activities" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+
+    <record id="sale.menu_sale_invoicing" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+
+    <record id="sale.menu_sale_quotations" model="ir.ui.menu">
+        <field name="active">True</field>
+        <field name="groups_id" eval="[(6,0, [ref('sales_team.group_sale_manager'),ref('sales_team.group_sale_salesman'),ref('avanta_fields_modifier.group_management_representative'),ref('avanta_fields_modifier.group_crm_user')])]"/>
+    </record>
+
+    <record id="product.product_template_action" model="ir.actions.act_window">
+        <field name="name">Services</field>
+        <field name="domain"></field>
+        <field name="context">{'search_default_services': 1}</field>
+    </record>
+
+    <record id="sale.menu_product_template_action" model="ir.ui.menu">
+        <field name="name">Services</field>
+        <field name="groups_id" eval="[(6,0, [ref('sales_team.group_sale_manager'),ref('sales_team.group_sale_salesman'),ref('avanta_fields_modifier.group_management_representative'),ref('avanta_fields_modifier.group_crm_user')])]"/>
+        <field name="sequence">3</field>
+    </record>
+
+    <menuitem name="Sales" id="sales_team.menu_base_partner" groups="sales_team.group_sale_salesman,sales_team.group_sale_manager,avanta_fields_modifier.group_management_representative,avanta_fields_modifier.group_crm_user,avanta_fields_modifier.group_crm_admin" sequence="6"/>
+    <menuitem id= "sale.menu_sales_config" parent= "sales_team.menu_sale_config" sequence= "1" name= "Sales" groups= "sales_team.group_sale_manager,sales_team.group_sale_salesman,account.group_account_manager,account.group_account_user,avanta_fields_modifier.group_management_representative,avanta_fields_modifier.group_crm_user,avanta_fields_modifier.group_crm_admin"/>
+    <menuitem name="Sales Teams" id="sales_team.sales_team_config" parent="sales_team.menu_sales" groups= "sales_team.group_sale_manager"/>
+
+    <record id="view_lead_source_form" model="ir.ui.view">
+        <field name="name">lead.source.form</field>
+        <field name="model">lead.source</field>
+        <field name="arch" type="xml">
+            <form string="Lead Source">
+                <sheet>
+                    <group>
+                        <field name="name"/>>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_lead_source_tree" model="ir.ui.view">
+        <field name="name">lead.source.tree</field>
+        <field name="model">lead.source</field>
+        <field name="arch" type="xml">
+            <tree string="Lead Source">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_lead_source" model="ir.actions.act_window">
+        <field name="name">Lead Source</field>
+        <field name="res_model">lead.source</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem action="action_lead_source" id="menu_lead_source" parent="sales_team.menu_sale_config" sequence="20"/>
+
+</odoo>

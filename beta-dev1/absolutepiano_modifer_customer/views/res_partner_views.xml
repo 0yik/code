@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="mobile" position="replace">
+                </field>
+                <field name="fax" position="before">
+                    <label for="company_mobile" string="Mobile"/>
+                    <div >
+                        <field name="mobile" widget="phone" class="oe_read_only oe_inline" required="0"/>
+                        <div class="oe_edit_only oe_inline" style="display: inline;" >
+                            <field name="country_code" class="oe_inline" options='{"no_open": True}' style="width:10%" required="1"/>
+                            <field name="company_mobile" class="oe_inline" style="width:90%" required="1"/>
+                        </div>
+                    </div>
+                    <field name="gst_no" attrs="{'invisible': [('company_type','!=','company')]}"/>
+                    <field name="registration_no" attrs="{'invisible': [('company_type','!=','company')],'required': [('company_type','=','company')]}"/>
+                </field>
+                <field name="email" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+                <field name="zip" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

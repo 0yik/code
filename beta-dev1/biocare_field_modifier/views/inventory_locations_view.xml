@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <!--Modifier Location/Vehicles -->
+        <record id="stock_location_inherit_view" model="ir.ui.view">
+            <field name="name">stock.location.inherit</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/label" position="attributes">
+                    <attribute name="string">Vehicle Number</attribute>
+                </xpath>
+                <field name="scrap_location" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="return_location" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!--Invisible partially_available state-->
+        <record id="stock_picking_inherit_view" model="ir.ui.view">
+            <field name="name">stock.picking.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="booking_service_V2.view_picking_form_booking"/>
+            <field name="arch" type="xml">
+                <field name="state" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,pending,assigned,done"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- view of search changes for production lot-->
+        <record id="view_search_production_lot_filter" model="ir.ui.view">
+            <field name="name">stock.production.lot.filter</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[1]/filter[1]" position="attributes">
+                    <attribute name="string">Vehicle</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Modifier Plate Number-->
+        <record id="plate_number_inheirt_view" model="ir.ui.view">
+            <field name="name">plate.number.inherit</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/div[2]/label" position="attributes">
+                    <attribute name="string">Vehicle Number</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="domain">[('is_equipment', '=', True)]</attribute>
+                    <attribute name="string">Vehicle</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[1]" position="attributes">
+                    <attribute name="string">Vehicles</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="plate_number_inheirt_view_tree" model="ir.ui.view">
+            <field name="name">plate.number.inherit.1</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="attributes">
+                    <attribute name="string">Serial Number</attribute>
+                </field>
+                <field name="product_id" position="attributes">
+                    <attribute name="string">Vehicle</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!--Rename menu Lots/Serial Numbers to Plate Number-->
+        <record id="stock.action_production_lot_form" model="ir.actions.act_window">
+        <field name="name">Vehicle Number</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="stock.view_production_lot_tree"/>
+        <field name="search_view_id" ref="stock.search_product_lot_filter"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a lot/serial number.
+          </p><p>
+            This is the list of all the production lots you recorded. When
+            you select a lot, you can get the traceability of the products contained in lot.
+          </p>
+        </field>
+        </record>
+        <menuitem action="stock.action_production_lot_form" id="stock.menu_action_production_lot_form"
+            parent="stock.menu_stock_inventory_control" groups="stock.group_production_lot"
+            sequence="101"/>
+
+        <!--Rename menu location to Vehicles-->
+        <record id="stock.action_location_form" model="ir.actions.act_window">
+            <field name="name">Vehicles</field>
+            <field name="res_model">stock.location</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="stock.view_location_tree2"/>
+            <field name="search_view_id" ref="stock.view_location_search"/>
+            <field name="context">{'search_default_in_location':1}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a location.
+              </p><p>
+                Define your locations to reflect your warehouse structure and
+                organization. Odoo is able to manage physical locations
+                (warehouses, shelves, bin, etc), partner locations (customers,
+                vendors) and virtual locations which are the counterpart of
+                the stock operations like the manufacturing orders
+                consumptions, inventories, etc.
+              </p><p>
+                Every stock operation in Odoo moves the products from one
+                location to another one.  For instance, if you receive products
+                from a vendor, Odoo will move products from the Vendor
+                location to the Stock location. Each report can be performed on
+                physical, partner or virtual locations.
+              </p>
+            </field>
+        </record>
+        <menuitem action="stock.action_location_form" id="stock.menu_action_location_form"
+            groups="stock.group_stock_multi_locations"
+            parent="stock.menu_warehouse_config" sequence="2"/>
+    </data>
+</odoo>

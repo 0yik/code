@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+    <record id="employee_login_page_form" model="ir.ui.view">
+    <field name="name">Employee login page changes</field>
+    <field name="model">res.users</field>
+    <field name="inherit_id" ref="base.view_users_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//div/label[@for='login']" position="replace">
+            <label for="login" class="oe_edit_only" string="Email Address/Username"/>
+        </xpath>
+        </field>
+    </record>
+
+    <record id="employee_personal_info_form" model="ir.ui.view">
+    <field name="name">employee.form.changes</field>
+    <field name="model">hr.employee</field>
+    <field name="inherit_id" ref="hr.view_employee_form" />
+    <field name="arch" type="xml">
+        <field name="bank_account_id" position="after">   
+        <field name='date_of_issue'/>
+        </field>
+        <field name="address_home_id" position="attributes">
+            <attribute name="string">Residential Address</attribute>
+        </field>
+        <field name="address_home_id" position="after">
+            <field name="home_address" string="Home Address"  attrs="{'invisible':[('singaporean','=',True)]}"/>
+            <field name="country" string="Home Country"  attrs="{'invisible':[('singaporean','=',True)]}" />
+            <field name="state"  attrs="{'invisible':[('singaporean','=',True)]}"/>
+            <field name="city"  attrs="{'invisible':[('singaporean','=',True)]}"/>
+            </field>
+        <xpath expr="//page[@name='public']/group/group/field[@name='coach_id']" position="attributes">
+            <attribute name="attrs">{'invisible':[('name','!=','')]}</attribute>
+        </xpath>
+        </field>
+        </record>  
+
+    </data>
+</odoo>

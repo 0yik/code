@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <!-- Qweb report For: Company Total Payroll -->
+		<report id="company_total_payroll_report"
+			string="Company Total Payroll" 
+			model="hr.payslip" 
+			report_type="qweb-pdf"
+			name="teo_payroll.company_total_payroll_report_tmp" auto="False" menu="False" header="False" />
+			
+		<!-- Qweb report For: Department Total Payroll -->
+		<report id="department_total_payroll_report"
+			string="Department Total Payroll" 
+			model="hr.payslip" 
+			report_type="qweb-pdf"
+			name="teo_payroll.dpt_total_payroll_report_temp" auto="False" menu="False" header="False" />
+			
+			
+	<!-- Paper Format for : Company Total Payroll Report -->
+		<record id="hr_payroll_company_total_paperformat" model="report.paperformat">
+			<field name="name">Comapny Total Payroll Report</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="page_height">0</field>
+			<field name="page_width">0</field>
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">05</field>
+			<field name="margin_bottom">23</field>
+			<field name="margin_left">7</field>
+			<field name="margin_right">7</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">35</field>
+			<field name="dpi">90</field>
+		</record>
+
+		
+			
+   </data>
+</odoo>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+
+        <template id="report_delivery_order_document">
+            <t t-call="kimhuat_modifier_printouts.external_layout_offer_modifier">
+            <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+            <div class="page">
+                <div class="col-xs-5 pull-right text-left" style="font-size:22px;">
+                            <span>Delivery Order</span>
+                        </div>
+                <div class="col-xs-8">
+                    <span t-field="o.company_id.name" style="font-weight:bold"></span><br/>
+                    <span t-field="o.partner_id.street"></span><br t-if="o.partner_id.street"/>
+                    <span t-field="o.partner_id.street2"></span><br t-if="o.partner_id.street2"/>
+                    <span t-field="o.partner_id.city"></span><br t-if="o.partner_id.city"/>
+                    <span t-field="o.partner_id.state_id.name"></span><br t-if="o.partner_id.state_id"/>
+                    <span t-field="o.partner_id.country_id.name"></span>
+                    <t t-if="o.partner_id.country_id">
+                        <span t-field="o.partner_id.zip"></span>
+                    </t>
+                    <br/><br/>
+                    <span>Attn:</span><span t-esc="o.partner_id.name"></span><br/><br/>
+                </div>
+                <div class="col-xs-4">
+                    <span>Delivery No: </span><span t-field="o.name"></span>
+                    <br/>
+                    <span>Date: </span><span t-field="o.min_date" t-field-options='{"format": "dd/MM/yyyy"}'></span>
+                    <br/>
+                    <span>Customer PO: </span>
+                    <t t-if="o.purchase_id.partner_ref" >
+                        <span t-field="o.purchase_id.partner_ref"></span>
+                    </t>
+                    <t t-else="1">
+                        <span t-field="o.sale_id.client_order_ref2"></span>
+                    </t>
+                    <br/>
+                </div>
+                <table class="table table-condensed mt48" style="collapse; border:1px solid black ;margin-left:15px;width:96%;">
+                    <thead>
+                        <tr style="collapse; border:1px solid black">
+                            <th style="collapse; border:1px solid black;width:6%;">
+                                <strong>Item</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;width:74%;">
+                                <strong>Description</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;width:10%;" class="text-center">
+                                <strong>Qty</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;width:10%;" class="text-center">
+                                <strong>UOM</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="No" t-value="0"/>
+                        <tr t-foreach="o.move_lines" t-as="move" style="collapse; border:1px solid black">
+                            <t t-set="No" t-value="No + 1"/>
+                            <td style="collapse; border:1px solid black" class="text-center">
+                                <span t-esc="No"/>
+                            </td>
+                            <td style="collapse; border:1px solid black">
+                                <span t-field="move.product_id.name"/>
+                            </td>
+                            <td style="collapse; border:1px solid black" class="text-center">
+                                <span t-esc="int(move.ordered_qty)"/>
+                            </td>
+                            <td style="collapse; border:1px solid black" class="text-center">
+                                <span t-field="move.product_uom"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="position:absolute; margin-top:300px; right:35px" class="col-xs-5 col-xs-offset-7">
+                            <span class="text-left"> Received by </span>
+                    <div style="margin-top:100px;text-left;border-top:1px solid black" >
+                        <br/>
+                        <span>Signature/Company Stamp/Date</span>
+                    </div>
+                </div>
+            </div>
+            </t>
+        </template>
+
+
+        <template id="report_delivery_order">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="kimhuat_modifier_printouts.report_delivery_order_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+        </template>
+
+        <!-- QWeb Reports -->
+        <report
+            id="picking_delivery_order"
+            model="stock.picking"
+            string="Delivery Order"
+            report_type="qweb-pdf"
+            name="kimhuat_modifier_printouts.report_delivery_order"
+            file="kimhuat_modifier_printouts.report_delivery_order"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="custom_assets" name="point of sale custom" inherit_id="point_of_sale.assets">
+		<xpath expr="." position="inside">
+			<script type="text/javascript" src="/aikchin_modifier_fields/static/src/js/pos_custom.js"></script>
+			<script type="text/javascript" src="/aikchin_modifier_fields/static/src/js/pos_db.js"></script>	
+		</xpath>
+	</template>
+	<template id="assets_backend" name="account assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/aikchin_modifier_fields/static/src/js/partner_name_widget.js"></script>
+			<script type="text/javascript" src="/aikchin_modifier_fields/static/src/js/product_name_widget.js"></script>
+        </xpath>
+    </template>
+</odoo>

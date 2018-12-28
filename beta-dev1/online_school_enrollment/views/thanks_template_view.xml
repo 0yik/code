@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="thanks" name="Successfully">
+	<t t-call="website.layout">
+		<div class="col-md-12">
+	        <img class="img img-responsive" style="width: 30%; height:200px;margin:auto" src="/online_school_enrollment/static/src/img/logo.jpg"/>
+	    </div>
+		<div id="wrap">
+			<div class="oe_structure"/>
+			<div class="container">
+				<h3>Thank you for registering. A confirmation email will be sent to you upon the status of your application.</h3>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 text-left">
+						<form action="/print_student_report" method="post" class="o_website_form form-horizontal container-fluid mt32" enctype="multipart/form-data">
+							<input type="hidden" t-attf-value="#{tx_id or ''}" id="student_report" name="student_report" class="student_report"/>
+							<input type="hidden" t-attf-value="#{without_paypal or ''}" id="without_paypal" name="without_paypal" class="without_paypal"/>
+
+		                    <h4><button type="submit" class="btn btn-lg btn-info" style="border-radius: 5px; height:43px; background-color: #494949;border-color: #494949;" value="Save">Print Application Detail</button></h4>
+		                </form>
+	                </div>
+	            </div>
+			</div>
+			<div class="oe_structure"/>
+		</div>
+	</t>
+	</template>
+</odoo>

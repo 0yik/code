@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+
+        <record model="ir.module.category" id="module_category_kimhuat_accessright">
+            <field name="name">Kim Huat Access Rights</field>
+        </record>
+
+        <!-- Group Administrator -->
+        <!--<record id="group_kimhuat_administrator" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="module_category_kimhuat_accessright"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>-->
+
+        <!-- Group Admin Clerk -->
+        <record id="group_kimhuat_admin_clerk" model="res.groups">
+            <field name="name">Admin Clerk</field>
+            <field name="category_id" ref="module_category_kimhuat_accessright"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- Group Accountant -->
+        <record id="group_kimhuat_accountant" model="res.groups">
+            <field name="name">Accountant</field>
+            <field name="category_id" ref="module_category_kimhuat_accessright"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <!--<field name="implied_ids" eval="[(4, ref('account.group_account_invoice'))]"/>-->
+        </record>
+        <!--(4, ref('account.group_account_invoice'))-->
+
+        <!-- Group Manager -->
+        <record id="group_kimhuat_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_category_kimhuat_accessright"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <!--<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+            <field name="implied_ids" eval="[(4, ref('hr_expense.group_hr_expense_user')),(4, ref('hr_holidays.group_hr_holidays_user'))]"/>
+        </record>
+
+        <!-- Group All Employee -->
+        <record id="group_kimhuat_all_employee" model="res.groups">
+            <field name="name">All Employees</field>
+            <field name="category_id" ref="module_category_kimhuat_accessright"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!--Menu Sales-->
+        <menuitem name="Sales"
+        id="sales_team.menu_base_partner"
+        groups="sales_team.group_sale_salesman,sales_team.group_sale_manager,group_kimhuat_accountant,group_kimhuat_manager,group_kimhuat_admin_clerk" sequence="6"/>
+
+        <!--Menu Sales Sales Sale-order -->
+        <menuitem action="sale.action_orders"
+            id="sale.menu_sale_order" parent="sales_team.menu_sales"
+            sequence="12" groups="sales_team.group_sale_salesman,sales_team.group_sale_manager,group_kimhuat_accountant,group_kimhuat_manager,group_kimhuat_admin_clerk"/>
+
+        <!--Menu Purchase-->
+        <menuitem name="Purchases"
+            id="purchase.menu_purchase_root"
+            groups="purchase.group_purchase_manager,purchase.group_purchase_user,group_kimhuat_accountant,group_kimhuat_manager,group_kimhuat_admin_clerk,group_kimhuat_all_employee"
+            web_icon="purchase,static/description/icon.png"
+            sequence="25"/>
+        <!--Menu Purchase Purchase-request-->
+        <menuitem id="purchase_request.parent_menu_purchase_request"
+            name="Purchase requests"
+            groups="purchase_request.group_purchase_request_user,purchase_request.group_purchase_request_manager,group_kimhuat_manager,group_kimhuat_admin_clerk,group_kimhuat_all_employee"
+            />
+
+        <!--Menu Invoicing-->
+        <menuitem name="Invoicing"
+            id="account.menu_finance"
+            groups="account.group_account_user,account.group_account_manager,account.group_account_invoice,group_kimhuat_accountant"
+            web_icon="account,static/description/icon.png"
+            sequence="40"/>
+
+        <!--&lt;!&ndash;Button Register Payment&ndash;&gt;-->
+        <!--<record id="kimhuat_modifier_invoice_form_register_payment" model="ir.ui.view">-->
+            <!--<field name="name">Invoice Form Register Payment</field>-->
+            <!--<field name="model">account.invoice</field>-->
+            <!--<field name="inherit_id" ref="account.invoice_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//form/header/button[@name='129']" position="replace">-->
+                    <!--<button name="129" type="action" states="open" string="Register Payment" groups="account.group_account_invoice" class="oe_highlight"/>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--Menu Invoicing Sales Payment-->
+        <menuitem action="account.action_account_payments" id="account.menu_action_account_payments_receivable"
+                  parent="account.menu_finance_receivables" sequence="20" groups="account.group_account_user,group_kimhuat_accountant"/>
+
+        <!--Menu invoicing chart of account-->
+        <menuitem id="account.menu_finance_entries" name="Adviser" parent="account.menu_finance" sequence="4" groups="account.group_account_manager,group_kimhuat_accountant"/>
+
+        <!--Menu invoicing reprot-->
+        <menuitem id="account.menu_finance_reports" name="Reports" parent="account.menu_finance" sequence="5" groups="account.group_account_invoice,group_kimhuat_accountant"/>
+
+        <!--Menu invoicing report pdfprint-->
+        <menuitem id="account.menu_finance_legal_statement" name="PDF Reports" parent="account.menu_finance_reports" groups="account.group_account_user,group_kimhuat_accountant"/>
+
+        <!--Menu Employee Departments-->
+        <menuitem action="hr.open_module_tree_department" id="hr.menu_hr_department_tree" parent="hr.menu_hr_root" sequence="90" groups="hr.group_hr_user,group_kimhuat_accountant,group_kimhuat_admin_clerk"/>
+
+        <!-- Menu Employee -->
+        <record id="hr.menu_open_view_employee_list_my" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('kimhuat_modifier_access_rights.group_kimhuat_accountant'))]"/>
+        </record>
+
+        <!--Menu Employee Contacts-->
+        <menuitem id="hr_contract.hr_menu_contract" name="Contracts" action="hr_contract.action_hr_contract" parent="hr.menu_hr_root" sequence="4" groups="hr.group_hr_manager,group_kimhuat_admin_clerk,group_kimhuat_accountant"/>
+
+        <!--Menu Emloyee Configuration-->
+        <menuitem id="hr.menu_human_resources_configuration" name="Configuration" parent="hr.menu_hr_root" groups="hr.group_hr_manager,group_kimhuat_admin_clerk" sequence="100"/>
+
+        <!--Menu Inventory-->
+        <menuitem name="Inventory" id="stock.menu_stock_root" sequence="30"
+        groups="stock.group_stock_manager,stock.group_stock_user,group_kimhuat_manager,group_kimhuat_admin_clerk"
+        web_icon="stock,static/description/icon.png"/>
+
+        <!--Menu Inventory Delivery-->
+        <menuitem id="stock.all_picking" name="All Transfers" parent="stock.menu_stock_warehouse_mgmt" sequence="2"
+                  action="stock.action_picking_tree_all" groups="stock.group_stock_manager,stock.group_stock_user,group_kimhuat_manager,group_kimhuat_admin_clerk"/>
+
+        <!--Menu Inventory Lots/Serial Numbers-->
+        <menuitem action="stock.action_production_lot_form" id="stock.menu_action_production_lot_form"
+        parent="stock.menu_stock_inventory_control" groups="stock.group_production_lot,group_kimhuat_manager"
+        sequence="101"/>
+
+        <!--Menu Inventory Configuration-->
+        <menuitem id="stock.menu_stock_config_settings" name="Configuration" parent="stock.menu_stock_root"
+            sequence="100" groups="stock.group_stock_manager,group_kimhuat_manager"/>
+
+        <!--Menu Inventory Configuration Warehouse Management-->
+        <menuitem id="stock.menu_warehouse_config" name="Warehouse Management" parent="stock.menu_stock_config_settings" groups="stock.group_stock_manager,group_kimhuat_manager" sequence="1"/>
+
+        <!--Menu Inventory Configuration Warehouse-->
+        <menuitem action="stock.action_warehouse_form" id="stock.menu_action_warehouse_form"
+            groups="base.group_no_one,stock.group_stock_multi_warehouses,group_kimhuat_manager"
+            parent="stock.menu_warehouse_config" sequence="1"/>
+
+        <!--Menu Leaves Allocation-->
+        <menuitem
+            id="hr_holidays.menu_open_department_leave_allocation_approve" groups="hr_holidays.group_hr_holidays_manager,hr_holidays.group_hr_holidays_user"
+            name="Leaves Allocation"
+            parent="hr_holidays.menu_hr_holidays_approvals"
+            action="hr_holidays.open_department_holidays_allocation_approve"
+            sequence="2"/>
+
+        <!--Button stock.inventory.form-->
+        <record id="kimhuat_modifier_stock_inventory_form" model="ir.ui.view">
+            <field name="name">Stock Inventory Form</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header/button[@name='action_done']" position="replace">
+                    <button name="stock.action_done" states="confirm" string="Validate Inventory" type="object" class="oe_highlight" groups="stock.group_stock_manager,kimhuat_modifier_access_rights.group_kimhuat_manager"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Employee Form-->
+        <!--Input field category_ids-->
+        <record id="kimhuat_modifier_employee_form" model="ir.ui.view">
+            <field name="name">Employee Form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/field[@name='category_ids']" position="replace">
+                    <field name="category_ids" widget="many2many_tags" placeholder="e.g. Part Time" options="{'no_create_edit': True}" groups="hr.group_hr_user,kimhuat_modifier_access_rights.group_kimhuat_manager"/>
+                </xpath>
+                <xpath expr="//form/sheet/div/button[@name='toggle_active']" position="replace">
+                      <button name="toggle_active" type="object" groups="hr.group_hr_user,kimhuat_modifier_access_rights.group_kimhuat_manager" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                      </button>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Input field Is a Manager-->
+        <record id="kimhuat_modifier_employee_form_hr_contract_inherit" model="ir.ui.view">
+            <field name="name">Employee Form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='manager']" position="replace">
+                    <field name="manager" groups="base.group_no_one,kimhuat_modifier_access_rights.group_kimhuat_manager"/>
+                </xpath>
+                <field name="vehicle_distance" position="attributes">
+                	<attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!--Button timesheets-->
+        <record id="kimhuat_modifier_employee_form_button_timesheets" model="ir.ui.view">
+            <field name="name">Employee Form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_employee_extd_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='482']" position="replace">
+                    <button name="482" type="action" class="oe_stat_button" icon="fa-clock-o" groups="hr_timesheet.group_hr_timesheet_user,kimhuat_modifier_access_rights.group_kimhuat_manager">
+                        <field name="timesheet_count" widget="statinfo" string="Timesheets"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Button Contracts-->
+        <!--Button timesheets-->
+        <record id="kimhuat_modifier_employee_form_button_contracts" model="ir.ui.view">
+            <field name="name">Employee Form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='436']" position="replace">
+                    <button name="436" class="oe_stat_button" icon="fa-book" type="action" groups="hr.group_hr_manager,kimhuat_modifier_access_rights.group_kimhuat_manager">
+                            <field name="contracts_count" widget="statinfo" string="Contracts"/>
+                        </button>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Hr Holidays Form-->
+        <record id="kimhuat_modifier_hr_holidays_form" model="ir.ui.view">
+            <field name="name">Hr Holidays Form</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group/group[2]/field[@name='holiday_type']" position="replace">
+                    <field name="holiday_type" attrs="{'readonly':[('type', '=', 'remove'),('state','!=','draft')]}" string="Mode"
+                           groups="hr_holidays.group_hr_holidays_user,kimhuat_modifier_access_rights.group_kimhuat_accountant,kimhuat_modifier_access_rights.group_kimhuat_admin_clerk,kimhuat_modifier_access_rights.group_kimhuat_all_employee" context="{'employee_id':employee_id}"/>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[2]/field[@name='employee_id']" position="replace">
+                    <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}"
+                           groups="hr_holidays.group_hr_holidays_user,kimhuat_modifier_access_rights.group_kimhuat_accountant,kimhuat_modifier_access_rights.group_kimhuat_admin_clerk,kimhuat_modifier_access_rights.group_kimhuat_all_employee"/>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[2]/field[@name='department_id']" position="replace">
+                    <field name="department_id" groups="hr_holidays.group_hr_holidays_user,kimhuat_modifier_access_rights.group_kimhuat_accountant,kimhuat_modifier_access_rights.group_kimhuat_admin_clerk,kimhuat_modifier_access_rights.group_kimhuat_all_employee"
+                           attrs="{'readonly':['|','|' ,('type','=','add'),('holiday_type','=','category'),('state','=', 'validate')],'invisible':[('holiday_type','=','category')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+
+    <data noupdate="0">
+        <!-- ACCOUNTANT GROUP -->
+
+        <!--3.1.8 Expense Claims-->
+        <record model="ir.rule" id="access_kimhuat_expense_claims_accountant">
+            <field name="name">Accountant - Expense Claims</field>
+            <field name="model_id" ref="hr_expense.model_hr_expense"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, [ref('group_kimhuat_accountant')])]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="perm_create" eval="1"/>
+        </record>
+
+        <!--3.1.9 Leave Requests -->
+        <record model="ir.rule" id="access_kimhuat_expense_hr_holidays_accountant">
+            <field name="name">Accountant - Hr Holidays</field>
+            <field name="model_id" ref="hr_holidays.model_hr_holidays"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, [ref('group_kimhuat_accountant')])]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="perm_create" eval="1"/>
+        </record>
+
+
+                <!-- MANAGER GROUP -->
+
+        <!--3.2.3 Customer Invoice Management-->
+        <record model="ir.rule" id="kimhuat_modifier_access_rights_account_analytic_line_rule">
+            <field name="name">Manager - Account Analytic Line</field>
+            <field name="model_id" ref="analytic.model_account_analytic_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, [ref('group_kimhuat_manager')])]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="perm_create" eval="1"/>
+        </record>
+
+
+        <!-- ADMIN CLERK GROUP -->
+            <!--3.3.8 Expense Claims-->
+        <record model="ir.rule" id="access_kimhuat_expense_claims_admin">
+            <field name="name">Admin - Expense Claims</field>
+            <field name="model_id" ref="hr_expense.model_hr_expense"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, [ref('group_kimhuat_admin_clerk')])]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="perm_create" eval="1"/>
+        </record>
+
+        <!--3.3.9 Leave Requests -->
+        <record model="ir.rule" id="access_kimhuat_expense_hr_holidays_admin">
+            <field name="name">Admin - Hr Holidays</field>
+            <field name="model_id" ref="hr_holidays.model_hr_holidays"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, [ref('group_kimhuat_admin_clerk')])]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="perm_create" eval="1"/>
+        </record>
+
+        <!-- ALL EMPLOYEE GROUP -->
+        <record model="ir.rule" id="access_kimhuat_expense_claims_employee">
+            <field name="name">Employee - Expense Claims</field>
+            <field name="model_id" ref="hr_expense.model_hr_expense"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, [ref('group_kimhuat_all_employee')])]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="perm_create" eval="1"/>
+        </record>
+
+        <!--3.4.3 Leave Requests -->
+        <record model="ir.rule" id="access_kimhuat_expense_hr_holidays_employee">
+            <field name="name">Employee - Hr Holidays</field>
+            <field name="model_id" ref="hr_holidays.model_hr_holidays"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, [ref('group_kimhuat_all_employee')])]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="perm_create" eval="1"/>
+        </record>
+
+
+        <record model="ir.rule" id="stock_picking_rule">
+        <field name="name">stock_picking multi-company</field>
+        <field name="model_id" search="[('model','=','stock.picking')]" model="ir.model"/>
+        <field name="global" eval="True"/>
+        <field name="groups" eval="[(4, ref('kimhuat_modifier_access_rights.group_kimhuat_manager')), (4, ref('kimhuat_modifier_access_rights.group_kimhuat_admin_clerk'))]"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    </data>
+</odoo>

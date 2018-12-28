@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+		<record id="view_pos_promotion_form_inherit_custome" model="ir.ui.view">
+            <field name="name">POS Promotion</field>
+            <field name="model">pos.promotion</field>
+			<field name="inherit_id" ref="pos_promotion.pos_promotion_form"/>
+			<field name="type">form</field>
+            <field name="arch" type="xml">
+				<xpath expr="//field[@name='type']" position="before">
+					<field name='period_type'/>
+				</xpath>
+				<xpath expr="//field[@name='active']" position="after">
+					<field name='period_type'/>
+				</xpath>
+			</field>
+		</record>
+
+
+</odoo>

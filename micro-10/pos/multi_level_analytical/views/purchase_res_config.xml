@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_config_analytic_inherit" model="ir.ui.view">
+        <field name="name">analytic account settings</field>
+        <field name="model">account.config.settings</field>
+        <field name="inherit_id" ref="purchase.view_account_config"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[@name='analytic_account_purchase']//div[1]" position="inside">
+                <label for="" style="display:block"/>
+                <field name="group_analytic_distribution_for_purchases" class="oe_inline"/>
+                <label for="group_analytic_distribution_for_purchases" />
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_leave_management_rule_notification_user" model="ir.rule">
+        <field name="name">Holidya : Notification Acess</field>
+        <field name="model_id" ref="model_hr_holiday_notification"/>
+        <field name="domain_force">['|', '|', ('author_id','=',user.id), ('email_from','like',user.partner_id.email), ('email_to','like',user.partner_id.email)]</field>
+        <field name="groups" eval="[(4, ref('hr.group_hr_user'))]"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+    </record>
+
+</odoo>

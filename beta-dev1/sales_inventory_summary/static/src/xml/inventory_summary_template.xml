@@ -1,0 +1,22 @@
+<templates>
+    <t t-name="WidgetInventory">
+        <div class="col-xs-12">
+            <table class="table table-bordered">
+                <tr>
+                   <th>Product</th>
+                   <t t-foreach="widget.locations_ids" t-as="location">
+                       <th class="text-center">Location <t t-esc="location"/></th>
+                   </t>
+                    <th class="text-center">Required Quantity</th>
+                    <th class="text-center">Total Qty On Hand</th>
+                </tr>
+                <tr t-foreach="widget.inventory_summary" t-as="inventory_summary">
+                    <td><t t-esc="inventory_summary.product_name"/> </td>
+                    <td class="text-center" t-foreach="inventory_summary.quantity" t-as="quantity">
+                        <span><t t-esc="quantity"/></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </t>
+</templates>

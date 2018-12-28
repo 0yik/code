@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<record id="view_allocate_leaves_info_form" model="ir.ui.view">
+            <field name="name">view.allocate.leave.info.form</field>
+            <field name="model">allocate.leaves</field>
+            <field name="arch" type="xml">
+                <form>
+                	<p>List of employee to whom leave is not allocate due to following reason.</p>
+                    <group>
+                        <field name="leave_reason_ids" nolabel="1">
+                        	<tree create="false" editable="bottom">
+                        		<field name="employee_id" readonly="1"/>
+                        		<field name="reason" readonly="1"/>
+                        	</tree>
+                        </field>
+                   	</group>
+                    <footer>
+                        <button special="cancel" string="OK"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+		
+</odoo>

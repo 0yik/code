@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="remark_asset_tree">
+            <field name="name">remark.asset.tree</field>
+            <field name="model">project.remark</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="owner_user"/>
+                    <field name="asset_number"/>
+                    <field name="serial_number"/>
+                    <field name="purchase_date"/>
+                    <field name="start_date"/>
+                    <field name="location"/>
+                    <field name="accumulated"/>
+                    <field name="asset_description"/>
+                    <field name="remark"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="remark_asset_form">
+            <field name="name">remark.asset.form</field>
+            <field name="model">project.remark</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="asset_number"/>
+                                <field name="serial_number"/>
+                                <field name="purchase_date"/>
+                                <field name="owner_user"/>
+                                <field name="asset_description"/>
+                            </group>
+                            <group>
+                                <field name="location"/>
+                                <field name="start_date"/>
+                                <field name="remark"/>
+                                <field name="accumulated"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_remark_asset" model="ir.actions.act_window">
+            <field name="name">Asset</field>
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <field name="res_model">project.remark</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="remark_asset_tree"/>
+            <!--<field name="search_view_id" ref="view_hr_timesheet_invoice_factor_ search"/>-->
+            <!--<field name="help" type="html">-->
+            <!--</field>-->
+        </record>
+
+        <menuitem id="menu_remark" name="Remark" sequence="20" />
+        <menuitem id="menu_remark_asset" name="Asset" parent="menu_remark" sequence="21" action="action_remark_asset"/>
+
+        <record id="view_account_asset_asset_form_inherit" model="ir.ui.view">
+            <field name="name">account.asset.asset.form</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_asset_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group/group[1]/field[@name='date']" position="attributes">
+                    <attribute name="string">Depreciation Start Date</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[1]/field[@name='date']" position="after">
+                    <field name="accumulated"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

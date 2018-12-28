@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_emploeyee_inherit_bio_form" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <!--xpath expr="//field[@name='category_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='category_ids']" position="after">
+                    <label for="is_teamleader" string=" Is Teamleader?"/>
+                    <field name="is_teamleader"/>
+                </xpath-->
+                <xpath expr="//page[@name='hr_settings']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <xpath expr="/form/*" position="before">
+                    <header>
+                         <button string="Assign User" name="action_assign_user"  type="object" class="oe_highlight"/>
+                    </header>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_res_users_inherit_employee_form" model="ir.ui.view">
+            <field name="name">res.users.employee.inherit.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//form/sheet/div/group/field[@name='partner_id']" position="after">
+                     <field name="employee_ids" widget="many2many_tags"/>
+                 </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_timesheet_inherit_view_form" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_employee_extd_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(hr_timesheet_sheet.act_hr_employee_2_hr_timesheet)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

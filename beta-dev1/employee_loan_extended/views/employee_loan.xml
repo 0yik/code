@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="employee_loan_details_inherited" model="ir.ui.view">
+            <field name="name">employee.loan.details.extended</field>
+            <field name="model">employee.loan.details</field>
+            <field name="inherit_id" ref="hr_employee_loan.view_loan_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='compute_installments']" position="replace"> 
+                    <button name="compute_installments" class="oe_highlight" groups="account.group_account_invoice"
+                        colspan="2" states="draft" string="Compute" type="object"
+                        help="Compute Installments or change the state according to the disbursement type for loan request or repayment type in case of installments" />
+                </xpath>
+
+                <xpath expr="//button[@name='applied']" position="replace"> 
+                    <button string="Apply" type="object" name="applied_state" groups="base.group_user"
+                            class="oe_highlight" states="draft" />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<template id="snippet_style_sixteen" inherit_id="honos_snippets.honos_snippets"
+		name="honos snippet" priority="16">
+		<xpath
+			expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']"
+			position="inside">
+			<t t-snippet="honos_snippet_style_16.snippet_style_16_template"
+			t-thumbnail="/honos_snippet_style_16/static/src/img/style_16.jpg" />
+		</xpath>
+	</template>
+	
+	<template id="snippet_style_16_template" name="Style 16">
+		<section class="img_banner_snippet">
+				<div class="img_banner_snippet_img_div">
+					<a href="#"><section><img class="s_image_common" src="/honos_snippet_style_16/static/src/img/style_16_img_1.jpg"></img></section></a>
+				</div>
+			</section>
+	</template>
+</odoo>

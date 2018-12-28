@@ -1,0 +1,322 @@
+<odoo>
+	<data>
+<!-- 		<record id="sale_order_delivery_view_form" model="ir.ui.view"> -->
+<!-- 			<field name="name">sale.order.delivery.view.form</field> -->
+<!-- 			<field name="model">sale.order</field> -->
+<!-- 			<field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock" /> -->
+<!-- 			<field name="arch" type="xml"> -->
+<!-- 				<xpath expr="//button[@name='action_view_delivery']" position="attributes"> -->
+<!-- 					<attribute name="invisible">1</attribute> -->
+<!-- 				</xpath> -->
+<!-- 			</field> -->
+<!-- 		</record> -->
+
+		<record id="sale_order_view_tree" model="ir.ui.view">
+			<field name="name">sale.order.view.tree</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='date_order']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='state']" position="replace">
+					<field name="state" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="sale_order_view_form" model="ir.ui.view">
+			<field name="name">sale.order.view.form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='note']" position="replace">
+					<field name="note" class="oe_inline" placeholder="Remarks Here...." />
+				</xpath>
+				<xpath expr="//field[@name='name']" position="replace">
+				    <field name="name" />
+				</xpath>
+				<xpath expr="//field[@name='partner_id']" position="replace">
+					<field name="partner_id" domain="[('customer','=',True),('is_company','=',True)]"
+						context="{'search_default_customer':1, 'show_address': 1}"
+						options="{&quot;always_reload&quot;: True}" />
+				</xpath>
+				<xpath expr="//sheet/group" position="after">
+					<group>
+						<group>
+							<field name="ref_no" />
+							<field name="company_commision" />
+							<field name="cc_auto" />
+							<field name="employee_id" />
+							<field name="tax_id" />
+							<field name="tax_rate" />
+							<field name="divison" />
+							<field name="buyer_name" />
+							<field name="projects_id" />
+							<field name="condition_sales_code" />
+						</group>
+						<group>
+							<field name="agent" />
+							<field name="agent_commision" />
+							<field name="ac_auto" />
+							<field name="season" />
+							<field name="lc_no" />
+							<field name="shipment_buyer_order_number" />
+							<field name="subject" />
+							<field name="opening" />
+							<field name="closing" />
+						</group>
+					</group>
+				</xpath>
+				<xpath expr="//notebook" position="after">
+					<group>
+						<group>
+							<field name="currency_id" />
+							<field name="currency_rate" />
+							<field name="freight_id" />
+							<field name="insure_id" />
+							<field name="discount" />
+							<field name="discount_amount" />
+						</group>
+						<group>
+							<field name="freight_pm" />
+							<field name="insure_pm" />
+							<field name="line_item_discount" />
+							<field name="qty_total" />
+							<field name="qty_issued" />
+						</group>
+					</group>
+				</xpath>
+				<xpath expr="//field[@name='order_line']" position="attributes">
+					<attribute name="context">{'default_shipment_buyer_order_no':
+						shipment_buyer_order_number}
+					</attribute>
+				</xpath>
+				<xpath expr="//field[@name='order_line']/tree/field[@name='product_id']"
+					position="replace">
+					<field name="pm_no" />
+					<field name="shipment_no" />
+					<field name="shipment_buyer_order_no" />
+					<field name="product_id" string="ItemNo"
+						attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}"
+						context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}" />
+				</xpath>
+
+				<xpath
+					expr="//field[@name='order_line']/tree/field[@name='qty_delivered']"
+					position="replace">
+					<field name="qty_delivered" invisible="1" />
+				</xpath>
+
+				<xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']"
+					position="replace">
+					<field name="qty_outstanding" />
+					<field name="price_unit" attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"
+						string="ItemUnitPrice" />
+				</xpath>
+				<xpath
+					expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']"
+					position="replace">
+					<field name="product_uom_qty" string="ItemQty"
+						context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}" />
+				</xpath>
+
+				<xpath expr="//field[@name='order_line']/tree/field[@name='price_total']"
+					position="after">
+					<field name="shipment_delivery_date" />
+					<field name="shipment_ship_mode" />
+					<field name="asn_no" />
+					<field name="final_destination" />
+					<field name="ship_address" />
+					<field name="item_country_origin" />
+					<field name="item_factory_english" />
+					<field name="item_hs_code" />
+					<field name="agent_commision" />
+					<field name="company_commision" />
+					<field name="gender" />
+					<field name="ref_no" />
+					<field name="note" />
+					<!-- <field name="pm_bottom_remark" /> -->
+					<field name="cat_no" />
+					<field name="col1_content" />
+					<field name="col1_name" />
+					<field name="col2_content" />
+					<field name="col2_name" />
+					<field name="col3_content" />
+					<field name="col3_name" />
+					<field name="col_code" />
+					<field name="colour_name" />
+					<!-- <field name="size" /> -->
+					<!-- <field name="original_delivery_date" /> -->
+					<!-- <field name="fabric_id" invisible="1" /> -->
+					<!-- <field name="fiber_content" invisible="1" /> -->
+					<!-- <field name="currency" /> -->
+					<!-- <field name="currency_code" /> -->
+					<!-- <field name="destination_code" /> -->
+					<!-- <field name="destination" /> -->
+					<!-- <field name="product_pack_id" /> -->
+					<!-- <field name="shipment_loading" /> -->
+					<!-- <field name="item_buyer_order_no" /> -->
+				</xpath>
+				<xpath
+					expr="//field[@name='order_line']/form/group/group/label[@for='qty_delivered']"
+					position="replace">
+					<label for="qty_delivered" string="Delivered Quantity"
+						invisible="1" />
+				</xpath>
+				<xpath expr="//field[@name='order_line']/form/group/group/div[2]"
+					position="replace">
+					<div invisible="1">
+						<field name="qty_delivered" invisible="1" />
+					</div>
+				</xpath>
+				<xpath
+					expr="//field[@name='order_line']/form/group/group/field[@name='tax_id']"
+					position="before">
+					<field name="pm_no" />
+					<field name="shipment_buyer_order_no"
+						context="{'default_shipment_buyer_order_no': parent.shipment_buyer_order_no}" />
+					<field name="component_code" />
+					<field name="hts_code" />
+					<field name="cat_no" />
+					<field name="knitted" />
+					<field name="note" />
+					<field name="stk_issue_qty" />
+					<field name="stk_issue_os_qty" />
+					<field name="cost_total" />
+					<field name="port_of_loading" />
+					<field name="port_of_discharger" />
+					<field name="final_destination" />
+					<field name="dc_no" />
+					<field name="vessel" />
+					<field name="bl_no" />
+					<field name="item2" />
+					<field name="col1_name" />
+					<field name="col1_content" />
+					<field name="col2_name" />
+					<field name="col2_content" />
+					<field name="col3_name" />
+					<field name="col3_content" />
+					<field name="currency" />
+					<field name="currency_code" />
+					<field name="destination_code" />
+					<field name="destination" />
+					<field name="pm_bottom_remark" />
+					<field name="shipment_no" />
+					<field name="shipment_ref" />
+					<field name="shipment_discharge_code" />
+					<field name="shipment_discharge" />
+					<field name="shipment_destination_code" />
+					<field name="shipment_loading_code" />
+					<field name="shipment_loading" />
+					<field name="item_seq" />
+				</xpath>
+				<xpath
+					expr="//field[@name='order_line']/form/group/group/field[@name='product_id']"
+					position="replace">
+					<field name="product_id" string="ItemNo"
+						context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+						attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}" />
+					<field name="product_pack_id" />
+				</xpath>
+				<xpath
+					expr="//field[@name='order_line']/form/group/group/label[@for='product_uom_qty']"
+					position="replace">
+					<label for="product_uom_qty" string="ItemQty" />
+				</xpath>
+				<xpath expr="//field[@name='order_line']/form/label[@for='name']"
+					position="replace">
+					<label for="name" string="ItemDesc" />
+				</xpath>
+				<xpath
+					expr="//field[@name='order_line']/form/group/group/field[@name='price_unit']"
+					position="replace">
+					<field name="qty_outstanding" />
+					<field name="price_unit" string="ItemUnitPrice" />
+					<field name="company_commision" />
+					<field name="agent_commision" />
+					<field name="colour_name" />
+					<field name="col_code" />
+					<field name="tolerance" />
+					<field name="shipment_ship_mode" />
+					<field name="shipment_delivery_date" />
+					<field name="original_delivery_date" />
+					<field name="ref_no" />
+					<field name="asn_no" />
+					<field name="gender" />
+					<field name="fabric_id" />
+					<field name="fiber_content" />
+					<field name="dim_code" />
+					<field name="item_buyer_order_no" />
+					<field name="item_factory_code" />
+					<field name="item_factory_english" />
+					<field name="item_country_code" />
+					<field name="item_country_origin" />
+					<field name="item_production_country_code" />
+					<field name="item_production_country" />
+					<field name="item_ean_no" />
+					<field name="item_hs_code" />
+					<field name="item_hs" />
+					<field name="item_label" />
+					<field name="attribute_seq_no" />
+					<field name="attribute_label" />
+					<field name="attribute_data_type" />
+					<field name="attribute_code" />
+					<field name="attribute_value" />
+					<field name="ship_address" />
+					<field name="pack_seq_no" />
+					<field name="pack_line_no" />
+				</xpath>
+				<xpath expr="//field[@name='order_line']/form/label[@for='name']"
+					position="before">
+					<group string="Size">
+						<group>
+							<field name="size" />
+							<field name="solid_size_pack"
+								attrs="{'invisible':['|',('size','=',False),('size','=','os')],'required':[('size','!=',False),('size','!=','os')]}" />
+						</group>
+						<group>
+							<field name="ratio"
+								attrs="{'invisible':['|',('size','=',False),('size','=','os')],'required':[('size','!=',False),('size','!=','os')]}" />
+							<field name="ttl_ctn"
+								attrs="{'invisible':['|',('size','=',False),('size','=','os')],'required':[('size','!=',False),('size','!=','os')]}" />
+						</group>
+					</group>
+					<div>
+						<label for="size_line"
+							attrs="{'invisible':['|',('size','=',False),('size','=','os')]}" />
+						<field name="size_line"
+							attrs="{'invisible':['|',('size','=',False),('size','=','os')]}">
+							<tree string="Sales Order Lines" create='false'>
+								<field name="size" />
+								<field name="qty" />
+							</tree>
+						</field>
+					</div>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="sale.action_orders" model="ir.actions.act_window">
+            <field name="name">Sales Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent'))]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a Quotation, the first step of a new sale.
+                </p><p>
+                    Once the quotation is confirmed, it becomes a sales order.
+                    You'll be able to invoice it and collect payments.
+                    From the <i>Sales Orders</i> menu, you can track delivery
+                    orders or services.
+                </p>
+            </field>
+        </record>
+
+	</data>
+</odoo>

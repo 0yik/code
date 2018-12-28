@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+
+
+    <t t-name="TaxButton">
+        <button class="control-button btn btn-default btn-fill btn-wd button-tax tax-apply">
+            <i class="fa fa-tag"/> Tax / Non-Tax
+        </button>
+    </t>
+
+
+</template>

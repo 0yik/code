@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="website_config_settings_view_form_inherit_mod_honos_theme" model="ir.ui.view">
+            <field name="name">website.config.settings.view.inherit.mod.honos.theme</field>
+            <field name="model">website.config.settings</field>
+            <field name="inherit_id" ref="website_sale.website_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <field name="group_website_multiimage" position="before">
+                    <field class="oe_inline" name="website_advance_deposit"/>
+                </field>
+            </field>
+        </record>
+        
+        <!-- Custom Made block code -->
+        <record model="ir.ui.view" id="view_custom_made_form">
+            <field name="name">custom.made.form</field>
+            <field name="model">custom.made</field>
+            <field name="arch" type="xml">
+                <form string="Custom Made">
+                    <sheet>
+                        <h1>
+                            <field name="name" placeholder="Name..." class="oe_inline"/>
+                        </h1>
+                        <group>
+	                        <group>
+			                    <field name="quantity"/>
+			                    <field name="fabric"/>
+			                    <field name="budget"/>
+			                    <field name="deadline"/>
+	                        </group>
+	                        <group>
+	                            <field name="email" />
+	                            <field name="phone"/>
+	                            <field name="u_image" filename="file_name"/>
+                                <field name="file_name" invisible="1"/>
+	                        </group>
+	                    </group>
+	                    <notebook name="remarks">
+	                        <page string="Remarks" name="remarks">
+	                            <field name="remarks" />
+	                        </page>
+	                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_custom_made_tree">
+            <field name="name">custom.made.tree</field>
+            <field name="model">custom.made</field>
+            <field name="arch" type="xml">
+                <tree> 
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="quantity"/>
+                    <field name="fabric"/>
+                    <field name="budget"/>
+                    <field name="deadline"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="action_custom_made" model="ir.actions.act_window">
+            <field name="name">Custom Made</field>
+            <field name="res_model">custom.made</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_website_custom_made" name="Custom Made" sequence="218"/>
+        <menuitem id="menu_website_custom_costume" parent="menu_website_custom_made" action="action_custom_made"
+            sequence="0" name="Custom Made Costume"/>
+    </data>
+</odoo>

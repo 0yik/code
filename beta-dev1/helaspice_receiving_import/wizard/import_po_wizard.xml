@@ -1,0 +1,100 @@
+<odoo>
+
+    <record id="import_po_line_wizard" model="ir.ui.view">
+        <field name="name">Import PO Line</field>
+        <field name="model">import.po.line</field>
+        <field name="arch" type="xml">
+            <form string="Import PO Line" create="false" delete="false" edit="false">
+                <group>
+                    <group>
+                        <field name="shipment_id" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="sap_ref" readonly="1"/>
+                        <field name="po_ref" readonly="1"/>
+                        <field name="item_no" readonly="1"/>
+                        <field name="item_barcode" readonly="1"/>
+                        <field name="product_id" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="received_qty" readonly="1"/>
+                        <field name="batch_no" readonly="1"/>
+                        <field name="bbd" readonly="1"/>
+                        <field name="pl_qty" readonly="1"/>
+                        <field name="pallet_no" readonly="1"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="import_po_line_tree" model="ir.ui.view">
+        <field name="name">Import PO Line</field>
+        <field name="model">import.po.line</field>
+        <field name="arch" type="xml">
+            <tree string="Import PO Line" create="false" delete="false" edit="false">
+                <field name="shipment_id" options="{'no_create': True, 'no_open': True}"/>
+                <field name="sap_ref"/>
+                <field name="po_ref"/>
+                <field name="item_no"/>
+                <field name="item_barcode"/>
+                <field name="product_id"/>
+                <field name="received_qty"/>
+                <field name="batch_no"/>
+                <field name="bbd"/>
+                <field name="pl_qty"/>
+                <field name="pallet_no"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="import_po_wizard" model="ir.ui.view">
+        <field name="name">Import PO</field>
+        <field name="model">import.po</field>
+        <field name="arch" type="xml">
+            <form string="Import PO">
+                <form>
+                    <group>
+                        <group>
+                            <field name="file" filename="filename" required="1" attrs="{'readonly': [('invalid_data_ids', '=', []),('valid_data_ids', '!=', [])]}"/>
+                            <field name="filename" invisible="1"/>
+                        </group>
+                        <group/>
+                    </group>
+                    <div class="oe_grey" attrs="{'invisible':['|',('invalid_data_ids', '!=', []),('valid_data_ids', '!=', [])]}">
+                        <b>File format :</b> Excel<br/>
+                        <b>Columns :</b> #, Shipment Ref, SAP Ref, PO Ref, Item No., Item Barcode, Item Description, Received Qty, Batch Number(P/L), BBD, PL Qty, Pallet No.<br/>
+                        <b>Note :</b><br/>
+                        <ul>
+                            <li>All columns should be present as per the above sequence.</li>
+                            <li>First row of excel sheet will be excluded while importing. It is considered as a header.</li>
+                        </ul>
+                    </div>
+                    <notebook attrs="{'invisible': [('invalid_data_ids', '=', []),('valid_data_ids', '=', [])]}">
+                        <page string="Valid Data" attrs="{'invisible': [('valid_data_ids', '=', [])]}">
+                            <field name="valid_data_ids" readonly="1"/>
+                        </page>
+                        <page string="Invalid Data" attrs="{'invisible': [('invalid_data_ids', '=', [])]}">
+                            <field name="invalid_data_ids" readonly="1"/>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="action_validate" string="Validate" type="object" class="oe_highlight" attrs="{'invisible': [('invalid_data_ids', '=', []),('valid_data_ids', '!=', [])]}"/>
+                        <button name="action_import" string="Import" type="object" class="oe_highlight" attrs="{'invisible': ['|',('invalid_data_ids', '!=', []),('valid_data_ids', '=', [])]}"/>
+                        <button name="cancel" special="cancel" string="Cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_import_po" model="ir.actions.act_window">
+        <field name="name">Import PO</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">import.po</field>
+        <field name="target">new</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <menuitem id="import_po_menu" action="act_import_po" parent="stock.menu_stock_inventory_control" sequence="30"/>
+
+</odoo>

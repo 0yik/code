@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Daily Work Journal Scheduler Every Days  -->
+        <record id="daily_work_journal_scheduler" model="ir.cron">
+            <field name="name" >Daily Work Journal Every Day</field>
+            <field eval="True" name="active"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="priority">4</field>
+            <field name="doall" eval="False" />
+            <field eval="'daily.work.journal'" name="model"></field>
+            <field eval="'action_sync_timesheet'" name="function"/>
+           <field eval="" name="args"/> 
+        </record>
+
+    </data>
+</odoo>

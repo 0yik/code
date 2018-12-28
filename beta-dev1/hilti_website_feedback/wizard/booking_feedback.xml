@@ -1,0 +1,28 @@
+<odoo>
+     
+	<record id="view_booking_feedback_wizard" model="ir.ui.view">
+		<field name="name">view.booking_feedback.wizard</field>
+		<field name="model">booking.feedback</field>
+		<field name="arch" type="xml">
+			<form string="Booking Feedback">
+				<group>
+					<field name='feedback_rating' widget="priority"/>
+					<field name='feedback_description'/>
+				</group>
+				<footer>
+					<button string="Save" class="btn-default" type="object" name="save_feedback"/>
+					<button string="Cancel" class="btn-default" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_booking_feedback" model="ir.actions.act_window">
+		<field name="name">Booking Feedback</field>
+		<field name="res_model">booking.feedback</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+    
+</odoo>

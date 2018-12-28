@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="view_picking_form_sap_inh" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <button name="action_assign" position="after">
+                <button name="push_picklist" string="Push Picklist" type="object"/>
+            </button>
+        </field>
+    </record>
+
+</odoo>

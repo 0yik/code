@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="purchase_order_modifier_view" model="ir.ui.view">
+        <field name="name">Purchase Order Modifier View</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header" position="inside">
+                <button name="action_landed_cost_wiz" type="object" string="Biaya Landing" attrs="{'invisible': [('is_shipping_done', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//form/sheet/div[@name='button_box']" position="inside">
+                <button type="object" name="action_view_landed_cost" class="oe_stat_button" icon="fa-money" attrs="{'invisible':['|',('state', 'in', ('draft','sent','to approve')),('landed_cost_ids','=',[])]}">
+                    <field name="landed_cost_count" widget="statinfo" string="Biaya Landing" help="Landed Costs"/>
+                    <field name="landed_cost_ids" invisible="1"/>
+                </button>
+            </xpath>
+            <field name="partner_ref" position="after">
+                <field name="is_shipping_done" invisible="1"/>
+            </field>
+        </field>
+    </record>
+    <record id="landed_cost_modifier_view" model="ir.ui.view">
+        <field name="name">Landed Cost Modifier View</field>
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form"></field>
+        <field name="arch" type="xml">
+            <field name="picking_ids" position="after">
+                <field name="source_reference"/>
+                <field name="attachment"/>
+            </field>
+        </field>
+    </record>
+</odoo>

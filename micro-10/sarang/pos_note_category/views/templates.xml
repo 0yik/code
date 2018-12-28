@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="Orderline">
+        <t t-jquery=".info-list" t-operation="append">
+            <t t-if="line.get_note() or line.get_attribute_string()">
+                <li class="info">
+                    <i class='fa fa-tag'/><t t-esc="line.get_attribute_string()" /><t t-esc="line.get_note()" />
+                </li>
+            </t>
+        </t>
+    </t>
+    <t t-name="NewOrderlineNoteButton">
+         <button class="control-button btn btn-default btn-fill btn-wd oe_hidden"><i class="pe-7s-note2"/> Note cat</button>
+    </t>
+    <t t-extend="OrderlineNoteButton">
+         <t t-jquery="button" t-operation="replace">
+        </t>
+    </t>
+
+    <t t-extend="TextAreaPopupWidget">
+        <t t-jquery=".modal-dialog" t-operation="replace">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput">
+                <p class="title"><t t-esc=" widget.options.title || '' " /></p>
+                <div>
+                    <t t-foreach="widget.options.attribute || []" t-as="item">
+                        <button style="width:40%" t-attf-class="pos_note_category_button btn-primary btn-wd control-button #{item.isToggle ? 'active btn-fill' : '' }">
+                            <t t-esc="item.name || '' " />
+                        </button>
+                    </t>
+                </div>
+                <textarea style="margin-top:50px;width: 70%;" id="add_description" placeholder="Add description"><t t-esc="widget.options.value" /></textarea>
+                <div class="footer">
+                    <div class="button confirm">
+                        Ok
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+        </t>
+    </t>
+
+</templates>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!--HR Holidays Form-->
+    <record id="hr_holidays_form_inherit" model="ir.ui.view">
+        <field name="name">Hr Holidays Form Inherit</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+        <field name="arch" type="xml">
+            <field name="payslip_status" position="after">
+                <field name="next_manager_id" attrs="{'readonly':['|',('next_manager_id','!=',False),('state','!=','confirm')], 'invisible': [('type','!=','remove')]}"/>
+            </field>
+            <field name="holiday_status_id" position="after">
+                <field name="no_of_approval" invisible="1"/>
+                <field name="total_approval" readonly="1" attrs="{'invisible': [('type','!=','remove')]}"/>
+            </field>
+        </field>
+    </record>
+
+    <!--HR Holiday Status Form-->
+    <record id="hr_holidays_status_form_inherit" model="ir.ui.view">
+        <field name="name">Hr Holidays Status Form Inherit</field>
+        <field name="model">hr.holidays.status</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="arch" type="xml">
+            <field name="double_validation" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

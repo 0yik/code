@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form View Of Student Fees Register Information -->
+    <record id="view_student_fees_register_form_wizard" model="ir.ui.view">
+        <field name="name">student.fees.register.form.wizard</field>
+        <field name="model">student.fees.register</field>
+        <field name="arch" type="xml">
+            <form string="Student Fees Register">
+                <header>
+                    <button name="fees_register_confirm" type="object" class="fa fa-check" string="Confirm" states="draft" groups="atts_course.group_marketing_manager" state="draft"/>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="class_registration_id" attrs="{'readonly':[('state','not in','draft')]}"/>
+                            <field name="date" attrs="{'readonly':[('state','not in','draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="number" attrs="{'readonly':[('state','not in','draft')]}"/>
+                            <field name="registration_type" readonly="1"/>
+                            <field name="payment_deadline" readonly="1"/>
+                            <field name="payment_term_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Fees Register Lines">
+                            <field name="register_lines" required='1' attrs="{'readonly':[('state','not in','draft')]}">
+                                <tree string="Register lines" editable="bottom">
+                                    <field name="fee_head_id"/>
+                                    <field name="details"/>
+                                    <field name="amount"/>
+                                    <field name="quantity"/>
+                                    <field name="tax"/>
+                                    <field name="total"/>
+                                </tree>
+                            </field>
+                            <field name="remarks" placeholder="Remarks......"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button string='Validate' name="validate_fees" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_registration_fee_form" model="ir.actions.act_window">
+        <field name="name">Fees Register</field>
+        <field name="res_model">student.fees.register</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_student_fees_register_form_wizard"/>
+        <field name="context">{'default_class_registration_id': active_id}</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_registration_form_inherit" model="ir.ui.view">
+        <field name="name">class.registration.form.inherit</field>
+        <field name="model">class.registration</field>
+        <field name="inherit_id" ref="theme_atts.view_registration_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="%(action_open_registration_fee_form)d" type="action" string="Register Fee" class="oe_highlight" attrs="{'invisible': [('state','not in',('draft'))]}"/>
+                <button name="fees_reservation_confirm" type="object" class="fa fa-check" string="Confirm Reservation" states="register" groups="atts_course.group_marketing_manager" state="draft"/>
+                <button name="registration_cancel" type="object" string="Cancel" states="register,confirm" groups="atts_course.group_school_administration"/>
+            </xpath>
+            <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                <button name="action_view_fees" type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                    attrs="{'invisible': [('fees_count', '=', 0)]}">
+                    <field name="fees_count" widget="statinfo" string="Fees"/>
+                </button>
+                <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                    attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                   <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

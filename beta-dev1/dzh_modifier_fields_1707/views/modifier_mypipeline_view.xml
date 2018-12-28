@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="my_pipeline_tree_view_inherit" model="ir.ui.view">
+			<field name="name">crm.lead.tree.opportunity.inherit</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='planned_revenue']" position="attributes">
+					<attribute name="string">Monthly Revenue</attribute>
+				</xpath>
+			</field>
+		</record>
+
+        <record id="my_pipeline_tree_view_inherit" model="ir.ui.view">
+			<field name="name">crm.lead.tree.opportunity.inherit</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="dzh_modifier_fields.crm_lead_form_inherit_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/div[@class='oe_title']/h2[@class='o_row']" position="replace">
+					<h2 class="o_row">
+                        <div>
+                            <label for="currency_id" class="oe_edit_only"/>
+                            <div class="o_row">
+                                <field name="currency_id"/>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="planned_revenue" string="Monthy Revenue" class="oe_edit_only"/>
+                            <div class="o_row">
+                                <field name="company_currency" invisible="1"/>
+                                <field name="planned_revenue" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="annual_revenue" string="Annual Revenue" class="oe_edit_only"/>
+                            <div class="o_row">
+                                <field name="annual_revenue"/>
+                                <!--<span class="oe_grey"> at </span>-->
+                            </div>
+                        </div>
+                        <div>
+                            <label for="one_time_revenue" string="One Time Revenue" class="oe_edit_only"/>
+                            <div class="o_row">
+                                <field  name="one_time_revenue"/>
+                                <span class="oe_grey"> at </span>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="probability" class="oe_edit_only"/>
+                            <div class="o_row">
+                                <field name="probability" string="Probability" widget="integer"/>
+                                <span>%</span>
+                            </div>
+                        </div>
+                    </h2>
+				</xpath>
+                <!--<xpath  expr="//form/sheet/group/group[1]/field[@name='partner_id']" position="before">-->
+                    <!--<field  name="one_time_revenue" />-->
+                <!--</xpath>-->
+                <xpath expr="//form/sheet/group/group[2]/field[@name='date_deadline']" position="after">
+                    <label for="x_subscription_period"/>
+                    <div>
+                        <field name="x_month_number" nolabel="1"/>
+                        <br/>
+                        <div class="o_row">
+                            <field name="x_subscription_period" nolabel="1"/>To
+                            <field name="x_end_date" nolabel="1"/>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[2]/div[2]" position="after">
+                    <label for="invoice_type" string="Type"/>
+                    <div>
+                        <field name="invoice_type" widget="radio" class="inline" string="Type"/>
+                    </div>
+                </xpath>
+			</field>
+		</record>
+
+    </data>
+</odoo>

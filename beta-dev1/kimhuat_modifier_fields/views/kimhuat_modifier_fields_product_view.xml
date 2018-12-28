@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!--BRAND VIEW-->
+
+        <record id="kimhuat_modifier_fields_product_brand_view_tree" model="ir.ui.view">
+			<field name="name">Product Brand Tree</field>
+			<field name="model">product.brand</field>
+			<field name="arch" type="xml">
+				<tree>
+                    <field name="name"/>
+                </tree>
+			</field>
+		</record>
+
+         <record id="kimhuat_modifier_fields_product_brand_view_form" model="ir.ui.view">
+			<field name="name">Product Brand Form</field>
+			<field name="model">product.brand</field>
+			<field name="arch" type="xml">
+				<form>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </form>
+			</field>
+		</record>
+
+        <record model="ir.actions.act_window" id="kimhuat_modifier_fields_product_brand_actions">
+            <field name="name">Product Brand</field>
+            <field name="res_model">product.brand</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Brand" action="kimhuat_modifier_fields_product_brand_actions" id="kimhuat_modifier_product_brand_menu"
+                  parent="sale.prod_config_main" sequence="8"/>
+
+        <!--TYPE VIEW-->
+
+        <record id="kimhuat_modifier_fields_product_type_view_tree" model="ir.ui.view">
+			<field name="name">Product Type Tree</field>
+			<field name="model">product.type</field>
+			<field name="arch" type="xml">
+				<tree>
+                    <field name="name"/>
+                </tree>
+			</field>
+		</record>
+
+         <record id="kimhuat_modifier_fields_product_type_view_form" model="ir.ui.view">
+			<field name="name">Product Type Form</field>
+			<field name="model">product.type</field>
+			<field name="arch" type="xml">
+				<form>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </form>
+			</field>
+		</record>
+
+        <record model="ir.actions.act_window" id="kimhuat_modifier_fields_product_type_actions">
+            <field name="name">Product Type</field>
+            <field name="res_model">product.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Type" action="kimhuat_modifier_fields_product_type_actions" id="kimhuat_modifier_product_type_menu"
+                  parent="sale.prod_config_main" sequence="9"/>
+
+        <!--INHERIT PRODUCT-->
+
+        <record id="kimhuat_modifier_fields_edit_product_view" model="ir.ui.view">
+            <field name="name">Product Form View</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page/group/group/field[@name='categ_id']" position="after">
+                    <field name="product_brand"/>
+                    <field name="product_type"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Hide is an Equipment -->
+        <record id="kimhuat_edit_booking_product_view" model="ir.ui.view">
+            <field name="name">Product booking Form View</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="booking_service_V2.product_template_only_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <field name="is_equipment" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!-- Hide Income Account -->
+        <record id="product_template_form_view_inherit" model="ir.ui.view">
+            <field name="name">product template form view inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="property_account_income_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="categ_id" position="attributes">
+                    <attribute name="string">Product Category</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!-- Hide Income Account -->
+        <record id="stock_view_template_property_form_inherit" model="ir.ui.view">
+            <field name="name">stock view template property form inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.view_template_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='group_lots_and_weight']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+		<menuitem action="stable_account_analytic_analysis.action_account_analytic_overdue" id="stable_account_analytic_analysis.menu_action_account_analytic_overdue" sequence="1" parent="sale_stock.menu_aftersale"/>
+
+    </data>
+</odoo>

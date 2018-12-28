@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="buku_expense_form_view">
+            <field name="name">buku.expense.form</field>
+            <field name="model">buku.expense</field>
+            <field name="arch" type="xml">
+                <form string="Buku Kas">
+                    <header>
+                        <button name="action_post" states="unposted" string="Post" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" nolabel="1"/>
+                   </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="type"/>
+                                <field name="journal_id" required="1"/>
+                                <field name="date" required="1"/>
+                            </group>
+                            <group>
+                                <field name="reference" required="1"/>
+                                <field name="account_id" required="1"/>
+                                <field name="amount" required="1"/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Bank">
+                                <field name="buku_expense_line_ids">
+                                    <tree string="Buku Expense Lines" editable="bottom">
+                                        <field name="c_account"/>
+                                        <field name="amount_currency" required="1"/>
+                                        <field name="c_description"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="buku_expense_tree_view">
+            <field name="name">buku.expense.form</field>
+            <field name="model">buku.expense</field>
+            <field name="arch" type="xml">
+                <tree string="Buku Kas">
+                    <field name="type"/>
+                    <field name="journal_id"/>
+                    <field name="date"/>
+                    <field name="reference"/>
+                    <field name="account_id"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_buku_expense">
+            <field name="name">Buku Kas</field>
+            <field name="res_model">buku.expense</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_buku_expense" parent="account.menu_finance_entries" name="Buku Kas" sequence="14"
+                  action="action_buku_expense"/>
+
+
+        <record model="ir.ui.view" id="buku_expense_line_fiorm_view">
+            <field name="name">buku.expense.line.form</field>
+            <field name="model">buku.expense.line</field>
+            <field name="arch" type="xml">
+                <form string="Buku Expense Line">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="c_account"/>
+                                <field name="amount_currency"/>
+                                <field name="c_description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <record model="ir.rule" id="stock_picking_warehouse_user_rule">
+ 	        <field name="name">stock_picking warehouse_user</field>
+	        <field name="model_id" search="[('model','=','stock.picking')]" model="ir.model"/>
+<!-- 	        <field name="global" eval="True"/> -->
+            <field eval="[(4,ref('stock.group_stock_user'))]" name="groups"/>
+	        <field name="domain_force">['|',('picking_type_id','=',False),('picking_type_id.warehouse_id','in',[user.active_warehouse_id.id or user.default_warehouse_id.id])]</field><!-- ['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])] -->
+	    </record>
+
+
+
+
+
+
+	     <record model="ir.rule" id="stock_move_warehouse_user_rule">
+	         <field name="name">stock_move warehouse_user</field>
+	        <field name="model_id" search="[('model','=','stock.move')]" model="ir.model"/>
+<!-- 	        <field name="global" eval="True"/> -->
+            <field eval="[(4,ref('stock.group_stock_user'))]" name="groups"/>
+	        <field name="domain_force">['|',('warehouse_id','=',False),('warehouse_id','in',[user.active_warehouse_id.id or user.default_warehouse_id.id])]</field><!-- ['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])] -->
+	     </record>
+	
+<!-- 	    <record model="ir.rule" id="stock_quant_rule"> -->
+<!-- 	        <field name="name">stock_quant multi-company</field> -->
+<!-- 	        <field name="model_id" ref="model_stock_quant"/> -->
+<!-- 	        <field name="global" eval="True"/> -->
+<!-- 	        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field> -->
+<!-- 	    </record> -->
+	
+<!-- 	    <record model="ir.rule" id="stock_inventory_line_comp_rule"> -->
+<!-- 	        <field name="name">Inventory Line multi-company</field> -->
+<!-- 	        <field name="model_id" ref="model_stock_inventory_line"/> -->
+<!-- 	        <field name="global" eval="True"/> -->
+<!-- 	        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field> -->
+<!-- 	    </record> -->
+	
+<!-- 	    <record model="ir.rule" id="stock_inventory_comp_rule"> -->
+<!-- 	        <field name="name">Inventory multi-company</field> -->
+<!-- 	        <field name="model_id" ref="model_stock_inventory"/> -->
+<!-- 	        <field name="global" eval="True"/> -->
+<!-- 	        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field> -->
+<!-- 	    </record> -->
+	
+<!-- 	    <record model="ir.rule" id="stock_warehouse_orderpoint_rule"> -->
+<!-- 	        <field name="name">stock_warehouse.orderpoint multi-company</field> -->
+<!-- 	        <field name="model_id" search="[('model','=','stock.warehouse.orderpoint')]" model="ir.model"/> -->
+<!-- 	        <field name="global" eval="True"/> -->
+<!-- 	        <field name="domain_force">['|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field> -->
+<!-- 	    </record> -->
+	
+<!-- 	     <record model="ir.rule" id="product_pulled_flow_comp_rule"> -->
+<!-- 	        <field name="name">product_pulled_flow multi-company</field> -->
+<!-- 	        <field name="model_id" ref="model_procurement_rule"/> -->
+<!-- 	        <field name="global" eval="True"/> -->
+<!-- 	        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field> -->
+<!-- 	    </record> -->
+	
+<!-- 	      <record model="ir.rule" id="stock_location_path_comp_rule"> -->
+<!-- 	        <field name="name">stock_location_path multi-company</field> -->
+<!-- 	        <field name="model_id" ref="model_stock_location_path"/> -->
+<!-- 	        <field name="global" eval="True"/> -->
+<!-- 	        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field> -->
+<!-- 	    </record>  -->
+    </data>
+</openerp>

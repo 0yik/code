@@ -1,0 +1,12 @@
+# -*- coding: utf-8 -*-
+
+from odoo import api, fields, models, _
+from odoo.tools import float_is_zero, float_compare
+import odoo.addons.decimal_precision as dp
+
+class MrpBomLine(models.Model):
+    _inherit = 'mrp.bom.line'
+    
+    
+                        
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

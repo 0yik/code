@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="po_fabric_header">
+			<div class="header">
+				<div class="row">
+					<div class="col-xs-12">
+					<img t-if="company.report_header" t-att-src="'data:image/png;base64,%s' % company.report_header" />
+						<img t-if="not company.report_header" src="/modifier_teo_purchase_order_report/static/src/img/logo.png" />
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="po_fabric_layout">
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+			<t t-if="da['state'] != 'draft'">
+				<t t-call="modifier_teo_purchase_order_report.po_fabric_header" />
+			</t>
+			<t t-raw="0" />
+			<t t-call="report.external_layout_footer" />
+		</template>
+
+		<template id="po_fabric_report">
+			<t t-call="report.html_container">
+				<t t-foreach="data['get_data']" t-as="da">
+					<t t-call="modifier_teo_purchase_order_report.po_fabric_layout">
+						<div class="page">
+							<style>
+								.detailed tr, .detailed td{
+								border:2px solid;
+								}
+								.line tr,
+								.line
+								th, .line td{
+								border:1px solid;
+								}
+								.nettotal tr, .nettotal td{
+								border-top: 1px solid black !important;
+								}
+							</style>
+							<div class="row">
+								<div class="col-xs-12" style="border-bottom:2px solid; padding-bottom:3px;">
+									<h3 class="text-center mt8">
+										<strong>PURCHASE ORDER - FABRIC(SG)</strong>
+									</h3>
+								</div>
+							</div>
+							<div class="row mt8">
+								<div class="col-xs-3" style="padding:0;">
+									<strong>DATE:</strong>
+									<br />
+									<span>Revision Date:</span>
+								</div>
+								<div class="col-xs-4" style="padding:0;">
+									<span t-esc="da['date_order']" />
+									<br />
+									<span
+										t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')" />
+								</div>
+								<div class="col-xs-2" style="padding:0;">
+									<strong>No :</strong>
+									<br />
+									<strong></strong>
+								</div>
+								<div class="col-xs-3" style="padding:0;">
+									<strong>
+										<span t-esc="da['name']" />
+									</strong>
+									<br />
+									<strong></strong>
+								</div>
+							</div>
+							<div class="row mt8">
+								<div class="col-xs-4" style="padding:0;">
+									<strong>Supplier address:</strong>
+								</div>
+								<div class="col-xs-4" style="padding:0;">
+									<strong>Delivery address:</strong>
+								</div>
+								<div class="col-xs-4" style="padding:0;">
+									<strong>Billing address:</strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-4"
+									style="border:2px solid; border-radius:5px;height:120px;">
+									<div>
+										<span t-esc="da['partner_id']" />
+										<br />
+										<span t-esc="da['p_street']" />
+										,
+										<span t-esc="da['p_street2']" />
+										<br />
+										<span t-esc="da['p_city']" />
+										,
+										<span t-esc="da['p_state']" />
+										<br />
+										<span t-esc="da['p_zip']" />
+										,
+										<span t-esc="da['p_country']" />
+									</div>
+								</div>
+								<div class="col-xs-4"
+									style="border:2px solid; border-radius:5px;height:120px;">
+									<div>
+										<span t-esc="da['company_id']" />
+										<br />
+										<span t-esc="da['c_street']" />
+										,
+										<span t-esc="da['c_street2']" />
+										<br />
+										<span t-esc="da['c_city']" />
+										,
+										<span t-esc="da['c_state']" />
+										<br />
+										<span t-esc="da['c_zip']" />
+										,
+										<span t-esc="da['c_country']" />
+									</div>
+								</div>
+								<div class="col-xs-4"
+									style="border:2px solid; border-radius:5px;height:120px;">
+									<div>
+										<span t-esc="da['company_id']" />
+										<br />
+										<span t-esc="da['c_street']" />
+										,
+										<span t-esc="da['c_street2']" />
+										<br />
+										<span t-esc="da['c_city']" />
+										,
+										<span t-esc="da['c_state']" />
+										<br />
+										<span t-esc="da['c_zip']" />
+										,
+										<span t-esc="da['c_country']" />
+									</div>
+								</div>
+							</div>
+							<div class="row mt8">
+								<table class="table detailed">
+									<tr>
+										<td style="width:16% !important">
+											<strong>Buyer</strong>
+										</td>
+										<td style="width:16% !important">
+											<span t-esc="da['buyer']" />
+										</td>
+										<td style="width:16% !important">
+											<strong>Delivery</strong>
+										</td>
+										<td style="width:16% !important">
+											<span t-esc="da['delivery']" />
+										</td>
+										<td style="width:16% !important">
+											<strong>Trade Term</strong>
+										</td>
+										<td style="width:16% !important">N/A</td>
+									</tr>
+									<tr>
+										<td style="width:16% !important">
+											<strong>Season</strong>
+										</td>
+										<td style="width:16% !important">
+											<span t-esc="da['supp_ref']" />
+										</td>
+										<td style="width:16% !important">
+											<strong>Currency</strong>
+										</td>
+										<td style="width:16% !important">
+											<span t-esc="da['currency_name']" />
+										</td>
+										<td style="width:16% !important">
+											<strong>Sales Term</strong>
+										</td>
+										<td style="width:16% !important">
+											<span t-esc="da['payment_term_id']" />
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="row mt16">
+								<table class="table line">
+									<thead>
+										<tr>
+											<th class="text-center">
+												<strong>Item</strong>
+											</th>
+											<th class="text-center">
+												<strong>Style No</strong>
+											</th>
+											<th>
+												<strong>Description</strong>
+											</th>
+											<th class="text-center">
+												<strong>Code</strong>
+											</th>
+											<th class="text-center">
+												<strong>Weight (gm/m2)</strong>
+											</th>
+											<th class="text-center">
+												<strong>Cuttable Width (inch)</strong>
+											</th>
+											<th class="text-center">
+												<strong>Colour</strong>
+											</th>
+											<th class="text-center">
+												<strong>Unit</strong>
+											</th>
+											<th class="text-center">
+												<strong>Qty</strong>
+											</th>
+											<th class="text-center">
+												<strong>
+													Price(
+													<t t-esc="da['currency_id']" />
+													)
+												</strong>
+											</th>
+											<th class="text-center">
+												<strong>
+													Total(
+													<t t-esc="da['currency_id']" />
+													)
+												</strong>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<t t-set='srn' t-value='1' />
+										<t t-foreach="da['lines']" t-as="line">
+											<tr>
+												<td class="text-center">
+													<span t-esc="srn" />
+												</td>
+												<td>
+													<span t-esc="line['stk_id']" />
+												</td>
+												<td>
+													<span t-esc="line['name']" />
+												</td>
+												<td class="text-center">
+													<span t-esc="line['fabric_id']" />
+												</td>
+												<td class="text-center">
+													<span t-esc="line['weight']" />
+												</td>
+												<td class="text-center">
+													<span t-esc="line['width']" />
+												</td>
+												<td class="text-center">
+													<span t-esc="line['colour_name']" />
+												</td>
+												<td class="text-center">
+													<span t-esc="line['uom']" />
+												</td>
+												<td class="text-right">
+													<span t-esc="'%.3f'%(line['product_qty'])" />
+												</td>
+												<td class="text-right">
+													<span t-esc="'%.4f'%(line['price_unit'])" />
+												</td>
+												<td class="text-right">
+													<span t-esc="'%.2f'%(line['price_subtotal'])" />
+												</td>
+											</tr>
+											<t t-set='srn' t-value='srn+1' />
+										</t>
+									</tbody>
+								</table>
+							</div>
+							<div class="row" style="page-break-inside: avoid;">
+								<div class="col-xs-5" style="border:1px solid;padding:0;height:400px;">
+									<div style="border-bottom:1px solid; padding-left:5px;">
+										<strong>Remark</strong>
+									</div>
+									<div style="padding-left:5px;">
+										<span t-raw="da['remarks']" />
+									</div>
+								</div>
+
+								<div class="col-xs-3"
+									style="border-top:1px solid;border-bottom:1px solid;padding:0;height:400px;">
+									<div style="border-bottom:1px solid; padding-left:5px;">
+										<strong>Sketch</strong>
+									</div>
+									<div style="padding:5px;">
+										<img width="150" height="200" alt="Product Images"
+											t-attf-src="data:image/gif;base64, #{da['sketch']}" />
+									</div>
+								</div>
+
+								<div class="col-xs-4" style="border:1px solid;padding:0;height:400px;">
+									<table class="table nettotal">
+										<tr>
+											<td>
+												<strong>NET TOTAL</strong>
+											</td>
+											<td class="text-right">
+												<strong>
+													<span t-esc="'%.2f'%(da['amount_untaxed'])" />
+													<span t-esc="da['currency_id']" />
+												</strong>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<strong>TAX TOTAL</strong>
+											</td>
+											<td class="text-right">
+												<strong>
+													<span t-esc="'%.2f'%(da['amount_tax'])" />
+													<span t-esc="da['currency_id']" />
+												</strong>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<strong>TOTAL</strong>
+											</td>
+											<td class="text-right">
+												<strong>
+													<span t-esc="'%.2f'%(da['amount_total'])" />
+													<span t-esc="da['currency_id']" />
+												</strong>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2" class="text-center">
+												<strong>Summary</strong>
+											</td>
+										</tr>
+										<tr t-if="da['summary_list']">
+											<td>
+												<strong>UOM</strong>
+											</td>
+											<td class="text-right">
+												<strong>Total Qty</strong>
+											</td>
+										</tr>
+										<t t-foreach="da['summary_list']" t-as="summary">
+											<tr>
+												<td>
+													<strong>
+														<span t-esc="summary['uom_id']" />
+													</strong>
+												</td>
+												<td class="text-right">
+													<strong>
+														<span t-esc="'%.2f'%(summary['quantity'])" />
+													</strong>
+												</td>
+											</tr>
+										</t>
+									</table>
+								</div>
+							</div>
+							<div class="row"
+								style="border-top: 2px solid black;border-bottom:1px solid; margin-top:10px;">
+								<div class="col-xs-4 text-center">
+									<strong>ISSUED BY</strong>
+									<br />
+									<br />
+									<span t-esc="da['issued_by']" />
+								</div>
+								<div class="col-xs-4 text-center">
+									<strong>VERIFIED BY</strong>
+									<br />
+									<br />
+									<span t-esc="da['verified_by']" />
+								</div>
+								<div class="col-xs-4 text-center">
+									<strong>APPROVED BY</strong>
+									<br />
+									<br />
+									<span t-esc="da['approved_by']" />
+								</div>
+							</div>
+							<div class="oe_structure" />
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

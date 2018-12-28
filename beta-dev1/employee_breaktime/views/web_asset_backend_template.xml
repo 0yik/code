@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="employee_breaktime assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/employee_breaktime/static/src/js/employee_kanban_view_handler.js"/>
+            <script type="text/javascript" src="/employee_breaktime/static/src/js/presence_widgets.js"/>
+            <script type="text/javascript" src="/employee_breaktime/static/src/js/greeting_message.js"/>
+            <script type="text/javascript" src="/employee_breaktime/static/src/js/kiosk_mode.js"/>
+            <script type="text/javascript" src="/employee_breaktime/static/src/js/kiosk_confirm.js"/>
+            <script type="text/javascript" src="/employee_breaktime/static/src/js/my_breaktimes.js"/>
+            <link rel="stylesheet" href="/employee_breaktime/static/src/less/emp_breaktime.less"/>
+        </xpath>
+    </template>
+</odoo>

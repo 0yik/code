@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="account.report_invoice_document">
+	<xpath expr="//t[@t-call='report.external_layout']" position="replace">
+	<t t-call="mums_sale_layout.external_sale_order_layouts">
+    <div class="page"> 
+        <style type="text/css">
+            /* Declare fonts */
+            @font-face {
+                font-family: helvetica-neue-bold;
+                src: url(/mums_sale_layout/static/font/helvetica-neue-condensed-bold-5949196ed73f9.ttf) format('truetype');
+            }
+            @font-face {
+                font-family: helvetica-neue-medium;
+                src: url(/mums_sale_layout/static/font/HelveticaMedCd.ttf) format('truetype');
+            }
+        </style>
+        <div class="oe_structure"/>
+            <div class="row">
+                <div class="col-xs-12">
+                    <span style="font-size:24pt;font-family:helvetica-neue-bold;color:#da607f;">SALES INVOICE</span>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-5">   
+                  <div style="border-top:1px solid #565656;"> 
+                    <div>
+                        <span style="font-family:helvetica-neue-medium;font-size:10pt;color:#5656565;">SHIPPED TO</span>
+                    </div>
+                    <div t-if="o.shipping_id">
+                        <span t-field="o.shipping_id.name" style="font-size:18pt;font-family:helvetica-neue-bold;color:#000000"/>
+                    </div>
+                    <div t-if="o.shipping_id">
+                        <span t-field="o.shipping_id.street" style="font-size:14pt;font-family:helvetica-neue-medium;color:#000000"/>
+                        <span t-field="o.shipping_id.street2" style="font-size:14pt;font-family:helvetica-neue-medium;color:#000000"/>
+                    </div>
+                    <div t-if="o.shipping_id">
+                        <span t-field="o.shipping_id.country_id.name" style="font-size:14pt;font-family:helvetica-neue-medium;color:#000000"/>
+                        <span t-field="o.shipping_id.zip" style="font-size:14pt;font-family:helvetica-neue-medium;color:#000000"/>.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="text-left" style="border-top: 1px solid #565656;">
+                        <div>
+                            <span style="font-family:helvetica-neue-medium;font-size:10pt;color:#5656565;">ORDER ID</span>
+                        </div>
+                        <div>
+                            <span t-field="o.mums_order_id" style="font-size:18pt;font-family:helvetica-neue-medium;color:#000000"/>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-xs-3">
+                    <div class="text-left" style="border-top: 1px solid #565656;">
+                        <div>
+                            <span style="font-family:helvetica-neue-medium;font-size:10pt;color:#5656565;">TRANSACTION DATE</span>
+                        </div>
+                        <div t-if="o.so_id">
+                            <span t-esc="o.so_id.date_order" style="font-size:18pt;font-family:helvetica-neue-medium;color:#000000"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="text-left" style="border-style:none;border-top: 1px solid #565656;">    
+                        <div>
+                            <span style="font-family:helvetica-neue-medium;font-size:10pt;color:#5656565;">TOTAL AMOUNT</span>
+                        </div>
+                        <div>
+                            <span t-field="o.amount_total" style="font-size:18pt;font-family:helvetica-neue-medium;color:#000000"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <t t-foreach="o.order_lines_layouted()" t-as="page">
+                <table class="table table-condensed" style="border-style:none;border-top: 2px solid #da607f;margin-top: 50px;">
+                    <thead style="font-size:12pt;font-family:helvetica-neue-bold;color:#da607f">
+                        <tr>
+                            <th style="border-bottom:2px solid #da607f!important;">DESCRIPTION</th>
+                            <th style="border-bottom:2px solid #da607f!important;" class="text-right">QUANTITY</th>
+                            <th style="border-bottom:2px solid #da607f!important;" class="text-right">UNIT PRICE</th>
+                            <th style="border-bottom:2px solid #da607f!important;" class="text-right" groups="sale.group_show_price_subtotal">PRICE</th>
+                        </tr>
+                   </thead>
+                   <tbody class="sale_tbody" style="font-size:12pt;font-family:helvetica-neue-medium;color:#5656565">
+                        <!-- Lines associated -->
+                        <t t-foreach="o.invoice_line_ids" t-as="l">
+                            <tr>
+                                <td style="border-top:1px solid #da607f!important;"><span style="display:block;" t-field="l.name"/>
+                                <span t-field="l.sqs_product_id" style="font-size:10pt;font-family:helvetica-neue-medium;color:#5656565"/>
+                                </td>
+                                <td style="border-top:1px solid #da607f!important;" class="text-right">
+                                    <span t-field="l.quantity"/>
+                                    <span t-field="l.uom_id" groups="product.group_uom"/>
+                                </td>
+                                <td style="border-top:1px solid #da607f!important;" class="text-right">
+                                    <span t-field="l.price_unit"/>
+                                </td>
+                                <td style="border-top:1px solid #da607f!important;" class="text-right" groups="sale.group_show_price_subtotal">
+                                    <span t-field="l.price_subtotal" 
+                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <t t-if="page_index &lt; page_size - 1" groups="sale.group_sale_layout">
+                    <p style="page-break-before:always;"> </p>
+                </t>
+            </t>
+            <table class="table table-condensed" style="font-size:12pt;font-family:helvetica-neue-bold;color:#5656565">
+                <tr class="border-black">
+                    <td style="border-top:2px solid #da607f!important;color:#da607f;"><strong>SUB-TOTAL</strong></td>
+                    <td style="border-top:2px solid #da607f!important;"/>
+                    <td style="border-top:2px solid #da607f!important;"/>
+                    <td style="border-top:2px solid #da607f!important;"/>
+                    <td class="text-right" style="border-top:2px solid #da607f!important;font-family:helvetica-neue-medium;">
+                        <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+                </tr>
+                <tr class="border-black">
+                    <td style="border-top:2px solid #da607f!important;"/>
+                    <td style="border-top:2px solid #da607f!important;"/>
+                    <td style="border-top:2px solid #da607f!important;"/>
+                    <td align="right" style="border-top:2px solid #da607f!important;color:#da607f;"><strong>SHIPPING FEE</strong></td>
+                    <td class="text-right" style="border-top:2px solid #da607f!important;font-family:helvetica-neue-medium;">
+                        <span t-field="o.shipping_charges" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+                </tr>
+                <tr class="border-black">
+                    <td style="border-top:1px solid #da607f!important;"/>
+                    <td style="border-top:1px solid #da607f!important;"/>
+                    <td style="border-top:1px solid #da607f!important;"/>
+                    <td align="right" style="border-top:1px solid #da607f!important;color:#da607f;"><strong>COUPON DISCOUNT</strong></td>
+                    <td class="text-right" style="border-top:1px solid #da607f!important;font-family:helvetica-neue-medium;">
+                        <span t-field="o.discount_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+                </tr>
+                <tr class="border-black">
+                    <td style="border-top:2px solid #da607f!important;border-bottom:2px solid #da607f;color:#da607f;"><strong>Total</strong></td>
+                    <td style="border-top:2px solid #da607f!important;border-bottom:2px solid #da607f;"/>
+                    <td style="border-top:2px solid #da607f!important;border-bottom:2px solid #da607f;"/>
+                    <td style="border-top:2px solid #da607f!important;border-bottom:2px solid #da607f;"/>
+                    <td style="border-top:2px solid #da607f!important;border-bottom:2px solid #da607f;font-family:helvetica-neue-medium;" class="text-right">
+                        <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="oe_structure"/>
+        </div>
+    	<div class="row" style="display:none;">
+            <div name="invoice_address" class="col-xs-5 col-xs-offset-7">
+                <address t-field="o.partner_id"
+                    t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                <span t-if="o.partner_id.vat">TIN: <span t-field="o.partner_id.vat"/></span>
+            </div>
+        </div>
+        <div class="row mt32 mb32" style="display:none;">
+			<div name="reference" class="col-xs-2" t-if="o.reference and o.type == 'in_invoice'">
+                <strong>Reference:</strong>
+                <p t-field="o.reference"/>
+            </div>
+        </div>
+    </t>
+	</xpath>
+
+</template>
+</data>
+</odoo>

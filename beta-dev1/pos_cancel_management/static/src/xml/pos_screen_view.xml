@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    
+    <t t-name="CancelOrderButton">
+        <div class='btn btn-default btn-fill btn-wd button-section control-button cancel-orderline-button cancel-orderline-button-red'>
+            <i class='fa fa-trash-o' />Cancel
+        </div>
+    </t>
+
+    <t t-extend="ProductScreenWidget">
+        <t t-jquery="div.control-buttons" t-operation="after">
+            <div class="control-buttons-section">
+            </div>
+        </t>
+    </t>
+    
+    <t t-extend="Orderline">
+        <t t-jquery="t[t-if='line.product.pos_categ_id[0]']" t-operation="replace">
+            <t t-if='line.product.pos_categ_id[0]'>
+                <t t-if="line.state !== 'Done' and line.state !== 'Cancelled'">
+                    <t t-if="line.state !== 'Kitchen confirmed cancel'">
+                        <t t-if="line.state == 'Waiting-delivery'">
+                            <div class='control-button done highlight'>
+                                Done
+                            </div> 
+                        </t>
+                        <t t-if="line.state == 'Waiting-delivery'">
+                            <div class='control-button error highlight'>
+                                Error
+                            </div>
+                        </t>
+                        <!--t t-if="line.state != 'Cancel' || line.state != 'Error'">
+                            <t t-if="line.state !== 'High-Priority'">
+                                <t t-if="line.state !== 'Waiting-delivery'">
+                                    <div class='control-button priority highlight'>
+                                        Priority
+                                    </div>
+                                </t>
+                            </t>
+                        </t-->
+                        <t t-if="line.state === 'Error' || line.state === 'Cancel'">
+                            <div class='control-button put-back highlight'>
+                                Put Back
+                            </div>
+                        </t>
+                        <t t-if="line.state === 'Need-to-confirm' || line.state === 'Error' || line.state == 'Not-enough-material'">
+                            <div class='control-button cancel highlight oe_hidden'>
+                                Delete
+                            </div>
+                        </t>
+                    </t>
+                </t>
+                
+            </t>
+        </t>
+    </t>
+    
+    <t t-extend="Orderline">
+        <t t-jquery=".info-list" t-operation="append">
+            <t t-if="line.get_cancel_order_reason()">
+                <li class="info orderline-cancel">
+                    <i class='fa fa-trash-o'/><span t-esc="line.get_cancel_order_reason()" />
+                </li>
+            </t>
+        </t>
+    </t>
+</templates>

@@ -1,0 +1,2 @@
+import purchase_report_wizard
+import purchase_all_report_wizard

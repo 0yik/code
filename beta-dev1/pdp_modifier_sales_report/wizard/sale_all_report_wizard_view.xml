@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+         <record id="pdp_sales_reports_wizard_view" model="ir.ui.view">
+            <field name="name">Print Sales Reports</field>
+            <field name="model">sales.reports.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Sales Reports Wizard">
+                    <group col="4">
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                        <field name="report" required="1"/>
+                        <field name="format" required="1"/>
+                        <field name="partner_id"/>
+                        <field name="category_id"/>
+                        <field name="movement"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-default"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="pdp_sale_wizard_action" model="ir.actions.act_window">
+            <field name="name">Other Sales Reports</field>
+            <field name="res_model">sales.reports.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem id="menu_all_sales_reports_wizard" action="pdp_sale_wizard_action" parent="menu_sales_reports_main"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="view_account_analytic_account_form_inherit" model="ir.ui.view">
+		<field name="name">Account Analytic Account Inherit</field>
+		<field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+		<field name="arch" type="xml">
+			<field name="partner_id" position="after">
+                <field name="level_id"/>
+            </field>
+            <!--<field name="tag_ids" position="after">-->
+                <!--<field name="parent_id"/>-->
+            <!--</field>-->
+		</field>
+	</record>
+
+    <record id="account_analytic_level_tree_view" model="ir.ui.view">
+        <field name="name">Account Analytic Level Tree</field>
+		<field name="model">account.analytic.level</field>
+        <field name="arch" type="xml">
+            <tree string="Account Analytic Level">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="model_id"/>
+            </tree>
+        </field>
+    </record>
+
+	<record id="account_analytic_level_form_view" model="ir.ui.view">
+		<field name="name">Account Analytic Level Form</field>
+		<field name="model">account.analytic.level</field>
+		<field name="arch" type="xml">
+			<form class="Account Analytic Level">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="open_analytic_account" icon="fa-bars" type="object" class="oe_stat_button" attrs="{'invisible': [('analytic_account_count','=',0)]}">
+                            <field name="analytic_account_count" string="Accounts" widget="statinfo" />
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" placeholder="Name.."/>
+                    </group>
+                    <separator string="Description"/>
+                    <field name="description"/>
+                    <group>
+                        <separator string="Analytic Account Prioritisation" colspan="2"/>
+                        <field name="model_id" options="{'no_create_edit': True}" context="{'tree_view_ref':'multi_level_analytical.ir_model_for_multiple_selection'}">
+                            <tree string="Models">
+                                <field name="name"/>
+                                <field name="model"/>
+                            </tree>
+                        </field>
+                        <field name="analytic_account_prioritization_line">
+                            <tree string="Analytic Account Prioritization" editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="model_list" options="{'no_create_edit': True}"/>
+                                <field name="fields_id" domain="[('model_id.model', '=', model_list),('related', '=', False),('ttype', 'not in', ('many2many', 'one2many')), ('store', '=', True)]" options="{'no_create_edit': True}"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+		</field>
+	</record>
+
+    <record id="account_analytic_level_action" model="ir.actions.act_window">
+        <field name="name">Analytic Category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.analytic.level</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a Analytic Account Level.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_account_analytic_level" action="account_analytic_level_action" parent="account.menu_analytic_accounting" sequence="15"/>
+
+    <record id="view_account_analytic_line_form_inherit_ad" model="ir.ui.view">
+		<field name="name">Account Analytic Distribution Form</field>
+		<field name="model">account.analytic.line</field>
+		<field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
+		<field name="arch" type="xml">
+
+            <field name="name" position="after">
+                <field name="analytic_level_id"/>
+                <field name="invoice_id" attrs="{'invisible': [('invoice_id', '=', False)]}"/>
+            </field>
+
+        </field>
+    </record>
+
+    <record id="view_account_analytic_account_list_ad_distribution" model="ir.ui.view">
+        <field name="name">account.analytic.account.list.ad.distribution</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_list"/>
+        <field name="arch" type="xml">
+            <field name="display_name" position="after">
+                <field name="level_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="ir_model_for_multiple_selection" model="ir.ui.view">
+        <field name="name">ir.model.for.multiple.selection</field>
+        <field name="model">ir.model</field>
+        <field name="sequence" eval="410"/>
+        <field name="arch" type="xml">
+             <tree string="Models">
+                <field name="name"/>
+                <field name="model"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='client_order_ref']" position="replace">
+                    <field name="client_order_ref" string="PO Reference" attrs="{'invisible' : [('state', '=', 'sale')]}"/>
+                    <field name="client_order_ref" string="Customer Reference" attrs="{'invisible' : [('state','!=','sale')]}"/>
+                </xpath>
+                <button name="action_quotation_send" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+        <template id="assets_backend" name="sale order form inherit" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" type="text/css" href="ham_modifier_fields/static/src/css/o_chatter_button_new_message.css" />
+            </xpath>
+        </template>
+    </data>
+</odoo>

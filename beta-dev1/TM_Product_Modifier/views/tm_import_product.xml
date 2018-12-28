@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="wizard_product_import_form_view">
+            <field name="name">wizard.product.import.form.view</field>
+            <field name="model">wizard.product.product.import</field>
+            <field name="arch" type="xml">
+                <form string="Add File Import">
+                    <group>
+                        <field name="file"/>
+                    </group>
+                    <footer>
+                        <button name="import_products" type="object"
+                                string="Import" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='wizard_product_import_action'>
+            <field name="name">Import Products Variant</field>
+            <field name="res_model">wizard.product.product.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_product_import_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="product_import_menu" name="Import Category Product Variant"
+                  parent="sale.prod_config_main"
+                  action="wizard_product_import_action" sequence="20"/>
+
+
+    </data>
+</odoo>

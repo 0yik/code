@@ -1,0 +1,15 @@
+.service-charge-on {
+    background: #6EC89B !important;
+    border: solid 1px #64AF8A !important;
+    color: white !important;
+}
+.pos .order .summary .line .subservice {
+    font-size: 16px;
+    font-weight: normal;
+    text-align: right;
+}
+.pos .order .summary .line .subentry {
+    font-size: 16px;
+    font-weight: normal;
+    text-align: right;
+}

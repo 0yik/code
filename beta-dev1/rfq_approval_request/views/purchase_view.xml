@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_form_notification_inherit" model="ir.ui.view">
+        <field name="name">Purchase Order Form Notification Inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="approve_check" invisible="1"/>
+                <field name="is_shipped" invisible="1"/>
+                <field name="is_vendor_bill" invisible="1"/>
+                <field name="is_unreceived" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_ref']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+     .       </xpath>
+            <xpath expr="//field[@name='currency_id']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_planned']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', 'not in', ('draft', 'sent'))]}
+                </attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_set_date_planned']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="receive_date" widget="date" required="1"
+                       attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+                <field name="approval_id" required="1"
+                       attrs="{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/sheet/group[1]/group[1]/field[@name='product_id']"
+                   position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/sheet/group[1]/group[1]/div/field[@name='product_qty']"
+                   position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/sheet/group[1]/group[1]/div/field[@name='product_uom']"
+                   position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/sheet/group[1]/group[1]/field[@name='price_unit']"
+                   position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/sheet/group[1]/group[2]/field[@name='taxes_id']"
+                   position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/sheet/group[1]/group[2]/field[@name='date_planned']"
+                   position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/sheet/group[1]/group[2]/field[@name='account_analytic_id']"
+                   position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/sheet/group[1]/group[2]/field[@name='company_id']"
+                   position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/sheet/notebook[1]/page[1]/field[@name='name']"
+                   position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/sheet/notebook[1]/page[2]/field[@name='invoice_lines']"
+                   position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='notes']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//label[@for='date_planned']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_planned']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_set_date_planned']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='dest_address_id']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='default_location_dest_id_usage']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='incoterm_id']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|','|',('invoice_status','=', 'invoiced'), ('state', '=','done'), ('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|','|',('invoice_status','=', 'invoiced'), ('state', '=',
+                    'done'), ('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_approve']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state', '=', 'to approve'),('approve_check','=',False)]}
+                </attribute>
+            </xpath>
+            <button name="button_confirm" position="replace">
+                <button name="button_confirm" type="object" states="draft" string="Request Approval"
+                        id="draft_confirm"/>
+            </button>
+            <button name="button_approve" position="replace">
+                <button name="button_approve" type="object" string="Approved" class="oe_highlight"
+                        attrs="{'invisible':['|',('state','!=','to approve'),('approve_check','=',False)]}"/>
+            </button>
+            <button name="button_cancel" position="after">
+                <button name="button_reject" string="Reject" type="object"
+                        attrs="{'invisible':['|',('state','!=','to approve'),('approve_check','=',False)]}"/>
+            </button>
+            <button name="button_cancel" position="replace">
+                <button name="button_cancel" states="draft,sent,purchase" string="Cancel" type="object"
+                        attrs="{'invisible': [('state','=','to approve')]}"/>
+            </button>
+        </field>
+    </record>
+
+    <!--Vendor bill notification scheduler-->
+    <record id="vendor_bill_notification_scheduler" model="ir.cron">
+        <field name="name">Vendor Bill Notification Scheduler</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model" eval="'purchase.order'"/>
+        <field name="function" eval="'vendor_bill_notification_scheduler'"/>
+        <field name="args" eval="'()'"/>
+        <field name="active" eval="True"/>
+    </record>
+
+    <!--Unreceived PO notification scheduler-->
+    <record id="unreceived_notification_scheduler" model="ir.cron">
+        <field name="name">Unreceived Notification Scheduler</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model" eval="'purchase.order'"/>
+        <field name="function" eval="'unreceived_notification_scheduler'"/>
+        <field name="args" eval="'()'"/>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

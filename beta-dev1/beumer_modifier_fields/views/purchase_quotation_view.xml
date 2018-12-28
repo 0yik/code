@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="purchase_quotation_cost_element_form_inherit_remove" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <field name="notes" position="replace">
+                    <field name="notes" placeholder="An administrator can set up default Terms and conditions in your Company settings."/>
+                </field>
+                <field name="partner_id" position="after">
+                    <field name="contact_name"/>
+                </field>
+                <xpath expr="//notebook/page[2]/group/group/div/field[@name='date_planned']" position="attributes">
+                    <!--<field name="date_planned" required="1" widget="date" attrs="{'readonly': [('state', 'not in', ('draft', 'sent'))]}"/>-->
+                    <attribute name="widget">date</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[2]/group/group/label" position="attributes">
+                    <attribute name="string">Delivery Date</attribute>
+                </xpath>
+                <field name="incoterm_id" position="after">
+                    <field name="packing"/>
+                </field>
+                <field name="date_approve" position="after">
+                    <field name="shipping_documents"/>
+                </field>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='date_planned']" position="replace">
+                    <field name="date_planned" string="Delivery Date" widget="date"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="replace">
+                    <field name="product_uom" attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}" string="UOM"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/sheet/group/group/div/field[@name='product_uom']" position="attributes">
+                    <attribute name="string">UOM</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="product_ids"/>
+                </xpath>
+                <xpath expr="//field[@name='cost_element_id']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="cost_element_id1" required="True"/>
+                    <field name="cost_element_id2" required="True"/>
+                    <field name="cost_element_id3" required="True"/>
+                    <field name="delivery_address" domain="[('project_id','=',project_id)]" context="{'project_id':project_id}"/>
+                    <field name="product_ctg"/>
+                </xpath>
+                <xpath expr="//form/header/button" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/header/button" position="before">
+                    <button name="create_analytic" string="Analytic Distribution" type="object" class="btn-primary"/>
+                </xpath>
+                <field name="order_line" position="after">
+                    <group>
+                        <group>
+                            <field name="pricing"/>
+                            <field name="attachments"/>
+                            <field name="warranty"/>
+                            <field name="purchasing" string="Purchasing Conditions" invisible="1"/>
+                            <field name="remarks" string="Notes"/>
+                        </group>
+                    </group>
+                </field>
+                <!--<field name="product_ctg" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="product_ctg" position="after">
+                    <field name="product_doa"/>
+                </field>-->
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_order_inherit_rename_contact">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.purchase_order_inherit"/>
+            <field name="arch" type="xml">
+                <field name="contract_id" position="replace">
+                    <field name="project_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_order_inherit_rename_contact_tree">
+            <field name="name">purchase.order.tree.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.purchase_order_tree_inherit"/>
+            <field name="arch" type="xml">
+                <field name="contract_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="purchase_quotation_tree_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.tree.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="date_planned" position="attributes">
+                    <attribute name="string">Delivery Date</attribute>
+                    <attribute name="widget">date</attribute>
+                </field>
+                <field name="company_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="purchase_quotation_inherit_product_line_tree" model="ir.ui.view">
+            <field name="name">purchase.order.product_line.tree.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="multi_category_analytic_account.purchase_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='create_analytic']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_analytic_distribution_form_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.distribution.form.inherit</field>
+            <field name="model">account.analytic.distribution</field>
+            <field name="inherit_id" ref="multi_category_analytic_account.account_analytic_distribution_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet/group" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/field[@name='line_ids']/tree" position="attributes">
+                    <attribute name="false">0</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/field[@name='line_ids']/tree/field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="options">{'no_create_edit': 1,'no_open': 1}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_analytic_distribution_form_inherit2" model="ir.ui.view">
+            <field name="name">account.analytic.distribution.form.inherit2</field>
+            <field name="model">account.analytic.distribution</field>
+            <field name="group_id" eval="[(4,ref('beumer_modifier_access_right.cfo_group')),(4,ref('account.group_account_manager'))]"/>
+            <field name="inherit_id" ref="multi_category_analytic_account.account_analytic_distribution_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/field[@name='line_ids']/tree/field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="options">{'no_create_edit': 0,'no_open': 0}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_requisition.menu_purchase_requisition_pro_mgt" model="ir.ui.menu">
+            <field name="sequence" eval="3"/>
+        </record>
+        <record id="purchase.menu_purchase_rfq" model="ir.ui.menu">
+            <field name="sequence" eval="4"/>
+        </record>
+        <record id="purchase_request.menu_purchase_request_pro_mgt" model="ir.ui.menu">
+            <field name="sequence" eval="5"/>
+        </record>
+        <record id="purchase.menu_purchase_form_action" model="ir.ui.menu">
+            <field name="sequence" eval="6"/>
+        </record>
+        <!--<menuitem id="purchase_requisition.menu_purchase_requisition_pro_mgt" sequence="3"/>-->
+
+    </data>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="assets_login" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<script type="text/javascript"
+				src="/forgotpwd_app_alert/static/src/js/forgotpwd_app_alert.js"></script>
+		</xpath>
+	</template>
+	
+</odoo>

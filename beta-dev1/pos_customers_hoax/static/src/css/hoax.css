@@ -1,0 +1,16 @@
+.pos .clientlist-screen .hoax {
+    right: 0px;
+    margin-left: 120px;
+    width: 70px;
+    position: absolute;
+    top: 0px;
+    line-height: 32px;
+    padding: 3px 13px;
+    font-size: 20px;
+    margin: 12px;
+}
+.pos .hightlight-hoax{
+    transition: all 150ms linear;
+    background: rgb(200, 110, 137) !important;
+    color: white;
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend='ClientListScreenWidget'>
+        <t t-jquery='.client-list thead tr' t-operation='append'>
+            <th>Hoax</th>
+        </t>
+        <t t-jquery=".button.new-customer" t-operation="after">
+            <span class='hoax' style="display:flex"><div>Hoax</div><input class="input-hoax" style="margin:auto" type="checkbox"/></span>
+        </t>
+    </t>
+    <t t-extend='ClientLine'>
+        <t t-jquery='.client-line' t-operation='append'>
+            <td>
+                <!--<t t-esc='widget.format_pr(partner.loyalty_points || 0, widget.pos.loyalty ? widget.pos.loyalty.rounding : 1.0)' />-->
+                <button class="button hoax-active">Hoax</button>
+            </td>
+        </t>
+    </t>
+</templates>

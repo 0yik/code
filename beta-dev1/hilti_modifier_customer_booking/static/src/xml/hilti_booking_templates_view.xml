@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:fdl=1: -->
+
+   
+<templates id="template" xml:space="preserve">
+    <t t-name="anchor_snippet">
+    <div class="anchor_main" t-att-id="'anchor_'+count">
+    <a class="remove_this fa fa-remove" style="color: #d2051e;cursor: pointer;margin-left: 67%;text-decoration: none;">&amp;nbsp;Remove</a>
+		<div class="#">
+			
+			<div class="col-md-9 anchor_padd">
+				<h4 style="color: #d2051e;" class="anchor_co_rm">Anchor <t t-esc="count" /></h4> 
+				<div
+	class="form-group field-project group selection_box col-md-4 anchor_type">
+					<select t-att-id="'anchor_type_'+count" name="anchor_type"
+	class="form-control selection-color-content js_anchor_type js_anchor_type_auto" t-att-index="count">
+						<option value="" selected="selected" class="place_holder">
+							Select anchor type
+						</option>
+						<t t-foreach="master_ids" t-as="ma">
+							<option t-att-value="ma.id">
+								<t t-esc="ma.name" />
+							</option>
+						</t>
+					</select>
+					<span class="highlight"></span>
+					<span class="bar"></span>
+					<label>Anchor Type</label>
+					<span t-att-class="'anchor_type_valication_error_'+count" style="color: #d2051e;display: none;">Please enter this information.</span>
+				</div>
+				<div
+	class="form-group field-project group selection_box col-md-4 anchor_type an_custom_padding">
+					<select t-att-id="'anchor_size_'+count" name="anchor_size"
+	class="form-control selection-color-content js_anchor_size_auto" t-att-index="count">
+						<option value="" selected="selected" class="place_holder">
+							Select anchor size
+						</option>
+						<t t-foreach="master_size_ids" t-as="maz">
+							<option t-att-value="maz.id">
+								<t t-esc="maz.name" />
+							</option>
+
+						</t>
+					</select>
+					<span class="highlight"></span>
+					<span class="bar"></span>
+					<label>Anchor Size</label>
+					<span t-att-class="'anchor_size_valication_error_'+count" style="color: #d2051e;display: none;">Please enter this information.</span>
+				</div>
+				<div class="form-group field-project group col-md-4 anchor_type an_custom_pad_mar">
+					<input type="text"  t-att-id="'anhor_qty_'+count" t-att-name="'anhor_qty_'+count" class="form-control anhor_qty_class js_anchor_qty_auto"
+	autocomplete="anhor_qty" autofocus="autofocus" placeholder="Enter anchor quantity to be tested" t-att-index="count">
+						<span class="highlight"></span>
+						<span class="bar"></span>
+						<label>Anchor Quantity to be tested</label>
+						<span t-att-class="'ancor_qty_valication_error_'+count" style="color: #d2051e;display: none;">Please enter this information.</span>
+						<span t-att-class="'qty_number_validation_'+count" style="color: #d2051e;display: none;">Anchor Qty should only be in numbers.</span>
+					</input>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 anchor_padd" style="display: none;" t-att-id="'display_none_sitecondition_'+count">
+			<div class="border_redio col-md-9">
+				<p class="complexity_text">Site Conditions</p>
+				<div class="col-md-4 col-sm-4 col-xs-4 small image_redio_button" t-att-id="'small_'+count" t-att-index="count">
+					<input type="radio" t-att-name="'complexity_'+count" class="img_redio"
+	value="simple" id="simple" style="display: none"></input>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-4 medium image_redio_button" t-att-id="'medium_'+count" t-att-index="count">
+					<input type="radio" t-att-name="'complexity_'+count" class="img_redio"
+	value="medium" id="medium" style="display: none"></input>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-4 complex image_redio_button" t-att-id="'complex_'+count" t-att-index="count">
+					<input type="radio" t-att-name="'complexity_'+count" class="img_redio"
+	value="complex" id="complex" style="display: none"></input>
+				</div>
+			</div>
+        	<span t-att-class="'site_condition_valication_error_'+count" style="color: #d2051e;display: none;clear: both;">Please enter this information.</span>
+		</div>
+		<div class="col-md-9 anchor_padd"><hr/></div>
+	</div>
+    </t>
+    
+   
+</templates>

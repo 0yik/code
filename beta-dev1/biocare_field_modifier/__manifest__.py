@@ -1,0 +1,45 @@
+# -*- coding: utf-8 -*-
+{
+    "name": """Biocare Custom Fields""",
+    "summary": """Biocare Modifier Fields For Leads and sale order""",
+    "category": "Sales",
+    "images": [],
+    "version": "10.0",
+    "application": False,
+
+    "author": "Hashmicro / Parikshit Vaghasiya/ Luc / Krupesh/Soundarya",
+    "website": "https://hashmicro.com",
+    "license": "AGPL-3",
+    "depends": [
+        'sale', 'crm', 'hr', 'account', 'stock', 'sale_stock',
+        'booking_service_V2', 'stock', 'booking_service_restriction_reusable',
+        'zone_and_postal_code_configuration', 'biocare_modifier_services_menu',
+        'hr_timesheet_sheet', 'sale_timesheet', 'contract_bookingorder'
+    ],
+    "data": [
+        "security/ir.model.access.csv",
+        "security/access_right.xml",
+        "views/hide_view.xml",
+        "views/menu_item.xml",
+        "wizard/auto_generate_view.xml",
+        "wizard/assign_access_user_view.xml",
+        "wizard/employee_user_create_wizard_view.xml",
+        "wizard/reschdule_booking_view.xml",
+        "views/account_view.xml",
+        "views/partner_view.xml",
+        "views/hr_employee_view.xml",
+        "views/crm_lead_view.xml",
+        "views/calendar_view.xml",
+        "views/biocare_opportunity_modifier_view.xml",
+        "views/biocare_sale_modifier_view.xml",
+        "views/booking_servicer_view.xml",
+        "views/inventory_locations_view.xml",
+        "views/product_view.xml",
+        "views/zone_view.xml",
+        "views/list_equipment_view.xml",
+    ],
+
+    "auto_install": False,
+    'application': True,
+    "installable": True,
+}

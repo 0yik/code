@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="external_layout_purchase_request">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="beumer_modifer_printout.external_layout_header_purchase_request" />
+            <t t-raw="0" />
+            <t t-call="beumer_modifer_printout.external_layout_footer_purchase_request" />
+        </template>
+
+        <template id="external_layout_header_purchase_request">
+             <div class="header" style="line-height:70%;margin-top:-15px;">
+                <div class="row">
+                    <div class="col-xs-6 " style="margin-top:-15px;">
+                        <span style="font-weight:bold;font-size:10px;" t-esc="company.partner_id.name" />
+                        <br/>
+                        <span style="font-weight:bold;font-size:10px;">PURCHASE REQUISITION FORM</span>
+                        <br/>
+                    </div>
+                    <div class="col-xs-6 " style="page-break-inside:avoid;">
+                        <img class="pull-right" t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 50px;width: 240px;"/>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="external_layout_footer_purchase_request">
+            <div class="footer text-center">
+                <ul class="list-inline">
+                <li></li>
+                <li><span class="page"/></li>
+                <li>of</li>
+                <li><span class="topage"/></li>
+                </ul>
+            </div>
+        </template>
+    </data>
+</odoo>

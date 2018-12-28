@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <data>
+
+        <record id="ppic_group" model="res.groups">
+            <field name="name">PPIC</field>
+        </record>
+
+        <record id="marketing_group" model="res.groups">
+            <field name="name">Marketing</field>
+        </record>
+        </data>
+
+    <menuitem id="sales_team.menu_sale_config" name="Configuration" parent="sales_team.menu_base_partner"
+    sequence="100" groups="sales_team.group_sale_manager,ppic_group,marketing_group"/>
+            <menuitem id="sales_team.menu_sale_report" name="Reports" parent="sales_team.menu_base_partner" sequence="99" groups="sales_team.group_sale_manager,ppic_group,marketing_group"/>
+
+    <menuitem id="sales_team.menu_config_address_book" parent="sales_team.menu_sale_config" name="Contacts" sequence="4" groups="base.group_no_one,ppic_group,marketing_group"/>
+    <menuitem id="sales_team.menu_localisation" name="Localization" parent="sales_team.menu_config_address_book" sequence="5" groups="base.group_no_one,ppic_group,marketing_group"/>
+    <menuitem action="base.action_country" id="sales_team.menu_country_partner" parent="sales_team.menu_localisation" sequence="1" groups="base.group_no_one,ppic_group,marketing_group"/>
+    <menuitem action="base.action_country_group" id="sales_team.menu_country_group" name="Country Group" parent="sales_team.menu_localisation" sequence="3" groups="base.group_no_one,ppic_group,marketing_group"/>
+    <menuitem action="base.action_country_state" id="sales_team.menu_country_state_partner" parent="sales_team.menu_localisation" sequence="2" groups="base.group_no_one,ppic_group,marketing_group"/>
+    <menuitem action="base.action_currency_form" id="sales_team.menu_action_currency_form" parent="sales_team.menu_localisation" sequence="3" groups="base.group_no_one,ppic_group,marketing_group"/>
+</odoo>

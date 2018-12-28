@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="email_template_token_notify" model="mail.template">
+            <field name="name">Email OTP Download Notify</field>
+            <field name="model_id" ref="hm_otp_email.model_otp_link_queue"/>
+            <field name="subject"><![CDATA[Notification about your OTP code!]]></field>
+            <field name="partner_to"><![CDATA[${(object.partner_id and object.partner_id.id or '')|safe}]]></field>
+            <field name="email_to"><![CDATA[${(object.partner_id and object.partner_id.email or object.email_to or '')|safe}]]></field>
+            <field name="use_default_to">True</field>
+            <field name="email_from"><![CDATA[${(object.create_uid.email or '')|safe}]]></field>
+            <field name="use_default_to">False</field>            
+            <field name="body_html"><![CDATA[
+                    Hello, <br/><br/>
+
+                    OTP Code:  ${object.token} <br/>
+                    Please input this code to download attachment file!<br/><br/>
+
+                    Thank you!
+            ]]></field>
+        </record>
+    </data>
+</odoo>

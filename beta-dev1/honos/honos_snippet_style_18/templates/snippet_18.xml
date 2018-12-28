@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<template id="snippet_style_eighteen" inherit_id="honos_snippets.honos_snippets"
+		name="honos snippet" priority="18">
+		<xpath
+			expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']"
+			position="inside">
+			<t t-snippet="honos_snippet_style_18.snippet_style_18_template"
+			t-thumbnail="/honos_snippet_style_18/static/src/img/style_18.jpg" />
+		</xpath>
+	</template>
+	
+	<template id="snippet_style_18_template" name="Style 18">
+		<section class="section_sub_class_category_two_banner">
+              <section class="section_class_category">
+                <section class="section_class_category_banner_left">
+                  <section class="section_sub_class_category_banner_left">
+                    <section class="section_class_category_banner_img_left">
+                      <section class="section_sub_class_category_banner_img_left">
+						  <a href="#">
+                        <section>
+                          <img  class="s_image_common" src="/honos_snippet_style_18/static/src/img/style_18_img_1.png"></img>
+                        </section>
+                        </a>
+                      </section>
+                    </section>
+                    <section class="section_class_category_banner_list_right">
+                      <section class="section_sub_class_category_banner_list_right">
+                        <div class="div_class_category_brand_list">
+                          <ul class="ul_class_category_brand_list common_font_style_category_banner">
+                            <li class="li_class_brand_name_heading">
+                              <h3>Shop For Men</h3>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">T-shirts </a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">Shirts</a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">Jeans</a>
+                            </li>
+                             <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">blazers</a>
+                            </li>
+                             <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">formals</a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#"> See All </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </section>
+                    </section>
+                  </section>
+                </section>
+                <section class="section_class_category_banner_right">
+                  <section class="section_sub_class_category_banner_left">
+                    <section class="section_class_category_banner_img_left">
+                      <section class="section_sub_class_category_banner_img_right">
+						  <a href="#">
+                        <section>
+                          <img class="s_image_common" src="/honos_snippet_style_18/static/src/img/style_18_img_2.png"></img>
+                        </section>
+                        </a>
+                      </section>
+                    </section>
+                    <section class="section_class_category_banner_list_right">
+                      <section class="section_sub_class_category_banner_list_right">
+                        <div class="div_class_category_brand_list">
+                          <ul class="ul_class_category_brand_list common_font_style_category_banner">
+                            <li class="li_class_brand_name_heading">
+                              <h3>Shop For Women</h3>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">Tops</a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">T-shirts</a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">Jeans</a>
+                            </li>
+                             <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">skirts</a>
+                            </li>
+                             <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#">shirts</a>
+                            </li>
+                            <li class="li_class_brand_name hvr-icon-forward">
+                              <a class="anch_class_brand_name" href="#"> See All </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </section>
+                    </section>
+                  </section>
+                </section>
+              </section>
+            </section>
+		</template>
+	
+</odoo>

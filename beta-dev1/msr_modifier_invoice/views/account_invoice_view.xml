@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="invoice_form_inhert1" model="ir.ui.view">
+        <field name="name">account.invoice.form.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/sheet/h1" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button type="object"
+                        name="action_view_vendor_bill"
+                        class="oe_stat_button"
+                        icon="fa-pencil-square-o"
+                        attrs="{'invisible':[('state', 'not in', ('draft','open')),('vendor_bill_ids','=',[])]}"
+                    >
+                        <field name="vendor_bill_count" widget="statinfo"/>
+                        </button>
+                    <field name="vendor_bill_ids" invisible="1"/>
+
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="invoice_form_inhert3" model="ir.ui.view">
+        <field name="name">account.invoice.form.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+             <field name="partner_id" position="after">
+                <field name="vendor_bill_id" invisible="0"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

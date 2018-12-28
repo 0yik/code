@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="pos_delivery_order_report">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <div class="page" style="font-family: Arial !important;">
+                <style>
+                    td {
+                        height:27px;
+                        border: 1px solid;
+                        justify-content: center;
+                    }
+                    th {
+                        border: 1px solid;
+                        justify-content: center;
+                    }
+                </style>
+                <table style="width:100%;border: 1px solid">
+                    <tr style="background-color:#6EC89B">
+                        <td colspan="2" style="text-align:center">Home Delivery Order</td>
+                    </tr>
+                    <tr style="text-align:left">
+                        <td style="font-weight: normal;font-size: 18px;color: black;">Name</td>
+                        <td style="border-left:1px solid"><t t-esc="o.d_name"></t></td>
+                    </tr>
+                    <tr style="text-align:left">
+                        <td style="font-weight: normal;font-size: 18px;color: black;">Mobile</td>
+                        <td style="border-left:1px solid"><t t-esc="o.mobile"></t></td>
+                    </tr>
+                    <tr style="text-align:left">
+                        <td style="font-weight: normal;font-size: 18px;color: black;">Email</td>
+                        <td style="border-left:1px solid"><t t-esc="o.email"></t></td>
+                    </tr>
+                    <tr style="font-weight: normal;font-size: 18px;color: black;text-align:center">
+                        <td colspan="2">
+                            Address
+                        </td>
+                    </tr>
+                    <tr style="text-align:left">
+                        <td style="font-weight: normal;font-size: 18px;color: black;">Locality</td>
+                        <td style="border-left:1px solid"><t t-esc="o.address"></t></td>
+                    </tr>
+                    <tr style="text-align:left">
+                        <td style="font-weight: normal;font-size: 18px;color: black;">Street</td>
+                        <td style="border-left:1px solid"><t t-esc="o.street"></t></td>
+                    </tr>
+                    <tr style="text-align:left">
+                        <td style="font-weight: normal;font-size: 18px;color: black;">City</td>
+                        <td style="border-left:1px solid"><t t-esc="o.city"></t></td>
+                    </tr>
+                    <tr style="text-align:left">
+                        <td style="font-weight: normal;font-size: 18px;color: black;">Zip</td>
+                        <td style="border-left:1px solid"><t t-esc="o.zip"></t></td>
+                    </tr>
+                    <tr style="font-weight: normal;font-size: 18px;color: black;text-align:center">
+                        <td colspan="2">
+                            Other Info
+                        </td>
+                    </tr>
+                    <tr style="text-align:left">
+                        <td style="font-weight: normal;font-size: 18px;color: black;">Date</td>
+                        <td style="border-left:1px solid"><t t-esc="o.delivery_date"></t></td>
+                    </tr>
+                    <tr style="text-align:left">
+                        <td style="font-weight: normal;font-size: 18px;color: black;">Server</td>
+                        <td style="border-left:1px solid"><t t-if="o.person_id" t-esc="o.person_id.name"></t></td>
+                    </tr>
+                    <tr style="text-align:left">
+                        <td style="font-weight: normal;font-size: 18px;color: black;"></td>
+                        <td style="border-left:1px solid"><t t-esc="o.order_note"></t></td>
+                    </tr>
+                </table>
+                <br/>
+                <h3 style="text-align:center;">Order Infomation</h3>
+                <br/>
+                <table style="width:100%;border: 1px solid">
+                    <tr style="text-align:center">
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Uom</th>
+                        <th>Price Unit</th>
+                    </tr>
+                    <tr t-foreach="order_lines" t-as="line" style="text-align:center">
+                        <td t-esc="line['product_name']"></td>
+                        <td t-esc="line['qty']"></td>
+                        <td t-esc="line['product_uom_name']"></td>
+                        <td><t t-esc="line['price_unit']"/>  <t t-esc="line['product_currency_symbol']"/></td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+    </t>
+</template>
+</odoo>

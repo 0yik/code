@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <data>
+            <record id="view_sale_requisition_tree_mar" model="ir.ui.view">
+                <field name="name">sale.requisition</field>
+                <field name="model">sale.requisition</field>
+                <field name="inherit_id" ref="so_blanket_order.view_sale_requisition_tree"/>
+                <field name="groups_id" eval="[(4, ref('marketing_group'))]"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//tree" position="attributes">
+                        <attribute name="create">true</attribute>
+                        <attribute name="edit">false</attribute>
+                        <attribute name="delete">false</attribute>
+                    </xpath>
+                </field>
+            </record>
+            <record id="view_sale_requisition_form_mar" model="ir.ui.view">
+                <field name="name">sale.requisition</field>
+                <field name="model">sale.requisition</field>
+                <field name="inherit_id" ref="so_blanket_order.view_sale_requisition_form"/>
+                <field name="groups_id" eval="[(4, ref('marketing_group'))]"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//form" position="attributes">
+                        <attribute name="create">true</attribute>
+                        <attribute name="edit">false</attribute>
+                        <attribute name="delete">false</attribute>
+                    </xpath>
+                </field>
+            </record>
+        </data>
+
+</odoo>

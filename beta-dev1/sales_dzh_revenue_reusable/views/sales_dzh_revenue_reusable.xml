@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--create header and footer-->
+        <template id="external_layout_offer">
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <t t-call="sales_dzh_revenue_reusable.external_layout_header_offer" />
+            <t t-raw="0" />
+            <!--<t t-call="sales_dzh_revenue_reusable.external_layout_footer_offer" />-->
+        </template>
+        <!--create header-->
+        <template id="sales_dzh_revenue_reusable.external_layout_header_offer">
+             <div class="header" style="padding-bottom:0px; margin:0px">
+                <div class="row">
+                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:60px;width:240px;float:right"/>
+                    <span  class ="text-center" style="font-size: 24px;font-weight:bold ">Summary Retail - DZH</span>
+                </div>
+            </div>
+        </template>
+
+        <report
+            id="action_sales_revenue_report"
+            model="account.dzh.invoice"
+            string="Sales Revenue Report"
+            name="sales_dzh_revenue_reusable.sales_revenue_report"
+            file="sales_dzh_revenue_reusable.sales_revenue_report"
+            report_type="qweb-pdf"
+        />
+
+        <record id="report_pipe_qweb_paperformat" model="report.paperformat">
+            <field name="name">Holidays Summary</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_sales_revenue_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report_pipe_qweb_paperformat"/>
+        </record>
+        <!--create report-->
+        <template id="sales_dzh_revenue_reusable.sales_revenue_report">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="sales_dzh_revenue_reusable.external_layout_offer">
+                    <div class="page">
+                        <t t-set="total_all_cancel" t-value="0"/>
+                            <div t-foreach="o.country_ids" t-as="country">
+                                    <!--<t t-foreach="o.currency_ids" t-as="currency">-->
+                                    <!--<t t-if="currency.currency_id.name == 'SGD'">-->
+                                        <!--<t t-set="currency_rate_sg" t-value="currency.rate"/>-->
+                                    <!--</t>-->
+                                    <!--<t t-if="currency.currency_id.id == country.currency_id.id">-->
+                                        <!--<t t-set="currency_rate_ot" t-value="currency.rate"/>-->
+                                    <!--</t>-->
+                                <!--</t>-->
+                                <table class="table table-condensed" style="font-size:10px;" >
+                                    <thead>
+                                        <!--<tr>-->
+                                        <span style="font-size: 15px;font-weight: bold;" t-field="country.name"/><br/>
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                        <!--get sales person and not duplicate-->
+                                        <t t-set="refund_partners" t-value="[]"/>
+                                        <t t-foreach="o.invoice_refund_ids" t-as="refund" t-if="refund.user_id">
+                                            <t t-if="refund.partner_id.country_id.id == country.id">
+                                                <t t-if="refund.user_id.name not in refund_partners">
+                                                    <t t-set="refund_partners" t-value="refund_partners + [refund.user_id.name]"/>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <span style="font-size: 12px;font-weight: bold;" t-field="country.name"/><span>  -  </span>
+                                        <span style="font-size: 12px;font-weight: bold;" t-foreach="refund_partners" t-as="partner">
+                                            <span t-esc="partner"/> &amp;
+                                        </span>
+
+                                        <!--</tr>-->
+                                        <tr>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:9%;">Company</th>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:7%;">Start/Increase</th>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:7%;">UserId</th>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:7%;">Start Date</th>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:7%;">Contract period</th>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:7%;">Billing Cycle</th>
+                                            <t t-if="country.code == 'SG'">
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:7%;">In orther Currency</th>
+                                            </t>
+                                            <t t-if="country.code != 'SG'">
+                                            <th  class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:5%;"><t t-esc="country.currency_id.name"/> </th>
+                                            </t>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:7%;">X-Change</th>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:7%;">Billing (per mth)</th>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:7%;">FY-Booking</th>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:7%;">Annualised</th>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:9%;">Service</th>
+                                            <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:7%;">Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="f_month" t-value="0"/>
+                                        <t t-set="total_month" t-value="0"/>
+                                        <t t-set="total_country" t-value="0"/>
+                                        <t t-set="c_month" t-value="'Jan'"/>
+                                        <span t-foreach="o.invoice_refund_ids" t-as="invoice_refund">
+                                            <t t-if="f_month == 1" t-set="c_month" t-value="'Jan'"/>
+                                            <t t-if="f_month == 2" t-set="c_month" t-value="'Feb'"/>
+                                            <t t-if="f_month == 3" t-set="c_month" t-value="'Mar'"/>
+                                            <t t-if="f_month == 4" t-set="c_month" t-value="'Apr'"/>
+                                            <t t-if="f_month == 5" t-set="c_month" t-value="'May'"/>
+                                            <t t-if="f_month == 6" t-set="c_month" t-value="'Jun'"/>
+                                            <t t-if="f_month == 7" t-set="c_month" t-value="'Jul'"/>
+                                            <t t-if="f_month == 8" t-set="c_month" t-value="'Aug'"/>
+                                            <t t-if="f_month == 9" t-set="c_month" t-value="'Sep'"/>
+                                            <t t-if="f_month == 10" t-set="c_month" t-value="'Oct'"/>
+                                            <t t-if="f_month == 11" t-set="c_month" t-value="'Nov'"/>
+                                            <t t-if="f_month == 12" t-set="c_month" t-value="'Dec'"/>
+                                            <tr t-if="invoice_refund.partner_id.country_id.id == country.id and int(invoice_refund.create_date.split('-')[1]) != f_month">
+                                                <t t-if="f_month == 0">
+                                                <tr style="background-color:#33FF66;font-size:12px;font-weight:bold">
+                                                    <td colspan="6">
+                                                        <span> Total Month of 2017 </span>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>$</td>
+                                                    <td>$</td>
+                                                    <td colspan="5"></td>
+                                                </tr>
+                                                </t>
+                                                <t t-if="f_month != 0">
+                                                <tr style="background-color:#33FF66;font-size:12px;font-weight:bold">
+                                                    <td colspan="6">
+                                                        <span> Total Month of <t t-esc="c_month"/> 2017 </span>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>$ <t t-esc="total_month"/></td>
+                                                    <td colspan="5"></td>
+                                                </tr>
+                                                </t>
+                                                <t t-set="total_month" t-value="0"/>
+                                                <t t-set="f_month" t-value="0"/>
+                                            </tr>
+                                            <tr t-if="invoice_refund.partner_id.country_id.id == country.id">
+                                                <td>
+                                                    <span t-field="invoice_refund.partner_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <!--<span t-field="invoice_refund.refund_invoice_id.company_id"/>-->
+                                                </td>
+                                                <td>
+                                                    <span t-foreach="invoice_refund.partner_id.opportunity_ids" t-as="op" t-if="op.name"><span t-field="op.name"/></span>
+                                                </td>
+                                                <td>
+                                                    <span t-field="invoice_refund.x_subscription_period"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="invoice_refund.x_month_number"/>
+                                                </td>
+                                                <td>
+                                                    <!--<span t-esc="invoice_refund.amount_total / currency_rate_sg * currency_rate_ot"/>-->
+                                                </td>
+                                                <td>
+                                                    <!--<span t-field="invoice_refund.refund_invoice_id.company_id"/>-->
+                                                </td>
+                                                <td>
+                                                    <!--<span t-field="invoice_refund.amount_total"/>-->
+                                                </td>
+                                                <td>
+                                                    <!--<span t-field="invoice_refund.refund_invoice_id.company_id"/>-->
+                                                    <span t-field="invoice_refund.amount_total"/>
+                                                </td>
+                                                <td>
+                                                    <!--<span t-field="invoice_refund.refund_invoice_id.company_id"/>-->
+                                                </td>
+                                                <td>
+                                                    <span t-esc="invoice_refund.amount_total * invoice_refund.x_month_number"/>
+                                                </td>
+                                                <td >
+                                                    <span t-foreach="invoice_refund.invoice_line_ids" t-as="p" t-if="p.product_id.name"><span t-field="p.product_id.name"/><br/></span>
+                                                </td>
+                                                <td>
+                                                    <span t-foreach="invoice_refund.partner_id.opportunity_ids" t-as="op" t-if="op.description"><span t-field="op.description"/></span>
+                                                </td>
+
+                                                <t t-set="total_month" t-value="total_month + invoice_refund.amount_total"/>
+                                                <t t-set="f_month" t-value="int(invoice_refund.create_date.split('-')[1])"/>
+                                                <t t-set="total_country" t-value="total_country + invoice_refund.amount_total"/>
+                                            </tr>
+                                        </span>
+                                        <tr style="background-color:#33FF66;font-size:12px;font-weight:bold">
+                                                <td colspan="6">
+                                                    <span> Total Month of <t t-esc="c_month"/> 2017 </span>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>$ <t t-esc="total_month"/></td>
+                                                <td colspan="5"></td>
+                                            </tr>
+                                        <tr style="background-color:#FFFF00; color:red ;font-size:15px;font-weight:bold" >
+                                            <td colspan="5">Total in <t t-esc="country.name"/></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>SGD</td>
+                                            <td>$ <t t-esc="total_country"/></td>
+                                            <td colspan="5"></td>
+                                        </tr>
+                                        <t t-set="total_all_cancel" t-value="total_all_cancel + total_country"/>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                    <t t-if="o.country_ids[len(o.country_ids._ids)-1].id == country.id">
+                                        <tr style="background-color:#3399FF; font-size:15px;font-weight:bold" >
+                                            <td colspan="5">Total</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>SGD</td>
+                                            <td>$ <t t-esc="total_all_cancel"/></td>
+                                            <td colspan="5"></td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="view_sales_revenue_report" model="ir.ui.view">
+            <field name="name">sales.pipeline.report.form</field>
+            <field name="model">account.dzh.invoice</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		        <form string="Sales Pipeline Report" version="10.0" style="height:240px">
+
+		            	<group>
+                            <group>
+                                <field name="type_report" required="1"/>
+                            </group>
+                            <group></group>
+		            		<group>
+		            			<field name="country_id" string="Country"/>
+                                <field name="start_date" string="Start Date" required="1"/>
+		            		</group>
+		            		<group>
+		            			<field name="user_id" string="Sales Person"/>
+                                <field name="end_date" string="End Date" required="1"/>
+		            		</group>
+		        		</group>
+
+		            <footer>
+						<button string="Print" name="print_report" type="object" class="oe_highlight"/>
+		                or
+		                <button string="Cancel" class="oe_link" special="cancel" />
+		            </footer>
+		        </form>
+            </field>
+        </record>
+
+        <record id="action_sales_revenue_report" model="ir.actions.act_window">
+            <field name="name">Sales DZH Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.dzh.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="sales_dzh_revenue_report_menu"
+            name="Profit and Loss Report"
+            parent="sales_team.menu_sale_report"
+            action="action_sales_revenue_report"
+        />
+    </data>
+</odoo>

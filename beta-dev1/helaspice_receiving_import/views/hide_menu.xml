@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.menu" id="account.menu_finance">
+            <field name="active">0</field>
+        </record>
+
+        <record model="ir.ui.menu" id="stock.menu_stock_scrap">
+            <field name="active">0</field>
+        </record>
+
+        <record model="ir.ui.menu" id="stock.menu_reordering_rules_config">
+            <field name="active">0</field>
+        </record>
+
+    </data>
+</odoo>

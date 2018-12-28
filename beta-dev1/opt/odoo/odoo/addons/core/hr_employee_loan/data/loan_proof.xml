@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="proof_of_residence" model="loan.proof">
+            <field name="name">Proof Of Residence</field>
+            <field name="description">Telephone Bill / Electricity Bill</field>
+            <field name="mandatory">TRUE</field>
+        </record>
+
+        <record id="proof_of_identity" model="loan.proof">
+            <field name="name">Proof Of Identity</field>
+            <field name="description">Identity Card / Passport / Driving License</field>
+            <field name="mandatory">TRUE</field>
+        </record>
+
+        <record id="latest_bank_statement" model="loan.proof">
+            <field name="name">Latest Bank Statement</field>
+            <field name="description">Salary / income is credited for past 3 months</field>
+            <field name="mandatory">TRUE</field>
+        </record>
+
+        <record id="copies_of_property_document" model="loan.proof">
+            <field name="name">Copies Of Property Document</field>
+            <field name="mandatory">FALSE</field>
+        </record>
+
+    </data>
+</odoo>

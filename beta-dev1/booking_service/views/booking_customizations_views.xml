@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	<record id="calender_event_form_changes" model="ir.ui.view">
+            <field name="name">calendar.event.changes.form</field>
+            <field name="model">calendar.event</field>
+			<field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//div[@class='oe_title']/h2" position="after">
+            		<label for="serial_ids" string="Equipments"/>
+                    <h2>
+                        <field name="serial_ids" widget="many2many_tags" placeholder="Select equipments..." class="oe_inline"/>
+                    </h2>
+                                        
+            	</xpath>
+            	<field name="categ_ids" position="after">
+            		<field name="employee_ids" widget="many2many_tags" placeholder="Select employees..."/>
+            	</field>
+			</field>
+		</record>
+
+    	<record id="employee_form_event_related_changes" model="ir.ui.view">
+            <field name="name">booking.form.event.related.changes</field>
+            <field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//div[@name='button_box']" position="inside">
+            		<button name="employee_events"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-calendar" sting="Events">
+                    	<field name="total_events" widget="statinfo" string="Events"/>
+                    </button>
+            	</xpath>
+            </field>
+        </record>
+
+    	<record id="product_template_is_equipment_field_form" model="ir.ui.view">
+            <field name="name">product.template.is.equipment.form</field>
+            <field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+            	<field name="type" position="before">
+            		<field name="is_an_equipment" />
+            	</field>
+			</field>
+		</record>
+
+    	<record id="serial_number_form_booking_changes" model="ir.ui.view">
+            <field name="name">serial.number.form.booking.changes</field>
+            <field name="model">stock.production.lot</field>
+			<field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//div[@name='button_box']" position="inside">
+            		<button name="action_view_events" type="object" class="oe_stat_button" icon="fa-calendar" sting="Events">
+                            <field name="events_count" widget="statinfo" string="Events"/>
+                        </button>
+            	</xpath>
+            </field>
+        </record>
+
+		<menuitem id="menu_booking_main" parent="sales_team.menu_base_partner" name="Booking" sequence="5" />                				                				
+    </data>
+</odoo>    

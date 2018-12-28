@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="hr_timesheet_sheet_form_inherit1" model="ir.ui.view">
+            <field name="name">hr_timesheet_sheet.sheet.form.inherit</field>
+            <field name="model">hr_timesheet_sheet.sheet</field>
+            <field name="inherit_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header/button[1]" position="after">
+                    <button name="action_update_access_right" string="Update Access Right" type="object" class="oe_highlight"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

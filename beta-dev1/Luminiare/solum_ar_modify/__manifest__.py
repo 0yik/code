@@ -1,0 +1,36 @@
+{
+    "name": "Luminiare Access Rights Modify",
+    "version": "1.0",
+    "depends": [
+    			"product",
+    			"calendar",
+    			"mail",
+    			"crm",
+    			"sale",
+                "account",
+                "stock",
+                "stock_account",
+                "purchase",
+                "sales_team",
+                "solum_sale",
+                "solum_invoice",
+                "solum_delivery_order",
+                "procurement",
+                "muk_dms",
+                ],
+    "author": "Hashmicro/Kunal",
+    "website": "http://www.hashmicro.com",
+    "category": "Solum",
+    'sequence': 1,
+    "description": """
+Hide some menus based on the user's company
+""",
+    'data': [
+    'security/group.xml',
+    'security/ir.model.access.csv',
+    'views/solum_ar_modify_templates.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+}

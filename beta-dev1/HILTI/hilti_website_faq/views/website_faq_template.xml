@@ -1,0 +1,179 @@
+<odoo>
+
+	<template id="assets_frontend" inherit_id="website.assets_frontend" name="Website FAQ">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/hilti_website_faq/static/src/js/hilti_website_faq.js"></script>
+        </xpath>
+    </template>
+
+	<template id='child_faq'>
+		<style>
+			 .panel-group .panel {
+		        border-radius: 0;
+		        box-shadow: none;
+		        border-color: #EEEEEE;
+		    }
+		
+		    .panel-title > a {
+		        display: block;
+		        padding: 15px;
+		        text-decoration: none;
+		    }
+		
+		    .more-less {
+		        float: right;
+		        color: #212121;
+		    }
+		
+		    .panel-default > .panel-heading + .panel-collapse > .panel-body {
+		        border-top-color: #EEEEEE;
+		    }
+		</style>
+		<ul class="nav nav-tabs">
+			<li class="active text-center" style='width:33%'>
+				<a data-toggle="tab" href="#question_answer">General Q&amp;A</a>
+			</li>
+			<li class="text-center" style='width:33%'>
+				<a data-toggle="tab" href="#user_manual">User Manuals</a>
+			</li>
+			<li class="text-center" style='width:33%'>
+				<a data-toggle="tab" href="#instructional_video">Instructional Videos</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div id="question_answer" class="tab-pane fade in active">
+				<t t-foreach='faq_types' t-as='faq_type'>
+					<t t-value='find_faq_records(faq_type.id, "question_answer", search=search)' t-set='faq_records'/>
+					<h3 t-if='faq_records' style='color: #7c7bad !important;'><t t-esc='faq_type.name'/></h3>
+					<t t-foreach='faq_records' t-as='faq_record'>
+						<t t-if='faq_record.faq_type == "question_answer"'>
+							<div style="font-size: 18px;margin-top: 4px;" class="page-header">
+								<b><t t-esc='faq_record.name'/></b>
+								<t t-foreach='faq_record.faq_tags' t-as='tags'>
+									<span class="label label-default"><t t-esc='tags.name'/></span>
+								</t>
+							</div>
+							<t t-foreach='faq_record.website_question_answer_ids' t-as='website_question_answer_id'>
+								<div class="panel-group" role="tablist">
+				            		<div class="panel panel-default">
+				              			<div class="panel-heading collapsed" role="tab" data-toggle="collapse" aria-expanded="false" t-att-data-target="'#'+str(website_question_answer_id.id)">
+				              				 <i class="more-less fa fa-chevron-down" aria-hidden="true"></i>
+				                			<h4 class="panel-title o_default_snippet_text" t-field="website_question_answer_id.question"/>
+				              			</div>
+				              			<div class="panel-collapse collapse" role="tabpanel" aria-expanded="false" t-att-id="website_question_answer_id.id" style="height: 0px;">
+				                			<div class="panel-body">
+				                  				<p class="o_default_snippet_text" t-field="website_question_answer_id.answer"></p>
+				                			</div>
+				              			</div>
+				            		</div>
+				          		</div>
+				          	</t>
+				       </t>
+					</t>
+				</t>
+			</div>
+			<div id="user_manual" class="tab-pane fade in">
+				<t t-foreach='faq_types' t-as='faq_type'>
+					<t t-value='find_faq_records(faq_type.id, "user_manual", search=search)' t-set='faq_records'/>
+					<h3 t-if='faq_records'><u><t t-esc='faq_type.name'/></u></h3>
+					<t t-foreach='faq_records' t-as='faq_record'>
+						<t t-if='faq_record.faq_type == "user_manual"'>
+			      			<div class='row mt8'>
+			      				<div class='col-md-8' style="font-size: 16px;">
+			      					<b><t t-esc='faq_record.name'/></b>
+			      					<t t-foreach='faq_record.faq_tags' t-as='tags'>
+										<span class="label label-default"><t t-esc='tags.name'/></span>
+									</t>
+			      				</div>
+			      				<div class='col-md-4 text-right'>
+			      					<a t-att-href="'/web/content/website.faq/'+str(faq_record.id)+'/user_manual'" t-att-download='faq_record.user_manual_datas_fname' target="_self"><b><i class="fa fa-download" aria-hidden="true"></i> Download PDF [ <t t-esc='convert_size(faq_record.file_size)'/> ]</b></a>
+			      				</div> 
+			      			</div>
+			      			<div t-if='faq_record.sub_title' class='row'>
+			      				<div class='col-md-12'>
+			      					<t t-esc='faq_record.sub_title'/>
+			      				</div>
+			      			</div>
+			      			<div t-if='faq_record.description' class='row'>
+			      				<div class='col-md-12'>
+			      					<span t-field='faq_record.description'/>
+			      				</div>
+			      			</div>
+			      			<hr/>
+			      		</t>
+			      	</t>
+	      		</t>
+			</div>
+			<div id="instructional_video" class="tab-pane fade in">
+				<t t-foreach='faq_types' t-as='faq_type'>
+					<t t-value='find_faq_records(faq_type.id, "instructional_video", search=search)' t-set='faq_records'/>
+					<h3 t-if='faq_records'><u><t t-esc='faq_type.name'/></u></h3>
+					<div class='row mt8'>
+					<t t-foreach='faq_records' t-as='faq_record'>
+						<t t-if='faq_record.faq_type == "instructional_video"'>
+							<div class='col-md-3'>
+								<div class='row'>
+									<div class='col-md-12'>
+										<b><t t-esc='faq_record.name'/></b>
+										<t t-foreach='faq_record.faq_tags' t-as='tags'>
+											<span class="label label-default"><t t-esc='tags.name'/></span>
+										</t>
+									</div>
+									<div class='col-md-12'>
+										<b><t t-esc='faq_record.sub_title'/></b>
+									</div>
+								</div>
+								<div class='row'>
+									<div class='col-md-12'>
+										<video width="250" controls='true'>
+									  		<source t-att-src="'/web/content/website.faq/'+str(faq_record.id)+'/instructional_video'" t-att-type="faq_record.mimetype"/>
+										</video>
+									</div>
+								</div>
+								<div class='row' t-if='faq_record.description'>
+									<div class='col-md-12'>
+										<span t-field='faq_record.description'/>
+									</div>
+								</div>
+							</div>
+						</t>
+					</t>
+					</div>
+				</t>
+			</div>
+		</div>
+	</template>
+
+	<template name='FAQ' id='website.faq'>
+		<t t-call="website.layout">
+			<div id="wrap">
+	        <div class="oe_structure"/>
+		        <div class="container">
+		            <div class="row mt16">
+		                <div class="col-md-8 col-xs-12 col-sm-12">
+		                	<div style='font-size: 36px;'>Frequently Asked Questions</div>
+		                </div>
+		                <div class="col-md-4 col-xs-12 col-sm-12 mt8">
+		                	<form action="/page/faq" method="post">
+			                	<div class="input-group">
+				                	
+								      <input type="text" name='search' class="form-control faq_search_input" t-att-value="search" title='Search here and view matching results in all tab categories listed below' placeholder="Enter your search term"/>
+								      <span class="input-group-btn">
+								        <button  class="btn btn-secondary faq_search btn-lg" title='Search here and view matching results in all tab categories listed below' type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+								      </span>
+								    
+							    </div>
+						    </form>
+		                </div>
+		            </div>
+		            <div class='row mt8 child_faq'>
+		            	<t t-call='hilti_website_faq.child_faq'/>
+		            </div>
+		        </div>
+	        <div class="oe_structure"/>
+	      </div>
+	    </t>
+		
+	</template>
+
+</odoo>

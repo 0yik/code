@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <record id="bank_transaction_form_view_inehrit" model="ir.ui.view">
+            <field name="name">bank.transaction.form</field>
+            <field name="model">bank.transaction</field>
+            <field name="inherit_id" ref="bank_transaction.bank_transaction_form_view"/>
+            <field name="arch" type="xml">
+                <field name="bank_transaction_line_in_ids" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="bank_transaction_line_out_ids" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <xpath expr="//notebook/page[1]" position="inside">
+                    <field name="bank_transaction_line_ids">
+                        <tree string="Bank Transaction Lines" editable="bottom">
+                            <field name="branch_id"/>
+                            <field name="bank_account_id" domain="[('type', '=', 'bank')]" required="1"/>
+                            <field name="amount_currency" required="1" sum="Total"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

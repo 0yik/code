@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="summary_purchase_report_form" model="ir.ui.view">
+        <field name="name">Summary Purchase Report Form</field>
+        <field name="model">summary.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Report Summary">
+                <group>
+                    <group>
+                        <field name="date_start" required="1"/>
+                    </group>
+                    <group>
+                        <field name="date_end" required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="generate_purchase_report" string="Print" type="object" icon="fa-file-pdf-o" class="btn-primary"/>
+                    or
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_summary_purchase_report" model="ir.actions.act_window">
+        <field name="name">Purchase Report Summary</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="res_model">summary.report.wizard</field>
+        <field name="view_id" ref="pdp_summary_purchase_report.summary_purchase_report_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="main_purchase_report" name="Reports" parent="purchase.menu_purchase_root" sequence="99"
+        groups="purchase.group_purchase_manager"/>
+
+    <menuitem id="purchase.purchase_report" name="Reports" parent="main_purchase_report" sequence="1"
+        groups="purchase.group_purchase_manager" action="purchase.action_purchase_order_report_all"/>
+
+    <menuitem id="summary_report_menu" name="Summary Purchase Report" parent="main_purchase_report" sequence="2"
+        groups="purchase.group_purchase_manager" action="action_summary_purchase_report"/>
+
+    <report
+        string="Summary Purchase Report"
+        id="action_purchase_summary_report"
+        model="summary.report.wizard"
+        report_type="qweb-pdf"
+        name="pdp_summary_purchase_report.report_summary"
+        file="pdp_summary_purchase_report.report_summary"
+    />
+
+</odoo>

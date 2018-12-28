@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-name="BranchOptionButton">
+        <button class="control-button branch_btn">
+            <i class="pe-7s-share"></i>
+            Branch (<span><t t-esc="widget.get_current_branch()"/> </span>)
+        </button>
+    </t>
+    <t t-extend="TableGuestsButton">
+        <t t-jquery=".control-button" t-operation="replace">
+            <button class="control-button btn btn-default btn-fill btn-wd guest-button"><i class="pe-7s-add-user"/> Guests: <t t-esc="widget.guests()" /></button>
+        </t>
+    </t>
+    <t t-extend="TransferOrderButton">
+        <t t-jquery=".control-button" t-operation="replace">
+            <button class="control-button btn btn-default btn-fill btn-wd transfer-button"><i class="pe-7s-shuffle"/> Transfer</button>
+        </t>
+    </t>
+    <t t-name="BranchOptionsPopupWidget">
+	    <div class="modal-dialog options-dialog" style="background-color: rgba(0,0,0,0.5) !important;">
+	        <div class="popup popup-options" style="background-color: #F0EEEE !important;">
+	            <p class="title" style="background: rgba(255,255,255,0.5) !important;
+    color: #ab460b !important;"><t t-esc=" widget.options.title || '' " /></p>
+				<div class='popup-option once' style="text-align: center; margin: 100px;">
+                    <select class="o_form_input form-control branch_selection" style="width: 100%">
+                        <t t-foreach="widget.branch_list" t-as="branch">
+                            <option t-att-value="branch.id"><t t-esc="branch.name"/></option>
+                        </t>
+                    </select>
+				</div>
+                <div class="footer centered">
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                    <div class="button confirm">
+                        Ok
+                    </div>
+                </div>
+	        </div>
+	    </div>
+    </t>
+
+
+    <t t-name="BranchMessagePopupWidget">
+	    <div class="modal-dialog options-dialog" style="background-color: rgba(0,0,0,0.5) !important;">
+	        <div class="popup popup-options" style="background-color: #F0EEEE !important;">
+	            <p class="title" style="background: rgba(255,255,255,0.5) !important;
+    color: #ab460b !important;"><t t-esc=" widget.options.title || '' " /></p>
+				<div class='popup-option content' style="text-align: left; margin: 35px;">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><span>From</span></td>
+                                <td><span t-esc="widget.from_branch.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><span>Order No.</span></td>
+                                <td><span t-esc="widget.order.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><span>Product:</span></td>
+                                <td></td>
+                            </tr>
+                            <t t-set="i" t-value="1"/>
+                            <t t-foreach="widget.order_lines" t-as="order_line">
+                                <tr>
+                                    <td> <span t-esc="order_line.qty"/> </td>
+                                    <td> <span t-esc="widget.pos.db.get_product_by_id(order_line.product_id).display_name"/> </td>
+                                    <td> <span t-if="order_line.note" t-esc="order_line.note"/> </td>
+                                </tr>
+                                <t t-set="i" t-value="i+1"/>
+                            </t>
+                        </tbody>
+                    </table>
+				</div>
+                <div class="footer centered">
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                    <div class="button confirm">
+                        Ok
+                    </div>
+                </div>
+	        </div>
+	    </div>
+    </t>
+</templates>

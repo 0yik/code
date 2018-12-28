@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="machine_management_wast_inherit_form_view" model="ir.ui.view">
+        <field name="name">machine.management.wast.form.inherit</field>
+        <field name="model">machine.management</field>
+        <field name="inherit_id" ref="scrap_approval_workflow.machine_management_inherit_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header/button[@name='button_scrap']" position="after">
+                <button name="button_wasted" type="object" string="Wasted"
+                        attrs="{'invisible': [('state', 'in', ('pending', 'ready', 'cancel', 'progress'))]}"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" name="action_see_move_wast" type="object" icon="fa-arrows-v"
+                        attrs="{'invisible': [('wast_count', '=', 0)]}">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="wast_count"/>
+                        </span>
+                        <span class="o_stat_text">Wasted</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

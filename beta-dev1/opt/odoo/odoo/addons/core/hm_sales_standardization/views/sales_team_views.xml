@@ -1,0 +1,241 @@
+<odoo>
+  <data>
+        <record id="sales_target_form_view" model="ir.ui.view">
+          <field name="name">sales.target.form</field>
+          <field name="model">sales.target</field>
+          <field name="arch" type="xml">
+              <form>
+                  <label for="year"/>
+                  <field name="year" readonly="1"/>
+                  <group>
+                    <group string="Sales Target">
+                        <field name="t_january" widget="monetary" />
+                        <field name="t_february" widget="monetary" />
+                        <field name="t_march" widget="monetary"/>
+                        <field name="t_april" widget="monetary"/>
+                        <field name="t_may" widget="monetary"/>
+                        <field name="t_june" widget="monetary"/>
+                        <field name="t_july" widget="monetary"/>
+                        <field name="t_august" widget="monetary"/>
+                        <field name="t_september" widget="monetary"/>
+                        <field name="t_october" widget="monetary"/>
+                        <field name="t_november" widget="monetary"/>
+                        <field name="t_december" widget="monetary"/>
+                    </group>
+                    <group string="Actual Sales Figure">
+                        <field name="january" widget="monetary" readonly="1"/>
+                        <field name="february" widget="monetary" readonly="1"/>
+                        <field name="march" widget="monetary" readonly="1"/>
+                        <field name="april" widget="monetary" readonly="1"/>
+                        <field name="may" widget="monetary" readonly="1"/>
+                        <field name="june" widget="monetary" readonly="1"/>
+                        <field name="july" widget="monetary" readonly="1"/>
+                        <field name="august" widget="monetary" readonly="1"/>
+                        <field name="september" widget="monetary" readonly="1"/>
+                        <field name="october" widget="monetary" readonly="1"/>
+                        <field name="november" widget="monetary" readonly="1"/>
+                        <field name="december" widget="monetary" readonly="1"/>
+                    </group>
+                  </group>
+            </form>
+          </field>
+      </record>
+      <record id="sales_target_tree_view" model="ir.ui.view">
+          <field name="name">sales.target.tree</field>
+          <field name="model">sales.target</field>
+          <field name="arch" type="xml">
+              <tree create="false" delete="false">
+                <field name="year"/>
+                <field name="january" widget="saletarget"/>
+                <field name="february" widget="saletarget"/>
+                <field name="march" widget="saletarget"/>
+                <field name="april" widget="saletarget"/>
+                <field name="may" widget="saletarget"/>
+                <field name="june" widget="saletarget"/>
+                <field name="july" widget="saletarget"/>
+                <field name="august" widget="saletarget"/>
+                <field name="september" widget="saletarget"/>
+                <field name="october" widget="saletarget"/>
+                <field name="november" widget="saletarget"/>
+                <field name="december" widget="saletarget"/>
+
+                  <field name="t_january" invisible="1"/>
+                    <field name="t_february" invisible="1"/>
+                    <field name="t_march" invisible="1"/>
+                    <field name="t_april" invisible="1"/>
+                    <field name="t_may" invisible="1"/>
+                    <field name="t_june" invisible="1"/>
+                    <field name="t_july" invisible="1"/>
+                    <field name="t_august" invisible="1"/>
+                    <field name="t_september" invisible="1"/>
+                    <field name="t_october" invisible="1"/>
+                    <field name="t_november" invisible="1"/>
+                    <field name="t_december" invisible="1"/>
+            </tree>
+
+          </field>
+      </record>
+      <record id="sales_target_form_view" model="ir.ui.view">
+          <field name="name">sales.target.form</field>
+          <field name="model">sales.target</field>
+          <field name="arch" type="xml">
+              <form>
+                  <label for="year"/>
+                  <field name="year"/>
+                  <group>
+                    <group string="Sales Target">
+                        <field name="t_january" widget="monetary" />
+                        <field name="t_february" widget="monetary" />
+                        <field name="t_march" widget="monetary"/>
+                        <field name="t_april" widget="monetary"/>
+                        <field name="t_may" widget="monetary"/>
+                        <field name="t_june" widget="monetary"/>
+                        <field name="t_july" widget="monetary"/>
+                        <field name="t_august" widget="monetary"/>
+                        <field name="t_september" widget="monetary"/>
+                        <field name="t_october" widget="monetary"/>
+                        <field name="t_november" widget="monetary"/>
+                        <field name="t_december" widget="monetary"/>
+                    </group>
+                    <group string="Actual Sales Figure">
+                        <field name="january" widget="monetary" readonly="1"/>
+                        <field name="february" widget="monetary" readonly="1"/>
+                        <field name="march" widget="monetary" readonly="1"/>
+                        <field name="april" widget="monetary" readonly="1"/>
+                        <field name="may" widget="monetary" readonly="1"/>
+                        <field name="june" widget="monetary" readonly="1"/>
+                        <field name="july" widget="monetary" readonly="1"/>
+                        <field name="august" widget="monetary" readonly="1"/>
+                        <field name="september" widget="monetary" readonly="1"/>
+                        <field name="october" widget="monetary" readonly="1"/>
+                        <field name="november" widget="monetary" readonly="1"/>
+                        <field name="december" widget="monetary" readonly="1"/>
+                    </group>
+                  </group>
+            </form>
+          </field>
+      </record>
+      <record id="sales_target_line_form_view_in_crm" model="ir.ui.view">
+          <field name="name">sales.target.line.form</field>
+          <field name="model">sales.target.line</field>
+          <field name="arch" type="xml">
+              <form>
+                  <label for="member_id" string="Sales Person"/>
+                  <field name="member_id" readonly="1"/>
+                  <group>
+
+                      <group string="Sales Target">
+                          <field name="t_january" widget="monetary"/>
+                          <field name="t_february" widget="monetary" />
+                          <field name="t_march" widget="monetary"/>
+                          <field name="t_april" widget="monetary"/>
+                        <field name="t_may" widget="monetary"/>
+                        <field name="t_june" widget="monetary"/>
+                        <field name="t_july" widget="monetary"/>
+                        <field name="t_august" widget="monetary"/>
+                        <field name="t_september" widget="monetary"/>
+                        <field name="t_october" widget="monetary"/>
+                        <field name="t_november" widget="monetary"/>
+                        <field name="t_december" widget="monetary"/>
+                      </group>
+
+                    <group string="Actual Sales Figure">
+                        <field name="january" widget="monetary" readonly="1"/>
+                        <field name="february" widget="monetary" readonly="1"/>
+                        <field name="march" widget="monetary" readonly="1"/>
+                        <field name="april" widget="monetary" readonly="1"/>
+                        <field name="may" widget="monetary" readonly="1"/>
+                        <field name="june" widget="monetary" readonly="1"/>
+                        <field name="july" widget="monetary" readonly="1"/>
+                        <field name="august" widget="monetary" readonly="1"/>
+                        <field name="september" widget="monetary" readonly="1"/>
+                        <field name="october" widget="monetary" readonly="1"/>
+                        <field name="november" widget="monetary" readonly="1"/>
+                        <field name="december" widget="monetary" readonly="1"/>
+                    </group>
+                  </group>
+              </form>
+
+          </field>
+      </record>
+       <record id="sales_target_line_tree" model="ir.ui.view">
+            <field name="name">sales.target.line.tree</field>
+            <field name="model">sales.target.line</field>
+            <field name="arch" type="xml">
+                <tree delete="false" create="0">
+                    <field name="member_id"/>
+                    <field name="january" widget="saletarget"/>
+                    <field name="february" widget="saletarget"/>
+                    <field name="march" widget="saletarget"/>
+                    <field name="april" widget="saletarget"/>
+                    <field name="may" widget="saletarget"/>
+                    <field name="june" widget="saletarget"/>
+                    <field name="july" widget="saletarget"/>
+                    <field name="august" widget="saletarget"/>
+                    <field name="september" widget="saletarget"/>
+                    <field name="october" widget="saletarget"/>
+                    <field name="november" widget="saletarget"/>
+                    <field name="december" widget="saletarget"/>
+
+                    <field name="t_january" invisible="1"/>
+                    <field name="t_february" invisible="1"/>
+                    <field name="t_march" invisible="1"/>
+                    <field name="t_april" invisible="1"/>
+                    <field name="t_may" invisible="1"/>
+                    <field name="t_june" invisible="1"/>
+                    <field name="t_july" invisible="1"/>
+                    <field name="t_august" invisible="1"/>
+                    <field name="t_september" invisible="1"/>
+                    <field name="t_october" invisible="1"/>
+                    <field name="t_november" invisible="1"/>
+                    <field name="t_december" invisible="1"/>
+                </tree>
+            </field>
+       </record>
+
+    <record id="sales_team_form_view_in_crm" model="ir.ui.view">
+      <field name="name">crm.team.form.inherit</field>
+      <field name="model">crm.team</field>
+      <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//form/sheet/notebook" position="inside">
+            <page name="sales_target" string="Sales Target">
+               <group>
+                    <field name="year"/>
+                </group>
+                <field name="sales_target_line_ids" options="{'not_delete': True}">
+                </field>
+            </page>
+          </xpath>
+          <xpath expr="//page[@name='more_info']" position="inside">
+            <group>
+                <field name="sales_targets" options="{'not_delete': True}"></field>
+            </group>
+          </xpath>
+      </field>
+    </record>
+
+      <!--<record id="crm_team_salesteams_view_kanban" model="ir.ui.view">-->
+            <!--<field name="name">crm.team.kanban</field>-->
+            <!--<field name="model">crm.team</field>-->
+            <!--<field name="inherit_id" ref="sales_team.crm_team_salesteams_view_kanban"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<data>-->
+                    <!--<xpath expr="//div[contains(@class, 'o_kanban_primary_right')]" position="after">-->
+                        <!--<t t-if="record.sales_target_line_ids.raw_value.length &gt; 1">-->
+                        <!--<div t-foreach="record.sales_target_line_ids.raw_value" class="col-xs-12" t-as="o">-->
+                            <!--<div class="o_progressbar">-->
+                                <!--<div class="o_progressbar_title" style="width:18%"><t t-esc="o.member_id.name"/></div>-->
+                                <!--<div class="o_progress" style="width:60%">-->
+                                    <!--<div class="o_progressbar_complete" style="width: 50% ;"></div>-->
+                                <!--</div>-->
+                                <!--<div class="o_progressbar_value" style="width:18%"><t t-esc="o.get_current_amount() or 0.0"/> / <t t-esc="o.get_current_target() or 0.0"/></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--</t>-->
+                    <!--</xpath>-->
+                <!--</data>-->
+            <!--</field>-->
+        <!--</record>-->
+  </data>
+</odoo>

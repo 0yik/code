@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--<template id="assets_backend" name="add_button_asset" inherit_id="web.assets_backend">-->
+            <!--<xpath expr="." position="inside">-->
+                <!--<script rel="stylesheet" src="/account_contact_modifier/static/src/js/add_button.js"></script>-->
+            <!--</xpath>-->
+        <!--</template>-->
+        <!--<record id="view_partner_form_children_link" model="ir.ui.view">-->
+            <!--<field name="name">res.partner.children</field>-->
+            <!--<field name="model">res.partner</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form>-->
+                    <!--<sheet>-->
+                        <!--<group>-->
+                            <!--<field name="child_partner_ids" string="Customer" widget="many2many_kanban">-->
+                            <!--</field>-->
+
+                        <!--</group>-->
+                    <!--</sheet>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="action_add_button" model="ir.actions.act_window">
+            <field name="name">Add</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_partner_form_children_link"/>
+        </record>-->
+
+        <record id="view_partner_form_add_button" model="ir.ui.view">
+            <field name="name">res.partner.children</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[1]" position="after">
+                    <page string="Branch">
+                        <field name="child_partner_ids" widget="many2many_kanban" string="">
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

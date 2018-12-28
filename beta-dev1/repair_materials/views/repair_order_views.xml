@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_repair_order_form_inherit">
+            <field name="name">mrp.repair</field>
+            <field name="model">mrp.repair</field>
+            <field name="inherit_id" ref="mrp_repair.view_repair_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='operations']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="domain">[('repair_materials', '=', True)]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='operations']/form//field[@name='product_id']" position="attributes">
+                    <attribute name="domain">[('repair_materials', '=', True)]</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

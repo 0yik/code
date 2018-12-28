@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_questionnaire_config,res_questionnaire_config,laborindo_customer_questionnaire.model_res_questionnaire_config,base.group_user,1,1,1,1
+access_res_question_line,res_question_line,laborindo_customer_questionnaire.model_res_question_line,base.group_user,1,1,1,1
+access_res_questionnaire,res_questionnaire,laborindo_customer_questionnaire.model_res_questionnaire,base.group_user,1,1,1,1
+access_res_questionnaire_lines,res_questionnaire_lines,laborindo_customer_questionnaire.model_res_questionnaire_lines,base.group_user,1,1,1,1

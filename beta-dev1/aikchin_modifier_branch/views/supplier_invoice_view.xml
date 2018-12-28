@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="view_invoice_supplier_tree_inherit" model="ir.ui.view">
+            <field name="name">invoice.supplier.tree.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_due']" position="before">
+                    <field name="branch_id" string="Branch"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

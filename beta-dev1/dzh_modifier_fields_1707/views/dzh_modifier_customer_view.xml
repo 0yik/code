@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--&lt;!&ndash;EDIT LEAVES (ALLOCATION REQUEST) FORM VIEW&ndash;&gt;-->
+        <!--<record id="dzh_modifier_invoice_line_user_view" model="ir.ui.view">-->
+            <!--<field name="name">invoice line form view</field>-->
+            <!--<field name="model">account.invoice</field>-->
+            <!--<field name="inherit_id" ref="dzh_modifier_fields.dzh_customer_invoice_inherit_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//form/sheet/group/group/field[@name='name']" position="attributes">-->
+                    <!--<attribute name="attrs">{'invisible': [('type', '=', 'add')]}</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//form/sheet/group/group/field[@name='name']" position="attributes">-->
+                    <!--<attribute name="string">Reason</attribute>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+    </data>
+</odoo>

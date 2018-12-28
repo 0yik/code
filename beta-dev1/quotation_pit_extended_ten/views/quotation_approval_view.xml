@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<!-- PARTNER VIEW -->
+        <record id="res_comopany_form_view_intipresisi" model="ir.ui.view">
+            <field name="name">res.company.form.view.form.intipresisi</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <data>
+                	<xpath expr='//notebook/page[1]' position="after">
+                		<page string="Sign Line">
+                			<field name="sign_line_ids">
+                				<tree string="Sign Line" editable="false">
+                				    <field name="user_id"/>
+                				    <field name="filename" invisible="1"/>
+                				    <field name="signature" filename="filename"/>
+                				</tree>
+                			</field>
+                		</page>
+                	</xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_order_form_intipresisi_approval" model="ir.ui.view">
+        	<field name="name">sale.order.intipresisi.approval</field>
+        	<field name="model">sale.order</field>
+        	<field name="inherit_id" ref="sale.view_order_form"/>
+        	<field name="arch" type="xml">
+        	    <data>
+        	        <xpath expr="//button[@name='print_quotation']" position="replace">
+        	        	<button name="approv_quotation_send" string="Submit" type="object" class="btn-primary"/>
+        	        </xpath>
+        	        <xpath expr="//button[@name='print_quotation']" position="replace"></xpath>
+        	        <xpath expr="//button[@name='approv_quotation_send']" position="after">
+        	        	<button name="%(action_crm_askcode_approval_quotation_action)d" states="draft,sent,waiting_approval" string="Approve" type="action" class="btn-primary" groups="sales_team.group_sale_manager"/>
+        	        </xpath>
+        	    </data>
+        	</field>
+        </record>
+
+	</data>
+</openerp>

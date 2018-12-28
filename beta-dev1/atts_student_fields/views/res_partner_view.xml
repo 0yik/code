@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--view inherited to add certain fields in Parent form-->
+        <record model="ir.ui.view" id="view_parent_form_inherit">
+            <field name="name">res.partner.parent.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="atts_course.view_parent_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='parent_school']" position="after">
+            		<field name="mother"/>
+            		<field name="father"/>
+            	</xpath>
+            	<xpath expr="//field[@name='city']" position="attributes">
+                    <attribute name="required">False</attribute>
+                </xpath>
+                <xpath expr="//field[@name='email']" position="attributes">
+                    <attribute name="required">False</attribute>
+                </xpath>
+                
+                <xpath expr="//sheet/form/group[1]/field" position="replace">
+                    <field name="parent_school"/>
+                </xpath>
+                
+                <xpath expr="//field[@name='state_id']" position="attributes">
+                    <attribute name="required">False</attribute>
+                </xpath>
+                
+                <xpath expr="//field[@name='country_id']" position="attributes">
+                    <attribute name="required">False</attribute>
+                </xpath>
+                
+                <xpath expr="//notebook[1]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                
+                <xpath expr="//field[@name='type']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                
+                <!-- <xpath expr="//page[2]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath> -->
+            	
+	             <xpath expr="/form/sheet/form/div[1]/h1[1]" position="after">
+		             <group string="Parent Information">
+		               <group>
+		                     <field name="nric" placeholder="Nric" required='1'/>
+		                     <field name="home_mob_no" placeholder="Home No"/>
+		                     <field name="office_no" placeholder="Office No"/>
+		                     <field name="other_accomodation" placeholder="other accommodation" attrs="{'invisible': [('ownership_of_accomodation', '!=', 'others')]}"/>
+		                     <field name="occupation_id"/>
+		                     <field name="parent_relation_with_student_id"/>
+		                     <field name="occupation" invisible='1'/>
+		                 </group>
+		                 <group>
+		                      <field name="citizenship" placeholder="Citizenship"/>
+		                      <field name="dob" placeholder="dob"/>
+		                      <field name="country_of_birth" placeholder="country of birth"/>
+		                      <field name="language" widget="many2many_tags" options='{"no_open": True, "no_create": True}'/>
+		                      <field name="race_id"/>
+		                      <field name="religion_id"/>
+		                      <field name="race" invisible='1'/>
+		                      <field name="religion" invisible='1'/>
+		                </group>
+		                </group>
+		                <group>
+			                <group>
+			                	<field name="accomodation"/>
+			                    <field name="marital_status" widget="radio"/>
+			                    <field name="qualification" widget="radio" />
+			                </group>
+			                <group>
+			                 	<field name="ownership_of_accomodation" />
+			                	<field name="father_mobile_ids" context="{'form_view_ref' : 'atts_student_fields.view_contact_view'}" attrs="{'invisible': [('father', '!=',True)]}"/>
+			                 	<field name="mother_mobile_ids" context="{'form_view_ref' : 'atts_student_fields.view_mother_contact_view'}" attrs="{'invisible': [('mother', '!=',True)]}"/>
+			                </group>
+		            </group>
+	           </xpath>
+          </field>
+       </record>
+	</data>
+</odoo>

@@ -1,0 +1,50 @@
+.note-button{
+		position: absolute;
+	    left: 18%;
+	    top: -3px;
+	    height: 77px !important;
+	    margin-left: 4px !important;
+	    width: 120px;
+}
+
+.pos .topcenterpane {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+            box-sizing: border-box;
+    position:absolute;
+    left: 35%;
+    width: 8%;
+    top:0px;
+    bottom:0;
+    border-right: solid 1px #CECBCB;
+    border-right: solid 3px #787878;
+    background: #e2e2e2;
+}
+
+.pos .numpad button{
+	height: 40px;
+    width: 117%;
+	border: 1px solid;
+    background: #808080;
+    color: #fff;
+}
+
+.pos .numpad{
+	width: 84%;
+}
+
+.row-centerpane .numpad{
+    display: none;
+}
+
+.pos .leftpane{
+    width: 20% !important;
+}
+.pos .category-simple-button{
+    background: #9a9a9a;
+    color: white;
+}
+.pos .category-button{
+    height: 85px;
+}

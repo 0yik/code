@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_budget_reserve_request_form_inherit">
+            <field name="name">view.budget.reserve.request.form.inherit</field>
+            <field name="model">budget.reserve.request</field>
+            <field name="inherit_id" ref="budget_management.view_budget_reserve_request_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_inherit_crossovered_budget_form_inherit">
+            <field name="name">crossovered.budget.inherit.inherit</field>
+            <field name="model">crossovered.budget</field>
+            <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crossovered_budget_line']//form//field[@name='analytic_account_id']"
+                       position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='crossovered_budget_line']//tree//field[@name='analytic_account_id']"
+                       position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='crossovered_budget_line']//tree//field[@name='percentage']"
+                       position="replace">
+                    <field name="percentage" digits="(14, 7)"/>
+                </xpath>
+
+                <!--<xpath expr="//field[@name='crossovered_budget_line']//form//field[@name='percentage']"
+                       position="replace">
+                    <field name="percentage" digits="(14, 7)"/>
+                </xpath>-->
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

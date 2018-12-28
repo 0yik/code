@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="menu_my_profile" model="website.menu">
+            <field name="name">My Profile</field>
+            <field name="url">/my_profile</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_tester'), ref('hilti_modifier_accessrights.group_hilti_admin')])]"/>
+            <field name="sequence" type="int">3</field>
+        </record>
+        
+        <record id="menu_my_profile_tester" model="website.menu">
+            <field name="name">My Profile</field>
+            <field name="url">/my_profile_tester</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_tester'), ref('hilti_modifier_accessrights.group_hilti_admin'), ref('hilti_modifier_accessrights.group_hilti_account_manager'), ref('hilti_modifier_accessrights.group_hilti_cs_engineer')])]"/>
+            <field name="sequence" type="int">2</field>
+        </record>
+        
+    </data>
+</odoo>

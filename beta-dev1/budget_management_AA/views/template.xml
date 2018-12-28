@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="budget_aa" name="AA Budget" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/budget_management_AA/static/src/css/pos.css"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

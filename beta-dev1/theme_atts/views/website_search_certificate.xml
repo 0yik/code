@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="search_certificate_page_bradcum">
+        <div class="container">
+            <h1>    
+                <span><span>Search Certificate</span></span>
+            </h1>
+            <ul class="breadcrumb">
+                <li><a href="/page/homepage">Home</a></li>
+                <li><a href="/page/search_certificate">Search Certificate</a></li>
+            </ul>
+        </div>
+    </template>
+
+    <template id="search_certificate" name="Search Certificate">
+        <t t-call="website.layout">
+            <t t-if="not website.is_breadcum">
+                <t t-if="website.bread_cum_image">
+                    <t t-set="bread_cum" t-value="website.image_url(website,'bread_cum_image')"/>
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs" t-attf-style="background-image:url(#{bread_cum}#)">
+                            <t t-call="theme_atts.search_certificate_page_bradcum" />  
+                        </nav>
+                    </t>
+                    <t t-if="not website.bread_cum_image">
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs">
+                            <t t-call="theme_atts.search_certificate_page_bradcum" />  
+                        </nav>
+                    </t>  
+                <!-- </t>  -->
+            </t>  
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <section style="background: none !important;">
+                    <div class="container">
+                        <div class="row mb32">
+  							<h3 class="directory-page-title mb32">
+								<t t-if="no_result">No Result</t>
+								<t t-if="not no_result">Search Certificate</t>
+								<div class="buttons" t-if="no_result">
+								<div class="pull-right">
+									<a href="/page/search_certificate" class="btn btn-primary">Back to Search</a>
+								</div>
+								</div>
+							</h3>
+							<div itemscope="" itemtype="">
+								<p>To verify a certificate, please follow the instructions below:</p>
+								<ol>
+									<li>Type in the Certificate Number as it appears on the certificate 999-9999</li>
+									<li>Click on ‘Search’</li>
+								</ol>
+								<p>The online certificate search application is only applicable for [STCW] AT5103 HV Training Course (MCA /MPA)</p>
+							</div>
+    					</div>
+    					<div class="row" t-if="not no_result">
+							<form method="POST" action="">
+								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+								<div class="row mt16 mb16">
+									<div class="col-sm-9">
+										<input type="text" name="key" class="form-control" placeholder="Search by Certificate No." t-att-value="key or ''"/>
+									</div>
+									<div class="col-sm-3">
+										<input type="hidden" name="save" value="1"/>
+										<button type="submit" class="asb-btn o_default_snippet_text"><b>Search by Certificate No.</b></button>
+									</div>
+								</div>
+							</form>
+					          <div class="table-responsive mt32 mb16">
+					            <table class="table table-bordered table-hover">
+					              	<thead>
+					                	<tr>
+									  		<td class="text-left">Certificate No.</td>
+	                                  		<td class="text-left">Issue Date</td>
+	                                  		<td class="text-left">Expiry Date</td>
+									  		<td class="text-left">Candidate Name</td>
+			                                <td class="text-left">Type of Certificate</td>
+					                	</tr>
+					              	</thead>
+					              	<tbody>
+					                 	<tr t-if="not certificate_ids">
+					                  		<td colspan="5" class="left">Please search to display result!</td>
+					                	</tr>
+					                	<t t-foreach="certificate_ids" t-as="certificate_id">
+					                		<tr>
+						                		<td class="text-left"><t t-esc="certificate_id.certification_no or ''"/></td>
+		                                  		<td class="text-left"><t t-esc="certificate_id.awarded_date or ''"/></td>
+		                                  		<td class="text-left"><t t-esc="certificate_id.date_of_expiry or ''"/></td>
+										  		<td class="text-left"><t t-esc="certificate_id.student_name or ''"/></td>
+				                                <td class="text-left"><t t-esc="certificate_id.certification_course.name or ''"/></td>
+				                            </tr>
+					                	</t>
+					              	</tbody>
+					            </table>
+					        </div>
+						</div>
+                    </div>
+                </section>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="invoice_form_project_field_access" model="ir.ui.view">
+            <field name="name">invoice form project field access</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.account_invoice_inherit"/>
+            <field name="groups_id" eval="[(4, ref('accsess_user_ar_manager')),(4, ref('accsess_accounting_manager'))]"/>
+            <field name="arch" type="xml">
+                <field name="contract_id" position="attributes">
+                    <attribute name="options">{'no_open': 1}</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="supplier_form_project_field_access" model="ir.ui.view">
+            <field name="name">supplier form project field access</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.invoice_supplier_form_inherit"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager')),(4, ref('accsess_accounting_manager'))]"/>
+            <field name="arch" type="xml">
+                <field name="contract_id" position="attributes">
+                    <attribute name="options">{'no_create_edit': True,'no_create': True, 'no_open': True}</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

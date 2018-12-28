@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="ccm_company_merchandise" name="merchandise">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <!--**************************************** breadcrumb start ****************************************  -->
+	            <section>
+	                <div class="bs_margin"></div>
+	            </section>
+	            <div class="breadcrumb_main">
+	                <div class="breadcrumb_container">
+	                    <section>
+	                        <div class="breadcrumb_inner">
+	                            <ol class="breadcrumb">
+	                                <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+	                                <li class="breadcrumb-item active">Merchandise</li>
+	                            </ol>
+	                        </div>
+	                    </section>
+	                </div>
+	            </div>
+	            <!--**************************************** breadcrumb start ****************************************  -->
+
+	            <!--**************************************** our service section start ****************************************  -->
+	            <div class="merchan_main">
+	                <div class="merchan_container">
+	                    <div class="col-md-12 merchan_heading">
+	                        <h3>Merchandises in CCM</h3>
+	                    </div>
+	                    <div class="row">
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="merchan_innerone">
+	                                <p>If you are looking for some costume accessories to perfect your party outfit, we are the right place!</p>
+	                                <p>Complete your look with our moustache, make-up, wings, masquerade maskes and wigs.</p>
+	                            </div>
+	                            <div class="merchan_innertwo">
+	                                <p>If you are looking to DIY costume, check out our range of Worbla Thermoplastics too!</p>
+	                                <p>We are the first and only distributor in Singapore.</p>
+	                                <p>Available in its orginial form (Worbla Finest Art), black form (Black Art) and even in a transparent form (TranspArt).</p>
+	                                <p>Worbla is great for creating your very own armour and weapon with details. With Worbla, you can create anything you can imagine!</p>
+	                            </div>
+	                        </div>
+	                        <div class="merchan_image">
+	                            <a href="#"><img src="/modifier_honos_theme/static/src/img/merchan.jpg" alt="merchan-image"/></a>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <!--**************************************** our service section end ****************************************  -->
+            </div>
+        </t>
+    </template>
+</odoo>

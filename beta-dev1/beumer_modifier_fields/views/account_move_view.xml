@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="account_move_form_view_inherit" model="ir.ui.view">
+            <field name="name">account move view form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="cost_element_id1" required="True"/>
+                    <field name="cost_element_id2" required="True"/>
+                    <field name="cost_element_id3" required="True"/>
+                    <field name="cost_element_code_sub"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

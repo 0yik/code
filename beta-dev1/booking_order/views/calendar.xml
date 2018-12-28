@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+        <record id="view_calendar_inherit_add_field" model="ir.ui.view">
+            <field name="name">calendar.event.form.inherit.add.field</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+            <field name="arch" type="xml">
+               <field name="partner_ids" position="after">
+                    <!-- <field name="equipment" string="Equipment">
+                        <tree>
+                            <field name="name"></field>
+                        </tree>
+                </field> -->
+                <field name="serial_number_id" string="Equipment"/>
+                <field name="employee_id" string="Employee"/>
+                </field>
+            </field>
+        </record>
+    
+</data>
+</odoo>

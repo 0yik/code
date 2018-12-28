@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_pin_pizza/static/src/js/pin_number_widget.js"></script>
+        </xpath>
+    </template>
+	<template id="assets_backend1" name="pos_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/pos_pin_pizza/static/src/css/pin_number.css"/>
+        </xpath>
+    </template>
+</odoo>

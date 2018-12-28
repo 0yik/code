@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="report_customer_soa_document">
+            <t t-call="beumer_modifer_printout.external_layout_invoice_tax">
+            <t t-set="o" t-value="o.with_context({'lang':o.lang})"/>
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-12">
+                        <div class="col-xs-7 text-left" style="display: table-header-group">
+                            <span style="font-size:12px;font-weight:bold;" t-esc="o.company_id.name or ''"/>
+                            <br/>
+                            <span style="font-weight:bold;font-size:12px;" t-esc="o.house_no" />,
+                            <span style="font-weight:bold;font-size:12px;" t-esc="o.unit_no" />
+                            <br/>
+                            <span style="font-weight:bold;font-size:12px;" t-esc="o.level_no" />,
+                            <span style="font-size:12px;font-weight:1px" t-esc="o.street"/>
+                            <br/>
+                            <span style="font-size:12px;font-weight:1px" t-esc="o.street2"/>
+                            <br/>
+                            <span style="font-size:12px;font-weight:1px" t-esc="o.city"/>
+                            <span style="font-size:12px;font-weight:1px" t-esc="o.country_id.name"/>
+                            <br/>
+                            <span style="font-size:12px;font-weight:bold">Attention &#160; :</span><span style="font-size:12px;font-weight:bold" t-esc="o.name"></span>
+                            <div style="text-decoration: underline"><span style="font-size:12px;font-weight:bold">(email :</span><span style="font-size:12px;font-weight:bold" t-esc="o.email"></span>)</div>
+                            <br/>
+                        </div>
+                        <div class="col-xs-5" style="margin-top:30px">
+                            <span style="font-size:22px;font-weight:bold">Statement of Account</span>
+                            <br/>
+                            <span style="font-size:22px;font-weight:bold">As at <span t-field="o.today_date" t-field-options="{&quot;format&quot;: &quot;dd/MM/yy&quot;}" />
+                            </span>
+
+                        </div>
+                        </div>
+                        <br/>
+                    </div>
+
+                    <table class="table table-condensed" style="border-collapse: collapse;border-top:1px solid black;font-size:12px;width:100%;border-left:hidden;border-right:hidden;">
+                        <thead>
+                            <tr style="border-top:1px solid black;border-bottom:1px solid black;">
+                                    <th class="text-left" style="width:20%;border-top:1px solid black;border-bottom:1px solid black;border-left:hidden;border-right:hidden;">Inv Date</th>
+                                    <th class="text-left" style="width:20%;border-top:1px solid black;border-bottom:1px solid black;border-left:hidden;border-right:hidden;">Document No.</th>
+                                    <th class="text-left" style="width:40%;border-top:1px solid black;border-bottom:1px solid black;border-left:hidden;border-right:hidden;">Description</th>
+                                    <th class="text-left" style="width:20%;border-top:1px solid black;border-bottom:1px solid black;border-left:hidden;border-right:hidden;background:yellow;">Amount(<span t-esc="o.currency_id.name"/>)</th>
+                            </tr>
+                        </thead>
+                        <tbody style="min-height: 500px;">
+                            <t t-set="total" t-value="0"/>
+                            <tr t-foreach="o.invoice_ids" t-as="invoice" style="border-top:1px solid black;">
+                                <td class="text-left" style="border:hidden;border-top:1px solid black;"><span t-field="invoice.date_invoice" /></td>
+                                <td class="text-left" style="border:hidden;border-top:1px solid black;"><span t-esc="invoice.number"/></td>
+                                <td class="text-left" style="border:hidden;border-top:1px solid black;">
+                                    <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                                        <span t-esc="line.product_id.name">&#160; </span>
+                                    </t>
+                                        <span t-if="invoice.purchase_id.name"/><span> - PO:</span><span t-esc="invoice.purchase_id.name"/>
+                                </td>
+                                <td class="text-right" style="border:hidden;border-top:1px solid black;"><span t-esc="invoice.residual_signed"/><t t-set="total" t-value="total+invoice.residual_signed"/></td>
+                            </tr>
+                            <tr style="border:hidden;">
+                                <td style="border:hidden">&#160;</td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                            </tr>
+                            <tr style="border:hidden;">
+                                <td style="border:hidden">&#160;</td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                            </tr>
+                            <tr style="border:hidden;">
+                                <td style="border:hidden">&#160;</td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                            </tr>
+                            <tr style="border:hidden;">
+                                <td style="border:hidden">&#160;</td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                            </tr><tr style="border:hidden;">
+                                <td style="border:hidden">&#160;</td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                            </tr><tr style="border:hidden;">
+                                <td style="border:hidden">&#160;</td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                            </tr><tr style="border:hidden;">
+                                <td style="border:hidden">&#160;</td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                                <td style="border:hidden"></td>
+                            </tr>
+                            <tr style="border-bottom:1px solid black;">
+                                <td style="border-bottom:1px solid black;border-top:hidden;border-left:hidden;border-right:hidden;">&#160;</td>
+                                <td style="border-bottom:1px solid black;border-top:hidden;border-left:hidden;border-right:hidden;"></td>
+                                <td style="border-bottom:1px solid black;border-top:hidden;border-left:hidden;border-right:hidden;"></td>
+                                <td style="border-bottom:1px solid black;border-top:hidden;border-left:hidden;border-right:hidden;"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="border:1px solid black;border-top:1px solid black;border-bottom:3px solid black;border-left:hidden;border-right:hidden;">
+                                <th colspan="2" style="background:yellow;">ACCOUNT BALANCE(<span t-esc="o.currency_id.name"/>)</th>
+                                <th></th>
+                                <th class="text-right"><span t-esc="total"/></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <table class="table table-condensed" style="border-collapse: collapse;border:hidden;font-size:12px;background:orange">
+                            <tr style="border:hidden">
+                                <td class="text-left" style="border:hidden">AGEING</td>
+                                <td class="text-left" style="border:hidden">Current Due</td>
+                                <td class="text-left" style="border:hidden">31 to 60 days due</td>
+                                <td class="text-left" style="border:hidden">61 to 90 days due</td>
+                                <td class="text-left" style="border:hidden">Over 91 days Due</td>
+                            </tr>
+                            <t t-set="day90" t-value="datetime.datetime.strptime(o.today_date, '%Y-%m-%d') - relativedelta(days=90)"/>
+                            <t t-set="day30" t-value="datetime.datetime.strptime(o.today_date, '%Y-%m-%d') - relativedelta(days=30)"/>
+                            <t t-set="day60" t-value="datetime.datetime.strptime(o.today_date, '%Y-%m-%d') - relativedelta(days=60)"/>
+
+                            <t t-set="current_due" t-value="0"/>
+                            <t t-set="due_3160" t-value="0"/>
+                            <t t-set="due_6190" t-value="0"/>
+                            <t t-set="due_91" t-value="0"/>
+                            <t t-foreach="o.invoice_ids" t-as="invoice">
+                                <t t-if="datetime.datetime.strptime(invoice.date_invoice, '%Y-%m-%d') &gt;= day30 and datetime.datetime.strptime(invoice.date_invoice, '%Y-%m-%d') &lt;= datetime.datetime.strptime(o.today_date, '%Y-%m-%d')" t-set="current_due" t-value="current_due + invoice.residual_signed"/>
+                                <t t-if="datetime.datetime.strptime(invoice.date_invoice, '%Y-%m-%d') &lt; day30 and datetime.datetime.strptime(invoice.date_invoice, '%Y-%m-%d') &gt;= day60" t-set="due_3160" t-value="due_3160 + invoice.residual_signed"/>
+                                <t t-if="datetime.datetime.strptime(invoice.date_invoice, '%Y-%m-%d') &lt; day60 and datetime.datetime.strptime(invoice.date_invoice, '%Y-%m-%d') &gt;= date90" t-set="due_6190" t-value="due_6190 + invoice.residual_signed"/>
+                                <t t-if="datetime.datetime.strptime(invoice.date_invoice, '%Y-%m-%d') &lt; day90" t-set="due_91" t-value="due_91 + invoice.residual_signed"/>
+                            </t>
+                            <tr style="border:hidden">
+                                <td class="text-left" style="border:hidden"></td>
+                                <td class="text-left" style="border:hidden"><span t-esc="current_due"/></td>
+                                <td class="text-left" style="border:hidden"><span t-esc="due_3160"/></td>
+                                <td class="text-left" style="border:hidden"><span t-esc="due_6190"/></td>
+                                <td class="text-left" style="border:hidden"><span t-esc="due_91"/></td>
+                            </tr>
+                    </table>
+                    <span style="font-size:12px">NOTE: PAYMENT RECEIVED AFTER STATEMENT DATE WILL BE REFLECTED IN THE NEXT STATEMENT</span>
+                </div>
+            </t>
+        </template>
+        <template id="report_customer_soa">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="beumer_modifer_printout.report_customer_soa_document" t-lang="o.lang"/>
+            </t>
+        </template>
+
+        <!-- QWeb Reports -->
+        <report
+            id="picking_customer_soa"
+            model="res.partner"
+            string="Customer SOA"
+            report_type="qweb-pdf"
+            name="beumer_modifer_printout.report_customer_soa"
+            file="beumer_modifer_printout.report_customer_soa"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+	    <record id="view_merge_transfer_stock" model="ir.ui.view">
+	      <field name="name">Merge Transfer Stock Inventory</field>
+	      <field name="model">merge.transfer.stock</field>
+	      <field name="arch" type="xml">
+	        <form string="Merging related Transfers">
+	          <group>
+				  <field name="pick_ids" domain="[('state','not in',['done','cancel'])]"/>
+	          </group>
+	          <footer>
+	            <button name="merged_transfer" string="Merge Transfer" type="object" class="oe_highlight"/>or
+	            <button string="Cancel" class="oe_link" special="cancel"/>
+	          </footer>
+	        </form>
+	      </field>
+	    </record>
+
+	    <act_window name="Merged Transfer"
+	            res_model="merge.transfer.stock"
+	            src_model="stock.picking"
+	            view_mode="form"
+	            target="new"
+	            key2="client_action_multi"
+	            id="action_view_merge_transfer_stock"/>
+				
+		
+		<menuitem id="all_picking_orders" name="Picking Order" parent="stock.menu_stock_warehouse_mgmt" sequence="3" action="action_view_merge_transfer_stock"/>
+		
+    </data>
+</odoo>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_hr_payslip_form_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.form.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[1]/label[1]" position="attributes">
+                <attribute name="string">Payslip Period</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_payslip_done']" position="replace">
+                <button string="Confirm" name="action_payslip_done" type="object" states="open" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//button[@name='compute_sheet']" position="replace">
+                <button string="Compute Sheet" name="compute_sheet" type="object" states="open" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//button[@name='action_payslip_done']" position="after">
+                <button string="Validate" name="action_payslip_open" type="object" states="draft" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//button[@name='action_payslip_cancel']" position="after">
+                <button string="Email Payslip" name="send_mail_template" type="object" class="oe_highlight"
+                        groups="beumer_modifier_access_right.payroll_admin_group,beumer_modifier_access_right.hr_manager_group,beumer_modifier_access_right.cfo_group"/>
+            </xpath>
+            <xpath expr="//field[@name='number']" position="before">
+                <label for="date_from" string="OT Period"/>
+                <div>
+                    <field name="ot_date_from" class="oe_inline"/>-
+                    <field name="ot_date_to" class="oe_inline"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='input_line_ids']" position="replace">
+                <field name="other_input_ids">
+                    <tree editable="bottom">
+                        <field name="salary_code_sub" invisible="1"/>
+                        <field name="salary_name"/>
+                        <field name="salary_code"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="amount"/>
+                    </tree>
+                </field>
+            </xpath>
+            <xpath expr="//form/sheet[1]/group[1]/field[@name='number']" position="after">
+
+            </xpath>
+        </field>
+    </record>
+
+
+
+    <record id="hr_payslip_extended_form_view_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="l10n_sg_hr_payroll.hr_payslip_extended_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='active']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='total_timesheet_hours']" position="after">
+                <field name="active" />
+            </xpath>
+            <!-- find field description and add the field
+                 idea_ids after it -->
+            <xpath expr="//field[@name='pay_by_cheque']" position="after">
+                <field name="bank_id"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="hr_payslip_run_form_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.run.form.inherit</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='close_payslip_run']" position="after">
+                <button string="Email Payslip" name="send_mail_template" type="object" class="oe_highlight"
+                        groups="beumer_modifier_access_right.payroll_admin_group,beumer_modifier_access_right.hr_manager_group,beumer_modifier_access_right.cfo_group"/>
+            </xpath>
+            <xpath expr="//form/sheet/group/label" position="attributes">
+                <attribute name="string">Payslip Period</attribute>
+            </xpath>
+            <xpath expr="//form/sheet/group" position="inside">
+                <label for="id" string="OT Period"/>
+                <div>
+                    <field name="ot_date_from" class="oe_inline"/>-
+                    <field name="ot_date_to" class="oe_inline"/>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>

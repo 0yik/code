@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="vpicktree_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.tree.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="request_type"/>
+                    <field name="location_id"/>
+                </field>
+                <field name="partner_id" position="after">
+                    <field name="create_date" string="Created Date"/>
+                    <field name="create_uid" string="Created by"/>
+                    <field name="write_date" string="Update Date"/>
+                    <field name="write_uid" string="Updated by"/>
+                </field>
+                <field name="origin" position="after">
+                    <field name="note"/>
+                </field>
+                <field name="backorder_id" position="after">
+                    <field name="total_quantity"/>
+                    <field name="total_price"/>
+                </field>
+            </field>
+        </record>
+
+
+        <!--<record id="view_move_picking_tree_inherit" model="ir.ui.view">-->
+            <!--<field name="name">stock.picking.form.inherit</field>-->
+            <!--<field name="model">stock.move</field>-->
+            <!--<field name="inherit_id" ref="stock.view_move_picking_tree"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//field[@name='product_uom_qty']" position="attributes">-->
+                    <!--<attribute name="default_focus">1</attribute>-->
+                    <!--<attribute name="string">testst</attribute>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+    </data>
+</odoo>

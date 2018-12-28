@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+
+        <!--hide existing report-->
+        <report
+            string="Picking Operations"
+            id="stock.action_report_picking"
+            model="stock.picking"
+            report_type="qweb-pdf"
+            name="stock.report_picking"
+            file="stock.report_picking_operations"
+            menu="False"
+            />
+
+        <report
+            string="Delivery Slip"
+            id="stock.action_report_delivery"
+            model="stock.picking"
+            report_type="qweb-pdf"
+            name="stock.report_deliveryslip"
+            file="stock.report_deliveryslip"
+            menu="False"
+            />
+
+        <report 
+            id="report_workorder_custom"
+            string="Work Order"
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="biocare_reports_modifier.report_workorder" 
+            name="biocare_reports_modifier.report_workorder" 
+            menu="False"/>
+
+
+        <record id="report_workorder_custom" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="biocare_reports_modifier.paperformat_euro_biocare"/>
+        </record>
+
+        <report 
+            id="action_report_job_sheet"
+            model="biocare_reports_modifier.report_job_sheet"
+            string="Job Sheet"
+            report_type="qweb-pdf"
+            name="biocare_reports_modifier.report_job_sheet"
+            file="biocare_reports_modifier.report_job_sheet"
+            />
+            
+        <report 
+            id="report_contract_custom"
+            string="Contract"
+            model="account.analytic.account" 
+            report_type="qweb-pdf"
+            file="biocare_reports_modifier.report_contract" 
+            name="biocare_reports_modifier.report_contract" 
+            />
+            
+        <report 
+            id="report_contract_wizard"
+            string="Contract"
+            model="account.analytic.account" 
+            report_type="qweb-pdf"
+            file="biocare_reports_modifier.report_contract_wizard" 
+            name="biocare_reports_modifier.report_contract_wizard"
+            menu="False"
+            />
+        
+        <record id="report_contract_custom" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="biocare_reports_modifier.paperformat_euro_biocare_contract"/>
+        </record>
+        
+        <record id="report_contract_wizard" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="biocare_reports_modifier.paperformat_euro_biocare_contract"/>
+        </record>
+        
+    </data>
+</odoo>

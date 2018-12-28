@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        
+        <record id="view_student_cca" model="ir.ui.view">
+	        <field name="name">student.cca.form</field>
+	        <field name="model">student.cca</field>
+	        <field name="arch" type="xml">
+	        <form string="CCA">
+	            <sheet>
+	                <group>
+						<group>
+							<field name="code" required='1'/>
+							<field name="session" widget="radio" />
+							<field name="comment" attrs="{'invisible': [('session', '!=', 'Others')]}"/>
+							<field name="date_start"/>
+						</group>
+						<group>
+							<field name="name" required='1'/>
+							<field name="teacher_id" required='1' widget="many2many_tags"/>
+							<field name="class_id"/>
+							<field name="date_end"/>
+						</group>
+	                </group>
+	                
+	                <field name="student_ids">
+						<tree string="Student List" editable="bottom">
+						   <field name="student_id" required='1'/>
+						</tree>
+	                </field>
+	                
+	             </sheet>
+	        </form>
+	        </field>
+       </record>
+       
+       <record id="student_cca_tree" model="ir.ui.view">
+            <field name="name">student.cca.tree</field>
+            <field name="model">student.cca</field>
+            <field name="arch" type="xml">
+                <tree string="CCA">
+                    <field name="code"/>
+                	<field name="name"/>
+                	<field name="teacher_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_student_cca" model="ir.actions.act_window">
+            <field name="name">CCA</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">student.cca</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="student_cca_tree"/>
+            <field name="help">Create and manage students CCA session.</field>
+        </record>
+        
+        <menuitem action="action_student_cca" id="menu_student_cca_tree" parent="school.menu_ems" sequence="4"/>
+
+        
+    </data>
+</openerp>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="currency_view_tree_inherit" model="ir.ui.view">
+            <field name="name">Currency view tree inherit</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="country_id" string="Country"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="currency_view_form_inherit" model="ir.ui.view">
+            <field name="name">Currency view form inherit</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="country_id" string="Country"/>
+                </field>
+                <xpath expr="//form/header/button" position="after">
+                    <button name="get_country" string="update country" type="object"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

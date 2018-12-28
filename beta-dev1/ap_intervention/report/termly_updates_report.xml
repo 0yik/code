@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<odoo>
+   <template id="report_ap_intervention_id">
+      <div class="page">
+         <table class="table table-condensed"  style="border: 1px solid black;">
+         	<tr >
+	         	<td colspan="2" style="border: 1px solid;text-align: center;">Student Info</td>
+	         	<td style="border-top :1px solid;"></td>
+	         	<td style="border-top :1px solid;"></td>
+	         	<td style="border-top :1px solid;">AP Intervention</td>
+	         	<t t-foreach="len(headers[2])" t-as="ot">
+					<td style="border-top :1px solid;"> </td>
+				</t>
+				<t t-foreach="len(headers[1])" t-as="ot">
+					<td style="border-top :1px solid;"> </td>
+				</t>
+				<t t-foreach="len(headers[0])" t-as="ot">
+					<td style="border-top :1px solid;"> </td>
+				</t>
+			</tr>
+            <tr style="border :1px solid;">
+				<td style="border :1px solid;text-align: center;">Class</td>
+				<td style="border :1px solid;text-align: center;">Student Name</td>
+				
+				<td style="border-left :1px solid;border-top :1px solid;">ST</td>
+				<t t-foreach="len(headers[0])" t-as="st">
+				<td style="border-top :1px solid;"></td>
+				</t>
+				<td style="border-left :1px solid;border-top :1px solid;">OT</td>
+				<t t-foreach="len(headers[1])" t-as="ot">
+				<td style="border-top :1px solid;"> </td>
+				</t>
+				<td style="border-left :1px solid;border-top :1px solid;">CM</td>
+				<t t-foreach="len(headers[2])" t-as="cm">
+				<td style="border-top :1px solid;"></td>
+				</t>
+            </tr>
+            <tr t-foreach="data" t-as="line"  style="border :1px solid;">
+               <td t-foreach="line" t-as="details" style="border :1px solid;">
+               	<span t-esc="details"></span>
+               </td>
+            </tr>
+         </table>
+      </div>
+   </template>
+   <template id="report_ap_intervention">
+      <t t-call="report.html_container">
+         <t t-foreach="docs" t-as="doc">
+            <t t-call="ap_intervention.report_ap_intervention_id"/>
+         </t>
+      </t>
+   </template>
+</odoo>

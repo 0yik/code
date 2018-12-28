@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_report_print_button_inherit_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <!--xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="replace">
+                    <button name="%(report_workorder_custom)d" string="Print" 
+                        states="done" type="action" groups="base.group_user"/>
+                </xpath-->
+                <xpath expr="//button[@name='do_print_picking']" position="replace">
+                    <button name="do_print_picking"
+                        string="Print Workorder" groups="stock.group_stock_user"
+                        type="object"
+                        attrs="{'invisible': [('is_booking', '=', False)]}"/> 
+                </xpath>
+                <xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="replace">
+                    <button name="%(stock.action_report_delivery)d"
+                        string="Print Delivery Slip"
+                        type="action" groups="base.group_user"
+                        attrs="{'invisible': ['|', ('is_booking','=', True), ('state', 'not in', ['done'])]}"/>
+                    <button name="%(stock.action_report_picking)d"
+                        string="Print Picking Operations"
+                        type="action" groups="base.group_user"
+                        attrs="{'invisible': ['|',('is_booking','=', True), ('state', 'not in', ['done'])]}"/>
+                </xpath>
+                <!--xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="replace">
+                    <button name="%(stock.act_stock_return_picking)d"
+                        string="Return"
+                        type="action"
+                        groups="base.group_user"
+                        attrs="{'invisible': [('is_booking','=', True), ('state', 'not in', ['done'])]}"/>
+                </xpath-->
+            </field>
+        </record>
+
+    </data>
+</odoo>

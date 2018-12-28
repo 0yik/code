@@ -1,0 +1,14 @@
+<odoo>
+	<data>
+		<record id="view_task_form2_inherit" model="ir.ui.view">
+			<field name="name">project.task.form</field>
+			<field name="model">project.task</field>
+			<field name="inherit_id" ref="project.view_task_form2"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/group/group/field[@name='project_id']" position="after">
+					<field name="project_task_type_ids" widget="many2many_tags" groups="ham_modifier_access_rights.group_project_project_manager"></field>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

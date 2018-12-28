@@ -1,0 +1,7 @@
+<odoo>
+    <data noupdate="1">
+
+        <delete id="hr_holidays.menu_open_ask_holidays_new" model="ir.ui.menu"/>
+
+    </data>
+</odoo>

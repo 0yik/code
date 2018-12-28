@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+        <!-- <act_window id="action_sntk" 
+            name="STNK Vehicles"
+            res_model="stnk.vehicles"
+            view_mode="tree,form"/> -->
+        
+        <record model="ir.ui.view" id="view_stnk_vehicles_form">
+            <field name="name">stnk.vehicles.form1</field>
+            <field name="model">stnk.vehicles</field>
+            <field name="arch" type="xml">
+                <form string="Sales">
+                <header>
+                <button string="Confirm" name="confirm" states="draft" type="object" class="oe_highlight"/>
+                <button string="Stop" name="stop" states="active" type="object" class="oe_highlight"/>
+                <button string="Reset to Draft" name="reset_to_draft" states="active,stop" type="object" class="oe_highlight"/>
+                <!-- <button string="Calcu" name="calcu" states="active,stop" type="object" class="oe_highlight"/> -->
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirm,active,stop"/>
+                </header>
+                <sheet>
+                    <group>
+                         <group>
+                            <field name="name"/>
+                            <field name="nr"/>
+                            <field name="np"/>
+                            <field name="mt"/>
+                            <field name="jm"/>
+                            <field name="tp"/>
+                            
+                            <field name="tpera"/>
+                            <field name="tahun_terbit"/>
+                            <field name="nmor"/>
+                            <field name="berlaku_sampai"/>
+                        </group>
+                        <group>
+                            <field name="npbkb"/>
+                            <field name="bahanbakar"/>
+                            <field name="warna_tnkb"/>
+                            <field name="kepemilikanke"/>
+                            <field name="noregistrasilama"/>
+                            <field name="kodenjkb"/>
+                            <field name="nourut"/>
+                            <field name="nik"/>
+                            <field name="nohp"/>
+                            
+                        
+                        </group>
+                    </group>
+                    
+                </sheet>
+                <notebook>
+                    <page string="STNK">
+                        <field name="stnk_list" mode="tree,kanban">
+                            <tree string="Incentive setup"  editable="bottom">
+                                
+                                    <field name="slt_id" invisible='0'/>
+                                    <!-- <field name="name" /> -->
+                                    <field name="jumlah" string="Jumlah" sum="Total"/>
+                                    <field name="sanskiadministrasi" string="Sanski Administrasi" sum="Total"/>
+                                    <field name="pokok" string="Pokok" sum="Total"/>
+                                    <!-- <field name="dt" string=""/> -->
+                            </tree>
+                            
+                                
+                            
+                        </field>
+                        <group>
+                            <field name="dt" string="Ditetapkan tanggal"/>
+                            <field name="pp" string="Penaksir Pajak"/>
+                            <field name="kasir" string="Kasir"/>
+                            
+                        </group>
+                    </page>
+                </notebook>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_stnk_vehicles_table_form">
+            <field name="name">stnk.vehicles.table.form1</field>
+            <field name="model">stnk.vehicles.table</field>
+            <field name="arch" type="xml">
+                <form string="Sales">
+                
+                <sheet>
+                    <group>
+                         <group>
+                            <field name="name"/>
+                            <!-- <field name="jumlah"/>
+                            <field name="sanskiadministrasi"/>
+                            <field name="pokok"/>
+                            <field name="dt"/> -->
+                            
+                            
+                        </group>
+                       
+                    </group>
+                    
+                </sheet>
+                
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="sntk_form_action">
+            <field name="name">Sales</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stnk.vehicles</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="context">{"search_default_requested_by":uid}</field> -->
+            <!-- <field name="search_view_id" ref="view_purchase_request_search"/> -->
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to start a new purchase request process.
+              </p><p>
+                A purchase request is an instruction to Purchasing to procure
+                a certain quantity of materials services, so that they are
+                available at a certain point in time.
+              </p>
+            </field>
+        </record>
+        
+        
+        <record model="ir.actions.act_window" id="sntk_table_form_action">
+            <field name="name">Add STNK Item</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stnk.vehicles.table</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="context">{"search_default_requested_by":uid}</field> -->
+            <!-- <field name="search_view_id" ref="view_purchase_request_search"/> -->
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to start a new purchase request process.
+              </p><p>
+                A purchase request is an instruction to Purchasing to procure
+                a certain quantity of materials services, so that they are
+                available at a certain point in time.
+              </p>
+            </field>
+        </record>
+        
+        <record id="product_template_add_stnk_form" model="ir.ui.view">
+	        <field name="name">product.template.add.stnk.form</field>
+	        <field name="model">product.template</field>
+	        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+	        <field name="arch" type="xml">
+				<xpath expr="//form/sheet/notebook/page[@name='general_information']/group/group[1]/field[@name='categ_id']" position="after">
+	    			<field name="stnk_id"/>
+				</xpath>
+	        </field>
+	    </record>
+        
+        <record id="action_stnk" model="ir.actions.act_window">
+            <field name="name">Sales</field>
+            <field name="res_model">stnk.vehicles</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+       
+        <record id="action_stnk_item" model="ir.actions.act_window">
+            <field name="name">Add STNK Item</field>
+            <field name="res_model">stnk.vehicles.table</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+       
+        <menuitem id="parent_menu_sntk"
+            name="STNK Vehicles"
+           
+            />
+            
+        <menuitem id="menu_sntk"
+            name="Sales"
+            parent="parent_menu_sntk"
+            
+            
+            />
+            
+        <menuitem id="menu_sub"
+            name="STNK"
+            parent="sales_team.menu_sales"
+            action="sntk_form_action"
+            sequence="60"
+            />
+        
+        
+        <menuitem id="menu_sub2"
+            name="Add STNK Item"
+            parent="sales_team.menu_sales"
+            action="sntk_table_form_action"
+            sequence="61"
+            />
+        
+    
+    </data>
+</odoo>

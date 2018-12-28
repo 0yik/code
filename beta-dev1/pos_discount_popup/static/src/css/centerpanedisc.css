@@ -1,0 +1,39 @@
+.disc-button{
+    width:45% !important;
+    border-radius: 0px !important;
+    font-size: 18px !important;
+    margin: 0px 0px 0px -3px !important;
+    border: 5px solid #4d4d4d !important;
+}
+.charge-buttons{
+	display: -webkit-box;
+	width: 100%;
+
+}
+.js_service_charge_button{
+	box-sizing: border-box;
+	padding-left: 0;
+	float: right;
+	border-top: none !important;
+	border-right: none !important;
+	width: 50%;
+	padding: 0px 8px 0px 60px !important;
+}
+.js_tax_button{
+	box-sizing: border-box;
+	padding-left: 0;
+	float: right;
+	border-top: none !important;
+	width: 50%;
+	padding: 0px 8px 0px 60px !important;
+}
+.service-charge-apply {
+    background: #6EC89B !important;
+    border: solid 1px #64AF8A !important;
+    color: white !important;
+}
+.tax-apply {
+    background: #6EC89B !important;
+    border: solid 1px #64AF8A !important;
+    color: white !important;
+}

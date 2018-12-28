@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="report_fund_realization_document">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page" style="font-size:10px">
+                            <table class="col-xs-6" style="margin-left:15px;">
+                                <thead>
+                                    <tr style="font-size:12px">
+                                        <th style="width:70%;" class="text-left">
+                                            <strong>Document Number:</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size:12px">
+                                    <tr>
+                                        <td class="text-left">
+                                            <span>Fund Request Number</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-if="o.fr_number">
+                                                <span t-esc="o.fr_number.name"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <table class="table table-condensed mt48"
+                                   style="margin-left:15px;width:95%;border-collapse: collapse;border-top: 3px solid black;font-size:12px">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="border: 1px solid black">Employee</th>
+                                        <th class="text-center" style="border: 1px solid black;">Designation</th>
+                                        <th class="text-center" style="border: 1px solid black">Department</th>
+                                        <th class="text-center" style="border: 1px solid black;">Currency</th>
+                                        <th class="text-center" style="border: 1px solid black;">Fund Transfered</th>
+                                        <th class="text-center" style="border: 1px solid black;">Amount Used</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="total_refund" t-value="0"/>
+                                    <t t-set="total_used" t-value="0"/>
+                                    <tr t-foreach="o.fun_relization_line" t-as="line">
+
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-bottom:hidden;">
+                                            <t t-if="line.emp_id">
+                                                <span t-esc="line.emp_id.name"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-bottom:hidden;">
+                                            <t t-if="line.designation">
+                                                <span t-esc="line.designation.name"/>
+                                            </t>
+
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-bottom:hidden;">
+                                            <t t-if="line.department_id">
+                                                <span t-esc="line.department_id.name"/>
+                                            </t>
+
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-bottom:hidden;">
+                                            <t t-if="line.currency">
+                                                <span t-esc="line.currency.name"/>
+                                            </t>
+
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-bottom:hidden;">
+                                            <span t-esc="'{0:,.2f}'.format(line.total_amount)"/>
+                                            <t t-set="total_refund" t-value="total_refund+line.total_amount"/>
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-right:1px solid black;border-bottom:hidden;">
+                                            <span t-esc="'{0:,.2f}'.format(line.remaning_amount)"/>
+                                            <t t-set="total_used" t-value="total_used+line.remaning_amount"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-bottom:1px solid black;">
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-bottom:1px solid black;">
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-bottom:1px solid black;">
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-bottom:1px solid black;">
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-bottom:1px solid black;">
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center"
+                                            style="border-bottom:hidden;">
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-bottom:hidden;">
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-bottom:hidden;">
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-bottom:hidden;">
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-bottom:hidden;">
+                                            <span t-esc="'{0:,.2f}'.format(total_refund)"/>
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-bottom:hidden;">
+                                            <span t-esc="'{0:,.2f}'.format(total_used)"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <template id="report_fund_realization">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="fund_request_b2b.report_fund_realization_document"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- QWeb Reports -->
+        <report
+                id="printout_fund_realization"
+                model="fund.relization"
+                string="Fund Realization"
+                report_type="qweb-pdf"
+                name="fund_request_b2b.report_fund_realization"
+                file="fund_request_b2b.report_fund_realization"
+        />
+
+    </data>
+</odoo>

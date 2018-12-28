@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_labor_mrp_form" model="ir.ui.view">
+        <field name="name">labor.mrp.form</field>
+        <field name="model">labor.mrp</field>
+        <field name="arch" type="xml">
+            <form string="Profile">
+                <header>
+                    <button name="print_pdf" string="Print MO" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <separator string="Employee Profile"/>
+
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="department_id"/>
+                            <field name="calendar_id"/>
+                            <field name="job_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="check_in"/>
+                            <field name="check_out"/>
+                        </group>
+
+                    </group>
+                    <separator string="Manufacturing Orders"/>
+                    <group>
+                        <group>
+                            <field name="mo_number"/>
+                            <field name="product_id"/>
+                            <field name="qty"/>
+                            <field name="bom_id"/>
+                        </group>
+
+                    </group>
+                    <field name="product_ids"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_machine_management_form" model="ir.ui.view">
+        <field name="name">machine.management.form</field>
+        <field name="model">machine.management</field>
+        <field name="arch" type="xml">
+            <form string="Profile">
+                <header>
+                    <!--<button name="button_mark_start" string="Start" type="object" class="oe_highlight"/>-->
+                    <!--<button name="button_mark_pause" string="Pause" type="object" class="oe_highlight"/>-->
+                    <!--<button name="button_mark_block" string="Block" type="object" class="oe_highlight"/>-->
+                    <button name="button_finish" type="object" string="Finish Order" attrs="{'invisible': ['|', ('state', '!=', 'progress'), ('is_produced', '=', False)]}" class="btn-info"/>
+                    <button name="button_mark_start" type="object" string="Start Working" attrs="{'invisible': ['|', ('working_state', '=', 'blocked'), ('state', '!=', 'pending')]}"/>
+                    <button name="button_mark_start" type="object" string="Start Working" attrs="{'invisible': ['|', ('working_state', '=', 'blocked'), ('state', '!=', 'ready')]}" class="btn-success"/>
+                    <button name="record_production" type="object" string="Done" class="btn-success" attrs="{'invisible': ['|', '|', '|', ('is_produced', '=', True), ('working_state', '=', 'blocked'), ('state', '!=', 'progress'), ('is_user_working', '=', False)]}"/>
+                    <button name="button_pending" type="object" string="Pause" class="btn-warning" attrs="{'invisible': ['|', '|', ('working_state', '=', 'blocked'), ('state', 'in', ('done', 'pending', 'ready', 'cancel')), ('is_user_working', '=', False)]}"/>
+                    <button name="%(act_mrp_block_workcenter_wo)d" type="action" context="{'default_workcenter_id': workcenter_id}" string="Block" class="btn-danger" attrs="{'invisible': ['|', '|', ('working_state', '=', 'blocked'), ('state', 'in', ('done', 'pending', 'ready', 'cancel')), ('is_user_working', '=', False)]}"/>
+                    <button name="button_unblock" type="object" string="Unblock" class="btn-danger" attrs="{'invisible': [('working_state', '!=', 'blocked')]}"/>
+                    <button name="button_mark_start" type="object" string="Continue Production" class="btn-warning" attrs="{'invisible': ['|', '|', ('working_state', '=', 'blocked'), ('is_user_working', '=', True), ('state', 'in', ('done', 'pending', 'ready', 'cancel'))]}"></button>
+                    <button name="button_mark_start" type="object" string="Continue Production" attrs="{'invisible': ['|', '|', ('production_state', '=', 'done'), ('working_state', '=', 'blocked'), ('state', '!=', 'done')]}"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="pending,ready,progress,done"/>
+                    <field name="is_user_working" invisible="1"/>
+                    <field name="working_state" invisible="1"/>
+                    <field name="production_state" invisible="1"/>
+                    <field name="is_produced" invisible="1"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="workcenter_id"/>
+                            <field name="product_id"/>
+                            <field name="mrp_production_id"/>
+                            <field name="mrp_plan_id"/>
+                            <field name="bom_id"/>
+                            <field name="check"/>
+                        </group>
+                        <group>
+                            <label for="time"/>
+                                <div>
+                                    <button style="pointer-events: none;" class="oe_inline label label-default">
+                                        <field name="time" widget="mm_time_counter"/>
+                                    </button>
+                                </div>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+                    <field name="employee_ids"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="product_consume_tree_view" model="ir.ui.view">
+        <field name="name">product.consume.tree</field>
+        <field name="model">product.consume</field>
+        <field name="arch" type="xml">
+            <tree editable='bottom'>
+                <field name="product_id"/>
+                <field name="to_consume"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="machine_management_tree_view" model="ir.ui.view">
+        <field name="name">machine.management.tree</field>
+        <field name="model">machine.management</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="workcenter_id"/>
+                <field name="mrp_production_id"/>
+                <field name="product_id"/>
+                <field name="bom_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="employee_department_tree_view" model="ir.ui.view">
+        <field name="name">employee.department.tree</field>
+        <field name="model">employee.department</field>
+        <field name="arch" type="xml">
+            <tree editable='bottom'>
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="mrp_production_wc_inherit_form_view" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="manufacturing_order_assigend_employee.mrp_production_inherit_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page/field[@name='assinged_employee_ids']/tree//field[@name='project_id']" position="after">
+                <field name="workcenter_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_production_wasted_scrapped_inherit_form_view" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page/field[@name='move_raw_ids']/tree//field[@name='quantity_done']" position="after">
+                <field name="wasted_qty" attrs="{'readonly': [['state', 'not in', ['done']]]}"/>
+                <field name="scrap_qty" attrs="{'readonly': [['state', 'not in', ['done']]]}" />
+            </xpath>
+        </field>
+    </record>
+
+    <!--<record id="stock_move_wasted_scrapped_inherit_form_view" model="ir.ui.view">-->
+        <!--<field name="name">stock.move.form.inherit</field>-->
+        <!--<field name="model">stock.move</field>-->
+        <!--<field name="inherit_id" ref="stock.view_move_form"/>-->
+        <!--<field name="arch" type="xml">-->
+            <!--<xpath expr="//form/sheet/group/group/group/field[@name='product_id']" position="after">-->
+                <!--<field name="wasted_qty"/>-->
+                <!--<field name="scrap_qty"/>-->
+            <!--</xpath>-->
+        <!--</field>-->
+    <!--</record>-->
+
+    <record model="ir.actions.act_window" id="labor_act_window">
+        <field name="name">Profile</field>
+        <field name="res_model">labor.mrp</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="machine_management_act_window">
+        <field name="name">Machine Management</field>
+        <field name="res_model">machine.management</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="labor_id" parent="mrp.menu_mrp_root" sequence="2" name="Labor Manufacturing"
+    />
+
+    <menuitem id="attendance_id" parent="labor_id" sequence="1" name="KIOSK mode"
+              action="hr_attendance.hr_attendance_action_kiosk_mode"/>
+
+    <menuitem id="employees_menu_id" parent="labor_id" sequence="2" name="Employee"
+              action="hr.open_view_employee_list_my"/>
+
+    <menuitem id="labor_act_id" parent="labor_id" sequence="3" name="Profile"
+              action="hr_attendance.hr_attendance_action_kiosk_mode"/>
+    <!--hr_attendance.hr_attendance_action_kiosk_mode-->
+
+    <menuitem id="employee_act_id" parent="labor_id" sequence="4" name="Machine Management"
+              action="machine_management_act_window"/>
+</odoo>

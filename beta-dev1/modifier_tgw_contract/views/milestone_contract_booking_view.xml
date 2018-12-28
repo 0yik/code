@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Milestone contract booking tree view -->
+    <record model="ir.ui.view" id="milestone_contract_bookings_tree_view">
+        <field name="name">milestone.contract.bookings.tree</field>
+        <field name="model">milestone.contract.bookings</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="account_analytic_account_id" string="Contract"/>
+                <field name="milestone_id" string="Milestone"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Milestone contract booking Form view -->
+    <record model="ir.ui.view" id="milestone_contract_bookings_form_view">
+        <field name="name">milestone.contract.bookings.form</field>
+        <field name="model">milestone.contract.bookings</field>
+        <field name="arch" type="xml">
+            <form string="Milestone">
+                <sheet>
+                    <group col="4" name="milestone_form">
+                        <field name="account_analytic_account_id"/>
+                        <field name="milestone_id"/>
+                        <field name="date"/>
+                        <field name="start_time"/>
+                        <field name="end_time"/>
+                        <field name="location"/>
+                        <field name="state"/>
+                    </group>
+                    <group name="one2many_list">
+                        <field name="vendor_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

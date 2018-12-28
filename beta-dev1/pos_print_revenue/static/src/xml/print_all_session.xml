@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PrintMultiSessionButton">
+        <div class="oe_status" style="padding: 12px 8px;">
+            <img src="/pos_print_revenue/static/src/img/multi_print.png" style="width: 36px; height: 36px;"></img>
+        </div>
+    </t>
+
+    <t t-name="XmlPrintMultiSessionReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' line-ratio='0.6'>
+            <t t-foreach='data.poses' t-as='pos'>
+                <div>
+                    <h3><t t-esc="pos.name"/></h3>
+                </div>
+                <div>------------------------------------------</div>
+                <t t-if="pos.product_ids.length > 0">
+                <t t-foreach='pos.product_ids' t-as='product_id'>
+                    <line>
+                        <left>
+                            <t t-esc='pos.order_lines[product_id].product_name'/>
+                        </left>
+                        <right>
+                            <t t-esc="pos.order_lines[product_id].qty"/>
+                            <t t-esc="widget.format_currency(pos.order_lines[product_id].price)"/>
+                        </right>
+                    </line>
+                </t>
+                </t>
+                <t t-if="pos.product_ids.length == 0">
+                    <div>No orderline</div>
+                </t>
+                <div>------------------------------------------</div>
+                <line size='double-height'>
+                    <left>Total:</left>
+                    <right>
+                        <t t-esc="widget.format_currency(pos.total)"/>
+                    </right>
+                </line>
+                <line size='double-height'>
+                    <left>Tax:</left>
+                </line>
+                <t t-foreach='pos.tax_names' t-as='tax'>
+                    <line>
+                        <left>
+                            <t t-esc='tax.name'/>
+                        </left>
+                        <right>
+                            <t t-esc="widget.format_currency(pos.taxes[tax.id])"/>
+                        </right>
+                    </line>
+                </t>
+                <div>------------------------------------------</div>
+                <line>
+                        <left>Total
+                        </left>
+                        <right>
+                            <t t-esc="widget.format_currency(pos.s_total)"/>
+                        </right>
+                    </line>
+                <line>
+                    <left>Payment:</left>
+                </line>
+                <t t-foreach='pos.payment_ids' t-as='payment_id'>
+                <line>
+                    <left><t t-esc="pos.payments[payment_id].name"/></left>
+                    <right><t t-esc="widget.format_currency(pos.payments[payment_id].amount)"/></right>
+                </line>
+            </t>
+            </t>
+            <line size='double-height'>
+                <left>Grand Total:</left>
+                <right>
+                    <t t-esc="widget.format_currency(data.grand_total)"/>
+                </right>
+            </line>
+        </receipt>
+    </t>
+</templates>
+

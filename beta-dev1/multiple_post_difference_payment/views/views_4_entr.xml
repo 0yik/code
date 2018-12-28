@@ -1,0 +1,109 @@
+<odoo>
+    <data>
+        <record id="view_account_payment_invoice_form_inherit_payment" model="ir.ui.view">
+            <field name="name">view.account.payment.invoice.form.inherit.multiple.post</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/group[3]" position="replace">
+                    <!--<group>-->
+                        <!--<field name ='display_diff' invisible="1"/>-->
+                        <!--<label for="payment_difference" attrs="{'invisible': [('display_diff', '=', True)]}"/>-->
+                        <!--<div attrs="{'invisible': [('display_diff', '=', True)]}">-->
+                            <!--<field name="payment_difference"/>-->
+                            <!--<field name="payment_difference_handling" widget="radio" nolabel="1"/>-->
+                        <!--</div>-->
+                        <!--<field name="writeoff_account_id" string="Post Difference In" invisible="1"/>-->
+                    <!--</group>-->
+                    <group>
+                        <label for="payment_difference" attrs="{'invisible': [('payment_difference', '=', 0.0)]}"/>
+                        <div attrs="{'invisible': [('payment_difference', '=', 0.0)]}">
+                            <field name="payment_difference"/>
+                            <field name="payment_difference_handling" widget="radio" nolabel="1"/>
+                        </div>
+                        <field name="writeoff_account_id" string="Post Difference In" invisible="1"/>
+                        <!--<field name="writeoff_account_id" string="Post Difference In"-->
+                            <!--attrs="{'invisible': [('payment_difference_handling','=','open')], 'required': [('payment_difference_handling', '=', 'reconcile')]}"/>-->
+                    </group>
+                </xpath>
+                <xpath expr="//group/group[3]" position="after">
+                    <group></group>
+                    <group attrs="{'invisible': [('payment_difference_handling','=','open')], 'required': [('payment_difference_handling', '=', 'reconcile')]}">
+                        <field name="multiple_post_line" invisible="1"/>
+                        <label string="Post Difference"/>
+                        <div name="amount_div" class="o_row">
+                            <field name="amount_1"/>
+                            <field name="writeoff_account_id_1" attrs="{'required': [('payment_difference_handling', '=', 'reconcile')]}"/>
+                        </div>
+
+                        <label string="Post Difference" invisible="1"/>
+                        <div name="amount_div" class="o_row" attrs="{'invisible': [('multiple_post_line','=',0)]}">
+                            <field name="amount_2" />
+                            <field name="writeoff_account_id_2" attrs="{'required':[('multiple_post_line','&gt;=',1)]}"/>
+                        </div>
+                        <label string="Post Difference" invisible="1"/>
+                        <div name="amount_div" class="o_row" attrs="{'invisible': [('multiple_post_line','&lt;',2)],'required':[('multiple_post_line','&gt;',2)]}">
+                            <field name="amount_3"/>
+                            <field name="writeoff_account_id_3" attrs="{'required':[('multiple_post_line','&gt;=',2)]}"/>
+                        </div>
+                        <label string="Post Difference" invisible="1"/>
+                        <div name="amount_div" class="o_row" attrs="{'invisible': [('multiple_post_line','&lt;',3)]}">
+                            <field name="amount_4"/>
+                            <field name="writeoff_account_id_4" attrs="{'required':[('multiple_post_line','&gt;=',3)]}"/>
+                        </div>
+                        <label string="Post Difference" invisible="1"/>
+                        <button type="object" name="show_new_post_payment" string="Add" class="oe_highlight"/>
+                    </group>
+                    <group></group>
+                </xpath>
+                <!--<xpath expr="//field[@name='writeoff_account_id']" position="replace">-->
+                    <!--<field name="writeoff_account_id" invisible="1"/>-->
+                <!--</xpath>-->
+                <xpath expr="//field[@name='amount']" position="after">
+                    <field name="amount_default" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+<!--<odoo>-->
+  <!--<data>-->
+    <!--<record id="view_account_payment_invoice_form_inherit_payment" model="ir.ui.view">-->
+      <!--<field name="name">view.account.payment.invoice.form.inherit.multiple.post</field>-->
+      <!--<field name="model">account.payment</field>-->
+      <!--<field name="inherit_id" ref="account.view_account_payment_invoice_form"/>-->
+      <!--<field name="arch" type="xml">-->
+          <!--<xpath expr="//field[@name='writeoff_account_id']" position="replace">-->
+                <!--<field name="writeoff_account_id" invisible="1"/>-->
+          <!--</xpath>-->
+          <!--<xpath expr="//group/group[3]" position="after">-->
+            <!--<div attrs="{'invisible': [('payment_difference_handling','=','open')], 'required': [('payment_difference_handling', '=', 'reconcile')]}">-->
+                <!--<label for="amount_1"/>-->
+                <!--<div name="amount_div" class="o_row">-->
+                  <!--<field name="amount_1"/>-->
+                  <!--<field name="writeoff_account_id_1" required="1"/>-->
+                <!--</div>-->
+                <!--<field name="multiple_post_line" invisible="1"/>-->
+                <!--<label for="amount_2" attrs="{'invisible': [('multiple_post_line','=',0)]}"/>-->
+                <!--<div name="amount_div" class="o_row" attrs="{'invisible': [('multiple_post_line','=',0)]}">-->
+                  <!--<field name="amount_2"/>-->
+                  <!--<field name="writeoff_account_id_2" attrs="{'required':[('multiple_post_line','&gt;=',1)]}"/>-->
+                <!--</div>-->
+                <!--<label for="amount_3" attrs="{'invisible': [('multiple_post_line','&lt;',2)]}"/>-->
+                <!--<div name="amount_div" class="o_row" attrs="{'invisible': [('multiple_post_line','&lt;',2)],'required':[('multiple_post_line','&gt;',2)]}">-->
+                  <!--<field name="amount_3"/>-->
+                  <!--<field name="writeoff_account_id_3" attrs="{'required':[('multiple_post_line','&gt;=',2)]}"/>-->
+                <!--</div>-->
+                <!--<label for="amount_4" attrs="{'invisible': [('multiple_post_line','&lt;',3)]}"/>-->
+                <!--<div name="amount_div" class="o_row" attrs="{'invisible': [('multiple_post_line','&lt;',3)]}">-->
+                  <!--<field name="amount_4"/>-->
+                  <!--<field name="writeoff_account_id_4" attrs="{'required':[('multiple_post_line','&gt;=',3)]}"/>-->
+                <!--</div>-->
+                <!--<button type="object" name="show_new_post_payment" string="Add" class="oe_highlight"/>-->
+            <!--</div>-->
+          <!--</xpath>-->
+      <!--</field>-->
+    <!--</record>-->
+  <!--</data>-->
+<!--</odoo>-->

@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="admission_register_form" name="Admission Form">
+		<t t-call="website.layout">
+    		<div class="row">
+                <div class="col-md-12">
+                    <img class="img img-responsive" style="width: 30%; height:200px;margin:auto" src="/online_school_enrollment/static/src/img/logo.jpg"/>
+                </div>
+            </div>
+    		<section class="o_order_form">
+    			<div>
+    				<div class="col-md-12 mt16 mb16 text-center text-muted">
+    					 <h2>Registration Form</h2>
+    				</div>
+    			</div>
+                <div class="container">
+                    <div class="col-md-12 mt16 mb16 text-left text-muted">
+                        <div class="#">
+                            <div class="#">
+                                <h3 style="color:#0085ba;">Personal Particulars</h3>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="row mt16 mb16">
+                        <form action="/admission/register/create" method="post" class="o_website_form form-horizontal container-fluid mt32" enctype="multipart/form-data">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label for="name" style="font-weight: 400;">Full Name</label>
+                                        <input type="text" class="form-control o_website_form_input" style="border-radius: 5px; height:43px; width:350px;" id="first_name" name="first_name" required="1" placeholder="First Name Middle Name Last Name"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Date Of Birth</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="dob" id="dob" required="1"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Age</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control age" name="age" id="age" disabled="True"/>
+                                    </div>
+                                    <!-- <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label for="middle" style="font-weight: 400;">Middle Name</label>
+                                        <input type="text" class="form-control o_website_form_input" style="border-radius: 5px; height:43px; width:350px;" id="middle_name" name="middle_name" required="1"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label for="last" style="font-weight: 400;">Last Name</label>
+                                        <input type="text" class="form-control o_website_form_input" style="border-radius: 5px; height:43px; width:350px;" id="last_name" name="last_name" required="1"/>
+                                    </div> -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label for="gender" style="font-weight: 400;">Gender</label>
+                                        <select name="gender" id="gender" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                            <option value="male" name="male" id="male">Male</option>
+                                            <option value="female" name="female" id="female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label for="nric" style="font-weight: 400;">NRIC</label>
+                                        <input type="text" class="form-control o_website_form_input" style="border-radius: 5px; height:43px; width:350px;" id="nric" name="nric"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label for="hp_no" style="font-weight: 400;">Hp No</label>
+                                        <input type="text" class="form-control o_website_form_input" style="border-radius: 5px; height:43px; width:350px;" id="hp_no" name="hp_no"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label for="occupation" style="font-weight: 400;">Occupation</label>
+                                        <input type="text" class="form-control o_website_form_input" style="border-radius: 5px; height:43px; width:350px;" id="occupation" name="occupation"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Income</label>
+                                        <select name="income" id="income" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                            <option value="less_then_1500" name="less_then_1500" id="less_then_1500">&lt; 1500</option>
+                                            <option value="1500_2000" name="1500_2000" id="1500_2000">1500 - 2000</option>
+                                            <option value="2001_3000" name="2001_3000" id="2001_3000">2001 - 3000</option>
+                                            <option value="3001_above" name="3001_above" id="3001_above">3001 &gt;</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">School</label>
+                                        <select name="school_ids" id="school_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                            <option value="">Select School</option>
+                                            <t t-foreach="school_ids or []" t-as="school">
+                                                <option t-att-value="school.id"><t t-esc="school.name"/></option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Courses</label>
+                                        <select name="standard_ids" id="standard_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                            <option value="">Select Courses</option>
+                                            <t t-foreach="standard_ids or []" t-as="standard">
+                                                <option t-att-value="standard.standard_id.id"><t t-esc="standard.standard_id.name"/>[<t t-esc="standard.division_id.name"/>]</option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Intake</label>
+                                        <select name="year_ids" id="year_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                            <option value="">Select Intake</option>
+                                            <t t-foreach="year_ids or []" t-as="year">
+                                                <option t-att-value="year.id"><t t-esc="year.name"/></option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <!-- <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Division</label>
+                                        <select name="division_ids" id="division_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                            <option value="">Select Division</option>
+                                            <t t-foreach="division_ids or []" t-as="division">
+                                                <option t-att-value="division.id"><t t-esc="division.name"/></option>
+                                            </t>
+                                        </select>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                   
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Block</label>
+                                        <textarea placeholder="Enter Address Here.." style="border-radius: 5px; height:43px; width:350px;" rows="2" class="form-control" name="address1" id="address1"></textarea>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Street</label>
+                                        <textarea placeholder="Enter Address Here.." style="border-radius: 5px; height:43px; width:350px;" rows="2" class="form-control" name="address2" id="address2"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Citizenship</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" placeholder="Enter Citizenship.." class="form-control" name="citizenship" id="citizenship"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Country</label>
+                                        <select name="country_ids" id="country_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                            <option value="">Select Country</option>
+                                            <t t-foreach="country_ids or []" t-as="country">
+                                                <option t-att-value="country.id"><t t-esc="country.name"/></option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">State</label>
+                                        <select name="state_ids" id="state_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                            <option value="">Select State</option>
+                                            <t t-foreach="state_ids or []" t-as="state">
+                                                <option t-att-value="state.id"><t t-esc="state.name"/></option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Zip</label>
+                                        <input type="text" placeholder="Enter Zip Code Here.." style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="zip" id="zip"/>
+                                    </div>
+                                </div>                  
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Phone Number</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" placeholder="Enter Phone Number Here.." class="form-control" name="phone" id="phone"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Mobile</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" placeholder="Enter Mobile Here.." class="form-control" name="mobile" id="mobile"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Email Address</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" placeholder="Enter Email Address Here.." class="form-control" name="email" id="email"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Website</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" placeholder="Enter Website Here.." class="form-control" name="website" id="website"/>
+                                    </div> -->
+                                     <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Marital Status</label>
+                                        <select name="marital_status" id="marital_status" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                            <option value="unmarried" name="unmarried" id="unmarried">Unmarried</option>
+                                            <option value="married" name="married" id="married">Married</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;"></div>
+                                </div>
+                            </div>
+                            <p><hr style="display: block; width: 100%;"/></p>
+
+                            <!-- <div class="container">
+                                <div class="col-md-12 mb16 text-left text-muted">
+                                    <div class="#">
+                                        <div class="#">
+                                            <h3 style="color:#0085ba;">Payment Option</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div calss="row">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                        <label style="font-weight: 400;">Payment Option</label>
+                                        <select name="payment_option" id="payment_option" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                            <option value="manually" name="manually" id="male">Manually At Pergas Office</option>
+                                            <option value="paypal" name="paypal" id="female">Using Paypal</option>
+                                        </select>
+                                    </div>        
+                                </div>
+                            </div> -->
+
+                            <div class="container">
+                                <div class="#">
+                                    <div class="col-md-12 mt32">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#general" role="tab" data-toggle="tab">General</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#parents" role="tab" data-toggle="tab">Parents</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#references" role="tab" data-toggle="tab">References</a>
+                                            </li>
+                                            <!-- <li class="nav-item">
+                                                <a class="nav-link" href="#previous_school" role="tab" data-toggle="tab">Previous School</a>
+                                            </li> -->
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#family_detail" role="tab" data-toggle="tab">Family Detail</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#general_survey_form" role="tab" data-toggle="tab">General Survey</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#education_backgroUnd_form" role="tab" data-toggle="tab">Education Background</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#qualification_form" role="tab" data-toggle="tab">Qualification</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane fade in active" id="general">
+                                                <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                    <label style="font-weight: 400;">Phone No.</label>
+                                                    <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="phone_no" id="phone_no"/>
+                                                </div>
+                                                <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                    <label style="font-weight: 400;">Mobile No.</label>
+                                                    <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="mobile_no" id="mobile_no"/>
+                                                </div>
+                                                <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                    <label style="font-weight: 400;">Mother Tongue</label>
+                                                    <select name="mother_tongue_ids" id="mother_tongue_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                                        <option value="">Select Mother Toungue</option>
+                                                        <t t-foreach="mother_tongue_ids or []" t-as="mother_toungue">
+                                                            <option t-att-value="mother_toungue.id"><t t-esc="mother_toungue.name"/></option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="parents">
+                                                <div class="row">
+                                                    <div class="col-md-6 mt16">
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Name</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_name" id="parent_name"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Address</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_address" id="parent_address"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Phone</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_phone" id="parent_phone"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Email</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_email" id="parent_email"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mt16">
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">City</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="parent_city" id="parent_city"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Country</label>
+                                                            <select name="parent_country_ids" id="parent_country_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                                                <option value="">Select Country</option>
+                                                                <t t-foreach="country_ids or []" t-as="country">
+                                                                    <option t-att-value="country.id"><t t-esc="country.name"/></option>
+                                                                </t>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">State</label>
+                                                            <select name="parent_state_ids" id="parent_state_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                                                <option value="">Select State</option>
+                                                                <t t-foreach="state_ids or []" t-as="state">
+                                                                    <option t-att-value="state.id"><t t-esc="state.name"/></option>
+                                                                </t>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="references">
+                                                <div class="row">
+                                                    <div class="col-md-6 mt16">
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Full Name</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="reference_name" id="reference_name" placeholder="First Name Middle Name Last Name"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Phone</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="reference_phone" id="reference_phone"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Designation</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="reference_designation" id="reference_designation"/>
+                                                        </div>
+                                                        <!-- <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Middle Name</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="reference_middle_name" id="reference_middle_name"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Surname</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="reference_last_name" id="reference_last_name"/>
+                                                        </div> -->
+                                                    </div>
+                                                
+                                                    <div class="col-md-6 mt16">
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Gender</label>
+                                                            <select name="reference_gender" id="reference_gender" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                                                <option value="male" name="male" id="male">Male</option>
+                                                                <option value="female" name="female" id="female">Female</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        
+                                           <!--  <div role="tabpanel" class="tab-pane fade" id="previous_school">
+                                                <div class="row">
+                                                    <div class="col-md-6 mt16">
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Name</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="previous_school_name" id="previous_school_name"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Registration No.</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="previous_school_registration_no" id="previous_school_registration_no"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Courses</label>
+                                                            <select name="previous_school_standard_ids" id="previous_school_standard_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                                                <option value="">Select Courses</option>
+                                                                <t t-foreach="standard_ids or []" t-as="standard">
+                                                                    <option t-att-value="standard.standard_id.id"><t t-esc="standard.standard_id.name"/>[<t t-esc="standard.division_id.name"/>]</option>
+                                                                </t>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mt16">
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Admission Date</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="previous_school_admission_date" id="previous_school_admission_date"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Exit Date</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="previous_school_exit_date" id="previous_school_exit_date"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+
+                                            <div role="tabpanel" class="tab-pane fade" id="family_detail">
+                                                <div class="row">
+                                                    <div class="col-md-6 mt16">
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Related Student</label>
+                                                            <select name="family_detail_related_student" id="family_detail_related_student" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                                                <option value="selected" name="selected" id="selected">Select Related Student</option>
+                                                                <option value="exist" name="exist" id="exist">Link to Existing Student</option>
+                                                                <option value="new" name="new" id="new">Create New Relative Name</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Email</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="family_detail_email" id="family_detail_email"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Relation</label>
+                                                            <select name="family_detail_relation_ids" id="family_detail_relation_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                                                <option value="">Select Courses</option>
+                                                                <t t-foreach="relation_ids or []" t-as="related">
+                                                                    <option t-att-value="related.id"><t t-esc="related.name"/></option>
+                                                                </t>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="col-md-6 mt16">
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Phone</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="family_detail_phone" id="family_detail_phone"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0; display:none;" id="div_exist_student">
+                                                            <label style="font-weight: 400;">Exist Student</label>
+                                                            <select name="family_detail_student_ids" id="family_detail_student_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                                                <option value="">Select Student</option>
+                                                                <t t-foreach="family_detail_student_ids or []" t-as="student">
+                                                                    <option t-att-value="student.id"><t t-esc="student.name"/></option>
+                                                                </t>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;display:none;" id="div_student_new_name">
+                                                            <label style="font-weight: 400;">Student Name</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="family_detail_student_new_name" id="family_detail_student_new_name"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="general_survey_form">
+                                                <div class="row">
+                                                    <div class="col-sm-6 mt16">
+                                                        <label style="font-weight: 400;">General Survey</label>
+                                                        <select name="general_survey_id" id="general_survey_id" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                                            <option value="">Select General Survey</option>
+                                                            <t t-foreach="general_survey_id or []" t-as="survey">
+                                                                <option t-att-value="survey.id"><t t-esc="survey.name"/></option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="education_backgroUnd_form">
+                                                <div class="row">
+                                                    <div class="container">
+                                                        <div class="col-md-12 mb16 text-left text-muted">
+                                                            <div class="#">
+                                                                <div class="#">
+                                                                    <h3 style="color:#0085ba;">Highest Qualification</h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 mt16">
+                                                    <label style="font-weight: 400;">Highest Qualification</label>
+                                                    <select name="highest_qualification_id" id="highest_qualification_id" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                                        <option value="">Select Highest Qualification</option>
+                                                        <t t-foreach="highest_qualification_id or []" t-as="qualification">
+                                                            <option t-att-value="qualification.id"><t t-esc="qualification.name"/></option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb16 text-left text-muted">
+                                                        <div class="#">
+                                                            <div class="#">
+                                                                <h3 style="color:#0085ba;">Islamic Studies Highest Achievement</h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="container">            
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="text-align:center;">Institution</th>
+                                                                    <th style="text-align:center;">From Date</th>
+                                                                    <th style="text-align:center;">To Date</th>
+                                                                    <th style="text-align:center;">Achievement</th>
+                                                                    <th style="text-align:center;"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr id="islamic_studies_highest_achievement_row" name="islamic_studies_highest_achievement_row">
+                                                                    <td>
+                                                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_institution" id="eb_institution"/>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_from_date" id="eb_from_date"/>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_to_date" id="eb_to_date"/>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_achievement" id="eb_achievement"/>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <input id="total_line" name="total_line" value="0" type="hidden"></input>
+                                                        <div class="col-md-12 mb16 text-left text-muted">
+                                                            <button type="button" class="btn btn-primary" name="add_mew_line" id="add_mew_line">Add New Line</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="col-sm-6 mt16">
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Institution</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_institution" id="eb_institution"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">From Date</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_from_date" id="eb_from_date"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">To Date</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_to_date" id="eb_to_date"/>
+                                                        </div>
+                                                        <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                            <label style="font-weight: 400;">Achievement</label>
+                                                            <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="eb_achievement" id="eb_achievement"/>
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="qualification_form">
+                                                <div class="row">
+                                                    <div class="container">
+                                                        <div class="col-md-12 mb16 text-left text-muted">
+                                                            <div class="#">
+                                                                <div class="#">
+                                                                    <h3 style="color:#0085ba;">Qualification</h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div calss="row">
+                                                            <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                                <label style="font-weight: 400;">Qualification</label>
+                                                                <input type="text" style="border-radius: 5px; height:43px; width:350px;" placeholder="Enter Qualification Here.." class="form-control" name="qualification_remark" id="qualification_remark"/>
+                                                            </div>        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                        <!-- <div class="container row">
+                            <div class="col-sm-6 mt16">
+                                <label style="font-weight: 400;">Payment Option</label>
+                                <select name="payment_option" id="payment_option" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                    <option value="manually" name="manually" id="male">Manually At Pergas Office</option>
+                                    <option value="paypal" name="paypal" id="female">Using Paypal</option>
+                                </select>
+                            </div>
+                        </div>   -->
+                            <div class="modal fade" id="payment_selection"
+                            tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                                <div class="modal-dialog slot_event">
+                                    <t t-name="total_event">
+                                        <div class="modal-content ">
+                                            <div class="modal-header booking_heading_popup">
+                                                <button type="button"
+                                                    class="close fa fa-close close_custom redirect_page_class"
+                                                    data-dismiss="modal" aria-hidden="true"></button>
+                                                <h4 class="modal-title" id="myModalLabel">
+                                                    Close
+                                                    <span></span>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="field-Contact group con_name_margin">
+                                                    <label style="font-weight: 400;">Payment Option</label>
+                                                    <select name="payment_option" id="payment_option" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                                        <option value="manually" name="manually" id="manually">Cash/NETS/Cheque at Pergas Office</option>
+                                                        <option value="paypal" name="paypal" id="paypal">Using Paypal</option>
+                                                    </select>
+                                                </div>
+                                                <div class="row text-center mt64">
+                                                    <button type="submit" id="submit_admission_register" class="btn btn-lg btn-info" name="submit_admission_register" style="border-radius: 5px; height:43px; background-color: #494949;border-color: #494949;" value="Save">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <div class="row text-center">
+                                <!-- <button type="submit" id="submit_admission_register" class="btn btn-lg btn-info" name="submit_admission_register" style="border-radius: 5px; height:43px; background-color: #494949;
+                                sborder-color: #494949;" value="Save">Submit</button> -->
+                                <!-- <button type="button" id="payment_selection_button" class="btn btn-lg btn-info" name="payment_selection_button" style="border-radius: 5px; height:43px; background-color: #494949;
+                                sborder-color: #494949;">Submit1</button> -->
+
+                                <a class="payment_selection_button" id="payment_selection_button"  name="payment_selection_button" ><button type="button" class="btn btn-lg btn-info" style="border-radius: 5px; height:43px; background-color: #494949;border-color: #494949;" value="Save">Submit</button></a>
+    						</div>
+                        </form>
+        			</div>
+                </div>
+            </section>
+    	</t>
+	</template>
+</odoo>

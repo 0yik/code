@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_bom_wizard_form" model="ir.ui.view">
+            <field name="name">bom.wizard.form</field>
+            <field name="model">bom.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="BOM Report" version="7.0">
+                <label string="Do you want to print Bill of Material Report "/>
+                <footer>
+		    	<button icon="gtk-print" string="Print Bom Excel Report" name="print_consildatd_excel" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+        <record id="action_bom_report_wizard" model="ir.actions.act_window">
+            <field name="name">BOM Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bom.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="ir_BOM_structure" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'project.task'" name="model"/>
+            <field name="name">Bill of Materials Report</field>
+            <field eval="'ir.actions.act_window,'+str(action_bom_report_wizard)" name="value"/>
+        </record>
+
+        <record id="view_bom_excel_form" model="ir.ui.view">
+            <field name="name">bom.excel.excel.form</field>
+            <field name="model">bom.excel</field>
+            <field name="arch" type="xml">
+                <form string="Bom Excel Report file" version="7.0">
+                    <group>
+                        <field name="excel_file" readonly="1" filename="file_name"/>
+                        <field name="file_name" invisible="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_bom_excel" model="ir.actions.act_window">
+            <field name="name">Bom Excel Report </field>
+            <field name="view_id" ref="view_bom_excel_form"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="res_model">bom.excel</field>
+            <field name="target">new</field>
+        </record>
+
+
+   </data>
+</openerp>

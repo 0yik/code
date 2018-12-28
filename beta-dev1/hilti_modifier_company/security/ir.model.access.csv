@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_booking,project booking,model_project_booking,,1,1,1,1
+access_location_location,Location location,zone_and_postal_code_configuration.model_location_location,,1,1,1,1
+access_zone_zone,zone zone,zone_and_postal_code_configuration.model_zone_zone,,1,1,1,1
+access_postal_code,access_postal_code,zone_and_postal_code_configuration.model_postal_code,,1,1,1,1
+access_sequence_details,access_sequence_details,zone_and_postal_code_configuration.model_sequence_details,,1,1,1,1

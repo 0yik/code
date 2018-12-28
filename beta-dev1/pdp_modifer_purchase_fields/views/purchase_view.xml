@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record id="discount_purchase_view_form" model="ir.ui.view">
+            <field name="name">discount.purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase_discount_total.discount_purchase_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[1]/group[1]/group" position="inside">
+                    <field name="additional_amount"/>
+                </xpath>
+                <field name="amount_tax" position="after">
+                    <field name="cal_add_price" widget='monetary'
+                           options="{'currency_field': 'currency_id'}"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
+

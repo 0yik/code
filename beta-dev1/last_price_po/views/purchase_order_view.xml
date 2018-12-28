@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_draft']" position="before">
+                    <button name="update_last_purchase_price" type="object" string="Update Last Purchase Price"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="context">{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id, 'order_name': parent.name}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
+                    <attribute name="context">{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id, 'order_name': parent.name}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="after">
+                    <field name="last_purchased_unit_price" readonly="1"/>
+                    <field name="last_average_unit_price" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form//field[@name='price_unit']" position="after">
+                    <field name="last_purchased_unit_price" readonly="1"/>
+                    <field name="last_average_unit_price" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_purchase_configuration" model="ir.ui.view">
+            <field name="name">purchase.res.config.view</field>
+            <field name="model">purchase.config.settings</field>
+            <field name="inherit_id" ref="purchase.view_purchase_configuration"/>
+            <field name="arch" type="xml">
+                <field name="po_double_validation_amount" position="after">
+                    <label for="average_last_calculation" string="Average Last Calculation"/>
+                        <div name="config_products">
+                            <field name="average_last_calculation" class="oe_inline"/>days
+                        </div>
+                    
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

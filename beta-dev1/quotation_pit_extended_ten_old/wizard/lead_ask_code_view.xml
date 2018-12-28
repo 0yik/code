@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="view_crm_lcrm_askcode_partner_partner" model="ir.ui.view">
+            <field name="name">crm.askcode.partner.form</field>
+            <field name="model">crm.askcode.partner</field>
+            <field name="arch" type="xml">
+                <form string="Convert to Account">
+                    <group name="name">
+                        <field name="code_partner" class="oe_inline" placeholder="Account Code"/>
+                    </group>
+                    <footer>
+                        <button name="convert_to_part" string="Create Accounts" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_crm_askcode_partner_action" model="ir.actions.act_window">
+            <field name="name">Convert to Accounts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.askcode.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_crm_lcrm_askcode_partner_partner"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>

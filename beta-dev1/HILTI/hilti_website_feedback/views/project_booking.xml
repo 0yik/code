@@ -1,0 +1,43 @@
+<odoo>
+	<data>
+
+		<record id="project_booking_view_readonly_inherit" model="ir.ui.view">
+			<field name="name">project.booking.view.readonly.inherit</field>
+			<field name="model">project.booking</field>
+			<field name="inherit_id"
+				ref="hilti_modifier_company.project_booking_view_readonly" />
+			<field name="arch" type="xml">
+				<field name='partner_id' position='after'>
+					<field name='feedback_received' invisible='1' />
+				</field>
+				<xpath expr='//header/field' position='before'>
+					<button name="%(hilti_website_feedback.action_booking_feedback)d"
+						class="oe_stat_button"
+						attrs="{'invisible': ['|', ('feedback_received','=', True), ('status', '!=', 'completed')]}"
+						type="action" string="Feedback" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="project_booking_view_tester_inherit_last" model="ir.ui.view">
+			<field name="name">project.booking.view.tester.inherit.last</field>
+			<field name="model">project.booking</field>
+			<field name="inherit_id"
+				ref="hilti_modifier_company.project_booking_view_tester" />
+			<field name="arch" type="xml">
+				<xpath expr="//sheet/notebook/page[@name='tester_feedback']"
+					position="after">
+					<page string="Customer Feedback" name="customer_feedback">
+						<sheet>
+							<group>
+								<field name='feedback_rating' widget="priority" readonly="1"/>
+								<field name='feedback_description' />
+							</group>
+						</sheet>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

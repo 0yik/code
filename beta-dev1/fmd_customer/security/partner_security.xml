@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<record id="group_all" model="res.groups">
+		<field name="name">All</field>
+	</record>
+	<record id="group_audit_associate" model="res.groups">
+		<field name="name">Audit Associate</field>
+	</record>
+
+	<record id="group_audit_senior" model="res.groups">
+		<field name="name">Audit Senior</field>
+	</record>
+
+	<record id="group_audit_manager" model="res.groups">
+		<field name="name">Audit Manager</field>
+	</record>
+
+	<record id="group_audit_partner" model="res.groups">
+		<field name="name">Audit Partner</field>
+	</record>
+
+	<record id="group_corp_sec_assistant" model="res.groups">
+		<field name="name">Corp Sec Assistant</field>
+	</record>
+
+	<record id="group_corp_sec_executive" model="res.groups">
+		<field name="name">Corp Sec Executive</field>
+	</record>
+
+	<record id="group_corp_sec_manager" model="res.groups">
+		<field name="name">Corp Sec Manager</field>
+	</record>
+
+	<record id="group_tax_associate" model="res.groups">
+		<field name="name">Tax Associate</field>
+	</record>
+
+	<record id="group_tax_senior" model="res.groups">
+		<field name="name">Tax Senior</field>
+	</record>
+
+	<record id="group_tax_manager" model="res.groups">
+		<field name="name">Tax manager</field>
+	</record>
+
+	<record id="group_accounts_associate" model="res.groups">
+		<field name="name">Accounts Associate</field>
+	</record>
+
+	<record id="group_accounts_senior" model="res.groups">
+		<field name="name">Accounts Senior</field>
+	</record>
+
+
+	<record id="group_accounts_manager_trail" model="res.groups">
+		<field name="name">Accounts manager</field>
+	</record>
+
+	<record id="group_opeartion_assistan" model="res.groups">
+		<field name="name">Operation Assistant</field>
+	</record>
+
+	<record id="group_operation_executive" model="res.groups">
+		<field name="name">Operation Executive</field>
+	</record>
+
+	<record id="group_operation_manager" model="res.groups">
+		<field name="name">Operation Manager</field>
+	</record>
+
+	<record id="group_bd_assistant" model="res.groups">
+		<field name="name">BD Assistant</field>
+	</record>
+
+	<record id="group_bd_executive" model="res.groups">
+		<field name="name">BD Executive</field>
+	</record>
+
+	<record id="group_bd_manager" model="res.groups">
+		<field name="name">BD Manager</field>
+	</record>
+
+	<record id="group_hr_assistant" model="res.groups">
+		<field name="name">HR Accounts Assistant</field>
+	</record>
+
+	<record id="group_hr_executive" model="res.groups">
+		<field name="name">HR Accounts Executive</field>
+	</record>
+
+	<record id="group_hr_account_manager" model="res.groups">
+		<field name="name">HR Accounts Manager</field>
+	</record>
+
+	<record id="group_billing_l1" model="res.groups">
+		<field name="name">Billing L1</field>
+	</record>
+
+	<record id="group_billing_l2" model="res.groups">
+		<field name="name">Billing L2</field>
+	</record>
+
+	<record id="group_front_desk" model="res.groups">
+		<field name="name">Front Desk</field>
+	</record>
+
+	<record id="group_general_l1" model="res.groups">
+		<field name="name">General L1</field>
+	</record>
+
+	<record id="group_general_l2" model="res.groups">
+		<field name="name">General L2</field>
+	</record>
+
+	<record id="group_general_l3" model="res.groups">
+		<field name="name">General L3</field>
+	</record>
+
+	<record id="group_general_l4" model="res.groups">
+		<field name="name">General L4</field>
+	</record>
+
+	<record id="group_cs1" model="res.groups">
+		<field name="name">CS1</field>
+	</record>
+
+	<record id="group_cs2" model="res.groups">
+		<field name="name">CS2</field>
+	</record>
+
+	<record id="group_client_view" model="res.groups">
+		<field name="name">Client view only</field>
+	</record>
+
+	<record id="group_client_general_l1_tax_associate" model="res.groups">
+		<field name="name">General L1 + Tax Associate</field>
+	</record>
+
+	<record id="group_client_general_l2_tax_senior" model="res.groups">
+		<field name="name">General L2 + Tax Senior</field>
+	</record>
+
+	<record id="group_client_general_l3_tax_manager" model="res.groups">
+		<field name="name">General L3 + Tax Manager</field>
+	</record>
+
+	<record id="group_client_general_l1_operation_assistant_1"
+		model="res.groups">
+		<field name="name">General L1 + Operation Assistant</field>
+	</record>
+
+	<record id="group_client_general_l2_operation_executive" model="res.groups">
+		<field name="name">General L2 + Operation Executive</field>
+	</record>
+
+	<record id="group_client_general_l3_operation_manager" model="res.groups">
+		<field name="name">General L3 + Operation Manager</field>
+	</record>
+
+	<record id="group_admin_fmd" model="res.groups">
+		<field name="name">Administrator</field>
+	</record>
+
+	<record id="group_menu_invisible" model="res.groups">
+		<field name="name">Menu Invisible</field>
+	</record>
+</odoo>

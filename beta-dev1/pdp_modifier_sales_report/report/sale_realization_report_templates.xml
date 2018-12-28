@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pdp_modifier_sales_report.report_saleorder_realization_document">
+        <t t-set="no" t-value="1"/>
+        <div class="page">
+            <div class="oe_structure" />
+            <div class="row">
+                   <div class="col-xs-4">
+                       <strong>Printed : </strong><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M')"/>
+                   </div>
+                   <div class="col-xs-8">
+                       <h4>
+                           <strong>Sales Order Customer Realization</strong>
+                       </h4>
+                   </div>
+                   <div class="col-xs-4">
+                       <strong>Page : </strong><span t-esc="no"/>
+                   </div>
+                   <div class="col-xs-7">
+                       <strong>Period : </strong> <span t-field="doc.from_date"  t-field-options='{"format": "d MMMM y 00:00"}'/> upto <span t-field="doc.to_date"  t-field-options='{"format": "d MMMM y 23:59"}'/>
+                   </div>
+            </div>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>SOD No</th>
+                        <th>Date</th>
+                        <th>Last DO</th>
+                        <th>Item Code</th>
+                        <th>Item Name</th>
+                        <th>Ordered</th>
+                        <th>Delivered</th>
+                   </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="doc.get_order_customer_realization()" t-as="record">
+	                    <t t-set="product_qty" t-value="0" />
+	                    <t t-set="qty_done" t-value="0" />
+                        <tr>
+	                        <td colspan="9"><strong><span t-esc="record" /></strong></td>
+	                    </tr>
+	                    <t t-foreach="record_value" t-as="line">
+	                    <tr>
+                            <td><span t-esc="line['so_name']" /></td>
+                            <td><span t-esc="line['date']" /></td>
+                            <td><span t-esc="line['last_do']" /></td>
+                            <td><span t-esc="line['default_code']" /></td>
+                            <td><span t-esc="line['product']" /></td>
+                            <td><span t-esc="line['qty']" /></td>
+                            <td><span t-esc="line['qty_done']" /></td>
+                        </tr>
+	                    <t t-set="product_qty" t-value="product_qty + line['qty']" />
+	                    <t t-set="qty_done" t-value="qty_done + line['qty_done']" />
+                        </t>
+                        <tr>
+                            <td colspan="5"></td>
+                            <td><strong><span t-esc="product_qty" /></strong></td>
+                            <td><strong><span t-esc="qty_done" /></strong></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+        <t t-set="no" t-value="no+1"/>
+    </template>
+
+    <template id="pdp_modifier_sales_report.report_saleorder_realization">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="pdp_modifier_sales_report.report_saleorder_realization_document" />
+            </t>
+        </t>
+    </template>
+
+</odoo>

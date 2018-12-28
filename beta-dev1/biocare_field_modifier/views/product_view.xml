@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="product_template_only_form_view_inherit" model="ir.ui.view">
+            <field name="name">product_view_inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="type" position="after">
+                    <field name="is_equipment"
+                        string="Is a Vehicle"
+                        attrs="{'invisible': [('type','in', ['consu', 'service'])]}"/>
+                </field>
+                <xpath expr="//label[@for='name']" position="replace">
+                    <label class="oe_edit_only" for="name"
+                        string="Product Name" 
+                        attrs="{'invisible': ['|', ('type','in', ['service']), ('is_equipment', '=', True)]}"/>
+                    <label class="oe_edit_only" for="name"
+                        string="Service Name" attrs="{'invisible': [('type','in', ['consu', 'product'])]}"/>
+                    <label class="oe_edit_only" for="name"
+                        string="Vehicle Number" attrs="{'invisible': [('is_equipment','=', False)]}"/>
+                </xpath>
+                <xpath expr="//div[@name='options']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('type','in', ['service']), ('is_equipment', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="replace">
+                    <field name="name" />
+                </xpath>
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="reserved_team" attrs="{'invisible': [('type','!=', 'service')]}"/>
+                    <field name="team_ids"
+                        attrs="{'invisible': [('reserved_team','=', False)], 'required': [('reserved_team', '=', True)]}"
+                        widget="many2many_tags"
+                        />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_product_product_inherit_bo_form" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="reserved_team" attrs="{'invisible': [('type','!=', 'service')]}"/>
+                    <field name="team_ids"
+                        attrs="{'invisible': [('reserved_team','=', False)], 'required': [('reserved_team', '=', True)]}"
+                        widget="many2many_tags"
+                        />
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_product_template_note_view_form" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page//group[@name='description']" position="replace">
+                    <group name="description">
+                    <separator string="Description for Quotations" colspan="4" attrs="{'invisible': [('type','in', ['service', 'product'])]}"/>
+                    <separator string="Description for Services" colspan="4" attrs="{'invisible': [('type','in', ['consu', 'product'])]}"/>
+                    <separator string="Description for Vehicle" colspan="4" attrs="{'invisible': [('type','in', ['service', 'consu'])]}"/>
+                    <field name="description_sale" colspan="4" nolabel="1"
+                        placeholder="This note will be displayed on the quotations."/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_product_product_service_tree" model="ir.ui.view">
+            <field name="name">product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <tree string="Services">
+                <field name="name"/>
+                <field name="type"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_product_product_service_form" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <form string="Services">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                            class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button>
+                        <button class="oe_stat_button" name="action_view_sales"
+                            type="object" icon="fa-usd">
+                            <field string="Sales" name="sales_count" widget="statinfo" />
+                        </button>
+                    </div>
+                    <field name="image_medium" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Service Name"/>
+                        <h1><field name="name" placeholder="Service Name"/></h1>
+                        <!--div name="options" groups="base.group_user">
+                            <div>
+                                <field name="sale_ok"/>
+                                <label for="sale_ok"/>
+                            </div>
+                            <div>
+                                <field name="purchase_ok"/>
+                                <label for="purchase_ok"/>
+                            </div>
+                        </div-->
+                    </div>
+                    <group>
+                        <group>
+                            <field name="description_sale" string="Service Description"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+        <record id="view_product_product_service_search" model="ir.ui.view">
+            <field name="name">product.product.search</field>
+            <field name="model">product.product</field>
+            <field name="type">search</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <search string="Services">
+                <field name="name"/>
+            </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_product_product_service_view">
+            <field name="name">Services</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_product_product_service_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_product_product_service_view_form">
+            <field name="act_window_id" ref="act_open_product_product_service_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_product_product_service_form"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_product_product_service_view_tree">
+            <field name="act_window_id" ref="act_open_product_product_service_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_product_product_service_tree"/>
+        </record>
+
+        <!--menuitem id="menu_product_product_service"
+            parent="module.xmlid"
+            sequence="20"
+            action="act_open_product_product_service_view"/-->
+    </data>
+</odoo>

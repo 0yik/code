@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="account_aged_balance_view_inherit_inherit">
+			<field name="name">Aged Partner Balance inherit</field>
+			<field name="model">account.aged.trial.balance</field>
+			<field name="inherit_id" ref="sg_account_standardisation.account_aged_balance_view_inherit"/>
+			<field name="arch" type="xml">
+				<field name="partner_ids" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="partner_ids" position="after">
+                    <field name="partner2_ids" context="{'result_selection' : result_selection}">
+                        <tree editable="bottom">
+							<field name="result_selection" invisible="1"/>
+                            <field name="name" options="{'no_create': True}"/>
+                            <field name="payment_term" widget="many2many_tags" options="{'no_create': True}"/>
+                        </tree>
+                    </field>
+                </field>
+			</field>
+		</record>
+        <menuitem id="account.menu_aged_trial_balance"
+        name="Aged Partner Balance"
+        action="account.action_account_aged_balance_view"
+        parent="account.menu_finance_legal_statement"/>
+    </data>
+</odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	<record id="view_stock_picking_form_booking" model="ir.ui.view">
+            <field name="name">view.sale.order.form.booking</field>
+            <field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+            	<button name="action_confirm" position="after">
+            		<button name="action_check_booking" states="draft" string="Check" class="btn-primary o_sale_confirm" type="object" />
+            	</button>
+            	<field name="move_type" position="before">
+            		<field name="is_booking" />
+            	</field>
+            	<xpath expr="//group/group[2]" position="after">
+            		<group>
+            			<field name="employee_ids" nolabel="1" attrs="{'invisible':[('is_booking','!=',True)]}">
+            				<tree string="Employees" >
+            					<field name="name" string="Employee"/>
+            				</tree>
+            			</field>
+            			<newline />
+            			<field name="equipments_ids" nolabel="1" attrs="{'invisible':[('is_booking','!=',True)]}">
+            				<tree string="Equpment" editable="bottom">
+	                    		<field name="product_id" required="1"/>
+	                    		<field name="serial_no_id" required="1"/>
+	                    	</tree>
+            			</field>
+            		</group>
+            	</xpath>
+            	<field name="backorder_id" position="after">
+            		<field name="booking_team_id" attrs="{'invisible':[('is_booking','!=',True)]}"/>
+            		<field name="team_leader_id" attrs="{'invisible':[('is_booking','!=',True)]}"/>
+            	</field>
+            	<field name="origin" position="after">
+            		<field name="scheduled_start_date" attrs="{'invisible':[('is_booking','!=',True)],'required':[('is_booking','=',True)]}"/>
+            		<field name="scheduled_end_date" attrs="{'invisible':[('is_booking','!=',True)],'required':[('is_booking','=',True)]}"/>
+            		<field name="actual_start_date" attrs="{'invisible':[('is_booking','!=',True)],'required':[('is_booking','=',True)]}"/>
+            		<field name="actual_end_date" attrs="{'invisible':[('is_booking','!=',True)],'required':[('is_booking','=',True)]}"/>
+            	</field>
+			</field>
+		</record>
+		
+		<record id="action_picking_tree_all_work_orders" model="ir.actions.act_window">
+            <field name="name">Work order</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context">{
+                    'contact_display': 'partner_address','default_is_booking':True
+            }
+            </field>
+            <field name="domain">[('is_booking','=',True)]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click here to create a new work order.
+              </p><p>
+                You can either do it immediately or mark it as Todo for future processing. Use your scanner to validate the transferred quantity quicker.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_picking_tree_work_orders" name="Work Order" parent="menu_booking_service_core" sequence="11" action="action_picking_tree_all_work_orders" groups="stock.group_stock_manager,stock.group_stock_user"/>
+		
+		
+		<record id="stock.action_picking_tree_all" model="ir.actions.act_window">
+			<field name="domain">[('is_booking','!=',True)]</field>
+		</record>
+    </data>
+</odoo>

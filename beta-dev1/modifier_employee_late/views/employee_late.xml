@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="hr_salary_rule_form_inherit_late" model="ir.ui.view">
+            <field name="name">hr.salary.rule.form.inherit</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="inherit_id" ref="hr_employee_loan.hr_salary_rule_form_inherit_loan_payment"/>
+            <field name="arch" type="xml">
+                <field name="is_loan_payment" position="after">
+                    <!--<field name="amount" attrs="{'invisible':[('name','!=','Late')],'required':[('name','=','Late')]}"/>-->
+                    <field name="late" attrs="{'invisible':[('name','!=','Late')],'required':[('name','=','Late')]}"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

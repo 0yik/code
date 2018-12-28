@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+   <t t-name="AddNoteButton">
+        <span class="control-button" style="display:none">
+            <i class="fa fa-sticky-note"></i>
+            Add Note
+        </span>
+    </t>
+   <t t-name="LastSoldPrice">
+        <span class="control-button last_sold_price" id="last_sold_price_pos">
+            Last Sold
+        </span>
+    </t>
+
+    <t t-name="LastSoldPricePopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" >
+                <p class="title">Last Sold  Price</p>
+                <div><t t-esc="widget.prod_info"/></div>
+	            <table style="width:100%;font-size: 16px;">
+		            <thead style="background: #CCC; border-top: 1px solid gray;border-bottom: 1px solid gray;">
+                        <tr>
+                            <th style="text-align: left;padding-left: 15px;">Product</th>
+		                    <th style="text-align: center;padding-right: 15px;">Last Sold Price</th>
+                            <th style="text-align: right;padding-left: 15px;">Last Sold Date</th>
+                        </tr>
+		            </thead>
+                    <t t-raw="widget.prod_info_data"/>
+                </table>
+                <div class="footer">
+                    <div class="button confirm">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

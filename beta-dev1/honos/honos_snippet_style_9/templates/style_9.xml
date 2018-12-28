@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="style_9" inherit_id="honos_snippets.honos_snippets"
+		name="Heading Snippet" priority="9">
+		<xpath
+			expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']"
+			position="inside">
+			<t t-snippet="honos_snippet_style_9.snippet_style_9_template" t-thumbnail="/honos_snippet_style_9/static/src/img/style_9.jpg" />
+		</xpath>
+	</template>
+	<template id="snippet_style_9_template" name="Style 9">
+		<section>
+			<section class="cat_img_content_snippet_wrap">
+				<div class="cat_img_content_snippet_container">
+
+					<div class="daily_deals_img_section">
+						<section>
+							<a href="#">
+							<img src="/honos_snippet_style_9/static/src/img/style_9_img_1.png"></img>
+							</a>
+						</section>
+					</div>
+					<div class="daily_deals_content_class">
+						<div class="content_subclass">
+						<p class="hr_before_heading"></p>
+						<h1 class="content_heading">daily deals</h1>
+						<div class="daily_deals_para">
+							<p class="">You can select a product to buy without leaving
+								current page,instantly add product to basket. Increase user
+								experiance and sales.</p>
+						</div>
+						<a class="b_fashion_btn" href="#">shop now</a>
+						</div>
+					</div>
+
+					<div class="daily_deals_snippet_category">
+						<div class="category_row_container">
+						<div class="category_row">
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c1.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Lipstick</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c2.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Mascara</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c3.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Foundation</a>
+							</div>
+						</div>
+						</div>
+						<div class="category_row_container">
+						<div class="category_row">
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c4.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Makeup box</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c5.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Brushes</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c6.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Lotion</a>
+							</div>
+						</div>
+						</div>
+						<div class="category_row_container">
+						<div class="category_row">
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c7.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Cream</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c8.png"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Nail paint</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+									<a href="#">
+										<img src="/honos_snippet_style_9/static/src/img/c9.png"></img>
+									</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">Eyeliner</a>
+							</div>
+						</div>
+						</div>
+					</div>s
+				</div>
+			</section>
+		</section>
+	</template>
+
+</odoo>

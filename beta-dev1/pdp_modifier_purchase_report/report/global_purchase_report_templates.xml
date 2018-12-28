@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_global_purchaseorder_document">
+        <t t-set="no" t-value="1"/>
+        <div class="page">
+            <div class="oe_structure" />
+            <div class="row">
+                   <div class="col-xs-4">
+                       <strong>Printed : </strong><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M')"/>
+                   </div>
+                   <div class="col-xs-8">
+                       <h4>
+                           <strong>GLOBAL PURCHASE ORDER</strong>
+                       </h4>
+                   </div>
+                   <div class="col-xs-4">
+                       <strong>Page : </strong><span t-esc="no"/>
+                   </div>
+                   <div class="col-xs-7">
+                       <strong>Period : </strong> <span t-field="doc.from_date"  t-field-options='{"format": "d MMMM y 00:00"}'/> upto <span t-field="doc.to_date"  t-field-options='{"format": "d MMMM y 23:59"}'/>
+                   </div>
+            </div>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Transaction</th>
+                        <th>Ref No.</th>
+                        <th>Supplier</th>
+                        <th>Term</th>
+                        <th>Net Total</th>
+                   </tr>
+                </thead>
+                <tbody>
+                    <t t-set="total" t-value="0" />
+                    <t t-set="currency" t-value="0" />
+                    <t t-foreach="doc.get_order_details()" t-as="record">
+                        <tr>
+	                        <td colspan="9" style="color: blue;"><b><h4><span>Currency:</span>&amp;nbsp;<span t-esc="record" /></h4></b></td>
+	                    </tr>
+                        <t t-foreach="record_value" t-as="order">
+                        <t t-set="currency" t-value="order['company_id'].currency_id.symbol"/>
+                        <tr>
+                            <td><span t-esc="order['state']"/></td>
+	                        <td><span t-esc="order['date']"/></td>
+	                        <td><span t-esc="order['transaction']"/></td>
+	                        <td><span t-esc="order['ref_no']"/></td>
+	                        <td><span t-esc="order['supplier']"/></td>
+	                        <td><span t-esc="order['term']"/></td>
+	                        <td><!--span t-esc="currency"/--> <span t-esc="'{0:,.2f}'.format(order['amount_total'])"/></td>
+                        </tr>
+                        <t t-set="total" t-value="total + order['amount_total']" />
+	                    <!--t t-set="total" t-value="total + order[amount_total]" /-->
+                    </t>
+                    <tr>
+                        <td colspan="4"><b> Total &amp;nbsp;    <span t-esc="record"/></b></td>
+                        <td></td>
+                        <td></td>
+                        <td><span t-esc="'{0:,.2f}'.format(total)"></span></td>
+                    </tr>
+                    </t>
+                    <br/>
+                </tbody>
+            </table>
+        </div>
+        <t t-set="no" t-value="no+1"/>
+    </template>
+
+    <template id="report_global_purchaseorder">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="pdp_modifier_purchase_report.report_global_purchaseorder_document" />
+            </t>
+        </t>
+    </template>
+
+</odoo>

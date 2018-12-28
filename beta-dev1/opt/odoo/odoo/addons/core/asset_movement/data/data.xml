@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="asset_movement" model="ir.sequence">
+            <field name="name">Asset Request sequence</field>
+            <field name="code">account.asset.request</field>
+            <field name="prefix">AREQ/%(range_year)s/</field>
+            <field name="padding">4</field>
+			<field name="next_number_actual">1</field>
+			<field name="number_increment">1</field>
+			<field name="implementation">standard</field>
+        </record>
+
+    </data>
+</odoo>

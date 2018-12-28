@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_users_form_inherit" model="ir.ui.view">
+            <field name="name">res.users.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//group[@name='messaging']" position="after"> -->
+<!--                    <group string="Location Settings" name="locations" colspan="4" col="4"> -->
+                        
+<!--                     </group> -->
+<!--                </xpath> -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="default_warehouse_id" required="1"/>
+                    <field name="active_warehouse_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>    
+        
+    </data>
+</openerp>

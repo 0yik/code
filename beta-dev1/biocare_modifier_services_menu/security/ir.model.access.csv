@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_biocare_modifier_services_menu_biocare_modifier_services_menu,biocare_modifier_services_menu.biocare_modifier_services_menu,model_biocare_modifier_services_menu_biocare_modifier_services_menu,,1,0,0,0

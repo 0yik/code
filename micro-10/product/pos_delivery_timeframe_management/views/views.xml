@@ -1,0 +1,30 @@
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+      <xpath expr="." position="inside">
+          <script type="text/javascript" src="/pos_delivery_timeframe_management/static/js/pos.js"></script>
+          <link rel="stylesheet" href="/pos_delivery_timeframe_management/static/css/pos.css" type="text/css"/>
+      </xpath>
+    </template>
+
+	<record model="ir.ui.view" id="pos_delivery_timeframe_management_config">
+		<field name="name">pos.config.settings.form</field>
+		<field name="model">pos.config.settings</field>
+		<field name="inherit_id" ref="point_of_sale.view_sale_config_settings_form_pos"/>
+		<field name="groups_id" eval="[(4, ref('point_of_sale.group_pos_manager'))]"/>
+		<field name="arch" type="xml">
+		    <xpath expr="//group/field[@name='module_pos_reprint']" position="after">
+		      <field name="time_frame_management" />
+		    </xpath>
+		</field>
+	 </record>
+
+  <record id="product_product_delivery_charge" model="product.product">
+    <field name="name">Delivery Charges</field>
+    <field name="standard_price">0</field>
+    <field name="list_price">0</field>
+    <field name="type">service</field>
+    <field name="uom_id" ref="product.product_uom_unit"/>
+    <field name="uom_po_id" ref="product.product_uom_unit"/>
+    <field name="default_code">Delivery</field>
+  </record>
+</odoo>

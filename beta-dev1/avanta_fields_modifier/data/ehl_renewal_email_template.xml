@@ -1,0 +1,15 @@
+<openerp>
+    <data>
+
+        <record id="email_warranty_template_asset" model="mail.template">
+            <field name="name">EHL Renewal Notification</field>
+            <field name="email_from">${(object.create_uid.email and '%s &lt;%s&gt;' % (object.create_uid.name, object.create_uid.email) or '')|safe}</field>
+            <field name="subject">${object.name}</field>
+            <field name="model_id" ref="avanta_fields_modifier.model_crm_lead"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="user_signature" eval="True"/>
+        </record>
+
+    </data>
+</openerp>

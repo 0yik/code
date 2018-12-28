@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="Product">
+        <t t-jquery="img" t-operation="replace">
+            <div style="    margin-top: 28px;
+    position: absolute;
+    margin-bottom: 0;
+    font-size: 14px;
+    display: block;
+    word-wrap: break-word;white-space:normal !important;
+    line-height: 20px;
+        color: white;
+        width: 85% !important;
+    height: 43% !important;
+    background: #9a9a9a !important;
+    padding: 10px;"><t t-esc="product.display_name"></t></div>
+        </t>
+        <t t-jquery=".product-name" t-operation="replace">
+        </t>
+    </t>
+</templates>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<data noupdate="1">
+
+        <!--Email template for submit request -->
+        <record id="email_template_edi_leave_request" model="mail.template">
+            <field name="name">Leave Request - Send by Email</field>
+            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field>
+            <!--field name="email_from">${ctx['email_from']|safe}</field-->
+            <field name="subject">${object.display_name or 'n/a' } need Approval</field>
+            <!--field name="partner_to">${object.partner_id.id}</field-->
+            <field name="email_to">${ctx['email_to']|safe}</field>
+            <field name="model_id" ref="leave_multi_approval_levels.model_hr_holidays"/>
+            <field name="auto_delete" eval="True"/>
+            <!--field name="report_template" ref="report_sale_order"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field-->
+            <!--field name="lang">${object.partner_id.lang}</field-->
+            <field name="body_html"><![CDATA[
+<p>Dear ${ctx['approval_name']|safe},
+<p>
+${ctx['emp_name']|safe} has applied for ${object.holiday_status_id.name2} (${ctx['date_from']|safe} to ${ctx['date_to']|safe})
+</p>
+<p>
+Kindly review the</strong> <a href="${ctx['url']|safe}" target="_blank">(${object.display_name})</a>
+</p>
+    <br/><br/>
+
+]]></field>
+        </record>
+</data>
+
+<data noupdate="1">
+        <!--Email template for submit request Approved-->
+        <record id="email_template_edi_leave_request_approved" model="mail.template">
+            <field name="name">Leave Request Approved- Send by Email</field>
+            <!--field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field-->
+            <field name="email_from">${ctx['email_from']|safe}</field>
+            <field name="subject">${object.display_name or 'n/a' } Approved</field>
+            <!--field name="partner_to">${object.partner_id.id}</field-->
+            <field name="email_to">${ctx['email_to']|safe}</field>
+            <field name="model_id" ref="leave_multi_approval_levels.model_hr_holidays"/>
+            <field name="auto_delete" eval="True"/>
+            <!--field name="report_template" ref="report_sale_order"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field-->
+            <!--field name="lang">${object.partner_id.lang}</field-->
+            <field name="body_html"><![CDATA[
+<p>Dear ${object.employee_id.name},
+<p>
+Your leave application for ${object.holiday_status_id.name2} (${ctx['date_from']|safe} to ${ctx['date_to']|safe}) has been Approved.
+</p>
+    <br/><br/>
+
+]]></field>
+        </record>
+</data>
+
+<data noupdate="1">
+        <!--Email template for submit request Reject-->
+        <record id="email_template_edi_leave_request_reject" model="mail.template">
+            <field name="name">Leave Request Reject- Send by Email</field>
+            <!--field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field-->
+            <field name="email_from">${ctx['email_from']|safe}</field>
+            <field name="subject">${object.display_name or 'n/a' } Rejected</field>
+            <!--field name="partner_to">${object.partner_id.id}</field-->
+            <!--field name="email_to">${ctx['email_to']|safe}</field-->
+            <field name="email_to">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field>
+            <field name="model_id" ref="leave_multi_approval_levels.model_hr_holidays"/>
+            <field name="auto_delete" eval="True"/>
+            <!--field name="report_template" ref="report_sale_order"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field-->
+            <!--field name="lang">${object.partner_id.lang}</field-->
+            <field name="body_html"><![CDATA[
+<p>Dear ${object.employee_id.name},
+<p>
+Your leave application for ${object.holiday_status_id.name2} (${ctx['date_from']|safe} to ${ctx['date_to']|safe}) has been Rejected.
+</p>
+    <br/><br/>
+
+]]></field>
+        </record>
+</data>
+
+</odoo>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<template id="snippet_style_17" inherit_id="honos_snippets.honos_snippets"
+		name="honos snippet" priority="17">
+		<xpath
+			expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']"
+			position="inside">
+			<t t-snippet="honos_snippet_style_17.snippet_style_17_template"
+			t-thumbnail="/honos_snippet_style_17/static/src/img/style_17.jpg" />
+		</xpath>
+	</template>
+	
+	<template id="snippet_style_17_template" name="Style 17">
+		<section class="honos_snippet_one_wrap">
+				<div class="honos_snippet_one_container">
+					<div class="b_snippet_one_left">
+						<div class="b_left_text_div">
+		    				<h1 class="b_left_text_heading">summer sale</h1>
+		    				<h3 class="b_left_text_heading_small">Discover latest looks from our new arrivals</h3>
+		    				<h1 class="b_discount_title">70% 
+		    				<span class="discount_small_text flat_text">flat</span> 
+		    				 <span class="discount_small_text off_text">off</span></h1>
+		    				<a class="b_fashion_btn b_shop_now_btn" href="#">shop now</a>
+    					</div>
+						<div  class="b_left_img_div">
+							<a href="#"><section><img src="/honos_snippet_style_17/static/src/img/style_17_img_1.png" class="s_image_common"></img></section></a>
+						</div>
+					</div>
+					<div class="b_snippet_one_right">
+						<div class="b_right_bottom_div">
+							<div class="b_right_inner_text right_inner_l_border">
+								<h1 class="b_right_inner_discount_title">Mega Offer</h1>
+								<h3 class="b_left_text_heading_small">Collection for man shirts</h3>
+								<a class="b_fashion_btn b_right_inner_btm_btn_extra" href="#">shop now</a>
+								<div class="btm_abs_border">
+								</div>
+							</div>
+							<div class="b_right_inner_right_img">
+							<a href="#"><section><img src="/honos_snippet_style_17/static/src/img/style_17_img_2.png" class="s_image_common"></img></section></a>
+							</div>
+						</div>
+						<div class="b_right_top_div">
+						<div class="b_right_inner_left_img">
+							
+								<a href="#"><section><img src="/honos_snippet_style_17/static/src/img/style_17_img_3.png" class="s_image_common"></img></section></a>
+						</div>
+						<div class="b_right_inner_text right_inner_r_border">	
+							<h1 class="b_right_inner_discount_title">Bumper Sale</h1>
+							<h3 class="b_left_text_heading_small">Luxury shirt for women</h3>
+							<a class="b_fashion_btn b_right_inner_top_btn_extra" href="#">shop now</a>
+							<div class="top_abs_border">
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</template>
+	
+	</odoo>

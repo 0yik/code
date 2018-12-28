@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/modifier_layout_customer/static/src/css/partner.css"/>
+            <link rel="stylesheet" href="/modifier_layout_customer/static/src/css/responsive.css"/>
+            <link rel="stylesheet" type="text/css" href="/modifier_layout_customer/static/src/css/cuscmp.css"/>
+        </xpath>
+    </template>
+</odoo>

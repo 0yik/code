@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>        
+        <record model="ir.ui.view" id="view_bpkb_vehicles_form">
+            <field name="name">bpkb.vehicles.form1</field>
+            <field name="model">bpkb.vehicles</field>
+            <field name="arch" type="xml">
+                <form string="Sales">
+                <header>
+                <button string="Confirm" name="confirm" states="draft" type="object" class="oe_highlight"/>
+                <button string="Stop" name="stop" states="active" type="object" class="oe_highlight"/>
+                <button string="Reset to Draft" name="reset_to_draft" states="active,stop" type="object" class="oe_highlight"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirm,active,stop"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nomor_polisi"/>
+                            <field name="merek"/>
+                            <field name="type_"/>
+                            <field name="jenis"/>
+                            <field name="model"/>
+                            <field name="isi_silinder"/>
+                            <field name="warna"/>
+                            <field name="no_rangka"/>
+                        </group>
+                        <group>
+                            <field name="tp"/>
+                            <field name="tpera"/>
+                            <field name="jumlah_sumbu"/>
+                            <field name="jumlah_roda"/>
+                            <field name="bahan_bakar"/>
+                            <field name="no_sertifikat"/>
+                            <field name="no_uji_berkala"/>
+                            <field name="pada_tanggal"/> 
+                            <field name="nomor_mesin"/>        
+                        </group>
+                    </group>
+                    
+                </sheet>
+                </form>
+            </field>
+        </record>
+       <record model="ir.ui.view" id="view_bpkb_vehicles_tree">
+            <field name="name">bpkb.vehicles.tree</field>
+            <field name="model">bpkb.vehicles</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="nomor_polisi"/>
+                    <field name="merek"/>
+                    <field name="type_"/>
+                    <field name="jenis"/>
+                    <field name="model"/>
+                    <field name="isi_silinder"/>
+                    <field name="warna"/>
+                    <field name="no_rangka"/>
+                    <field name="nomor_mesin"/>
+                    <field name="jumlah_sumbu"/>
+                    <field name="jumlah_roda"/>
+                    <field name="bahan_bakar"/>
+                    <field name="no_sertifikat"/>
+                    <field name="no_uji_berkala"/>
+                    <field name="pada_tanggal"/>
+                    <field name="tp"/>
+                    <field name="tpera"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_bpkb" model="ir.actions.act_window">
+            <field name="name">Sales</field>
+            <field name="res_model">bpkb.vehicles</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+            
+        <menuitem id="menu_bpkb"
+            name="BPKB"
+            parent="sales_team.menu_sales"
+            action="action_bpkb"
+            sequence="60"
+            />
+    
+    </data>
+</odoo>
+

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_order_matrix,access_order_matrix,model_sale_order_approval_matrix,,1,0,0,0
+access_order_matrix_line,access_order_matrix_line,model_sale_order_approval_matrix_line,sales_team.group_sale_manager,1,1,1,1
+
+
+

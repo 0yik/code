@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="pre_po_header">
+			<div class="header">
+				<div class="row">
+					<div class="col-xs-12">
+						<img t-if="company.report_header" t-att-src="'data:image/png;base64,%s' % company.report_header"/>
+						<img t-if="not company.report_header" src="/modifier_teo_sale_order/static/src/img/logo.png" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12"
+						style="border-top:2px solid;border-bottom:2px solid; padding-top:5px; padding-bottom:5px;">
+						<h3 class="text-center mt8">
+							<strong>TEO GARMENTS CORPORATION PTE LTD</strong>
+						</h3>
+						<h3 class="text-center mt0">
+							<strong>COLOR &amp; SIZE BREAKDOWN</strong>
+						</h3>
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="pre_po_layout">
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+
+			<t t-call="modifier_teo_sale_order.pre_po_header" />
+			<t t-raw="0" />
+			<t t-call="report.external_layout_footer" />
+		</template>
+
+		<template id="pre_po_report">
+			<t t-call="report.html_container">
+				<t t-call="modifier_teo_sale_order.pre_po_layout">
+					<div class="page">
+						<t t-foreach="data['main_data']" t-as="dmd">
+							<style>
+								.line tr, .line
+								th, .line td{
+								border:1px solid;
+								}
+							</style>
+							<div style="page-break-inside: avoid;">
+								<div class="row">
+									<div class="col-xs-12">
+										<strong>Date: </strong>
+										<span t-raw="data['date']" />
+									</div>
+								</div>
+								<div class="row" style="page-break-inside: avoid;">
+									<div class="col-xs-12">
+										<strong>Revision Date: </strong>
+										<span t-raw="data['revision_date']" />
+									</div>
+								</div>
+								<div class="row" style="page-break-inside: avoid;">
+									<div class="col-xs-12">
+										<strong>Style Number:</strong>
+										<span t-esc="dmd['style']" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										<strong>Description:</strong>
+										<span t-esc="dmd['description'] if dmd['description'] else '-'" />
+									</div>
+								</div>
+								<t t-foreach="dmd['get_data']" t-as="da">
+								<div style="page-break-inside: avoid;">
+									<div class="row mt16" style="border:1px solid; border-radius:3px;">
+										<div class="col-xs-2">
+											<strong>PO#:</strong>
+										</div>
+										<div class="col-xs-3">
+											<strong>
+												<t t-esc="da['so_id'] if da['so_id'] else '-'" />
+											</strong>
+										</div>
+										<div class="col-xs-3">
+											<strong>Customer:</strong>
+										</div>
+										<div class="col-xs-4">
+											<strong>
+												<t t-esc="da['customer'] if da['customer'] else '-'" />
+											</strong>
+										</div>
+										<div class="col-xs-2">
+											<strong>Delivery Date:</strong>
+										</div>
+										<div class="col-xs-3">
+											<strong>
+												<t t-esc="da['delivery_date'] if da['delivery_date'] else '-'" />
+											</strong>
+										</div>
+										<div class="col-xs-3">
+											<strong>Final Destination:</strong>
+										</div>
+										<div class="col-xs-4">
+											<strong>
+												<t
+													t-esc="da['final_destination'] if da['final_destination'] else '-'" />
+											</strong>
+										</div>
+									</div>
+									<div class="row">
+										<table class="table line">
+											<thead>
+												<tr style="page-break-inside: avoid;">
+													<th class="text-center">Colour Name</th>
+													<th class="text-center">Col Code</th>
+													<t t-foreach="da['col_name']" t-as="cn">
+														<th t-if="cn" class="text-center">
+															<span t-esc="cn" />
+														</th>
+													</t>
+													<th class="text-center">Carton Quantity</th>
+													<th class="text-center">Pack Type</th>
+													<th class="text-center">Pack Method</th>
+													<t t-if="da['size']">
+														<t t-foreach="da['size']" t-as="ds">
+															<th class="text-center">
+																<t t-esc="ds" />
+															</th>
+														</t>
+													</t>
+													<th class="text-center">Total</th>
+												</tr>
+											</thead>
+											<tbody>
+												<t t-foreach="da['line_ids']" t-as="dl">
+													<tr style="page-break-inside: avoid;">
+														<td class="text-center">
+															<span t-esc="dl['colour_name']" />
+														</td>
+														<td class="text-center">
+															<span t-esc="dl['col_code']" />
+														</td>
+														<t t-foreach="dl['col_content']" t-as="dcc">
+															<td t-if="dcc" class="text-center">
+																<span t-esc="dcc" />
+															</td>
+														</t>
+														<td class="text-center">
+															<span
+																t-esc="dl['carton_quantity'] if dl['carton_quantity'] else '-'" />
+														</td>
+														<td class="text-center">
+															<span t-esc="dl['pack']" />
+														</td>
+														<td class="text-center">
+															<span
+																t-esc="'Solid Col, Solid Size' if dl['pack_method'] else 'Ratio Pack'" />
+															<br />
+															<span t-esc="'' if dl['pack_method'] else dl['ratio']" />
+														</td>
+														<t t-foreach="dl['size']" t-as="ds">
+															<td class="text-center">
+																<span t-esc="int(ds)" />
+															</td>
+														</t>
+														<td class="text-center">
+															<span t-esc="dl['total']" />
+														</td>
+													</tr>
+												</t>
+												<tr style="border-top:2px solid;page-break-inside: avoid;">
+													<td class="text-center">
+														<strong>Total</strong>
+													</td>
+													<t t-foreach="da['col_name']" t-as="dcn">
+														<td t-if="dcn" class="text-center">
+														</td>
+													</t>
+													<td class="text-center">
+													</td>
+													<td class="text-center">
+														<t
+															t-esc="da['total_carton_qty'] if da['total_carton_qty'] else '-'" />
+													</td>
+													<td class="text-center">
+													</td>
+													<td class="text-center">
+													</td>
+													<td t-if="len(da['size']) > 0" class="text-center">
+														<t t-esc="da['size_1']" />
+													</td>
+													<td t-if="len(da['size']) > 1" class="text-center">
+														<t t-esc="da['size_2']" />
+													</td>
+													<td t-if="len(da['size']) > 2" class="text-center">
+														<t t-esc="da['size_3']" />
+													</td>
+													<td t-if="len(da['size']) > 3" class="text-center">
+														<t t-esc="da['size_4']" />
+													</td>
+													<td t-if="len(da['size']) > 4" class="text-center">
+														<t t-esc="da['size_5']" />
+													</td>
+													<td t-if="len(da['size']) > 5" class="text-center">
+														<t t-esc="da['size_6']" />
+													</td>
+													<td t-if="len(da['size']) > 6" class="text-center">
+														<t t-esc="da['size_7']" />
+													</td>
+													<td t-if="len(da['size']) > 7" class="text-center">
+														<t t-esc="da['size_8']" />
+													</td>
+													<td t-if="len(da['size']) > 8" class="text-center">
+														<t t-esc="da['size_9']" />
+													</td>
+													<td class="text-center">
+														<t t-esc="da['total_qty']" />
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									</div>
+								</t>
+							</div>
+						</t>
+						<div class="row">
+							<div class="col-xs-12"
+								style="border-top:2px solid;border-bottom:2px solid; padding-top:5px; padding-bottom:5px;">
+								<h3 class="text-center mt8">
+									<strong>Summary Table</strong>
+								</h3>
+							</div>
+						</div>
+						<t t-foreach="data['summary_data']" t-as="ds">
+							<div class="row" style="page-break-inside: avoid;">
+								<table class="table line" style="page-break-inside: avoid;">
+									<thead>
+										<tr style="page-break-inside: avoid;">
+											<th class="text-center">Colour Name</th>
+											<th class="text-center">Colour Code</th>
+											<t t-if="ds['size']">
+												<t t-foreach="ds['size']" t-as="da">
+													<th class="text-center">
+														<t t-esc="da" />
+													</th>
+												</t>
+											</t>
+											<th class="text-center">
+												Total(
+												<t t-esc="ds['uom']" />
+												)
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<t t-foreach="ds['line_ids']" t-as="dl">
+											<tr style="page-break-inside: avoid;">
+												<td class="text-center">
+													<span t-esc="dl['colour_name']" />
+												</td>
+												<td class="text-center">
+													<span t-esc="dl['col_code']" />
+												</td>
+												<t t-foreach="dl['size']" t-as="dsize">
+													<td class="text-center">
+														<span t-esc="int(dsize)" />
+													</td>
+												</t>
+												<td class="text-center">
+													<span t-esc="dl['total']" />
+												</td>
+											</tr>
+										</t>
+										<tr style="border-top:2px solid;page-break-inside: avoid;" >
+											<td colspan="2" class="text-center">
+												<strong>Grand Total</strong>
+											</td>
+											<td t-if="len(ds['size']) > 0" class="text-center">
+												<t t-esc="ds['size_1']" />
+											</td>
+											<td t-if="len(ds['size']) > 1" class="text-center">
+												<t t-esc="ds['size_2']" />
+											</td>
+											<td t-if="len(ds['size']) > 2" class="text-center">
+												<t t-esc="ds['size_3']" />
+											</td>
+											<td t-if="len(ds['size']) > 3" class="text-center">
+												<t t-esc="ds['size_4']" />
+											</td>
+											<td t-if="len(ds['size']) > 4" class="text-center">
+												<t t-esc="ds['size_5']" />
+											</td>
+											<td t-if="len(ds['size']) > 5" class="text-center">
+												<t t-esc="ds['size_6']" />
+											</td>
+											<td t-if="len(ds['size']) > 6" class="text-center">
+												<t t-esc="ds['size_7']" />
+											</td>
+											<td t-if="len(ds['size']) > 7" class="text-center">
+												<t t-esc="ds['size_8']" />
+											</td>
+											<td t-if="len(ds['size']) > 8" class="text-center">
+												<t t-esc="ds['size_9']" />
+											</td>
+											<td class="text-center">
+												<t t-esc="ds['total_qty']" />
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</t>
+						<div class="row">
+							<div class="col-xs-3">
+								<strong>Remarks:</strong>
+							</div>
+							<div class="col-xs-12">
+								<span t-raw="data['remarks']" />
+							</div>
+						</div>
+						<div class="row">
+							<t t-foreach="data['style_image']" t-as="si">
+								<div class="col-xs-2" style="padding:3px;">
+									<img width="100" height="80" alt="Product Images"
+										t-attf-src="data:image/gif;base64, #{si}" />
+								</div>
+							</t>
+						</div>
+					</div>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_inventory_request_line,access_pos_inventory_request_line,model_pos_inventory_request_line,,1,1,1,1
+access_pos_inventory_request,access_pos_inventory_request,model_pos_inventory_request,,1,1,1,1
+access_pos_order_reference,access_pos_order_reference,model_pos_order_reference,,1,1,1,1

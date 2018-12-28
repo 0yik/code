@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_featured_products,access_featured_products,model_featured_products,,1,0,0,0
+access_featured_products_line,access_featured_products_line,model_featured_products_line,,1,0,0,0
+access_new_arrival,access_new_arrival,model_new_arrival,,1,0,0,0
+access_new_arrival_line,access_new_arrival_line,model_new_arrival_line,,1,0,0,0
+access_top_banner,access_top_banner,model_top_banner,,1,0,0,0
+access_stock_warehouse_public,stock_warehouse_public,stock.model_stock_warehouse,base.group_public,1,1,1,1
+access_stock_location_public,stock_location_public,stock.model_stock_location,base.group_public,1,1,1,1
+access_stock_move_public,stock_move_public,stock.model_stock_move,base.group_public,1,1,1,1
+access_stock_quant_public,stock_quant_public,stock.model_stock_quant,base.group_public,1,1,1,1
+access_product_uom_public,product_uom_public,product.model_product_uom,base.group_public,1,1,1,1
+access_website_discount,website_discount,model_website_discount,base.group_public,1,1,1,1

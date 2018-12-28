@@ -1,0 +1,2312 @@
+<odoo>
+	<data>
+		<template id="assets_backend" name="Custom Dashboard" inherit_id="web.assets_backend">
+			<xpath expr="." position="inside">
+				<link rel="stylesheet" type="text/less" href="/hilti_modifier_customer_booking/static/src/less/sales_team_dashboard.less"/>
+				<script type="text/javascript" src="/hilti_modifier_customer_booking/static/src/js/hilti_dashboard.js"></script>
+			</xpath>
+		</template>
+		<template id="assets_booking" inherit_id="web.assets_frontend">
+			<xpath expr="." position="inside">
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/m.php" />
+				<link rel="stylesheet"
+					  href="/hilti_modifier_customer_booking/static/src/css/web_booking_style.css" />
+				<link rel="stylesheet"
+					  href="/hilti_modifier_customer_booking/static/src/css/web_booking_responsive.css" />
+				<link rel="stylesheet"
+					  href="/hilti_modifier_customer_booking/static/src/css/auto_suggest.css" />
+				<link rel="stylesheet"
+					  href="/hilti_modifier_customer_booking/static/src/css/autocomplete.plugin.css" />
+				<link rel="stylesheet"
+					  href="/hilti_modifier_customer_booking/static/src/css/wizard_custom.css"/>
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/hilitearrow.js" />
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/autocomplete.plugin.js" />
+
+
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/custom_booking.js"></script>
+				<link rel="stylesheet"
+					  href="/hilti_modifier_customer_booking/static/src/css/fullcalendar.css" />
+				<link rel="stylesheet"
+					  href="/hilti_modifier_customer_booking/static/src/css/bootstrap-select.css" />
+				<link rel="stylesheet"
+					  href="/hilti_modifier_customer_booking/static/src/css//jquery.qtip.min.css" />
+				<link rel="stylesheet"
+					  href="/hilti_modifier_customer_booking/static/src/css/website_calendar.css" />
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/moment.min.js" />
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/fullcalendar.js" />
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/jquery.qtip.min.js" />
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/website_calendar.js" />
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/bootstrap-select.js" />
+				<link rel="stylesheet"
+					  href="/hilti_modifier_customer_booking/static/src/css/bootstrap-timepicker.min.css" />
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/bootstrap-timepicker.min.js" />
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/street_dictionary.js" />
+				<script type="text/javascript"
+						src="/hilti_modifier_customer_booking/static/src/js/wizard_custom.js" />
+			</xpath>
+		</template>
+
+		<template id="map_for_mobile" name="Map for Mobile" page="True">
+			<t t-call="website.layout">
+				<div id="wrap" class="oe_structure oe_empty">
+					<script type="text/javascript" src="/hilti_modifier_customer_booking/static/src/js/customized_map.js"/>
+					<section>
+						<div class="col-xs-12 mt32" align="center">
+							<div class="row">
+							<div id="map" class="mb16" style="overflow: hidden; position: relative; width: 100%; height: 500px;"></div>
+						</div>
+						</div>
+					</section>
+				</div>
+			</t>
+		</template>
+
+		<template id="customer_booking_template" name="Customer Booking"
+				  page="True">
+			<t t-call="website.layout">
+				<div id="wrap" class="oe_structure oe_empty">
+					<section>
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12">
+									<t t-call="hilti_modifier_customer_booking.wizard_checkout_flow">
+									</t>
+								</div>
+							</div>
+							<div class="row booking_page" style="display: block;">
+								<div class="col-md-12" id="booking_portion">
+									<div id="booking_right_arrow" class="left_arrow">
+										<!--<img src='/hilti_modifier_customer_booking/static/src/img/arrow-24-xxl.png'
+                                            style="width: 45px; margin-right: -40px;float: right;border-radius: 50%;background-color: #d2051e;padding: 15px;cursor: pointer;" />-->
+										<button type="button" class="btn btn-custom btn-lg" disabled="disabled" style="border-radius: 50%;"><span class="fa fa-chevron-right"></span> </button>
+									</div>
+									<div class="col-md-12 booking_heading">
+										<h3>Project Selection</h3>
+										<br/>
+									</div>
+									<div style="font-family:arial; margin-bottom:10px;padding:0;" class="col-md-12 booking_heading">
+										Please enter your project and contact details for the booking:
+									</div>
+									<form class="oe_customer_booking_form" role="form" action="booking"
+										  method="post">
+										<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+										<div
+												class="form-group field-project group selection_box pr_name_mobile project_field_margin">
+											<t t-if="not customer">
+												<select id="customer" name="customer"
+														class="form-control selection-color-content selectpicker project_focus_2"
+														data-live-search="true" autofocus="">
+													<option value="" selected="selected" class="place_holder">Select
+														your
+														customer
+													</option>
+													<t t-foreach="partner_id" t-as="pr">
+														<option t-att-value="pr.id" t-att-name="pr.name">
+															<t t-esc="pr.name" />
+														</option>
+													</t>
+												</select>
+											</t>
+											<t t-if="customer">
+												<select id="customer" name="customer"
+														class="form-control selection-color-content selectpicker project_focus_2"
+														data-live-search="true" autofocus="" disabled="disabled">
+													<option t-att-value="customer.id" t-att-name="customer.name" t-att-selected="customer and customer.id == (customer and customer.id or -1)">
+														<t t-esc="customer.name" disabled="true"/>
+													</option>
+												</select>
+											</t>
+											<style>
+												.tooltip {
+												position: relative;
+												display: inline-block;
+												opacity: 1;
+												z-index: 0 !important;
+												left: 2%;
+												}
+
+												.tooltip .tooltiptext {
+												visibility: hidden;
+												width: 250px;
+												background-color: white;
+												color: black;
+												text-align: left;
+												border-radius: 6px;
+												padding: 5px 0;
+												position: absolute;
+												top: 160%;
+												left: -50%;
+												margin-left: -60px;
+												border: 1px solid #ccc;
+												}
+
+												.tooltip .tooltiptext::after {
+												content: "";
+												position: absolute;
+												bottom: 100%;
+												left: 25%;
+												margin-left: -5px;
+												border-width: 5px;
+												border-style: solid;
+												border-color: transparent transparent black transparent;
+												}
+
+												.tooltip:hover .tooltiptext {
+												visibility: visible;
+												}
+												.tooltip .tooltiptext li {
+												text-align:left !important;
+												margin-left: -20px;
+												}
+												.tooltip .tooltiptext ul {
+												margin-bottom: 0px;
+												}
+												.oe_customer_booking_form input[type="text"] {
+												<!--width: 320px !important;-->
+												max-width: 320px !important;
+												}
+												.bootstrap-select > .dropdown-toggle{
+												width:318px !important;
+												}
+											</style>
+
+											<!--span class="info_icon"
+                                                title="Please select your project name , If your project does not exist, please select Create new project option.">
+                                                <i class="fa_info_class fa fa-info" aria-hidden="true"/>
+                                            </span-->
+
+											<span class="highlight"></span>
+											<span class="bar"></span>
+											<label class="special_label custom_special_label con_name_margin">Customer Name</label>
+											<span class="customer_valication_error">Please enter this information.</span>
+										</div>
+
+										<div
+												class="form-group field-project group selection_box pr_name_mobile project_field_margin">
+											<t t-if="is_new_pr == 1">
+												<select id="project" name="project" stype="width: 108% !important;"
+														class="form-control selection-color-content selectpicker project_focus_1"
+														data-live-search="true">
+													<option value="" class="place_holder">Select your project
+													</option>
+													<option value="create" id="create_project" style="font-weight: bold;color: #d2051e;">Create
+														new project
+													</option>
+													<t t-foreach="project_id" t-as="pr">
+														<t t-if="pr.is_new_project == true">
+															<t t-if="pr.id == project_id_new">
+																<option t-att-value="pr.id" t-att-name="pr.name">
+																	<t t-esc="pr.name" />
+																</option>
+															</t>
+															<t t-if="pr.id != project_id_new">
+																<option t-att-value="pr.id" t-att-name="pr.name"
+																>
+																	<t t-esc="pr.name" />
+																</option>
+															</t>
+														</t>
+														<t t-if="pr.is_new_project == false">
+															<option t-att-value="pr.id" t-att-name="pr.name">
+																<t t-esc="pr.name" />
+															</option>
+														</t>
+													</t>
+												</select>
+											</t>
+											<t t-if="is_new_pr == 0">
+												<select id="project" name="project"
+														class="form-control selection-color-content selectpicker project_focus_2"
+														data-live-search="true" autofocus="">
+													<option value="" class="place_holder">
+														Select your project
+													</option>
+													<option value="create" id="create_project" style="font-weight: bold;color: #d2051e;">Create new project
+													</option>
+													<t t-foreach="project_id" t-as="pr">
+														<option t-att-value="pr.id" t-att-name="pr.name">
+															<t t-esc="pr.name" />
+														</option>
+													</t>
+												</select>
+											</t>
+											<style>
+												.tooltip {
+												position: relative;
+												display: inline-block;
+												opacity: 1;
+												z-index: 0 !important;
+												left: 2%;
+												}
+
+												.tooltip .tooltiptext {
+												visibility: hidden;
+												width: 250px;
+												background-color: white;
+												color: black;
+												text-align: left;
+												border-radius: 6px;
+												padding: 5px 0;
+												position: absolute;
+												top: 160%;
+												left: -50%;
+												margin-left: -60px;
+												border: 1px solid #ccc;
+												}
+
+												.tooltip .tooltiptext::after {
+												content: "";
+												position: absolute;
+												bottom: 100%;
+												left: 25%;
+												margin-left: -5px;
+												border-width: 5px;
+												border-style: solid;
+												border-color: transparent transparent black transparent;
+												}
+
+												.tooltip:hover .tooltiptext {
+												visibility: visible;
+												}
+												.tooltip .tooltiptext li {
+												text-align:left !important;
+												margin-left: -20px;
+												}
+												.tooltip .tooltiptext ul {
+												margin-bottom: 0px;
+												}
+												.oe_customer_booking_form input[type="text"] {
+												<!--width: 320px !important;-->
+												max-width: 320px !important;
+												}
+												.bootstrap-select > .dropdown-toggle{
+												width:318px !important;
+												}
+											</style>
+											<div class="tooltip">
+												<img src='/hilti_modifier_customer_booking/static/src/img/IMG_14122017_143502_0.png' style="width: 19px;height: 19px;" />
+												<span class="tooltiptext"
+													  style="width: 320px !important; max-width: 320px !important;">             <ul>
+													<li>Please select your project from the list.</li>
+													<li>If your project name does not exist, select <br/>the "Create new project" option from the list.</li>
+												</ul>
+												</span>
+											</div>
+
+											<!--span class="info_icon"
+                                                title="Please select your project name , If your project does not exist, please select Create new project option.">
+												<i class="fa_info_class fa fa-info" aria-hidden="true"/>
+											</span-->
+
+											<span class="highlight"></span>
+											<span class="bar"></span>
+											<label class="special_label_project con_name_margin">Project Name</label>
+											<span class="project_valication_error">Please enter this information.</span>
+										</div>
+										<div class="form-group oe-inline">
+											<lable>Tester requires SIC?
+											</lable>
+											<br/>
+											<input type="radio" name="sic" value="yes" class="sic"
+												   id="sic">&amp;nbsp;Yes&amp;nbsp;
+											</input>
+											<input type="radio" name="sic" value="no" class="sic"
+												   id="sic">&amp;nbsp;No
+											</input>
+											<!-- <span class="email_validation_blanck_password">Please fill
+                                                                                                in password field.</span> -->
+											<span class="sic_valication_error">Please enter this information.</span>
+										</div>
+										<!--<div class="form-group field_starttime group">
+										    <input id="re_time_sic" name="re_time_sic" type="time" class="form-control">
+											    <span class="highlight"></span>
+											    <span class="bar"></span>
+											    <label>Required Time</label>
+										    </input>
+											    <span class="re_time_sic_error">Please enter this information.</span>
+									    </div>-->
+										<div class="field-Contact group con_name_margin">
+											<input type="text" name="Contact" id="Contact" class="form-control"
+												   autocomplete="current-password"
+												   placeholder="Enter your contact name">
+												<span class="highlight"></span>
+												<span class="bar"></span>
+												<label>Contact Name</label>
+											</input>
+											<span class="contact_name_valication_error">Please enter this information.</span>
+											<span class="contact_name_validation">Contact Name should contain letters only.</span>
+										</div>
+										<div class="form-group field-Contact-number group">
+											<input type="text" t-att-value="rebook.contact_number if rebook else ''" name="con_no" id="con_no" class="form-control"
+												   autocomplete="con_name"
+												   placeholder="Enter your contact number">
+												<span class="highlight"></span>
+												<span class="bar"></span>
+												<label>Contact Number</label>
+											</input>
+											<span class="contact_number_valication_error">Please enter this information.</span>
+											<span class="contact_number_validation">Contact number should contain numbers only.</span>
+											<span class="contact_number_validation_digit">Contact number must consist of 8 numbers.</span>
+										</div>
+										<!-- <div class="search_location form-group group"><input id="pac-input" 
+                                                                                        class="controls form-control" type="text" placeholder="Enter Your Location" 
+                                                                                        default="Singapore" style="z-index: 9;position: absolute;top: 0px;display: 
+                                                                                        block;overflow: hidden;color: white;border-radius: 0px;width: 100%;opacity: 
+                                                                                        1.2;background-color: rgba(0, 0, 0, 0.85);max-width: 100%;"></input></div> -->
+										<!-- <div class="container" id="map-canvas" style="height:300px;"></div> -->
+										<div style="margin-bottom: 45px;">
+											<div class="form-group field-address search_address_postal group" style="margin-bottom: 0px;">
+												<!--<div > -->
+												<!--<div class="form-group field-address search_address_postal group">-->
+												<input type="text" class='form-control' name="address" t-att-value="rebook.location_id.address if rebook else ''"
+													   style="padding-right: 25px;" id="address" value="" autocomplete="off"
+													   placeholder="Enter your site location - address/postal code">
+													<span class="highlight"></span>
+													<span class="bar"></span>
+													<label>Address</label>
+													<span class="fa fa-remove pull-right remove_address" style="display:block;margin-top: -30px;cursor: pointer;margin-right: 10px"></span>
+												</input>
+												<span class="address_valication_error">Please enter this information.</span>
+											</div>
+											<div class="tooltip">
+												<img src='/hilti_modifier_customer_booking/static/src/img/IMG_14122017_143502_0.png' style="width: 19px;height: 19px;" />
+												<span class="tooltiptext"
+													  style="width: 340px !important; max-width: 400px !important;">             <ul>
+													<li>If your new site does not have a postal code/street address, please enter the nearest ladmark in this Site Location field.</li>
+													<!--li>If your project name does not exist, select <br/>the "Create new project" option from the list.</li-->
+												</ul>
+												</span>
+											</div>
+											<!--<div id="info" class="info_custom mt32">-->
+											<div id="info" class="info_custom" style="top:0px !important; position: inherit;">
+												<table cellpadding="0" cellspacing="0" id="tableInfo">
+													<tbody>
+														<tr>
+															<td id="columnInfo">
+																<table id="datatableInfo">
+																	<tbody></tbody>
+																</table>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="form-group field-address group search_address_postal">
+											<input type="text" class='form-control' name="postal_code" t-att-value="rebook.location_id.postal_code.name if rebook else ''"
+												   id="postal_code" value="" autocomplete="off" placeholder="Enter Postal code">
+												<span class="highlight"></span>
+												<span class="bar"></span>
+												<label>Postal code</label>
+											</input>
+											<span class="postal_code_valication_error">Please enter this information.</span>
+										</div>
+										<div id="map" style="overflow: hidden; position: relative; width: 100%; height: 400px;"></div>
+
+
+										<br />
+										<br />
+										<br />
+										<br />
+									</form>
+								</div>
+								<div class="col-md-12" id="anchor_portion">
+									<div id="anchor_left_arrow" class="left_arrow">
+										<!--<img
+                                                                                    src='/hilti_modifier_customer_booking/static/src/img/arrow-88-xxl.png'
+                                                                                    style="width: 45px;height: 45px;margin-left: -40px;margin-top: 70px;border-radius: 50%;background-color: #d2051e;padding: 15px;cursor: pointer;" />-->
+										<button type="button" class="btn btn-custom btn-lg" style="border-radius: 50%;"><span class="fa fa-chevron-left"></span> </button>
+									</div>
+									<div id="anchor_right_arrow" class="left_arrow">
+										<!--<img
+                                                                                    src='/hilti_modifier_customer_booking/static/src/img/arrow-24-xxl.png'
+                                                                                    style="width: 45px;height: 45px;margin-right: -40px;float: right;border-radius: 50%;margin-top: 70px;background-color: #d2051e;padding: 15px;cursor: pointer;" />-->
+										<button type="button" class="btn btn-custom btn-lg" disabled="disabled" style="border-radius: 50%;"><span class="fa fa-chevron-right"></span> </button>
+									</div>
+									<div class="col-md-12">
+										<form class="oe_customer_booking_form" role="form"
+											  action="booking" method="post">
+											<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+											<div class="col-md-12 booking_heading">
+												<h3>Anchor Selection</h3>
+												<br />
+											</div>
+											<div style="font-family:arial;" class="col-md-12 booking_heading">
+												Please select the anchor details for the booking:
+											</div>
+											<div class="#">
+												<div class="col-md-9 anchor_padd">
+													<h4 style="color: #d2051e;">Anchor 1</h4>
+													<div
+															class="form-group field-project group selection_box col-md-4 anchor_type">
+														<select id="anchor_type" name="anchor_type"
+																class="form-control selection-color-content">
+															<option value="" selected="selected" class="place_holder">Select
+																anchor type
+															</option>
+															<t t-foreach="master_ids" t-as="ma">
+																<option t-att-value="ma.id">
+																	<t t-esc="ma.name" />
+																</option>
+															</t>
+														</select>
+														<span class="highlight"></span>
+														<span class="bar"></span>
+														<label>Anchor Type</label>
+														<span class="anchor_type_valication_error">Please enter this information.</span>
+													</div>
+													<div
+															class="an_custom_padding form-group field-project group selection_box col-md-4 anchor_type">
+														<select id="anchor_size" name="anchor_size" class="anchor_size form-control selection-color-content">
+															<option value="" selected="selected" class="place_holder">Select
+																anchor size
+															</option>
+															<t t-foreach="master_size_ids" t-as="maz">
+																<option t-att-value="maz.id">
+																	<t t-esc="maz.name" />
+																</option>
+															</t>
+														</select>
+														<span class="highlight"></span>
+														<span class="bar"></span>
+														<label>Anchor Size</label>
+														<span class="anchor_size_valication_error">Please enter this information.</span>
+													</div>
+													<div class="an_custom_pad_mar form-group field-project group col-md-4 anchor_type">
+														<input type="text" name="anhor_qty" id="anhor_qty" class="anhor_qty form-control" autocomplete="anhor_qty"
+															   placeholder="Enter anchor quantity to be tested">
+															<span class="highlight"></span>
+															<span class="bar"></span>
+															<label>Anchor Quantity to be tested</label>
+														</input>
+														<span class="ancor_qty_valication_error">Please enter this information.</span>
+														<span class="qty_number_validation">Anchor Qty should only be in numbers.</span>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 anchor_padd display_none_sitecondition"
+												 style="display: none;">
+												<div class="border_redio col-md-9 col-sm-12 col-xs-12">
+													<p class="complexity_text">Site Conditions</p>
+													<div class="col-md-4 col-sm-4 col-xs-4 small image_redio_button">
+														<input type="radio" name="complexity" class="img_redio"
+															   value="simple" id="simple" style="display: none"></input>
+													</div>
+													<div class="col-md-4 col-sm-4 col-xs-4 medium image_redio_button">
+														<input type="radio" name="complexity" class="img_redio"
+															   value="medium" id="medium" style="display: none"></input>
+													</div>
+													<div class="col-md-4 col-sm-4 col-xs-4 complex image_redio_button">
+														<input type="radio" name="complexity" class="img_redio"
+															   value="complex" id="complex" style="display: none"></input>
+													</div>
+												</div>
+												<span class="site_condition_valication_error">Please enter this information.</span>
+											</div>
+											<div class="col-md-9 anchor_padd">
+												<hr />
+											</div>
+											<div class="inc"></div>
+											<input type="hidden" name="anchor_count" id="anchor_count"
+												   value="1" />
+											<a href="#" class="fa fa-plus" id="append" name="append"
+											   style="color: #d2051e;clear: both;display: block;text-decoration: none;">&amp;nbsp;Add new
+												anchor
+											</a>
+											<br />
+											<br />
+											<br />
+										</form>
+									</div>
+								</div>
+								<div class="col-md-12" id="calendar_portion">
+									<div id="calendar_left_arrow" class="left_arrow">
+										<!--<img
+                                                                                    src='/hilti_modifier_customer_booking/static/src/img/arrow-88-xxl.png'
+                                                                                    style="width: 45px;margin-left: -40px;border-radius: 50%;background-color: #d2051e;padding: 15px;cursor: pointer; " />-->
+										<button type="button" class="btn btn-custom btn-lg" style="border-radius: 50%;"><span class="fa fa-chevron-left"></span> </button>
+									</div>
+									<div class="col-md-12 booking_heading">
+										<h3>Date &amp; Timeslot Selection</h3>
+										<br />
+									</div>
+									<div style="font-family:arial;">
+										<p>Please select the date and timeslot for booking from the below calendar:</p>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<form class="oe_customer_booking_form" role="form" action="booking" method="post">
+												<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+												<div class="form-group field_starttime group">
+													<!--<input id="re_time_sic" name="re_time_sic" type="time" class="form-control" pattern="[0-9]{2}:[0-9]{2}">
+                                                        <span class="highlight"></span>
+                                                        <span class="bar"></span>
+                                                        <label style="margin-left:50px;">Time Required for SIC</label>
+                                                    </input>
+                                                    <span class="re_time_sic_error">Please enter this information.</span>-->
+													<div class="row">
+														<div class="col-md-3 col-xs-12 mt16">
+															<input id="re_time_sic_hours" placeholder="Enter hours required for SIC" name="re_time_sic_hours" type="number" class="form-control" min="0" style="width: 90%;">
+																<span class="highlight"></span>
+																<span class="bar"></span>
+																<label>Hours required for SIC</label>
+															</input></div>
+														<div class="col-md-3 col-xs-12 mt16">
+															<input id="re_time_sic_minutes" placeholder="Enter minutes required for SIC" name="re_time_sic_minutes" type="number" class="form-control" min="0" max="59" style="width: 90%;">
+																<span class="highlight"></span>
+																<span class="bar"></span>
+																<label>Minutes required for SIC</label>
+															</input>
+														</div>
+														<div class="col-md-6"></div>
+														<div class="col-md-12">
+															<span class="re_time_sic_error">Please enter hours and minutes required for SIC.</span>
+														</div>
+													</div>
+												</div>
+												<div class="cal_style_inner">
+													<div id='website_calendar' />
+													<div class="row ml-32" >
+														<ul class="after_cal">
+															<li class="today_checkbox">
+																<span></span>
+																Today
+
+															</li>
+
+															<li class="white_checkbox">
+																<span></span>
+																Available
+
+															</li>
+															<li class="magento_checkbox">
+																<span></span>
+																Selected
+
+															</li>
+															<!--<li class="red_checkbox">-->
+															<!--<span></span>-->
+															<!--Not Available-->
+															<!---->
+															<!--</li>-->
+															<li class="grey_checkbox">
+																<span></span>
+																Non-working Days
+
+															</li>
+														</ul>
+													</div>
+													<span class="projec_not_approve_admin_calendar">Your project is not approved from admin.</span>
+													<span class="select_calendar_error">Please enter this information.</span>
+												</div>
+												<div class="book_class">
+													<!-- <button type="button" value="special" class="btn btn-primary 
+                                                                                                                text-center button_book_special"> Dedicated Support <i class="fa fa-long-arrow-right 
+                                                                                                                pull-right fa_padding" /></button> -->
+													<button type="button" value="book"
+															class="btn btn-primary text-center button_book_book">
+														BOOK
+
+														<i class="fa fa-long-arrow-right pull-right fa_padding hidden" />
+													</button>
+													<br />
+													<span class="project_not_approved_special">Your project is not approved from admin.</span>
+													<a value="special" class="button_book_special_a" style="color: #d2051e;">Dedicated
+														Support
+													</a>
+												</div>
+												<span class="project_not_approved">Your project is not approved from admin.</span>
+												<div class="book_for_sic" style="display: none">
+													<button type="button"
+															class="btn btn-primary text-center button_book_sic">
+														BOOK FOR SIC
+
+														<i class="fa fa-long-arrow-right fa_padding" />
+													</button><br/>
+													<a value="special" class="button_book_special_a" style="color: #d2051e;">Dedicated
+														Support
+													</a>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- For Create New Project Pop Up -->
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+							 aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<form action="/project_create/" method='POST'>
+										<div class="modal-header create_pro_heading">
+											<button type="button" class="close fa fa-close close_custom redirect_page_class"
+													data-dismiss="modal" aria-hidden="true"></button>
+											<h4 class="modal-title" id="myModalLabel">Create New Project</h4>
+										</div>
+										<div>
+											<span class="project_text" style="padding-top: 7px;">Please enter your new project name.
+											</span>
+
+										</div>
+										<div class="modal-body group form-group input_special">
+											<!-- <span><strong class="project_text">Name : </strong></span><input name="name" id="project_name" type="text"></input> -->
+											<input type="text" name="name" id="project_name" class="form-control"
+												   autocomplete="current-password"
+												   placeholder="Enter new project name">
+												<span class="highlight"></span>
+												<span class="bar"></span>
+												<label>Project Name</label>
+											</input>
+											<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+										</div>
+										<div class="modal-footer model_cust_footer">
+											<button type="button"
+													class="btn btn-default botton_create_project_cancel redirect_page_class"
+													data-dismiss="modal" style="color: white;">CANCEL</button>
+											<input type="submit" value="OK"
+												   class="btn btn-primary botton_create_project" id="create_project" />
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="time_slot" tabindex="-1" role="dialog"
+							 aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog slot_event">
+								<t t-name="total_event">
+									<div class="modal-content">
+										<form action="/booking_slot/" method='POST'>
+											<div class="modal-body time_slot_model" id="timeslot_with_error">
+												<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+											</div>
+										</form>
+									</div>
+								</t>
+							</div>
+						</div>
+					</section>
+					<!-- <section class="section_anchor_none"><div class="container"><div 
+                                                class="row"><div class="col-md-12"><form class="oe_customer_booking_form" 
+                                                role="form" action="booking" method="post"><input type="hidden" name="csrf_token" 
+                                                t-att-value="request.csrf_token()" /><div class="col-md-12 booking_heading"><h3>Anchor Selection</h3><br /></div><div class="#"><div class="col-md-9 
+                                                anchor_padd"><h4 style="color: #d2051e;">Anchor 1</h4><div class="form-group 
+                                                field-project group selection_box col-md-4 anchor_type"><select id="anchor_type" 
+                                                name="anchor_type" class="form-control selection-color-content"><option 
+                                                value="" selected="selected" class="place_holder">Select anchor type </option><t t-foreach="master_ids" t-as="ma"><option t-att-value="ma.id"><t t-esc="ma.name" 
+                                                /></option></t></select><span class="highlight"></span><span class="bar"></span><label>Anchor Type</label></div><div class="an_custom_padding form-group 
+                                                field-project group selection_box col-md-4 anchor_type"><select id="anchor_size" 
+                                                name="anchor_size" class="form-control selection-color-content"><option 
+                                                value="" selected="selected" class="place_holder">Select anchor size </option><t t-foreach="master_size_ids" t-as="maz"><option t-att-value="maz.id"><t t-esc="maz.name" /></option></t></select><span class="highlight"></span><span class="bar"></span><label>Anchor Size</label></div><div class="an_custom_pad_mar 
+                                                form-group field-project group col-md-4 anchor_type"><input type="text" 
+                                                name="anhor_qty" id="anhor_qty" class="form-control" autocomplete="anhor_qty" 
+                                                 placeholder="Enter anchor quantity to be tested"><span 
+                                                class="highlight"></span><span class="bar"></span><label>Anchor Quantity</label></input></div></div></div><div class="col-md-12 anchor_padd display_none_sitecondition" 
+                                                style="display: none;"><div class="border_redio col-md-9"><p class="complexity_text">Site 
+                                                Conditions</p><div class="col-md-4 col-sm-4 col-xs-4 small"><input type="radio" 
+                                                name="complexity" class="img_redio" value="simple" id="simple">Simple</input></div><div class="col-md-4 col-sm-4 col-xs-4 medium"><input type="radio" 
+                                                name="complexity" class="img_redio" value="medium" id="medium">Medium</input></div><div class="col-md-4 col-sm-4 col-xs-4 complex"><input type="radio" 
+                                                name="complexity" class="img_redio" value="complex" id="complex">Complex</input></div></div></div><div class="col-md-9 anchor_padd"><hr /></div><div 
+                                                class="inc"></div><input type="hidden" name="anchor_count" id="anchor_count" 
+                                                value="1" /><a href="#" class="fa fa-plus" id="append" name="append" style="color: 
+                                                #d2051e;clear: both;display: block;">&amp;nbsp;Add new anchor </a><br /><br /><br /></form></div></div></div></section> -->
+					<section class="cal_style">
+						<!-- <div class="container"><div class="col-md-12 booking_heading"><h3>Date &amp; Timeslot Selection</h3><br /></div><div class="row"><div 
+                                                        class="col-md-12"><form class="oe_customer_booking_form" role="form" action="booking" 
+                                                        method="post"><input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" 
+                                                        /><div class="cal_style_inner"><div id='website_calendar' /><div class="row"><ul class="after_cal"><li class="white_checkbox"><span></span> Available 
+                                                        </li><li class="magento_checkbox"><span></span> Selected </li><li class="red_checkbox"><span></span> Not Available </li><li class="grey_checkbox"><span></span> 
+                                                        Holidays </li></ul></div></div><div class="book_class"><button type="button" 
+                                                        value="special" class="btn btn-primary text-center button_book_special"> 
+                                                        Dedicated Support <i class="fa fa-long-arrow-right pull-right fa_padding" 
+                                                        /></button><button type="button" value="book" class="btn btn-primary text-center 
+                                                        button_book_book"> BOOK <i class="fa fa-long-arrow-right pull-right fa_padding" 
+                                                        /></button><br /><a value="special" class="button_book_special_a" style="color: 
+                                                        #d2051e;">Dedicated Support </a></div></form></div></div></div> -->
+						<div class="modal fade" id="booking_confirmation" tabindex="-1"
+							 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog slot_event">
+								<t t-name="total_event">
+									<div class="modal-content ">
+										<form action="/booking_final" method='POST'>
+											<div class="modal-header booking_heading_popup booking_sic_req_line">
+												<button type="button" class="close fa fa-close close_custom"
+														data-dismiss="modal" aria-hidden="true"></button>
+												<h4 class="modal-title" id="myModalLabel">
+													Confirm Your Booking
+
+													<span></span>
+												</h4>
+											</div>
+											<div class="modal-body">
+												<p>Please confirm your booking details.</p>
+												<div id="booking_point"></div>
+												<input type="checkbox" name="terms"
+													   title="Please indicate that you accept the Terms and Conditions."
+													   value="terms" class="terms normal_checkbox">
+													<p class="p_terms">
+														I have read and agree to the
+
+														<a class="open_terms_condition" style="color: #d2051e">Terms and Conditions</a>
+														and
+
+														<a class="open_terms_and_condition_policy" style="color: #d2051e">Testing Policy</a>
+														for booking.
+
+													</p>
+												</input>
+												<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+											</div>
+											<div class="modal-footer model_cust_footer">
+												<button type="button"
+														class="btn btn-default botton_create_project_cancel"
+														data-dismiss="modal" style="color: white;">CANCEL</button>
+												<input type="submit" value="CONFIRM"
+													   class="btn btn-primary botton_create_project normal_submit_bottom"
+													   id="booking_final_button" disabled="disabled" />
+											</div>
+										</form>
+									</div>
+								</t>
+							</div>
+						</div>
+						<div class="modal fade" id="booking_confirmation_sic" tabindex="-1"
+							 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog slot_event">
+								<t t-name="total_event">
+									<div class="modal-content ">
+										<form action="/booking_final" method='POST'>
+											<div class="modal-header booking_heading_popup booking_sic_req_line">
+												<button type="button" class="close fa fa-close close_custom"
+														data-dismiss="modal" aria-hidden="true"></button>
+												<h4 class="modal-title" id="myModalLabel">
+													Confirm Your SIC Booking
+
+													<span></span>
+												</h4>
+											</div>
+											<div class="modal-body">
+												<p>Please confirm your booking details.</p>
+												<div id="booking_point_sic"></div>
+												<input type="checkbox" name="terms"
+													   title="Please indicate that you accept the Terms and Conditions."
+													   value="terms" class="terms normal_checkbox">
+													<p class="p_terms">
+														I have read and agree to the
+
+														<a class="open_terms_condition" style="color: #d2051e">Terms and Conditions</a>
+														and
+
+														<a class="open_terms_and_condition_policy" style="color: #d2051e">Testing Policy</a>
+														for booking.
+
+													</p>
+												</input>
+												<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+											</div>
+											<div class="modal-footer model_cust_footer">
+												<button type="button"
+														class="btn btn-default botton_create_project_cancel"
+														data-dismiss="modal" style="color: white;">CANCEL</button>
+												<input type="submit" value="CONFIRM"
+													   class="btn btn-primary botton_create_project normal_submit_bottom"
+													   id="booking_final_button" disabled="disabled" />
+											</div>
+										</form>
+									</div>
+								</t>
+							</div>
+						</div>
+						<div class="modal fade" id="booking_confirmation_special"
+							 tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							 aria-hidden="true">
+							<div class="modal-dialog slot_event">
+								<t t-name="total_event">
+									<div class="modal-content ">
+										<form action="/booking_final" method='POST'>
+											<div class="modal-header booking_heading_popup special_req_line">
+												<button type="button" class="close fa fa-close close_custom"
+														data-dismiss="modal" aria-hidden="true"></button>
+												<h4 class="modal-title" id="myModalLabel">
+													Confirm Your Special Request
+
+													<span></span>
+												</h4>
+											</div>
+											<div class="modal-body">
+												<p>Please confirm your special request details.</p>
+												<div id="booking_special_point"></div>
+												<input type="checkbox" name="terms" value="terms"
+													   title="Please indicate that you accept the Terms and Conditions."
+													   class="terms special_checkbox">
+													<p class="p_terms">
+														I have read and agree to the
+
+														<a class="open_terms_condition" style="color: #d2051e">Terms and Conditions</a>
+														and
+
+														<a class="open_terms_and_condition_policy" style="color: #d2051e">Testing Policy</a>
+														for booking.
+
+													</p>
+												</input>
+												<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+											</div>
+											<div class="modal-footer model_cust_footer">
+												<button type="button"
+														class="btn btn-default botton_create_project_cancel"
+														data-dismiss="modal" style="color: white;">CANCEL</button>
+												<input type="submit" value="CONFIRM"
+													   class="btn btn-primary botton_create_project special_submit_bottom"
+													   id="booking_final_button" disabled="disabled" />
+											</div>
+										</form>
+									</div>
+								</t>
+							</div>
+						</div>
+						<div class="modal fade" id="booking_confirmation_sic"
+							 tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							 aria-hidden="true">
+							<div class="modal-dialog slot_event">
+								<t t-name="total_event">
+									<div class="modal-content ">
+										<form action="/booking_final" method='POST'>
+											<div class="modal-header booking_heading_popup">
+												<button type="button" class="close fa fa-close close_custom"
+														data-dismiss="modal" aria-hidden="true"></button>
+												<h4 class="modal-title" id="myModalLabel">
+													Confirm Your SIC Request
+
+													<span></span>
+												</h4>
+											</div>
+											<div class="modal-body">
+												<p>Please confirm your SIC request details.</p>
+												<div id="booking_sic_point"></div>
+												<input type="checkbox" name="terms" value="terms"
+													   title="Please indicate that you accept the Terms and Conditions."
+													   class="terms sic_checkbox">
+													<p class="p_terms">
+														I have read and agree to the
+
+														<a class="open_terms_condition" style="color: #d2051e">Terms and Conditions</a>
+														and
+
+														<a class="open_terms_and_condition_policy" style="color: #d2051e">Testing Policy</a>
+														for booking.
+
+													</p>
+												</input>
+												<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+											</div>
+											<div class="modal-footer model_cust_footer">
+												<button type="button"
+														class="btn btn-default botton_create_project_cancel"
+														data-dismiss="modal" style="color: white;">CANCEL</button>
+												<input type="submit" value="CONFIRM"
+													   class="btn btn-primary botton_create_project sic_submit_bottom"
+													   id="booking_final_button" disabled="disabled" />
+											</div>
+										</form>
+									</div>
+								</t>
+							</div>
+						</div>
+						<t t-if="booking_done">
+							<div class="modal fade in" id="booking_done" tabindex="-1"
+								 role="dialog" aria-labelledby="myModalLabel" style="display: block;">
+								<div class="modal-dialog slot_event">
+									<t t-name="total_event">
+										<div class="modal-content ">
+											<div class="modal-header booking_heading_popup">
+												<button type="button"
+														class="close fa fa-close close_custom redirect_page_class"
+														data-dismiss="modal" aria-hidden="true"></button>
+												<h4 class="modal-title" id="myModalLabel">
+													Booking Confirmation
+
+													<span></span>
+												</h4>
+											</div>
+											<div class="modal-body">
+												<p>Thank you for your booking.</p>
+												<p> A confirmation email with details of your booking will be sent to your email address. Please check your mail. 
+												</p>
+												<p></p>
+												<p>You will also receive an email notification again for booking re-confirmation, few days before the actual booking. You may wish to re-confirm/re-schedue/cancel your booking. </p>
+												<p></p>
+												<p>
+												    Note: Once re-confirmed, booking cannot be rescheduled/cancelled.
+												</p>
+												<div class="detail_display">
+													<p style="color: #d2051e">Booking Summary</p>
+													<p>Booking
+														Number: &amp;nbsp;
+
+														<t t-if="booking_id">
+															<t t-esc="booking_id" /></t>
+													</p>
+													<p>Date:
+														&amp;nbsp;
+
+														<t t-if="booking_date">
+															<t t-esc="booking_date" /></t>
+													</p>
+													<p>Time:
+														&amp;nbsp;
+
+														<t t-if="booking_time">
+															<t t-esc="booking_time" /></t>
+													</p>
+												</div>
+											</div>
+											<div class="modal-footer custom_footer_booking_done">
+												<input type="button" value="OK"
+													   class="btn btn-primary botton_book_final_project redirect_page_class"
+													   id="botton_book_final_project" />
+											</div>
+										</div>
+									</t>
+								</div>
+							</div>
+						</t>
+						<t t-if="booking_special_done">
+							<div class="modal fade in" id="booking_special_done"
+								 tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+								 style="display: block;">
+								<div class="modal-dialog slot_event">
+									<t t-name="total_event">
+										<div class="modal-content ">
+											<div class="modal-header booking_heading_popup">
+												<button type="button"
+														class="close fa fa-close close_custom redirect_page_class"
+														data-dismiss="modal" aria-hidden="true"></button>
+												<h4 class="modal-title" id="myModalLabel">
+													Special Request Confirmation
+
+													<span></span>
+												</h4>
+											</div>
+											<div class="modal-body">
+												<p>Thank you for your booking.</p>
+												<p>Special confirmation will be sent to your email address.
+												</p>
+												<div class="detail_display">
+													<p style="color: #d2051e">Special request summary</p>
+													<t t-if="show_massage_dedicated">
+														<p>Your booking is awaiting confirmation from the testers and once a tester is available, you will be notified on the booking confirmation soon.
+														</p>
+													</t>
+													<p>Booking
+														Number: &amp;nbsp;
+
+														<t t-if="booking_id">
+															<t t-esc="booking_id" /></t>
+													</p>
+													<p>Start
+														date &amp; time:
+														&amp;nbsp;
+
+														<t t-if="booking_start_date">
+															<t t-esc="booking_start_date" /></t>
+													</p>
+													<p>End
+														date &amp; time:
+														&amp;nbsp;
+
+														<t t-if="booking_end_date">
+															<t t-esc="booking_end_date" /></t>
+													</p>
+												</div>
+											</div>
+											<div class="modal-footer custom_footer_booking_done">
+												<input type="button" value="OK"
+													   class="btn btn-primary botton_book_final_project redirect_page_class"
+													   id="botton_book_final_project" />
+											</div>
+										</div>
+									</t>
+								</div>
+							</div>
+						</t>
+						<t t-if="booking_sic_done">
+							<div class="modal fade in" id="booking_special_done"
+								 tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+								 style="display: block;">
+								<div class="modal-dialog slot_event">
+									<t t-name="total_event">
+										<div class="modal-content ">
+											<div class="modal-header booking_heading_popup">
+												<button type="button"
+														class="close fa fa-close close_custom redirect_page_class"
+														data-dismiss="modal" aria-hidden="true"></button>
+												<h4 class="modal-title" id="myModalLabel">
+													SIC Request Confirmation
+
+													<span></span>
+												</h4>
+											</div>
+											<div class="modal-body">
+												<p>Thank you for your booking.</p>
+												<p>SIC confirmation will be sent to your email address.
+												</p>
+												<div class="detail_display">
+													<p style="color: #d2051e">SIC request summary</p>
+													<p>Booking
+														Number: &amp;nbsp;
+
+														<t t-if="booking_id">
+															<t t-esc="booking_id" /></t>
+													</p>
+													<p>Start
+														date &amp; time:
+														&amp;nbsp;
+
+														<t t-if="booking_start_date">
+															<t t-esc="booking_start_date" /></t>
+													</p>
+													<p>End
+														date &amp; time:
+														&amp;nbsp;
+
+														<t t-if="booking_end_date">
+															<t t-esc="booking_end_date" /></t>
+													</p>
+												</div>
+											</div>
+											<div class="modal-footer custom_footer_booking_done">
+												<input type="button" value="OK"
+													   class="btn btn-primary botton_book_final_project redirect_page_class"
+													   id="botton_book_final_project" />
+											</div>
+										</div>
+									</t>
+								</div>
+							</div>
+						</t>
+						<div class="modal fade" id="terms_and_condition" tabindex="-1"
+							 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog slot_event">
+								<div class="modal-content custom_model_content">
+									<div class="modal-header booking_heading_popup">
+										<button type="button" class="close fa fa-close close_custom"
+												data-dismiss="modal" aria-hidden="true"></button>
+										<h4 class="modal-title" id="myModalLabel">
+											Terms and Conditions
+
+											<span></span>
+										</h4>
+									</div>
+									<div class="modal-body custom_model_body">
+										<h5>1. GENERAL </h5>
+										<p>1.1 In these conditions the following words have the
+											meanings shown:
+										</p>
+										<p>"Buyer" means the person, firm or company purchasing Goods.
+										</p>
+										<p>"Company" means, individually and collectively, Hilti Far
+											East Private Limited and/or any of its
+											related corporations,
+											associated or subsidiary companies, as the
+											case may be.
+										</p>
+										<p>"Contract" means the agreement between the Company and the
+											Buyer for the purchase of Goods
+											from the Company by the Buyer.
+										</p>
+										<p>"Contracts" includes all agreements between the Company and
+											the Buyer for the purchase of
+											Goods from the Company by the
+											Buyer.
+										</p>
+										<p>"Goods" means the goods manufactured by the Company and
+											purchased by the Buyer on the
+											terms of this Contract
+										</p>
+										<p>“personal data” means any information that can be used
+											directly or indirectly, alone or in
+											combination with other
+											information, to identify an individual.
+										</p>
+										<p>“Privacy Policy” means Hilti’s privacy policy accessible at
+											[https://www.hilti.com.sg/terms], as
+											that policy may be
+											updated or revised by Hilti from time to time.
+										</p>
+										<p>1.2 Unless agreed otherwise in writing between the Company
+											and the Buyer, these conditions
+											shall be incorporated in all
+											Contracts of the Company to sell
+											Goods and shall be the sole
+											conditions under which the sale takes place. All other terms,
+											conditions or other representations,
+											whether written or oral,
+											are excluded from the Contracts between the
+											Buyer and the
+											Company,
+											including any terms and conditions which the Buyer
+											may purport to
+											apply under any order for
+											Goods.
+										</p>
+										<p>1.3 These conditions shall prevail unless expressly varied
+											in writing and signed by a Director on
+											behalf of the Company.
+										</p>
+										<p>1.4 No statement, description, information, warranty,
+											condition or recommendation contained in
+											any catalogue, price
+											list, advertisement or communication or
+											made verbally by any
+											of the agents
+											or employees of the Company shall be construed
+											to vary in any
+											way any of the conditions under
+											this Contract
+											unless otherwise agreed in accordance with Clause
+											1.3 above.
+										</p>
+										<p>1.5 Any written quotation, estimate and/or advertised price
+											for the Goods shall be an invitation to
+											treat and no binding
+											contract shall be created by placing an order
+											on the Company’s
+											website or
+											otherwise until the Company has acknowledged the
+											order in writing and
+											confirmed its acceptance
+											of the order in
+											writing. Company reserves the right to reject
+											any order in
+											whole or in part for any
+											reason, including where the Buyer
+											fails the credit approval process
+											of the Company, or exceeds
+											its available credit limit with the Company, or the Goods
+											ordered are not available. Where the Goods ordered are not
+											available, the Company will inform the Buyer accordingly and
+											may
+											recommend a replacement. If the replacement is accepted by
+											the Buyer,
+											this will constitute a
+											binding order for the
+											replacement Goods and the Company will deliver
+											the replacement
+											Goods to
+											the Buyer.
+										</p>
+										<h5>2. PRICE</h5>
+										<p>2.1 Subject to Clause 2.2 below, the price payable for
+											Goods shall, unless otherwise stated by the
+											Company in writing
+											and agreed on its behalf, be based on the
+											prevailing price
+											list of the
+											Company effective at the date that the order is
+											accepted and
+											confirmed in writing by Company.
+										</p>
+										<P>2.2 Unless otherwise agreed in writing between the Company
+											and the Buyer, the Company's
+											prices may be subject to
+											variation to take account of variations in
+											wages, materials or
+											other costs
+											since the date of the Company's quotation or, if
+											no quotation is
+											issued, the date of the Buyer's
+											order. The
+											Company accordingly reserves the right to adjust the
+											invoice
+											price payable by the
+											amount of any increase or decrease in
+											such costs after the price is
+											quoted and the invoice so
+											adjusted shall be payable as if it were the original Contract
+											price.
+										</P>
+										<p>2.3 All prices are exclusive of Goods and Services Tax and
+											all other applicable taxes, duties and
+											other charges. The
+											Buyer shall be liable for all and any local
+											taxes, duties
+											and/or charges as
+											appropriate.
+										</p>
+										<p>2.4 The Buyer agrees that section 32(3) of the Sale of
+											Goods Act (Cap. 393) shall not apply to
+											Goods sent by the
+											Company.
+										</p>
+										<p>2.5 The Company shall be entitled to invoice the Buyer by
+											post or email for the price of the
+											Goods in the Singapore
+											Dollar or such other currency as the
+											Company shall agree in
+											writing.
+										</p>
+										<p>2.6 The Company has the right to invoice the Buyer for the
+											costs of any packaging, transportation
+											of the Goods or any
+											additional costs resulting from any other
+											alteration made by
+											the Buyer on or
+											at the time of delivery or upon notification
+											by the Company
+											that the Goods are awaiting
+											collection. Any such
+											additional costs may be invoiced by the Company in
+											Singapore
+											Dollars or
+											such other currency as the Company shall agree in
+											writing.
+										</p>
+										<h5>3. FUEL SURCHARGE/ CARRIAGE AND INSURANCE</h5>
+										<p>3.1 The cost of fuel surcharge to the Buyer's premises in
+											Singapore shall be in accordance with
+											the charges agreed in
+											writing between the Buyer and the Company.
+										</p>
+										<p>3.2 The cost of carriage and insurance of the Goods to the
+											Buyer’s premises in Singapore shall be
+											in accordance with the
+											charges laid out in the Company’s
+											prevailing price list on the
+											date that the
+											order is accepted and confirmed in writing by
+											Company
+										</p>
+										<p>3.3 In all other cases the price of the Goods shall be
+											exclusive of carriage and insurance to the
+											Buyer's premises.
+										</p>
+										<p>3.4 Export orders shall be quoted and charged on a FOB
+											(port of Singapore) (Incoterms 2010)
+											basis.
+										</p>
+										<h5>4. ADDITIONAL COSTS</h5>
+										<p>The Buyer agrees to pay for any loss or extra costs above
+											the quoted price for the Goods which
+											are directly or
+											indirectly incurred by the Company through the
+											Buyer's
+											instructions or lack of
+											instruction or through failure or
+											delay in taking delivery or through
+											any act or default on the
+											part
+											of the Buyer, its servants or agents.
+										</p>
+										<h5>5. TERMS OF PAYMENT</h5>
+										<p>5.1 All payments due under any Contract must be made by the
+											Buyer within thirty (30) days of
+											the date of invoice from
+											Company, unless otherwise agreed in
+											writing between the Buyer
+											and the
+											Company. The Buyer shall not be entitled to exercise
+											any set off,
+											lien or any other similar right or
+											claim
+										</p>
+										<P>5.2 If the Goods are delivered in installments, the Company
+											shall be entitled to invoice each
+											installment as and when
+											delivery thereof has been made and payment shall
+											be due in
+											accordance
+											with Clause 5.1 above in respect of each invoice.
+										</P>
+										<p>5.3 Any failure by the Buyer to either pay any due
+											installment in accordance with this Contract or
+											failure to
+											give delivery instructions in respect of any Goods shall
+											cause the whole of the price for
+											Goods already manufactured at
+											the time of such a default, to
+											become due forthwith without
+											any
+											notice.
+										</p>
+										<p>5.4 Prompt payment shall be a condition precedent to future
+											deliveries of the Goods due under
+											any Contract.
+										</p>
+										<p>5.5 Without prejudice to any other rights it may have, the
+											Company is entitled to charge and to be
+											paid interest at 2%
+											above the then-current base rate of DBS Bank
+											Limited on any
+											overdue
+											payment of the price of the Goods or the price of any
+											installments
+											thereof.
+										</p>
+										<h5>6. DELIVERY</h5>
+										<p>6.1 The Company endeavours to deliver the Goods within the
+											estimated delivery period specified
+											its quotation or otherwise
+											specified in writing by Company,
+											subject always to the
+											availability of
+											stock. The estimated delivery period shall be
+											calculated from the
+											date of the acceptance by the
+											Company of
+											the Buyer's order, or the date of receipt of all
+											necessary
+											information to enable the
+											Company to manufacture or procure
+											the manufacture of the Goods,
+											whichever shall be the later.
+											If
+											no period is stipulated by the Company, then delivery will
+											be
+											such time after receipt of
+											instructions as the Company thinks
+											reasonable.
+										</p>
+										<p>6.2 All times or dates given for delivery of the Goods are
+											given in good faith but without any
+											responsibility on the part
+											of the Company. Time of delivery shall not be of
+											the essence
+											of any
+											Contract nor shall the Company be under any liability
+											for any delay
+											beyond the Company's
+											control
+										</p>
+										<p>6.3 Where the Goods are handed to a carrier for carriage to
+											the Buyer or the Singapore port for
+											export, any such carrier
+											shall be deemed to be an agent of the
+											Company and not of the
+											Buyer for
+											the purpose of sections 44, 45 and 46 of the Sale of
+											Goods Act
+											(Cap. 393).
+										</p>
+										<p>6.4 No liability for non-delivery, loss or damage to the
+											Goods occurring post delivery, or for any
+											claim that the Goods
+											are not in accordance with the Contract, will
+											attach to the
+											Company, unless
+											claims to that effect are notified in writing
+											by the Buyer to the
+											Company (and in the case of
+											claims for
+											non-delivery, loss or damage with a copy to the carrier
+											if the
+											Company's own vehicles
+											have not been used to deliver the
+											Goods) within 1 day of delivery
+										</p>
+										<p>6.5 If the Buyer fails to give notice in accordance with
+											Clause 6.4 above, the Goods shall be
+											deemed to be in all
+											respects in accordance with the Contract and
+											the Buyer shall
+											be deemed to
+											have accepted the Goods and shall be bound to pay
+											for the same
+											accordingly.
+										</p>
+										<P>6.6 All requests for proof of delivery must be made within
+											a period of 21 days following the date
+											of the invoice.
+										</P>
+										<p>6.7 The Buyer agrees that in the event of a valid claim for
+											non-delivery, loss or damage to the
+											Goods and/or
+											non-compliance with the Contract, the Company may at
+											its sole
+											discretion either
+											reprocess or replace the Goods at its own
+											expense but shall then be
+											under no further liability in
+											connection with such non-delivery, loss, damage or
+											non-compliance.
+										</p>
+										<p>6.8 If for any reason the Buyer is unable to accept
+											delivery of the Goods at the time when the
+											Goods have been
+											notified as ready for delivery, the Company may at
+											its sole
+											discretion, store the
+											Goods at the risk of the Buyer and take
+											all reasonable steps to
+											safeguard and insure them at the
+											cost
+											of the Buyer, provided that the Buyer shall be immediately
+											informed thereof.
+										</p>
+										<p>6.9 The Company shall have the right to make delivery by
+											installments of such quantities of the
+											Goods and at such
+											intervals as it may decide. Any defect in any
+											installment
+											shall not be a ground
+											for cancellation of the remainder of the
+											installments and the
+											Buyer shall be bound to accept
+											further
+											deliveries thereof.
+										</p>
+										<h5>7. RETURNS AND CANCELLATIONS</h5>
+										<p>7.1 For all non-perishable product returns, Hilti must be
+											notified within 6 months from delivery.
+											All perishable
+											products (products with expiry dates) listed in
+											Appendix 1 –
+											returnable chemical
+											products – must be returned within 14 days
+											after delivery. Other
+											perishable products not listed in
+											the
+											Appendix 1 are not entitled for return.
+										</p>
+										<p>Products must be in saleable condition to qualify for
+											return. Saleable condition is defined as those
+											unused items in
+											original packaging, defect-free and in unbroken
+											quantities.
+											All returns are subject
+											to Hilti inspection, testing and
+											acceptance. Non-stocking,
+											non-standard items and discontinued
+											items are not eligible for return credit.
+										</p>
+										<h5>8. PASSING OF TITLE AND RISK</h5>
+										<p>8.1 From the date of delivery to the Buyer, the Goods shall
+											be at the risk of the Buyer, who shall
+											be solely responsible
+											for their custody and maintenance. Unless
+											otherwise expressly
+											agreed in
+											writing, the Goods shall remain the property of the
+											Company until all
+											payments due to the
+											Company from the Buyer
+											under the Contract or any other contract have
+											been made in
+											full
+											unconditionally and credited to the Company’s account.
+											Whilst the ownership
+											of the Company
+											continues, the Buyer shall
+											keep the Goods separate and identifiable
+											from all other goods
+											in its
+											possession as fiduciary agent and bailee for the
+											Company.
+										</p>
+										<p>8.2 In the event of any resale of the Goods, the beneficial
+											entitlement of the Company shall attach
+											to the proceeds of the
+											sale or other disposition thereof, so
+											that such proceeds or
+											any claim thereof
+											shall be assigned to the Company.
+										</p>
+										<p>8.3 In the event of failure to pay the price in accordance
+											with the Contract, the Company shall
+											have the power to re-sell
+											the Goods, such power being additional
+											to (and not in
+											substitution for)
+											any other power of sale arising by operation
+											of law or
+											implication or otherwise and for such
+											purpose the
+											Company and its servants and agents may forthwith enter
+											upon
+											any premises or land
+											occupied or owned by the Buyer to remove
+											the Goods.
+										</p>
+										<p>8.4 Pending payment of the full purchase price of the
+											Goods, the Buyer shall at all times keep the
+											Goods
+											comprehensively insured against loss or damage by accident,
+											fire, theft and other risks
+											usually covered by insurance in
+											the type of business for which the
+											Goods are for the time
+											being
+											used in an amount at least equal to the balance of the
+											price for
+											the same time to time remaining
+											outstanding. The
+											policy shall bear an endorsement recording the Company’s
+											interest and shall be
+											produced to the Company on request.
+										</p>
+										<h5>9. WARRANTIES</h5>
+										<p>9.1 All Goods are sold with the benefit of and subject to
+											the conditions of the warranty supplied
+											with them, which is
+											available for inspection on request.
+										</p>
+										<p>9.2 Nothing herein or in any warranty given by the Company
+											shall impose any liability upon the
+											Company in respect of any
+											defect in the Goods arising out of the
+											acts, omissions,
+											negligence or
+											default of the Buyer, its servants and agents
+											including without
+											limitation any failure by the Buyer
+											to comply
+											with any recommendations of the Company as to storage
+											and
+											handling or use or
+											servicing of the Goods, use of the Goods
+											with other goods or other
+											misuse of the Goods or
+											accident or
+											fair wear and tear of the Goods.
+										</p>
+										<P>9.3 The Company shall not be liable for any damage, loss,
+											costs or expenses of any type
+											whatsoever and however arising
+											from or in any way connected to or with
+											the installation of
+											the
+											Goods by the Buyer or any of its employees, agents or
+											contractors.
+											The buyer hereby indemnifies
+											the Company against
+											all actions, costs, charges, losses, damages
+											and expenses
+											which the
+											Company may incur or sustain by reason of any action
+											brought by any
+											third party relating in any
+											way to the
+											installation of the Goods.
+										</P>
+										<P>9.4 Except as provided for in these conditions, any
+											warranties, (whether express or implied by
+											statute or common
+											law or howsoever), including without limitation
+											those of
+											satisfactory quality
+											or of fitness for a particular purpose
+											even if that purpose is
+											made known expressly or by
+											implication
+											of the Company) are hereby excluded. The Company makes no
+											representation or
+											warranty that the use of the Goods does not
+											infringe the intellectual
+											property rights or other rights
+											of
+											any third party and the Company accepts no liability in this
+											respect.
+										</P>
+										<h5>10. BUYER'S RESPONSIBILITY</h5>
+										<P>10.1 The selection of the Goods suitable for the Buyer's
+											purposes depends on a range of factors.
+											These factors include,
+											but are not limited to, on-site conditions
+											or other
+											circumstances of the
+											proposed application of the Goods known
+											only to the Buyer. The Buyer
+											is solely responsible for
+											satisfying itself that the data supplied to the Company on
+											which
+											information or recommendations
+											made by the Company are
+											based is correct and that any assumptions
+											made by the Company
+											to
+											supplement that data are suitable for the Buyer's purposes.
+										</P>
+										<P>10.2 The Company accepts no responsibility of any nature
+											whatsoever for information or advice
+											it supplies, where any
+											data supplied by the Buyer is incorrect
+											or where any
+											assumption which the
+											Company has made is unsuitable for the
+											Buyer's purposes. The Buyer
+											is encouraged to raise with
+											the
+											Company any questions it may have.
+										</P>
+										<h5>11. LIABILITY</h5>
+										<P>11.1 Notwithstanding anything to the contrary in these
+											Terms and Conditions, the Company's
+											liability to any user for
+											personal injury or death caused by its
+											negligence or fraud is
+											not limited.
+										</P>
+										<P>11.2 The Company shall not be liable (whether or not the
+											Company has been advised of the
+											possibility of such loss) in
+											contract, tort, negligence or otherwise
+											howsoever arising for
+											any
+											claim, damage, loss or costs in respect of:
+										</P>
+										<P>11.2.1 any losses special to the Buyer, any direct loss of
+											profits, any direct loss of turnover and/or
+											any direct loss of
+											revenue; and
+										</P>
+										<P>11.2.2 any indirect or consequential loss or damage
+											howsoever caused including without
+											limitation any losses
+											special to the Buyer, any loss of profits, loss
+											of turnover,
+											loss of revenue,
+											loss of business and/or loss of data and for
+											the avoidance of
+											doubt, the sub-clauses in this Clause
+											11.2 are
+											intended and agreed by the Buyer to be severable.
+										</P>
+										<P>11.3 Subject to Clause 11.1, the aggregate liability of the
+											Company (whether in contract, tort,
+											negligence or breach of
+											statutory duty or otherwise) to the Buyer for
+											any loss or
+											damage shall be
+											limited to the price of the Goods.
+										</P>
+										<P>11.4 The Buyer shall be liable for and shall indemnify the
+											Company against any and all expenses,
+											loss, liability or
+											proceedings suffered by a third party arising
+											as a result of
+											or in connection with
+											any act, omission, negligence, and/or
+											breach of the terms of
+											this Contract or otherwise through
+											the
+											default of the Buyer.
+										</P>
+										<h5>12. DEFAULT OR INSOLVENCY OF BUYER</h5>
+										<P>12.1 In the event that:</P>
+										<p>12.1.1 the Buyer shall be in breach of any of its
+											obligations under the Contract;
+										</p>
+										<p>12.1.2 any distress or execution shall be levied on the
+											Buyer's property or assets; or
+										</p>
+										<p>12.1.3 the Buyer (an individual or partnership) shall make
+											or offer to make any voluntary
+											arrangement or composition with
+											its creditors or become bankrupt or if
+											any bankruptcy petition
+											be presented against him;
+										</p>
+										<p>12.1.4 (if the Buyer is a company) the Buyer has an
+											administrative receiver or administrator
+											appointed or makes a
+											voluntary arrangement with its creditors or
+											commences to be
+											wound up; or
+										</p>
+										<p>12.1.5 otherwise if the Buyer fails to pays its debts as
+											and when they fall due; or
+										</p>
+										<p>12.1.6 such equivalent event in Clauses 12.1.1 to Clause
+											12.1.5 occurs to the Buyer in its local
+											jurisdiction;
+										</p>
+										<p>the Company at its discretion and without prejudice to any
+											other right or claim may by notice in
+											writing forthwith
+											determine wholly or in part any and all of the
+											other Contracts
+											between the
+											Company and the Buyer or may (without prejudice to
+											the Company's
+											rights subsequently to
+											determine the Contract for
+											the same cause should it so decide) by
+											notice in writing
+											suspend
+											further deliveries of Goods.
+										</p>
+										<h5>13. FORCE MAJEURE</h5>
+										<p>The Company shall be entitled to delay or cancel delivery
+											or to reduce the amount of the Goods
+											delivered if it is
+											prevented from, hindered or delayed in
+											manufacturing,
+											obtaining or delivering
+											the Goods by normal route or means of
+											delivery through any
+											circumstances beyond its control
+											including, but not limited to, strikes, lock-outs, accidents,
+											war,
+											fire, reduction in or unavailability
+											of power at
+											manufacturing plant, breakdown of plant or
+											machinery or
+											shortage or unavailability
+											of raw materials from normal source
+											of supply.
+										</p>
+										<h5>14. WAIVER</h5>
+										<p>Any waiver of rights by the Company shall be in writing and
+											signed by an authorised
+											representative of the Company. The
+											waiver by the Company of any right or
+											the failure by the
+											Company to exercise any right or to insist on the strict
+											performance
+											of any provision of this
+											Contract shall not operate
+											as a waiver of, or preclude any further
+											exercise or
+											enforcement of any
+											other right or provision of this Contract.
+										</p>
+										<h5>15. SEVERABILITY</h5>
+										<p>15.1 Each provision of this Contract is severable and
+											distinct from the others. The parties intend
+											that every such
+											provision shall be and remain valid and
+											enforceable to the
+											fullest extent permitted
+											by law. If in any particular case any
+											of these conditions shall
+											be held to be invalid or shall not
+											apply to this Contract, the other conditions shall continue
+											in
+											full force and effect.
+										</p>
+										<h5>16. THIRD PARTY RIGHTS</h5>
+										<p>A person who is not a party to this Contract has no right
+											under the Contracts (Rights of Third
+											Parties) Act (Cap. 53B)
+											to enforce any term of this Contract but this
+											does not affect
+											any right or
+											remedy of a third party which exists or is
+											available apart from
+											that Act.
+										</p>
+										<h5>17. ASSIGNMENT</h5>
+										<p>The Buyer may not assign, sub-contract or in any way
+											dispose of its rights or obligations under
+											this Contract
+											without the prior written consent of the Company.
+										</p>
+										<h5>18. NOTICES</h5>
+										<p>18.1 Any notice required to be served under this Contract
+											shall be served on the Company at its
+											registered offices in
+											Singapore or such other address as the Company
+											may from time
+											to time
+											notify to the Buyer and on the Buyer at the address
+											notified to the
+											Company in its registration
+											application by
+											hand, registered post, email or facsimile. The Buyer is
+											responsible for notifying
+											the Company in writing of any change
+											of address, email address
+											or fax number from those in the
+											Buyer's registration application.
+										</p>
+										<p>18.2 Any such notice served by hand or registered post
+											shall be deemed to have been served upon
+											written
+											acknowledgement of receipt by an employee or agent of the
+											recipient. In the case of
+											service by email, when the email is
+											available to read in the
+											recipient's inbox and in the case of
+											facsimile when the addressee's machine acknowledges receipt
+											thereof
+											provided that a copy of the
+											notice or communication is
+											also put into the post in accordance
+											with Clause 18.1 within
+											24 hours
+											following dispatch of the initial version.
+										</p>
+										<h5>19. BUYER DATA</h5>
+										<p>19.1 The Buyer hereby acknowledges that it has read and
+											agrees to the terms and contents of the
+											Privacy Policy, and
+											consents to the Company’s collection, use and
+											disclosure of
+											the Buyer Data
+											(as defined in Clause 19.2) in accordance with
+											the Privacy
+											Policy.
+										</p>
+										<p>19.2 The Company may collect, use, process and disclose all
+											data it obtains from or in relation to
+											the Buyer (including
+											personal data of the Buyer’s officers,
+											employees and agents)
+											(“Buyer Data”)
+											to enable the Company to do business with the
+											Buyer and for the
+											specific purpose of selling the
+											Goods to the
+											Buyer. The purposes for which the Company may
+											collect, use,
+											process or disclose
+											the Buyer Data include:
+										</p>
+										<div style="padding-left: 20px;">
+											<p>(i) Facilitating and processing product and service orders
+												by the Buyer;
+											</p>
+											<p>(ii) Processing payment and delivery, and collecting fees
+												owed to the Company by the
+												Buyer;
+											</p>
+											<p>(iii) Communicating with the Buyer, including to inform
+												the Buyer about products,
+												services, offers, privacy notices,
+												updates and other information
+												relevant to the Buyer;
+											</p>
+											<p>(iv) Performing analysis and customer research, including
+												general market research or
+												surveying customers’ needs and
+												opinions on specific issues,
+												generating sales and traffic
+												patterns, and to analyze advertising effectiveness;
+											</p>
+											<p>(v) Administering rewards, surveys, sweepstakes, contests,
+												or other promotional activities
+												or events;
+											</p>
+											<p>(vi) Protecting the Company against error, fraud and other
+												criminal activity;
+											</p>
+											<p>(vii) Disclosure to third party service providers, credit
+												card companies and other entities
+												processing payment or
+												delivery of goods or services, professional
+												advisors and
+												auditors, government or regulatory authorities, whether
+												within or
+												outside Singapore, to
+												the extent required for the
+												sale of the Goods to the Buyer, or
+												where required or
+												permitted by applicable law; and
+											</p>
+											<p>(viii) Other purposes that the Buyer has specifically
+												agreed to, or that are permitted by
+												applicable law.
+											</p>
+										</div>
+										<p>The Buyer hereby expressly consents to and further warrants
+											that it has obtained all necessary
+											consents for the
+											collection, use and disclosure of the Buyer Data by
+											the
+											Company for the
+											abovementioned purposes.
+										</p>
+										<p>19.3 The Company may collect Buyer Data from third parties
+											with the Buyer's consent or where
+											required or permitted by
+											applicable law, for example, credit
+											reference agencies.
+										</p>
+										<p>19.4 Any Buyer Data gathered about the Buyer will only be
+											used in the context of and for
+											purposes reasonable for the
+											business the Company conducts for the
+											Buyer, including the
+											purposes
+											set out in Clause 19.2 above and the Privacy Policy,
+											and for any
+											other purpose required for the
+											fair processing of
+											such data. The Buyer may notify the Company to
+											cease
+											processing the data if it
+											is unhappy with the way the Company
+											uses such data or wishes
+											the Company to cease using any
+											such
+											data. The Buyer may also notify the Company if it wishes to
+											access, update, rectify or
+											remove any of Buyer Data in the
+											Company’s possession or control.
+										</p>
+										<p>19.5 The Company may disclose the Buyer Data as required or
+											permitted by law, including but
+											without limitation, to prevent
+											a crime, discharge a statutory duty
+											or as required by a court
+											order in
+											the context of legal proceedings or to any third
+											parties who
+											process such Buyer Data on the
+											Company's behalf,
+											such as computer maintenance companies and any group
+											company
+											within the
+											Company's organisation. Such disclosures will be
+											made in accordance
+											with applicable law and
+											the Privacy Policy
+											where applicable.
+										</p>
+										<h5>20. SINGAPORE LAW</h5>
+										<p>This Contract shall be construed and governed in accordance
+											with the laws of Singapore and all
+											proceedings in connection
+											herewith shall be brought in, and Buyer hereby
+											agrees to
+											submit to the
+											non-exclusive jurisdiction of the Courts of
+											Singapore.
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="terms_and_condition_policy"
+							 tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							 aria-hidden="true">
+							<div class="modal-dialog slot_event">
+								<div class="modal-content custom_model_content">
+									<div class="modal-header booking_heading_popup">
+										<button type="button" class="close fa fa-close close_custom"
+												data-dismiss="modal" aria-hidden="true"></button>
+										<h4 class="modal-title" id="myModalLabel">
+											RE: Site Testing Policy
+
+											<span></span>
+										</h4>
+									</div>
+									<div class="modal-body custom_model_body">
+										<p>As part of Hilti’s value-added services, we provide site
+											testing service to our valued customers
+											who purchase anchor
+											products from us. In accordance to the
+											British Standard 8539
+											(BS8539)
+											adopted in Singapore, we provide complimentary proof
+											test to fixings
+											up to 2.5% (or minimum of
+											3) numbers of Hilti
+											anchors out of the total number installed
+											on the job.
+										</p>
+										<p>"Hilti is also able to perform testing beyond 2.5% of the
+											total quantity involved at a competitive rate,
+											and the cost
+											structure is available from any Hilti
+											Representative.
+										</p>
+										<p>The operational hours for site testing are from Monday to
+											Friday from 9:00 a.m. to 6:00 p.m.
+											Kindly secure the desired
+											testing date two (2) days in advance via
+											our online booking
+											form
+											(http://hilti.com.sg/pot).
+										</p>
+										<p>All testing slots are subject to availability</p>
+										<p>Prior to requesting for a test date, kindly ensure that all
+											relevant parties/authorities are present at
+											the time of
+											testing. The test location at the job site should
+											also have a
+											safe access and working
+											platform. We seek your kind
+											understanding in ensuring these to
+											facilitate a smooth,
+											efficient and
+											productive site testing.
+										</p>
+										<p>For further information and details, please contact our
+											Customer Service Hotline at 6777 7887 or
+											your Hilti Account
+											Manager.
+										</p>
+										<h5>The Cost Structure for Testing Request:</h5>
+										<h4>Office hour Dedicated Support (w.e.f. 1st Aug 2017)</h4>
+										<p>(Monday to Friday from 9:00 a.m. to 6:00 p.m. and excluding
+											Public Holiday, subject to availability)
+										</p>
+										<p>
+											<table border="1" style="width: 100%;text-align: center;">
+												<tr>
+													<th style="text-align: center;">Request</th>
+													<th style="text-align: center;">Charges</th>
+												</tr>
+												<tr>
+													<td>Half Day (3 hours)</td>
+													<td>SGD300</td>
+												</tr>
+												<tr>
+													<td>Full Day (7 hours)</td>
+													<td>SGD600</td>
+												</tr>
+											</table>
+										</p>
+										<h4>After office hour Dedicated Support ( (w.e.f. 1st Aug
+											2017)
+										</h4>
+										<P>(Monday to Friday from 6:00 p.m. till next business day,
+											Saturday, Sunday &amp; Public Holiday,
+											subject to
+											availability)
+										</P>
+										<p>
+											<table border="1" style="width: 100%;text-align: center;">
+												<tr>
+													<th style="text-align: center;">Request</th>
+													<th style="text-align: center;">Charges</th>
+												</tr>
+												<tr>
+													<td>First 2 hours </td>
+													<td>SGD300</td>
+												</tr>
+												<tr>
+													<td>Subsequent ½ hour</td>
+													<td>SGD75</td>
+												</tr>
+											</table>
+										</p>
+										<p>Note:</p>
+										<p>1. The prices quoted exclude 7% GST. </p>
+										<p>2. It comprises of one manpower per slot and requires two
+											(2) working days in advance for
+											Half a day request, and five
+											(5) working days in advance for
+											Full
+											Day and After Office Hour
+											support, to secure a test date.
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="booking_send_special_request"
+							 tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							 aria-hidden="true">
+							<div class="modal-dialog slot_event">
+								<t t-name="total_event">
+									<div class="modal-content ">
+										<div class="modal-header booking_heading_popup">
+											<button type="button"
+													class="close fa fa-close close_custom redirect_page_class"
+													data-dismiss="modal" aria-hidden="true"></button>
+											<h4 class="modal-title" id="myModalLabel">
+												Dedicated Support Request
+
+												<span></span>
+											</h4>
+										</div>
+										<div class="error_tester_notavailable" style="display: none;text-align: center;">
+											<b style="color: #d2051e;"> Tester is not available for below date time, Please select another date time.</b>
+										</div>
+										<div class="error_tester_penalty" style="display: none;text-align: center;">
+											<b style="color: #d2051e;"> Staff are not allowed to book penalty days in advance for this Customer due to the restriction of Penalty days for Non-VIP Customers. Please inform the Customer / contact your admin for further assistance.</b>
+										</div>
+										<div class="modal-body">
+											<div class="col-xs-12 mt16">
+												<div class="input-group field-Contact group con_name_margin date col-xs-11" style="padding:0; float:left; margin:0;">
+													<input type="text" name="start_date" id="start_date"
+														   class="form-control datePicker"
+														   placeholder="Select start date" style="z-index: 10;position: static;">
+														<!--placeholder="Select start date" style="z-index: 10;position: static;">-->
+														<!--span class="input-group-addon">
+                                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                        </span-->
+														<span class="highlight"></span>
+														<span class="bar"></span>
+														<label>Start Date</label>
+														<span class="special_start_date_error">Please enter this information.</span>
+													</input>
+												</div>
+												<div class="field-Contact group con_name_margin col-xs-1" style="padding: 5px 0px 0px 5px;float:left; margin:0;">
+													<img src='/hilti_modifier_customer_booking/static/src/img/calendar_icon.png' style="width: 30px;"/>
+												</div>
+											</div>
+											<div class="col-xs-12 mt16">
+												<div class="field-Contact group con_name_margin input-group col-xs-11" style="padding:0;float:left; margin:0;">
+													<input id="st_time" type="text"
+														   placeholder="Select start time" class="form-control timepicker1 input-small">
+														<!--span class="input-group-addon">
+                                                            <i class="fa fa-clock-o"></i>
+                                                        </span-->
+														<span class="highlight"></span>
+														<span class="bar"></span>
+														<label style="z-index: 2;">Start Time</label>
+													</input>
+													<span class="special_start_time_error" style="float:left;margin-top:0px;">Please enter this information.</span>
+												</div>
+												<div class="field-Contact group con_name_margin col-xs-1" style="padding: 0;float:left; margin:0;">
+													<img src='/hilti_modifier_customer_booking/static/src/img/time_icon.png' style="width: 40px;"/>
+												</div>
+											</div>
+											<div class="col-xs-12 mt16">
+												<div class="field-Contact group con_name_margin input-group col-xs-11" style="padding:0;float:left; margin:0;">
+													<input type="text" name="end_date" id="end_date"
+														   class="form-control datePicker"
+														   placeholder="Select end date" style="z-index: 10;position: static;">
+														<!--span class="input-group-addon">
+                                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                        </span-->
+														<span class="highlight"></span>
+														<span class="bar"></span>
+														<label>End Date</label>
+														<span class="special_end_date_error">Please enter this information.</span>
+													</input>
+												</div>
+												<div class="field-Contact group con_name_margin col-xs-1" style="padding: 5px 0px 0px 5px;float:left; margin:0;">
+													<img src='/hilti_modifier_customer_booking/static/src/img/calendar_icon.png' style="width: 30px;"/>
+												</div>
+											</div>
+											<div class="col-xs-12 mt16">
+												<div class="field-Contact group con_name_margin input-group col-xs-11" style="padding:0;float:left; margin:0;">
+													<input id="ed_time" type="text"
+														   placeholder="Select start time" class="form-control timepicker1 input-small">
+														<!--span class="input-group-addon">
+                                                            <i class="fa fa-clock-o"></i>
+                                                        </span-->
+														<span class="highlight"></span>
+														<span class="bar"></span>
+														<label style="z-index: 2;">End Time</label>
+													</input>
+													<span class="special_end_time_error" style="float:left; margin-top:0px;">Please enter this information.</span>
+												</div>
+												<div class="field-Contact group con_name_margin col-xs-1" style="padding: 0;float:left; margin:0;">
+													<img src='/hilti_modifier_customer_booking/static/src/img/time_icon.png' style="width: 42px;"/>
+												</div>
+											</div>
+											<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+										</div>
+										<div class="modal-footer model_cust_footer model_special_footer">
+											<button type="button"
+													class="btn btn-default botton_create_project_cancel mt32"
+													data-dismiss="modal" style="color: white;">CANCEL</button>
+											<input type="submit" value="SEND REQUEST" data-dismiss="modal"
+												   class="btn btn-primary botton_create_project button_date_special mt32"
+												   id="send_request_booking_final_button" />
+										</div>
+									</div>
+								</t>
+							</div>
+						</div>
+						<div class="modal fade" id="booking_sic_request"
+							 tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							 aria-hidden="true">
+							<div class="modal-dialog slot_event">
+								<t t-name="total_event">
+									<div class="modal-content ">
+										<div class="modal-header booking_heading_popup">
+											<button type="button"
+													class="close fa fa-close close_custom redirect_page_class"
+													data-dismiss="modal" aria-hidden="true"></button>
+											<h4 class="modal-title" id="myModalLabel">
+												SIC Request
+
+												<span></span>
+											</h4>
+										</div>
+										<div class="error_tester_notavailable_sic" style="display: none;text-align: center;">
+											<b style="color: #d2051e;"> Tester is not available for below date time, Please select another date time.</b>
+										</div>
+										<div class="error_tester_penalty_sic" style="display: none;text-align: center;">
+											<b style="color: #d2051e;"> Staff are not allowed to book penalty days in advance for this Customer due to the restriction of Penalty days for Non-VIP Customers. Please inform the Customer / contact your admin for further assistance.</b>
+										</div>
+										<div class="modal-body">
+											<div class="col-xs-12">
+												<div class="field-Contact group con_name_margin col-xs-11" style="padding:0;">
+													<input type="text" name="start_date_sic" id="start_date_sic"
+														   class="form-control datePicker"
+														   placeholder="Select start date">
+														<span class="highlight"></span>
+														<span class="bar"></span>
+														<label>Start Date</label>
+														<span class="sic_start_date_error">Please enter this information.</span>
+													</input>
+												</div>
+												<div class="field-Contact group con_name_margin col-xs-1" style="padding: 5px 0px 0px 5px;">
+													<img src='/hilti_modifier_customer_booking/static/src/img/calendar_icon.png' style="width: 30px;"/>
+												</div>
+											</div>
+											<div class="col-xs-12">
+												<div class="field-Contact group con_name_margin col-xs-11" style="padding:0;">
+													<input id="st_time_sic" type="text"
+														   class="form-control timepicker1 input-small">
+														<!--<span class="input-group-addon">
+                                                            <i class="glyphicon glyphicon-time"></i>
+                                                        </span>-->
+														<span class="highlight"></span>
+														<span class="bar"></span>
+														<label style="z-index: 2;">Start Time</label>
+														<span class="sic_start_time_error">Please enter this information.</span>
+													</input>
+												</div>
+												<div class="field-Contact group con_name_margin col-xs-1" style="padding: 0px 0px 0px 0px;">
+													<img src='/hilti_modifier_customer_booking/static/src/img/time_icon.png' style="width:42px;"/>
+												</div>
+											</div>
+											<!-- <div class="field-Contact group con_name_margin"><input type="text" name="end_date_sic" id="end_date_sic"
+                                                                                                        class="form-control datePicker"
+                                                                                                         placeholder="Select end date"><span class="highlight"></span><span class="bar"></span><label>End Date</label></input></div> -->
+											<div class="col-xs-12">
+												<div class="field-Contact group con_name_margin col-xs-11" style="padding:0;">
+													<input id="ed_time_sic" type="text"
+														   class="form-control timepicker1 input-small">
+														<!--<span class="input-group-addon">
+                                                            <i class="glyphicon glyphicon-time"></i>
+                                                        </span>-->
+														<span class="highlight"></span>
+														<span class="bar"></span>
+														<label style="z-index: 2;">End Time</label>
+														<span class="sic_end_time_error">Please enter this information.</span>
+													</input>
+												</div>
+												<div class="field-Contact group con_name_margin col-xs-1" style="padding: 0px 0px 0px 0px;">
+													<img src='/hilti_modifier_customer_booking/static/src/img/time_icon.png' style="width: 42px;"/>
+												</div>
+											</div>
+											<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+										</div>
+										<div class="modal-footer model_cust_footer model_special_footer">
+											<button type="button"
+													class="btn btn-default botton_create_project_cancel"
+													data-dismiss="modal" style="color: white;">CANCEL</button>
+											<input type="submit" value="SEND REQUEST" data-dismiss="modal"
+												   class="btn btn-primary botton_create_project button_date_sic"
+												   id="send_request_booking_final_button" />
+										</div>
+									</div>
+								</t>
+							</div>
+						</div>
+					</section>
+				</div>
+			</t>
+		</template>
+	</data>
+</odoo>

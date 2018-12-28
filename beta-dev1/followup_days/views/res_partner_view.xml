@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="partner_view_inhertied">
+            <field name="name">partner.view.buttons</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="22"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="followup_days"/>
+                </xpath> 
+            </field>
+        </record>
+        <record model="ir.ui.view" id="account_invoice_form_view_inhertied">
+            <field name="name">partner.view.buttons</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form" />
+            <field name="priority" eval="22"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="followup_days" invisible="1"/>
+                    <field name="today_weekday" invisible="1"/>
+                </xpath> 
+            </field>
+        </record>
+
+        <record id="view_account_invoice_search_inherited" model="ir.ui.view">
+            <field name="name">account.invoice.search</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="followup_days" string="Followup days"/>
+                    <filter name="followup_days" string="Followup Days" domain="[                        
+                        ('state','in',['open']),
+                        ('date_due', '&lt;=', datetime.datetime.today()),
+                        ('today_weekday', '=', True )]"/>
+                </xpath>
+                <xpath expr="//group" position="inside">
+                    <filter string="followup_days" name="is_today_followup_day" context="{'group_by': 'followup_days'}"/>
+                </xpath>
+            </field>
+        </record>
+
+  </data>
+</odoo>

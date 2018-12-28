@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        <menuitem id="account.menu_aged_trial_balance"
+        name="Detailed Aging"
+        action="account.action_account_aged_balance_view"
+        parent="account.menu_finance_legal_statement"/>
+    </data>
+</odoo>

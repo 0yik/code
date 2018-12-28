@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="promotion_button">
+        <t t-jquery="button" t-operation="replace">
+        </t>
+    </t>
+
+    <t t-name="promotion_button_new">
+        <button class="control-button btn btn-default btn-fill btn-wd"><i class="pe-7s-check"/> Manual apply Promotion</button>
+    </t>
+
+    <t t-extend="PaymentScreenWidget">
+        <t t-jquery=".payment-buttons" t-operation="append">
+            <div class='button' id='promotion_pay'>
+                <i class='fa fa-tag' /> Promo
+            </div>
+        </t>
+    </t>
+
+    <t t-name="list_of_promo">
+        <t t-if="promotions">
+            <t t-foreach="promotions" t-as="promotion">
+                <span class='product promotion-line' t-att-data-id="promotion.id">
+                    <div class="product-img">
+                        <img src="/pos_promotion/static/description/promotion.png" />
+                    </div>
+                    <div class="product-name">
+                        <t t-esc="promotion.name"/>
+                    </div>
+                </span>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="promotion_popup">
+        <t t-jquery=".modal-dialog" t-operation="replace">
+            <div class="modal-dialog">
+                <div class="popup">
+                    <p class="title">Choice a Promotion</p>
+                    <div class="product-list-scroller touch-scrollable">
+                        <div class="product-list" id="promotions_list">
+                            
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="button remove_promotion confirm" stype="float:left">
+                            <i class="pe-7s-trash"/> Remove
+                        </div>
+                        <div class="button cancel" stype="float:right">
+                            <i class="pe-7s-close"/> Cancel
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </t>
+    </t>
+
+</templates>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="purchase_request_reject_popup_form" model="ir.ui.view">
+            <field name="name">purchase.request.reject.popup.form</field>
+            <field name="model">purchase.request.reject.popup</field>
+            <field name="arch" type="xml">
+            <form string="Rejection Reason">
+                <group>
+                    <field name="reason_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button name="button_reject" string="Save" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-default"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="purchase_request_reject_popup_action" model="ir.actions.act_window">
+            <field name="name">Rejection Reason PopUp</field>
+            <field name="res_model">purchase.request.reject.popup</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref=""/>
+            <field name="target">new</field>
+            <!--<field name="context">{}</field>-->
+        </record>
+
+        <record id="purchase_request_line_tree_inherit_reject" model="ir.ui.view">
+            <field name="name">purchase.request.line.tree.inherit</field>
+            <field name="model">purchase.request.line</field>
+            <field name="inherit_id" ref="purchase_request.purchase_request_line_tree"/>
+            <field name="arch" type="xml">
+                <button name="button_approved" position="after">
+                  <button name="%(purchase_request_reject_popup_action)d" type="action" string="Reject" attrs="{'invisible': [('request_state', '=', 'rejected')]}"/>
+                </button>
+            </field>
+        </record>
+
+        <record id="view_purchase_request_form_inherit_reason" model="ir.ui.view">
+            <field name="name">purchase.request.form.inherit.reason</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
+            <field name="arch" type="xml">
+                <field name="description" position="after">
+                    <field name="reason_ids" widget="many2many_tags" attrs="{'invisible':[('state','!=','rejected')],'readonly':[('state','=','rejected')]}"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

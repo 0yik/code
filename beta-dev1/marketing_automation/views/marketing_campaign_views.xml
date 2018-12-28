@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="marketing_automation_menu" name="Marketing Automation"
+        web_icon="marketing_automation,static/description/icon.png" />
+
+    <!-- Campaign -->
+    <record id="marketing_campaign_view_kanban" model="ir.ui.view">
+        <field name="name">marketing.automation.campaign.view.kanban</field>
+        <field name="model">marketing.automation.campaign</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" draggable="0">
+                <field name="name"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-xs-9">
+                                    <span class="o_ma_text_processed" t-att-title="record.name.raw_value">
+                                        <t t-esc="record.name.raw_value"/>
+                                    </span>
+                                </div>
+                                <div class="col-xs-3">
+                                    <t t-set="state_colors" t-value="{'draft': 'label-primary', 'running': 'o_ma_processed', 'stopped': 'label-danger'}"/>
+                                    <span t-attf-class="label #{state_colors[record.state.raw_value]} pull-right" t-att-title="record.state.value">
+                                        <t t-esc="record.state.value"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row text-uppercase text-center">
+                                <div class="col-xs-4 text-muted">
+                                    <span>Total</span>
+                                    <h2 class="mt4"><strong><field name="total_participant_count"/></strong></h2>
+                                </div>
+                                <div class="col-xs-4 o_ma_text_processed">
+                                    <span>Running</span>
+                                    <h2 class="mt4"><strong><field name="running_participant_count"/></strong></h2>
+                                </div>
+                                <div class="col-xs-4 text-primary">
+                                    <span>Completed</span>
+                                    <h2 class="mt4"><strong><field name="completed_participant_count"/></strong></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="marketing_participant_action_launch_test" model="ir.actions.act_window">
+        <field name="name">Launch a test</field>
+        <field name="res_model">marketing.participant</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_campaign_id': active_id}</field>
+    </record>
+
+    <record id="marketing_participant_action" model="ir.actions.act_window">
+        <field name="name">Records</field>
+        <field name="res_model">marketing.participant</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_campaign_id': active_id, 'default_campaign_id': active_id}</field>
+    </record>
+
+    <record id="marketing_campaign_view_form" model="ir.ui.view">
+        <field name="name">marketing.automation.campaign.view.form</field>
+        <field name="model">marketing.automation.campaign</field>
+        <field name="arch" type="xml">
+            <form string="Campaign">
+                <header>
+                    <button name="action_start_campaign" type="object" states="draft,stopped" class="btn-primary" string="Start" />
+                    <button name="%(marketing_participant_action_launch_test)d" type="action" attrs="{'invisible': ['|', ('marketing_activity_ids', '=', []), ('state', '=', 'stopped') ]}" class="btn-warning" string="Launch a Test" />
+                    <button name="action_stop_campaign" type="object" states="running" class="btn-danger" string="Stop" />
+                    <button name="sync_participants" type="object" states="running" class="btn-danger" string="Generate Participants" groups="base.group_no_one"/>
+                    <button name="execute_activities" type="object" states="running" class="btn-danger" string="Execute Activities" groups="base.group_no_one"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running,stopped" />
+                </header>
+                <field name="require_sync" invisible="1"/>
+                <div class="text-center" attrs="{'invisible': [('require_sync', '=', False)]}">
+                    <div class="h4 mt8"><strong>The workflow has been modified!</strong></div>
+                    <p>Some participants are already running on this campaign. Click on 'Update' to apply the modifications you've just made.</p>
+                    <p>Be aware that participants that had no more activities could be reintroduced into the campaign and new traces could be created for them.</p>
+                    <p class="mb8">
+                        <button name="action_update_participants" type="object" class="btn btn-primary" string="Update"/>
+                        <button name="action_set_synchronized" type="object" class="btn btn-default ml8" string="Don't update"/>
+                    </p>
+                </div>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="%(marketing_participant_action)d" type="action" icon="fa-code-fork fa-rotate-180 fa-flip-vertical" class="oe_stat_button">
+                            <field name="total_participant_count" widget="statinfo" string="Participants" />
+                        </button>
+                        <button name="toggle_active" type="object" icon="fa-archive" class="oe_stat_button">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}' />
+                        </button>
+                        <button type="object" icon="fa-archive" class="oe_stat_button">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}' />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" string="Name" />
+                        <h1><field name="name" required="1" placeholder="e.g. eCommerce Offers" /></h1>
+                    </div>
+                    <group>
+                        <field name="model_id" attrs="{'readonly': [('state', '!=', 'draft')]}" options="{'no_create_edit': True, 'no_open': True}" class="oe_inline" string="Target Model" />
+                        <field name="model_name" invisible="1"/>
+                        <field name="unique_field_id" options="{'no_create_edit': True, 'no_open': True}" groups="base.group_no_one" class="oe_inline" />
+                        <field name="domain" widget="char_domain"
+                                    placeholder="Select Records"
+                                    attrs="{'invisible': [('model_id', '=', 'mail.mass_mailing.contact')]}"
+                                    options="{'model_field': 'model_name', 'model_domain': 'domain'}"
+                                    context="{'search_default_not_opt_out':1}"/>
+                    </group>
+                    <div class="o_ma_hierarchy">
+                        <div class="o_ma_hierarchy_title" attrs="{'invisible': [('marketing_activity_ids', '=', [])]}">Workflow</div>
+                        <div class="o_ma_hierarchy_readonly oe_read_only" attrs="{'invisible': [('marketing_activity_ids', '!=', [])]}">
+                            <h3>No activity added</h3>
+                            <p>
+                                Click on 'Edit' button to add new activity in workflow.
+                            </p>
+                        </div>
+                        <field name="marketing_activity_ids" nolabel="1" options="{'create_text':'Add new activity'}" context="{'default_campaign_id': active_id, 'default_model_id': model_id, 'default_model_name': model_name}" class="o_ma_hierarchy_container o_ma_campaign_hierarchy">
+                            <tree>
+                                <field name="name"/>
+                                <field name="activity_type"/>
+
+                            </tree>
+                            <form>
+                                <sheet>
+                                     <div class="oe_button_box" name="button_box">
+                                        <button name="get_statistics_sent" type="object"
+                                            icon="fa-envelope-o" class="oe_stat_button"
+                                            attrs="{'invisible': [('total_sent', '=', 0)]}" >
+                                            <field name="total_sent" string="Emails Sent" widget="statinfo"/>
+                                        </button>
+                                        <button name="get_statistics_received"
+                                            type="object" class="oe_stat_button">
+                                            <field name="received_ratio" widget="percentpie" string="Received"/>
+                                        </button>
+                                        <button name="get_statistics_opened"
+                                            type="object" class="oe_stat_button">
+                                            <field name="opened_ratio" widget="percentpie" string="Opened"/>
+                                        </button>
+                                        <button name="get_statistics_replied"
+                                            type="object" class="oe_stat_button">
+                                            <field name="replied_ratio" widget="percentpie" string="Replied"/>
+                                        </button>
+                                        <button name="get_statistics_bounced"
+                                            type="object" class="oe_stat_button">
+                                            <field name="bounced_ratio" widget="percentpie" string="Bounced"/>
+                                        </button>
+                                        <!-- <button name="%(mass_mailing.action_view_mass_mailing_contacts)d"
+                                            type="action" class="oe_stat_button">
+                                            <field name="clicks_ratio" widget="percentpie" string="Clicks"/>
+                                        </button> -->
+                                    </div>
+                                    <div class="oe_title">
+                                        <label for="name" class="oe_edit_only" string="Name" />
+                                        <h1><field name="name" required="1" placeholder="e.g. eCommerce Offers" /></h1>
+                                    </div>
+                                    <group>
+                                        <group>
+                                            <field name="activity_type" widget="radio" options="{'horizontal': true}" />
+                                            <field name="model_id" invisible="1"/>
+                                            <field name="model_name" invisible="1"/>
+                                            <field name="mass_mailing_id"
+                                                domain="[('mailing_model', '=', model_name), ('use_in_marketing_automation', '=', True)]"
+                                                context="{
+                                                    'default_state': 'done',
+                                                    'default_mailing_model': model_name, 
+                                                    'default_use_in_marketing_automation': True,
+                                                    'form_view_ref': 'marketing_automation.mass_mailing_view_form_marketing_activity'}"
+                                                attrs="{
+                                                    'required': [('activity_type', '=', 'email')],
+                                                    'invisible': [('activity_type', '!=', 'email')]}"/>
+                                            <field name="server_action_id" domain="[('model_name', '=', model_name)]" attrs="{'required': [('activity_type', '=', 'action')], 'invisible': [('activity_type', '!=', 'action')]}" context="{'default_model_name': model_name}" />
+                                        </group>
+                                        <group>
+                                            <label for="interval_number" string="Perform" />
+                                            <div>
+                                                <field name="interval_number" class="oe_inline" />
+                                                <field name="interval_type" class="oe_inline ml4" />
+                                                <span class="ml8">after</span>
+                                            </div>
+                                            <label for="trigger_type" class="hidden" />
+                                            <div>
+                                                <field name="trigger_type" />
+                                            </div>
+                                            <label for="parent_id" attrs="{'invisible': [('trigger_type', '=', 'begin')]}"/>
+                                            <div>
+                                                <!-- domain="[('id', 'in', parent.marketing_activity_ids), ('id', '!=', id)]" -->
+                                                <field name="parent_id" context="{'parent_activity': parent.marketing_activity_ids, 'id_activity': id, 'name_activity': name}" attrs="{'required': [('trigger_type', '!=', 'begin')], 'invisible': [('trigger_type', '=', 'begin')]}" options="{'no_create_edit': True}"/>
+                                            </div>
+                                            <label string="Warning" invisible="1"/>
+                                            <div>
+                                                <small class="oe_edit_only text-muted" attrs="{'invisible': [('trigger_type', '=', 'begin')]}">(save the campaign to make its activities selectable)</small>
+                                            </div>
+                                            <label for="validity_duration"/>
+                                            <div>
+                                                <field name="validity_duration"/>
+                                            </div>
+                                            <label for="validity_duration_number" string="Valid during" attrs="{'invisible': [('validity_duration', '=', False)]}"/>
+                                            <div attrs="{'invisible': [('validity_duration', '=', False)]}">
+                                                <field name="validity_duration_number" class="oe_inline"/>
+                                                <field name="validity_duration_type" class="oe_inline"/>
+                                            </div>
+                                        </group>
+                                    </group>
+                                    <notebook>
+                                        <page string="Domain">
+                                            <group>
+                                                <field name="domain" widget="char_domain" nolabel="1" options="{ 'model_field': 'model_name'}" />
+                                            </group>
+                                        </page>
+                                    </notebook>
+                                </sheet>
+                            </form>
+                        </field>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="marketing_campaign_view_tree" model="ir.ui.view">
+        <field name="name">marketing.automation.campaign.view.tree</field>
+        <field name="model">marketing.automation.campaign</field>
+        <field name="arch" type="xml">
+            <tree string="Campaign">
+                <field name="name" />
+                <field name="state" />
+                <field name="total_participant_count" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="marketing_campaign_view_search" model="ir.ui.view">
+        <field name="name">marketing.automation.campaign.view.search</field>
+        <field name="model">marketing.automation.campaign</field>
+        <field name="arch" type="xml">
+            <search string="Search Campaign">
+                <filter string="New" domain="[('state', '=', 'draft')]" />
+                <filter string="Running" domain="[('state', '=', 'running')]" />
+                <filter string="Stopped" domain="[('state', '=', 'stopped')]" />
+                <separator />
+                <filter string="Archived" domain="[('active', '=', False)]" />
+                <group>
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="marketing_campaign_action" model="ir.actions.act_window">
+        <field name="name">Campaigns</field>
+        <field name="res_model">marketing.automation.campaign</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <menuitem id="marketing_campaign_menu" name="Campaigns"
+        parent="marketing_automation_menu"
+        action="marketing_campaign_action"
+        sequence="1"/>
+
+    <menuitem id="marketing_automation_configuration_menu" name="Configuration"
+        parent="marketing_automation_menu"
+        sequence="2"
+        groups="base.group_no_one"/>
+
+</odoo>

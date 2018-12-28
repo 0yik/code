@@ -1,0 +1,15 @@
+<odoo>
+  <data>
+    <record id="custom_pos_promotion_item_form_view" model="ir.ui.view">
+        <field name="name">pos.promotion.item.form.custom</field>
+        <field name="model">pos.promotion</field>
+        <field name="inherit_id" ref="pos_promotion.pos_promotion_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='discount_order_ids']/tree/field[@name='discount']" position="after">
+              <field name="multi_discount"/>
+                        
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

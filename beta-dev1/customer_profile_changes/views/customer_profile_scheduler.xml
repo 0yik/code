@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="ir_cron_customer_profile_changes" model="ir.cron">
+            <field name="name">Customer Edit Check Flag Reset</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="True"/>
+            <field name="active" eval="True"/>
+            <field name="model">res.partner</field>
+            <field name="function">customer_view_schedule</field>
+            <field name="args">()</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_purchase_request_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.request.form.inherit</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[1]" position="attributes">
+              		<attribute name="string">RFQs</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[1]/field[@name='line_ids']" position="replace">
+                    <field name="line_ids">
+                        <tree editable="bottom">
+                            <field name="rfq_number"/>
+                            <field name="vendor"/>
+                            <field name="total_amount"/>
+                            <field name="preferred_vendor" on_change="preferred_vendor_check()"/>
+                            <field name="justification"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_request_line_tree_inherit" model="ir.ui.view">
+            <field name="name">purchase.request.line.tree.inherit</field>
+            <field name="model">purchase.request.line</field>
+            <field name="inherit_id" ref="purchase_request.purchase_request_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="replace">
+                    <tree string="Purchase Request Lines" create="false">
+                        <field name="request_id"/>
+                        <field name="request_state"/>
+                        <field name="requested_by"/>
+                        <field name="assigned_to"/>
+                        <field name="date_required"/>
+                        <field name="rfq_number"/>
+                        <field name="vendor"/>
+                        <field name="total_amount"/>
+                        <field name="preferred_vendor" on_change="preferred_vendor_check()"/>
+                        <field name="justification"/>
+                        <button name="action_approve" type="object" string="Approve" class="oe_highlight"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+        <delete model="ir.actions.act_window" id="purchase_request_to_rfq.action_purchase_request_line_make_purchase_order"/>
+        <delete model="ir.values" id="purchase_request_to_rfq.action_purchase_request_line_make_purchase_order"/>
+
+        <delete model="ir.actions.act_window" id="purchase_request_to_requisition.action_purchase_request_line_make_purchase_requisition"/>
+        <delete model="ir.values" id="purchase_request_to_requisition.action_purchase_request_line_make_purchase_requisition"/>
+
+        <delete model="ir.actions.act_window" id="purchase_request_to_requisition.action_purchase_request_line_make_purchase_requisition"/>
+    </data>
+</odoo>
+

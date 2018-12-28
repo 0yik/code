@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[@name='sales_purchases']/group[@name='container_row_2']/group[@name='sale']/field[@name='customer']"
+                       position="after">
+                    <field name="customer_id" attrs="{'invisible':[('customer','=',False)]}"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[@name='sales_purchases']/group[@name='container_row_2']/group[@name='purchase']/field[@name='supplier']"
+                       position="after">
+                    <field name="supplier_id" attrs="{'invisible':[('supplier','=',False)]}"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook" position="inside">
+                    <page name="product" string="Products" attrs="{'invisible':[('supplier','=',False)]}">
+                        <field name="products_supplier_info">
+                            <tree>
+                                <field name="product_code" string="Vendor Product ID"/>
+                                <field name="product_name" string="Vendor Product Name"/>
+                                <field name="min_qty" string="Minimum Quantity"/>
+                                <field name="price" string="Price"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

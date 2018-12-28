@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="edit_holiday_new_employee_inherit" model="ir.ui.view">
+            <field name="name">hide approve button for employee</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="check_leave_manager" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate2,validate"/>
+                </xpath>
+                <xpath expr="//form/header/button[3]" position="after">
+                    <button class="oe_highlight" string="Leave Manager Approve" name="action_leave_manager_approve" type="object" attrs="{'invisible': ['|',('state', 'not in', ['confirm']),('check_leave_manager', '=',False) ] }"/>
+                </xpath>
+                <xpath expr="//form/header/button[2]" position="replace">
+                    <button string="Approve" name="action_approve" states="validate2"
+                            type="object" class="oe_highlight" invisible="1" modifiers="{'invisible': [['state', 'not in', ['validate2']]]}"/>
+                </xpath>
+                <xpath expr="//form/header/button[3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="edit_holiday_new_hr_manager_inherit" model="ir.ui.view">
+            <field name="name">display approve button for hr manager</field>
+            <field name="model">hr.holidays</field>
+            <field name="groups_id" eval="[(4, ref('aikchin_modifier_access_right.hr_manager_group'))]"/>
+            <field name="inherit_id" ref="edit_holiday_new_employee_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header/button[2]" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+         <record id="edit_holiday_new_ceo_inherit" model="ir.ui.view">
+            <field name="name">display approve button for ceo</field>
+            <field name="model">hr.holidays</field>
+            <field name="groups_id" eval="[(4, ref('project.group_project_manager'))]"/>
+            <field name="inherit_id" ref="edit_holiday_new_employee_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header/button[2]" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[3]" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="edit_holiday_leave_manager_search" model="ir.ui.view">
+            <field name="name">display approve button for ceo</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.view_hr_holidays_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='allocations']" position="after">
+                    <filter name="leave_manager" string="Leave Manager" domain="[('leave_manager_id', '=', uid)]"/>
+                </xpath>
+                <xpath expr="//filter[@name='approve']" position="replace">
+                    <filter domain="[('state','in',('confirm','validate1','validate2'))]" string="To Approve" name="approve"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="open_department_holidays_approve_inherit" model="ir.actions.act_window">
+            <field name="name">Department Leaves</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="context">{ 'search_default_approve':1, 'search_default_leave_manager':1}</field>
+             <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a new leave request.
+                </p>
+            </field>
+            <field name="domain">[('type','=','remove')]</field>
+            <field name="search_view_id" ref="edit_holiday_leave_manager_search"/>
+        </record>
+
+        <menuitem
+            id="hr_holidays.menu_open_department_leave_approve"
+            name="Leaves"
+            parent="hr_holidays.menu_hr_holidays_approvals"
+            groups="hr_holidays.group_hr_holidays_manager,hr_holidays.group_hr_holidays_user"
+            action="open_department_holidays_approve_inherit"
+            sequence="1"/>
+    </data>
+</odoo>

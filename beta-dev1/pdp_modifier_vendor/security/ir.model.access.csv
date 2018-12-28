@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pdp_modifier_vendor_pdp_modifier_vendor,pdp_modifier_vendor.pdp_modifier_vendor,model_pdp_modifier_vendor_pdp_modifier_vendor,,1,0,0,0

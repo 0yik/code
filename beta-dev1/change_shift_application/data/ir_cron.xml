@@ -1,0 +1,26 @@
+<odoo>
+    <data noupdate="1">
+        <record model="ir.cron" id="cron_changes_schedule">
+            <field name="name">Auto Changes Schedule Change Shift</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'change.shift.interval'"/>
+            <field name="function" eval="'cron_do_changes'"/>
+            <field name="args" eval="'()'" />
+        </record>
+
+        <record model="ir.cron" id="cron_restore_schedule">
+            <field name="name">Auto Restore Schedule Change Shift</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'change.shift.interval'"/>
+            <field name="function" eval="'cron_do_restore'"/>
+            <field name="args" eval="'()'" />
+        </record>
+
+    </data>
+</odoo>

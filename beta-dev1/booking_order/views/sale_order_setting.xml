@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_book_order_settings_inherit_id" model="ir.ui.view">
+            <field name="name">sale config settings </field>
+            <field name="model">sale.config.settings</field>
+            <field name="inherit_id" ref="sale.view_sales_config"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='main']" position="inside">
+                    <group string="Booking">
+                        <field name="pre_booking" ></field>
+                        <field name="post_booking" ></field>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

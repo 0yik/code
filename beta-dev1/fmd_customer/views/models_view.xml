@@ -1,0 +1,186 @@
+<odoo>
+	<data>
+
+		<record id="contact_list_form_view" model="ir.ui.view">
+			<field name="name">contact.list.form.view</field>
+			<field name="model">contact.list</field>
+			<field name="arch" type="xml">
+				<form string="Contacts List">
+					<sheet>
+						<group>
+							<group>
+								<field name="contact_type_id" />
+								<field name="reside_overseas" />
+								<field name="name" />
+								<field name="position_id" />
+								<field name="phone" />
+								
+								<!-- <field name="contact_type_id" />
+								<field name="name" />
+								<field name="file_as_id" />
+								<field name="position_id" />
+								<field name="job_title" />
+								<field name="address_type_id" />
+								<label for="street" string="Address" />
+								<div class="o_address_format">
+									<field name="street" placeholder="Street..." class="o_address_street" />
+									<field name="street2" placeholder="Street 2..." class="o_address_street" />
+									<field name="city" placeholder="City" class="o_address_city" />
+									<field name="state_id" class="o_address_state"
+										placeholder="State" options="{&quot;no_open&quot;: True}"
+										context="{'country_id': country_id, 'zip': zip}" />
+									<field name="zip" placeholder="ZIP" class="o_address_zip" />
+									<field name="country_id" placeholder="Country" class="o_address_country"
+										options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+								</div>
+								<field name="phone" widget="phone" />
+								<field name="phone2" widget="phone" />
+								<field name="mobile" widget="phone" />
+								<field name="mobile2" widget="phone" /> -->
+							</group>
+							<group>
+								<field name="mobile" />
+								<field name="email" />
+								<field name="contact_mode_c" />
+								<field name="opt_out_c" />
+								<field name="remarks" />
+								
+								<!-- <field name="fax" />
+								<field name="email" widget="email" />
+								<field name="email2" widget="email" />
+								<field name="web" widget="url" placeholder="e.g. www.hashmicro.com" />
+								<field name="skype" />
+								<field name="other" />
+								<field name="other2" />
+								<field name="send_emails" />
+								<field name="sync_iphone" />
+								<field name="statutory_contact" />
+								<field name="feedback_contact" /> -->
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="contact_list_tree_view" model="ir.ui.view">
+			<field name="name">contact.list.tree.view</field>
+			<field name="model">contact.list</field>
+			<field name="arch" type="xml">
+				<tree string="Contacts List">
+					<field name="contact_type_id" />
+					<field name="reside_overseas" />
+					<field name="name" />
+					<field name="position_id" />
+					<field name="phone" />
+					<field name="mobile" />
+					<field name="email" />
+					<field name="contact_mode_c" />
+					<field name="opt_out_c" />
+					<field name="remarks" />
+					
+					<!-- <field name="contact_type_id" />
+					<field name="name" />
+					<field name="file_as_id" />
+					<field name="position_id" />
+					<field name="job_title" />
+					<field name="address_type_id" />
+					<field name="phone" widget="phone" />
+					<field name="phone2" widget="phone" />
+					<field name="mobile" widget="phone" />
+					<field name="mobile2" widget="phone" />
+					<field name="fax" />
+					<field name="email" widget="email" />
+					<field name="email2" widget="email" />
+					<field name="web" widget="url" placeholder="e.g. www.hashmicro.com" />
+					<field name="skype" />
+					<field name="other" />
+					<field name="other2" />
+					<field name="send_emails" />
+					<field name="sync_iphone" />
+					<field name="statutory_contact" />
+					<field name="feedback_contact" /> -->
+				</tree>
+			</field>
+		</record>
+
+		<record id="director_list_form_view" model="ir.ui.view">
+			<field name="name">director.list.form.view</field>
+			<field name="model">director.list</field>
+			<field name="arch" type="xml">
+				<form string="Directors List">
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="file_as_id" />
+								<field name="position_id" />
+								<field name="job_title" />
+								<field name="address_type_id" />
+								<label for="street" string="Address" />
+								<div class="o_address_format">
+									<field name="street" placeholder="Street..." class="o_address_street" />
+									<field name="street2" placeholder="Street 2..." class="o_address_street" />
+									<field name="city" placeholder="City" class="o_address_city" />
+									<field name="state_id" class="o_address_state"
+										placeholder="State" options="{&quot;no_open&quot;: True}"
+										context="{'country_id': country_id, 'zip': zip}" />
+									<field name="zip" placeholder="ZIP" class="o_address_zip" />
+									<field name="country_id" placeholder="Country" class="o_address_country"
+										options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+								</div>
+								<field name="phone" widget="phone" />
+								<field name="phone2" widget="phone" />
+								<field name="mobile" widget="phone" />
+								<field name="mobile2" widget="phone" />
+							</group>
+							<group>
+								<field name="fax" />
+								<field name="email" widget="email" />
+								<field name="email2" widget="email" />
+								<field name="web" widget="url" placeholder="e.g. www.hashmicro.com" />
+								<field name="skype" />
+								<field name="other" />
+								<field name="other2" />
+								<field name="send_emails" />
+								<field name="sync_iphone" />
+								<field name="statutory_contact" />
+								<field name="feedback_contact" />
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="director_list_tree_view" model="ir.ui.view">
+			<field name="name">director.list.tree.view</field>
+			<field name="model">director.list</field>
+			<field name="arch" type="xml">
+				<tree string="Directors List">
+					<field name="name" />
+					<field name="file_as_id" />
+					<field name="position_id" />
+					<field name="job_title" />
+					<field name="address_type_id" />
+					<field name="phone" widget="phone" />
+					<field name="phone2" widget="phone" />
+					<field name="mobile" widget="phone" />
+					<field name="mobile2" widget="phone" />
+					<field name="fax" />
+					<field name="email" widget="email" />
+					<field name="email2" widget="email" />
+					<field name="web" widget="url" placeholder="e.g. www.hashmicro.com" />
+					<field name="skype" />
+					<field name="other" />
+					<field name="other2" />
+					<field name="send_emails" />
+					<field name="sync_iphone" />
+					<field name="statutory_contact" />
+					<field name="feedback_contact" />
+				</tree>
+			</field>
+		</record>
+
+	</data>
+</odoo>

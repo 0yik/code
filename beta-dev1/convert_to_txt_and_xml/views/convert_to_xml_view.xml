@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+    	<!-- SALE ORDER VIEW -->
+
+    	<record model="ir.ui.view" id="quotation_per_quotation_form_view_convertxml">
+    	    <field name="name">Quotation</field>
+    	    <field name="model">sale.order</field>
+    	    <field name="inherit_id" ref="sale.view_order_form"/>
+    	    <field name="arch" type="xml">
+    	        <data>
+    	            <xpath expr='//notebook/page[2]' position="after">
+    	                <page string="Additional ERP Information">
+    	                	<group>
+    	                		<field name="transport_payer"/>
+    	                		<field name="buyer_comment"/>
+    	                		<field name="customer_transport_time_days"/>
+    	                		<field name="customer_invoice_code"/>
+                                <field name="buyer_reference"/>
+    	                	</group>
+    	                </page>
+    	            </xpath>
+    	            <xpath expr="//field[@name='order_line']/form//field[@name='name']" position="after">
+    	            	<field name="setup" invisible="1"/>
+    	            	<field name="alloy" invisible="1"/>
+    	            	<field name="each" invisible="1"/>
+    	            </xpath>
+    	        </data>
+    	    </field>
+    	</record>
+
+        <record id="ir_actions_server_download_product_excel" model="ir.actions.server">
+            <field name="name">Export to Excel</field>
+            <field name="model_id" ref="model_product_product"/>
+            <field name="state">code</field>
+            <field name="key2">client_action_multi</field>
+            <field name="code">action = model.download_excel()</field>
+        </record>
+
+        <record id="id_export_server_download_product" model="ir.values">
+            <field name="model_id" ref="model_product_product" />
+            <field name="name">Export to Excel</field>
+            <field name="key2">client_action_multi</field>
+            <field eval="'ir.actions.server,%d'%ir_actions_server_download_product_excel" name="value"/>
+            <field name="key">action</field>
+            <field name="model">product.product</field>
+        </record>
+
+
+        <record id="ir_actions_server_download_cust_excel" model="ir.actions.server">
+            <field name="name">Export to Excel</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="key2">client_action_multi</field>
+            <field name="code">action = model.download_excel()</field>
+        </record>
+
+        <record id="id_export_server_download_cust" model="ir.values">
+            <field name="model_id" ref="model_res_partner" />
+            <field name="name">Export to Excel</field>
+            <field name="key2">client_action_multi</field>
+            <field eval="'ir.actions.server,%d'%ir_actions_server_download_cust_excel" name="value"/>
+            <field name="key">action</field>
+            <field name="model">res.partner</field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record id="stock.res_company_1" model="res.company">
+	        <field eval="1.0" name="buffer_stock_per"/>
+	    </record>
+    </data>
+</odoo>

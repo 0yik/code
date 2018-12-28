@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+
+    <t t-name="ServiceCharges">
+        <button class="control-button btn btn-default btn-fill btn-wd js_service_charge_button service-charge-button service-charge-on service-charge-apply" data-mode='on' ><i class="fa fa-tag"/> Service Charge
+        </button>
+    </t>
+
+    <t t-name="TaxNonCharge">
+        <button class="control-button btn btn-default btn-fill btn-wd tax-non-discount-button tax-apply" data-mode='tax'><i class="fa fa-tag"/> Tax / Non-Tax
+        </button>
+    </t>
+    
+    <t t-extend="OrderWidget">
+        <t t-jquery="div.line:first" t-operation="replace">
+            <div class="line" style="border-top:none">
+            <table class="entry total">
+                <tr class='sub-total' style="font-size:16px">
+                    <td>Sub Total</td>
+                    <td>:</td>
+                    <td><span class="value">0.00€</span></td>
+                </tr>
+                <tr class="subservice">
+                    <td>Service Charge(<span class="service-percentage"></span>)</td>
+                    <td>:</td>
+                    <td><span class="value">0.00€</span></td>
+                </tr>
+                <tr  class='subentry'>
+                    <td>PB1(<span class="tax-percentage"></span>)</td>
+                    <td>:</td>
+                    <td><span class="value">0.00€</span></td>
+                </tr>
+                <tr class='total-total' style="font-size: 22px;color: black;font-weight: bold;">
+                    <td>Total</td>
+                    <td>:</td>
+                    <td> <span class="value" style="font-size: 22px;color: black;font-weight: bold;">0.00€</span></td>
+                </tr>
+            </table>
+            </div>
+        </t>
+    </t>
+
+</template>
+

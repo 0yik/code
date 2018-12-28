@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_loyalty_franchise_management,franchise.management,model_franchise_management,,1,1,1,0
+acees_royality_fees_school_admin,acees_royality_fees_school_admin,model_royalti_fees,school.group_school_administration,1,1,1,1
+acees_royality_fees_school_admin,acees_royality_fees_school_admin,model_royalti_fees,,1,0,0,0

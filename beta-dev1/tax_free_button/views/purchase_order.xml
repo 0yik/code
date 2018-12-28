@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <record id="view_purchase_configuration_inherit" model="ir.ui.view">
+            <field name="name">purchase.config.settings.inherit</field>
+            <field name="model">purchase.config.settings</field>
+            <field name="inherit_id" ref="purchase.view_purchase_configuration"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/div" position="before">
+                    <group string="Tax Free">
+                        <label string="Tax Free"/>
+                        <div>
+                            <field name="tax_free_button" class="oe_inline"/>
+                            <label for="tax_free_button"/>
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_order_form_notification_inherit_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="rfq_approval_request.purchase_order_form_notification_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group/group[2]" position="after">
+                    <group></group>
+                    <group>
+                        <field name="check_tax_free_button" invisible="1"/>
+                        <button name="tax_free_button" string="Tax free / Applied" type="object" class="btn-primary" attrs="{'invisible':[('check_tax_free_button','=',False)]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="booking_account_analytic_account_form_form" model="ir.ui.view">
+        <field name="name">booking.account.analytic.account.invoice.form.inherit</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"/>
+        <field eval="40" name="priority"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page" position="after">
+                <page string="Booking" id="booking_order">
+                    <button name="validate_booking_order_line" string="Validate" type="object" class="fbutton oe_highlight"/>
+                    <field name="booking_order_line_ids" domain="[('state','=','draft'),('order_id','!=',False)]">
+                        <tree>
+                            <field name="product_id"/>
+                            <field name="serial_no"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="actual_start_date"/>
+                            <field name="actual_end_date"/>
+                            <field name="state"/>
+                            <field name="order_id" string="Booking Order"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

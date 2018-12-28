@@ -1,0 +1,30 @@
+
+<odoo>
+	<data>
+		<record id="mail_mass_mailing_contact_tree_view" model="ir.ui.view">
+			<field name="name">mail_mass_mailing_contact_tree_view</field>
+			<field name="model">mail.mass_mailing.contact</field>
+			<field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_contact_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='email']" position="replace">
+				</xpath>
+				<xpath expr="//field[@name='name']" position="replace">
+					<field name="name" />
+					<field name="email" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="mail_mass_mailing_form_view" model="ir.ui.view">
+			<field name="name">mail_mass_mailing_form_view</field>
+			<field name="model">mail.mass_mailing</field>
+			<field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='mailing_model']" position="after">
+				<br/>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

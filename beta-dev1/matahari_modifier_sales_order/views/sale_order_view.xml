@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_order_form_inherit_validity_date">
+            <field name="name">sale.order.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+               <field name="validity_date" position="attributes">
+                   <attribute name="readonly">1</attribute>
+               </field>
+                <field name="partner_shipping_id" position="after">
+                    <field name="category_id"/>
+                </field>
+                <field name="payment_term_id" position="after">
+                    <field name="wh_location" invisible="1"/>
+                </field>
+
+            </field>
+        </record>
+
+        <record id="view_order_form_inherit_sale_stock" model="ir.ui.view">
+            <field name="name">sale.order.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='sale_shipping']/field[@name='warehouse_id']" position="replace">
+			    </xpath>
+            </field>
+
+         </record>
+        <record id="view_order_form_with_carrier" model="ir.ui.view">
+            <field name="name">sale.order.inherit</field>
+            <field name="model">sale.order</field>
+                <field name="inherit_id" ref="delivery.view_order_form_with_carrier"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='carrier_selection']" position="after">
+                    <field name="warehouse_id" options="{'no_create': True}" groups="stock.group_stock_multi_locations"/>
+			    </xpath>
+            </field>
+         </record>
+    </data>
+</odoo>

@@ -1,0 +1,103 @@
+# -*- coding: utf-8 -*-
+
+import time
+import operator
+import itertools
+from datetime import datetime
+from dateutil import relativedelta
+import xlwt
+from xlsxwriter.workbook import Workbook
+from tools.translate import _
+from cStringIO import StringIO
+import base64
+import netsvc
+
+from osv import fields, osv
+
+class rubros_so_wizard(osv.osv_memory):
+    _name ='rubros.so.wizard'
+    def print_consildatd_excel(self, cr, uid, ids, context=None):
+        sale_id = context.get('active_ids')
+        print "=====================", sale_id
+        so_obj = self.pool.get('sale.order')
+        so_browse = so_obj.browse(cr,uid,sale_id,context = context )[0]
+        print "\n\n##########test",so_browse,so_browse.date_order
+        
+        import base64
+        filename = 'rubros_sale_order_report.xls'
+        workbook = xlwt.Workbook()
+        style = xlwt.XFStyle()
+        tall_style = xlwt.easyxf('font:height 720;') # 36pt
+        # Create a font to use with the style
+        font = xlwt.Font()
+        font.name = 'Times New Roman'
+        font.bold = True
+        font.height = 250
+        style.font = font
+        worksheet = workbook.add_sheet('Sheet 1')
+        worksheet.write(0,0, 'SALE ORDER', style)
+        worksheet.write(0,1, so_browse.name)
+        worksheet.write(1,0, 'ORDER DATE', style)
+        worksheet.write(1,1, so_browse.date_order)
+        worksheet.write(2,0, 'CUSTOMER', style)
+        worksheet.write(2,1, so_browse.partner_id.name)
+        first_row = worksheet.row(1)
+        first_row.set_style(tall_style)
+        first_col = worksheet.col(1)
+        first_col.width = 256 * 30
+        second_row = worksheet.row(0)
+        second_row.set_style(tall_style)
+        second_col = worksheet.col(0)
+        second_col.width = 156 * 30
+        worksheet.write(4,0, 'NO', style)
+        worksheet.write(4,1, 'PRODUCT CODE', style)
+        worksheet.write(4,2, 'DESCRIPCION', style)
+        worksheet.write(4,3, 'QUANTITY', style)
+        worksheet.write(4,4, 'UOM', style)
+        worksheet.write(4,5, 'UNIT PRICE', style)
+        worksheet.write(4,6, 'PRICE SUBTOTAL', style)
+        row = 1
+        col = 0
+        row_2 = 5
+        total = 0.0
+        index = 1
+        for line in so_browse.order_line:
+            worksheet.write(row_2,0,index)
+            worksheet.write(row_2,1,line.product_id.code)
+            worksheet.write(row_2,2,line.product_id.name)
+            worksheet.write(row_2,3,line.product_uom_qty)
+            worksheet.write(row_2,4,line.product_uom.name)
+            worksheet.write(row_2,5,line.price_unit)
+            worksheet.write(row_2,6,line.price_subtotal)
+            row_2 += 1
+            index += 1
+        worksheet.write(row_2 + 1, 5, 'TOTAL',style)
+        worksheet.write(row_2 + 1, 6, so_browse.amount_total,style)
+        fp = StringIO()
+        workbook.save(fp)
+        export_id = self.pool.get('rubros.excel').create(cr, uid, {'excel_file': base64.encodestring(fp.getvalue()), 'file_name': filename}, context=context)
+        fp.close()
+        return {
+                        'view_mode': 'form',
+                        'res_id': export_id,
+                        'res_model': 'rubros.excel',
+                        'view_type': 'form',
+                        'type': 'ir.actions.act_window',
+                        'context': context,
+                        'target': 'new',
+                }
+        return True
+     
+rubros_so_wizard()
+
+
+class rubros_excel(osv.osv_memory):
+    _name= "rubros.excel"
+    _columns= {
+               'excel_file': fields.binary('Excel Report for Rubros Sale Order'),
+               'file_name': fields.char('Excel File', size=64),
+               }
+
+rubros_excel()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

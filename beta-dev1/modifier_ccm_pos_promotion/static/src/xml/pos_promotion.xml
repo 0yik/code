@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="promotion_popup" t-extend="promotion_popup">
+        <t t-jquery=".cancel" t-operation="replace">
+            <div class="button cancel" style="float:right;">
+                <i class="pe-7s-check"/> Ok
+            </div>
+        </t>
+    </t>
+</templates>

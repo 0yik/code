@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="admission_register_form" name="Admission Form">
+		<t t-call="website.layout">
+    		<div class="row">
+                <div class="col-md-12">
+                    <img class="img img-responsive" style="width: 30%; height:auto;margin:auto" src="/online_school_enrollment/static/src/img/logo.jpg"/>
+                </div>
+            </div>
+    		<section class="o_order_form" name="selection_registration_form">
+    			<div>
+    				<div class="col-md-12 mt16 mb16 text-center text-muted">
+    					 <h2>Registration Form</h2>
+    				</div>
+    			</div>
+                <div class="container">
+                    <div class="col-md-12 mt16 mb16 text-left text-muted">
+                        <div class="#">
+                            <div class="#">
+                                <h3 style="color:#0085ba;">Personal Particulars</h3>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="row mt16 mb16">
+                        <form action="/admission/register/create" method="post" class="o_website_form form-horizontal container-fluid mt32" enctype="multipart/form-data">
+                            <div class="col-sm-6">
+                                <div class="row" name="div_fullname_dob_age">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_fullname">
+                                        <label for="name" style="font-weight: 400;">Full Name</label>
+                                        <input type="text" class="form-control o_website_form_input" style="border-radius: 5px; height:43px; width:350px;" id="first_name" name="first_name" required="1" placeholder="First Name Middle Name Last Name"/><span style="color:red;" id="full_name_errmsg"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_dob">
+                                        <label style="font-weight: 400;">Date Of Birth</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="dob" id="dob" required="1" value=""/>
+                                        <span style="color:red;" id="dob_errmsg"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_age">
+                                        <label style="font-weight: 400;">Age</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control age" name="age" id="age" disabled="True"/>
+                                    </div>
+                                </div>
+                                <div class="row" name="div_gender_detail">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_gender">
+                                        <label for="gender" style="font-weight: 400;">Gender</label>
+                                        <select name="gender" id="gender" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                            <option value="male" name="male" id="male">Male</option>
+                                            <option value="female" name="female" id="female">Female</option>
+                                        </select>
+                                        <span style="color:red;" id="gender_errmsg"/>
+                                    </div>
+                                </div>
+                                <div class="row" name="div_school_course">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_school">
+                                        <label style="font-weight: 400;">School</label>
+                                        <select name="school_ids" id="school_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                            <option value="0">Select School</option>
+                                            <t t-foreach="school_ids or []" t-as="school">
+                                                <option t-att-value="school.id"><t t-esc="school.name"/></option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <span style="color:red;" id="school_ids_errmsg"/>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_course">
+                                        <label style="font-weight: 400;">Courses</label>
+                                        <select name="standard_ids" id="standard_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                            <option value="0">Select Courses</option>
+                                            <t t-foreach="standard_ids or []" t-as="standard">
+                                                <option t-att-value="standard.standard_id.id"><t t-esc="standard.standard_id.name"/>[<t t-esc="standard.division_id.name"/>]</option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <span style="color:red;" id="standard_ids_errmsg"/>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_intake">
+                                        <label style="font-weight: 400;">Intake</label>
+                                        <select name="year_ids" id="year_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                            <option value="select_intake">Select Intake</option>
+                                            <t t-foreach="year_ids or []" t-as="year">
+                                                <option t-att-value="year.id"><t t-esc="year.name"/></option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <span style="color:red;" id="year_ids_errmsg"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row" name="div_block_street">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_block">
+                                        <label style="font-weight: 400;">Block</label>
+                                        <textarea placeholder="Enter Address Here.." style="border-radius: 5px; height:43px; width:350px;" rows="2" class="form-control" name="address1" id="address1" required="1"></textarea>
+                                        <span style="color:red;" id="address1_errmsg"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_street">
+                                        <label style="font-weight: 400;">Street</label>
+                                        <textarea placeholder="Enter Address Here.." style="border-radius: 5px; height:43px; width:350px;" rows="2" class="form-control" name="address2" id="address2" required="1"></textarea>
+                                        <span style="color:red;" id="address2_errmsg"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_country">
+                                        <label style="font-weight: 400;">Country</label>
+                                        <select name="country_ids" id="country_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                            <option value="">Select Country</option>
+                                            <t t-foreach="country_ids or []" t-as="country">
+                                                <option t-att-value="country.id"><t t-esc="country.name"/></option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_state">
+                                        <label style="font-weight: 400;">State</label>
+                                        <select name="state_ids" id="state_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                            <option value="">Select State</option>
+                                            <t t-foreach="state_ids or []" t-as="state">
+                                                <option t-att-value="state.id"><t t-esc="state.name"/></option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_zip">
+                                        <label style="font-weight: 400;">Postal Code</label>
+                                        <input type="text" placeholder="Enter Zip Code Here.." style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="zip" id="zip"/>
+                                    </div>
+                                </div>                  
+                                <div class="row" name="div_phone_mobile_email">
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_phone">
+                                        <label style="font-weight: 400;">Phone Number</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" placeholder="Enter Phone Number Here.." class="form-control" name="phone" id="phone"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_mobile">
+                                        <label style="font-weight: 400;">Mobile</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" placeholder="Enter Mobile Here.." class="form-control" name="mobile" id="mobile"/>
+                                    </div>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_email">
+                                        <label style="font-weight: 400;">Email Address</label>
+                                        <input type="text" style="border-radius: 5px; height:43px; width:350px;" placeholder="Enter Email Address Here.." class="form-control" name="email" id="email" required="1"/>
+                                        <span style="color:red;" id="email_errmsg"/>
+                                    </div>
+                                </div>
+                                <div class="row" name="div_marital_status_detail">
+                                     <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_marital_status">
+                                        <label style="font-weight: 400;">Marital Status</label>
+                                        <select name="marital_status" id="marital_status" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                            <option value="unmarried" name="unmarried" id="unmarried">Single</option>
+                                            <option value="married" name="married" id="married">Married</option>
+                                            <option value="other" name="other" id="other">Others</option>
+                                        </select>
+                                    </div>
+                                    <span style="color:red;" id="marital_status_errmsg"/>
+                                    <div class="col-sm-12" style="margin: 0 0 20px 0;"></div>
+                                </div>
+                            </div>
+                            <p><hr style="display: block; width: 100%;"/></p>
+
+                            <div class="container">
+                                <div class="#">
+                                    <div class="col-md-12 mt32" name="div_tab">
+                                        <ul class="nav nav-tabs" role="tablist" name="tab_ul">
+                                            <li class="nav-item" name="li_general">
+                                                <a class="nav-link active" id="general_tab" name="general_tab" href="#general" role="tab" data-toggle="tab">General</a>
+                                            </li>
+                                            <li class="nav-item" name="li_qualification">
+                                                <a class="nav-link" id="qualification_tab" name="qualification_tab" href="#qualification_form" role="tab" data-toggle="tab">Qualification</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" name="main_div_general_phone_mobile_mother">
+                                            <div role="tabpanel" class="tab-pane fade in active" id="general" name="div_general_phone_mobile_mother">
+                                                <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_general_phone">
+                                                    <label style="font-weight: 400;">Phone No.</label>
+                                                    <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="phone_no" id="phone_no" required="1"/>
+                                                    <span style="color:red;" id="phone_no_errmsg"/>
+                                                </div>
+                                                <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_general_mobile">
+                                                    <label style="font-weight: 400;">Mobile No.</label>
+                                                    <input type="text" style="border-radius: 5px; height:43px; width:350px;" class="form-control" name="mobile_no" id="mobile_no" required="1"/>
+                                                    <span style="color:red;" id="mobile_no_errmsg"/>
+                                                </div>
+                                                <div class="col-sm-12" style="margin: 0 0 20px 0;" name="div_general_mother">
+                                                    <label style="font-weight: 400;">Mother Tongue</label>
+                                                    <select name="mother_tongue_ids" id="mother_tongue_ids" style="border-radius: 5px; height:43px; width:350px;" class="form-control">
+                                                        <option value="">Select Mother Tongue</option>
+                                                        <t t-foreach="mother_tongue_ids or []" t-as="mother_toungue">
+                                                            <option t-att-value="mother_toungue.id"><t t-esc="mother_toungue.name"/></option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="qualification_form" name="div_qualification_form">
+                                                <div class="row">
+                                                    <div class="container" name="div_qualification_label">
+                                                        <div class="col-md-12 mb16 text-left text-muted">
+                                                            <div class="#">
+                                                                <div class="#">
+                                                                    <h3 style="color:#0085ba;">Qualification</h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div calss="row" name="div_qualification_value">
+                                                            <div class="col-sm-12" style="margin: 0 0 20px 0;">
+                                                                <label style="font-weight: 400;">Qualification</label>
+                                                                <input type="text" style="border-radius: 5px; height:43px; width:350px;" placeholder="Enter Qualification Here.." class="form-control" name="qualification_remark" id="qualification_remark"/>
+                                                            </div>        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                            <div class="modal fade" id="payment_selection"
+                            tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                                <div class="modal-dialog slot_event">
+                                    <t t-name="total_event">
+                                        <div class="modal-content ">
+                                            <div class="modal-header booking_heading_popup">
+                                                <button type="button"
+                                                    class="close fa fa-close close_custom redirect_page_class"
+                                                    data-dismiss="modal" aria-hidden="true"></button>
+                                                <h4 class="modal-title" id="myModalLabel">
+                                                    Close
+                                                    <span></span>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="field-Contact group con_name_margin">
+                                                    <label style="font-weight: 400;">Registration Fee</label><br/>
+                                                    <label style="font-weight: 400;">Payment Option</label>
+                                                    <select name="payment_option" id="payment_option" style="border-radius: 5px; height:43px; width:350px;" class="form-control" required="1">
+                                                        <option value="manually" name="manually" id="manually">Cash/NETS/Cheque at Pergas Office</option>
+                                                    </select>
+                                                </div>
+                                                <div class="row text-center mt64">
+                                                    <button type="submit" id="submit_admission_register" class="btn btn-lg btn-info" name="submit_admission_register" style="border-radius: 5px; height:43px; background-color: #494949;border-color: #494949;" value="Save">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="declaration_form"
+                            tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                                <div class="modal-dialog slot_event">
+                                    <t t-name="total_event">
+                                        <div class="modal-content ">
+                                            <div class="modal-header booking_heading_popup">
+                                                <button type="button"
+                                                    class="close fa fa-close close_custom redirect_page_class"
+                                                    data-dismiss="modal" aria-hidden="true"></button>
+                                                <h4 class="modal-title" id="myModalLabel">
+                                                    Close
+                                                    <span></span>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-lg-12" style="font-size:16px;">
+                                                            <div class="title" style="margin: 20px 0px;">
+                                                                <span style="border-bottom: 1px solid #000;font-size: 20px;">Registration Declaration</span>
+                                                            </div>  
+                                                            <div class="#">
+                                                                <p>1. Please ensure that several procedures are correctly executed before sending the application form. Any incomplete forms will not be processed.</p>
+                                                                <p>2. Upon registration and payment, students or their representatives are deemed to have read and accepted the following terms and conditions:</p>
+                                                                <div style="margin-left: 40px;">
+                                                                    <p>a. Please fill up the information succinctly on every appropriate space.</p>
+                                                                    <p>b. Please ensure that all the required information is complete and correct.</p>
+                                                                    <p>c. Please forward copies of academic certificates, examination, transcripts as well as relevant certificates. (SLPI &amp; DPI only)</p>
+                                                                </div>
+                                                            </div>  
+                                                            <div class="sub-heading">
+                                                                <span style="font-size: 18px;">Payment</span>
+                                                                <ul>
+                                                                    <li style="line-height: 30px;">Only completed form will be processed fully.</li>
+                                                                    <li style="line-height: 30px;color: #87ceeb;">Payment can be made by cash, NETS, PayPal or</li>
+                                                                    <li style="line-height: 30px;">‘Crossed’ cheque shall be written in name of <strong>‘PERGAS’</strong>.</li>
+                                                                    <li style="line-height: 30px;"><strong>Registration</strong> fee that has been paid <strong>will not be returned</strong> and cannot be transferred to any person.</li>
+                                                                </ul>
+                                                            </div>  
+                                                            <div class="ck-box">
+                                                                <p><span style="margin-right: 5px;">
+                                                                        <input type="checkbox" name="first_checkbox" id="first_checkbox" value="Bike"/>
+                                                                    </span>I hereby certify that I have read and understood all the terms and conditions set forth in this application and all the information I have furnished in this form are true and accurate. I understand that any false or misleading statement may result to the application being rejected.</p>
+                                                                <p><span style="margin-right: 5px;">
+                                                                        <input type="checkbox" name="second_checkbox" value="Bike" id="second_checkbox"/>
+                                                                    </span>Your registration is subject to the agreement of the terms and conditions governing personal data protection, which can be accessed via <a href="https://www.pergas.org.sg" style="color: #87ceeb; text-decoration: underline;">www.pergas.org.sg.</a></p>
+                                                                <p><span style="margin-right: 5px;">
+                                                                        <input type="checkbox" name="third_checkbox" value="Bike" id="third_checkbox"/>
+                                                                    </span>I confirm that I have read, understood and agreed with the Declarations.</p>
+                                                            </div>
+                                                        </div>  
+                                                    </div>  
+                                                </div>
+                                                <div class="row text-center mt64">
+                                                    <button type="button" id="payment_selection_button" class="btn btn-lg btn-info payment_selection_button" name="payment_selection_button" style="border-radius: 5px; height:43px; background-color: #494949;border-color: #494949;" value="Save">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <div class="row" name="open_declaration_form_button_div">
+                                <div class="col-md-6 text-right">
+                                    <a class="open_declaration_form_button" id="open_declaration_form_button"  name="open_declaration_form_button" ><button type="button" class="btn btn-lg btn-info" style="border-radius: 5px; height:43px; background-color: #494949;border-color: #494949;" value="Save">Submit</button></a>
+                                </div>
+    						</div>
+                        </form>
+        			</div>
+                </div>
+            </section>
+    	</t>
+	</template>
+</odoo>

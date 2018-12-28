@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+	
+	<t t-extend="PaymentScreenWidget">
+        <t t-jquery=".payment-buttons" t-operation="append">
+            <div class='button sale-debit-customer'>
+                <i class='fa fa-file-text-o' />
+                <span class='sale-debit'>
+                    Customer Debit Payment
+                </span>
+            </div>
+        </t>
+    </t>
+</template>
+

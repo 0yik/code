@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : <https://store.webkul.com/license.html/> -->
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PrinterWidget">
+        <div class="printer_select">
+            <center >
+                <b>
+                    <p class="all_connected" style="color:rgb(94, 185, 55);height:24px">
+                        <i class='fa fa-fw fa-print' style="font-size: 20px;margin-left: 35px;-webkit-box-reflect: left 5px;"></i>
+                        <i class='fa fa-fw fa-print' style="font-size: 20px;margin-top: -8px;margin-left: 6px;"></i>
+                    </p>
+                    <p class="all_connecting" style="height:24px">
+                        <i class="fa fa-fw fa-spin fa-spinner" style="font-size:21px;color:white"></i>
+                    </p>
+                    <p class="all_disconnected" style="color:#c53400;height:24px;">
+                        <i class='fa fa-fw fa-print' style="font-size: 18px"></i>
+                        <i class='fa fa-fw fa-print' style="font-size: 18px;margin-top: -8px;margin-left: 6px;"></i>
+                        <i class='fa fa-fw fa-print' style="font-size: 18px;margin-top: 12px;position: absolute; margin-left: -38px;"></i>
+                    </p>
+                </b>
+            </center> 
+            <div class="printer_dropdown" >
+                <ul>
+                    <t t-foreach="widget.pos.active_printers" t-as="printer">
+                        <li class="printer_name" t-att-id="printer.config.id" >
+                            <center>
+                                <div class="printer_status" id='_index'  t-att-id="printer.config.id">
+                                    <div class="printer_connected">
+                                        <t t-esc="printer.config.short_code"/>
+                                        <i class='fa fa-fw fa-sitemap'></i>
+                                    </div>
+                                    <div class="printer_connecting oe_hidden">
+                                        <t t-esc="printer.config.short_code"/>
+                                        <i class='fa fa-fw fa-spin fa-spinner'></i>
+                                    </div>
+                                    <div class="printer_disconnected oe_hidden">
+                                        <t t-esc="printer.config.short_code"/>
+                                        <i class='fa fa-fw fa-sitemap'></i>
+                                    </div>
+                                </div>
+                            </center>
+                        </li>
+                    </t>
+                </ul>
+            </div>
+        </div> 
+    </t>
+   
+    <t t-name="DuplicateXmlReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <t t-if='receipt.company.logo'>
+                <img t-att-src='receipt.company.logo' />
+                <br/>
+            </t>
+            <t t-if='!receipt.company.logo'>
+                <h1><t t-esc='receipt.company.name' /></h1>
+                <br/>
+            </t>
+            <div font='b'>
+                <t t-if='receipt.company.contact_address'>
+                    <div><t t-esc='receipt.company.contact_address' /></div>
+                </t>
+                <t t-if='receipt.company.phone'>
+                    <div>Tel:<t t-esc='receipt.company.phone' /></div>
+                </t>
+                <t t-if='receipt.company.vat'>
+                    <div>VAT:<t t-esc='receipt.company.vat' /></div>
+                </t>
+                <t t-if='receipt.company.email'>
+                    <div><t t-esc='receipt.company.email' /></div>
+                </t>
+                <t t-if='receipt.company.website'>
+                    <div><t t-esc='receipt.company.website' /></div>
+                </t>
+                <t t-if='receipt.header_xml'>
+                    <t t-raw='receipt.header_xml' />
+                </t>
+                <t t-if='!receipt.header_xml and receipt.header'>
+                    <div><t t-esc='receipt.header' /></div>
+                </t>
+                <t t-if='receipt.cashier'>
+                    <div class='cashier'>
+                        <div>--------------------------------</div>
+                        <div>Served by <t t-esc='receipt.cashier' /></div>
+                    </div>
+                </t>
+            </div>
+            <br /><br />
+
+            <!-- Orderlines -->
+
+            <div class='orderlines' line-ratio='0.6'>
+                <t t-foreach='receipt.orderlines' t-as='line'>
+                    <t t-set='simple' t-value='line.discount === 0 and line.unit_name === "Unit(s)" and line.quantity === 1' />
+                    <t t-if='simple'>
+                        <line>
+                            <left><t t-esc='line.product_name_wrapped[0]' /></left>
+                            <right><value><t t-esc='line.price_display' /></value></right>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductNameLines"/>
+                    </t>
+                    <t t-if='!simple'>
+                        <line><left><t t-esc='line.product_name_wrapped[0]' /></left></line>
+                        <t t-call="XmlReceiptWrappedProductNameLines"/>
+                        <t t-if='line.discount !== 0'>
+                            <line indent='1'><left>Discount: <t t-esc='line.discount' />%</left></line>
+                        </t>
+                        <line indent='1'>
+                            <left>
+                                <value value-decimals='3' value-autoint='on'>
+                                    <t t-esc='line.quantity' />
+                                </value>
+                                <t t-if='line.unit_name !== "Unit(s)"'>
+                                    <t t-esc='line.unit_name' /> 
+                                </t>
+                                x 
+                                <value value-decimals='2'>
+                                    <t t-esc='line.price' />
+                                </value>
+                            </left>
+                            <right>
+                                <value><t t-esc='line.price_display' /></value>
+                            </right>
+                        </line>
+                    </t>
+                </t>
+            </div>
+
+            <!-- Subtotal -->
+
+            <t t-set='taxincluded' t-value='Math.abs(receipt.subtotal - receipt.total_with_tax) &lt;= 0.000001' />
+            <t t-if='!taxincluded'>
+                <line><right>--------</right></line>
+                <line><left>Subtotal</left><right> <value><t t-esc="receipt.subtotal" /></value></right></line>
+                <t t-foreach='receipt.tax_details' t-as='tax'>
+                    <line>
+                        <left><t t-esc='tax.name' /></left>
+                        <right><value><t t-esc='tax.amount' /></value></right>
+                    </line>
+                </t>
+            </t>
+
+            <!-- Total -->
+
+            <line><right>--------</right></line>
+            <line class='total' size='double-height'>
+                <left><pre>        TOTAL</pre></left>
+                <right><value><t t-esc='receipt.total_with_tax' /></value></right>
+            </line>
+            <br/><br/>
+
+            <!-- Payment Lines -->
+
+            <t t-foreach='paymentlines' t-as='line'>
+                <line>
+                    <left><t t-esc='line.name' /></left>
+                    <right><value><t t-esc='line.get_amount()'/></value></right>
+                </line>
+            </t>
+            <br/> 
+
+            <line size='double-height'>
+                <left><pre>        CHANGE</pre></left>
+                <right><value><t t-esc='receipt.change' /></value></right>
+            </line>
+            <br/>
+            
+            <!-- Extra Payment Info -->
+
+            <t t-if='receipt.total_discount'>
+                <line>
+                    <left>Discounts</left>
+                    <right><value><t t-esc='receipt.total_discount'/></value></right>
+                </line>
+            </t>
+            <t t-if='taxincluded'>
+                <t t-foreach='receipt.tax_details' t-as='tax'>
+                    <line>
+                        <left><t t-esc='tax.name' /></left>
+                        <right><value><t t-esc='tax.amount' /></value></right>
+                    </line>
+                </t>
+                <line>
+                    <left>Total Taxes</left>
+                    <right><value><t t-esc='receipt.total_tax'/></value></right>
+                </line>
+            </t>
+
+            <div class='before-footer' />
+
+            <!-- Footer -->
+            <t t-if='!receipt.footer_xml and receipt.footer'>
+                <br/>
+                <t t-esc='receipt.footer' />
+                <br/>
+                <br/>
+            </t>
+
+            <div class='after-footer' />
+            
+            <br/>
+            <div font='b'>
+                <div><t t-esc='receipt.name' /></div>
+                <div><t t-esc='receipt.date.localestring' /></div>
+
+                <div>***********************************</div>
+                <div>Duplicate Receipt
+                </div>
+                <div>***********************************</div>
+            </div>
+
+        </receipt>
+    </t>
+
+</templates>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<record id="reconfirm_booking_form_view" model="ir.ui.view">
+		<field name="name">Reconfirm Booking</field>
+		<field name="model">reconfirm.booking</field>
+		<field name="arch" type="xml">
+			<form string="Reconfirm">
+				<h3><field name='description' nolabel="1" readonly='1'/></h3>
+				<footer>
+					<button name="booking_reconfirm" string="Confirm" type="object" class="btn-primary" />
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+	
+	
+</odoo>

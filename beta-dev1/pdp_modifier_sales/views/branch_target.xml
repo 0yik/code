@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_branch_target_form_inherit" model="ir.ui.view">
+            <field name="name">custom.branch.target.inherit</field>
+            <field name="model">branch.target</field>
+            <field name="inherit_id" ref="pdp_sales_target_achievement.branch_target_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+					<button name="count_daily_target" string="Compute Daily" type="object" class="btn-primary"/>
+				</xpath>
+				<xpath expr="//header" position="inside">
+					<button name="count_daily_so" string="Today Total SO" type="object" class="btn-primary"/>
+				</xpath>
+				 <xpath expr="//sheet/notebook/page[2]/field[@name='target_id']/tree/field[@name='target']" position="after">
+					<field name="daily_target"/>
+				</xpath>
+				<xpath expr="//sheet/notebook/page[2]/field[@name='target_id']/tree/field[@name='achievement']" position="after">
+					<field name="daily_achivement"/>
+				</xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

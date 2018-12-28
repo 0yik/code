@@ -1,0 +1,35 @@
+<odoo>
+    <menuitem name="Purchases"
+              id="purchase.menu_purchase_root"
+              groups="account.group_account_user,account.group_account_manager,purchase.group_purchase_manager,purchase.group_purchase_user"
+              web_icon="purchase,static/description/icon.png"
+              sequence="25"/>
+
+    <record id="purchase_order_form_view_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <button name="button_confirm" states="sent" position="attributes">
+                <attribute name="groups">purchase.group_purchase_manager,account.group_account_manager</attribute>
+            </button>
+            <button name="button_confirm" states="draft" position="attributes">
+                <attribute name="groups">
+                    purchase.group_purchase_manager,account.group_account_manager
+                </attribute>
+            </button>
+        </field>
+    </record>
+
+    <record id="modifier_teo_purchase_form_view_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.modifier.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="modifier_teo_purchase_order.purchase_order_view_form"/>
+        <field name="arch" type="xml">
+            <button name="action_rfq_verify" states="draft" position="attributes">
+                <attribute name="groups">purchase.group_purchase_manager,account.group_account_manager</attribute>
+            </button>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem name="Sales to Invoice" id="sale.menu_sale_order_upselling"  groups="kimhuat_modifier_fields.make_invisible"/>
+    </data>
+</odoo>

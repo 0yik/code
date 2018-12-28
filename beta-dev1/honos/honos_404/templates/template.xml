@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="honos_404" inherit_id="website.404">
+		<xpath expr="//div[@class='container']" position="replace">
+					<div class="container">
+						<div class="honos_404_left">
+							<h1 class="mt32 honos_404_font">404</h1>
+							<p class="honos_404_page">THIS PAGE YOU REQUESTED COULD NOT BE FOUND</p>
+							<ul class="honos_404_ul">
+								<li class="honos_404_li">
+									<a class="common-btn" href="/">Homepage</a>
+									<a class="common-btn" href="/page/website.contactus/">Contact Us</a>
+								</li>
+							</ul>
+						</div>
+						<div class="honos_404_right">
+							<img src="/honos_404/static/src/img/404.jpg"></img>
+						</div>
+					</div>
+			
+				<t t-if="request.debug">
+					<t t-call="website.http_error_debug" />
+				</t>
+			
+		</xpath>
+	</template>
+</odoo>

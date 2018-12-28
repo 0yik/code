@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_anchor_type,Anchor type,model_anchor_type,,1,1,1,1
+access_anchor_master,Anchor master,model_anchor_master,,1,1,1,1
+access_anchor_size,Anchor size,model_anchor_size,,1,1,1,1
+access_time_slot_start,Time slot start,model_time_slot_start,,1,1,1,1
+access_time_slot_start_end,Time slot start end,model_time_slot_start_end,,1,1,1,1
+access_timeslot_master,Timeslot master,model_timeslot_master,,1,1,1,1
+access_project_booking_anchor,Project booking anchor,model_project_booking_anchor,,1,1,1,1
+access_timeslot_booking,Timeslot booking,model_timeslot_booking,,1,1,1,1
+access_equipment_equipment,Equipment equipment,model_equipment_equipment,,1,1,1,1
+access_holiday_holiday,Holiday holiday,model_holiday_holiday,,1,1,1,1
+access_time_slot_end,Time slot end,model_time_slot_end,,1,1,1,1
+access_pt_reminder,Pt reminder,model_pt_reminder,,1,1,1,1
+access_res_users,Res Users Hilti Admin,base.model_res_users,hilti_modifier_accessrights.group_hilti_admin,1,1,1,1
+access_res_users_account_manager,Res Users Account Manager,base.model_res_users,hilti_modifier_accessrights.group_hilti_account_manager,1,1,0,0
+access_anchor_size_type,access_anchor_size_type,model_anchor_size_type,,1,1,1,1
+access_res_users_tester,Res Users Account tester,base.model_res_users,hilti_modifier_accessrights.group_hilti_tester,1,1,0,0

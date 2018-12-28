@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="assets_login" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet"
+				href="/hilti_modifier_loginsignup/static/src/css/web_login_style.css" />
+			<script type="text/javascript"
+				src="/hilti_modifier_loginsignup/static/src/js/custom.js"></script>
+		</xpath>
+	</template>
+
+	<template id="website.show_sign_in" customize_show="True"
+		inherit_id="website.layout" name="Show Sign In">
+		<xpath expr="//ul[@id='top_menu']" position="inside">
+			<li groups="base.group_public">
+				<a t-attf-href="/web/login">
+					<span class="sign_in_user">
+						<i class="fa fa-user" aria-hidden="true" style="color: #231f20;"></i>
+					</span>
+					<b>Sign in</b>
+				</a>
+			</li>
+		</xpath>
+	</template>
+
+
+	<template id="login_layout" inherit_id="web.login_layout"
+		name="Login Layout Inherit">
+		<xpath expr="//t[@t-set='body_classname']" position="replace">
+			<t t-set="body_classname" t-value="''" />
+		</xpath>
+
+		<xpath expr="//div[@class='row']" position="attributes">
+			<attribute name="class">body_login</attribute>
+		</xpath>
+
+		<xpath expr="//div[@class='col-md-6 col-md-offset-3 o_database_list']"
+			position="before">
+			<div id="background-wrapper" t-attf-style="background-image: url('#{background_src}');"></div>
+		</xpath>
+
+		<xpath expr="//div[@class='col-md-6 col-md-offset-3 o_database_list']"
+			position="attributes">
+			<attribute name="class">col-lg-3 col-md-4 col-sm-4 col-xs-11
+				o_database_list
+			</attribute>
+		</xpath>
+
+		<xpath expr="//div[@class='text-center']/img" position="attributes">
+			<attribute name="class">company_logo</attribute>
+		</xpath>
+	</template>
+
+	<template id="login" inherit_id="web.login" name="Login Inherit">
+		<xpath expr="//form[@class='oe_login_form']" position="replace">
+			<div class="login_form_main">
+				<div class="heading_title text-center">
+					<h2>SIGN IN</h2>
+				</div>
+				<form class="oe_login_form form_custom" role="form"
+					t-attf-action="/web/login{{ '?debug' if debug else '' }}" method="post"
+					onsubmit="this.action = this.action + location.hash" border="2">
+					<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+
+					<div class="form-group field-login group">
+						<input type="text" name="login" t-att-value="login" id="login"
+							class="form-control" autofocus="autofocus" autocapitalize="off"
+							placeholder="Enter your email address">
+							<span class="highlight"></span>
+							<span class="bar"></span>
+							<label>Email</label>
+						</input>
+						<span class="email_validation_blanck">Please fill in Email field.</span>
+					</div>
+
+					<div class="form-group field-password group">
+						<input type="password" name="password" id="password" class="form-control"
+							autocomplete="current-password" t-att-autofocus="'autofocus' if login else None"
+							maxlength="4096" placeholder="Enter your password">
+							<span class="highlight"></span>
+							<span class="bar"></span>
+							<label>Password</label>
+						</input>
+						<span class="email_validation_blanck_password">Please fill in password field.</span>
+					</div>
+
+					<p class="alert alert-danger" t-if="error">
+						<t t-esc="error" />
+					</p>
+					<p class="alert alert-success" t-if="message">
+						<t t-esc="message" />
+					</p>
+
+					<input type="hidden" name="redirect" t-att-value="redirect" />
+					<div class="clearfix oe_login_buttons sign_up_custom" name="submit_login">
+						<button type="submit"
+							class="btn btn-primary custom_button_login text-center">
+							SIGN IN
+							<i class="fa fa-long-arrow-right pull-right fa_padding hidden" />
+						</button>
+					</div>
+					<div class="clearfix oe_login_buttons reg_forgot text-center">
+						<a t-if="signup_enabled" t-attf-href="/web/signup?{{ keep_query() }}"
+							class="btn btn-link">Register</a>
+						<t t-if="signup_enabled">
+							<t t-if="reset_password_enabled">
+								|
+							</t>
+						</t>
+						<a t-if="reset_password_enabled" t-attf-href="/web/reset_password?{{ keep_query() }}"
+							class="btn btn-link">Forgot Password?</a>
+					</div>
+
+				</form>
+			</div>
+		</xpath>
+
+	</template>
+
+	<template id="reset_remove" inherit_id="auth_signup.login"
+		name="Sign up - Reset Password">
+		<xpath expr="//a[@t-if='signup_enabled']" position="replace" />
+		<xpath expr="//a[@t-if='reset_password_enabled']" position="replace" />
+	</template>
+	<template id="website.footer_custom" inherit_id="website.layout"
+		name="Footer">
+		<xpath expr="//div[@id='footer']" position="inside">
+			<div class="text-custom-color text-center" itemscope="itemscope">
+				Copyright
+				&amp;copy; 2017 HILTI All rights reserved.
+			</div>
+		</xpath>
+	</template>
+
+	<template id="website.layout_footer_copyright" inherit_id="website.layout"
+		name="Footer Copyright">
+	</template>
+
+	<template id="website.footer_default" inherit_id="website.footer_custom"
+		name="Automatic Footer">
+	</template>
+
+
+	<template id="auth_signup.fields" name="Auth Signup/ResetPassword form fields">
+		<div class="form-group field-login width_register_form group">
+			<input type="text" name="login" t-att-value="login" id="login"
+				class="form-control" autofocus="autofocus" autocapitalize="off"
+				t-att-readonly="'readonly' if only_passwords else None" placeholder="Enter your email address">
+				<span class="highlight"></span>
+				<span class="bar"></span>
+				<label>Email</label>
+			</input>
+			<span class="email_validation">Please enter valid email address.</span>
+			<span class="email_validation_bl_re">Please fill in Email field.</span>
+		</div>
+
+		<div class="form-group field-name width_register_form group">
+			<input type="text" name="name" t-att-value="name" id="name"
+				class="form-control" placeholder="Enter your name"
+				t-att-readonly="'readonly' if only_passwords else None"
+				t-att-autofocus="'autofocus' if login and not only_passwords else None">
+				<span class="highlight"></span>
+				<span class="bar"></span>
+				<label>Name</label>
+			</input>
+			<span class="name_validation_bl_re">Please fill in name field.</span>
+		</div>
+
+		<div class="form-group field-password width_register_form group">
+			<input type="password" name="password" id="password" class="form-control"
+				t-att-autofocus="'autofocus' if only_passwords else None"
+				placeholder="Enter your password">
+				<span class="highlight"></span>
+				<span class="bar"></span>
+				<label>Password</label>
+			</input>
+			<span class="password_validation_bl_re">Please fill in Password field.</span>
+			<span class="password_validation_character">Your password must contain a combination of alphabets and numbers. Please try again.</span>
+			<span class="password_validation_character_total">Your password must be at least 6 characters long. Please try again.</span>
+		</div>
+
+		<div class="form-group field-confirm_password width_register_form group">
+			<input type="password" name="confirm_password" id="confirm_password"
+				class="form-control" placeholder="Re-enter your password">
+				<span class="highlight"></span>
+				<span class="bar"></span>
+				<label>Re-enter Password</label>
+			</input>
+			<span class="pass_validation">These passwords don't match. Try again?</span>
+			<span class="repassword_validation_bl_re">Please fill in Re-enter Password field.</span>
+		</div>
+		<!-- <div class="form-group field-boolean width_register_form"> <input 
+			type="checkbox" name="is_account" class="form-controll-boolean" value="account"> 
+			I have an Account Number</input> </div> -->
+		<div t-if="not only_passwords" class="form-group field-account width_register_form group">
+			<input type="text" name="account_number" id="account_number"
+				class="form-control open_tool_tip" placeholder="Enter your account number"
+				data-toggle="tooltip" data-placement="left"
+				title="Please get your company's account number from your respective account manager.">
+				<span class="highlight"></span>
+				<span class="bar"></span>
+				<label>Account Number</label>
+			</input>
+			<span class="acc_validation">Account number should contain only numbers.</span>
+			<span class="acc_validation_digit">Account number must consist of 8 numbers.</span>
+			<span class="acc_validation_bl_re">Please fill in Account Number field.</span>
+		</div>
+	</template>
+
+	<template id="auth_signup.signup" name="Sign up login">
+		<t t-call="web.login_layout">
+			<div class="register_form_main">
+				<div class="heading_title text-center">
+                                    <h2>REGISTER</h2>
+                                    <div class="project_text" align="left">
+                                        Dear Customers, please enter the information below for registration.
+                                    </div>
+				</div>
+				<form class="oe_signup_form" role="form" method="post" t-if="not message">
+					<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+					<t t-call="auth_signup.fields">
+						<t t-set="only_passwords" t-value="bool(token)" />
+					</t>
+
+					<p class="alert alert-danger" t-if="error">
+						<t t-esc="error" />
+					</p>
+					<input type="hidden" name="redirect" t-att-value="redirect" />
+					<input type="hidden" name="token" t-att-value="token" />
+					<div
+						class="clearfix oe_login_buttons width_register_form send_cancel_padding">
+						<button type="submit"
+							class="btn btn-primary custom_button_login text-center registerd_button">
+							REGISTER
+							<i class="fa fa-long-arrow-right pull-right fa_padding hidden" />
+						</button>
+					</div>
+				</form>
+			</div>
+		</t>
+	</template>
+
+	<template id="auth_signup.reset_password" name="Reset password">
+		<t t-call="web.login_layout">
+			<div class="register_form_main">
+				<div class="heading_title text-center">
+					<h2>FORGOT PASSWORD</h2>
+				</div>
+				<div t-if="message" class="row">
+				    <div class="col-md-12">
+						<p class="alert alert-success register_form_main" t-if="message">
+							<t t-esc="message" />
+						</p>
+				    </div>
+				    <div class="col-md-12">
+						<a href="/web/login" class="btn btn-primary custom_reset_button_cancel pull-left" role="button">CANCEL</a>
+					</div>
+				</div>
+
+				<form class="oe_reset_password_form" role="form" method="post"
+					t-if="not message">
+					<p class="margin_class_p">Please enter your Email address here and
+						create your new
+						password by following
+						the instuctions sent to your Email address.
+					</p>
+					<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+
+					<t t-if="token and not invalid_token">
+						<t t-call="auth_signup.fields">
+							<t t-set="only_passwords" t-value="1" />
+						</t>
+					</t>
+
+					<t t-if="not token">
+						<div class="form-group field-login width_register_form group">
+							<input type="text" name="login" t-att-value="login" id="login"
+								class="form-control" placeholder="Enter your email address"
+								autofocus="autofocus" required="required" autocapitalize="off">
+								<span class="highlight"></span>
+								<span class="bar"></span>
+								<label>Email</label>
+							</input>
+							<span class="email_validation_reset">Please enter valid Email address.</span>
+							<span class="email_validation_bl_re_reset">Please fill in Email field.</span>
+						</div>
+					</t>
+
+					<p class="alert alert-danger register_form_main" t-if="error">
+						<t t-esc="error" />
+					</p>
+					<input type="hidden" name="redirect" t-att-value="redirect" />
+					<input type="hidden" name="token" t-att-value="token" />
+					<div
+						class="clearfix oe_login_buttons width_register_form send_cancel_padding">
+						<button type="submit"
+							class="btn btn-primary custom_reset_button pull-right">
+							SEND
+							<i class="fa fa-long-arrow-right pull-right fa_padding hidden" />
+						</button>
+						<a t-if="not token" t-attf-href="/web/login?{{ keep_query() }}"
+							class="btn btn-primary custom_reset_button_cancel pull-left"
+							role="button">
+							CANCEL
+						</a>
+						<a t-if="invalid_token" href="/web/login"
+							class="btn btn-primary custom_reset_button_cancel pull-left"
+							role="button">
+							CANCEL
+						</a>
+					</div>
+
+				</form>
+			</div>
+		</t>
+	</template>
+
+</odoo>

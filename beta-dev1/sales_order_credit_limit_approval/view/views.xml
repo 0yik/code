@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_order_form_view_add_approve_limit" model="ir.ui.view">
+            <field name="name">sale.order.form.add.approve.limit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <field name="show_approve_over_limit" invisible="1"></field>
+                    <field name="write_date" invisible="1"></field>
+                    <button name="action_approve_limit" string="Approve" type="object" attrs="{'invisible': ['|','|',('show_approve_over_limit', '=', False),('write_date', '=', None),('state','!=','draft')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="approved_by" readonly="True"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="telering_view_sales_config" model="ir.ui.view">
+            <field name="name">telering sale settings</field>
+            <field name="model">sale.config.settings</field>
+            <field name="inherit_id" ref="sales_team.view_sale_config_settings"/>
+            <field name="arch" type="xml">
+                <div id="main" position="inside">
+                    <group string="Sales Order Approval" name="approve_setting">
+                        <field name="credit_limit_approver" widget="many2many_tags" string="Credit Limit Approver"/>
+                    </group>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

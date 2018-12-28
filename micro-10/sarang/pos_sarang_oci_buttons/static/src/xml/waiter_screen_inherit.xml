@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<!--t t-extend="ButtonExitHighPriority">
+		<t t-jquery="button" t-operation="replace">
+
+		</t>
+	</t>
+	<t t-extend="ButtonHighPriority">
+		<t t-jquery="button" t-operation="replace">
+
+		</t>
+	</t-->
+	<t t-extend="Orderline">
+		<t t-jquery="div[class='control-button priority highlight']" t-operation="replace">
+		</t>
+	</t>
+	<t t-extend="NumpadWidget">
+		<t t-jquery="button[class='input-button numpad-backspace']" t-operation="replace">
+		</t>
+		<t t-jquery="button[data-mode='price']" t-operation="replace">
+			<button class="input-button numpad-backspace">
+                <img style="pointer-events: none;" src="/point_of_sale/static/src/img/backspace.png" width="24" height="21" />
+            </button>
+		</t>
+		<!--<t t-jquery="button[data-mode='discount']" t-operation="replace">-->
+			<!--<button class="mode-button" data-mode='price'>Price</button>-->
+		<!--</t>-->
+	</t>
+</templates>

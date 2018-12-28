@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="course_registration_modal" name="Course Register Modal">
+        <!-- Modal -->
+        <div id="course_registration" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>ATTENTION!</h4>
+                        <p>Online registration has to be submitted at least 3 working days prior to class commencement.</p>
+                        <p>ATTS reserves the rights to reschedule / cancel the class</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" href="#course_registration_thanks">ok</button>
+                        <button type="button" class="btn ml8" data-dismiss="modal">cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Thanks Modal -->
+        <div id="course_registration_thanks" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Registration completed successfully</h4>
+                        <p>The seat has been reserved and we will contact you within 2 working days.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-primary" href="/">ok</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="course_registration_individual" name="Course Register - Individual">
+        <t t-call="website.layout">
+            <div t-attf-class="container course_registration #{register_status}">
+                <t t-call="theme_atts.course_registration_modal"/>
+                <div class="row mt32">
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <section class="as-t-title pull-left">
+                                    <h2 class="o_default_snippet_text">Course Register <span>(Individual)</span></h2>
+                                </section>
+                            </div>
+                            <div class="col-md-12">
+                                <h4 class="as-sub-title">Delegate details</h4>
+                            </div>
+                        </div>
+                        <form action="" method="post" class="s_website_form form-horizontal mt32" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div t-attf-class="form-group form-field o_website_form_required_custom #{course and 'hidden'}">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="course_id">Course</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <select class="form-control o_website_form_input" name="course_id" required="">
+                                        <t t-foreach="all_courses or []" t-as="c">
+                                            <option t-att-value="c.id" t-att-selected="c.id == (course and course.id or -1)">
+                                                <t t-esc="c.name" />
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="name">Name</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input" name="name" required=""/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="nric_passport">NRIC/Passport</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input" t-att-value="student.nric_passport" name="nric_passport" required=""/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field div_nationality o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="nationality">Nationality</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <select class="form-control o_website_form_input" name="nationality" required="">
+                                        <option value="singapore_citizen" t-att-selected="student.nationality == 'singapore_citizen'">Singapore Citizen</option>
+                                        <option value="singapore_permanent_resident" t-att-selected="student.nationality == 'singapore_permanent_resident'">Singapore Permanent Resident</option>
+                                        <option value="others" t-att-selected="student.nationality == 'others'">Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div t-attf-class="form-group form-field hidden div_country">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="country">Country</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <select class="form-control o_website_form_input" name="country_id" id="country_id">
+                                        <option value="">Country...</option>
+                                        <t t-foreach="countries" t-as="c">
+                                            <option t-att-value="c.id" t-att-selected="c.id == (student.country_id and student.country_id.id or -1)">
+                                                <t t-esc="c.name" />
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom" id="individual_dob">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="date_of_birth">Date of Birth</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input disabled" name="date_of_birth" t-att-value="student.date_of_birth" required=""/>
+                                    <span class="form-control-feedback">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="contact_number">Mobile Number</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <div class="row form-control-mobile">
+                                        <div class="col-md-2 col-sm-2 country_code">
+                                            <select class="form-control" name="phone_country_code">
+                                                <t t-foreach="countries" t-as="c">
+                                                    <option t-att-value="'+' + str(c.phone_code)" t-att-selected="c.id == (student.country_id and student.country_id.id or -1)">
+                                                        <t t-esc="'+' + str(c.phone_code)" />
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-10 col-sm-10 phone">
+                                            <input type="number" class="form-control o_website_form_input" name="contact_number" t-att-value="student.contact_number" required=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="email">Email ID</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="email" class="form-control o_website_form_input" name="email" required="" t-att-value="student.email"/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="mail_address">Mailing Address</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input" name="mail_address" t-att-value="student.mail_address" required=""/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="company_name">Company Name</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input" name="company_name" t-att-value="student.company_name" required=""/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="job_title">Job Title</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <select class="form-control o_website_form_input" name="job_title" required="">
+                                        <option value="design_engineer" t-att-selected="student.job_title == 'design_engineer'">Design Engineer</option>
+                                        <option value="electrical_assistance_engineer" t-att-selected="student.job_title == 'electrical_assistance_engineer'">Electrical Assistance Engineer</option>
+                                        <option value="electrical_instrumentation_engineer" t-att-selected="student.job_title == 'electrical_instrumentation_engineer'">Electrical &amp; Instrumentation Engineer</option>
+                                        <option value="electrical_instrumentation_technician" t-att-selected="student.job_title == 'electrical_instrumentation_technician'">Electrical &amp; Instrumentation Technician</option>
+                                        <option value="mechanical_engineer" t-att-selected="student.job_title == 'mechanical_engineer'">Mechanical Engineer</option>
+                                        <option value="mechanical_technician" t-att-selected="student.job_title == 'mechanical_technician'">Mechanical Technician</option>
+                                        <option value="production_engineer_electrical" t-att-selected="student.job_title == 'production_engineer_electrical'">Production Engineer(Electrical)</option>
+                                        <option value="production_engineer_mechanical" t-att-selected="student.job_title == 'production_engineer_mechanical'">Production Engineer(Mechanical)</option>
+                                        <option value="project_engineer" t-att-selected="student.job_title == 'project_engineer'">Project Engineer</option>
+                                        <option value="sales_engineer" t-att-selected="student.job_title == 'sales_engineer'">Sales Engineer</option>
+                                        <option value="service_engineer" t-att-selected="student.job_title == 'service_engineer'">Service Engineer</option>
+                                        <option value="senior_engineer" t-att-selected="student.job_title == 'senior_engineer'">Senior / Engineer</option>
+                                        <option value="others" t-att-selected="student.job_title == 'others'">Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group form-field dietary_request o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="dietary_request">Dietary Request</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <select class="form-control o_website_form_input" name="dietary_request" required="">
+                                        <option value="halal_food" t-att-selected="student.dietary_request == 'halal_food'">Halal Food</option>
+                                        <option value="vegetarian_food" t-att-selected="student.dietary_request == 'vegetarian_food'">Vegetarian Food</option>
+                                        <option value="non_halal_food" t-att-selected="student.dietary_request == 'non_halal_food'">Non-Halal Food</option>
+                                        <option value="others" t-att-selected="student.dietary_request == 'others'">Others</option>
+                                    </select>
+                                    <input type="text" class="form-control o_website_form_input mt16 dietary_request_comment hidden" name="dietary_request_comment" placeholder="Comments..."/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="payment_method">Payment Method</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <select class="form-control o_website_form_input" name="payment_method" required="">
+                                        <option value="cash_payment" t-att-selected="student.payment_method == 'cash_payment'">Cash Payment</option>
+                                        <option value="bank_transfer" t-att-selected="student.payment_method == 'bank_transfer'">Bank Transfer</option>
+                                        <option value="local_cheque" t-att-selected="student.payment_method == 'local_cheque'">Local Cheque</option>
+                                        <option value="credit_card" t-att-selected="student.payment_method == 'credit_card'">Credit Card</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom" id="payment_deadline" t-if="class_id">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="payment_deadline">Payment Deadline</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" t-att-value="class_id.date_start" class="form-control o_website_form_input" name="payment_deadline" t-attf-readonly='#{class_id and class_id.date_start or none}'/>
+                                    <span class="form-control-feedback">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="checkbox" name="terms_condition" required="">
+                                        I have read and consent the <a href="/page/terms-conditions">terms &amp; conditions</a>.
+                                    </input>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="checkbox" name="privacy_policy" required="">
+                                        <a href="/page/privacy-policy-3">Privacy Policy</a>
+                                    </input>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_custom o_website_form_required_custom">
+                                <div class="col-md-10 col-sm-8">
+                                    <label class="control-label text-righ" for="course_document">A document to provide ? </label>
+                                    <input type="file" class="form-control o_website_form_input" name="course_document" multiple="multiple"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8 col-md-7">
+                                    <input type="hidden" name="save" value="1"/>
+                                    <input type="hidden" name="class_id" t-att-value="class_id and class_id.id or 0"/>
+                                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                                    <span id="o_website_form_result"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1">
+                        <div class="course_details individual">
+                            <img t-attf-src="/web/image/subject.subject/#{course.id}/image_thumb" class="img-responsive oe_slides_grid_thumbnail"/>
+                            <p>
+                                <b t-field="course.name"/>
+                                <div class="pull-right">
+                                    <t  t-esc="class_id and class_id.date_start or ''"/>
+                                </div>
+                                <br/>
+                                <div>
+                                    <p t-field="course.description"/>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="course_registration_corporate" page="True" name="Course Register - Corporate">
+        <t t-call="website.layout">
+            <div t-attf-class="container course_registration #{register_status}">
+                <t t-call="theme_atts.course_registration_modal"/>
+                <div class="row mt32">
+                    <form action="" method="post" class="s_website_form form-horizontal mt32" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="col-md-12">
+                            <section class="as-t-title pull-left">
+                                <h2 class="o_default_snippet_text">Course Register <span>(Corporate)</span></h2>
+                            </section>
+                        </div>
+                        <div class="col-md-12">
+                            <h4 class="as-sub-title">Corporate details</h4>
+                        </div>
+                        <div class="col-md-7">
+                            <div t-attf-class="form-group form-field o_website_form_required_custom #{course and 'hidden'}">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="course_id">Course</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <select class="form-control o_website_form_input" name="course_id" required="">
+                                        <t t-foreach="all_courses or []" t-as="c">
+                                            <option t-att-value="c.id" t-att-selected="c.id == (course and course.id or -1)">
+                                                <t t-esc="c.name" />
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                            <div t-attf-class="form-group form-field #{class_id and class_id.date_start and 'hidden'}" id="training_date">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="training_date">Training Date</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input" name="training_date" t-att-value="class_id and class_id.date_start or ''"/>
+                                    <span class="form-control-feedback">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="name">Person In Charge</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input" name="name" required=""/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="company_name">Company Name</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input" name="company_name" t-att-value="student.company_name" required=""/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="fax_no">Fax No</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input" name="fax_no" t-att-value="student.fax_no" required=""/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="uen_no_company_number">UEN No/Company Number</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input" name="uen_no_company_number" t-att-value="student.uen_no_company_number" required=""/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="contact_number">Contact Number</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <div class="row form-control-mobile">
+                                        <div class="col-md-2 col-sm-2 country_code">
+                                            <select class="form-control" name="phone_country_code">
+                                                <t t-foreach="countries" t-as="c">
+                                                    <option t-att-value="'+' + str(c.phone_code)" t-att-selected="c.id == (student.country_id and student.country_id.id or -1)">
+                                                        <t t-esc="'+' + str(c.phone_code)" />
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-10 col-sm-10 phone">
+                                            <input type="number" class="form-control o_website_form_input" name="contact_number" t-att-value="student.contact_number" required=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="email">Email ID</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="email" class="form-control o_website_form_input" name="email" required="" t-att-value="student.email"/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="mail_address">Mailing Address</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input" name="mail_address" t-att-value="student.mail_address" required=""/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="certification_mail_address">Certification Mailing Address</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="text" class="form-control o_website_form_input" name="certi_mailing_add" t-att-value="student.certi_mailing_add" required=""/>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="payment_method">Payment Method</label>
+                                <div class="col-md-10 col-sm-8">
+                                    <select class="form-control o_website_form_input" name="payment_method" required="">
+                                        <option value="cash_payment" t-att-selected="student.payment_method == 'cash_payment'">Cash Payment</option>
+                                        <option value="bank_transfer" t-att-selected="student.payment_method == 'bank_transfer'">Bank Transfer</option>
+                                        <option value="local_cheque" t-att-selected="student.payment_method == 'local_cheque'">Local Cheque</option>
+                                        <option value="credit_card" t-att-selected="student.payment_method == 'credit_card'">Credit Card</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group form-field">
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="checkbox" name="individual_billing">
+                                        Individual Billing
+                                    </input>
+                                    <a href="#" data-toggle="tooltip" data-placement="right" title='For company who requires individual invoice for every delegate'>   <span class="fa fa-info-circle"/></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-md-offset-1">
+                            <div class="course_details corporate">
+                                <img t-attf-src="/web/image/subject.subject/#{course.id}/image_thumb" class="img-responsive oe_slides_grid_thumbnail"/>
+                                <p>
+                                    <b t-field="course.name"/>
+                                    <div class="pull-right">
+                                        <t  t-esc="class_id and class_id.date_start or ''"/>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <p t-field="course.description"/>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group form-field delegate_details">
+                                <label class="col-md-3 col-sm-4 align-left control-label" for="delegate_details_list">Delegate Details (List)</label>
+                                <div class="col-md-12 col-sm-12">
+                                    <table class="table table-hover auto-layout">
+                                        <thead>
+                                            <tr>
+                                                <th><input type="checkbox" name="delegate_details_list"/></th>
+                                                <th>Name</th>
+                                                <th>Date of Birth</th>
+                                                <th>Nationality</th>
+                                                <th>Designation</th>
+                                                <th>Dietary Request</th>
+                                                <th>Mobile Number</th>
+                                                <th>Email ID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="input_fields_delegate">
+                                            <tr>
+                                                <td width="5%"><input type="checkbox" name="is_delegate"/></td>
+
+                                                <td width="20%"><input type="text" name="delegate_name"/></td>
+
+                                                <td width="10%">
+                                                    <div class="delegate_date">
+                                                        <input type="text" name="delegate_date" class="disabled"/>
+                                                    </div>
+                                                </td>
+
+                                                <td width="15%">
+                                                    <div class="div_nationality">
+                                                        <select name="delegate_nationality" class="delegate_nationality">
+                                                            <option value=""></option>
+                                                            <option value="singapore_citizen">Singapore Citizen</option>
+                                                            <option value="singapore_permanent_resident">Singapore Permanent Resident</option>
+                                                            <option value="others">Others</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="div_country mt8 hidden">
+                                                        <select name="country_id" class="delegate_nationality">
+                                                            <option value="">Country...</option>
+                                                            <t t-foreach="countries" t-as="c">
+                                                                <option t-att-value="c.id" t-att-selected="c.id == (student.country_id and student.country_id.id or -1)">
+                                                                    <t t-esc="c.name" />
+                                                                </option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                </td>
+
+                                                <td width="10%"><input type="text" name="delegate_designation"/></td>
+
+                                                <td width="10%">
+                                                    <div class="dietary_request">
+                                                        <input type="text" name="dietary_request"/>
+                                                    </div>
+                                                </td>
+
+                                                <td width="15%">
+                                                    <div class="delegate_mobile">
+                                                        <select class="country_code" name="phone_country_code">
+                                                            <t t-foreach="countries" t-as="c">
+                                                                <option t-att-value="'+' + str(c.phone_code)" t-att-selected="c.id == (student.country_id and student.country_id.id or -1)">
+                                                                    <t t-esc="'+' + str(c.phone_code)" />
+                                                                </option>
+                                                            </t>
+                                                        </select>
+                                                        <input class="phone" type="number" name="delegate_number"/>
+                                                    </div>
+                                                </td>
+
+                                                <td width="15%"><input type="email" name="delegate_email"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <a class="add_more_field_delegate_button">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Add an item
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="checkbox" name="terms_condition" required="">
+                                        I have read and consent the <a href="/page/terms-conditions">terms &amp; conditions</a>.
+                                    </input>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_required_custom">
+                                <div class="col-md-10 col-sm-8">
+                                    <input type="checkbox" name="privacy_policy" required="">
+                                        <a href="/page/privacy-policy-3">Privacy Policy</a>
+                                    </input>
+                                </div>
+                            </div>
+                            <div class="form-group form-field o_website_form_custom o_website_form_required_custom">
+                                <div class="col-md-10 col-sm-8">
+                                    <label class="control-label text-righ" for="course_document">A document to provide ? </label>
+                                    <input type="file" class="form-control o_website_form_input" name="course_document" multiple="multiple"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8 col-md-7">
+                                    <input type="hidden" name="save" value="1"/>
+                                    <input type="hidden" name="class_id" t-att-value="class_id and class_id.id or 0"/>
+                                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                                    <span id="o_website_form_result"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

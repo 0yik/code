@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="tm_view_sales_config" model="ir.ui.view">
+            <field name="name">tm sale settings</field>
+            <field name="model">sale.config.settings</field>
+            <field name="inherit_id" ref="sales_team.view_sale_config_settings"/>
+            <field name="arch" type="xml">
+                <div id="main" position="inside">
+                    <group string="Printout" name="config_printout">
+                        <!--<label for="printout_sale_order" string="Leads Email Alias"/>-->
+                        <field name="printout_sale_order" widget="radio"/>
+                    </group>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

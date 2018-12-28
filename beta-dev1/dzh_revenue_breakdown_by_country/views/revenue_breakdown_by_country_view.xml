@@ -1,0 +1,439 @@
+<odoo>
+    <data>
+        <!--Report-->
+        <report
+            id="action_revenue_breakdown_by_country_report"
+            model="revenue.breakdown.by.country"
+            string="Revenue Breakdown by Country"
+            name="dzh_revenue_breakdown_by_country.revenue_breakdown_by_country_report"
+            file="dzh_revenue_breakdown_by_country.revenue_breakdown_by_country_report"
+            report_type="qweb-pdf"/>
+
+        <!--Paperformat-->
+        <record id="revenue_breakdown_by_country_report_qweb_paperformat" model="report.paperformat">
+            <field name="name">Revenue Breakdown by Country</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">280</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">15</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_revenue_breakdown_by_country_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="revenue_breakdown_by_country_report_qweb_paperformat"/>
+        </record>
+
+        <!--Headers and Footers for Credit Note Report -->
+        <template id="external_revenue_breakdown_by_country_report">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="dzh_revenue_breakdown_by_country.revenue_breakdown_by_country_report_header" />
+            <t t-raw="0" />
+            <t t-call="dzh_revenue_breakdown_by_country.revenue_breakdown_by_country_report_footer" />
+        </template>
+
+        <!--HEARDER-->
+        <template id="dzh_revenue_breakdown_by_country.revenue_breakdown_by_country_report_header">
+            <div class="header">
+                <div class="row">
+                    <div>
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:40px;width:160px;float:right"/>
+                    </div>
+                    <div>
+                        <!--<span  style="font-size:24px;font-weight:bold">Revenue Breakdown by Country</span>-->
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!--FOOTER-->
+        <template id="dzh_revenue_breakdown_by_country.revenue_breakdown_by_country_report_footer">
+            <div class="footer" style="font-size:10pt;">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <div class="text-right" style="float:right">
+                            <ul class="list-inline">
+                                <li>Page:</li>
+                                <li><span class="page"/></li>
+                                <li>of</li>
+                                <li><span class="topage"/></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="dzh_revenue_breakdown_by_country.revenue_breakdown_by_country_report">
+            <t t-call="report.html_container">
+                <t t-call="dzh_revenue_breakdown_by_country.external_revenue_breakdown_by_country_report">
+                    <t t-foreach="docs" t-as="o">
+                        <div class="page">
+                            <t t-if="o.not_country_filter == 1">
+                                <table class="table table-bordered">
+                                    <thead>
+
+                                    </thead>
+                                    <body>
+                                        <t t-set="total_annual_rp" t-value="0"/>
+                                        <t t-set="total_ac_rp" t-value="0"/>
+                                        <t t-set="total_uit_rp" t-value="0"/>
+                                        <!--SINGAPORE-->
+                                        <tr style="page-break-inside:avoid;">
+                                            <td colspan="6" style="background-color:#3399FF;font-size:20px;">Revenue Breakdown by Country as at
+                                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %b %Y')"/></td>
+                                        </tr>
+                                        <tr class="text-left" style="font-weight: bold; page-break-inside:avoid;">
+                                            <th style="width:25%;">SINGAPORE</th>
+                                            <th style="width:15%">Per Mth (SGD)</th>
+                                            <th style="width:15%">Annual (SGD)</th>
+                                            <th style="width:15%"></th>
+                                            <th style="width:15%;">Total no. of A/Cs</th>
+                                            <th style="width:15%;">Total no. of User Ids/Terminals</th>
+                                        </tr>
+                                        <t t-set="total_amount" t-value="0"/>
+                                        <t t-set="total_ms_ac" t-value="0"/>
+                                        <t t-set="total_ms_uit" t-value="0"/>
+                                        <t t-foreach="o.member_type_ids" t-as="member_type">
+                                            <t t-set="amount_per_mth" t-value="0"/>
+                                            <t t-set="total_ac" t-value="0"/>
+                                            <t t-set="total_uit" t-value="0"/>
+                                            <t t-foreach="o.customer_ids" t-as="customer">
+                                                <t t-set="count_cutomer" t-value="0"/>
+                                                <t t-foreach="o.account_invoice" t-as="invoice">
+                                                    <t t-if="invoice.partner_id.member_type_id.id == member_type.id and invoice.team_id.country.code == 'SG' and customer.id == invoice.partner_id.id">
+                                                        <t t-set="count_cutomer" t-value="1"/>
+                                                        <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                                                            <t t-set="amount_per_mth" t-value="amount_per_mth + line.price_unit * line.quantity"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <t t-if="count_cutomer == 1">
+                                                    <t t-set="total_ac" t-value="total_ac + 1"/>
+                                                    <t t-foreach="customer.partner_users" t-as="user_id">
+                                                        <t t-if="user_id.status == 'active'">
+                                                            <t t-set="total_uit" t-value="total_uit + 1"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <t t-set="total_amount" t-value="total_amount + (amount_per_mth * 12)"/>
+                                            <t t-set="total_ms_ac" t-value="total_ms_ac + total_ac"/>
+                                            <t t-set="total_ms_uit" t-value="total_ms_uit + total_uit"/>
+                                            <tr style="page-break-inside:avoid">
+                                                    <td><t t-esc="'Singapore - '+ member_type.name"/></td>
+                                                <td><t t-esc="'{0:,.2f}'.format(amount_per_mth)"/></td>
+                                                <td><t t-esc="'{0:,.2f}'.format(amount_per_mth * 12)"/></td>
+                                                <td></td>
+                                                <td><t t-esc="total_ac"/> </td>
+                                                <td><t t-esc="total_uit"/> </td>
+                                            </tr>
+                                        </t>
+                                        <t t-set="total_annual_rp" t-value="total_annual_rp + total_amount"/>
+                                        <t t-set="total_ac_rp" t-value="total_ac_rp + total_ms_ac"/>
+                                        <t t-set="total_uit_rp" t-value="total_uit_rp + total_ms_uit"/>
+                                        <tr style="font-weight: bold;page-break-inside:avoid;">
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount/12)"/></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount)"/></td>
+                                            <td></td>
+                                            <td><t t-esc="total_ms_ac"/></td>
+                                            <td><t t-esc="total_ms_uit"/></td>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid;"></tr>
+                                        <!--MALAYSIA-->
+                                        <tr class="text-left" style="page-break-inside:avoid;">
+                                            <th style="width:25%;">MALAYSIA</th>
+                                            <th style="width:15%">Per Mth (SGD)</th>
+                                            <th style="width:15%">Annual (SGD)</th>
+                                            <th style="width:15%">Annual (MYR)</th>
+                                            <th style="width:15%;">Total no. of A/Cs</th>
+                                            <th style="width:15%;">Total no. of User Ids/Terminals</th>
+                                        </tr>
+                                        <t t-set="total_amount" t-value="0"/>
+                                        <t t-set="total_ms_ac" t-value="0"/>
+                                        <t t-set="total_ms_uit" t-value="0"/>
+                                        <t t-set="total_amount_myr" t-value="0"/>
+                                        <t t-foreach="o.member_type_ids" t-as="member_type">
+                                            <t t-set="amount_per_mth" t-value="0"/>
+                                            <t t-set="total_ac" t-value="0"/>
+                                            <t t-set="total_uit" t-value="0"/>
+                                            <t t-foreach="o.customer_ids" t-as="customer">
+                                                <t t-set="count_cutomer" t-value="0"/>
+                                                <t t-foreach="o.account_invoice" t-as="invoice">
+                                                    <t t-if="invoice.partner_id.member_type_id.id == member_type.id and invoice.team_id.country.code == 'MY' and customer.id == invoice.partner_id.id">
+                                                        <t t-set="count_cutomer" t-value="1"/>
+                                                        <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                                                            <t t-set="amount_per_mth" t-value="amount_per_mth + line.price_unit * line.quantity"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <t t-if="count_cutomer == 1">
+                                                    <t t-set="total_ac" t-value="total_ac + 1"/>
+                                                    <t t-foreach="customer.partner_users" t-as="user_id">
+                                                        <t t-if="user_id.status == 'active'">
+                                                            <t t-set="total_uit" t-value="total_uit + 1"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <t t-set="total_amount" t-value="total_amount + (amount_per_mth * 12)"/>
+                                            <t t-set="total_ms_ac" t-value="total_ms_ac + total_ac"/>
+                                            <t t-set="total_ms_uit" t-value="total_ms_uit + total_uit"/>
+                                            <tr style="page-break-inside:avoid">
+                                                    <td><t t-esc="'Malaysia - '+ member_type.name"/></td>
+                                                <td><t t-esc="'{0:,.2f}'.format(amount_per_mth)"/></td>
+                                                <td><t t-esc="'{0:,.2f}'.format(amount_per_mth * 12)"/></td>
+                                                <td style="font-weight: bold;">
+                                                    <t t-set="currency_malaysia" t-value="0"/>
+                                                    <t t-foreach="o.country_ids" t-as="country">
+                                                        <t t-if="country.code == 'MY'">
+                                                            <t t-set="currency_malaysia" t-value="country.currency_id"/>
+                                                        </t>
+                                                    </t>
+                                                    <t t-if="currency_malaysia != 0">
+                                                        <t t-foreach="o.curency_rate_ids" t-as="curency_rate">
+                                                            <t t-if="curency_rate.currency_id == currency_malaysia">
+                                                                <t t-esc="'{0:,.2f}'.format(amount_per_mth * 12 * curency_rate.rate)"/>
+                                                                <t t-set="total_amount_myr" t-value="total_amount_myr + (amount_per_mth * 12 * curency_rate.rate)"/>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                </td>
+                                                <td><t t-esc="total_ac"/> </td>
+                                                <td><t t-esc="total_uit"/> </td>
+                                            </tr>
+                                        </t>
+                                        <t t-set="total_annual_rp" t-value="total_annual_rp + total_amount"/>
+                                        <t t-set="total_ac_rp" t-value="total_ac_rp + total_ms_ac"/>
+                                        <t t-set="total_uit_rp" t-value="total_uit_rp + total_ms_uit"/>
+                                        <tr style="font-weight: bold;page-break-inside:avoid;">
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount/12)"/></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount)"/></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_myr)"/></td>
+                                            <td><t t-esc="total_ms_ac"/></td>
+                                            <td><t t-esc="total_ms_uit"/></td>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid;"></tr>
+                                        <!--ORTHER-->
+                                         <tr class="text-left" style="page-break-inside:avoid;">
+                                            <th style="width:25%;">OTHERS</th>
+                                            <th style="width:15%">Per Mth (SGD)</th>
+                                            <th style="width:15%">Annual (SGD)</th>
+                                            <th style="width:15%">Annual (USD/Others)</th>
+                                            <th style="width:15%;">Total no. of A/Cs</th>
+                                            <th style="width:15%;">Total no. of User Ids/Terminals</th>
+                                        </tr>
+                                        <t t-set="total_amount" t-value="0"/>
+                                        <t t-set="total_ms_ac" t-value="0"/>
+                                        <t t-set="total_ms_uit" t-value="0"/>
+                                        <t t-foreach="o.country_ids" t-as="country">
+                                            <t t-if="country.code != 'SG' and country.code != 'MY'">
+                                                <t t-set="amount_per_mth" t-value="0"/>
+                                                <t t-set="total_ac" t-value="0"/>
+                                                <t t-set="total_uit" t-value="0"/>
+                                                <t t-foreach="o.customer_ids" t-as="customer">
+                                                    <t t-set="count_cutomer" t-value="0"/>
+                                                    <t t-foreach="o.account_invoice" t-as="invoice">
+                                                        <t t-if="invoice.team_id.country.id == country.id and customer.id == invoice.partner_id.id">
+                                                            <t t-set="count_cutomer" t-value="1"/>
+                                                            <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                                                                <t t-set="amount_per_mth" t-value="amount_per_mth + line.price_unit * line.quantity"/>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                    <t t-if="count_cutomer == 1">
+                                                        <t t-set="total_ac" t-value="total_ac + 1"/>
+                                                        <t t-foreach="customer.partner_users" t-as="user_id">
+                                                            <t t-if="user_id.status == 'active'">
+                                                                <t t-set="total_uit" t-value="total_uit + 1"/>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <t t-set="total_amount" t-value="total_amount + (amount_per_mth * 12)"/>
+                                                <t t-set="total_ms_ac" t-value="total_ms_ac + total_ac"/>
+                                                <t t-set="total_ms_uit" t-value="total_ms_uit + total_uit"/>
+                                                <tr style="page-break-inside:avoid">
+                                                    <td><t t-esc="country.name"/></td>
+                                                    <td><t t-esc="'{0:,.2f}'.format(amount_per_mth)"/></td>
+                                                    <td><t t-esc="'{0:,.2f}'.format(amount_per_mth * 12)"/></td>
+                                                    <td style="font-weight: bold;">
+                                                        <t t-foreach="o.curency_rate_ids" t-as="curency_rate">
+                                                            <t t-if="curency_rate.currency_id == country.currency_id">
+                                                                <t t-esc="'{0:,.2f}'.format(amount_per_mth * 12 * curency_rate.rate)"/>
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                    <td><t t-esc="total_ac"/> </td>
+                                                    <td><t t-esc="total_uit"/> </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-set="total_annual_rp" t-value="total_annual_rp + total_amount"/>
+                                        <t t-set="total_ac_rp" t-value="total_ac_rp + total_ms_ac"/>
+                                        <t t-set="total_uit_rp" t-value="total_uit_rp + total_ms_uit"/>
+                                        <tr style="font-weight: bold;page-break-inside:avoid;">
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount/12)"/></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount)"/></td>
+                                            <td></td>
+                                            <td><t t-esc="total_ms_ac"/></td>
+                                            <td><t t-esc="total_ms_uit"/></td>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid;"></tr>
+                                        <tr style="font-weight: bold;background-color:#FFFF66;page-break-inside:avoid;">
+                                            <td colspan="1">Total subscription revenue/terminals (Asia)</td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_annual_rp/12)"/></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_annual_rp)"/></td>
+                                            <td></td>
+                                            <td><t t-esc="total_ac_rp"/></td>
+                                            <td><t t-esc="total_uit_rp"/></td>
+                                        </tr>
+                                    </body>
+                                </table>
+                            </t>
+                            <t t-if="o.not_country_filter == 0">
+                                <table class="table table-bordered">
+                                    <thead>
+
+                                    </thead>
+                                    <body>
+                                        <tr style="page-break-inside:avoid;">
+                                            <td colspan="6" style="background-color:#3399FF;font-size:20px;">Revenue Breakdown by Country</td>
+                                        </tr>
+                                        <tr class="text-left" style="font-weight: bold; page-break-inside:avoid;">
+                                            <th style="width:25%;"><t t-esc="o.country_ids.name"/> </th>
+                                            <th style="width:15%">Per Mth (SGD)</th>
+                                            <th style="width:15%">Annual (SGD)</th>
+                                            <th style="width:15%">
+                                                <t t-if="o.country_ids.code != 'SG'">
+                                                    <t t-esc="'Annual ('+o.country_ids.currency_id.name+')'"/>
+                                                </t>
+                                            </th>
+                                            <th style="width:15%;">Total no. of A/Cs</th>
+                                            <th style="width:15%;">Total no. of User Ids/Terminals</th>
+                                        </tr>
+                                        <t t-set="total_amount" t-value="0"/>
+                                        <t t-set="total_ms_ac" t-value="0"/>
+                                        <t t-set="total_ms_uit" t-value="0"/>
+                                        <t t-foreach="o.member_type_ids" t-as="member_type">
+                                            <t t-set="amount_per_mth" t-value="0"/>
+                                            <t t-set="total_ac" t-value="0"/>
+                                            <t t-set="total_uit" t-value="0"/>
+                                            <t t-foreach="o.customer_ids" t-as="customer">
+                                                <t t-set="count_cutomer" t-value="0"/>
+                                                <t t-foreach="o.account_invoice" t-as="invoice">
+                                                    <t t-if="invoice.partner_id.member_type_id.id == member_type.id and invoice.team_id.country.id == o.country_ids.id and customer.id == invoice.partner_id.id">
+                                                        <t t-set="count_cutomer" t-value="1"/>
+                                                        <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                                                            <t t-set="amount_per_mth" t-value="amount_per_mth + line.price_unit * line.quantity"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <t t-if="count_cutomer == 1">
+                                                    <t t-set="total_ac" t-value="total_ac + 1"/>
+                                                    <t t-foreach="customer.partner_users" t-as="user_id">
+                                                        <t t-if="user_id.status == 'active'">
+                                                            <t t-set="total_uit" t-value="total_uit + 1"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <t t-set="total_amount" t-value="total_amount + (amount_per_mth * 12)"/>
+                                            <t t-set="total_ms_ac" t-value="total_ms_ac + total_ac"/>
+                                            <t t-set="total_ms_uit" t-value="total_ms_uit + total_uit"/>
+                                            <tr style="page-break-inside:avoid">
+                                                <td><t t-esc="o.country_ids.name +' - '+ member_type.name"/></td>
+                                                <td><t t-esc="'{0:,.2f}'.format(amount_per_mth)"/></td>
+                                                <td><t t-esc="'{0:,.2f}'.format(amount_per_mth * 12)"/></td>
+                                                <td>
+                                                    <t t-if="o.country_ids.code != 'SG'">
+                                                        <t t-foreach="o.curency_rate_ids" t-as="curency_rate">
+                                                            <t t-if="curency_rate.currency_id == o.country_ids.currency_id">
+                                                                <t t-esc="'{0:,.2f}'.format(amount_per_mth * 12 * curency_rate.rate)"/>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                </td>
+                                                <td><t t-esc="total_ac"/> </td>
+                                                <td><t t-esc="total_uit"/> </td>
+                                            </tr>
+                                        </t>
+                                        <tr style="font-weight: bold;page-break-inside:avoid;">
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount/12)"/></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount)"/></td>
+                                            <td></td>
+                                            <td><t t-esc="total_ms_ac"/></td>
+                                            <td><t t-esc="total_ms_uit"/></td>
+                                        </tr>
+                                    </body>
+                                </table>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <!--# SHOW POP UP-->
+        <record id="revenue_breakdown_by_country_report_view" model="ir.ui.view">
+            <field name="name">Revenue Breakdown by Country</field>
+            <field name="model">revenue.breakdown.by.country</field>
+            <field name="arch" type="xml">
+            <form string="Report Options" style="height:240px">
+                <label string=""/>  <!-- binding for inherited views -->
+                <group>
+                    <group>
+                        <field name="country"/>
+                        <field name="start_date" string="Start Date"/>
+                    </group>
+                    <group>
+                        <field name="sales_person"/>
+                        <field name="end_date" string="End Date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="revenue_breakdown_by_country_report_actions" model="ir.actions.act_window">
+            <field name="name">Revenue Breakdown by Country</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">revenue.breakdown.by.country</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="revenue_breakdown_by_country_report_menu"
+            name="Revenue Breakdown by Country"
+            parent="sales_team.menu_sale_report"
+            action="revenue_breakdown_by_country_report_actions"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="modifier_honos_theme.multi_featured_category_slider_block">
+        <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal" contenteditable="False" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content" id="s_media_block_modal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Featured Products Slider Configuration</h4>
+                    </div>
+                    <div class="modal-body" contenteditable="false">
+                        <div class="row">
+                            <form class="form-horizontal container-fluid" role="form">
+                                <div class="col-sm-12 form-group">
+                                    <label class="col-sm-2 control-label" style="width:80px;" for="slider_type">Name</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="slider_type" style="width:250px; margin-top:0;" name="slider_type"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" id="cancel">Cancel</button>
+                        <button class="btn btn-danger" data-dismiss="modal" id="multi_tabs_submit">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    
+    <!-- **************************************** New arrival selection modal *********************************** -->
+    <t t-name="modifier_honos_theme.multi_featured_new_arrival_slider_block">
+        <div aria-hidden="true" aria-labelledby="arrival_modal_label" class="modal" contenteditable="False" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content" id="s_media_block_modal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">New Arrivals Slider Configuration</h4>
+                    </div>
+                    <div class="modal-body" contenteditable="false">
+                        <div class="row">
+                            <form class="form-horizontal container-fluid" role="form">
+                                <div class="col-sm-12 form-group">
+                                    <label class="col-sm-2 control-label" style="width:80px;" for="slider_arrival_type">Name</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="slider_arrival_type" style="width:250px; margin-top:0;" name="slider_arrival_type"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" id="cancel">Cancel</button>
+                        <button class="btn btn-danger" data-dismiss="modal" id="multi_tabs_arrival_submit">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="idea_purchase_request_form" model="ir.ui.view">
+            <field name="name">purchase.request.form</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='description']" position="before">
+                    <field name="project_id"/>
+                    <field name="cost_element_id1" required="True"/>
+                    <field name="cost_element_id2" required="True"/>
+                    <field name="cost_element_id3" required="True"/>
+                    <!--<field name="cost_element_code"/>-->
+                    <field name="cost_element_code_sub"/>
+                </xpath>
+                <xpath expr="//form/header/button" position="after">
+                    <button name="create_analytic" string="Analytic Distribution" type="object" class="btn-primary"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_purchase_requisition_form_inherit_custom" model="ir.ui.view">
+            <field name="name">purchase.requisition.form.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <field name="ordering_date" position="attributes">
+                    <attribute name="string">Creation Date</attribute>
+                    <attribute name="readonly">1</attribute>
+                </field>
+                <field name="schedule_date" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="account_analytic_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="picking_type_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="required">0</attribute>
+                </field>
+                <field name="company_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="required">0</attribute>
+                </field>
+                <xpath expr="//form/header/button[@name='action_cancel']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <field name="state" position="attributes">
+                    <attribute name="statusbar_visible">draft,in_progress,done</attribute>
+                </field>
+                <!--<field name="state" widget="statusbar" statusbar_visible="draft,in_progress,open,done"/>-->
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='qty_ordered']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_uom_id']" position="replace">
+                    <field name="product_uom_id"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='account_analytic_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='vendor_ids']" position="after">
+                    <field name="project_id" context="{'compute_name': '_get_project_name'}" required="True"/>
+                    <field name="cost_element_id1" required="True"/>
+                    <field name="cost_element_id2" required="True"/>
+                    <field name="cost_element_id3" required="True"/>
+                    <!--<field name="cost_element_code" required="True"/>-->
+                    <field name="cost_element_code_sub"/>
+                </xpath>
+                <!--<xpath expr="//form/header/button" position="after">-->
+                    <!--<button name="create_analytic" string="Analytic Distribution" type="object" class="btn-primary"/>-->
+                <!--</xpath>-->
+                <field name="origin" position="after">
+                    <field name="product_ctg"/>
+                </field>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="domain">[
+                                            ('product_doa','=',parent.product_ctg)
+                                                ]
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_id']" position="after">
+                    <field name="description"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_uom_id']" position="attributes">
+                    <attribute name="string">UOM</attribute>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/form/group/field[@name='product_uom_id']" position="attributes">
+                    <attribute name="string">UOM</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[2]/field[@name='product_ctg']" position="after">
+                    <!--<group>-->
+                    <label for="create_analytic"/>
+                        <button name="create_analytic" nolabel="1" string="Analytic Distribution" type="object" class="oe_highlight oe_edit_only"/>
+                </xpath>
+                <field name="type_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="date_end" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_hr_expense_sheet_filter_modifier" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.filter.modifier</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_filter"/>
+            <field name="arch" type="xml">
+                <filter name="submitted" position="attributes">
+                    <attribute name="domain">[('state', '=', 'submited')]</attribute>
+                </filter>
+                <filter name="approved" position="attributes">
+                    <attribute name="domain">[('state', '=', 'post')]</attribute>
+                </filter>
+            </field>
+        </record>
+
+        <record id="purchase_requisition_view_tree_inherit" model="ir.ui.view">
+            <field name="name">purchase.requisition.view.tree.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_tree"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="account_invoice_collect_return_sign" model="ir.ui.view">
+            <field name="name">account.invoice.form.sign.ext</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='comment']" position="before">
+                    <group name="collect_signature">
+                        <field name="collect_sign" widget="signature"/>
+                    </group>
+                    <group name="Return Signature">
+                        <field name="return_sign" widget="signature"/>
+                    </group>
+                    <group name="ReceivedRefDepo">
+                        <field name="recv_ref_depo"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

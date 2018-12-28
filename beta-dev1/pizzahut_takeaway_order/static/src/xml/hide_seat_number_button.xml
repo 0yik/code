@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="seat_number_template" inherit_id="seat_number_table.template" xml:space="preserve">
+
+	<t t-extend="TableSeatNumbersButton">
+		<t t-jquery="div[class='control-button btn btn-default btn-fill btn-wd']" t-operation="replace">
+			<div class='control-button btn btn-default btn-fill btn-wd seat_number_from_takeaway'>
+                <i class="pe-7s-check"></i> Seat Number: <t t-esc="widget.seatnumber()"/>
+            </div>
+		</t>
+	</t>
+
+</templates>

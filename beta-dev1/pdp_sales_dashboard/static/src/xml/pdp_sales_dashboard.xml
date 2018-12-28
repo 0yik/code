@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-extend="sales_team.SalesDashboard">
+        <!-- add cusotm dash board -->
+         <t t-jquery='.o_sales_dashboard' t-operation='after'>
+            <!-- current day quotation -->
+            <div class="col-xs-12 o_sales_dashboard"><h2><center>Sales Recap</center></h2></div>
+            <div class="row col-xs-12">
+                <div class="panel panel-primary col-xs-3">
+                    <t t-value="JSON.parse(widget.data.records[0].kanban_dashboard)" t-set="dashboard"/>
+                    <div>
+                        <a href="#" class="o_dashboard_action" name="pdp_sales_dashboard.total_quotations_action">
+                            <div class="o_kanban_card_header_title" style="padding:0px 10px !important;border-bottom:none !important;background-color: #7c7bad;">
+                                <h2 style="color: white;">
+                                    Total Quotation
+                                </h2>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="container o_kanban_card_content o_visible col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 o_kanban_primary_right">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span><b>Count</b></span>
+                                        <span><b>Total</b></span>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <span>
+                                            <b><t t-esc="dashboard.count_today_quotations"></t></b>
+                                        </span>
+                                        <span>
+                                            <b>
+                                                <t t-esc="widget.render_monetary_field(dashboard.total_today_quotations, values['currency_id'])"/>
+                                            </b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                 <!--This month quotation -->
+                 <div class="panel panel-primary col-xs-3">
+                    <t t-value="JSON.parse(widget.data.records[0].kanban_dashboard)" t-set="dashboard"/>
+                    <div>
+                        <a href="#" class="o_dashboard_action" name="pdp_sales_dashboard.current_month_quotations_action">
+                            <div class="o_kanban_card_header_title" style="padding:0px 10px !important;border-bottom:none !important;background-color: #7c7bad;">
+                                <h2 style="color: white;">
+                                    This Month Quotation
+                                </h2>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="container o_kanban_card_content o_visible col-xs-12">
+                        <div class="row">
+                            
+                            <div class="col-xs-12 o_kanban_primary_right">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span><b>Count</b></span>
+                                        <span><b>Total</b></span>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <span>
+                                            <b><t t-esc="dashboard.count_month_quotations"></t></b>
+                                        </span>
+                                        <span>
+                                            <b>
+                                                <t t-esc="widget.render_monetary_field(dashboard.total_month_quotations, values['currency_id'])"/>
+                                            </b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                 </div>
+                 
+                 <!--Total Sales Order-->
+                 <div class="panel panel-primary col-xs-3">
+                    <t t-value="JSON.parse(widget.data.records[0].kanban_dashboard)" t-set="dashboard"/>
+                    <div>
+                        <a href="#" class="o_dashboard_action" name="pdp_sales_dashboard.total_sales_order_action">
+                        <div class="o_kanban_card_header_title" style="padding:0px 10px !important;border-bottom:none !important;background-color: #7c7bad;">
+                            <h2 style="color: white;">
+                                Total Sales Order
+                            </h2>
+                        </div>
+                        </a>
+                    </div>
+                    <div class="container o_kanban_card_content o_visible col-xs-12">
+                        <div class="row">
+                            
+                            <div class="col-xs-12 o_kanban_primary_right">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span><b>Count</b></span>
+                                        <span><b>Total</b></span>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <span>
+                                            <b><t t-esc="dashboard.count_today_so"></t></b>
+                                        </span>
+                                        <span>
+                                            <b>
+                                            <t t-esc="widget.render_monetary_field(dashboard.total_today_so, values['currency_id'])"/>
+                                            </b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                 </div>
+
+                 <!--This Month Sales Order-->
+                 <div class="panel panel-primary col-xs-3">
+                    <t t-value="JSON.parse(widget.data.records[0].kanban_dashboard)" t-set="dashboard"/>
+                    <div>
+                        <a href="#" class="o_dashboard_action" name="pdp_sales_dashboard.current_month_sale_order_action">
+                        <div class="o_kanban_card_header_title" style="padding:0px 10px !important;border-bottom:none !important;background-color: #7c7bad;">
+                            <h2 style="color: white;">
+                                This Month Sales Order
+                            </h2>
+                        </div>
+                         </a>
+                    </div>
+                    <div class="container o_kanban_card_content o_visible col-xs-12">
+                        <div class="row">
+                            
+                            <div class="col-xs-12 o_kanban_primary_right">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span><b>Count</b></span>
+                                        <span><b>Total</b></span>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <span>
+                                            <b><t t-esc="dashboard.count_month_so"></t></b>
+                                        </span>
+                                        <span>
+                                            <b>
+                                                <t t-esc="widget.render_monetary_field(dashboard.total_month_so, values['currency_id'])"/>
+                                            </b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                 </div>
+                 
+                 <!--Sales Order to Invoice-->
+                 <div class="panel panel-primary col-xs-3">
+                    <t t-value="JSON.parse(widget.data.records[0].kanban_dashboard)" t-set="dashboard"/>
+                    <div>
+                        <a href="#" class="o_dashboard_action" name="pdp_sales_dashboard.sale_order_to_invoice_action">
+                        <div class="o_kanban_card_header_title" style="padding:0px 10px !important;border-bottom:none !important;background-color: #7c7bad;">
+                            <h2 style="color: white;">
+                                Sales to Invoice
+                            </h2>
+                        </div>
+                        </a>
+                    </div>
+                    <div class="container o_kanban_card_content o_visible col-xs-12">
+                        <div class="row">
+                            
+                            <div class="col-xs-12 o_kanban_primary_right">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span><b>Count</b></span>
+                                        <span><b>Total</b></span>
+                                    </div>
+                                    <div class="col-xs-9 text-right" >
+                                        <span>
+                                            <b><t t-esc="dashboard.count_to_invoice"></t></b>
+                                        </span>
+                                        <span>
+                                            <b>
+                                                <t t-esc="widget.render_monetary_field(dashboard.total_to_invoice, values['currency_id'])"/>
+                                            </b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                 </div>   
+            </div>
+        </t>
+    </t>
+</templates>

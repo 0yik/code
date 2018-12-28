@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<menuitem action="account.action_invoice_tree1" id="menu_action_invoice_tree1_modifier" parent="school_fees.menu_fees" sequence="1" string="My Invoice"  name="My Invoice" groups="school.group_school_student"/>
+
+		<record id="invoice_form_student_portal" model="ir.ui.view">
+            <field name="name">account.invoice.form.student.portal</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="group_id" ref=""/>
+            <field name="groups_id" eval="[(6, 0, [ref('school.group_school_student') ])]"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//button[@name='action_invoice_sent']" position="attributes">
+            		<attribute name="invisible">1</attribute>
+            	</xpath>
+            	<xpath expr="//button[@name='action_invoice_sent']" position="attributes">
+            		<attribute name="invisible">1</attribute>
+            	</xpath>
+            	<xpath expr="//button[@name='action_invoice_draft']" position="attributes">
+            		<attribute name="invisible">1</attribute>
+            	</xpath>
+            	<xpath expr="//button[@name='action_invoice_cancel']" position="attributes">
+            		<attribute name="invisible">1</attribute>
+            	</xpath>
+            	<xpath expr="//button[@name='action_invoice_open']" position="attributes">
+            		<attribute name="invisible">1</attribute>
+            	</xpath>
+            	<xpath expr="//button[@name='%(account.action_account_invoice_payment)d']" position="attributes">
+            		<attribute name="invisible">1</attribute>
+            	</xpath>
+            	<xpath expr="//button[@name='%(account.action_account_invoice_payment)d']" position="attributes">
+            		<attribute name="invisible">1</attribute>
+            	</xpath>
+            	<xpath expr="//button[@name='action_invoice_cancel']" position="after">
+            		<button name="pay_invoice_using_paypal" type="object" string="PayPal" groups="school.group_school_student"/> <!-- attrs="{'invisible': [('state','in',['open','paid'])]}" -->
+            	</xpath>
+            </field>
+        </record>
+	</data>
+</odoo>

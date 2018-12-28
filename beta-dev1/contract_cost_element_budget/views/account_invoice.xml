@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="account_invoice_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
+                    <field name="contract_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_invoice_tree_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.tree.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="/tree/field[@name='partner_id']" position="after">
+                    <field name="contract_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="invoice_supplier_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="contract_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="invoice_supplier_tree_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.tree.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="/tree/field[@name='partner_id']" position="after">
+                    <field name="contract_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Hide Create and Edit Project : AR, AP, AM-->
+        <record id="invoice_supplier_form_inherit2" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="invoice_supplier_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='contract_id']" position="attributes">
+                    <attribute name="options">{'no_create_edit': False, 'no_create':False}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="invoice_form_inherit_not_access" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form.no.access.project</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="invoice_supplier_form_inherit"/>
+            <field name="groups_id" eval="[(4, ref('beumer_modifier_access_right.accounting_not_access_analytic_account'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='contract_id']" position="attributes">
+                    <attribute name="options">{"no_create": 1, "no_create_edit": 1}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="invoice_form_inherit_not_access_project" model="ir.ui.view">
+            <field name="name">account.invoice.form.no.access.project</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account_invoice_inherit"/>
+            <field name="groups_id" eval="[(4, ref('beumer_modifier_access_right.accounting_not_access_analytic_account'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='contract_id']" position="attributes">
+                    <attribute name="options">{"no_create": 1, "no_create_edit": 1}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

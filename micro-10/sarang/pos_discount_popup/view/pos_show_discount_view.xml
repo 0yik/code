@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="pos_show_popup_qty_assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_discount_popup/static/src/js/pos_disc.js"></script>
+            <link rel="stylesheet" href="/pos_discount_popup/static/src/css/centerpanedisc.css" />
+        </xpath>
+    </template>
+    <data>
+        <record id="pos_config_sarangoci_discount" model="ir.ui.view">
+            <field name="name">pos.config.sarangoci.discount</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='receipt']" position="after">
+                    <group name="discount" string="Discount">
+                        <field name="discount_amount" string="Custom discount" placeholder="Separated by commas"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

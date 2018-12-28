@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_class_list_wizard" model="ir.ui.view">
+            <field name="name">class.list.wizard</field>
+            <field name="model">class.list.wizard</field>
+            <field name="arch" type="xml">
+            <form string="Class List Report">
+                <group col="4" colspan="6">
+                    
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_class_list_wizard" model="ir.actions.act_window">
+	        <field name="name">Class List</field>
+	        <field name="res_model">class.list.wizard</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">form</field>
+	        <field name="target">new</field>
+    	</record>
+    	
+    <!-- <menuitem name="Class List" action="action_class_list_wizard" id="wizard_class_list" parent="atts_class.menu_action_class_report" sequence="13" /> -->
+
+
+</odoo>

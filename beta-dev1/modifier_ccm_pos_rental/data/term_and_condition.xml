@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="standard_tnc" model="sale.tc">
+            <field name="name">Standard Terms and Conditions</field>
+            <field name="active">True</field>
+            <field name="subject">I agree to the Terms &amp; Conditions stated overleaf and understand that full payment shall be made upon collection of costumes.</field>
+            <field name="terms">&lt;center&gt;&lt;div style="font-family: Arial;font-size: 15px; color: black;"&gt;&lt;b&gt;TERMS &amp;amp; CONDITIONS&lt;/b&gt;&lt;/div&gt;&lt;/center&gt;
+&lt;ol&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Booking Deposit &lt;/b&gt;
+        &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; For advance bookings, a booking deposit equivalent to 50% of the rental rate is payable for each set of costume. Upon payment of booking deposit, costume(s) will be set aside for collection date. This deposit is not refundable. &lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Payment &lt;/b&gt;
+         &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; All payments are to be made upon collection. &lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Rental Periods &lt;/b&gt;
+         &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; Rental period begins on the day of collection and must be returned on or before the date specified on rental agreement (invoice). &lt;/p&gt;
+        &lt;table style="border:1px solid black;font-family:Arial;font-size:15px;margin-left:30px;" width="80%;"&gt;
+            &lt;tr style="line-height:20px;"&gt;
+                &lt;th style="border:1px solid black;padding-left:10px;"&gt; Rental Period &lt;/th&gt;
+                &lt;th style="border:1px solid black;padding-left:10px;"&gt; Return &lt;/th&gt;
+                &lt;th style="border:1px solid black;padding-left:10px;"&gt; Price &lt;/th&gt;
+                &lt;th style="border:1px solid black;padding-left:10px;"&gt; Deposit &lt;sup&gt;1&lt;/sup&gt; &lt;/th&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 7-hour &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; within 7 hrs &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 50% of 3-day rental fee &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 300% of rental fee &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 1-day &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; before 3pm on following working day &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 75% of 3-day rental fee &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 200% of rental fee &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 3-day &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; on or before the third day &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 100% 3-day rental fee &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 120% of rental fee &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 1-week &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; on or before the seventh day &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 150% of 3-day rental fee &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 120% of rental fee &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/li&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Refundable Deposit for Foreigners&lt;sup&gt;1&lt;/sup&gt;&lt;/b&gt;
+         &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; For foreigners (not holding onto any of the following: Singapore IC/PR IC/Employment/S Pass/Work Permit/Dependent's Pass) a refundable deposit of 300-400% of the costume rental rates would be required, depending on the rental period. &lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Late Return &lt;/b&gt;
+         &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; Late return of the costumes would be charged at 100% of 3-day rental fee per 3-day block. Refundable deposit made in cheque would be banked in immediately upon any late return. &lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Exchange / Cancellation / Refund &lt;/b&gt;
+         &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; Costumes cannot be changed once costumes have been brought out of the shop premises. Costume changes before collection would be charged at $10 per set. No refund of booking deposit would be made for cancellation of costumes; this includes cancellation due to costumes being ill-fitting, change in event theme, and cancellation of the function or whatsoever reason. &lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Missing Items, Loss or Damage &lt;/b&gt;
+         &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; Customers or persons collecting on their behalf should check their items thoroughly during collection and advise the shop of any damage, marks, stains, or missing items. CCM will not be liable for the delivery of any missing items. In the case of loss or damage, the customer may be liable for an extra charge to cover the replacement or repair. This is subjected to severity of the damage and prevailing value of item. Any repairable damage(s) would be charged at reasonable market price not exceeding 50% of the prevailing value of the damaged costume. Irreparable damage(s) and loss of items(s) would be charged to the prevailing value of the item(s). &lt;/p&gt;
+        &lt;table style="border:1px solid black;font-family:Arial;font-size:15px;margin-left:30px;" width="80%"&gt;
+            &lt;tr style="line-height:25px;"&gt;
+                &lt;th style="border:1px solid black;padding-left:10px;"&gt;  &lt;/th&gt;
+                &lt;th style="border:1px solid black;padding-left:10px;"&gt; Forfeiture &lt;/th&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; Late Return &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; 100% of 3-day rental fee per 3-day block &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; Repairable Damage &lt;/td&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; Subjected to severity of damage, reasonable market price not exceeding 50% of the prevailing value of the damaged costume &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; Irreparable Damage &lt;/td&gt;
+                &lt;td rowspan="2" style="border:1px solid black;padding-left:10px;"&gt; Prevailing value of the item(s). &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td style="border:1px solid black;padding-left:10px;"&gt; Loss &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/li&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Rental Bags &lt;/b&gt;
+         &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; Costume and mascot bags should be returned along with the rented items. In the case of failure to return, each carrier, costume cover and mascot bag will be charged $5, $10 and $100 respectively. &lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Alterations &lt;/b&gt;
+         &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; Any fitting alterations, if possible, will be done by CCM, prior to collection of items. If customers should make changes to the costumes on their own, they should not do anything that might cause damage to the costume and are required to inform the staff about any alterations made. &lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Laundry &lt;/b&gt;
+         &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; Laundering will be done by CCM at no additional cost, except where special laundering is required. &lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Request for invoice &lt;/b&gt;
+         &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; Any request to retrieve copies of lost or misplaced invoice will be subjected to a $20 service fee. &lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li style="font-family: Arial;font-size: 15px; color: black; margin-bottom: 0px;"&gt;&lt;b&gt; Liabilities &lt;/b&gt;
+         &lt;p style="font-family: Arial;font-size: 15px; color: black;"&gt; CCM is not responsible for any accident, damage or loss resulting from the use of rental items. &lt;/p&gt;
+    &lt;/li&gt;
+&lt;/ol&gt;
+&lt;span style="font-family: Arial;font-size: 15px; color: black;"&gt; All prices are quoted in Singapore dollars unless otherwise stated. &lt;/span&gt; &lt;br/&gt;
+&lt;span style="font-family: Arial;font-size: 15px; color: black;"&gt; These terms and conditions are subject to change. &lt;/span&gt;</field>
+        </record>
+    </data>
+</odoo>

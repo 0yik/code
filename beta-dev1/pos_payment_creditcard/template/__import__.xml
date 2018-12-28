@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets" inherit_id="point_of_sale.assets">
+            <xpath expr="//script[last()]" position="after">
+                <script type="text/javascript" src="/pos_payment_creditcard/static/src/js/models.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

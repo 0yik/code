@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_partner_form_inherit_add_sale_type" model="ir.ui.view">
+            <field name="name">res.partner.form.add.sale.type</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="company_type" position="after">
+                    <field name="sale_type" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_res_partner_filter_add_sale_type" model="ir.ui.view">
+            <field name="name">res.partner.form.add.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <filter name="type_company" position="after">
+                    <separator/>
+                    <filter string="Wholesale" name="wholesale" domain="[('sale_type','=','wholesale')]"/>
+                    <filter string="Retail" name="retail" domain="[('sale_type','=','retail')]"/>
+                </filter>
+            </field>
+        </record>
+
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="context" eval="{'search_default_wholesale':1}"/>
+        </record>
+    </data>
+</odoo>

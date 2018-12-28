@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+
+    <t t-name="ChoosePromotionWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput">
+                <p class="title"><t t-esc=" widget.title || '' " /></p>
+                <div class="product-list-scroller touch-scrollable">
+                    <div class="product-list">
+                        <t t-if="widget.promotions">
+                            <t t-foreach="widget.promotions" t-as="promotion">
+                                <span class='product promotion-line' t-att-data-id="promotion.id">
+                                    <div class="product-img">
+                                        <img src="/pos_promotion/static/description/promotion.png" />
+                                    </div>
+                                    <div class="product-name">
+                                        <t t-esc="promotion.name"/>
+                                    </div>
+                                </span>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="promotion_select_button">
+        <button class="control-button btn btn-default btn-fill btn-wd"><i class="pe-7s-check"/>
+            <t t-esc="widget.pos.promotion_selected ? widget.pos.promotion_selected.name : widget.default_title"/>
+        </button>
+    </t>
+
+
+</template>

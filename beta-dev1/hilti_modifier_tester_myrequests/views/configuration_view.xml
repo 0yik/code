@@ -1,0 +1,18 @@
+<odoo>
+
+	<record id="admin_configuration_view_extended" model="ir.ui.view">
+		<field name="name">admin.configuration.view.extended</field>
+		<field name="model">admin.configuration</field>
+		<field name="inherit_id" ref="hilti_modifier_customer_booking.admin_configuration_view" />
+		<field name="arch" type="xml">
+			<label for="calendar_display" position='before'>
+				<label for="request_half_day_hours"/>
+				<div>
+					<field name="request_half_day_hours" />
+						<span> Hours </span>
+				</div>
+			</label>
+		</field>
+	</record>
+
+</odoo>

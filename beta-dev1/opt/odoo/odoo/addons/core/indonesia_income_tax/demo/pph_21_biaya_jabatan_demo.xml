@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="pph_21_biaya_jabatan" model="l10n_id.pph_21_biaya_jabatan">
+		    <field name="name">X Biaya Jabatan</field>
+		    <field name="date_start" eval="time.strftime('%Y')+'-01-01'"/>
+		    <field name="rate_biaya_jabatan" eval="5.0"/>
+		    <field name="max_biaya_jabatan" eval="500000.0"/>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,13 @@
+<openerp>
+	<data>
+        <report
+            string="CRM Report Print"
+            id="action_crm_report_pdf"
+            model="crm.report.wizz"
+            report_type="qweb-pdf"
+            file="avanta_crm_report.report_crm_report_document" 
+            name="avanta_crm_report.report_crm_report_document"
+        />
+		
+	</data>
+</openerp>

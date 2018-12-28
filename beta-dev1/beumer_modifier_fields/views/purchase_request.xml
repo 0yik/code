@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_purchase_request_form_inherit_custom">
+            <field name="name">purchase.request.form.inherit</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group/group[3]" position="after">
+                    <group>
+                        <field name="bipo_no"/>
+                        <field name="balance_budget"/>
+                        <field name="customer_id"/>
+                        <field name="sale_price"/>
+                        <field name="sales_quotation" string="Sales Quotation"/>
+                        <field name="customer_po_no" string="Customer PO No"/>
+                        <field name="customer_po_date"/>
+                    </group>
+                </xpath>
+                <!--<xpath expr="//field[@name='line_ids']/form" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+                <field name="assigned_to" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="assigned_to" position="after">
+                    <field name="approve_sub" string="Approver"/>
+                    <field name="delivery_address" domain="[('project_id','=',project_id)]" context="{'project_id':project_id}"/>
+                    <field name="delivery_date" required="True"/>
+                </field>
+                <field name="picking_type_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_purchase_request_form_inherit_lines">
+            <field name="name">purchase.request.form.inherit.lines</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="multiple_rfq_pr.view_purchase_request_form_inherit"/>
+            <field name="arch" type="xml">
+                <!--<field name="total_amount" position="before">
+                    <field name="amount_untaxed" string="Untaxed"/>
+                </field>-->
+                <field name="justification" position="attributes">
+                    <attribute name="attrs">{'required' : [('preferred_vendor','=',True)]}</attribute>
+                </field>
+                <field name="justification" position="after">
+                    <field name="request_state" invisible="1"/>
+                    <button name="open_from_pr" string="Open RFQ" type="object" attrs="{'invisible' : [('request_state','!=','approved')]}"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="purchase_request_form_inherit2" model="ir.ui.view">
+            <field name="name">purchase.request.form.inherit</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.purchase_request_form_inherit"/>
+            <field name="arch" type="xml">
+                <field name="contract_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="unline_department_in_purchase_request_form" model="ir.ui.view">
+            <field name="name">Unline department in purchase request</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="analytic_approving_extension.view_purchase_request_form_inherit"/>
+            <field name="arch" type="xml">
+                <field name="department_id" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="purchase_request_view_tree_inherit" model="ir.ui.view">
+            <field name="name">purchase.request.view.tree.inherit</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_tree"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!--<record id="action_create_purchase_order" model="ir.actions.server">-->
+            <!--<field name="name">Create Purchase Order</field>-->
+            <!--<field name="type">ir.actions.server</field>-->
+            <!--<field name="model_id" ref="model_purchase_request"/>-->
+            <!--<field name="state">code</field>-->
+            <!--<field name="code">action = record.create_purchase_order();-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record model="ir.values" id="purchase_request_create_po">-->
+            <!--<field name="model">purchase.request</field>-->
+            <!--<field name="name">Create Purchase Order</field>-->
+            <!--<field name="key">action</field>-->
+            <!--<field name="key2">client_action_multi</field>-->
+            <!--<field name="value" eval="'ir.actions.server,' + str(ref('action_create_purchase_order'))" />-->
+        <!--</record>-->
+
+        <record model="ir.actions.act_window" id="purchase_request.purchase_request_form_action">
+            <field name="context">{"search_default_state": 'to_approve'}</field>
+        </record>
+
+    </data>
+</odoo>

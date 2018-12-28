@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="crm_lead_contactus_form" model="ir.ui.view">
+        <field name="name">crm.lead.form.lead</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <form string="Leads Form">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Subject"/>
+                        <h1><field name="name" placeholder="Describe the lead..."/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="phone"/>
+                            <field name="email_from"/>
+                            <field name="contact_name"/>
+                            <field name="partner_name" string="Company Name"/>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+        </record>
+
+        <record id="crm_lead_contactus_tree" model="ir.ui.view">
+            <field name="name">crm.lead.tree.lead</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <tree string="Leads">
+                    <field name="name" string="Subject"/>
+                    <field name="phone"/>
+                    <field name="email_from"/>
+                    <field name="contact_name"/>
+                    <field name="partner_name" string="Company Name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+    <!-- Contact US Menu -->
+    <record id="crm_lead_contactus" model="ir.actions.act_window">
+        <field name="name">Contact Us</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('crm_lead_contactus_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('crm_lead_contactus_form')})]"/>
+    </record>
+
+    <menuitem
+        id="crm_lead_menu_activities"
+        name="Contact Us"
+        parent="atts_course.menu_ems"
+        sequence="9"
+        action="crm_lead_contactus" />
+
+</odoo>

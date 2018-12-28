@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            string="SKU Print" 
+            id="action_report_stock_picking_new" 
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            name="vinay-27022017-test-a-b.report_stock_picking_new" 
+            file="vinay-27022017-test-a-b.report_stock_picking_new" 
+        />
+    </data>
+</odoo>

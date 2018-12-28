@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <template id="assets_backend" name="assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/avanta_fields_modifier/static/src/js/kanban_view.js"></script>
+                <script type="text/javascript" src="/avanta_fields_modifier/static/src/js/views/pivot_view.js"></script>
+                <script type="text/javascript" src="/avanta_fields_modifier/static/src/js/widgets/sidebar.js"></script>
+            </xpath>
+        </template>
+
+        <template id="assets_common" name="assets common" inherit_id="web.assets_common">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/avanta_fields_modifier/static/src/js/views/form_common.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="contactus_form_atts" name="Contact Form" inherit_id="website_crm.contactus_form" customize_show="True">
+        <xpath expr="//div/form" position="replace">
+            <form action="/website_form/" method="post" data-model_name="crm.lead" data-success_page="/page/website_crm.contactus_thanks" class="s_website_form form-horizontal container-fluid mt32" enctype="multipart/form-data">
+                <div class="form-group form-field o_website_form_required_custom">
+                    <label class="col-md-3 col-sm-4 align-left control-label" for="contact_name">Your Name</label>
+                    <div class="col-md-10 col-sm-8">
+                        <input type="text" class="form-control o_website_form_input" name="contact_name" t-att-value="request.params.get('contact_name', '')" required=""/>
+                    </div>
+                </div>
+                <div class="form-group form-field">
+                    <label class="col-md-3 col-sm-4 align-left control-label" for="phone">Phone Number</label>
+                    <div class="col-md-10 col-sm-8">
+                        <input type="text" class="form-control o_website_form_input" name="phone" t-att-value="request.params.get('phone', '')" />
+                    </div>
+                </div>
+                <div class="form-group form-field o_website_form_required_custom">
+                    <label class="col-md-3 col-sm-4 align-left control-label" for="email_from">Email</label>
+                    <div class="col-md-10 col-sm-8">
+                        <input type="text" class="form-control o_website_form_input" name="email_from" required="" t-att-value="request.params.get('email_from', '')" />
+                    </div>
+                </div>
+                <div class="form-group form-field o_website_form_required_custom">
+                    <label class="col-md-3 col-sm-4 align-left control-label" for="partner_name">Your Company</label>
+                    <div class="col-md-10 col-sm-8">
+                        <input type="text" class="form-control o_website_form_input" name="partner_name" required="" t-att-value="request.params.get('partner_name', '')" />
+                    </div>
+                </div>
+                <div class="form-group form-field o_website_form_required">
+                    <label class="col-md-3 col-sm-4 align-left control-label" for="name">Subject</label>
+                    <div class="col-md-10 col-sm-8">
+                        <input type="text" class="form-control o_website_form_input" name="name" required="" t-att-value="request.params.get('name', '')" />
+                    </div>
+                </div>
+                <div class="form-group form-field o_website_form_required_custom">
+                    <label class="col-md-3 col-sm-4 align-left control-label" for="description">Your Question</label>
+                    <div class="col-md-10 col-sm-8">
+                        <textarea class="form-control o_website_form_input" name="description" required=""><t t-esc="request.params.get('description', '')" rows="40"/></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-8 col-md-7">
+                        <span class="btn btn-primary btn-lg o_website_form_send">Send</span>
+                        <span id="o_website_form_result"></span>
+                    </div>
+                </div>
+            </form>
+		</xpath>
+	</template>
+	<template id="company_description_atts" name="Company Description ATTS" inherit_id="website.company_description">
+        <xpath expr="//address/div" position="replace">
+            <div class="col-md-12">
+                <span t-esc="res_company.name"/>
+            </div>
+            <div class="col-md-1">
+                <i class="fa fa-map-marker"></i>
+            </div>
+            <div class="col-md-11">
+                <t t-if="res_company.street"><span t-esc="res_company.street"/><br/></t>
+                <t t-if="res_company.street2"><span t-esc="res_company.street2"/><br/></t>
+                <t t-if="res_company.city"><span t-esc="res_company.city"/> <span t-esc="res_company.zip"/><br/></t>
+                <t t-if="res_company.state_id.name"><span t-esc="res_company.state_id.name"/><br/></t>
+                <t t-if="res_company.country_id.name"><span t-esc="res_company.country_id.name"/></t>
+            </div>
+            <div class="col-md-1">
+                <i class="fa fa-phone"></i>
+            </div>
+            <div class="col-md-11">
+                <t t-if="res_company.phone"><span t-esc="res_company.phone"/><br/></t>
+            </div>
+            <div class="col-md-1">
+                <i class="fa fa-fax"></i>
+            </div>
+            <div class="col-md-11">
+                <t t-if="res_company.fax"><span t-esc="res_company.fax"/><br/></t>
+            </div>
+            <div class="col-md-1">
+                <i class="fa fa-envelope"></i>
+            </div>
+            <div class="col-md-11">
+                <t t-if="res_company.email"><span t-esc="res_company.email"/><br/></t>
+            </div>
+        </xpath>
+
+		<xpath expr="//img[contains(@class, 'thumbnail')]" position="replace">
+			<img class="thumbnail img-responsive" t-att-src="res_company.google_map_img(18, 350, 450)" />
+		</xpath>
+	</template>
+</odoo>

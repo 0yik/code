@@ -1,0 +1,186 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="inherited_view_stock_quant_form">
+            <field name="name">inherited.stock.quant.form</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock.view_stock_quant_form"/>
+            <field name="arch" type="xml">
+                <field name="qty" position="after">
+                    <field name="branch_ids" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="ir_filters_stock_quant_branch_manager" model="ir.rule">
+            <field name="name">stock.quant</field>
+            <field name="model_id" search="[('model','=','stock.quant')]" model="ir.model"/>
+            <field name="domain_force">[('branch_ids','in',[user.branch_id.id])]</field>
+            <field name="groups" eval="[ (4, ref('branch.group_branch_user_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_stock_quant_branch_user" model="ir.rule">
+            <field name="name">stock.quant.user</field>
+            <field name="model_id" search="[('model','=','stock.quant')]" model="ir.model"/>
+            <field name="domain_force">[('branch_ids','in',[user.branch_id.id])]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_product_branch_manager" model="ir.rule">
+            <field name="name">product.product</field>
+            <field name="model_id" search="[('model','=','product.product')]" model="ir.model"/>
+            <field name="domain_force">[('branch_ids','in',[user.branch_id.id])]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_product_branch_user" model="ir.rule">
+            <field name="name">product.product</field>
+            <field name="model_id" search="[('model','=','product.product')]" model="ir.model"/>
+            <field name="domain_force">[('branch_ids','in',[user.branch_id.id])]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_pos_order_branch_manager" model="ir.rule">
+            <field name="name">pos.order</field>
+            <field name="model_id" search="[('model','=','pos.order')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.branch_id.id)]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_pos_order_branch_user" model="ir.rule">
+            <field name="name">pos.order</field>
+            <field name="model_id" search="[('model','=','pos.order')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.branch_id.id)]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_pos_session_branch_manager" model="ir.rule">
+            <field name="name">pos.session</field>
+            <field name="model_id" search="[('model','=','pos.session')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.branch_id.id)]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_pos_session_branch_user" model="ir.rule">
+            <field name="name">pos.session</field>
+            <field name="model_id" search="[('model','=','pos.session')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.branch_id.id)]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_stock_picking_branch_user" model="ir.rule">
+            <field name="name">stock.picking</field>
+            <field name="model_id" search="[('model','=','stock.picking')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.branch_id.id)]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_stock_picking_branch_manager" model="ir.rule">
+            <field name="name">stock.picking.manager</field>
+            <field name="model_id" search="[('model','=','stock.picking')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.branch_id.id)]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_stock_move_branch_user" model="ir.rule">
+            <field name="name">stock.move</field>
+            <field name="model_id" search="[('model','=','stock.move')]" model="ir.model"/>
+            <field name="domain_force">[('product_id.branch_ids','in',[user.branch_id.id])]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_stock_move_branch_manager" model="ir.rule">
+            <field name="name">stock.move.manager</field>
+            <field name="model_id" search="[('model','=','stock.move')]" model="ir.model"/>
+            <field name="domain_force">[('product_id.branch_ids','in',[user.branch_id.id])]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_pos_config_branch_user" model="ir.rule">
+            <field name="name">pos.config.user</field>
+            <field name="model_id" search="[('model','=','pos.config')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.branch_id.id)]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_pos_config_branch_manager" model="ir.rule">
+            <field name="name">pos.config</field>
+            <field name="model_id" search="[('model','=','pos.config')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.branch_id.id)]</field>
+            <field name="groups" eval="[(4, ref('branch.group_branch_user_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!--ir.rules for Brand manager-->
+
+        <record id="ir_filters_stock_quant_brand_manager" model="ir.rule">
+            <field name="name">stock.quant.brand.manager</field>
+            <field name="model_id" search="[('model','=','stock.quant')]" model="ir.model"/>
+            <field name="domain_force">[('branch_ids','=',user.brand_branch_ids.ids)]</field>
+            <field name="groups" eval="[ (4, ref('user_accessright_branch.group_brand_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_product_brand_manager" model="ir.rule">
+            <field name="name">product.product.brand.manager</field>
+            <field name="model_id" search="[('model','=','product.product')]" model="ir.model"/>
+            <field name="domain_force">[('branch_ids','=',user.brand_branch_ids.ids)]</field>
+            <field name="groups" eval="[ (4, ref('user_accessright_branch.group_brand_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_pos_order_brand_manager" model="ir.rule">
+            <field name="name">pos.order.brand.manager</field>
+            <field name="model_id" search="[('model','=','pos.order')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.brand_branch_ids.ids)]</field>
+            <field name="groups" eval="[ (4, ref('user_accessright_branch.group_brand_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_pos_session_brand_manager" model="ir.rule">
+            <field name="name">pos.session.brand.manager</field>
+            <field name="model_id" search="[('model','=','pos.session')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.brand_branch_ids.ids)]</field>
+            <field name="groups" eval="[ (4, ref('user_accessright_branch.group_brand_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_stock_picking_brand_manager" model="ir.rule">
+            <field name="name">stock.picking.brand.manager</field>
+            <field name="model_id" search="[('model','=','stock.picking')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.brand_branch_ids.ids)]</field>
+            <field name="groups" eval="[ (4, ref('user_accessright_branch.group_brand_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_stock_move_brand_manager" model="ir.rule">
+            <field name="name">stock.move.brand.manager</field>
+            <field name="model_id" search="[('model','=','stock.move')]" model="ir.model"/>
+            <field name="domain_force">[('product_id.branch_ids','=',user.brand_branch_ids.ids)]</field>
+            <field name="groups" eval="[ (4, ref('user_accessright_branch.group_brand_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="ir_filters_pos_config_brand_manager" model="ir.rule">
+            <field name="name">pos.config.brand.manager</field>
+            <field name="model_id" search="[('model','=','pos.config')]" model="ir.model"/>
+            <field name="domain_force">[('branch_id','=',user.brand_branch_ids.ids)]</field>
+            <field name="groups" eval="[ (4, ref('user_accessright_branch.group_brand_manager'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

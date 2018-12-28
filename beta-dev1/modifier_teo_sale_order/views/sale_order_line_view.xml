@@ -1,0 +1,295 @@
+<odoo>
+	<data>
+		<record id="view_sale_order_line_tree" model="ir.ui.view">
+			<field name="name">sale.order.line.tree</field>
+			<field name="model">sale.order.line</field>
+			<field name="arch" type="xml">
+				<tree string="Sale Order Line">
+					<field name="sequence" widget="handle" />
+					<field name="order_id" string="SOID" />
+					<field name="pm_no" />
+					<field name="shipment_no" />
+					<field name="shipment_buyer_order_no" />
+					<field name="product_id" string="ItemNo"
+						attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}"
+						context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}" />
+					<field name="procurement_ids" invisible="1" />
+					<field name="layout_category_id" groups="sale.group_sale_layout" />
+					<field name="name" />
+					<field name="product_uom_qty" string="ItemQty"
+						context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}" />
+					<field name="qty_delivered" invisible="1" />
+					<field name="qty_invoiced"/>
+					<field name="qty_outstanding" />
+					<field name="qty_to_invoice" invisible="1" />
+					<field name="product_uom"
+						attrs="{'readonly': [('state', 'in', ('sale','done', 'cancel'))]}"
+						context="{'company_id': parent.company_id}" groups="product.group_uom"
+						options='{"no_open": True}' />
+					<field name="analytic_tag_ids" groups="analytic.group_analytic_accounting"
+						widget="many2many_tags" />
+					<field name="price_unit" attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"
+						string="ItemUnitPrice" />
+					<field name="tax_id" widget="many2many_tags"
+						domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
+						attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}" />
+					<field name="discount" groups="sale.group_discount_per_so_line" />
+					<field name="price_subtotal" widget="monetary"
+						groups="sale.group_show_price_subtotal" />
+					<field name="price_total" widget="monetary"
+						groups="sale.group_show_price_total" />
+					<field name="shipment_delivery_date" />
+					<field name="shipment_ship_mode" />
+					<field name="asn_no" />
+					<field name="final_destination" />
+					<field name="ship_address" />
+					<field name="item_country_origin" />
+					<field name="item_factory_english" />
+					<field name="item_hs_code" />
+					<field name="agent_commision" />
+					<field name="company_commision" />
+					<field name="gender" />
+					<field name="ref_no" />
+					<field name="note" />
+					<!-- <field name="pm_bottom_remark" /> -->
+					<field name="cat_no" />
+					<field name="col1_content" />
+					<field name="col1_name" />
+					<field name="col2_content" />
+					<field name="col2_name" />
+					<field name="col3_content" />
+					<field name="col3_name" />
+					<field name="col_code" />
+					<field name="colour_name" />
+					<field name="state" invisible="1" />
+					<!-- <field name="size" /> -->
+					<!-- <field name="original_delivery_date" /> -->
+					<!-- <field name="fabric_id" invisible="1" /> -->
+					<!-- <field name="fiber_content" invisible="1" /> -->
+					<!-- <field name="currency" /> -->
+					<!-- <field name="currency_code" /> -->
+					<!-- <field name="destination_code" /> -->
+					<!-- <field name="destination" /> -->
+					<!-- <field name="product_pack_id" /> -->
+					<!-- <field name="shipment_loading" /> -->
+					<!-- <field name="item_buyer_order_no" /> -->
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_sale_order_line_form" model="ir.ui.view">
+			<field name="name">sale.order.line.form</field>
+			<field name="model">sale.order.line</field>
+			<field name="arch" type="xml">
+				<form string="Sales Order Lines">
+					<group>
+						<group>
+							<field name="product_id" string="ItemNo"
+								attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}" />
+							<field name="product_pack_id" />
+							<field name="layout_category_id" groups="sale.group_sale_layout" />
+							<field name="invoice_status" invisible="1" />
+							<field name="qty_to_invoice" invisible="1" />
+							<field name="qty_delivered_updateable" invisible="1" />
+							<field name="procurement_ids" invisible="1" />
+							<field name="price_subtotal" invisible="1" />
+							<label for="product_uom_qty" string="ItemQty" />
+							<div>
+								<field
+									context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'uom_qty_change':True, 'company_id': parent.company_id}"
+									name="product_uom_qty" class="oe_inline" />
+								<field name="product_uom" groups="product.group_uom"
+									class="oe_inline oe_no_button"
+									attrs="{'readonly': [('state', 'in', ('sale','done', 'cancel'))]}" />
+							</div>
+							<label for="qty_delivered" string="Delivered Quantity"
+								invisible="1" />
+							<div invisible="1">
+								<field name="qty_delivered" invisible="1" />
+							</div>
+							<label for="qty_invoiced" string="Invoiced Quantity"/>
+							<div>
+								<field name="qty_invoiced" />
+							</div>
+							<field name="qty_outstanding" />
+							<field name="price_unit" string="ItemUnitPrice" />
+							<field name="company_commision" />
+							<field name="agent_commision" />
+							<field name="colour_name" />
+							<field name="col_code" />
+							<field name="tolerance" />
+							<field name="shipment_ship_mode" />
+							<field name="shipment_delivery_date" />
+							<field name="original_delivery_date" />
+							<field name="ref_no" />
+							<field name="asn_no" />
+							<field name="gender" />
+							<field name="fabric_id" />
+							<field name="fiber_content" />
+							<field name="dim_code" />
+							<field name="item_buyer_order_no" />
+							<field name="item_factory_code" />
+							<field name="item_factory_english" />
+							<field name="item_country_code" />
+							<field name="item_country_origin" />
+							<field name="item_production_country_code" />
+							<field name="item_production_country" />
+							<field name="item_ean_no" />
+							<field name="item_hs_code" />
+							<field name="item_hs" />
+							<field name="item_label" />
+							<field name="attribute_seq_no" />
+							<field name="attribute_label" />
+							<field name="attribute_data_type" />
+							<field name="attribute_code" />
+							<field name="attribute_value" />
+							<field name="ship_address" />
+							<field name="pack_seq_no" />
+							<field name="pack_line_no" />
+							<label for="discount" groups="sale.group_discount_per_so_line" />
+							<div name="discount" groups="sale.group_discount_per_so_line">
+								<field name="discount" class="oe_inline" />
+								%
+							</div>
+						</group>
+						<group>
+							<field name="pm_no" />
+							<field name="shipment_buyer_order_no"
+								context="{'default_shipment_buyer_order_no': parent.shipment_buyer_order_no}" />
+							<field name="component_code" />
+							<field name="hts_code" />
+							<field name="cat_no" />
+							<field name="knitted" />
+							<field name="note" />
+							<field name="stk_issue_qty" />
+							<field name="stk_issue_os_qty" />
+							<field name="cost_total" />
+							<field name="port_of_loading" />
+							<field name="port_of_discharger" />
+							<field name="final_destination" />
+							<field name="dc_no" />
+							<field name="vessel" />
+							<field name="bl_no" />
+							<field name="item2" />
+							<field name="col1_name" />
+							<field name="col1_content" />
+							<field name="col2_name" />
+							<field name="col2_content" />
+							<field name="col3_name" />
+							<field name="col3_content" />
+							<field name="currency" />
+							<field name="currency_code" />
+							<field name="destination_code" />
+							<field name="destination" />
+							<field name="pm_bottom_remark" />
+							<field name="shipment_no" />
+							<field name="shipment_ref" />
+							<field name="shipment_discharge_code" />
+							<field name="shipment_discharge" />
+							<field name="shipment_destination_code" />
+							<field name="shipment_loading_code" />
+							<field name="shipment_loading" />
+							<field name="item_seq" />
+							<field name="tax_id" widget="many2many_tags"
+								domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
+								attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}" />
+							<label for="customer_lead" />
+							<div>
+								<field name="customer_lead" class="oe_inline" />
+								days
+							</div>
+							<label for="analytic_tag_ids" groups="analytic.group_analytic_accounting" />
+							<div>
+								<field name="analytic_tag_ids" widget="many2many_tags"
+									groups="analytic.group_analytic_accounting" />
+							</div>
+						</group>
+					</group>
+					<group string="Size">
+						<group>
+							<field name="size" />
+							<field name="solid_size_pack"
+								attrs="{'invisible':['|',('size','=',False),('size','=','os')],'required':[('size','!=',False),('size','!=','os')]}" />
+						</group>
+						<group>
+							<field name="ratio"
+								attrs="{'invisible':['|',('size','=',False),('size','=','os')],'required':[('size','!=',False),('size','!=','os')]}" />
+							<field name="ttl_ctn"
+								attrs="{'invisible':['|',('size','=',False),('size','=','os')],'required':[('size','!=',False),('size','!=','os')]}" />
+						</group>
+					</group>
+					<div>
+						<label for="size_line"
+							attrs="{'invisible':['|',('size','=',False),('size','=','os')]}" />
+						<field name="size_line"
+							attrs="{'invisible':['|',('size','=',False),('size','=','os')]}">
+							<tree string="Sales Order Lines" create='false'>
+								<field name="size" />
+								<field name="qty" />
+							</tree>
+						</field>
+					</div>
+					<label for="name" string="ItemDesc" />
+					<field name="name" />
+					<div groups="base.group_no_one">
+						<label for="invoice_lines" />
+						<field name="invoice_lines" />
+					</div>
+					<field name="state" invisible="1" />
+				</form>
+			</field>
+		</record>
+
+		<record id="action_sale_order_line" model="ir.actions.act_window">
+			<field name="name">Sale Order Line</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order.line</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('state', '!=', ('cancel'))]</field>
+			<field name="view_id" ref="view_sale_order_line_tree" />
+		</record>
+
+		<menuitem id="menu_sale_order_line" parent="sales_team.menu_sales"
+			action="action_sale_order_line" sequence="15" />
+
+		<record id="create_po_wizard_form" model="ir.ui.view">
+			<field name="name">Create PO Wizard</field>
+			<field name="model">create.po.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Create PO">
+					<group>
+						<field name="partner_id" />
+					</group>
+					<footer>
+						<button name="create_po" string="Create PO" type="object"
+							class="btn-primary" />
+						<button string="Cancel" class="btn-default" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<act_window id="action_create_po_sale_order_line" name="Create PO"
+			src_model="sale.order.line" res_model="create.po.wizard" view_type="form"
+			view_mode="form" key2="client_action_multi" target="new" />
+
+		<record id="ir_actions_server_create_duplicate_sol" model="ir.actions.server">
+			<field name="name">Duplicate Sale Order Line</field>
+			<field name="model_id" ref="sale.model_sale_order_line" />
+			<field name="state">code</field>
+			<field name="condition">True</field>
+			<field name="code">record.duplicate_line()</field>
+		</record>
+
+		<record id="dupliacte_so_line_mutli" model="ir.values">
+			<field name="name">Duplicate SO Line</field>
+			<field name="value"
+				eval="'ir.actions.server,%d'%ir_actions_server_create_duplicate_sol" />
+			<field name="key">action</field>
+			<field name="key2">client_action_multi</field>
+			<field name="model">sale.order.line</field>
+		</record>
+
+	</data>
+</odoo>

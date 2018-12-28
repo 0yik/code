@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="paperformat_fmd" model="report.paperformat">
+			<field name="name">FMD Customer Report</field>
+			<field name="format">A4</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">10</field>
+			<field name="margin_bottom">10</field>
+			<field name="margin_left">7</field>
+			<field name="margin_right">7</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">5</field>
+		</record>
+		<report id="report_res_partner_form" string="Customer Report Form"
+			model="res.partner" report_type="qweb-pdf" paperformat="fmd_customer.paperformat_fmd"
+			file="fmd_customer.res_partner_report_form" name="fmd_customer.res_partner_report_form" />
+
+		<record model="ir.actions.report.xml" id="report_res_partner_form">
+			<field name="groups_id"
+				eval="[(6,0,[ref('group_admin_fmd'), ref('group_corp_sec_assistant'), ref('group_corp_sec_executive'), ref('group_corp_sec_manager'), ref('group_cs1'), ref('group_cs2'), ref('group_operation_executive'), ref('group_operation_manager'), ref('group_bd_executive'), ref('group_bd_manager'), ref('group_client_general_l2_operation_executive'), ref('group_client_general_l3_operation_manager')])]" />
+		</record>
+	</data>
+</openerp>

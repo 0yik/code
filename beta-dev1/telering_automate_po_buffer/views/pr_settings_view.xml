@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo> 
+	<record id="view_purchase_configuration_pr" model="ir.ui.view">
+        <field name="name">purchase.res.config.pr.view</field>
+        <field name="inherit_id" ref="purchase.view_purchase_configuration"/>
+        <field name="model">purchase.config.settings</field>
+        <field name="arch" type="xml">
+        	<xpath expr="//form[@class='oe_form_configuration']" position="inside">
+        		<group string="Buffer Stock Settings">
+        			<field name="buffer_stock_per"/>
+        		</group>
+        	</xpath>
+       	</field>
+    </record>
+</odoo>

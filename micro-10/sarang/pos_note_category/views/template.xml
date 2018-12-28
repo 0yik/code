@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets" name="pos_category assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_note_category/static/src/js/pos_note_category_pos.js"></script>
+            <script type="text/javascript" src="/pos_note_category/static/src/js/pos_note_category_pos_restaurant.js"></script>
+        </xpath>
+    </template>
+</odoo>

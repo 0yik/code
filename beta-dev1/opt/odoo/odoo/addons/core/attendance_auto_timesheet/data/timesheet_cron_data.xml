@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record model="ir.cron" id="ir_cron_currency_update_every_day">
+            <field name="name">Attandence Auto Timesheet</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field><!-- it s every day -->
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'hr_timesheet_sheet.sheet'"/>
+            <field name="function" eval="'attandance_auto_timesheet'"/>
+            <field name="args">()</field>
+        </record>
+    </data>
+</odoo>

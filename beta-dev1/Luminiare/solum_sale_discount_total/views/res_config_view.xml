@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_discount_config" model="ir.ui.view">
+            <field name="name">discount.config</field>
+            <field name="model">account.config.settings</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/group[7]" position="after">
+                    <group>
+                        <label for="id" string="Discount-Commission Limit"/>
+                        <div>
+                            <div>
+                                <label for="discount_limit"/>
+                                <field name="discount_limit" class="oe_inline"/>
+                            </div>
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

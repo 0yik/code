@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!--  Hide Create Edit Financial Reports AR AP Manager-->
+        <record id="view_account_financial_report_tree_inherit" model="ir.ui.view">
+            <field name="name">view account financial report tree inherit</field>
+            <field name="model">account.financial.report</field>
+            <field name="inherit_id" ref="account.view_account_financial_report_tree"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_financial_report_form_inherit" model="ir.ui.view">
+            <field name="name">view account financial report form inherit</field>
+            <field name="model">account.financial.report</field>
+            <field name="inherit_id" ref="account.view_account_financial_report_form"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--  Hide Create Edit Report Templates AR AP Manager-->
+        <record id="account_financial_report_tree_inherit" model="ir.ui.view">
+            <field name="name">account financial report tree inherit</field>
+            <field name="model">afr</field>
+            <field name="inherit_id" ref="sg_account_report.account_financial_report_tree"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_financial_report_view_inherit" model="ir.ui.view">
+            <field name="name">account financial report view inherit</field>
+            <field name="model">afr</field>
+            <field name="inherit_id" ref="sg_account_report.account_financial_report_view"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--  Hide Create Edit Analytic Accounts AR AP Manager-->
+        <record id="view_account_analytic_account_list_inherit3" model="ir.ui.view">
+            <field name="name">view account analytic account list inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_list"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_analytic_account_form_inherit" model="ir.ui.view">
+            <field name="name">view account analytic account form inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--  Hide Create Edit Analytic Entries AR AP Manager-->
+        <record id="view_account_analytic_line_tree_inherit" model="ir.ui.view">
+            <field name="name">view account analytic line tree inherit</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_line_tree"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_analytic_line_form_inherit" model="ir.ui.view">
+            <field name="name">view account analytic account form inherit</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--  Hide Create Edit Assets AR AP Manager-->
+        <record id="view_account_asset_asset_purchase_tree_inherit" model="ir.ui.view">
+            <field name="name">view account asset asset purchase tree inherit</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_asset_purchase_tree"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_asset_asset_form_inherit" model="ir.ui.view">
+            <field name="name">view account asset asset form inherit</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_asset_form"/>
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Show menu Cash & Bank Register to AR & AP Manager -->
+        <record id="sg_pettycash.cash_bank_register" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_user_ap_manager')),(4, ref('accsess_user_ar_manager'))]"/>
+        </record>
+
+        <record id="sg_pettycash.cash_register" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_user_ap_manager')),(4, ref('accsess_user_ar_manager'))]"/>
+        </record>
+
+        <record id="sg_pettycash.bank_register" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_user_ap_manager')),(4, ref('accsess_user_ar_manager'))]"/>
+        </record>
+        <!--Show menu to Auditor-->
+        <record id="account.menu_finance" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_user_auditor'))]"/>
+        </record>
+        <record id="account.menu_board_journal_1" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_user_auditor'))]"/>
+        </record>
+        <record id="account.menu_finance_receivables" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_user_auditor'))]"/>
+        </record>
+
+        <record id="sg_partner_payment.menu_customer_receipts" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_user_auditor'))]"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+.selection-floor{
+    min-height: 52px;
+    padding: 20px;
+    border-bottom: dashed 1px rgb(215,215,215);
+}
+.selection-floor .label{
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px 0px;
+    font-size: 36px;
+    color: #43996E !important;
+    text-shadow: 0px 2px white, 0px 2px 2px rgba(0, 0, 0, 0.27);
+}
+.selection-floor .floor-list{
+    margin-left: 40px;
+}
+
+.selection-floor select {
+    padding: 4px;
+    border-radius: 3px;
+    border: solid 1px #cecbcb;
+    margin-bottom: 4px;
+    background: white;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    color: #555555;
+    width: 340px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+.top-content h1 {
+    margin-top: 0px;
+}
+
+ul.table-list {
+    margin: 12px;
+    background-color: white;
+}
+
+ul.table-list li:hover{
+    background-color: lightblue;
+}
+ul.table-list li.selected{
+    background-color: lightgreen;
+}
+.tableline .amount_total{
+    float: right;
+}
+.tableline span{
+    font-size: 24px;
+}
+

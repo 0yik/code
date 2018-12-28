@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_purchase_requisition_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.requisition.form.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group/group[1]/field[@name='vendor_id']" position="attributes">
+              		<attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[1]/field[@name='vendor_id']" position="after">
+                    <field name="vendor_ids" widget="many2many_tags"/>
+                </xpath>
+                <xpath expr="//form/header/button[@name=%(purchase_requisition.action_purchase_requisition_to_so)d][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[@name=%(purchase_requisition.action_purchase_requisition_to_so)d][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[@name=%(purchase_requisition.action_purchase_requisition_to_so)d][2]" position="after">
+                    <button name="action_create_po" type="object" string="New Quotation" attrs="{'invisible': [('state', '!=', 'open')]}"/>
+                    <button name="action_create_po" type="object" string="New Quotation" class="btn-primary" attrs="{'invisible': [('state', '!=', 'in_progress')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_purchase_requisition_to_po">
+            <field name="name">Purchase Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="domain">[('requisition_id','=',active_id)]</field>
+            <field name="context">{"default_requisition_id":active_id}</field>
+        </record>
+
+        <record model="ir.values" id="purchase_request_create_values">
+            <field name="model_id" ref="purchase_request.model_purchase_request" />
+            <field name="name">Create Purchase Request</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_purchase_requisition_to_po'))" />
+            <field name="key">action</field>
+            <field name="model">purchase.requisition</field>
+        </record>
+
+    </data>
+</odoo>
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_custom_pdp_layout" inherit_id="point_of_sale.assets" name="pos_sarang_oci_header assets">
+        
+        <xpath expr="//script[last()]" position="after">
+            <link rel="stylesheet" href="/pos_three_row_layout/static/src/css/centerpane.css" />
+            <!-- <script type="text/javascript" src="/pos_three_row_layout/static/src/js/tex-service.js"></script> -->
+        </xpath>
+    </template>
+</odoo>

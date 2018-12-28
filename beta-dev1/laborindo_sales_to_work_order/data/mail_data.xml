@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="mail_template_data_work_order1" model="mail.template">
+            <field name="name">Work Order</field>
+            <field name="model_id" ref="laborindo_sales_to_work_order.model_work_order_so"/>
+            <field name="email_to">${object.worker_id.partner_id.email}</field>
+            <field name="subject">Work Order ${object.name}</field>
+            <field name="body_html"><![CDATA[
+<p>
+    Dear ${object.worker_id.name or ''},
+</p>
+<p>You have Work Order ${object.name} and need to start work on the same</p>
+<p>Thanks</p>
+]]></field>
+        </record>
+    </data>
+</odoo>

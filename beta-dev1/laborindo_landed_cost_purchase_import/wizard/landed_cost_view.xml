@@ -1,0 +1,53 @@
+<odoo>
+    <record id="view_landed_cost_wizard_form" model="ir.ui.view">
+        <field name="name">landed.cost.wizard.form</field>
+        <field name="model">landed.cost.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form name="landed_cost_wizard">
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="purchase_id" invisible="1"/>
+                            <field name="date"/>
+                            <field name="picking_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="account_journal_id"/>
+                        </group>
+                    </group>
+                    <separator string="Cost Lines"/>
+                        <p class="oe_grey">
+                            Landed cost are computed based on the purchase unit of measure.
+                        </p>
+                    <field name="cost_lines">
+                        <tree string="Cost Lines" editable="bottom">
+                            <field name="product_id"
+                                   domain="[('landed_cost_ok', '=', True)]"
+                                   context="{'default_landed_cost_ok': True, 'form_view_ref':'stock_landed_costs.view_stock_landed_cost_type_form'}"/>
+                            <field name="name"/>
+                            <field name="account_id"/>
+                            <field name="split_method"/>
+                            <field name="price_unit"/>
+                        </tree>
+                    </field>
+                </sheet>
+                <footer>
+                    <button string="Save" name="save_landed_cost" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_landed_cost_wizard" model="ir.actions.act_window">
+        <field name="name">Landed Cost</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">landed.cost.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+
+    </record>
+</odoo>

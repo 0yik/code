@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="student_portal_invoices_template" name="Student Portal Invoice">
+		<t t-call="student_portal.student_portal_layout">
+			<h3 class="page-header">Your Invoices and Payments</h3>
+			<t t-if="not invoices">
+				<p>There are currently no invoices for your account.</p>
+			</t>
+			<t t-if="invoices">
+				<table class="table table-hover o_my_status_table">
+					<thead>
+						<tr class="active">
+						<th style="background-color:transparent;width: 14%;">Invoice #</th>
+						<th style="background-color:transparent;">Invoice Date</th>
+						<th style="background-color:transparent;">Due Date</th>
+						<th style="background-color:transparent;width: 22%;"></th>
+						<th style="background-color:transparent;width: 15%;"></th>
+						<th style="background-color:transparent;width: 18%;">Amount Due</th>
+						</tr>
+					</thead>
+				<t t-foreach="invoices" t-as="invoice">
+					<tr>
+						<td class= "cell_overflow">
+							<a t-att-href="'/my/invoices/pdf/'+str(invoice.id)" t-att-title="invoice.number"><t t-esc="invoice.number"/></a>
+						</td>
+						<td><span t-field="invoice.date_invoice"/></td>
+						<td><span t-field="invoice.date_due"/></td>
+						<td>
+							<t t-if="invoice.state == 'open'">
+								<span class="label label-info"><i class="fa fa-fw fa-clock-o"/> Waiting for Payment</span>
+							</t>
+							<t t-if="invoice.state == 'paid'">
+								<span class="label label-default"><i class="fa fa-fw fa-check"/> Paid</span>
+							</t>
+							<t t-if="invoice.state == 'cancel'">
+								<span class="label label-default"><i class="fa fa-fw fa-remove"/> Cancelled</span>
+							</t>
+						</td>
+						<td>
+							<a t-if="invoice.state == 'open'" t-attf-href="/website_payment/pay?reference=#{invoice.number}&amp;amount=#{invoice.residual}&amp;currency_id=#{invoice.currency_id.id}&amp;country_id=#{invoice.partner_id.country_id.id}" alt="Pay Now" class="btn btn-xs btn-primary"><i class="fa fa-arrow-circle-right"/> Pay Now</a>
+						</td>
+						<td>
+							<span t-field="invoice.residual" t-options='{"widget": "monetary", "display_currency": invoice.currency_id}'/>
+						</td>
+					</tr>
+				</t>
+				</table>
+				<div t-if="pager" class="o_portal_pager text-center">
+					<t t-call="website.pager"/>
+				</div>
+			</t>
+		</t>
+	</template>
+</odoo>

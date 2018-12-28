@@ -1,0 +1,69 @@
+<odoo>
+    <record id="paperformat_report_delivery" model="report.paperformat">
+        <field name="name">Absolutepiano</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">50</field>
+        <field name="margin_bottom">00</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">38</field>
+        <field name="dpi">80</field>
+    </record>
+
+    <report
+		string="Delivery Order"
+		id="stock.action_report_delivery"
+		model="stock.picking"
+		report_type="qweb-pdf"
+		name="stock.report_deliveryslip"
+		file="stock.report_deliveryslip"
+		paperformat="paperformat_report_delivery"
+	/>
+
+    <report
+            id="account.account_invoice_action_report_duplicate"
+            model="account.invoice"
+            string="Duplicates"
+            report_type="qweb-pdf"
+            name="account.account_invoice_report_duplicate_main"
+            file="account.report_invoice_duplicate"
+            attachment_use="False"
+        />
+
+    <report
+            id="sale.report_sale_order"
+            string="Quotation / Order"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="sale.report_saleorder"
+            name="sale.report_saleorder"
+            paperformat="paperformat_report_delivery"
+        />
+
+    <report
+            string="Purchase Order"
+            id="purchase.action_report_purchase_order"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="purchase.report_purchaseorder"
+            file="purchase.report_purchaseorder"
+            paperformat="paperformat_report_delivery"
+        />
+
+    <report
+            id="account.account_invoices"
+            model="account.invoice"
+            string="Invoices"
+            report_type="qweb-pdf"
+            name="account.report_invoice"
+            file="account.report_invoice"
+            attachment_use="True"
+            attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
+            paperformat="paperformat_report_delivery"
+        />
+</odoo>

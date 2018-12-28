@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+	<record id="view_order_form_intipresisi" model="ir.ui.view">
+		<field name="name">sale.order.intipresisi</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="arch" type="xml">
+		    <data>
+		        <xpath expr="//form/sheet/group/group/field[@name='partner_id']" position="before">
+		        	<field name="sale_order_name_id"/>
+		        </xpath>
+		        <xpath expr="//form/sheet/group/group/field[@name='payment_term_id']" position="after">
+		        	<field name="manual_sequence"/>
+		        	<field name="revision"/>
+		        	<field name="goods_label"/>
+		        </xpath>
+		        <xpath expr="//form/sheet/group/group/field[@name='date_order']" position="attributes">
+		        	<attribute name='string'>Quote Date</attribute>
+		        </xpath>
+		        <xpath expr='//notebook/page[1]/group[@name="sale_total"]/div/label[@for="amount_total"]' position="attributes">
+		        	<attribute name='string'>Grand Total</attribute>
+		        </xpath>
+		        <xpath expr='//notebook/page[2]/group/group/field[@name="client_order_ref"]' position="before">
+		        	<field name="contact_id" context="{'is_contact':True, 'partner_id': partner_id}"/>
+		        </xpath>
+		        <xpath expr='//notebook/page[2]/group/group/field[@name="client_order_ref"]' position="attributes">
+		        	<attribute name='invisible'>1</attribute>
+		        </xpath>
+		    </data>
+		</field>
+	</record>
+	
+	<record id="view_order_form_inherit_sale_stock_intipresisi" model="ir.ui.view">
+		<field name="name">sale.order.form.sale.stock</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+		<field name="arch" type="xml">
+		    <data>
+		        <xpath expr="//group[@name='sale_shipping']/field[@name='picking_policy']" position="after">
+		        	<field name="delivery_term_id"/>
+		        	<field name="delivery_time"/>
+		        </xpath>
+		    </data>
+		</field>
+	</record>
+	
+	<record id="seq_sale_order_inti" model="ir.sequence">
+        <field name="name">Sales Order Intipresisi</field>
+        <field name="code">sale.quotation.intipresisi</field>
+        <field name="prefix"></field>
+        <field name="suffix">/Q-XXX/IPT/%(month)s/%(y)s</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+	
+</data>
+</openerp>

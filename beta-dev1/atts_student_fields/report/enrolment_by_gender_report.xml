@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<odoo>
+    <template id="enrolment_by_gender_report_temp">
+	<t t-foreach="docs" t-as="doc"/>
+	<t t-call="report.html_container">
+            <div class="page">
+	            <span><strong><u>Year Of Birth by Gender</u></strong></span><br/><br/><br/>
+	            <span style="background-color: slategray;"><strong>Programme</strong>&#160;&#160;&#160;&#160;<strong>(All)</strong></span><br/><br/><br/>
+               <table cellspacing="0" cellpadding="0" class="table table-condensed"  style="border: 1px solid black">
+                   	 <thead>
+                            <tr style="background-color: slategray;">
+                                <th style="border: medium none !important;">
+                                 <strong>Sum Year Of Birth</strong><br/>
+                                 <strong>YOB Filter</strong><br/>
+                                </th >
+                                <th style="border: medium none !important;">
+                                 <strong>Age List</strong><br/>
+                                 <strong>AM</strong><br/>
+                                 </th>
+                                <th style="border: medium none !important;">
+                                 <strong></strong><br/>
+                                 <strong>PM</strong><br/>
+                                </th >
+                                <th style="border: medium none !important;">Grand Total</th>
+                            </tr>
+                        </thead>
+                    	<tbody>
+                        <tr t-foreach="enrolment_by_gender_cal.get('year_dictionary')" t-as="line" style="background-color: lavender;">
+                            <td>
+                                <span><strong t-esc="line"/></span><br/>
+                                <strong>Female</strong><br/>
+                                <strong>Male</strong>
+                            </td>
+                            <td>
+                            	<strong><span t-esc="enrolment_by_gender_cal.get('year_dictionary') and enrolment_by_gender_cal.get('year_dictionary').get(line) and enrolment_by_gender_cal.get('year_dictionary').get(line).get('total_count_am','') or ''"/></strong><br/>
+                            	<span t-esc="enrolment_by_gender_cal.get('year_dictionary') and enrolment_by_gender_cal.get('year_dictionary').get(line) and enrolment_by_gender_cal.get('year_dictionary').get(line).get('female_count_am','') or ''"/><br/>
+                            	<span t-esc="enrolment_by_gender_cal.get('year_dictionary') and enrolment_by_gender_cal.get('year_dictionary').get(line) and enrolment_by_gender_cal.get('year_dictionary').get(line).get('male_count_am','') or ''"/>
+                            </td>
+                            <td>
+	                            <strong><span t-esc="enrolment_by_gender_cal.get('year_dictionary') and enrolment_by_gender_cal.get('year_dictionary').get(line) and enrolment_by_gender_cal.get('year_dictionary').get(line).get('total_count_pm','') or ''"/></strong><br/>
+	                            <span t-esc="enrolment_by_gender_cal.get('year_dictionary') and enrolment_by_gender_cal.get('year_dictionary').get(line) and enrolment_by_gender_cal.get('year_dictionary').get(line).get('female_count_pm','') or ''"/><br/>
+	                           <span t-esc="enrolment_by_gender_cal.get('year_dictionary') and enrolment_by_gender_cal.get('year_dictionary').get(line) and enrolment_by_gender_cal.get('year_dictionary').get(line).get('male_count_pm','') or ''"/>
+                            </td>
+                            <td>
+                            	<strong><span t-esc="enrolment_by_gender_cal.get('year_dictionary') and enrolment_by_gender_cal.get('year_dictionary').get(line) and enrolment_by_gender_cal.get('year_dictionary').get(line).get('grand_total','') or ''"/></strong><br/>
+                            	<span t-esc="enrolment_by_gender_cal.get('year_dictionary') and enrolment_by_gender_cal.get('year_dictionary').get(line) and enrolment_by_gender_cal.get('year_dictionary').get(line).get('total_female_count','') or ''"/><br/>
+                            	<span t-esc="enrolment_by_gender_cal.get('year_dictionary') and enrolment_by_gender_cal.get('year_dictionary').get(line) and enrolment_by_gender_cal.get('year_dictionary').get(line).get('total_male_count','') or ''"/><br/>
+                            </td>
+                        </tr>
+                        <thead>
+                            <tr style="background-color: slategray;">
+                                <th>Grand Total</th>
+                                <th><strong><span t-esc="enrolment_by_gender_cal.get('total_dictionary') and enrolment_by_gender_cal.get('total_dictionary').get('grand_total_am','') or ''"/></strong></th>
+                                <th><strong><span t-esc="enrolment_by_gender_cal.get('total_dictionary') and enrolment_by_gender_cal.get('total_dictionary').get('grand_total_pm','') or ''"/></strong></th>
+                                <th><strong><span t-esc="enrolment_by_gender_cal.get('total_dictionary') and enrolment_by_gender_cal.get('total_dictionary').get('total_of_grand_total','') or ''"/></strong></th>
+                            </tr>
+                        </thead>
+                        
+                   </tbody>
+             </table>
+            </div>
+	</t>
+    </template>
+    
+    
+</odoo>

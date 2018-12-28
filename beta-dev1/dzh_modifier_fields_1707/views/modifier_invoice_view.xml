@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="dzh_modifier_inherit_form1" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="dzh_modifier_fields.dzh_customer_invoice_inherit_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='x_contact_term']" position="after" sequence="30">
+                    <field name="probability" widget="interger"/>
+                </xpath>
+                <!--<xpath expr="//form/sheet/group/group[2]/div/field[@name='currency_id']" position="after" sequence="30">-->
+                    <!--<field name="type_table" widget="checkbox" nolabel="1" statusbar_visible="new,renewal,fallout"/>-->
+                <!--</xpath>-->
+            </field>
+        </record>
+
+        <record id="dzh_modifier_inherit_form2" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group/group[2]" sequence="30">
+                    <label for="invoice_type" string=" "/>
+                        <div>
+                            <group class="inline">
+                                <group>
+                                        <field name="invoice_type" widget="radio" string="Invoice"/>
+                                </group>
+                                <group>
+                                        <field name="invoice_arrange" widget="radio" string="Invoice Type"/>
+                                </group>
+                            </group>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <field name="other_descripton" class="form-control" attrs="{'invisible': [('invoice_arrange','!=','other')]}" placeholder="Your Description"/>
+                                </div>
+                            </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

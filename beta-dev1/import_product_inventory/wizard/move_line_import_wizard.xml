@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+         <record id="import_stock_picking_line_wizard_view" model="ir.ui.view">
+            <field name="name">Wizard for import stock operation line from csv/xls file </field>
+            <field name="model">stock.picking.line.import</field>
+            <field name="arch" type="xml">
+                <form string="Import Stock Picking Line">
+                    <group>
+                        <field name="import_option" widget="radio" />
+                    </group>
+                  
+                    <group>
+                        <field name="file" filename="name"/>
+                    </group>
+                    <footer>
+                        <button name="import_picking_line_data" string="Import" type="object" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="import_picking_line_wizard_action" model="ir.actions.act_window">
+            <field name="name">Import Stock Picking Line</field>
+            <field name="res_model">stock.picking.line.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

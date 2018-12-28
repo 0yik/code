@@ -1,0 +1,58 @@
+# -*- coding: utf-8 -*-
+from openerp import http
+from openerp import SUPERUSER_ID
+from odoo.http import request
+
+class CustomerSupport(http.Controller):
+    @http.route(['/website_support_ticket/ticket_submitted'], type='http', auth="public", methods=['POST'], website=True)
+    def ticket_submitted(self, **post):
+        cr, uid, context, pool = http.request.cr, http.request.uid, http.request.context, request.env
+        Partner = request.env['res.partner'].search([('customer_id', '=', post['customer_id']), ('email', '=', post['email'])])
+        if not Partner:
+            Partner = request.env['res.partner'].search([('email', '=', post['email'])])
+        if Partner:
+            support = pool['support.request'].sudo().create({
+                                                            'name': post['subject'],
+                                                            'email_from': post['email'],
+                                                            'phone': post['phone'],
+                                                            'category': post['category'],
+                                                            'description': post['description'],
+                                                            'priority': post['priority'],
+                                                            'customer_id': post['customer_id'],
+                                                            'partner_id': Partner.id,
+                                                             })
+            values = {
+                'support':support
+            }
+            issue_template = request.env.ref('website_support_ticket.email_template_ticket_create')
+            issue_template.sudo().send_mail(support.id, force_send=True)
+            return request.render('website_support_ticket.thanks_mail_send', values)
+        else:
+            return request.render('website_support_ticket.support_invalid',{})
+
+    @http.route(['/website_support_ticket/search_user_ticket'], type='http', auth="user", methods=['POST'], website=True)
+    def search_user_ticket(self, **post):
+        cr, uid, context, pool = http.request.cr, http.request.uid, http.request.context, request.env
+        Ticket = pool['support.request'].search([('ticket_no', '=', post['ticket_no'])])
+        if Ticket:
+            try:
+                action_id = pool.ref('website_support_ticket.act_support_request_form')
+            except ValueError:
+                action_id = False
+            portal_link = "%s/web?db=%s#id=%s&action=%s&view_type=form&model=%s" % (pool['ir.config_parameter'].get_param('web.base.url'), cr.dbname, Ticket.id, action_id.id,'support.request')
+            return request.redirect(portal_link)
+        else:
+            return request.render('website_support_ticket.ticket_invalid',{})
+
+    @http.route(['/website_support_ticket/show_user_tickets'], type='http', auth="user", methods=['POST'], website=True)
+    def show_user_tickets(self, **post):
+        cr, uid, context, pool = http.request.cr, http.request.uid, http.request.context, request.env
+        try:
+            action_id = pool.ref('website_support_ticket.act_support_request_tree')
+        except ValueError:
+            action_id = False
+        portal_link = "%s/web?db=%s#&action=%s&model=%s" % (pool['ir.config_parameter'].get_param('web.base.url'), cr.dbname, action_id.id,'support.request')
+        return request.redirect(portal_link)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

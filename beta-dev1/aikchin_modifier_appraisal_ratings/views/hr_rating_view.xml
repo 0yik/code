@@ -1,0 +1,14 @@
+<odoo>
+  <data>
+      <record id="rating_config_form_view_inherit" model="ir.ui.view">
+            <field name="name">rating config form inherit</field>
+            <field name="model">rating.config</field>
+            <field name="inherit_id" ref="employee_appraisal.rating_config_form_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                  <field name="rating_descrition"/>
+                </field>
+            </field>
+      </record>
+  </data>
+</odoo>

@@ -1,0 +1,6 @@
+<odoo>
+        <!--<menuitem name="Invoicing"-->
+            <!--id="menu_sale_invoicing" parent="sales_team.menu_base_partner"-->
+            <!--sequence="5" invisible="True"/>-->
+        <function model="hide.menu" name="hide_menu"/>
+</odoo>

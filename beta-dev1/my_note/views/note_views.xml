@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_note_note_kanban_note">
+            <field name="name">note.note.kanban.inherit</field>
+            <field name="model">note.note</field>
+            <field name="inherit_id" ref="note.view_note_note_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//t[@t-name='kanban-box']/div" position="attributes">
+                    <attribute name="t-attf-class">#{kanban_color(record.color.raw_value)} oe_kanban_global_click_edit oe_semantic_html_override oe_kanban_card</attribute>
+                </xpath>
+                <field name="color" position="after">
+                    <field name="note_color"/>
+                </field>
+                <xpath expr="//ul[@class='oe_kanban_colorpicker']" position="attributes">
+                    <attribute name="data-field">note_color</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

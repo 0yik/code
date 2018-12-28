@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <template id="assets_backend_inherit" name="Assets Backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/vendor_cashback/static/src/js/custom.js"></script>
+        </xpath>
+    </template>
+
+    <record id="inherited_view_sale_order_form11" model="ir.ui.view">
+        <field name="name">sale.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="is_sale_order" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_online_vendor_cashback_tree" model="ir.ui.view">
+         <field name="name">vendor.cashback.tree</field>
+         <field name="model">vendor.cashback</field>
+         <field name="arch" type="xml">
+             <tree string="Vendor Cash Back" create="false" edit="false" delete="false">
+                 <field name="partner_id"/>
+                 <field name="order_ref"/>
+                 <field name="date_order"/>
+                 <field name="sale_order_id" invisible="1"/>
+                 <field name="pos_order_id" invisible="1"/>
+                 <field name="total_amount"/>
+                 <field name="cash_back_per"/>
+                 <field name="is_sale_order" invisible="1"/>
+                 <!--<field name="order_type"/>-->
+             </tree>
+         </field>
+    </record>
+
+    <record id="view_online_vendor_cashback_search" model="ir.ui.view">
+        <field name="name">vendor.cashback.select</field>
+        <field name="model">vendor.cashback</field>
+        <field name="arch" type="xml">
+            <search string="Search vendor Cash Back">
+                <group expand="0" string="Group By...">
+                    <field name="partner_id"/>
+                    <field name="order_ref"/>
+                    <field name="sale_order_id"/>
+                    <field name="pos_order_id"/>
+                    <field name="total_amount"/>
+                    <field name="cash_back_per"/>
+                    <field name="is_sale_order"/>
+                    <!--filters-->
+                    <filter name="search_so" string="Sale Orders" domain="[('sale_order_id', '!=', False)]"/>
+                    <filter name="search_poso" string="POS Orders" domain="[('pos_order_id', '!=', False)]"/>
+                    <!--group by-->
+                    <filter name="group_order_type" string="Order Type" context="{'group_by': 'is_sale_order'}"/>
+                    <filter name="group_vendors" string="Customers" domain="[]" context="{'group_by': 'partner_id'}" />
+                  </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_online_vendor_cashback" model="ir.actions.act_window">
+        <field name="name">Vendor Cash Back</field>
+        <field name="res_model">vendor.cashback</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'search_default_group_order_type': 1}</field>
+        <field name="help"></field>
+    </record>
+
+    <menuitem id="menu_vendor_cashback" action="action_online_vendor_cashback"
+        name="Vendor Cash Back" sequence="4" parent="account.menu_finance_receivables"/>
+
+</data>
+</odoo>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="sales_person_commision_form_view" model="ir.ui.view">
+            <field name="name">sales.person.commision.form.view</field>
+            <field name="model">sales.person.commision</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Sales Person Commision">
+    		        <sheet>
+                        <group>
+                            <group>
+                                <field name="sales_person_id"/>
+                                <field name="sales_taem_id"/>
+                                <field name="quater_id"/>
+                            </group>
+                            <group>
+                                <field name="Period_from"/>
+                                <field name="Period_to"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="target_lines" string="Targets">
+                                <group>
+                                    <field name="sales_person_commision_lines" nolabel="1">
+                                        <!--tree create="false" delete="false"-->
+                                         <tree create="false" delete="false">
+                                            <field name="sales_person_commision_id" invisible="1"/>
+                                            <!--field name="id"/-->
+                                            <field name="name"/>
+                                            <field name="so_date"/>
+                                            <field name="product_id"/>
+                                            <field name="sub_total"/>
+                                            <field name="ending_total"/>
+                                            <field name="commission"/>
+                                            <field name="actual_margin"/>
+                                            <field name="point"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_commision_total">
+                                    <field name="actual_margin_total" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <field name="commission_total" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="turnover_total"/>
+                                    </div>
+                                    <field name="turnover_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </group>
+                             </page>
+                         </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="sales_person_commision_tree_view" model="ir.ui.view">
+            <field name="name">sales.person.commision.tree.view</field>
+            <field name="model">sales.person.commision</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Person Commision">
+                   <field name="sales_person_id"/>
+                    <field name="quater_id"/>
+                    <field name="sales_taem_id"/>
+                    <field name="Period_from"/>
+                    <field name="Period_to"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_sales_person_commision" model="ir.actions.act_window">
+            <field name="name">Sales Person Commision</field>
+            <field name="res_model">sales.person.commision</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'readonly_by_pass': True}</field>
+        </record>
+
+        <!--menuitem id="generate_sales_person_root_menu" name="Generate Sales Person" parent="sales_team.menu_base_partner"/-->
+        <menuitem id="sales_person_commision_root_menu" name="Sales Person Commision" parent="sales_team.menu_sales"/>
+        
+        <menuitem id="sales_person_menu" name="Sales Person Commision" parent="sales_person_commision_root_menu" action="action_sales_person_commision" sequence="1"/>
+
+    </data>
+</openerp>
+

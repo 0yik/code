@@ -1,0 +1,45 @@
+<odoo>
+
+    <record id="discrepancy_report_wizard" model="ir.ui.view">
+        <field name="name">Discrepancy Report</field>
+        <field name="model">discrepancy.report</field>
+        <field name="arch" type="xml">
+            <form string="Discrepancy Report">
+                <form>
+                    <group>
+                        <group>
+                            <field name="report_for" widget="radio"/>
+                            <field name="product_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group>
+                            <field name="shipment_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('report_for', '=', 'stock_count')]}"/>
+                        </group>
+                    </group>
+                    <field name="email_to" invisible="1"/>
+                    <div attrs="{'invisible': [('report_file', '=', False)]}">
+                        <separator string="Discrepancy Report"/>
+                        Click on the file to download the report
+                        <field name="report_file" filename="filename" readonly="1" class="oe_inline"/>
+                        <field name="filename" invisible="1" class="oe_inline"/>
+                    </div>
+                    <footer>
+                        <button name="action_generate" string="Generate Report" type="object" class="oe_highlight" attrs="{'invisible': [('report_file', '!=', False)]}"/>
+                        <button name="action_send_mail" string="Send Mail" type="object" class="oe_highlight" attrs="{'invisible': [('report_file', '=', False)]}" confirm="The mail will be sent to the Inventory Managers with discrepancy report attachment."/>
+                        <button name="action_generate" string="Re-Generate Report" type="object" attrs="{'invisible': [('report_file', '=', False)]}"/>
+                        <button name="cancel" special="cancel" string="Cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_discrepancy_report" model="ir.actions.act_window">
+        <field name="name">Discrepancy Report</field>
+        <field name="res_model">discrepancy.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="discrepancy_report_menu" action="act_discrepancy_report" parent="stock.menu_warehouse_report" sequence="122"/>
+
+</odoo>

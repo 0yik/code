@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record forcecreate="True" id="ir_cron_contract_costs_generator" model="ir.cron">
+            <field name="name">Budget status Done</field>
+            <field eval="True" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'crossovered.budget'" name="model" />
+            <field eval="'run_budget_done'" name="function" />
+            <field eval="'()'" name="args" />
+        </record>
+
+        <!-- Budgets View inherit Form view-->
+        <record model="ir.ui.view" id="view_inherit_crossovered_budget_form">
+            <field name="name">crossovered.budget.inherit</field>
+            <field name="model">crossovered.budget</field>
+            <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="replace">
+                    <header>
+                        <button string="Submit for Approval" name="submit_for_approval" states="draft" type="object" class="oe_highlight"/>
+                        <button string="Approve" name="approve_budget" states="waiting_for_approval" type="object" class="oe_highlight"/>
+                        <button string="Reject" name="submit_for_reject" states="waiting_for_approval" type="object" class="oe_highlight"/>
+                        <button string="Reset to Draft" name="reset_to_draft" type="object" class="oe_highlight"/>
+                        <!--<button string="Confirm" name="action_budget_confirm" states="draft" type="object" class="oe_highlight"/>-->
+                        <!--<button string="Approve" name="action_budget_validate" states="confirm" type="object" class="oe_highlight"/>-->
+                        <!--<button string="Done" name="action_budget_done" states="validate" type="object" class="oe_highlight"/>-->
+                        <!--<button string="Reset to Draft" name="action_budget_draft" states="cancel" type="object" />-->
+                        <!--<button string="Cancel Budget" name="action_budget_cancel" states="confirm,validate" type="object"/>-->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,waiting_for_approval,validate,done"/>
+                    </header>
+                </xpath>
+                <!--<xpath expr="//field[@name='state']" position="replace">-->
+                    <!--<field name="state" widget="statusbar" statusbar_visible="draft,waiting_for_approval,confirm"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//header/button[@name='action_budget_confirm']" position="attributes">-->
+                    <!--<attribute name="states">waiting_for_approval</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//header" position="inside">-->
+                    <!--<button string="Submit for Approval" name="submit_for_approval" states="draft" type="object" class="oe_highlight"/>-->
+                    <!--<button string="Reject" name="submit_for_reject" states="waiting_for_approval" type="object" class="oe_highlight"/>-->
+                    <!--&lt;!&ndash;<button string="Reset to Draft" name="reset_to_draft" states="rejected" type="object" class="oe_highlight"/>&ndash;&gt;-->
+                    <!--<button string="Reset to Draft" name="reset_to_draft" type="object" class="oe_highlight"/>-->
+                <!--</xpath>-->
+                <xpath expr="//page[1]" position="after">
+                    <page name="budget_change_history" string="Budget Change History">
+                        <field name="budget_change_history_line" nolabel="1" readonly="1">
+                            <tree string="Budget Change History Lines">
+                                <field name="general_budget_id"/>
+                                <field name="analytic_account_id"/>
+                                <field name="requester"/>
+                                <field name="approver"/>
+                                <field name="date_changed"/>
+                                <field name="old_planned_amount"/>
+                                <field name="new_planned_amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='planned_amount']" position="after">
+					<field name="reserved_amount" sum="Reserved Amount" widget="monetary"/>
+                </xpath>
+                
+            </field>
+        </record>
+
+    </data>
+</odoo>

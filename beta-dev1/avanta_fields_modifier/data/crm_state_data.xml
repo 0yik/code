@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="crm_status_enquiry" model="crm.stage">
+        <field name="name">Enquiry</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="crm_status_allocation" model="crm.stage">
+        <field name="name">Allocation</field>
+        <field name="sequence">2</field>
+    </record>
+    
+    <record id="crm_status_follow_up" model="crm.stage">
+        <field name="name">Follow up</field>
+        <field name="sequence">3</field>
+    </record>
+
+    <record id="crm_status_quotation" model="crm.stage">
+         <field name="name">Quotation</field>
+         <field name="sequence">4</field>
+    </record>
+
+    <record id="crm_status_status" model="crm.stage">
+         <field name="name">Status</field>
+         <field name="sequence">5</field>
+    </record>
+
+    <record id="category_ssg_environmental_cleaning" model="product.category">
+        <field name="name">SSG Environmental Cleaning</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_ssg_generic_manufacturing_skills" model="product.category">
+        <field name="name">SSG Generic Manufacturing Skills</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_ssg_occupational_hygiene_professionals" model="product.category">
+        <field name="name">SSG Occupational Hygiene Professionals</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_ssg_process_industry" model="product.category">
+        <field name="name">SSG Process Industry</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_ssg_workplace_safety_health" model="product.category">
+        <field name="name">SSG Workplace Safety &amp; Health</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_ssg_employability_skills" model="product.category">
+        <field name="name">SSG Employability Skills</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_ssg_marine_industry" model="product.category">
+        <field name="name">SSG Marine Industry</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_ssg_level_a" model="product.category">
+        <field name="name">SSG Level A</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_ssg_level_b" model="product.category">
+        <field name="name">SSG Level B</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_ssg_business_management" model="product.category">
+        <field name="name">SSG Business Management</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_mom_lsp_courses" model="product.category">
+        <field name="name">MOM / LSP Courses</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_scdf_courses" model="product.category">
+        <field name="name">SCDF (CERT) Courses</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_first_aid_courses" model="product.category">
+        <field name="name">First-Aid Courses</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_irca_lead_auditor_courses" model="product.category">
+        <field name="name">IRCA Lead Auditor Courses</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_iso_courses" model="product.category">
+        <field name="name">ISO Courses</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_soft_skills" model="product.category">
+        <field name="name">Soft Skills</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_it_courses" model="product.category">
+        <field name="name">IT Courses</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_professional_specialised_courses" model="product.category">
+        <field name="name">Professional &amp; Specialised Courses</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_other_training" model="product.category">
+        <field name="name">Other Training</field>
+        <field name="type">normal</field>
+    </record>
+    <!--AA Training-->
+    <record id="category_wsq_courses" model="product.category">
+        <field name="name">WSQ Courses</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_advanced_diploma" model="product.category">
+        <field name="name">Advanced_Diploma</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_diploma" model="product.category">
+        <field name="name">Diploma</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_certificate_courses" model="product.category">
+        <field name="name">Certificate Courses</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_diploma_advanced_diploma_courses" model="product.category">
+        <field name="name">Diploma &amp; Advanced Diploma Courses</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_nebosh" model="product.category">
+        <field name="name">Nebosh</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_aa_e_learning" model="product.category">
+        <field name="name">AA_E-Learning</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_other_aa_training" model="product.category">
+        <field name="name">Other AA Training</field>
+        <field name="type">normal</field>
+    </record>
+
+    <!--Consulting-->
+    <record id="category_quality" model="product.category">
+        <field name="name">Quality</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_automotive" model="product.category">
+        <field name="name">Automotive</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_food_safety_and_hygeine" model="product.category">
+        <field name="name">Food Safety and Hygeine</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_it_security" model="product.category">
+        <field name="name">IT Security </field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_business_continuity" model="product.category">
+        <field name="name">Business Continuity</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_integrated_consulting" model="product.category">
+        <field name="name">Integrated Consulting</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_business_excellence" model="product.category">
+        <field name="name">Business Excellence</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_aerospace" model="product.category">
+        <field name="name">Aerospace</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_healthcare" model="product.category">
+        <field name="name">Healthcare</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_environment" model="product.category">
+        <field name="name">Environment</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_environmental_advisory_services" model="product.category">
+        <field name="name">Environmental Advisory Services</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_asset_management" model="product.category">
+        <field name="name">Asset Management</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_climate_change_projects" model="product.category">
+        <field name="name">Climate Change Projects</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_occupational_health_safety" model="product.category">
+        <field name="name">Occupational Health &amp; Safety</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_health_and_safety_advisory_services" model="product.category">
+        <field name="name">Health and Safety Advisory Services</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_major_hazadous_installations" model="product.category">
+        <field name="name">Major Hazadous Installations</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_legal_advisory" model="product.category">
+        <field name="name">Legal Advisory</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_it_courses" model="product.category">
+        <field name="name">IT Courses</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_other_consulting" model="product.category">
+        <field name="name">Other Consulting</field>
+        <field name="type">normal</field>
+    </record>
+
+    <!--Auditing-->
+    <record id="category_mom_audit" model="product.category">
+        <field name="name">MOM Audit</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_nea_audit" model="product.category">
+        <field name="name">NEA Audit</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_bizsafe_audit" model="product.category">
+        <field name="name">bizSAFE Audit</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_award_audit" model="product.category">
+        <field name="name">Award Audit</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_other_audit" model="product.category">
+        <field name="name">Other Audit</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_management_system_audit" model="product.category">
+        <field name="name">Management System Audit</field>
+        <field name="type">normal</field>
+    </record>
+    <!--Outsourcing-->
+
+    <record id="category_administrative_and_operations_staff" model="product.category">
+        <field name="name">Administrative and Operations Staff</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_safety_professional" model="product.category">
+        <field name="name">Safety Professional</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_engineering_professional" model="product.category">
+        <field name="name">Engineering Professional</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="category_other_position" model="product.category">
+        <field name="name">Other Position</field>
+        <field name="type">normal</field>
+    </record>
+
+    <!--EHS Legal Updating-->
+
+    <record id="category_ehs_legal_updating" model="product.category">
+        <field name="name">EHS Legal Updating</field>
+        <field name="type">normal</field>
+    </record>
+
+    <!--Room Rental-->
+
+    <record id="category_room_rental" model="product.category">
+        <field name="name">Room Rental</field>
+        <field name="type">normal</field>
+    </record>
+
+    <!--E-Learning-->
+
+    <record id="category_ag_e_learning" model="product.category">
+        <field name="name">AG_E-Learning</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record id="product_template_ag_training" model="product.template">
+        <field name="name">AG Training</field>
+        <field name="type">service</field>
+    </record>
+
+    <record id="service_category_ssg_environmental_cleaning" model="service.category">
+        <field name="product_category_name" ref="category_ssg_environmental_cleaning"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_ssg_generic_manufacturing_skills" model="service.category">
+        <field name="product_category_name" ref="category_ssg_generic_manufacturing_skills"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_ssg_occupational_hygiene_professionals" model="service.category">
+        <field name="product_category_name" ref="category_ssg_occupational_hygiene_professionals"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_ssg_process_industry" model="service.category">
+        <field name="product_category_name" ref="category_ssg_process_industry"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_ssg_workplace_safety_health" model="service.category">
+        <field name="product_category_name" ref="category_ssg_workplace_safety_health"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_ssg_level_a" model="service.category">
+        <field name="product_category_name" ref="category_ssg_level_a"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_ssg_employability_skills" model="service.category">
+        <field name="product_category_name" ref="category_ssg_employability_skills"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_ssg_marine_industry" model="service.category">
+        <field name="product_category_name" ref="category_ssg_marine_industry"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_ssg_level_b" model="service.category">
+        <field name="product_category_name" ref="category_ssg_level_b"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_ssg_business_management" model="service.category">
+        <field name="product_category_name" ref="category_ssg_business_management"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_mom_lsp_courses" model="service.category">
+        <field name="product_category_name" ref="category_mom_lsp_courses"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_scdf_courses" model="service.category">
+        <field name="product_category_name" ref="category_scdf_courses"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_first_aid_courses" model="service.category">
+        <field name="product_category_name" ref="category_first_aid_courses"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_irca_lead_auditor_courses" model="service.category">
+        <field name="product_category_name" ref="category_irca_lead_auditor_courses"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_iso_courses" model="service.category">
+        <field name="product_category_name" ref="category_iso_courses"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_soft_skills" model="service.category">
+        <field name="product_category_name" ref="category_soft_skills"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_it_courses" model="service.category">
+        <field name="product_category_name" ref="category_it_courses"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_professional_specialised_courses" model="service.category">
+        <field name="product_category_name" ref="category_professional_specialised_courses"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="service_category_other_training" model="service.category">
+        <field name="product_category_name" ref="category_other_training"/>
+        <field name="service_id" ref="product_template_ag_training"/>
+    </record>
+
+    <record id="product_template_aa_training" model="product.template">
+         <field name="name">AA Training</field>
+         <field name="type">service</field>
+    </record>
+
+    <record id="service_category_wsq_courses" model="service.category">
+        <field name="product_category_name" ref="category_wsq_courses"/>
+        <field name="service_id" ref="product_template_aa_training"/>
+    </record>
+
+    <record id="service_category_certificate_courses" model="service.category">
+        <field name="product_category_name" ref="category_certificate_courses"/>
+        <field name="service_id" ref="product_template_aa_training"/>
+    </record>
+
+    <record id="service_category_diploma_advanced_diploma_courses" model="service.category">
+        <field name="product_category_name" ref="category_diploma_advanced_diploma_courses"/>
+        <field name="service_id" ref="product_template_aa_training"/>
+    </record>
+
+    <record id="service_category_nebosh" model="service.category">
+        <field name="product_category_name" ref="category_nebosh"/>
+        <field name="service_id" ref="product_template_aa_training"/>
+    </record>
+
+    <record id="service_category_aa_e_learning" model="service.category">
+        <field name="product_category_name" ref="category_aa_e_learning"/>
+        <field name="service_id" ref="product_template_aa_training"/>
+    </record>
+
+    <record id="service_category_other_aa_training" model="service.category">
+        <field name="product_category_name" ref="category_other_aa_training"/>
+        <field name="service_id" ref="product_template_aa_training"/>
+    </record>
+
+    <record id="product_template_consulting" model="product.template">
+         <field name="name">Consulting</field>
+         <field name="type">service</field>
+    </record>
+
+    <record id="service_category_quality" model="service.category">
+        <field name="product_category_name" ref="category_quality"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_automotive" model="service.category">
+        <field name="product_category_name" ref="category_automotive"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_food_safety_and_hygeine" model="service.category">
+        <field name="product_category_name" ref="category_food_safety_and_hygeine"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_it_security" model="service.category">
+        <field name="product_category_name" ref="category_it_security"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_business_continuity" model="service.category">
+        <field name="product_category_name" ref="category_business_continuity"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_integrated_consulting" model="service.category">
+        <field name="product_category_name" ref="category_integrated_consulting"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_business_excellence" model="service.category">
+        <field name="product_category_name" ref="category_business_excellence"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_aerospace" model="service.category">
+        <field name="product_category_name" ref="category_aerospace"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_healthcare" model="service.category">
+        <field name="product_category_name" ref="category_healthcare"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_environment" model="service.category">
+        <field name="product_category_name" ref="category_environment"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_environmental_advisory_services" model="service.category">
+        <field name="product_category_name" ref="category_environmental_advisory_services"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_asset_management" model="service.category">
+        <field name="product_category_name" ref="category_asset_management"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_climate_change_projects" model="service.category">
+        <field name="product_category_name" ref="category_climate_change_projects"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_occupational_health_safety" model="service.category">
+        <field name="product_category_name" ref="category_occupational_health_safety"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_health_and_safety_advisory_services" model="service.category">
+        <field name="product_category_name" ref="category_health_and_safety_advisory_services"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_major_hazadous_installations" model="service.category">
+        <field name="product_category_name" ref="category_major_hazadous_installations"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_legal_advisory" model="service.category">
+        <field name="product_category_name" ref="category_legal_advisory"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="service_category_other_consulting" model="service.category">
+        <field name="product_category_name" ref="category_other_consulting"/>
+        <field name="service_id" ref="product_template_consulting"/>
+    </record>
+
+    <record id="product_template_auditing" model="product.template">
+         <field name="name">Auditing</field>
+         <field name="type">service</field>
+    </record>
+
+    <record id="service_category_mom_audit" model="service.category">
+        <field name="product_category_name" ref="category_mom_audit"/>
+        <field name="service_id" ref="product_template_auditing"/>
+    </record>
+
+    <record id="service_category_nea_audit" model="service.category">
+        <field name="product_category_name" ref="category_nea_audit"/>
+        <field name="service_id" ref="product_template_auditing"/>
+    </record>
+
+    <record id="service_category_bizsafe_audit" model="service.category">
+        <field name="product_category_name" ref="category_bizsafe_audit"/>
+        <field name="service_id" ref="product_template_auditing"/>
+    </record>
+
+    <record id="service_category_award_audit" model="service.category">
+        <field name="product_category_name" ref="category_award_audit"/>
+        <field name="service_id" ref="product_template_auditing"/>
+    </record>
+
+    <record id="service_category_management_system_audit" model="service.category">
+        <field name="product_category_name" ref="category_management_system_audit"/>
+        <field name="service_id" ref="product_template_auditing"/>
+    </record>
+
+    <record id="service_category_other_audit" model="service.category">
+        <field name="product_category_name" ref="category_other_audit"/>
+        <field name="service_id" ref="product_template_auditing"/>
+    </record>
+
+    <record id="product_template_out_sourcing" model="product.template">
+         <field name="name">Out Sourcing</field>
+         <field name="type">service</field>
+    </record>
+
+    <record id="service_category_administrative_and_operations_staff" model="service.category">
+        <field name="product_category_name" ref="category_administrative_and_operations_staff"/>
+        <field name="service_id" ref="product_template_out_sourcing"/>
+    </record>
+
+    <record id="service_category_safety_professional" model="service.category">
+        <field name="product_category_name" ref="category_safety_professional"/>
+        <field name="service_id" ref="product_template_out_sourcing"/>
+    </record>
+
+    <record id="service_category_engineering_professional" model="service.category">
+        <field name="product_category_name" ref="category_engineering_professional"/>
+        <field name="service_id" ref="product_template_out_sourcing"/>
+    </record>
+
+    <record id="service_category_other_position" model="service.category">
+        <field name="product_category_name" ref="category_other_position"/>
+        <field name="service_id" ref="product_template_out_sourcing"/>
+    </record>
+
+    <record id="product_template_ehs_legal_updating" model="product.template">
+         <field name="name">EHS Legal Updating</field>
+         <field name="type">service</field>
+    </record>
+
+    <record id="service_category_ehs_legal_updating" model="service.category">
+        <field name="product_category_name" ref="category_ehs_legal_updating"/>
+        <field name="service_id" ref="product_template_ehs_legal_updating"/>
+    </record>
+
+    <record id="product_template_room_rental" model="product.template">
+         <field name="name">Room Rental</field>
+         <field name="type">service</field>
+    </record>
+
+    <record id="service_category_room_rental" model="service.category">
+        <field name="product_category_name" ref="category_room_rental"/>
+        <field name="service_id" ref="product_template_room_rental"/>
+    </record>
+
+    <record id="product_template_e_learning" model="product.template">
+         <field name="name">E-Learning</field>
+         <field name="type">service</field>
+    </record>
+
+    <record id="service_category_ag_e_learning" model="service.category">
+        <field name="product_category_name" ref="category_ag_e_learning"/>
+        <field name="service_id" ref="product_template_e_learning"/>
+    </record>
+
+    <record id="lead_source_corporate" model="lead.source">
+         <field name="name">Corporate</field>
+    </record>
+
+    <record id="lead_source_existing_client" model="lead.source">
+         <field name="name">Existing Client</field>
+    </record>
+
+    <record id="lead_source_inbound_calls" model="lead.source">
+         <field name="name">Inbound Calls</field>
+    </record>
+
+    <record id="lead_source_enquiry@avanta_com_sg" model="lead.source">
+         <field name="name">enquiry@avanta.com.sg</field>
+    </record>
+
+    <record id="lead_source_training@avanta-acad_com_sg" model="lead.source">
+         <field name="name">training@avanta-acad.com.sg</field>
+    </record>
+
+    <record id="lead_source_referral-internal_staff" model="lead.source">
+         <field name="name">Referral-Internal Staff</field>
+    </record>
+
+    <record id="lead_source_jobscentral" model="lead.source">
+         <field name="name">Jobscentral</field>
+    </record>
+
+    <record id="lead_source_tender" model="lead.source">
+         <field name="name">Tender</field>
+    </record>
+
+    <record id="lead_source_online_registration" model="lead.source">
+         <field name="name">Online Registration</field>
+    </record>
+
+    <record id="lead_source_refferal-internal_staff" model="lead.source">
+         <field name="name">Refferal - Internal Staff</field>
+    </record>
+
+    <record id="lead_source_associates" model="lead.source">
+         <field name="name">Associates</field>
+    </record>
+
+    <record id="lead_source_eem" model="lead.source">
+         <field name="name">EMM</field>
+    </record>
+
+    <record id="lead_source_referral-company" model="lead.source">
+         <field name="name">Referral - Company</field>
+    </record>
+
+    <record id="lead_source_referral-internal" model="lead.source">
+         <field name="name">Referral - Individual</field>
+    </record>
+
+    <record id="lead_source_digital" model="lead.source">
+         <field name="name">Digital</field>
+    </record>
+
+    <record id="lead_source_walk_in" model="lead.source">
+         <field name="name">Walk In</field>
+    </record>
+
+     <record id="lead_source_email_enquiry" model="lead.source">
+         <field name="name">Email Enquiry</field>
+    </record>
+
+    <record id="lead_source_cold_calls" model="lead.source">
+         <field name="name">Cold Calls</field>
+    </record>
+
+    <record id="lead_source_enquiry@avanta-acad_com_sg" model="lead.source">
+         <field name="name">enquiry@avanta-acad.com.sg</field>
+    </record>
+
+    <record id="lead_source_events" model="lead.source">
+         <field name="name">Events</field>
+    </record>
+
+    <record id="lead_source_lead_master" model="lead.source">
+         <field name="name">Lead Master</field>
+    </record>
+
+    <record id="lead_source_training@avanta_com_sg" model="lead.source">
+         <field name="name">training@avanta.com.sg</field>
+    </record>
+
+    <record id="kick_off_project_phases" model="project.phases">
+        <field name="name">kick-off</field>
+    </record>
+
+    <record id="training_project_phases" model="project.phases">
+        <field name="name">Training</field>
+    </record>
+
+    <record id="documentation_project_phases" model="project.phases">
+        <field name="name">Documentation</field>
+    </record>
+
+    <record id="internal_audit_project_phases" model="project.phases">
+        <field name="name">Internal Audit</field>
+    </record>
+
+    <!---Avanta Status-->
+    <record id="avanta_status_pending" model="avanta.status">
+        <field name="name">Pending</field>
+    </record>
+
+    <record id="avanta_status_invoiced" model="avanta.status">
+        <field name="name">Invoiced</field>
+    </record>
+
+    <record id="project_status_ongoing" model="project.status">
+        <field name="name">Ongoing</field>
+    </record>
+
+    <record id="project_status_project_completed" model="project.status">
+        <field name="name">Project Completed</field>
+    </record>
+
+    <record id="project_status_kickoff_meeting" model="project.status">
+        <field name="name">Kickoff Meeting</field>
+    </record>
+
+    <record id="project_status_awareness_training" model="project.status">
+        <field name="name">Awareness Training</field>
+    </record>
+
+    <record id="project_status_documentation_stage" model="project.status">
+        <field name="name">Documentation Stage</field>
+    </record>
+
+    <record id="project_status_implementation_stage" model="project.status">
+        <field name="name">Implementation Stage</field>
+    </record>
+
+    <record id="project_status_internal_auditor_training" model="project.status">
+        <field name="name">Internal Auditor Training</field>
+    </record>
+
+    <record id="project_status_internal_audit" model="project.status">
+        <field name="name">Internal Audit</field>
+    </record>
+
+    <record id="project_status_management_review" model="project.status">
+        <field name="name">Management Review</field>
+    </record>
+
+    <record id="project_status_certification_audit" model="project.status">
+        <field name="name">Certification audit</field>
+    </record>
+
+    <record id="inclusive" model="account.tax">
+        <field name="name">Inclusive</field>
+        <field name="type_tax_use">sale</field>
+        <field name="amount_type">percent</field>
+        <field name="amount">0.00</field>
+    </record>
+
+    <record id="gst" model="account.tax">
+        <field name="name">GST @ 7%</field>
+        <field name="type_tax_use">sale</field>
+        <field name="amount_type">percent</field>
+        <field name="amount">7</field>
+    </record>
+
+</odoo>
+
+

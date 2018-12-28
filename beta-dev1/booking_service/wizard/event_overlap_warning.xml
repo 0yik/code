@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<record id="event_overlap_warning_form" model="ir.ui.view">
+            <field name="name">event.overlap.warning.form</field>
+            <field name="model">event.overlap.warning</field>
+            <field name="arch" type="xml">
+                <form string="Event Overlap Warning">
+                    <div>
+						<span><b><field name="name" /></b></span>
+                    </div>
+                    <footer>
+                        <button name="action_confirm" string="Confirm Sale" type="object"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+    </data>
+</openerp>

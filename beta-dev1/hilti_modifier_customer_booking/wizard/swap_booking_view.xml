@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<record id="view_swap_booking" model="ir.ui.view">
+		<field name="name">Swap booking</field>
+		<field name="model">swap.booking</field>
+		<field name="arch" type="xml">
+			<form string="Swap Booking">
+				<p>Please select the check box  below if you wish to swap with a booking on date and time.</p>
+				<group>
+                    <group>
+                    	<field name="is_differ_time"/>
+                        <field name="booking_id" 
+                            required="1"
+                            options="{'no_create_edit': True}" string="Select Booking"/>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="start_time" readonly="1" />
+                        <field name="tester_id" readonly="1" />
+                    </group>
+                    <group>
+                        <field name="end_time" readonly="1" />
+                    </group>
+                </group>
+				<footer>
+					<button name="swap_booking" string="Swap" type="object" class="btn-primary" />
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+	
+	<record id="action_view_swap_booking" model="ir.actions.act_window">
+		<field name="name">Swap Testers</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">swap.booking</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+		<field name="groups_id" eval="[]" />
+	</record>
+	
+	
+</odoo>

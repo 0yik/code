@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="object">
+            <html>
+                <head>
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+                    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+                    <title>Token Download</title>
+                </head>
+                <body>
+                    <form action="/otp/verify/" method="POST" align="center">
+                        <h1 style="">DOWNLOAD ATTACHMENT FILE</h1><br/><br/>
+                        <input name="id" t-att="{'value': object.id}" type="hidden"/>
+                        OTP Code: <strong><input name="token" value="" align="center" required="true"/></strong>
+                        <strong><input type="submit"/></strong>
+                    </form>
+
+                    <p align="center" t-if="not show_invalid"><strong style="color:red">Note:</strong> The OTP Code is send to your email. Please check email to get OTP Code!</p>
+                    <p align="center" t-if="show_invalid" style="color:red">Token entered is Invalid. Try or generate again</p>
+                </body>
+            </html>
+         </template>
+    </data>
+</odoo>

@@ -1,0 +1,11 @@
+textarea[name="lea_off"]{
+    resize:none;
+}
+
+textarea[name="mana_fe"]{
+    resize:none;
+}
+
+textarea[name="parking"]{
+    resize:none;
+}

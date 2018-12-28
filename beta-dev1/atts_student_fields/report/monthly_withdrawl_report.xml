@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<odoo>
+    <template id="report_monthly_withdrawl">
+        <t t-call="report.html_container">
+	<t t-foreach="docs" t-as="doc"/>
+        <div class="page">
+        	<br/>
+        	<br></br>
+            <table class="table table-condensed"  style="border: 1px solid black;">
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid black;text-align:centre;background-color: slategray;">
+                            <span><b>Enrolment of the Month</b></span>
+                        </td>
+                        <td style="border: 1px solid black;text-align:centre;background-color: lavender;"> 
+                            <span t-esc="student_dict.get('month',' ')"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;text-align:centre;background-color: slategray;">
+                            <span><b>Number of Student Annual Dropout</b></span>
+                        </td>
+                        <td style="border: 1px solid black;text-align:centre;background-color: lavender;"> 
+                            <span t-esc="student_dict.get('year',' ')"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;text-align:centre;background-color: slategray;">
+                            <span><b>Dropout Rate(%)</b></span>
+                        </td>
+                        <td style="border: 1px solid black;text-align:centre;background-color: lavender;"> 
+                            <span t-esc="student_dict.get('dropout',' ')">%</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+	
+        </div>
+       </t>
+    </template>
+    
+   
+</odoo>
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_hr_expense_sheet_form_inherit2" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.form.inherit2</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="expense_masking.view_hr_expense_sheet_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/field[@name='expense_line_ids']/tree/field[@name='name']"  position="after">
+                    <field name="text_reference"/>
+                </xpath>
+                <xpath expr="//form/sheet/field[@name='expense_line_ids']/tree/field[@name='analytic_account_id']"  position="after">
+                    <field name="analytic_distribution"/>
+                </xpath>
+                <xpath expr="//form/sheet/field[@name='expense_line_ids']/tree/field[@name='currency_id']"  position="after">
+                    <field name="exchange_rate"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

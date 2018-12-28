@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+    <!--remove old button-->
+    <t t-extend="ButtonConfirm">
+        <t t-jquery="button" t-operation="replace">
+        </t>
+    </t>
+
+    <!--add new button-->
+    <t t-name="ButtonPrintKitchenBar">
+        <button class="btn btn-default btn-fill btn-wd control-button send-kichen-button"><i class="pe-7s-angle-right-circle"/> Send Kitchen/bar</button>
+    </t>
+
+    <!--add new screen-->
+    <t t-name="KitchenBarScreenWidget">
+        <div class='receipt-screen screen'>
+            <div class='screen-content'>
+                <div class='top-content'>
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                    <h1>Kitchen Printing</h1>
+                    <span class='button next'>
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                </div>
+                <div class="centered-content">
+                    <div class="button print">
+                        <i class='fa fa-print'></i> Print
+                    </div>
+                    <div class="pos-receipt-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="KitchenView">
+        <div class="pos-sale-ticket" style="font-size:13px !important">
+            <div class="text-align:left;">
+            <!--<h2><t t-esc="widget.pos.company.name"/></h2>-->
+            <h4>===  KITCHEN / <t t-esc="order.uid.split('-')[2]"/>  ===</h4>
+            </div>
+            <div class="text-align:left;">
+                <h4>Table : <t t-esc="widget.pos.table.name"/></h4><br />
+            </div>
+            <div style="height: 17px;overflow: hidden;">----------------------------------------------------------------------------------------------------------------</div>
+            <div class="receipt-phone">
+                <t t-esc="order.get_date_create_format()"/> / #<t t-esc="order.uid.split('-')[2]"/><br />
+            </div>
+            <br />
+            <div style="height: 17px;overflow: hidden;">----------------------------------------------------------------------------------------------------------------</div>
+            <div class='receipt-orderlines' align="left" style="margin-top:5px;">
+                <!--<line t-foreach="orderlines" t-as="orderline" t-if="orderline.show_on_print_kitchen()">-->
+                <div t-foreach="orderlines" t-as="orderline" t-if="orderline.state !== 'Confirmed'" >
+                    <div style="text-align:left;font-size: 18px;">
+                        <t t-esc="orderline.get_quantity_str_with_unit()"/> x <t t-esc="orderline.get_product().display_name"/> <t t-if="orderline.is_priority">(Priority)</t>
+                    </div >
+                    <div t-if="orderline.get_note()" style="text-align:left;font-size: 18px;">
+                        <t t-esc="orderline.get_note()" />
+                    </div>
+                    <br/>
+                </div>
+            </div>
+            <!--END RECEIPT-->
+        </div>
+    </t>
+
+    <t t-name="KitchenReceipt">
+        <receipt align='center' width='48' value-thousands-separator='' >
+            <div class="text-align:left;">
+            <!--<h2><t t-esc="widget.pos.company.name"/></h2>-->
+            <h3>===  KITCHEN / <t t-esc="order.uid.split('-')[2]"/>  ===</h3>
+            </div>
+            <div class="text-align:left;">
+                <h3>Table : <t t-esc="widget.pos.table.name"/></h3><br />
+            </div>
+            <div style="text-align:center;padding:0px;margin:0px;">------------------------------------------------</div>
+            <div class="receipt-phone">
+                <t t-esc="order.get_date_create_format()"/> / #<t t-esc="order.uid.split('-')[2]"/><br />
+            </div>
+            <br />
+            <div style="text-align:center;padding:0px;margin:0px;">------------------------------------------------</div>
+            <div class='receipt-orderlines' align="left" style="margin-top:5px;">
+                <!--<line t-foreach="orderlines" t-as="orderline" t-if="orderline.show_on_print_kitchen()">-->
+                <div t-foreach="orderlines" t-as="orderline" t-if="orderline.state !== 'Confirmed'" >
+                    <div style="text-align:left;font-size: 18px;">
+                        <t t-esc="orderline.get_quantity_str_with_unit()"/> x <t t-esc="orderline.get_product().display_name"/> <t t-if="orderline.is_priority">(Priority)</t>
+                    </div >
+                    <div t-if="orderline.get_note()" style="text-align:left;font-size: 18px;">
+                        <t t-esc="orderline.get_note()" />
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </receipt>
+    </t>
+</template>
+

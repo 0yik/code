@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<data>
+
+<template id="custom_report_invoice_document">
+    <t t-call="pos_rental.external_invoice_layouts">
+      <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+        <div class="page">
+            <div class="row" style="padding-top:30px;font-family: Arial;font-size:15px;padding-bottom:5px;">
+                <div class="col-xs-7" ><div style="width:16%;display:inline-block;"> Name </div> :
+                <span  t-field="o.partner_id" style="border-bottom: 1px solid black;"/>
+                </div>
+                <div class="col-xs-5 pull-right" ><div style="width:30%;display:inline-block;">Invoice No</div>:<span class="oe_inline" t-field="o.id" style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;padding-bottom:5px;">
+                <div class="col-xs-7"><div style="width:16%;display:inline-block;">Company</div> :
+                <span class="oe_inline" t-field="o.company_id" style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;padding-bottom:5px;">
+                <div class="col-xs-7" ><div style="width:17%;display:inline-block;">Address </div>: <span class="oe_inline" t-field="o.company_id.street" style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+                <div class="col-xs-5 pull-right"><div style="width:30%;display:inline-block;">Date</div>:<span t-field="o.date_invoice"
+                        style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;padding-bottom:5px;">
+                <div class="col-xs-7" >
+                    <div style="width:18%;display:inline-block;">  </div><span class="oe_inline" t-field="o.company_id.street2" style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+                <div class="col-xs-5 pull-right" ><div style="width:30%;display:inline-block;">Phone</div>:
+                    <span t-field="o.partner_id.phone"
+                        style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom:15px;font-family: Arial;font-size: 15px;">
+                <div style="width:11.9%;display:inline-block;"></div><span t-field="o.company_id.country_id.name" style="border-bottom: 1px solid black;"/>
+                <span t-field="o.company_id.zip" style="border-bottom: 1px solid black;"/>
+            </div>
+
+            <table class="table table-bordered"  style="border: 2px solid black;margin:0;font-family: Arial;font-size: 15px; ">
+                <thead>
+                    <tr class="border-black">
+                        <th class="text-center" style="border: 2px solid black;width:600px;height:40px;">Description</th>
+                        <th class="hidden" >Source Document</th>
+                        <th class="text-center" style="border: 2px solid black;width:300px;height:40px;">Quantity</th>
+                        <th class="text-center" style="border: 2px solid black;width:200px;height:40px;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody class="invoice_tbody">
+                    <tr t-foreach="o.invoice_line_ids" t-as="l" style="border: 2px solid black;">
+                        <td><span t-field="l.name"/></td>
+                        <td class="hidden"><span t-field="l.origin"/></td>
+                        <td class="text-right" style="border: 2px solid black;">
+                            <span t-field="l.quantity"/>
+                            <span t-field="l.uom_id"  groups="product.group_uom"/>
+                        </td>
+                        <td class="text-right" style="border: 2px solid black;">
+                            <span t-field="l.price_unit"/>
+                        </td>
+                       
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row-fluid" style="font-family: Arial;font-size: 15px;">
+                <div class="text-right pull-right" style="border-left: 2px solid black;border-right: 2px solid black;border-bottom: 2px solid black;width:165px;height:25px;" >
+                    <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'  />
+                </div>
+                
+                
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;">
+                <div class="col-xs-6"><div style="width:35%;display:inline-block;">Collection Date</div>: <span t-field="o.date_invoice"
+                        style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+                <div class="text-center">Total</div>
+                
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;">
+                <div class="col-xs-6" ><div style="width:35%;display:inline-block;">Return date</div>: <span t-field="o.date_invoice"
+                        style="border-bottom: 1px solid black; display:inline-block;"/>
+               
+                <div class="form-check text-danger" style="display:inline-block;">
+                  <input type="checkbox" class="form-check-input"/>  before 3pm
+                </div> 
+                </div>
+                <div class="col-xs-6 text-center">Booking Deposite
+                <div class="text-right pull-right" style="border-left: 2px solid black;border-right: 2px solid black;border-bottom: 2px solid black;width:165px;height:23px;" >
+                    <span t-options='{"widget": "monetary", "display_currency": o.currency_id}'>0.00$</span></div>
+                </div>
+                
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;">
+                <div class="col-xs-6" ><div style="width:35%;display:inline-block;">Refundable Deposite</div>: <span class="oe_inline"  style="border-bottom: 1px solid black; display:inline-block;">0.00$</span></div>
+                <div class="col-xs-6 text-center">Balance due
+                <div class="text-right pull-right" style="border-left: 2px solid black;border-right: 2px solid black;border-bottom: 2px solid black;width:165px;height:23px;" >
+                    <span t-options='{"widget": "monetary", "display_currency": o.currency_id}'>0.00$</span></div>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;padding-bottom:5px;">
+                <div class="col-xs-6" style="margin-top:45px;"><div style="width:35%;display:inline-block;">Sign for Collection</div>: <span class="oe_inline" style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+                <div class="col-xs-6" style="margin-top:45px;"><div style="width:35%;display:inline-block;">Sign for Return</div>: <span class="oe_inline"  style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;padding-bottom:5px;">
+                <div class="form-check text-danger" style="margin-top:15px;margin-left:15px;">
+                      <input type="checkbox" class="form-check-input"/>
+                      I agree to the Terms &amp; Conditions stated overleaf and understand that full payment shall be made upon collection of costumes.
+                </div>
+            </div>
+            <div class="row zero_min_height" style="margin-top:25px;">
+                <div class="col-xs-6">
+                    <div style="border-bottom: 2px solid black;width:80%"></div>
+                </div>
+                <div class="col-xs-6 pull-right">
+                    <div style="border-bottom: 2px solid black;width:80%"></div>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;">
+                <div class="col-xs-6"><span>Signature</span></div>
+                <div class="col-xs-6"><span> Staff Signature</span></div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;">
+                <div class="col-xs-6">IC/Passport No: <div style="display:inline-block;border-bottom: 1px solid black; width:100px;"></div>
+                </div>
+                <div class="col-xs-6 pull-right">Any Alterations?
+                    <div class="checkbox-inline">
+                      <input type="checkbox" id="inlineCheckbox1" value="option1"/> Yes
+                    </div>
+                    <div class="checkbox-inline">
+                      <input type="checkbox" id="inlineCheckbox2" value="option2"/> No
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-lg-6" style="padding: 0;margin: 0;">
+                 <span class="checkbox-inline">Booking</span> <input type="checkbox" id="inlineCheckbox1" />
+                  <span class="checkbox-inline">Collection</span> <input class="oe_inline" type="checkbox" name="radio" />
+          
+                  <span class="checkbox-inline">Return</span> <input class="oe_inline" type="checkbox" name="radio" /> 
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+<template id="custom_report_invoice">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="pos_rental.custom_report_invoice_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+<template id="account_invoice_report_duplicate" inherit_id="pos_rental.custom_report_invoice_document" primary="True">
+        
+</template>
+</data>
+</odoo>

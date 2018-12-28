@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_company_title_form" model="ir.ui.view">
+            <field name="name">company.title.form</field>
+            <field name="model">company.title</field>
+            <field name="arch" type="xml">
+                <form string="Company Titles">
+
+                    <group>
+                        <field name="name" required="1"/>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+
+         <record id="view_company_title_tree" model="ir.ui.view">
+            <field name="name">company.title.tree</field>
+             <field name="model">company.title</field>
+            <field name="arch" type="xml">
+                <tree string="Company Titles">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_company_title" model="ir.actions.act_window">
+            <field name="name">Company Title</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">company.title</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a company title.
+                </p>
+        </field>
+        </record>
+
+        <menuitem id="company_title_sub_menu" name="Company Title" parent="sales_team.menu_sale_config" sequence="4"/>
+
+        <menuitem id="company_title_menu" action="action_company_title" parent="modifier_layout_customer.company_title_sub_menu" sequence="19"/>
+
+    </data>
+</odoo>

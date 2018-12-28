@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="xxi_assets_custom_changes" inherit_id="point_of_sale.assets" name="pos_interface_changes assets">
+        
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/xxi_pos_layout_rev1/static/src/css/left_right_pane.css" />
+            <link rel="stylesheet" href="/xxi_pos_layout_rev1/static/src/css/pos_layout_change.css" />
+        </xpath>
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/xxi_pos_layout_rev1/static/src/js/fieldadd.js"></script>
+            <script type="text/javascript" src="/xxi_pos_layout_rev1/static/src/js/new_walk_in_customer.js"></script>
+            <script type="text/javascript" src="/xxi_pos_layout_rev1/static/src/js/misc_button.js"></script>
+        </xpath>
+    </template>
+</odoo>

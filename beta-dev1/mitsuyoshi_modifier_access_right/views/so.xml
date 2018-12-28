@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <data>
+            <record id="view_quotation_tree_mar" model="ir.ui.view">
+                <field name="name">sale.order</field>
+                <field name="model">sale.order</field>
+                <field name="inherit_id" ref="sale.view_quotation_tree"/>
+                <field name="groups_id" eval="[(4, ref('marketing_group'))]"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//tree" position="attributes">
+                        <attribute name="create">false</attribute>
+                        <attribute name="edit">false</attribute>
+                        <attribute name="delete">false</attribute>
+                    </xpath>
+                </field>
+            </record>
+            <record id="view_order_form_mar" model="ir.ui.view">
+                <field name="name">sale.order</field>
+                <field name="model">sale.order</field>
+                <field name="inherit_id" ref="sale.view_order_form"/>
+                <field name="groups_id" eval="[(4, ref('marketing_group'))]"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//form" position="attributes">
+                        <attribute name="create">false</attribute>
+                        <attribute name="edit">false</attribute>
+                        <attribute name="delete">false</attribute>
+                    </xpath>
+                </field>
+            </record>
+
+            <record id="view_sale_order_kanban_mar" model="ir.ui.view">
+                <field name="name">sale.order</field>
+                <field name="model">sale.order</field>
+                <field name="inherit_id" ref="sale.view_sale_order_kanban"/>
+                <field name="groups_id" eval="[(4, ref('marketing_group'))]"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//kanban" position="attributes">
+                        <attribute name="create">false</attribute>
+                        <attribute name="edit">false</attribute>
+                        <attribute name="delete">false</attribute>
+                    </xpath>
+                </field>
+            </record>
+
+             <record id="view_sale_order_calendar_mar" model="ir.ui.view">
+                <field name="name">sale.order</field>
+                <field name="model">sale.order</field>
+                <field name="inherit_id" ref="sale.view_sale_order_calendar"/>
+                <field name="groups_id" eval="[(4, ref('marketing_group'))]"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//calendar" position="attributes">
+                        <attribute name="create">false</attribute>
+                        <attribute name="edit">false</attribute>
+                        <attribute name="delete">false</attribute>
+                    </xpath>
+                </field>
+            </record>
+        </data>
+
+</odoo>

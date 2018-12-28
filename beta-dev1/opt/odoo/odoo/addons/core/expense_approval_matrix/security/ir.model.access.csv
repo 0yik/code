@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_expense_approval_matrix_user,access.expense.approval.matrix.group.user,model_expense_approval_matrix,base.group_user,1,1,1,1
+access_expense_approval_matrix_lines_user,access.expense.approval.matrix.lines.group.user,model_expense_approval_matrix_lines,base.group_user,1,1,1,1

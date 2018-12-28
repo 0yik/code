@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <record id="bi_generic_import.gen_sale_wizard_import" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+        <record id="bi_generic_import.gen_product_wizard_import" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+        <record id="bi_generic_import.gen_partner_import_menu" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+    </data>
+</odoo>

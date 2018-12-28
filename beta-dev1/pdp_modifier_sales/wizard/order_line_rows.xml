@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+         <record id="import_order_line_row_wizard_view" model="ir.ui.view">
+            <field name="name">sale.order.line.row</field>
+            <field name="model">sale.order.line.row</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="row"/>
+                    </group>
+                    <footer>
+                        <button name="cancel" string="Cancel" special="cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="import_order_line_row_wizard_action" model="ir.actions.act_window">
+            <field name="name">Sale Order Line Rows</field>
+            <field name="res_model">sale.order.line.row</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

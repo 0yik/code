@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE html>
+
+<odoo>
+
+    <!-- Form view for Education Background -->
+    <record id="education_background_form_view" model="ir.ui.view">
+        <field name="name">education.background.form.view</field>
+        <field name="model">education.background</field>
+        <field name="arch" type="xml">
+            <form string="Education Background">
+                <sheet>
+                    <group>
+                        <field name="institution" class="oe_inline"/>
+                        <field name="from_date" class="oe_inline"/>
+                        <field name="to_date" class="oe_inline"/>
+                        <field name="achievement" class="oe_inline"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view for Education Background -->
+    <record id="education_background_tree_view" model="ir.ui.view">
+        <field name="name">education.background.tree.view</field>
+        <field name="model">education.background</field>
+        <field name="arch" type="xml">
+            <tree string="Education Background">
+                <field name="institution" class="oe_inline"/>
+                <field name="from_date" class="oe_inline"/>
+                <field name="to_date" class="oe_inline"/>
+                <field name="achievement" class="oe_inline"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action view for Education Background -->
+    <record id="education_background_action" model="ir.actions.act_window">
+        <field name="name">Education Background</field>
+        <field name="res_model">education.background</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a Education Background.
+          </p>
+        </field>
+    </record>
+    
+
+    <menuitem id="menu_student_education_background_sub_form" name="Education Background" parent="school_fees.menu_student_fees_structure_form" action="education_background_action"/>
+
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="category_description_template" inherit_id="honos_shop.honos_shop_products">
+		<xpath expr="//div[@id='sub_header_row']" position="before">
+			
+			<section>
+				<t t-foreach="category" t-as="pc_id">
+						<div t-field="pc_id.content">
+							<div class="oe_structure"/>
+						</div>
+					</t>
+			</section>
+		</xpath>
+	</template>
+</odoo>

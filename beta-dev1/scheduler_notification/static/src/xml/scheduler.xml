@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="scheduler_notification.scheduler_items">
+        <div class="o_thread_date_separator o_border_dashed" data-toggle="collapse" data-target="#o_chatter_planned_activities">
+            <span class="o_thread_date btn">
+                <i class="fa fa-fw fa-caret-down"/>
+                Schedule Reminders
+                <small class="o_chatter_planned_activities_summary ml8">
+                    <span class="label img-circle label-danger"><t t-esc="runningscheduler"/></span>
+                </small>
+            </span>
+        </div>
+
+        <div id="o_chatter_planned_activities" class="collapse in">
+            <t t-foreach="schedulers" t-as="scheduler">
+                <div class="o_thread_message" style="margin-bottom: 10px;text-align: left;">
+                    <div class="o_thread_message_sidebar">
+                        <div class="o_avatar_stack">
+                             <img t-attf-src="/web/image#{scheduler.user_id[0] >= 0 ? ('/res.users/' + scheduler.user_id[0] + '/image_small') : ''}"
+                                  class="o_thread_message_avatar img-circle mb8" t-att-title="scheduler.create_uid[1]"/>
+                        </div>
+                    </div>
+                    <div class="o_thread_message_core o_mail_note" style="text-align: left;">
+                        <div class="o_thread_message_tools btn-group">
+                            <p>Name: <t t-esc="scheduler.name"/> </p>
+                            <p>End Date: <t t-esc="scheduler.end_date"/></p>
+                            <a href="#" class="btn btn-link btn-success text-muted btn-sm o_scheduler_done mr8" t-att-data-scheduler="scheduler.id" data-toggle="popover">
+                                <i class="fa fa-check"/> Mark Done
+                            </a>
+                            <a href="#" class="btn btn-link btn-default text-muted btn-sm o_scheduler_edit" t-att-data-scheduler="scheduler.id">
+                                <i class="fa fa-pencil"/> Edit
+                            </a>
+                            <a href="#" class="btn btn-link btn-sm btn-danger text-muted o_scheduler_unlink" t-att-data-scheduler="scheduler.id">
+                                <i class="fa fa-times"/> Cancel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+
+            <!--<t t-if="done_schedulers">
+                <p>Done Scheduler: <t t-esc="nbdone_schedulers"/> </p>
+                <t t-foreach="done_schedulers" t-as="scheduler">
+                    <div class="o_thread_message" style="margin-bottom: 10px;text-align: left;">
+                        <div class="o_thread_message_sidebar">
+                            <div class="o_avatar_stack">
+                                 <img t-attf-src="/web/image#{scheduler.user_id[0] >= 0 ? ('/res.users/' + scheduler.user_id[0] + '/image_small') : ''}"
+                                      class="o_thread_message_avatar img-circle mb8" t-att-title="scheduler.create_uid[1]"/>
+                            </div>
+                        </div>
+                        <div class="o_thread_message_core o_mail_note" style="text-align: left;">
+                            <div class="o_thread_message_tools btn-group">
+                                <p>Name: <t t-esc="scheduler.name"/> </p>
+                                <p>End Date: <t t-esc="scheduler.end_date"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>-->
+
+        </div>
+    </t>
+
+</templates>

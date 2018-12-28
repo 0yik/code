@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_res_partner_inherit_form_inherit">
+            <field name="name">res.partner.inherited.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="l10n_sg_hr_payroll.view_res_partner_inherit_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='house_no']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='level_no']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='unit_no']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!--field name="email" position="after">
+                    <field name="issuer_id"/>
+                </field-->
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_res_partner_modify_customer">
+            <field name="name">res.partner.inherited.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="sg_account_report.view_partner_form_inherited"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='customer_id']" position="replace">
+                </xpath>
+                <xpath expr="//div[@class='oe_title']/h1" position="after">
+                    <label for="customer_id" class="oe_edit_only" attrs="{'invisible':[('customer','=',False)]}"/>
+                    <field name="customer_id" autocomplete="off" attrs="{'invisible':[('customer','=',False)]}"/>
+                    <label for="supplier_id" class="oe_edit_only" attrs="{'invisible':[('customer','=',True)]}"/>
+                    <field name="supplier_id" autocomplete="off" attrs="{'invisible':[('customer','=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="domain">['|',('customer','=',True),('supplier','=',True)]</field>
+        </record>
+
+        <record id="base.action_partner_customer_form" model="ir.actions.act_window">
+            <field name="domain">['|',('customer','=',True),('supplier','=',True)]</field>
+        </record>
+
+
+		<record id="base.action_partner_supplier_form" model="ir.actions.act_window">
+			<field name="domain">['|',('customer','=',True),('supplier','=',True)]</field>
+		</record>
+		
+		<record model="ir.ui.view" id="res_partner_inherited_view_form">
+			<field name="name">res.partner.inherited.view.form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="account.view_partner_property_form" />
+			<field name="arch" type="xml">
+				<field name="property_payment_term_id" position="replace">
+					<field name="property_payment_term_ids" widget="many2many_tags"/>
+				</field>
+				<field name="property_supplier_payment_term_id" position="replace">
+					<field name="property_supplier_payment_term_ids" widget="many2many_tags"/>
+					<!--<button name="update_delivery_address" type="object" string="Update Delivery Address"/>-->
+				</field>
+			</field>
+		</record>
+		<record id="base.action_partner_form_view1" model="ir.actions.act_window.view">
+			<field eval="2" name="sequence"/>
+		</record>
+		<record id="base.action_partner_form_view2" model="ir.actions.act_window.view">
+		    <field eval="1" name="sequence"/>
+		</record>
+		<record id="base.action_partner_tree_view1" model="ir.actions.act_window.view">
+		    <field name="sequence" eval="0"/>
+		</record>
+		<record id="base.action_partner_supplier_form" model="ir.actions.act_window">
+			<field name="view_mode">tree,kanban,form</field>
+		</record>
+		<record id="stock.product_template_action_product" model="ir.actions.act_window">
+			<field name="view_mode">tree,kanban,form</field>
+		</record>
+
+
+
+        <record id="inherit_customer_sale" model="ir.ui.view">
+            <field name="name">res.partner.customer</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="customer_modifier.customer_modifier_views"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='industry']" position="replace">
+                    <field name="industry" required="1"/>
+                </xpath>
+            </field>
+        </record>
+        <!--<record id="inherit_customer_sale1" model="ir.ui.view">-->
+            <!--<field name="name">res.partner.customer</field>-->
+            <!--<field name="model">res.partner</field>-->
+            <!--<field name="inherit_id" ref="base.view_partner_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//field[@name='street']" position="replace">-->
+                    <!--<field name="street" required="1"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='phone']" position="replace">-->
+                    <!--<field name="phone" required="1"/>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+        <record id="inherit_customer_sale1" model="ir.ui.view">
+            <field name="name">res.partner.customer</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='street']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

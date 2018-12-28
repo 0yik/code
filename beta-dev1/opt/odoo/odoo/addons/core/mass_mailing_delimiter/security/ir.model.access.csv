@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mass-mailing-delimiter_mass-mailing-delimiter,mass-mailing-delimiter.mass-mailing-delimiter,model_mass-mailing-delimiter_mass-mailing-delimiter,,1,0,0,0

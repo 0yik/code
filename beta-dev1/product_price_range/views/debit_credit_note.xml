@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!--<menuitem action="credit_debit_note.action_out_refund" name="Credit Note"
+			id="credit_debit_note.submenu_credit_note" parent="account.menu_finance_receivables"
+			sequence="2" />-->
+		<menuitem action="credit_debit_note.action_in_refund" name="Debit Note"
+			id="credit_debit_note.submenu_debit_note" parent="account.menu_finance_payables"
+			sequence="2" />
+	</data>
+</odoo>

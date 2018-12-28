@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="crm_case_form_view_job_inherit_identification">
+            <field name="name">Jobs - Recruitment Form</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" postion="after">
+                    <group string="Family Information" name="family_histoy">
+                        <field name="family_member_of_employee" readonly="1"/>
+                        <field name="name_of_emlpyee" readonly="1"/>
+                        <field name="relationship" readonly="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

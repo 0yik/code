@@ -1,0 +1,30 @@
+<odoo>
+	<data>
+		<record id="fabric_fabric_form_view" model="ir.ui.view">
+			<field name="name">fabric.fabric.form.view</field>
+			<field name="model">fabric.fabric</field>
+			<field name="arch" type="xml">
+				<form string="Fabric">
+					<sheet>
+						<group>
+							<field name="name" />
+							<field name="uom_id" />
+							<field name="description" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record id="res_company_view_form" model="ir.ui.view">
+            <field name="name">res_company_view_form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='website']" position="after">
+                    <field name="report_header" />
+                </xpath>
+            </field>
+        </record>
+	</data>
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<data>
+        <record model="ir.ui.view" id="aikchin_appraisal_form_view">
+            <field name="name">aikchin.appraisal.form</field>
+            <field name="model">aikchin.appraisal</field>
+            <field name="arch" type="xml">
+                <form string="AikChin Appraisal">
+                    <sheet>
+                        <group>
+                            <field name="employee_id"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="print_appraisal_prinout" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" name="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="aikchin_appraisal_action">
+            <field name="name">AikChin Appraisal</field>
+            <field name="res_model">aikchin.appraisal</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+		<menuitem id="aikchin_appraisal" name="Appraisal" parent="sg_hr_employee.menu_parent_hr_report_summary"/>
+		<menuitem id="aikchin_appraisal_sub" name="Employee Appraisal" parent="aikchin_appraisal"
+                  action="aikchin_appraisal_action"/>
+
+
+	</data>
+</odoo>

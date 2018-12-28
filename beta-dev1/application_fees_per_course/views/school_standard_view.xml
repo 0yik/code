@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE html>
+
+<odoo>
+	<!-- inherit Course view -->
+	<record id="view_school_standard_form_modifier" model="ir.ui.view">
+        <field name="name">school.standard.form.modifier.application.wise</field>
+        <field name="model">school.standard</field>
+        <field name="inherit_id" ref="school.view_school_standard_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='user_id']" position="after">
+                	<field name="application_fee_structure_id"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

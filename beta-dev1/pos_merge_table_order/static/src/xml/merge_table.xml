@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="MergetTableButton">
+        <button class="control-button btn btn-default btn-fill btn-wd">
+            <i class="fa fa-files-o"></i>
+            Merge
+        </button>
+    </t>
+    <t t-name="MergeTableScreenWidget">
+        <div class='splitbill-screen screen'>
+            <div class='screen-content'>
+                <div class='top-content'>
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                    <h1>Bill Merging</h1>
+                </div>
+                <div class='left-content touch-scrollable scrollable-y'>
+                    <div class="selection-floor">
+                        <span class="label">Floor</span>
+                        <span class="floor-list">
+                            <select id="pick-floor">
+
+                            </select>
+                        </span>
+                    </div>
+                    <div class='table-list'>
+                        <ul class='table-list'>
+                        </ul>
+                    </div>
+                </div>
+                <div class='right-content touch-scrollable scrollable-y'>
+                    <div class='order-info'>
+                        <span class='subtotal' t-att-data-value="order_total">
+                            <t t-esc="widget.format_currency(order_total)"/>
+                        </span>
+                    </div>
+                    <div class='paymentmethods'>
+                        <div class='button payment'>
+                            <i class='fa fa-chevron-right' /> Payment
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="MergeTableline">
+        <li t-attf-class="tableline #{ table.selected ? 'selected' : ''}" t-att-data-id="table.id" style="padding: 20px;">
+            <span class="table-name">
+                <t t-esc="table.display_name"/>
+            </span>
+            <span class="amount_total">
+                <t t-esc="widget.format_currency(table.amount_total)"/>
+            </span>
+        </li>
+    </t>
+
+</templates>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!--record id="view_product_bi_inherit_XX" model="ir.ui.view">
+            <field name="name">view.product.bi.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='inventory']" position="after">
+                        <separator string="Stocks Qty By Location"/>
+                        <field name="location_line">
+                            <tree>
+                                <field name="id"/>
+                                <field name="date"/>
+                                <field name="location_id"/>
+                                <field name="stock_move_id"/>
+                                <field name="sale_order_id"/>
+                                <field name="so_count" sum="so_count"/>
+                                <field name="so_amount" sum="so_amount"/>
+                                <field name="purchase_id"/>
+                                <field name="po_count" sum="so_amount"/>
+                                <field name="po_amount" sum="so_amount"/>
+                                <field name="so_po_diff_count" sum="so_po_diff_count"/>
+                                <field name="so_po_diff_amount" sum="so_po_diff_amount"/>
+                            </tree>
+                        </field>
+                </xpath>
+            </field>
+        </record-->
+    </data>
+</openerp>

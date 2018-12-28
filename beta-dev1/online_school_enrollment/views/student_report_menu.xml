@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<data noupdate="1">
+		<record id="paperformat_student_report" model="report.paperformat">
+	        <field name="name">Student Report Paper Format</field>
+	        <field name="default" eval="True"/>
+	        <field name="format">A4</field>
+	        <field name="orientation">Portrait</field>
+	        <field name="margin_top">10</field>
+	        <field name="margin_bottom">23</field>
+	        <field name="margin_left">7</field>
+	        <field name="margin_right">7</field>
+	        <field name="header_line" eval="False"/>
+	        <field name="header_spacing">10</field>
+	        <field name="dpi">90</field>
+	    </record>
+	</data>
+
+    <report
+        id="action_student_report"
+        model="student.student"
+        name="online_school_enrollment.student_report"
+        file="online_school_enrollment.student_report"
+        report_type="qweb-pdf"
+        menu="True"
+        string="student_report"
+        paperformat="online_school_enrollment.paperformat_student_report"
+    />
+</odoo>

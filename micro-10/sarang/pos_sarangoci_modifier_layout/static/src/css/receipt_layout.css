@@ -1,0 +1,1578 @@
+button.hide_priority{
+    display: none !important;
+}
+
+@media (min-width:1024px) {
+    .pos .control-button .fa {
+        margin-right: 0px;
+        margin-left: -8px;
+    }
+	.pos .control-button {
+	    width: 130px;
+	    margin-left: -2px;
+	    min-width: 72px !important;
+	}
+	.pos .actionpad .button.pay .pay-circle {
+		font-size: 20px;
+		line-height: 30px;
+		width: 34px;
+		margin-bottom:0;
+	}
+	button.mode-button.quantity-button.selected-mode {
+		top: -3px;
+		position: absolute;
+		width: 8% !important;
+		height: 48% !important;
+		font-size: 15px !important;
+	}
+	.control-buttons {
+		width: 100%;
+		left: 8.9%;
+		position: relative;
+	}
+
+	.pos .centerpane .numpad {
+	    margin: 0px 0px 0px 0px;
+	    height: 300px;
+	    width: 12% !important;
+	    position: absolute;
+	    left: 4px;
+	}
+
+	button.control-button.guest-button{
+		height: 71px;
+		position: absolute;
+		margin: 50px 0px 0px -2px;
+		top: 30px;
+		width: 9%;
+		left: 0%;
+	}
+	button.btn.btn-default.btn-fill.btn-wd.control-button.send-kichen-button{
+		height: 145px;
+		top: 6px;
+		left: 25.5%;
+		width: 10%;
+		position: absolute;
+		background: #6EC89B;
+		line-height: 16px !important;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.transfer-button {
+		height: 72px;
+		top: 6px;
+		left: 35.8%;
+		width: 10%;
+		position: absolute;
+		white-space: pre;
+	}
+
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.Complimentary-orderline-button {
+		font-size: 11px;
+		left: 35.8%;
+		margin: 50px 0px 0px 0px;
+		top:30px;
+		height: 69px;
+		position: absolute;
+		width: 7.9%;
+		white-space: nowrap;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.split-button {
+		top: 6px;
+		left: 46%;
+		height: 72px;
+		position: absolute;
+		width: 9.3%;
+		white-space: pre;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.note-button {
+		position: absolute;
+	    left: 17%;
+	    top: 30px;
+	    height: 71px;
+	    margin: 50px 0px 0px 2px;
+	    width: 8%;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.bill-button {
+		top: 6px;
+	    position: absolute;
+	    left: 54.7%;
+	    height: 72px;
+	    margin-left: 9px;
+	    width: 8.8%;
+	    white-space: pre;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.cancel-orderline-button.cancel-orderline-button-red {
+		position: absolute;
+	    top: 2px;
+	    height: 71px;
+	    width: 6.43%;
+	    left: 0%;
+	    margin-left: -2px;
+	    margin-top: 3px;
+	}
+	.pos .control-button.btn.reprint-button{
+		position: absolute;
+		left: 9%;
+		margin: 50px 0px 0px 1px;
+		height: 71px;
+		top: 30px;
+		width: 8%;
+	}
+	.pos .control-button.btn.prio-button{
+		position: absolute;
+	    left: 9%;
+	    margin: 5px 0px 0px 1px;
+	    top: 1px;
+	    height: 72px;
+	    width: 8%;
+	}
+	.pos .control-button.btn.cancelprio-button{
+		position: absolute;
+	    left: 17%;
+	    margin: 5px 0px 0px 2px;
+	    top: 1px;
+	    height: 72px;
+	    width: 8%;
+	    line-height: 16px !important;
+	}
+	.pos .control-button.btn.all-free-button{
+		position: absolute;
+		left: 46%;
+		margin: 50px 0px 0px 0px;
+		top: 28px;
+		font-size: 10px;
+		height: 51px;
+		width: 7.2%;
+		white-space: nowrap;
+		line-height: 17px !important;
+		padding-top: 17px;
+	}
+	.pos .control-button.btn.cdiscountl-button{
+		position: absolute;
+		left: 55.3%;
+		margin: 50px 0px 0px 3px;
+		top: 30px;
+		height: 70px;
+		width: 8.7%;
+		white-space: pre;
+	}
+
+	.pos .actionpad {
+		float: right;
+		margin-right: 12px;
+		width: 11% !important;
+		margin-top: 2px;
+	}
+
+    .pos .centerpane {
+        height: 23% !important;
+        bottom: 8px !important;
+    }
+    
+	.row-centerpane{
+		width: 98.4%;
+		position: fixed;
+		height: 23%;
+		bottom: 8px;
+		border-right: none;
+		background: #e2e2e2;
+	}
+	.pos .actionpad .button.pay {
+	    height: 71px !important;
+	    left: 6px;
+	}
+	.pos .actionpad .button .fa-user {
+	    position: absolute;
+	    left: 40px;
+	    top: 8px;
+	    margin-right: 0px;
+	    font-size: 15px;
+	    background: rgba(255, 255, 255, 0.5);
+	    line-height: 29px;
+	    width: 30px;
+	    border-radius: 100%;
+	}
+	.pos .actionpad .button.set-customer {
+	    padding-left: 0px;
+	    padding-right: 0px;
+	    line-height: 85px;
+	    height: 71px;
+	    left: 6px;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.tax-non-discount-button {
+		top: 79px;
+		position: absolute;
+		padding-left: 0px !important;
+		left: 64.7%;
+		height: 71px;
+		width: 12%;
+		white-space: pre;
+		padding: 3px 3px 6px 6px !important;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.service-charge-button {
+		top: 6px;
+		position: absolute;
+		padding-left: 11px !important;
+		left: 64.7%;
+		height: 72px;
+		width: 12%;
+		white-space: pre;
+	}
+}
+
+@media (min-width:1181px) {
+	.pos .control-button {
+	    width: 130px;
+	    margin-left: -2px;
+	}
+	.pos .actionpad .button.pay .pay-circle {
+		font-size: 25px;
+		line-height: 44px;
+		width: 48px;
+	}
+	button.mode-button.quantity-button.selected-mode {
+		top: -3px;
+		position: absolute;
+		width: 10% !important;
+		height: 45% !important;
+		font-size: 15px !important;
+	}
+	.control-buttons {
+		width: 100%;
+		left: 10.8%;
+		position: relative;
+	}
+
+	.pos .centerpane .numpad {
+	    margin: 0px 0px 0px 0px;
+	    height: 300px;
+	    width: 12% !important;
+	    position: absolute;
+	    left: 4px;
+	}
+
+	button.control-button.guest-button{
+		height: 61px;
+		position: absolute;
+		margin: 50px 0px 0px -2px;
+		top: 30px;
+		width: 9%;
+		left: 0%;
+	}
+	button.btn.btn-default.btn-fill.btn-wd.control-button.send-kichen-button{
+		height: 137px;
+		top: 6px;
+		left: 27.5%;
+		width: 10.5%;
+		position: absolute;
+		white-space: pre;
+		background: #6EC89B;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.transfer-button {
+		height: 72px;
+		top: 6px;
+		left: 38.3%;
+		width: 8.87%;
+		position: absolute;
+		white-space: pre;
+	}
+
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.Complimentary-orderline-button {
+		font-size: 11px;
+		left: 38.3%;
+		margin: 71px 0px 0px 0px;
+		height: 61px;
+		position: absolute;
+		width: 7.2%;
+		white-space: nowrap;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.split-button {
+		top: 6px;
+		left: 47.3%;
+		height: 72px;
+		position: absolute;
+		width: 9.3%;
+		white-space: pre;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.note-button {
+		position: absolute;
+	    left: 18%;
+	    top: 31px;
+	    height: 61px;
+	    margin: 49px 0px 0px 2px;
+	    width: 9%;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.bill-button {
+		top: 6px;
+	    position: absolute;
+	    left: 56%;
+	    height: 72px;
+	    margin-left: 9px;
+	    width: 8.1%;
+	    white-space: pre;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.cancel-orderline-button.cancel-orderline-button-red {
+		position: absolute;
+	    top: 2px;
+	    height: 71px;
+	    width: 7.43%;
+	    left: 0%;
+	    margin-left: -3px;
+	    margin-top: 3px;
+	}
+	.pos .control-button.btn.reprint-button{
+		position: absolute;
+		left: 9%;
+		margin: 3px 0px 0px 1px;
+		height: 61px;
+		top: 77px;
+		width: 8.9%;
+	}
+	.pos .control-button.btn.prio-button{
+		position: absolute;
+	    left: 9%;
+	    margin: 5px 0px 0px 1px;
+	    top: 1px;
+	    height: 73px;
+	    width: 8.9%;
+	}
+	.pos .control-button.btn.cancelprio-button{
+		position: absolute;
+	    left: 18%;
+	    margin: 5px 0px 0px 2px;
+	    top: 1px;
+	    height: 73.4px;
+	    width: 9%;
+	    white-space: pre;
+	}
+	.pos .control-button.btn.all-free-button{
+		position: absolute;
+		left: 47.3%;
+		margin: 2px 0px 0px 0px;
+		top: 75px;
+		font-size: 10px;
+		height: 44px;
+		width: 7.5%;
+		white-space: nowrap;
+		line-height: 17px !important;
+		padding-top: 17px;
+	}
+	.pos .control-button.btn.cdiscountl-button{
+		position: absolute;
+		left: 56.4%;
+		margin: 2px 0px 0px 3px;
+		top: 77px;
+		height: 63px;
+		width: 8.2%;
+		white-space: pre;
+	}
+
+	.pos .actionpad {
+		float: right;
+		margin-right: 12px;
+		width: 12% !important;
+		margin-top: 2px;
+	}
+
+	.row-centerpane{
+		width: 100%;
+		position: fixed;
+		height: 24%;
+		bottom: 0;
+		border-right: solid 3px #787878;
+		background: #e2e2e2;
+	}
+	.pos .actionpad .button.pay {
+	    height: 89px !important;
+	}
+	.pos .actionpad .button .fa-user {
+	    position: absolute;
+	    left: 8px;
+	    top: 8px;
+	    margin-right: 8px;
+	    font-size: 15px;
+	    background: rgba(255, 255, 255, 0.5);
+	    line-height: 29px;
+	    width: 30px;
+	    border-radius: 100%;
+	}
+	.pos .actionpad .button.set-customer {
+	    padding-left: 50px;
+	    padding-right: 40px;
+	    line-height: 0;
+        height: 47px;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.tax-non-discount-button {
+		top: 79px;
+		position: absolute;
+		padding-left: 0px !important;
+		left: 64.2%;
+		height: 63px;
+		margin-left: 9px;
+		width: 9.3%;
+		white-space: pre;
+		padding: 3px 3px 6px 6px !important;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.service-charge-button {
+		top: 6px;
+		position: absolute;
+		padding-left: 0px !important;
+		left: 64.2%;
+		height: 72px;
+		margin-left: 9px;
+		width: 9.3%;
+		white-space: pre;
+	}
+}
+@media (min-width:1281px){
+	.pos .control-button {
+	    width: 130px;
+	    margin-left: -2px;
+	}
+	.pos .actionpad .button.pay {
+		height: 103px !important;
+	}
+	button.mode-button.quantity-button.selected-mode {
+	    top: 2px;
+	    position: absolute;
+	    width: 10.5% !important;
+	    height: 50% !important;
+	    font-size: 15px !important;
+	}
+	.control-buttons {
+		width: 100%;
+		left: 10.8%;
+		position: relative;
+	}
+
+	.pos .centerpane .numpad {
+	    margin: 0px 0px 0px 0px;
+	    height: 300px;
+	    width: 12% !important;
+	    position: absolute;
+	    left: 4px;
+	}
+
+	button.control-button.guest-button{
+		height: 74px;
+		position: absolute;
+		margin: 50px 0px 0px 2px;
+		top: 30px;
+		width: 121px;
+	}
+	button.btn.btn-default.btn-fill.btn-wd.control-button.send-kichen-button{
+		height: 152px;
+	    top: 2px;
+	    position: absolute;
+	    background: #6EC89B;
+	    left: 27%;
+	    width: 147px;
+	    margin-left: 5px;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.transfer-button {
+/*	    height: 76px;
+	    top: 2px;
+	    left: 40%;
+	    width: 120px;
+	    position: absolute;*/
+	    height: 76px !important;
+        top: 2px !important;
+        left: 38.4% !important;
+        width: 120px !important;
+        position: absolute;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.Complimentary-orderline-button {
+/*	    top: 22px;
+	    left: 41.5%;
+	    margin: 57px 0px 0px 0px;
+	    height: 72px ;
+	    position: absolute;
+	    width: 128px;*/
+	    top: 22px;
+        left: 38.4%;
+        margin: 58px 0px 0px 0px;
+        height: 72px;
+        position: absolute;
+        width: 98px !important;
+        font-size: 9px;
+        white-space: nowrap;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.split-button {
+/*	    top: 2px; 
+	    left: 52.8%;
+	    height: 76px;
+	    position: absolute;
+	    width: 145px;*/
+	    top: 2px !important;
+        left: 47.4% !important;
+        height: 76px !important;
+        position: absolute;
+        width: 119px !important;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.note-button {
+/*	    position: absolute;
+	    left: 19.3% ;
+	    top: 31px ;
+	    height: 74px ;
+	    margin: 49px 0px 0px 18px ;
+	    width: 130px;*/
+	    position: absolute;
+        left: 18%;
+        top: 31px;
+        height: 74px;
+        margin: 49px 0px 0px 4px;
+        width: 120px;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.bill-button {
+/*		top: 2px;
+		position: absolute;
+		left: 63%;
+		height: 76px;
+		margin-left: 10px;
+		width:140px;*/
+		top: 2px !important;
+	    position: absolute;
+	    left: 55.1% !important;
+	    height: 76px !important;
+	    margin: 0px 0px 0px 17px;
+	    width: 116px !important;
+	    white-space: pre;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.cancel-orderline-button.cancel-orderline-button-red {
+		position: absolute;
+	    top: 0%;
+	    height: 75px;
+	    width: 100px;
+	    margin-left: 2px;
+	    margin-top: 2px;
+	}
+	.pos .control-button.btn.reprint-button{
+/*		position: absolute;
+		left: 11%;
+		margin: 3px 0px 0px 0px;
+		height: 74px !important;
+		margin-left: -4px !important;
+		top: 77px;
+		width: 130px;*/
+		position: absolute;
+		left: 10%;
+		margin: 3px 0px 0px -9px;
+		height: 74px !important;
+		top: 77px;
+		width: 119px;
+	}
+	.pos .control-button.btn.prio-button{
+/*	    position: absolute;
+	    left: 11%;
+	    margin: 3px 0px 0px 0px;
+	    top: 0px;
+	    height: 76px !important;
+	    margin-left: -4px !important;
+	    width: 130px;*/
+	    position: absolute;
+	    left: 10%;
+	    margin: 3px 0px 0px -9px;
+	    top: -1px;
+	    height: 77px !important;
+	    width: 119px;
+	}
+	.pos .control-button.btn.cancelprio-button{
+/*	    position: absolute;
+	    left: 21%;
+	    margin: 2px 0px 0px 0px;
+	    top: 0px;
+	    height: 77px !important;
+	    margin-left: -5px !important;
+	    width: 130px;*/
+	    position: absolute;
+	    left: 18%;
+	    top: -3px;
+	    height: 77px !important;
+	    margin-left: 4px !important;
+	    width: 120px;
+	}
+	.pos .control-button.btn.all-free-button{
+/*		position: absolute;
+		left: 52.8%;
+		margin: 2px 0px 0px 0px;
+		top: 75px;
+	    height: 72px;
+	    width: 123px;
+	    font-size: 11px;*/
+	    position: absolute;
+	    left: 47%;
+	    margin: 2px 0px 0px 6px;
+	    top: 75px;
+	    height: 47px;
+	    width: 97px;
+	    font-size: 9px!important;
+	    padding-top: 26px !important;
+	}
+	.pos .control-button.btn.cdiscountl-button{
+		position: absolute;
+		left: 56.1% !important;
+		margin: 2px 0px 0px 3px;
+		top: 77px;
+		height: 74px;
+		width: 116px !important;
+	}
+
+	.pos .actionpad {
+		float: right;
+		margin-right: 15px;
+		width: 12% !important;
+		margin-top: 0px;
+	}
+
+	.row-centerpane{
+		width: 100%;
+		position: fixed;
+		height: 24%;
+		bottom: 0;
+		border-right: solid 3px #787878;
+		background: #e2e2e2;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.tax-non-discount-button {
+	    top: 79px;
+	    position: absolute;
+	    padding-left: 0px !important;
+	    left: 64.5%;
+	    height: 75px;
+	    margin-left: 9px;
+	    width: 120px;
+	    white-space: pre;
+	    padding: 3px 3px 6px 6px !important;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.service-charge-button {
+	       top: 2px;
+		   position: absolute;
+	       padding-left: 0px !important;
+		   left: 64.5%;
+		   height: 75px;
+		   margin-left: 9px;
+		   width: 120px;
+		   white-space: pre;
+	}
+}
+
+@media (min-width: 1361px){ 
+	.pos .control-button {
+	    width: 130px;
+	    margin-left: -2px;
+	}
+	.pos .actionpad .button.pay {
+	    height: 98px !important;
+	}
+	button.mode-button.quantity-button.selected-mode {
+		top:2px;
+		position: absolute;
+		width: 10% !important;
+		height: 49% !important;
+		font-size: 15px !important;
+	}
+	.control-buttons {
+		width: 100%;
+		left: 10.8%;
+		position: relative;
+	}
+
+	.pos .centerpane .numpad {
+	    margin: 0px 0px 0px 0px;
+	    height: 300px;
+	    width: 12% !important;
+	    position: absolute;
+	    left: 4px;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.guest-button{
+		height: 72px;
+		position: absolute;
+		margin: 50px 0px 0px -4px;
+		top: 30px;
+		left: 0%;
+		width: 138px;
+	}
+	button.btn.btn-default.btn-fill.btn-wd.control-button.send-kichen-button{
+		height: 149px;
+	    top: 3px;
+	    left: 27%;
+	    width: 143px;
+	    position: absolute;
+	    background: #6EC89B;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.transfer-button {
+		height: 76px !important;
+		top: 3px !important;
+		left: 37% !important;
+		width: 139px !important;
+		position: absolute;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.Complimentary-orderline-button {
+		top: 23px;
+		left: 37%;
+		margin: 57px 0px 0px 0px;
+		height: 70px;
+		position: absolute;
+		font-size: 11px !important;
+		width: 117px !important;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.split-button {
+		top: 3px !important;
+		left: 46.3% !important;
+		height: 76px !important;
+		position: absolute;
+		width: 140px !important;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.note-button {
+		position: absolute;
+	    left: 17%;
+	    top: 31px;
+	    height: 72px !important;
+	    margin: 49px 0px 0px 20px;
+	    width: 134px;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.bill-button {
+		top: 3px !important;
+		position: absolute;
+		left: 55.1% !important;
+		height: 75px !important;
+		margin-left: 9px;
+		width: 139px !important;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.cancel-orderline-button.cancel-orderline-button-red {
+		top: 0%;
+		left: 0%;
+		height: 75px;
+		width: 115px;
+		margin-top: 2px;
+		margin-left: -4px;
+	}
+	.pos .control-button.btn.reprint-button{
+		position: absolute;
+		left: 9%;
+		margin: 3px 0px 0px 0px;
+		height: 72px !important;
+		top: 77px;
+		width: 139px;
+	}
+	.pos .control-button.btn.prio-button{
+		position: absolute;
+	    left: 9%;
+	    margin: 3px 0px 0px 0px;
+	    top: 0px;
+	    height: 76px !important;
+	    width: 138px;
+	}
+	.pos .control-button.btn.cancelprio-button{
+		position: absolute;
+	    left: 18%;
+	    margin: 2px 0px 0px 0px;
+	    top: 1px;
+	    height: 76px !important;
+	    width: 135px;
+	}
+	.pos .control-button.btn.all-free-button{
+		position: absolute;
+		left: 46.3% !important;
+		margin: 2px 0px 0px 0px !important;
+		top: 76px !important;
+		font-size: 11px !important;
+		height: 44px !important;
+		width: 119px !important;
+	}
+	.pos .control-button.btn.cdiscountl-button{
+		position: absolute;
+		left: 55.7% !important;
+		margin: 2px 0px 0px 1px;
+		top: 78px;
+		height: 72px;
+		width: 138px !important;
+	}
+
+	.pos .actionpad {
+		float: right;
+		margin-right: 15px;
+		width: 12% !important;
+		margin-top: 0px;
+	}
+	.product-screen{
+	    height: 97% !important;
+	}
+	.row-centerpane{
+		width: 100%;
+		position: fixed;
+		height: 21%;
+		bottom: 0;
+		border-right: solid 3px #787878;
+		background: #e2e2e2;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.tax-non-discount-button {
+		top: 82px;
+		position: absolute;
+		padding-left: 0px !important;
+		left: 64.5%;
+		height: 69px;
+		margin-left: 9px;
+		width: 140px;
+		white-space: pre;
+		padding: 3px 3px 6px 6px !important;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.service-charge-button {
+		top: 2px;
+		position: absolute;
+		padding-left: 0px !important;
+		left: 64.5%;
+		height: 76px;
+		margin-left: 9px;
+		width: 140px;
+		white-space: pre;
+	}
+}
+
+@media (min-width: 1366px) {
+	.pos .control-button .fa {
+        margin-right: 0px;
+        margin-left: -8px;
+    }
+    .pos .control-button.btn.btn-fill {
+        line-height:67px !important;
+    }
+	.pos .control-button {
+	    min-width: 65px !important;
+	    width: 130px;
+	    margin-left: -2px;
+	}
+	.pos .actionpad .button.pay .pay-circle {
+		font-size: 19px;
+		line-height: 32px;
+		width: 34px;
+		padding-top: 3px;
+		margin-bottom: 0;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.guest-button {
+        height: 71px;
+        position: absolute;
+        margin: 50px 0px 0px -4px;
+        top: 31px;
+        left: 0%;
+        width: 8.4%;
+    }
+	button.mode-button.quantity-button.selected-mode {
+		top: 4px;
+		position: absolute;
+		width: 8.8% !important;
+		height: 147px !important;
+		font-size: 15px !important;
+	}
+	.control-buttons {
+		width: 100%;
+		left: 9.7%;
+		position: relative;
+	}
+
+	.pos .centerpane .numpad {
+	    margin: 0px 0px 0px 0px;
+	    height: 300px;
+	    width: 12% !important;
+	    position: absolute;
+	    left: 4px;
+	}
+
+	button.control-button.guest-button{
+		height: 61px;
+		position: absolute;
+		margin: 50px 0px 0px -2px;
+		top: 30px;
+		width: 8.3%;
+		left: 0%;
+	}
+	button.btn.btn-default.btn-fill.btn-wd.control-button.send-kichen-button{
+		height: 147px;
+		top: 6px;
+		left: 24.5%;
+		width: 11.5%;
+		position: absolute;
+		line-height: 16px !important;
+		background: #6EC89B;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.transfer-button {
+		height: 73px !important;
+		top: 6px !important;
+		left: 36.7% !important;
+		width: 9.3% !important;
+		position: absolute;
+		white-space: pre;
+	}
+
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.Complimentary-orderline-button {
+		font-size: 11px;
+		left: 36.7%;
+		margin: 50px 0px 0px 0px;
+		height: 71px !important;
+		top: 31px !important;
+		position: absolute;
+		width: 7.7% !important;
+		white-space: nowrap;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.split-button {
+		top: 6px !important;
+		left: 46.3% !important;
+		height: 73px !important;
+		position: absolute;
+		width: 10.2% !important;
+		white-space: pre;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.note-button {
+		position: absolute;
+	    left: 16.4%;
+	    top: 31px;
+	    height: 71px !important;
+	    margin: 50px 0px 0px 2px;
+	    width: 8%;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.bill-button {
+		top: 6px !important;
+	    position: absolute;
+	    left: 56.8% !important;
+	    height: 73px !important;
+	    margin-left: 0;
+	    width: 8.6% !important;
+	    white-space: pre;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.cancel-orderline-button.cancel-orderline-button-red {
+		position: absolute;
+	    top: 2px;
+	    height: 71px;
+	    width: 6.7%;
+	    left: 0%;
+	    margin-left: -3px;
+	    margin-top: 4px;
+	    line-height: 75px !important;
+	}
+	.pos .control-button.btn.reprint-button{
+		position: absolute;
+		left: 8.2%;
+		margin: 50px 0px 0px 1px;
+		height: 71px !important;
+		top: 31px;
+		width: 8%;
+	}
+	.pos .control-button.btn.prio-button{
+		position: absolute;
+	    left: 8.20%;
+	    margin: 5px 0px 0px 1px;
+	    top: 1px;
+	    height: 73px !important;
+	    width: 8%;
+	}
+	.pos .control-button.btn.cancelprio-button{
+		position: absolute;
+	    left: 16.2%;
+	    margin: 5px 0px 0px 2px;
+	    top: 1px;
+	    height: 73px !important;
+	    width: 8%;
+	    line-height: 16px !important;
+	    white-space: normal; 
+	}
+	.pos .control-button.btn.all-free-button{
+		position: absolute;
+		left: 46.3% !important;
+		margin: 50px 0px 0px 0px !important;
+		top: 30px !important;
+		font-size: 10px;
+		height: 44px !important;
+		width: 8.6% !important;
+		white-space: nowrap;
+		line-height: 17px !important;
+		padding-top: 17px;
+	}
+	.pos .control-button.btn.cdiscountl-button{
+		position: absolute;
+		left: 56.8% !important;
+		margin: 50px 0px 0px 0px !important;
+		top: 32px !important;
+		height: 71px !important;
+		width: 8.6% !important;
+		white-space: pre;
+	}
+
+	.pos .actionpad {
+		float: right;
+		margin-right: 12px;
+		width: 10% !important;
+		margin-top: 2px;
+		margin-left: 2px;
+	}
+
+    .pos .centerpane {
+        height: 21% !important;
+        bottom: 8px !important;
+    }
+
+	.row-centerpane{
+		width: 98.9%;
+		position: fixed;
+		height: 21%;
+		bottom: 8px;
+		border-right: none;
+		background: #e2e2e2;
+	}
+	.pos .actionpad .button.pay {
+	    height: 73px !important;
+	    left: 7px;
+	}
+	
+	.pos .actionpad .button .fa-user {
+	    position: absolute;
+	    left: 50px;
+	    top: 8px;
+	    margin-right: 0;
+	    font-size: 15px;
+	    background: rgba(255, 255, 255, 0.5);
+	    line-height: 29px;
+	    width: 30px;
+	    border-radius: 100%;
+	}
+	.pos .actionpad .button.set-customer {
+	    padding-left: 0;
+	    padding-right: 0;
+	    line-height: 90px;
+	    height:73px;
+	    left: 7px;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.tax-non-discount-button {
+		top: 82px;
+		position: absolute;
+		padding-left: 0px !important;
+		left: 65.2%;
+		height: 71px;
+		width: 12%;
+		padding: 0 !important;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.service-charge-button {
+		top: 6px;
+		position: absolute;
+		padding-left: 0px !important;
+		left: 65.2%;
+		height: 71px;
+		width: 12%;
+	}
+}
+
+@media (min-width: 1481px) {
+	.pos .control-button {
+	    width: 130px;
+	    margin-left: -2px;
+	}
+	button.mode-button.quantity-button.selected-mode {
+		top:2px;
+		position: absolute;
+		width: 10% !important;
+		height: 50% !important;
+		font-size: 15px !important;
+	}
+	.control-buttons {
+		width: 100%;
+		left: 10.8%;
+		position: relative;
+	}
+
+	.pos .centerpane .numpad {
+	    margin: 0px 0px 0px 0px;
+	    height: 300px;
+	    width: 12% !important;
+	    position: absolute;
+	    left: 4px;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.guest-button{
+		height: 74px;
+	    position: absolute;
+	    margin: 50px 0px 0px -7px;
+	    top: 30px;
+	    width: 162px;
+	}
+	button.btn.btn-default.btn-fill.btn-wd.control-button.send-kichen-button{
+		height: 150px;
+		top: 4px;
+		left: 28.5%;
+		width: 170px;
+		position: absolute;
+		background: #6EC89B;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.transfer-button {
+		height: 76px !important;
+		top: 3px !important;
+		left: 39% !important;
+		width: 150px !important;
+		position: absolute;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.Complimentary-orderline-button {
+		top: 23px;
+	    left: 39%;
+	    margin: 57px 0px 0px 0px;
+	    height: 72px;
+	    font-size: 10px !important;
+	    position: absolute;
+	    width: 128px !important;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.split-button {
+		top: 3px !important;
+	   left: 48% !important;
+	   height: 76px !important;
+	   position: absolute;
+	   width: 150px !important;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.note-button {
+		position: absolute;
+		left: 19.1%;
+		top: 30px;
+		height: 74px !important;
+		margin: 50px 0px 0px 0px;
+		width: 161px;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.bill-button {
+		top: 3px !important;
+		position: absolute !important;
+		left: 56.5% !important;
+		height: 76px !important;
+		margin-left: 9px !important;
+		width: 150px !important;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.cancel-orderline-button.cancel-orderline-button-red {
+		position: absolute;
+	    top: 0%;
+	    left: 0%;
+	    height: 75px;
+	    width: 140px;
+	    margin-left: -7px;
+	    margin-top: 2px;
+	}
+	.pos .control-button.btn.reprint-button{
+		position: absolute;
+		left: 9%;
+		margin: 3px 0px 0px 6px;
+		height: 74px !important;
+		top: 77px;
+		width: 163px;
+	}
+	.pos .control-button.btn.prio-button{
+		position: absolute;
+		left: 9%;
+		margin: 3px 0px 0px 6px;
+		top: 0px;
+		height: 76px;
+		width: 163px;
+	}
+	.pos .control-button.btn.cancelprio-button{
+		position: absolute;
+	    left: 18.9%;
+	    margin: 2px 0px 0px 0px;
+	    top: 1px;
+	    height: 76px !important;
+	    width: 160px;
+	}
+	.pos .control-button.btn.all-free-button{
+		position: absolute;
+		left: 48% !important;
+		margin: 2px 0px 0px 0px !important;
+		top: 76px !important;
+		height: 46px !important;
+		width: 130px !important;
+	}
+	.pos .control-button.btn.cdiscountl-button{
+		position: absolute;
+		left: 57% !important;
+		margin: 2px 0px 0px 1px;
+		top: 78px;
+		height: 74px;
+		width: 150px !important;
+	}
+
+	.pos .actionpad {
+		float: right;
+		margin-right: 15px;
+		width: 12% !important;
+		margin-top: 0px;
+	}
+	.product-screen{
+	    height: 100% !important;
+	}
+	.row-centerpane{
+		width: 100%;
+		position: fixed;
+		height: 19%;
+		bottom: 0;
+		border-right: solid 3px #787878;
+		background: #e2e2e2;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.service-charge-button {			
+		top: 4px;
+		position: absolute;
+		padding-left: 0px !important;
+		left: 65.6%;
+		height: 74px;
+		margin-left: 9px;
+		width: 146px;
+		white-space: pre;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.tax-non-discount-button {
+		position: absolute;
+		padding-left: 0px !important;
+		left: 65.6%;
+		height: 73px;
+		margin-left: 9px;
+		top: 81px;
+		width: 146px;
+		white-space: pre;
+		padding: 3px 3px 6px 6px !important;
+	}
+}
+
+@media (min-width: 1681px) {
+	.pos .control-button {
+	    width: 130px;
+	    margin-left: -2px;
+	}
+	button.mode-button.quantity-button.selected-mode {
+		top:2px;
+		position: absolute;
+		width: 10% !important;
+		height: 50% !important;
+		font-size: 15px !important;
+	}
+	.control-buttons {
+		width: 100%;
+		left: 10.8%;
+		position: relative;
+	}
+
+	.pos .centerpane .numpad {
+	    margin: 0px 0px 0px 0px;
+	    height: 300px;
+	    width: 12% !important;
+	    position: absolute;
+	    left: 4px;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.guest-button{
+		height: 74px;
+	    position: absolute;
+	    margin: 50px 0px 0px -7px;
+	    top: 30px;
+	    width: 170px;
+	}
+	button.btn.btn-default.btn-fill.btn-wd.control-button.send-kichen-button{
+		height: 150px;
+		top: 4px;
+		left: 28.5%;
+		width: 179px;
+		position: absolute;
+		background: #6EC89B;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.transfer-button {
+		height: 76px !important;
+		top: 3px !important;
+		left: 39% !important;
+		width: 160px !important;
+		position: absolute;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.Complimentary-orderline-button {
+		top: 23px;
+	    left: 39%;
+	    margin: 57px 0px 0px 0px;
+	    height: 72px;
+	    font-size: 10px !important;
+	    position: absolute;
+	    width: 138px !important;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.split-button {
+		top: 3px !important;
+	   left: 48% !important;
+	   height: 76px !important;
+	   position: absolute;
+	   width: 159px !important;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.note-button {
+		position: absolute;
+		left: 19.1%;
+		top: 30px;
+		height: 74px !important;
+		margin: 50px 0px 0px 0px;
+		width: 169px;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.bill-button {
+		top: 3px !important;
+		position: absolute !important;
+		left: 56.5% !important;
+		height: 76px !important;
+		margin-left: 9px !important;
+		width: 160px !important;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.cancel-orderline-button.cancel-orderline-button-red {
+		position: absolute;
+	    top: 0%;
+	    left: 0%;
+	    height: 75px;
+	    width: 148px;
+	    margin-left: -7px;
+	    margin-top: 2px;
+	}
+	.pos .control-button.btn.reprint-button{
+		position: absolute;
+		left: 9%;
+		margin: 3px 0px 0px 6px;
+		height: 74px !important;
+		top: 77px;
+		width: 171px;
+	}
+	.pos .control-button.btn.prio-button{
+		position: absolute;
+		left: 9%;
+		margin: 3px 0px 0px 6px;
+		top: 0px;
+		height: 76px;
+		width: 172px;
+	}
+	.pos .control-button.btn.cancelprio-button{
+		position: absolute;
+	    left: 18.9%;
+	    margin: 2px 0px 0px 0px;
+	    top: 1px;
+	    height: 76px !important;
+	    width: 169px;
+	}
+	.pos .control-button.btn.all-free-button{
+		position: absolute;
+		left: 48% !important;
+		margin: 2px 0px 0px 0px !important;
+		top: 76px !important;
+		height: 46px !important;
+		width: 138px !important;
+	}
+	.pos .control-button.btn.cdiscountl-button{
+		position: absolute;
+		left: 57% !important;
+		margin: 2px 0px 0px 1px;
+		top: 78px;
+		height: 74px;
+		width: 159px !important;
+	}
+
+	.pos .actionpad {
+		float: right;
+		margin-right: 15px;
+		width: 12% !important;
+		margin-top: 0px;
+	}
+	.product-screen{
+	    height: 100% !important;
+	}
+	.row-centerpane{
+		width: 100%;
+		position: fixed;
+		height: 19%;
+		bottom: 0;
+		border-right: solid 3px #787878;
+		background: #e2e2e2;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.service-charge-button {			
+		top: 4px;
+		position: absolute;
+		padding-left: 0px !important;
+		left: 65.6%;
+		height: 74px;
+		margin-left: 9px;
+		width: 155px;
+		white-space: pre;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.tax-non-discount-button {
+		position: absolute;
+		padding-left: 0px !important;
+		left: 65.6%;
+		height: 73px;
+		margin-left: 9px;
+		top: 81px;
+		width: 155px;
+		white-space: pre;
+		padding: 3px 3px 6px 6px !important;
+	}
+}
+
+
+@media (min-width: 1979px) {
+	.pos .control-button {
+	    width: 130px;
+	    margin-left: -2px;
+	}
+	button.mode-button.quantity-button.selected-mode {
+		top:2px;
+		position: absolute;
+		width: 10% !important;
+		height: 50% !important;
+		font-size: 15px !important;
+	}
+	.control-buttons {
+		width: 100%;
+		left: 10.8%;
+		position: relative;
+	}
+
+	.pos .centerpane .numpad {
+	    margin: 0px 0px 0px 0px;
+	    height: 300px;
+	    width: 12% !important;
+	    position: absolute;
+	    left: 4px;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.guest-button{
+		height: 74px;
+	    position: absolute;
+	    margin: 50px 0px 0px -7px;
+	    top: 30px;
+	    width: 9.5%;
+	}
+	button.btn.btn-default.btn-fill.btn-wd.control-button.send-kichen-button{
+		height: 150px;
+		top: 4px;
+		left: 28.5%;
+		width: 10%;
+		position: absolute;
+		background: #6EC89B;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.transfer-button {
+		height: 76px !important;
+		top: 3px !important;
+		left: 39% !important;
+		width: 8.8% !important;
+		position: absolute;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.Complimentary-orderline-button {
+		top: 23px;
+	    left: 39%;
+	    margin: 57px 0px 0px 0px;
+	    height: 72px;
+	    position: absolute;
+	    width: 7.7% !important;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.split-button {
+		top: 3px !important;
+	   left: 48% !important;
+	   height: 76px !important;
+	   position: absolute;
+	   width: 8.8% !important;
+	}
+
+	button.control-button.btn.btn-default.btn-fill.btn-wd.note-button {
+		position: absolute;
+		left: 19.1%;
+		top: 30px;
+		height: 74px !important;
+		margin: 50px 0px 0px 0px;
+		width: 9.5%;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.bill-button {
+		top: 3px !important;
+		position: absolute !important;
+		left: 56.5% !important;
+		height: 76px !important;
+		margin-left: 9px !important;
+		width: 8.8% !important;
+	}
+	.btn.btn-default.btn-fill.btn-wd.button-section.control-button.cancel-orderline-button.cancel-orderline-button-red {
+		position: absolute;
+	    top: 0%;
+	    left: 0%;
+	    height: 75px;
+	    width: 8.5%;
+	    margin-left: -7px;
+	    margin-top: 2px;
+	}
+	.pos .control-button.btn.reprint-button{
+		position: absolute;
+		left: 9%;
+		margin: 3px 0px 0px 6px;
+		height: 74px !important;
+		top: 77px;
+		width: 9.5%;
+	}
+	.pos .control-button.btn.prio-button{
+		position: absolute;
+		left: 9%;
+		margin: 3px 0px 0px 6px;
+		top: 0px;
+		height: 76px;
+		width: 9.5%;
+	}
+	.pos .control-button.btn.cancelprio-button{
+		position: absolute;
+	    left: 18.9%;
+	    margin: 2px 0px 0px 0px;
+	    top: 1px;
+	    height: 76px !important;
+	    width: 9.5%;
+	}
+	.pos .control-button.btn.all-free-button{
+		position: absolute;
+		left: 48% !important;
+		margin: 2px 0px 0px 0px !important;
+		top: 76px !important;
+		height: 46px !important;
+		width: 7.7% !important;
+	}
+	.pos .control-button.btn.cdiscountl-button{
+		position: absolute;
+		left: 57% !important;
+		margin: 2px 0px 0px -1px;
+		top: 78px;
+		height: 74px;
+		width: 8.8% !important;
+	}
+
+	.pos .actionpad {
+		float: right;
+		margin-right: 15px;
+		width: 12% !important;
+		margin-top: 0px;
+	}
+	.product-screen{
+	    height: 100% !important;
+	}
+	.row-centerpane{
+		width: 100%;
+		position: fixed;
+		height: 19%;
+		bottom: 0;
+		border-right: solid 3px #787878;
+		background: #e2e2e2;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.service-charge-button {			
+		top: 4px;
+		position: absolute;
+		padding-left: 0px !important;
+		left: 65.6%;
+		height: 74px;
+		margin-left: 9px;
+		width: 9%;
+		white-space: pre;
+	}
+	button.control-button.btn.btn-default.btn-fill.btn-wd.tax-non-discount-button {
+		position: absolute;
+		padding-left: 0px !important;
+		left: 65.6%;
+		height: 73px;
+		margin-left: 9px;
+		top: 81px;
+		width: 9%;
+		white-space: pre;
+		padding: 3px 3px 6px 6px !important;
+	}
+}

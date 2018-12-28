@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend_new" name="hm syatem " inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/hm_system/static/src/js/custom_remove_odoo.js"></script>
+            <link rel="stylesheet" href="/hm_system/static/src/css/hm_new.less"/>
+            <link rel="stylesheet" href="/hm_system/static/src/css/custom_branding.css"/>
+            <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet"/>
+        </xpath>
+    </template>
+
+    <template id="webclient_bootstrap" inherit_id="web.webclient_bootstrap">
+
+        <xpath expr="//t[@t-set='head']" position="after">
+            <t t-set="head_web_enterprise">
+                <!-- Chrome, Firefox OS and Opera -->
+                <meta name="theme-color" content="#1e9880;"/>
+                <link rel="icon" sizes="192x192" href="/web_enterprise/static/src/img/mobile-icons/android-192x192.png"/>
+
+                <!-- iOS Safari -->
+                <meta name="apple-mobile-web-app-capable" content="yes"/>
+                <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+                <link rel="apple-touch-icon" href="/web_enterprise/static/src/img/mobile-icons/apple-152x152.png"/>
+
+                <!-- Windows Phone -->
+                <meta name="msapplication-navbutton-color" content="#1e9880;"/>
+                <meta name="msapplication-TileColor" content="#875A7B"/>
+                <meta name="msapplication-TileImage" content="/web_enterprise/static/src/img/mobile-icons/windows-144x144.png"/>
+            </t>
+            <t t-set="head" t-value="head_web_enterprise + (head or '')"/>
+        </xpath>
+        <xpath expr="//a[@class='drawer-toggle navbar-collapse collapse btn btn-default app-drawer-toggle']" position="replace">
+            <a class="drawer-toggle navbar-collapse collapse btn btn-default app-drawer-toggle"
+               accesskey="n"
+               >
+                <span class="sr-only">Toggle App Drawer</span>
+                <i class="fa fa-th fa-lg app-drawer-icon-open"
+                   t-translation="off"
+                   aria-hidden="true"
+                   />
+            </a>
+        </xpath>
+    </template>
+
+    <template id="web.layout" name="Web layout">&lt;!DOCTYPE html&gt;
+        <html t-att="html_data or {}">
+            <head>
+                <meta charset="utf-8"/>
+                <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+                <title t-esc="title or 'Hashmicro'"/>
+                <link type="image/x-icon" rel="shortcut icon" href="/hm_system/static/src/favicon.ico"/>
+
+                <script type="text/javascript">
+                    var odoo = {
+                        csrf_token: "<t t-esc="request.csrf_token(None)"/>",
+                    };
+                </script>
+                <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+                <t t-raw="head or ''"/>
+            </head>
+            <style>
+                body{
+                    font-family: 'Roboto', sans-serif;
+                }
+            </style>
+            <body t-att-class="body_classname">
+                <t t-raw="0"/>
+            </body>
+        </html>
+    </template>
+
+    <template id="web.login_layout" name="Login Layout">
+        <t t-call="web.layout">
+            <t t-set="html_data" t-value="{'style': 'height: 100%;'}"/>
+            <t t-set="head">
+                <t t-call-assets="web.assets_common" t-js="false"/>
+                <t t-call-assets="web.assets_frontend" t-js="false"/>
+                <t t-call-assets="web.assets_common" t-css="false"/>
+                <t t-call-assets="web.assets_frontend" t-css="false"/>
+            </t>
+            <t t-set="body_classname" t-value="'container'"/>
+
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 o_database_list" style="padding-top:35px;"> 
+                  <div class="text-center">
+                        <img t-attf-src="/web/binary/company_logo{{ '?dbname='+db if db else '' }}"/>
+                    </div>
+                    <t t-raw="0"/>
+                    <div class="text-center" t-if="not disable_footer">
+                        <t t-if="not disable_database_manager">
+                            <!-- <a class="" href="/web/database/manager">Manage Databases</a> | -->
+                        </t>
+                        <a href="https://www.hashmicro.com" target="_blank">Powered by <span>Hashmicro</span></a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    
+    <template id="menu_branding" inherit_id="web.menu" name="App Drawer - Menu">
+        <xpath expr="//div[@id='appDrawerAppPanelBody']" position="replace">
+            <div class="panel-body" id="appDrawerAppPanelBody">
+                <input type="text" id="search-menu" placeholder="Search.." name="search-menu" value="" aria-required="true" tabindex="1"/>
+                <ul class="list-unstyled oe_application_menu_placeholder"
+                    style="display: none;">
+
+                    <li t-foreach="menu_data['children']" t-as="menu" class="text-center">
+                        <t t-call="web.menu_link">
+                            <t t-set="display_images" t-value="1" />
+                        </t>
+                    </li>
+                </ul>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='appDrawerAppPanelHead']" position="replace">
+        </xpath>
+    </template>
+
+	<!-- coded by anand on 28 nov 2017 for more than 6 menu items shows in More menu. -->
+	<template id="web_responsive.menu_secondary_submenu"
+              inherit_id="web.menu_secondary_submenu"
+              name="App Drawer - Secondary Submenu">
+
+        <xpath expr="//ul" position="replace">
+			<t t-set="count" t-value="0"/>
+			<t t-set="all_menu" t-value="menu['children']"/>
+			<t t-if="submenu">
+				<t t-foreach="menu['children']" t-as="menu">
+					<t t-if="menu['children']">
+		                <li t-attf-class="{{ 'dropdown-header' if submenu else '' }}">
+		                    <t t-if="submenu">
+		                        <t t-esc="menu['name']" />
+		                        <t t-call="web.menu_secondary_submenu">
+		                            <t t-set="submenu" t-value="True" />
+		                        </t>
+		                    </t>
+		                    <t t-if="not submenu">
+		                        <a class="dropdown-toggle"
+		                           data-toggle="dropdown"
+		                           role="button"
+		                           aria-haspopup="true"
+		                           aria-expanded="false"
+		                           >
+		                            <t t-esc="menu['name']" />
+		                            <span class="caret" />
+		                         </a>
+		                        <ul t-if="menu['children']"
+		                            t-attf-class="dropdown-menu oe_secondary_submenu dropdown-scrollable"
+		                            >
+		                            <t t-call="web.menu_secondary_submenu">
+		                                <t t-set="submenu" t-value="True" />
+		                            </t>
+		                        </ul>
+		                    </t>
+		                </li>
+		            </t>
+		            <t t-if="not menu['children']">
+		                <li>
+		                    <t t-call="web.menu_link" />
+		                </li>
+		            </t>
+				</t>
+			</t>
+			<t t-if="not submenu">
+		        <t t-foreach="menu['children']" t-as="menu">
+		            <t t-if="count &lt; 6">
+						<t t-if="menu['children']">
+				            <li t-attf-class="{{ 'dropdown-header' if submenu else '' }}">
+				                <t t-if="submenu">
+				                    <t t-esc="menu['name']" />
+				                    <t t-call="web.menu_secondary_submenu">
+				                        <t t-set="submenu" t-value="True" />
+				                    </t>
+				                </t>
+				                <t t-if="not submenu">
+				                    <a class="dropdown-toggle"
+				                       data-toggle="dropdown"
+				                       role="button"
+				                       aria-haspopup="true"
+				                       aria-expanded="false"
+				                       >
+				                        <t t-esc="menu['name']" />
+				                        <span class="caret" />
+				                     </a>
+				                    <ul t-if="menu['children']"
+				                        t-attf-class="dropdown-menu oe_secondary_submenu dropdown-scrollable"
+				                        >
+				                        <t t-call="web.menu_secondary_submenu">
+				                            <t t-set="submenu" t-value="True" />
+				                        </t>
+				                    </ul>
+				                </t>
+				            </li>
+				        </t>
+				        <t t-if="not menu['children']">
+				            <li>
+				                <t t-call="web.menu_link" />
+				            </li>
+				        </t>
+					</t>
+					<t t-set="count" t-value="count+1"/>
+		        </t>
+				<t t-if="len(all_menu) &gt; 6">
+					<li id="menu_more_container" class="dropdown">
+		                <a class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+		                <ul id="menu_more" class="dropdown-menu">
+							<t t-set="count" t-value="0"/>
+							<t t-foreach="all_menu" t-as="menu">
+								<t t-if="count &gt; 5">
+									<t t-if="menu['children']">
+										<li t-attf-class="{{ 'dropdown-header' if submenu else 'more_menu' }}">
+										    <t t-if="submenu">
+										        <t t-esc="menu['name']" />
+										        <t t-call="web.menu_secondary_submenu">
+										            <t t-set="submenu" t-value="True" />
+										        </t>
+										    </t>
+										    <t t-if="not submenu">
+										        <a class="dropdown-toggle"
+										           data-toggle="dropdown"
+										           role="button"
+										           aria-haspopup="true"
+										           aria-expanded="false"
+										           >
+										            <t t-esc="menu['name']" />
+										            <span class="caret" />
+										         </a>
+										        <ul t-if="menu['children']"
+										            t-attf-class="dropdown-menu oe_secondary_submenu dropdown-scrollable"
+										            >
+										            <t t-call="web.menu_secondary_submenu">
+										                <t t-set="submenu" t-value="True" />
+										            </t>
+										        </ul>
+										    </t>
+										</li>
+									</t>
+									<t t-if="not menu['children']">
+										<li>
+										    <t t-call="web.menu_link" />
+										</li>
+									</t>
+								</t>
+								<t t-set="count" t-value="count+1"/>
+							</t>
+						</ul>
+		            </li>
+				</t>
+			</t>
+        </xpath>
+
+    </template>
+	<!-- Finished custom code -->
+
+
+    <template id="web_responsive.menu_link" inherit_id="web.menu_link" name="App Drawer - Menu Link">
+        <xpath expr="//a" position="attributes">
+            <attribute name="t-att-data-menu-name">menu['name']</attribute>
+        </xpath>
+        <xpath expr="//span[@class='oe_menu_text']" position="replace">
+            <t t-if="display_images">
+
+                <p class="app-drawer-title text-center">
+                    <t t-esc="menu['name']" />
+                </p>
+                <img t-attf-src="/web/image/ir.ui.menu/{{ menu['id'] }}/web_icon_data"
+                     class="app-drawer-icon-app img-rounded"
+                     t-att-alt="menu['name']"
+                     t-att-title="menu['name']"
+                     />
+            </t>
+            <t t-if="not display_images">
+                <span class="oe_menu_text">
+                    <t t-esc="menu['name']" />
+                </span>
+            </t>
+        </xpath>
+    </template>
+
+
+    <record id="web_planner_view_tree_pdf" model="ir.ui.view">
+        <field name="name">web.planner.view.tree.pdf</field>
+        <field name="model">web.planner.pdf</field>
+        <field name="arch" type="xml">
+            <tree string="Planner Pdf">
+                <field name="name"/>
+                <field name="tooltip_planner" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="web_planner_view_form_pdf" model="ir.ui.view">
+        <field name="name">web.planner.view.form.pdf</field>
+        <field name="model">web.planner.pdf</field>
+        <field name="arch" type="xml">
+            <form string="Planner Pdf">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="menu_get_id" />
+                        <field name="tooltip_planner"/>
+                        <field name="attch_doc"/>
+                    </group>
+                </sheet>        
+            </form>
+        </field>
+    </record>
+
+    <record id="web_planner_action_new" model="ir.actions.act_window">
+        <field name="name">Planners Pdf</field>
+        <field name="res_model">web.planner.pdf</field>
+        <field name="view_type">form</field>
+        <field name='view_mode'>tree,form</field>
+    </record>
+
+    <menuitem id="web_planner_menu_new" name="Planners Pdf" action="web_planner_action_new" parent="base.next_id_2" sequence="11"/>
+
+
+</odoo>

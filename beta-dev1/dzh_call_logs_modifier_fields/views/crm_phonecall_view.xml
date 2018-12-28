@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="market_segment_form_view">
+            <field name="name">Market Segment Tree</field>
+            <field name="model">market.segment</field>
+            <field name="arch" type="xml">
+                <form string="Market Segment">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="market_segment_tree_view">
+            <field name="name">Market Segment Tree</field>
+            <field name="model">market.segment</field>
+            <field name="arch" type="xml">
+                <tree string="Market Segment">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="member_type_form_view">
+            <field name="name">Member Type Tree</field>
+            <field name="model">member.type</field>
+            <field name="arch" type="xml">
+                <form string="Member Type">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="member_type_tree_view">
+            <field name="name">Member Type Tree</field>
+            <field name="model">member.type</field>
+            <field name="arch" type="xml">
+                <tree string="Member Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--<record id="inherit_crm_case_phone_tree_view" model="ir.ui.view">-->
+            <!--<field name="name">crm.phonecall.tree.view</field>-->
+            <!--<field name="model">crm.phonecall</field>-->
+            <!--<field name="inherit_id" ref="crm_phonecall.crm_case_inbound_phone_tree_view"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="user_id" position="after">-->
+                    <!--<field name="source_id"/>-->
+                    <!--<field name="crm_market_segment_id" />-->
+                    <!--<field name="crm_member_type_id" />-->
+                    <!--<field name="product_ids" widget="many2many_tags"/>-->
+                    <!--<field name="country_id" />-->
+                <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
+
+    </data>
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="house_color_tree" model="ir.ui.view">
+          <field name="name">house.colour.tree</field>
+          <field name="model">house.colour</field>
+          <field name="priority">2</field>
+          <field name="arch" type="xml">
+              <tree string="House Color">
+                  <field name="name"/>
+                  <field name="start_date"/>
+                  <field name="end_date"/>
+              </tree>
+          </field>
+   </record>
+        
+	 <record id="view_house_color_form" model="ir.ui.view">
+           <field name="name">house.colour.from</field>
+           <field name="model">house.colour</field>
+           <field name="arch" type="xml">
+               <form string="House Colour">
+               <sheet>
+	               	<group>
+	                   <field name="name" required='1'/>
+	                   <field name="start_date" />
+	                   <field name="end_date" />
+	                   <field name="class_line">
+		                   	<tree editable='bottom'>
+		                   		<field name="class_id" required='1'/>
+		                   	</tree>
+	                   </field>
+	                   <field name="student_line">
+		                   	<tree editable='bottom'>
+		                   		<field name="student_id" required='1'/>
+		                   	</tree>
+	                   </field>
+	                    <field name="employee_line">
+		                   	<tree editable='bottom'>
+		                   		<field name="employee_id" required='1'/>
+		                   	</tree>
+	                   </field>
+	                </group>
+                </sheet>
+               </form>
+           </field>
+      </record>
+      
+      <record id="action_house_color" model="ir.actions.act_window">
+            <field name="name">House Color</field>
+            <field name="res_model">house.colour</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="house_color_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+      
+      <menuitem 
+            id="house_color_menu"
+            name="House Colour"
+            parent="atts_course.menu_ems" sequence="5"/>
+            
+      <menuitem 
+            id="sub_house_color_menu"
+            name="House Colour"
+            parent="house_color_menu"
+            action="action_house_color"/>
+	</data>
+</odoo>

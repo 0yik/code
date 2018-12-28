@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="pos_untaxed_payment_method_assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_untaxed_payment_method/static/src/js/pos_untaxed_payment_method.js"></script>
+            <link rel="stylesheet" href="/pos_untaxed_payment_method/static/src/css/pos_untaxed_payment_method.css" />
+        </xpath>
+    </template>
+</odoo>

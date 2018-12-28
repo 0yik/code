@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="generate_bo_order_report_menu" 
+            sequence="4"
+            parent="booking_service_V2.main_booking_menu"
+            name="Generate BO/Reports"
+            />
+            
+        <menuitem id="configuration_bo_order" 
+            sequence="100"
+            parent="booking_service_V2.main_booking_menu"
+            name="Configuration"
+            />
+
+        <menuitem id="zone_postal_code_menu" 
+            parent="configuration_bo_order"
+            sequence="1"
+            name="Zones &amp; Postal code Management"
+            action="zone_and_postal_code_configuration.action_zone_zone_view"/>
+        
+    </data>
+</odoo>

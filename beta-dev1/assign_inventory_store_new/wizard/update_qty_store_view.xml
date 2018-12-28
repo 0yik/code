@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_update_qty_store_form" model="ir.ui.view">
+            <field name="name">update.qty.store.form</field>
+            <field name="model">update.qty.store</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <form string="Update Store Quantity">
+                <group>
+                    <field name="product_tmpl_id" invisible="1"/>
+                    <field name="product_variant_count" invisible="1"/>
+                    <field name="product_id" widget="selection"
+                        domain="[('product_tmpl_id', '=', product_tmpl_id)]"
+                        attrs="{'readonly': [('product_variant_count', '=', 1)]}"/>
+                    <field name="location_id" groups="stock.group_stock_multi_locations" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="new_quantity"/>
+                    <field name="new_quantity_on_hand"/>
+                </group>
+                <footer>
+                    <button string="Apply" icon="" states="" type="object" name="change_store_product_qty"/>
+                    <button string="_Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_update_qty_store_view">
+            <field name="name">Update Store Quantity</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">update.qty.store</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_update_qty_store_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <!--record model="ir.actions.act_window.view" id="act_open_update_qty_store_view_form">
+            <field name="act_window_id" ref="act_open_update_qty_store_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_update_qty_store_form"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_update_qty_store_view_tree">
+            <field name="act_window_id" ref="act_open_update_qty_store_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_update_qty_store_tree"/>
+        </record-->
+
+        <!--menuitem id="menu_update_qty_store"
+            parent="module.xmlid"
+            sequence="20"
+            action="act_open_update_qty_store_view"/-->
+    </data>
+</odoo>

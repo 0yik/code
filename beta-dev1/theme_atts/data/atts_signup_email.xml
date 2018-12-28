@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ATTS Welcome Mail template override with base START-->
+        <record id="atts_welcome_email" model="mail.template">
+            <field name="name">ATTS Login: Welcome Mail</field>
+            <field name="email_from"><![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="subject">Welcome to the ATTS family!</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+            <div>
+                <p>Dear ${object.name},</p>
+                <span>
+                    Thank you for your interest.
+                </span>
+                <br/>
+                <span>
+                    Your account is activated and ready to use.
+                </span>
+                <br/><br/>
+
+                Kind Regards,
+                <br/>
+                Team ATTS
+                <br/>
+            </div>
+            ]]></field>
+        </record>
+        <!-- ATTS Welcome Mail template override with base END-->
+
+        <!-- Create user notify to ATTS START -->
+        <record id="atts_notify_corporate_user" model="mail.template">
+            <field name="name">Corporate User Notify</field>
+            <field name="email_from"><![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.env.context.get('school_admins')|safe}</field>
+            <field name="subject">New Corporate User signup</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+            <div>
+                <p>Dear Admin,</p>
+                <span>
+                    "${object.env.context.get('user_name')}" just created a ATTS Corporate profile. You’re just one click away of using your profile and enjoying all our nice features. 
+                </span>
+                <br/>
+                <div style="text-align: left; margin-top: 16px;">
+                     <a href="${object.env.context.get('action_url')}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #337ab7; border: 1px solid #337ab7; border-radius:3px; color: white;">Activate account</a>
+                </div>
+                <br/>
+                <br/>
+                <span>
+                    Once You has been activated profile, User can log in with his mail address and password.
+                </span>
+                <br/>
+                <br/>
+                <span>
+                    Have a lovely day!
+                </span>
+                <br/>
+                <br/>
+
+                Kind Regards,
+                <br/>
+                Team ATTS
+                <br/>
+            </div>
+            ]]></field>
+        </record>
+        <!-- Create user notify to ATTS END -->
+
+        <!-- ATTS Course register notify email START-->
+        <record id="atts_notify_class_registration_user" model="mail.template">
+            <field name="name">Class Registration Notify</field>
+            <field name="email_from"><![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.env.context.get('school_admins')|safe}</field>
+            <field name="subject">New Class Registration</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+            <div>
+                <p>Dear Admin,</p>
+                <span>
+                    "${object.env.context.get('student_name')}" just register in this class "${object.env.context.get('class_display_name')}". 
+                </span>
+                <br/>
+                <br/>
+                <span>
+                    Have a lovely day!
+                </span>
+                <br/>
+                <br/>
+
+                Kind Regards,
+                <br/>
+                Team ATTS
+                <br/>
+            </div>
+            ]]></field>
+        </record>
+        <!-- ATTS Course register notify email END-->
+    </data>
+</odoo>

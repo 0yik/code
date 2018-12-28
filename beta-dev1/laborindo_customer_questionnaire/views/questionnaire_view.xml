@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="res_question_form_view">
+            <field name="name">res.question.line.form</field>
+            <field name="model">res.question.line</field>
+            <field name="arch" type="xml">
+                <form string="Question">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" reqiured="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_question_tree_view">
+            <field name="name">res.question.line.tree</field>
+            <field name="model">res.question.line</field>
+            <field name="arch" type="xml">
+                <tree string="Questions">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_questionnaire_config_form_view">
+            <field name="name">res.questionnaire.config.form</field>
+            <field name="model">res.questionnaire.config</field>
+            <field name="arch" type="xml">
+                <form string="Questionnaire">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                        <separator string="Questions Line"/>
+                        <group>
+                            <field name="question_lines" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="name" required="1"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_questionnaire_config_tree_view">
+            <field name="name">res.questionnaire.config.tree</field>
+            <field name="model">res.questionnaire.config</field>
+            <field name="arch" type="xml">
+                <tree string="Questionnaires">
+                    <field name="name"/>
+                    <!--<field name="question_lines" widget="many2many_tags"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_res_questionnaire_config">
+            <field name="name">Questionnaire</field>
+            <field name="res_model">res.questionnaire.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_res_questionnaire_config" parent="sale.menu_sales_config" name="Questionnaire Set"
+            sequence="12" action="action_res_questionnaire_config"/>
+
+        
+        <record model="ir.ui.view" id="res_questionnaire_form_view">
+            <field name="name">res.questionnaire.form</field>
+            <field name="model">res.questionnaire</field>
+            <field name="arch" type="xml">
+                <form string="Questionnaire">
+                    <sheet>
+                        <group>
+                            <field name="partner_id" required="1"/>
+                            <field name="res_questionnaire_config_id" required="1"/>
+                            <field name="total_points"/>
+                        </group>
+                        <separator string="Questions Line"/>
+                        <group>
+                            <field name="question_lines" nolabel="1">
+                                <tree editable="bottom" create="false">
+                                    <field name="question_id" readonly="1"/>
+                                    <field name="point" required="1"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_questionnaire_tree_view">
+            <field name="name">res.questionnaire.tree</field>
+            <field name="model">res.questionnaire</field>
+            <field name="arch" type="xml">
+                <tree string="Questionnaires">
+                    <field name="partner_id"/>
+                    <field name="res_questionnaire_config_id"/>
+                    <field name="total_points" string="Points"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_res_questionnaire">
+            <field name="name">Questionnaire</field>
+            <field name="res_model">res.questionnaire</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_res_questionnaire" parent="sales_team.menu_sales" name="Questionnaire"
+            sequence="12" action="action_res_questionnaire"/>
+
+    </data>
+</odoo>

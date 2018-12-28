@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+
+        <report id="report_student_payslip_qweb"
+                string="Student Payslip"
+                model="student.payslip"
+                report_type = "qweb-pdf"
+                file="atts_school_fees.student_payslip"
+                name="atts_school_fees.student_payslip" />
+
+        <report id="report_student_fees_register_qweb"
+                string="Fees Register"
+                model="student.fees.register"
+                report_type = "qweb-pdf"
+                file="atts_school_fees.student_fees_register"
+                name="atts_school_fees.student_fees_register"
+                groups="atts_course.group_school_administration"/>
+                
+       <report id="report_fee_receipt_qweb"
+                string="Fee Receipt"
+                model="student.payslip"
+                report_type = "qweb-pdf"
+                file="atts_school_fees.fee_receipt"
+                name="atts_school_fees.fee_receipt"
+                menu="False" />
+                
+       <report id="report_fee_outstanding_qweb"
+                string="Outstanding Fee Report"
+                model="student.payslip"
+                report_type = "qweb-pdf"
+                file="atts_school_fees.outstanding_fee_report"
+                name="atts_school_fees.outstanding_fee_report"
+                menu="False" />
+      <report id="report_billing_qweb"
+                string="Billing Report"
+                model="student.student"
+                report_type = "qweb-pdf"
+                file="atts_atts_school_fees.billing_report"
+                name="atts_school_fees.billing_report"
+                menu="False" />
+      <report id="report_billing_letter"
+                string="Billing Report Letter"
+                model="register.student.list"
+                report_type = "qweb-pdf"
+                file="atts_school_fees.billing_report_letter"
+                name="atts_school_fees.billing_report_letter" />
+
+</odoo>

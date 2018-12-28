@@ -1,0 +1,35 @@
+<odoo>
+	<data>
+
+		<record id="so_line_wizard_form" model="ir.ui.view">
+			<field name="name">SO Line Wizard</field>
+			<field name="model">so.line.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Create SO Line Report">
+				    <sheet>
+                        <group>
+                            <group>
+                                <field name="from_date" />
+                            </group>
+                            <group>
+                                <field name="to_date" />
+                            </group>
+                        </group>
+                        <group>
+                            <field name="remarks" />
+                        </group>
+                    </sheet>
+					<footer>
+						<button name="generate_so" string="Generate" type="object"
+							class="btn-primary" />
+						<button string="Cancel" class="btn-default" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<act_window id="action_sale_order_line_report" name="Create SO Report"
+			src_model="sale.order.line" res_model="so.line.wizard" view_type="form"
+			view_mode="form" key2="client_action_multi" target="new" />
+	</data>
+</odoo>

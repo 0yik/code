@@ -1,0 +1,413 @@
+<odoo>
+    <data>
+        <record id="project_booking_view_search_admin" model="ir.ui.view">
+            <field name="name">project.booking.search.view</field>
+            <field name="model">project.booking</field>
+            <field name="arch" type="xml">
+                <search string="Project Booking">
+                    <field name="booking_no" filter_domain="[('booking_no','ilike',self)]" string="Booking Number"/>
+                    <field name="company_id" operator="child_of" string="Company"/>
+                    <field name="project_id" />
+                    <field name="final_start_dtime" string="Booking Start Date &amp; Time"/>
+                    <field name="final_start_dtime" string="Booking End Date &amp; Time"/>
+                    <field name="tester_id"/>
+                    <!--field name="status" /-->
+                    <separator />
+                    <!-- filter for the customer and tester-->
+                    <filter string="Pending"
+                        name="pending_booking_ct"
+                        domain="[('status', '=', 'pending')]"
+                        groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                    <filter string="Started"
+                        name="started_booking_ct"
+                        domain="[('status', '=', 'started')]"
+                        groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                    <filter string="Re-Scheduled"
+                        name="rescheduled_booking_ct"
+                        domain="[('status', '=', 'rescheduled')]"
+                        groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                    <filter string="Re-Confirmed"
+                        name="reconfirmed_booking_ct"
+                        domain="[('status', '=', 'reconfirmed')]"
+                        groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                    <filter string="Completed"
+                        name="completed_booking_ct"
+                        domain="[('status', '=', 'completed')]"
+                        groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                    <filter string="Cancelled"
+                        name="cancelled_booking_ct"
+                        domain="[('status', '=', 'cancelled')]"
+                        groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                    <!-- finish filter for the tester/customer-->
+                    <separator />
+                    <filter string="Today"
+                        name="today" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        domain="[('final_start_dtime', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:01')), ('final_start_dtime', '&lt;=', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
+                    <filter string="7 Days Bookings"
+                        name="this_week" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        domain="[('final_start_dtime', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:01')), ('final_start_dtime', '&lt;=', (context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d 23:59:59'))]"/>
+
+                    <filter string="Today Pending Bookings"
+                        name="pending_booking_today" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        domain="[('status', '=', 'pending'), ('final_start_dtime', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:01')), ('final_start_dtime', '&lt;=', (context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d 23:59:59'))]"/>
+                    <filter string="Today Completed Bookings"
+                        name="completed_booking_today" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        domain="[('status', '=', 'completed'), ('final_start_dtime', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:01')), ('final_start_dtime', '&lt;=', (context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d 23:59:59'))]"/>
+                    <filter string="Today Delayed Bookings"
+                        name="delayed_booking_today" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        context="{'today_delayed_bookings': True}"/>
+
+                    <filter string="This Month Pending Bookings"
+                        name="pending_booking_this_month" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        context="{'this_month_pending_bookings': True}" />
+                    <filter string="This Month Completed Bookings"
+                        name="completed_booking_this_month" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer" 
+                        context="{'this_month_completed_bookings': True}" />
+                    <filter string="This Month Delayed Bookings"
+                        name="delayed_booking_this_month" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        context="{'this_month_delayed_bookings': True}" />
+
+                    <filter string="Last Month Pending Bookings"
+                        name="pending_booking_last_month" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        context="{'last_month_pending_bookings': True}" />
+                    <filter string="Last Month Completed Bookings"
+                        name="completed_booking_last_month" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        context="{'last_month_completed_bookings': True}" />
+                    <filter string="Last Month Delayed Bookings"
+                        name="delayed_booking_last_month" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        context="{'last_month_delayed_bookings': True}" />
+
+                    <filter string="Delayed Start"
+                        name="delayed_start" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        context="{'delayed_start': True}" />
+                    <filter string="Delayed End"
+                        name="delayed_end" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        context="{'delayed_end': True}" />
+
+                    <filter string="SIC Bookings"
+                        name="sic_bookings" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        domain="[('booking_type', '=', 'sic')]"/>
+                    <filter string="Normal Bookings"
+                        name="normal_booking" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        domain="[('booking_type', '=', 'normal')]"/>
+                    <filter string="Special Bookings"
+                        name="dedicated_support" groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_customer"
+                        domain="[('booking_type', '=', 'special')]"/>
+                    <!-- <filter string="VIP Bookings"
+                            name="last_minute"
+                            domain="{'booking_type': 'last_minute'}" /> -->
+
+                    <!-- <filter string="VIP Customers"
+                            name="last_minute"
+                            domain="{'booking_type': 'last_minute'}" /> -->
+
+                    <group expand="0" string="Group By">
+                        <filter name="status" string="Status" domain="[]" context="{'group_by':'status'}"/>
+                        <filter name="projects" string="Projects" domain="[]" context="{'group_by':'project_id'}"/>
+                    </group>        
+
+
+                </search>
+            </field>
+        </record>
+
+        <record id="hilti_modifier_company.action_my_booking_view" model="ir.actions.act_window">
+            <field name="name">My Bookings</field>
+            <field name="res_model">project.booking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="search_view_id" ref="project_booking_view_search_admin"/>
+            <field name="domain">[('user_id', '=', uid),('is_final', '=', True)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    My Bookings
+                </p>
+                <p>
+                </p>
+            </field>
+            <field name="view_ids"
+                eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('hilti_modifier_company.project_booking_view_tree_readonly')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('hilti_modifier_company.project_booking_view_readonly')}),
+                (0, 0, {'view_mode': 'calendar', 'view_id': ref('hilti_modifier_company.project_booking_view_calendar_readonly')})]" />
+        </record>
+
+        <record id="hilti_modifier_company.action_my_booking_view_tester" model="ir.actions.act_window">
+            <field name="name">My Tasks</field>
+            <field name="res_model">project.booking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="project_booking_view_search_admin"/>
+            <field name="domain">[('user_tester_id', '=', uid)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    My Tasks
+                </p>
+                <p>
+                </p>
+            </field>
+            <field name="view_ids"
+                eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('hilti_modifier_company.project_booking_view_tree_tester')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('hilti_modifier_company.project_booking_view_tester')}),
+                (0, 0, {'view_mode': 'calendar', 'view_id': ref('hilti_modifier_company.project_booking_view_calendar_readonly')})
+                ]" />
+        </record>
+
+        <record id="hilti_modifier_company.action_admin_booking_view" model="ir.actions.act_window">
+            <field name="name">Customer Bookings</field>
+            <field name="res_model">project.booking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[]</field>
+            <field name="search_view_id" ref="project_booking_view_search_admin"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Customer Bookings
+                </p>
+                <p>
+                </p>
+            </field>
+            <field name="view_ids"
+                eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('hilti_modifier_company.project_booking_view_tree_admin')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('hilti_modifier_company.project_booking_view_admin')}),
+                (0, 0, {'view_mode': 'calendar', 'view_id': ref('hilti_modifier_company.project_booking_view_calendar_readonly')})
+                ]" />
+        </record>
+
+        <record id="project_booking_view_tree_admin_inherit" model="ir.ui.view">
+            <field name="name">project.booking.view.tree.admin.inherit</field>
+            <field name="model">project.booking</field>
+            <field name="inherit_id"
+                ref="hilti_modifier_company.project_booking_view_tree_admin" />
+            <field name="arch" type="xml">
+                <field name="project_id" position="after">
+                    <field name="final_start_dtime" string="Booking Start Date &amp; Time"/>
+                    <field name="final_end_dtime" string="Booking End Date &amp; Time"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="project_booking_view_admin_inherit" model="ir.ui.view">
+            <field name="name">project.booking.view.admin.inherit</field>
+            <field name="model">project.booking</field>
+            <field name="inherit_id" ref="hilti_modifier_company.project_booking_view_admin" />
+            <field name="arch" type="xml">
+                <field name="create_date" position="after">
+                    <field name="booking_type" required="1" />
+                    <field name="sic_required_hours" widget="float_time" attrs="{'invisible': [('booking_type', 'in', ['normal', 'special'])], 'required': [('booking_type', 'in', ['sic'])]}"/>
+                    <field name="start_date_time"
+                        attrs="{'invisible': [('booking_type', 'in', ['normal', 'sic'])], 'required': [('booking_type', 'in', ['special'])]}" />
+                    <field name="end_date_time"
+                        attrs="{'invisible': [('booking_type', 'in', ['normal', 'sic'])], 'required': [('booking_type', 'in', ['special'])]}" />
+                    <field name="final_start_dtime" invisible="1"/>
+                    <field name="final_end_dtime" invisible="1"/>
+                </field>
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string='Anchor Details' attrs="{'invisible': [('booking_type', 'in', ['sic'])]}">
+                            <field name="project_booking_anchor_ids">
+                                <tree editable='bottom'>
+                                    <field name="name" required="1" />
+                                    <field name="anchor_type_id" options="{'no_create_edit': True}"
+                                        required="1" />
+                                    <field name="anchor_size_id" options="{'no_create_edit': True}"
+                                        context="{'parent_anchor_type_id': anchor_type_id}" required="1" />
+                                    <field name="anchor_qty" required="1" />
+                                    <field name="an_complexity" required="1" />
+                                    <field name="equipment_id" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Booking Date &amp; Time"
+                            attrs="{'invisible': [('booking_type', 'in', ['special'])]}">
+                            <field name="time_booking_ids">
+                                <form string="TimeSlot Booking">
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="pr_booking_id" invisible="1" />
+                                                <field name="booking_date" required="1" context="{'parent_project_booking_anchor_ids': parent.project_booking_anchor_ids,
+                                                    'parent_project_id': parent.project_id, 'parent_sid_required': parent.sid_required, 'parent_postal_code': parent.postal_code, 'parent_booking_type': parent.booking_type, 'parent_sic_required_hours': parent.sic_required_hours}"/>
+                                                <field name="time_slot_id" options="{'no_create_edit': True}"/>
+                                            </group>
+                                            <group>
+                                                <field name="timeslot_start_id" readonly="1" />
+                                                <field name="timeslot_end_id" readonly="1" />
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                                <tree>
+                                    <field name="pr_booking_id" invisible="1" />
+                                    <field name="booking_date" />
+                                    <field name="time_slot_id" invisible="1" />
+                                    <field name="timeslot_start_id" readonly="1" />
+                                    <field name="timeslot_end_id" readonly="1" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Tester Feedback" name="tester_feedback" attrs="{'invisible': [('status', 'not in', ['completed'])]}">
+                            <sheet>
+                                <group>
+                                    <field name="feedback_anchor_ids" readonly="1" string="Anchor feedback">
+                                        <tree>
+                                            <field name="name" />
+                                            <field name="anchor_type_id" />
+                                            <field name="anchor_size_id" />
+                                            <field name="anchor_qty" />
+                                            <field name="an_complexity"/>
+                                            <field name="failer_qty" />
+                                        </tree>
+                                    </field>
+                                    <field name="testing_remark" string="Testing Remarks" readonly="1"/>
+                                </group>
+                            </sheet>
+                        </page>
+                    </notebook>
+                </xpath>
+                <xpath expr='//header/field' position='before'>
+                    <button name="final_booking_admin" type="object" string="Book"
+                        attrs="{'invisible': [('is_final', '=', True)]}" groups='hilti_modifier_accessrights.group_hilti_admin'/>
+                    <button name="reschedule_booking" type="object" string="Re-Schedule"
+                        attrs="{'invisible': [('status', 'not in', ['pending', 'reconfirmed'])]}"
+                        groups='hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_account_manager,hilti_modifier_accessrights.group_hilti_cs_engineer'/>
+                    <button name="%(action_view_swap_booking)d" type="action" string="Swap Booking"
+                        attrs="{'invisible': [('status', 'not in', ['pending', 'reconfirmed'])]}" groups='hilti_modifier_accessrights.group_hilti_admin'/>
+                    <button name="rebook_booking" class="oe_stat_button" type="object" string="Re-Book"/>
+                    <!--button name="reassign_tester_from_admin" type="object"
+                        string="Re-Assign Tester" attrs="{'invisible': [('status', 'not in', ['pending'])]}" groups='hilti_modifier_accessrights.group_hilti_admin'/-->
+                    <button name="%(act_open_reassign_tester_view)d" type="action"
+                        string="Re-Assign Tester" attrs="{'invisible': [('status', 'not in', ['pending', 'reconfirmed'])]}" groups='hilti_modifier_accessrights.group_hilti_admin'/>
+                    <button name="cancel_booking" class="oe_stat_button" type="object" string="Cancel" attrs="{'invisible': [('status', 'not in', ['pending'])]}" groups='hilti_modifier_accessrights.group_hilti_admin, hilti_modifier_accessrights.group_hilti_account_manager, hilti_modifier_accessrights.group_hilti_cs_engineer'/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_booking_view_admin_re_booking_inherit" model="ir.ui.view">
+            <field name="name">project.booking.view.admin.inherit</field>
+            <field name="model">project.booking</field>
+            <field name="inherit_id" ref="hilti_modifier_company.project_booking_view_admin_re_booking" />
+            <field name="arch" type="xml">
+                <field name="create_date" position="after">
+                    <field name="booking_type" required="1" />
+                    <field name="sic_required_hours" widget="float_time" attrs="{'invisible': [('booking_type', 'in', ['normal', 'special'])], 'required': [('booking_type', 'in', ['sic'])]}"/>
+                    <field name="start_date_time"
+                        attrs="{'invisible': [('booking_type', 'in', ['normal', 'sic'])], 'required': [('booking_type', 'in', ['special'])]}" />
+                    <field name="end_date_time"
+                        attrs="{'invisible': [('booking_type', 'in', ['normal', 'sic'])], 'required': [('booking_type', 'in', ['special'])]}" />
+                </field>
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string='Anchor Details' attrs="{'invisible': [('booking_type', 'in', ['sic'])]}">
+                            <field name="project_booking_anchor_ids">
+                                <tree editable='bottom'>
+                                    <field name="name" required="1" />
+                                    <field name="anchor_type_id" options="{'no_create_edit': True}"
+                                        required="1" />
+                                    <field name="anchor_size_id" options="{'no_create_edit': True}"
+                                        context="{'parent_anchor_type_id': anchor_type_id}" required="1" />
+                                    <field name="anchor_qty" required="1" />
+                                    <field name="an_complexity" required="1" />
+                                    <field name="equipment_id" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Booking Date &amp; Time"
+                            attrs="{'invisible': [('booking_type', 'in', ['special'])]}">
+                            <field name="time_booking_ids" attrs="{'required':[('booking_type','in',['normal', 'sic'])]}">
+                                <form string="TimeSlot Booking" >
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="pr_booking_id" invisible="1" />
+                                                <field name="booking_date" required="1" context="{'parent_project_booking_anchor_ids': parent.project_booking_anchor_ids,
+                                                    'parent_project_id': parent.project_id, 'parent_sid_required': parent.sid_required, 'parent_postal_code': parent.postal_code,'parent_booking_type': parent.booking_type, 'parent_sic_required_hours': parent.sic_required_hours }"/>
+                                                <field name="time_slot_id" options="{'no_create_edit': True}"/>
+                                            </group>
+                                            <group>
+                                                <field name="timeslot_start_id" readonly="1" />
+                                                <field name="timeslot_end_id" readonly="1" />
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                                <tree>
+                                    <field name="pr_booking_id" invisible="1" />
+                                    <field name="booking_date" />
+                                    <field name="time_slot_id" invisible="1" />
+                                    <field name="timeslot_start_id" readonly="1" />
+                                    <field name="timeslot_end_id" readonly="1" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="project_booking_view_tester_book_for_delay_inherit" model="ir.ui.view">
+            <field name="name">project.booking.view.admin.inherit</field>
+            <field name="model">project.booking</field>
+            <field name="inherit_id" ref="hilti_modifier_company.project_booking_view_tester_book_for_delay" />
+            <field name="arch" type="xml">
+                <field name="create_date" position="after">
+                    <field name="booking_type" required="1" />
+                    <field name="sic_required_hours" widget="float_time" attrs="{'invisible': [('booking_type', 'in', ['normal', 'special'])], 'required': [('booking_type', 'in', ['sic'])]}"/>
+                    <field name="start_date_time"
+                        attrs="{'invisible': [('booking_type', '=', 'normal')], 'required': [('booking_type', 'in', ['special','sic'])]}" />
+                    <field name="end_date_time"
+                        attrs="{'invisible': [('booking_type', '=', 'normal')], 'required': [('booking_type', 'in', ['special','sic'])]}" />
+                </field>
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string='Anchor Details'  attrs="{'invisible': [('booking_type', 'in', ['sic'])]}">
+                            <field name="project_booking_anchor_ids">
+                                <tree editable='bottom'>
+                                    <field name="name" required="1" />
+                                    <field name="anchor_type_id" options="{'no_create_edit': True}"
+                                        required="1" />
+                                    <field name="anchor_size_id" options="{'no_create_edit': True}"
+                                        context="{'parent_anchor_type_id': anchor_type_id}" required="1" />
+                                    <field name="anchor_qty" required="1" />
+                                    <field name="an_complexity" required="1" />
+                                    <field name="equipment_id" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Booking Date &amp; Time"
+                            attrs="{'invisible': [('booking_type', 'in', ['special'])]}">
+                            <field name="time_booking_ids" attrs="{'required':[('booking_type','in',['normal', 'sic'])]}">
+                                <form string="TimeSlot Booking" >
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="pr_booking_id" invisible="1" />
+                                                <field name="booking_date" required="1" context="{'parent_project_booking_anchor_ids': parent.project_booking_anchor_ids,
+                                                    'parent_project_id': parent.project_id, 'parent_sid_required': parent.sid_required, 'parent_postal_code': parent.postal_code,'parent_booking_type': parent.booking_type, 'parent_sic_required_hours': parent.sic_required_hours }"/>
+                                                <field name="time_slot_id" options="{'no_create_edit': True}"/>
+                                            </group>
+                                            <group>
+                                                <field name="timeslot_start_id" readonly="1" />
+                                                <field name="timeslot_end_id" readonly="1" />
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                                <tree>
+                                    <field name="pr_booking_id" invisible="1" />
+                                    <field name="booking_date" />
+                                    <field name="time_slot_id" invisible="1" />
+                                    <field name="timeslot_start_id" readonly="1" />
+                                    <field name="timeslot_end_id" readonly="1" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

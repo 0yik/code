@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_atts_iinvoice" model="report.paperformat">
+        <field name="name">ATTS Invoice</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">75</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">35</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report 
+        id="report_fee_invoice"
+        string="invoice"
+        model="student.fees.invoice"
+        report_type="qweb-pdf"
+        file="atts_school_fees.report_invoice" 
+        name="atts_school_fees.report_invoice"
+        paperformat="paperformat_atts_iinvoice"
+        menu="False"
+    />
+    <template id="atts_school_fees.report_invoice">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="header mb32">
+                    <table width="100%">
+                        <tr style="font-size:15px">
+                            <td width="5%"/><td width="13%" class="text-center mt16">
+                                <img src="/theme_atts/static/src/img/logo.jpg" title="atts" alt="ATTS" style="max-height: 100px;" />
+                            </td>
+                            <td class="text-center">
+                                <b style="font-size:20px">ASSETS TRAINING &amp; TECHNICAL SERVICES PTE LTD </b><br/>
+                                No.3, Buroh Street, JTC Space One @ Buroh Street, Singapore 627566<br/>
+                                Tel : (65) 6265 2838   Fax : (65) 6265 3138<br/>
+                                Co. Reg. No : 200411848C | GST Reg. No : 200411848C
+                            </td><td width="10%"/>
+                        </tr>
+                    </table>
+                </div>
+                <div class="page">
+                    <div class="text-center" style="font-size:16px;"><b>TAX INVOICE</b></div>
+                    <table width="100%">
+                        <tr>
+                            <td colspan="2" width="60%">
+                                <b>Bill To:</b>
+                            </td>
+                            <td width="18%"><b>Inv Date:</b></td>
+                            <td><t t-esc="o.get_invoice_date()"/></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4" colspan="2">
+                                <t t-if="o.delegate_id">
+                                    <b><t t-esc="o.delegate_id.delegate_name"/></b>
+                                </t>
+                                <t t-if="not o.delegate_id">
+                                    <b><t t-esc="o.registration_id.name"/></b>
+                                </t>
+                                <t t-if="o.registration_id.registration_type != 'individual'">
+                                    <br/>
+                                    <t t-esc="o.registration_id.company_name"/>
+                                </t>
+                                <br/>
+                                <p><t t-esc="o.registration_id.mail_address"/></p>
+                            </td>
+                            <td width="18%"><b>Inv No:</b></td>
+                            <td><t t-esc="o.name"/></td>
+                        </tr>
+                        <tr>
+                            <td width="18%"><b>Booking Number:</b></td>
+                            <td><t t-esc="o.registration_id.registration_id"/></td>
+                        </tr>
+                        <tr>
+                            <td width="18%"><b>Payment Terms:</b></td>
+                            <td><t t-if="o.payment_term_id" t-esc="o.payment_term_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td width="18%"><b>Payment Due:</b></td>
+                            <td><t t-if="o.dead_line" t-esc="o.get_invoice_due_date()"/></td>
+                        </tr>
+                    </table>
+                    <table width="100%" class="table table-bordered mt16" style="font-size:14px;">
+                        <t t-set="subtotal" t-value="0.0"/>
+                        <tr>
+                            <th width="7%" class="text-center">Item</th>
+                            <th width="37%" class="text-center">Description</th>
+                            <th width="15%" class="text-center">Details</th>
+                            <th width="10%" class="text-center">Amount</th>
+                            <th width="15%" class="text-center">GST</th>
+                            <th width="15%" class="text-center">Total Incl. GST</th>
+                        </tr>
+                        <t t-if="o.invoice_lines">
+                            <t t-set="item" t-value="0"/>
+                            <tr t-foreach="o.invoice_lines" t-as="line">
+                                <td class="text-center">
+                                    <t t-set="item" t-value="item + 1"/>
+                                    <t t-esc="item"/>
+                                </td>
+                                <td>
+                                    <t t-if="not line.fee_head_id.is_course_head" t-esc="line.fee_head_id.name"/>
+                                    <t t-if="line.fee_head_id.is_course_head">
+                                        <t t-esc="o.registration_id.class_id.display_name"/>
+                                        <t t-if="not o.registration_id.individual_billing and o.registration_id.registration_type != 'individual'">
+                                            <t t-set="student_count" t-value="0"/>
+                                            <t t-foreach="o.registration_id.delegate_lines" t-as="student_id">
+                                                <br/>
+                                                <t t-set="student_count" t-value="student_count + 1"/>
+                                                <t t-esc="student_count"/>. <t t-esc="student_id.delegate_name"/>
+                                            </t>
+                                        </t>
+                                        <t t-if="o.registration_id.individual_billing or o.registration_id.registration_type == 'individual'">
+                                            <br/>
+                                            <t t-if="o.delegate_id">1. <t t-esc="o.delegate_id.delegate_name"/></t>
+                                            <t t-if="not o.delegate_id">1. <t t-esc="o.registration_id.name"/></t>
+                                        </t>
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="not line.fee_head_id.is_course_head" t-esc="line.details"/>
+                                    <t t-if="line.fee_head_id.is_course_head">
+                                        <t t-esc="o.registration_id.get_course_date()"/>
+                                    </t>
+                                </td>
+                                <td class="text-right" style="vertical-align: middle;">
+                                    <t t-if="not line.fee_head_id.is_course_head">
+                                        <t t-if="line.amount &lt; 0">
+                                            (<t t-esc="'{0:,.2f}'.format(-line.amount)"/>)
+                                        </t>
+                                        <t t-if="not line.amount &lt; 0">
+                                            <t  t-esc="'{0:,.2f}'.format(line.amount)"/>
+                                        </t>
+                                    </t>
+                                    <t t-if="line.fee_head_id.is_course_head">
+                                        <t t-if="not o.registration_id.individual_billing and o.registration_id.registration_type != 'individual'">
+                                            <t t-foreach="o.registration_id.delegate_lines" t-as="student_id">
+                                                <br/>
+                                                <t t-if="line.amount &lt; 0">
+                                                    (<span style="float:right !important;" t-esc="-line.amount"/>)
+                                                </t>
+                                                <t t-if="not line.amount &lt; 0">
+                                                    <span style="float:right !important;" t-esc="line.amount"/>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-if="o.registration_id.individual_billing or o.registration_id.registration_type == 'individual'">
+                                            <t t-if="line.amount &lt; 0">
+                                                (<t t-esc="'{0:,.2f}'.format(-line.amount)"/>)
+                                            </t>
+                                            <t t-if="not line.amount &lt; 0">
+                                                <sp t-esc="'{0:,.2f}'.format(line.amount)"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </td>
+                                <td class="text-right" style="vertical-align: middle;">
+                                    <t t-if="not line.fee_head_id.is_course_head">
+                                        <t t-if="line.tax &lt; 0">
+                                            (<t t-esc="'{0:,.2f}'.format(-line.tax)"/>)
+                                        </t>
+                                        <t t-if="not line.tax &lt; 0">
+                                            <t t-esc="'{0:,.2f}'.format(line.tax)"/>
+                                        </t>
+                                    </t>
+                                    <t t-if="line.fee_head_id.is_course_head">
+                                        <t t-if="not o.registration_id.individual_billing and o.registration_id.registration_type != 'individual'">
+                                            <t t-foreach="o.registration_id.delegate_lines" t-as="student_id">
+                                                <br/>
+                                                <t t-if="line.tax &lt; 0">
+                                                    (<span style="float:right !important;" t-esc="-line.tax"/>)
+                                                </t>
+                                                <t t-if="not line.tax &lt; 0">
+                                                    <span style="float:right !important;" t-esc="line.tax"/>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-if="o.registration_id.individual_billing or o.registration_id.registration_type == 'individual'">
+                                            <t t-if="line.tax &lt; 0">
+                                            (<t t-esc="'{0:,.2f}'.format(-line.tax)"/>)
+                                        </t>
+                                        <t t-if="not line.tax &lt; 0">
+                                            <t t-esc="'{0:,.2f}'.format(line.tax)"/>
+                                        </t>
+                                        </t>
+                                    </t>
+                                </td>
+                                <td class="text-right" style="vertical-align: middle;">
+                                    <t t-if="not line.fee_head_id.is_course_head">
+                                        <t t-if="line.total &lt; 0">
+                                            (<t t-esc="'{0:,.2f}'.format(-line.total)"/>)
+                                        </t>
+                                        <t t-if="not line.total &lt; 0">
+                                            <t t-esc="'{0:,.2f}'.format(line.total)"/>
+                                        </t>
+                                    </t>
+                                    <t t-if="line.fee_head_id.is_course_head">
+                                        <t t-if="not o.registration_id.individual_billing and o.registration_id.registration_type != 'individual'">
+                                            <t t-foreach="o.registration_id.delegate_lines" t-as="student_id">
+                                                <br/>
+                                                <t t-if="line.total &lt; 0">
+                                                    (<spn style="float:right !important;" t-esc="-line.total/line.quantity"/>)
+                                                </t>
+                                                <t t-if="not line.total &lt; 0">
+                                                    <spn style="float:right !important;" t-esc="line.total/line.quantity"/>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-if="o.registration_id.individual_billing or o.registration_id.registration_type == 'individual'">
+                                            <t t-if="line.total &lt; 0">
+                                                (<t t-esc="'{0:,.2f}'.format(-line.total)"/>)
+                                            </t>
+                                            <t t-if="not line.total &lt; 0">
+                                                <t t-esc="'{0:,.2f}'.format(line.total)"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                    <t t-set="subtotal" t-value="subtotal + line.total"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td style="vertical-align: middle;">
+                                <b>Total (SGD)</b>
+                            </td>
+                            <td class="text-right" style="vertical-align: middle;">
+                                <t t-set="total_payable" t-value="subtotal "/>
+                                <b><span class="pull-left">$</span>
+                                <t  />
+                                <span class="pull-right" t-esc="'{0:,.2f}'.format(total_payable)"/></b>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="text-center" style="vertical-align: middle;">E. &amp; O. E</div>
+                    <br/>
+                    <h5>Singapore Dollars : <t t-esc="o.get_amount_in_word(total_payable)"/></h5>
+                    <p t-if="o.fee_registration_id.remarks">Remarks : <t t-esc="o.fee_registration_id.remarks"/></p>
+                </div>
+                <div class="footer">
+                    <div style="font-size:13px;line-height: 8px;">
+                        <p><b>PAYMENT INSTRUCTION: </b></p> 
+                        <p>For Local Payment, Please issue cheque to :</p>  
+                        <p><b>"ASSETS TRAINING &amp; TECHNICAL SERVICES PTE LTD"</b></p>
+                        <p>For Overseas Payment, Please wire funds to :</p>
+                        <b><p>United Overseas Bank Limited</p>
+                        <p>No. 1, Jurong West Central 2,</p>
+                        <p>#01-16C, Jurong Point Shopping Centre Singapore 848886</p>
+                        <p>ACCOUNT NO : 113-310-620-6</p>
+                        <p>SWIFT CODE : UOVBSGSG, BANK CODE 7375,</p>
+                        <p>BRANCH CODE : 013.</p></b>
+                        <br/>
+                        <p><b>NOTE:</b></p>
+                        <p>This is a computer generated Invoice and requires no signature. </p>
+                        <p>Interest at 1.5% per month will be charged on all overdue invoices. </p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,24 @@
+@media (max-width: 851px) {
+    .modifiercustomer {
+        margin-left: -100px !important;
+    }
+    .pelanggan_newline {
+        display: block !important;
+    }
+     .customername {
+        width: 135% !important;
+    }
+    .test{
+        padding-left: 9px !important;
+        margin-top:64px !important;
+    }
+}
+
+.o_res_partner_kanban{
+    text-transform:uppercase !important;
+}
+
+.o_list_view table [data-id="display_name"], .o_list_view [data-field="display_name"],
+.o_list_view [data-id="pelanggan"], .o_list_view [data-field="pelanggan"]{
+    text-transform:uppercase !important;
+}

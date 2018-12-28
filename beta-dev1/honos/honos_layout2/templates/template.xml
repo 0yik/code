@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="website.homepage" name="honos Home">
+		<t t-call="website.layout">
+			<div class="mask_cover"></div>
+			<div class="oe_structure">
+		<section class="s23_main_wrap">
+			<div class="s23_content_left_div">
+					<div class="s23_snippet_left_container">
+						<div class="snippet_left_content">
+							<h3 class="s23_content_title">Beauty Collection</h3>
+							<p class="s23_desc_para">We have lots of styles for spring collection that makes you feel wow! Update yourself with latest trends now.
+							</p>
+							<a class="b_fashion_btn s23_bcolor" href="#">Shop now</a>
+						</div>
+					</div>
+					<div class="s23_left_btm_div">
+						<div class="l_btm_img">
+							<section><img class="s_image_common" src="/honos_snippet_style_23/static/src/img/style_23_img_2.png"></img></section>
+						</div>					
+					</div>
+				</div>
+			<div class="s23_img_right_div">
+				<section><img class="s_image_common" src="/honos_snippet_style_23/static/src/img/style_23_img_1.png"></img></section>
+			</div>
+		</section>
+		</div>
+			<div class="oe_structure">
+			<section class="honos_big_catg_snippet_wrap">
+				<div class="honos_big_catg_container">
+					<div class="big_catg_top">
+						<div class="center_big_price">
+							<p class="big_price">$615</p>
+						</div>
+						<div class="big_img_one_container">
+							<div class="big_catg_img_one">
+								<section>
+									<a href="#">
+										<img class="s_image_common" src="/honos_snippet_style_15/static/src/img/style_15_img_1.png"></img>
+									</a>
+								</section>
+							</div>
+						</div>
+						<div>
+						</div>
+						<div class="product_info">
+							<a href="#" class="product_title">Eye Shadow</a>
+							<p class="product_sub-title">New exclusive matte colors available</p>
+							<a class="b_fashion_btn left_content_btn_extra" href="#">Shop
+													Now</a>
+						</div>
+					</div>
+					<div class="big_catg_bottom">
+						<div class="big_catg_bottom_left">
+							<div class="big_price_left">
+								<p class="big_price">$68</p>
+							</div>
+							<div class="big_catg_img_two">
+								<section>
+									<a href="#">
+										<img class="s_image_common" src="/honos_snippet_style_15/static/src/img/style_15_img_2.png"></img>
+									</a>
+								</section>
+							</div>
+							<div class="product_info">
+								<a href="#" class="product_title">Make-up kit</a>
+								<p class="product_sub-title">New exclusive matte colors available</p>
+								<a class="b_fashion_btn left_content_btn_extra" href="#">Shop
+													Now</a>
+							</div>
+						</div>
+						<div class="big_catg_bottom_right">
+								<div class="big_price_right">
+									<p class="big_price">$28</p>
+								</div>
+							<div class="big_catg_img_three">
+								<section>
+									<a href="#">
+										<img class="s_image_common" src="/honos_snippet_style_15/static/src/img/style_15_img_3.png"></img>
+									</a>
+								</section>
+							</div>
+							<div class="product_info">
+								<a href="#" class="product_title">Lipstick</a>
+								<p class="product_sub-title">New exclusive matte colors available</p>
+								<a class="b_fashion_btn left_content_btn_extra" href="#">Shop
+													Now</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			</div>
+				<div class="oe_structure" />
+			<div class="oe_structure">
+			<section class="img_banner_snippet">
+				<div class="img_banner_snippet_img_div">
+					<a href="#"><section><img class="s_image_common" src="/honos_snippet_style_16/static/src/img/style_16_img_1.jpg"></img></section></a>
+				</div>
+			</section>	
+				</div>
+				
+				
+				
+			<div class="oe_structure">
+			<section class="honos_home_second_section">
+				<div class="honos_home_second_sub_section">
+					<div class="chs_img_container">
+						<img src="/honos_snippet_style_7/static/src/img/style_7_img_1.png"></img>
+					</div>
+					<div class="chs_detail_container">
+						<h2 class="chs_heading">Fashion that likes to say yes
+						</h2>
+						<p class="chs_para">
+							honos is your one-stop online fashion destination for
+							all your wardrobe needs.Inspired by the international catwalks
+							and the global street scene, we offer wearable fashion at
+							pocket-friendly prices—right to your doorstep. Refresh your
+							closet with the hottest international labels and the most
+							exclusive collections. Keep it fashionable, keep it fresh! honos
+							style will make you fall in love with yourself!
+						</p>
+						<a class="b_fashion_btn" href="#">shop Now</a>
+					</div>
+				</div>
+			</section>	
+				</div>
+			
+				
+			<div class="oe_structure">
+				<section class="snippet_design">
+					<section class="c_offer_common">
+						<section class="left_container_parent">
+							<div class="snippet_sale_icon">
+								15%
+								<span>off</span>
+							</div>
+							<div class="snippet_left_container">
+								<div class="snippet_left_content">
+									<h3 class="content_title">Spring Collection</h3>
+									<p class="desc_para">We have lots of styles for spring collection that
+										makes you feel wow! Update yourself with latest trends now.
+									</p>
+									<a class="b_fashion_btn" href="#">Shop now</a>
+								</div>
+								<div class="snippet_right_timer_div">
+									<p id="date_timer">
+										<div class="timer_common">
+											<div id="days"></div>
+											<p id="d_lbl"></p>
+										</div>
+
+										<p class="colon">:</p>
+
+										<div class="timer_common">
+											<div id="hours"></div>
+											<p id="h_lbl"></p>
+										</div>
+										<p class="colon">:</p>
+
+										<div class="timer_common">
+											<div id="minutes"></div>
+											<p id="m_lbl"></p>
+										</div>
+										<p class="colon">:</p>
+
+										<div class="timer_common">
+											<div id="seconds"></div>
+											<p id="s_lbl"></p>
+										</div>
+									</p>
+								</div>
+							</div>
+						</section>
+						<section class="right_container_parent"
+							style="background-image:url('/honos_snippet_style_2/static/src/img/img.jpg')">
+						</section>
+					</section>
+				</section>
+			</div>
+		</t>
+	</template>
+</odoo>

@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<record id="view_budget_analytic_account_tree" model="ir.ui.view">
+		<field name="name">Budget Analytic Account Tree</field>
+		<field name="model">account.analytic.account</field>
+		<field name="arch" type="xml">
+			<tree string="Budget Analytic Account">
+				<field name="display_name" />
+				<field name="financial_budget_number" />
+				<field name="analytic_ctg" />
+				<field name="partner_id" />
+				<field name="code" />
+				<field name="active" invisible="1" modifiers="{'tree_invisible': true}"/>
+				<field name="company_id" />
+				<field name="last_invoice_date" />
+				<field name="toinvoice_total" />
+				<field name="remaining_hours" />
+				<field name="date_start" />
+				<field name="date_end" />
+				<field name="manager_id" />
+				<field name="pricelist_id" invisible="1"  modifiers="{'tree_invisible': true}"/>
+			</tree>
+		</field>
+	</record>
+
+
+	<record id="action_budget_analytic_account" model="ir.actions.act_window">
+		<field name="name">Budget Analytic Account</field>
+		<field name="res_model">account.analytic.account</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_budget_analytic_account_tree"/>
+		<field name="context">{'default_use_budget': True}</field>
+		<field name="domain">[('use_budget','=',True)]</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+				Click here to create a Budget Analytic Account
+			</p>
+		</field>
+	</record>
+
+	<menuitem id="menu_budget_analytic_account" name="Budget Analytic Account"
+		action="action_budget_analytic_account" parent="budget_management.menu_budget"
+		sequence="80" />
+
+	<record id="view_account_config_settings_account_budget" model="ir.ui.view">
+        <field name="name">account.config.settings.account.budget</field>
+        <field name="model">account.config.settings</field>
+        <field name="inherit_id" ref="account.view_account_config_settings"/>
+        <field name="arch" type="xml">
+            <group name="followup" position="before">
+            	<group name="account_budget" string="Budget Analytic Account">
+            		<label for="id" string="Budget Setting"/>
+                	<div>
+                        <field name="budget_setting" class="oe_inline"/>
+                        <label for="budget_setting"/>
+                    </div>
+                </group>
+            </group>
+        </field>
+    </record>
+
+		<record id="view_sub_dept_wizard" model="ir.ui.view">
+            <field name="name">sub.dept.descendant.line</field>
+            <field name="model">budget.aa.lines</field>
+            <field name="arch" type="xml">
+                <form string="Budget Lines">
+                    <group >
+                        <field name="sub_dept_ids" colspan="4" nolabel="1">
+							<tree editable="top">
+								<field name="name"/>
+								<field name="amount" sum="Total Amount" />
+							</tree>
+                        </field>
+                    </group>
+                    <group>
+                    </group>
+                </form>
+            </field>
+        </record>
+</odoo>

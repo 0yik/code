@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="discount_sale_order_view_form1" model="ir.ui.view">
+            <field name="name">discount.sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='discount']" position="attributes">
+                    <attribute name="digits">(16, 2)</attribute>
+                </xpath>
+                <xpath expr="//group[@class='oe_subtotal_footer oe_right']" position="replace">
+                        <group name="discount">
+                            <field name="discount_ids">
+                                <tree editable="buttom">
+                                    <field name="discount_type"/>
+                                    <field name="discount_rate"/>
+                                    <field name="description"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="amount_befor_discount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_discount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <div>
+                                <label for="amount_tax"/>
+                                <button name="button_reset_taxes" states="draft,proforma2"
+                                        string="(update)" class="oe_link oe_edit_only"
+                                        type="object" help="Recompute taxes and total"/>
+                            </div>
+                            <field name="amount_tax" nolabel="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_total" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</openerp>

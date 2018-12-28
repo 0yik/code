@@ -1,0 +1,35 @@
+<odoo>
+	<data>
+
+		<record id="view_res_company_from_data_da" model="ir.ui.view">
+            <field name="name">res.company.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+            <data>
+				<field name="name" position="after">
+					<field name="ot1_monday" invisible="1"/>
+					<field name="ot1_tuesday" invisible="1"/>
+					<field name="ot1_wednesday" invisible="1"/>
+					<field name="ot1_thursday" invisible="1"/>
+					<field name="ot1_friday" invisible="1"/>
+					<field name="ot1_saturday" invisible="1"/>
+					<field name="ot1_sunday" invisible="1"/>
+
+					<field name="ot1_5_monday" invisible="1"/>
+					<field name="ot1_5_tuesday" invisible="1"/>
+					<field name="ot1_5_wednesday" invisible="1"/>
+					<field name="ot1_5_thursday" invisible="1"/>
+					<field name="ot1_5_friday" invisible="1"/>
+					<field name="ot1_5_saturday" invisible="1"/>
+					<field name="ot1_5_sunday" invisible="1"/>
+
+					<field name="ot2_saturday" invisible="1"/>
+					<field name="ot2_sunday" invisible="1"/>
+				</field>
+            </data>
+            </field>
+        </record>
+
+	</data>
+</odoo>

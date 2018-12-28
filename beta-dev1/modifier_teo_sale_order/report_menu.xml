@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="paperformat_pre_po" model="report.paperformat">
+			<field name="name">Pre PO Report</field>
+			<field name="format">A4</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">50</field>
+			<field name="margin_bottom">23</field>
+			<field name="margin_left">20</field>
+			<field name="margin_right">5</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">45</field>
+		</record>
+		
+		<record id="paperformat_so_line" model="report.paperformat">
+			<field name="name">SO Line Report</field>
+			<field name="format">A4</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">50</field>
+			<field name="margin_bottom">23</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">45</field>
+		</record>
+
+		<report id="menu_pre_po_report" string="Create Pre PO Report"
+			model="pre.po.wizard" report_type="qweb-pdf"
+			file="modifier_teo_sale_order.pre_po_report" name="modifier_teo_sale_order.pre_po_report"
+			paperformat="modifier_teo_sale_order.paperformat_pre_po" />
+
+		<report id="menu_so_line_report" string="Create SO Line Report"
+			model="so.line.wizard" report_type="qweb-pdf"
+			file="modifier_teo_sale_order.so_line_report" name="modifier_teo_sale_order.so_line_report"
+			paperformat="modifier_teo_sale_order.paperformat_so_line" />
+
+	</data>
+</openerp>

@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+
+        <record id="view_picking_internal_search_import" model="ir.ui.view">
+            <field name="name">stock.picking.internal.search.import</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="inside">
+                    <filter string="Pallet No" domain="[]" context="{'group_by':'pallet_no'}"/>
+                    <filter string="Shipment" domain="[]" context="{'group_by':'shipment_id'}"/>
+                    <filter string="PO Reference" domain="[]" context="{'group_by':'po_reference'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_form_inh" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <button name="action_assign" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="action_cancel" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="force_assign" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="do_new_transfer" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="do_unreserve" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="do_prepare_partial" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="button_scrap" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <field name="origin" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </field>
+                <field name="origin" position="after">
+                    <field name="pallet_no" attrs="{'invisible': ['|', ('pallet_no', '&lt;', 1), ('picking_type_code', '!=', 'incoming')]}"/>
+                    <field name="shipment_id" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="po_reference" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

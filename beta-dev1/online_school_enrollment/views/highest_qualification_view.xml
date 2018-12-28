@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE html>
+
+<odoo>
+
+	<!-- Form view for Highest Qualification -->
+    <record id="highest_qualification_form_view" model="ir.ui.view">
+        <field name="name">highest.qualification.form.view</field>
+        <field name="model">highest.qualification</field>
+        <field name="arch" type="xml">
+            <form string="Highest Qualification">
+                <sheet>
+                    <group>
+                        <field name="name" class="oe_inline"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view for Highest Qualification -->
+    <record id="highest_qualification_tree_view" model="ir.ui.view">
+        <field name="name">highest.qualification.tree.view</field>
+        <field name="model">highest.qualification</field>
+        <field name="arch" type="xml">
+            <tree string="Highest Qualification">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action view for Highest Qualification -->
+    <record id="highest_qualification_action" model="ir.actions.act_window">
+        <field name="name">Highest Qualification</field>
+        <field name="res_model">highest.qualification</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a Highest Qualification.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_student_highest_qualification_sub_form" name="Highest Qualification" parent="school_fees.menu_student_fees_structure_form" action="highest_qualification_action"/>
+
+</odoo>

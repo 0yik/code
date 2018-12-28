@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aikchin_modifier_analytic_accounts_aikchin_modifier_analytic_accounts,aikchin_modifier_analytic_accounts.aikchin_modifier_analytic_accounts,model_aikchin_modifier_analytic_accounts_aikchin_modifier_analytic_accounts,,1,0,0,0

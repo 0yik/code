@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="report_job_sheet">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="biocare_reports_modifier.external_layout_jobsheet_new">
+                <div class="page" style="font-size: 17px;">
+                <style>
+table1, tr, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    
+}
+
+.css-serial {
+  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+}
+
+.css-serial tbody td:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
+}
+thead{
+  
+}
+tfoot{
+  display: table-footer-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+td, th {
+  padding: 10px;
+  text-align: center;
+}
+table{
+  width: 100%;
+}
+.first-col{
+  width: 20%;
+}
+.second-col{
+  width: 30%;
+}
+tfoot tr td {    
+  padding:25px;
+}
+</style>
+                    <div class="oe_structure"/>
+                    <h4 class="text-center"><strong>DAILY REPORT FORM</strong></h4>
+                    <!--table id="table1" style="width:100%;">
+                        <tr>
+                            <td colspan="3" style="width:27%; padding:9px !important;" class="text-center"><strong>FULL NAME*:</strong>
+                            </td>
+                            <td colspan="1" style="width:24.1%; padding:9px !important;" class="text-center">
+                                <strong><span t-esc="data['form']['employee_id'][-1]"/></strong>
+                            </td>
+                            <td colspan="1" style="width:15.7%; padding:9px !important;" class="text-center"><strong>VEHICLE:</strong></td>
+                            <td colspan="4" style="width:33.2%; padding:9px !important;" class="text-center"><strong><span t-esc="vehicle"/></strong></td>
+                        </tr>
+                    </table>
+                    <table id="table1" class="css-serial" style="width:100%">
+                        <tr>
+                            <th style="width:2%; padding:9px !important;" class="text-center">SN</th>
+                            <th style="width:1%; padding:9px !important;" class="text-center">*GI</th>
+                            <th style="width:27%; padding:9px !important;" class="text-center">Job</th>
+                            <th style="width:32%; padding:9px !important;" class="text-center">Task/Customer</th>
+                            <th style="width:10%; padding:9px !important;" class="text-center">Jobsheet No.</th>
+                            <th style="width:18%; padding:9px !important;" class="text-center">Job Date</th>
+                            <th style="width:2%; padding:9px !important;" class="text-center">Time In</th>
+                            <th style="width:2%; padding:9px !important;" class="text-center">Time Out</th>
+                            <th style="width:6%; padding:9px !important;" class="text-center">**For Office Use</th>
+                        </tr>
+                        <t t-set="i" t-value="0"/>
+                        <t t-foreach="work_orders" t-as="workorder_obj">
+                            <t t-foreach="workorder_obj.move_lines" t-as="line">
+                                <tbody>
+                                    <td class="text-center" style="width:2%; padding:9px !important;"></td>
+                                    <td class="text-center" style="width:1%; padding:9px !important;"></td>
+                                    <td class="text-center" style="width:27%; padding:9px !important;"><span t-field="line.product_id"></span></td>
+                                    <td class="text-left" style="width:32%; padding:9px !important;"><span t-field="line.picking_id.partner_id"></span></td>
+                                    <td class="text-center" style="width:10%; padding:9px !important;"><span t-field="line.picking_id.name"></span></td>
+                                    <td class="text-center" style="width:18%; padding:9px !important;"><span t-field="line.picking_id.actual_end" t-field-options='{"format": "dd-MM-y"}'></span></td>
+                                    <td class="text-center" style="width:2%; padding:9px !important;"><span t-esc="line.picking_id.get_time_format_start(line.picking_id)" ></span></td>
+                                    <td class="text-center" style="width:2%; padding:9px !important;"><span t-esc="line.picking_id.get_time_format_end(line.picking_id)"></span></td>
+                                    <td style="width:6%; padding:9px !important;"></td>
+                                </tbody>
+                            </t>
+                        </t>
+                    </table>
+                    <table id="table1" style="width:100%; padding:25px !important;">
+                        <tr>
+                            <td style="width:27%; padding:25px !important;" class="text-center">Technician Signature:
+                            </td>
+                            <td style="width:24%;">
+                            </td>
+                            <td rowspan="2" style="width:15.7%; padding:25px !important;" class="text-center">Remarks **For Office Use
+                            </td>
+                            <td style="width:19%; padding:25px !important;">
+                            </td>
+                            <td style="width:14.3%; padding:25px !important;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" style="padding:25px !important;">Checked By:
+                            </td>
+                            <td style="padding:25px !important;">
+                            </td>
+                            <td style="padding:25px !important;">
+                            </td>
+                            <td style="padding:25px !important;">
+                            </td>
+                        </tr>
+                    </table-->
+                    
+                    <table border="1px" cellspacing="0" style="page-break-inside: avoid;">
+                        <tbody>
+                           <tr>
+                              <th class="first-col text-center" colspan="3">FULL NAME:</th>
+                              <th class="second-col text-center"><span t-esc="data['form']['employee_id'][-1]"/></th>
+                              <th class="text-center">VEHICLE:</th>  
+                              <th colspan="4" class="text-center"><span t-esc="vehicle"/></th>
+                           </tr>
+                        </tbody>
+                          <tbody>
+                           <tr >
+                              <th>SN</th>
+                              <th>*GI</th>
+                              <th>Job</th>
+                              <th>Task/Customer</th>
+                              <th>Jobsheet No.</th>
+                              <th>Job Date</th>
+                              <th>Time In</th>
+                              <th>Time Out</th>
+                              <th>**For Office Use</th>
+                            </tr>
+                            <t t-set="i" t-value="1"/>
+                            <t t-foreach="work_orders" t-as="workorder_obj">
+                                <t t-foreach="workorder_obj.move_lines" t-as="line">
+                                    <tr >
+                                        <td class="text-center"><t t-esc="i"/></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"><span t-field="line.product_id"></span></td>
+                                        <td class="text-left"><span t-field="line.picking_id.partner_id"></span></td>
+                                        <td class="text-center"><span t-field="line.picking_id.name"></span></td>
+                                        <td class="text-center first-col"><span t-field="line.picking_id.actual_end" t-field-options='{"format": "dd-MM-y"}'></span></td>
+                                        <td class="text-center"><span t-esc="line.picking_id.get_time_format_start(line.picking_id)" ></span></td>
+                                        <td class="text-center"><span t-esc="line.picking_id.get_time_format_end(line.picking_id)"></span></td>
+                                        <td></td>
+                                        <t t-set="i" t-value="i + 1"/>
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr>
+                                <td colspan="3"  class="text-center"><br/>Technician <br/>Signature:<br/></td>
+                                <td colspan="1"></td>
+                                <td colspan="1"  class="text-center"><br/>Remarks **For Office Use<br/></td>
+                                <td colspan="2" ></td>
+                                <td colspan="2" ></td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td colspan="3"  class="text-center"><br/>Checked By:<br/><br/></td>
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
+                                <td colspan="2" ></td>
+                                <td colspan="2" ></td>
+                            </tr>
+                        </tbody>
+                        <!--tfoot>
+                            <tr>
+                                <td colspan="3" rowspan="2" class="text-center">Technician Signature:</td>
+                                <td rowspan="2"></td>
+                                <td colspan="1" rowspan="4" class="text-center"><br/>Remarks **For Office Use</td>
+                                <td colspan="2" rowspan="2"></td>
+                                <td colspan="2" rowspan="2"></td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td colspan="3" rowspan="2" class="text-center">Checked By:</td>
+                                <td rowspan="2"></td>
+                                <td colspan="2" rowspan="2"></td>
+                                <td colspan="2" rowspan="2"></td>
+                            </tr>
+                        </tfoot-->
+                        
+                    </table>
+
+                </div>
+            <div class="oe_structure"/>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

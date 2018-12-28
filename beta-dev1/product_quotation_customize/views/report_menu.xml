@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+         
+         <!--Quotation/Sale Order Report-->
+         <report 
+        	id="ips_quotation_report_menu_id" 
+        	string="Quote/Order" 
+        	model="sale.order" 
+            report_type="qweb-pdf"
+            name="product_quotation_customize.ips_quotation_report_template_id"
+            file="product_quotation_customize.ips_quotation_report_template_id" 
+            />
+            
+        
+        <record id="paperformat_quote_ips_label" model="report.paperformat">
+            <field name="name">Quotation IntiPresisi</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">52</field>
+            <field name="margin_bottom">50</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">50</field>
+            <field name="dpi">90</field>
+        </record>
+     	<record id="ips_quotation_report_menu_id" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="paperformat_quote_ips_label"/>
+		</record>
+	</data>
+</openerp>

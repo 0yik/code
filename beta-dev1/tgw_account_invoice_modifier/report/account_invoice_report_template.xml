@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+
+	<!--TGW - External Layout-->
+	<template id="external_layout_custom">
+	    <t t-if="o and 'company_id' in o">
+        	<t t-set="company" t-value="o.company_id"></t>
+    	</t>
+    	<t t-if="not o or not 'company_id' in o">
+        	<t t-set="company" t-value="res_company"></t>
+	    </t>
+		    <!--<t t-call="tgw_account_invoice_modifier.external_layout_header_custom" />-->
+	    <t t-raw="0" />
+	</template>
+
+	<!--TGW - External Layout Header-->
+	<template id="external_layout_header_custom">
+		<div class="header" style="font-size:11px;">
+			<header class="entry-header" style="display:none">
+    			<h1 class="entry-title"></h1>
+			</header>
+		</div>
+	</template>
+
+	<!--TGW - External Layout Footer-->
+	<template id="external_layout_footer_custom">
+		<div class="footer" style="font-size:11px;">
+			<div class="col-xs-12 text-cent mt16">
+					Page: <span class="page"/>
+			</div>
+		</div>
+	</template>
+
+	<!--TGW Invoice Print Out-->
+	<template id="report_tgw_account_invoice">
+		<t t-call="tgw_account_invoice_modifier.external_layout_custom">
+			<t t-set="o" t-value="doc_ids" t-as="o"/>
+			<t t-set="company" t-value="o.company_id"/>
+				<div class="header">
+
+				</div>
+				<div class="page">
+					<div class="row">
+						<div class="col-xs-5 pull-right">
+							<span t-if="o.number">INVOICE NUMBER: <span t-field="o.number" style="font-size:20px; color:red;"/></span>
+						</div>
+					</div>
+					<table style="width:100%;">
+						<tr>
+							<td style="max-height: 100px; text-align:center;width:100%;"><img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" /></td>
+						</tr>
+						<tr>
+							<td t-esc="o._get_company_address_line_1()" style="text-align:center;width:100%;"></td>
+						</tr>
+						<tr>
+							<td t-esc="o._get_company_address_line_2()" style="text-align:center;width:100%;"></td>
+						</tr>
+					</table>
+
+					<div class="row mt32 mb32">
+
+						<table style="width:100%">
+							<tr>
+								<td><strong>Client's Name: </strong></td>
+								<td><span t-field="o.client_name"/></td>
+								<td><strong>Appointment Date: </strong></td>
+								<td><span t-field="o.analytic_contract_id.meet_up_date"/></td>
+							</tr>
+							<tr>
+								<td><br></br></td>
+								<td><br></br></td>
+								<td><br></br></td>
+								<td><br></br></td>
+							</tr>
+							<tr>
+								<td><strong>Tel: </strong></td>
+								<td><span t-field="o.client_tel"/></td>
+								<td><strong>Photography Date: </strong></td>
+								<td><span t-field="o.analytic_contract_id.photography_date"/></td>
+							</tr>
+							<tr>
+								<td><br></br></td>
+								<td><br></br></td>
+								<td><br></br></td>
+								<td><br></br></td>
+							</tr>
+							<tr>
+								<td><strong>Email: </strong></td>
+								<td><span t-field="o.client_email"/></td>
+								<td><strong>R.O.M Date: </strong></td>
+								<td><!-- <span t-field="o.analytic_contract_id.date_rom" t-field-options='{"format": "%d.%m.%Y"}'/> -->
+								<t t-if="o.analytic_contract_id and o.analytic_contract_id.date_rom">
+									<sapn t-esc="datetime.datetime.strptime(o.analytic_contract_id.date_rom, '%Y-%m-%d %H:%M:%S').strftime('%d/%m/%Y %H:%M:%S')"/>
+								</t>
+								</td>
+							</tr>
+							<tr>
+								<td><br></br></td>
+								<td><br></br></td>
+								<td><br></br></td>
+								<td><br></br></td>
+							</tr>
+						  	<tr>
+								<td><strong>Address: </strong></td>
+								<td><span t-field="o.client_address"/></td>
+								<td><strong>Event Date: </strong></td>
+								<td><!-- <span t-field="o.analytic_contract_id.date_wedd2" t-field-options="{&quot;format&quot;: &quot;dd/mm/yyyy&quot;}"/> -->
+								<t t-if="o.analytic_contract_id and o.analytic_contract_id.date_wedd2">
+									<sapn t-esc="datetime.datetime.strptime(o.analytic_contract_id.date_wedd2, '%Y-%m-%d %H:%M:%S').strftime('%d/%m/%Y')"/>
+								</t>
+								</td>
+						  	</tr>
+						</table>
+
+						<!-- Is there a discount on at least one line? -->
+						<t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
+
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Description</th>
+									<th class="hidden">Source Document</th>
+									<th class="text-right">Quantity</th>
+									<th class="text-right">Unit Price</th>
+									<th t-if="display_discount" class="text-right">Disc.(%)</th>
+									<th class="text-right">Taxes</th>
+									<th class="text-right">Tax Excluded Price</th>
+								</tr>
+							</thead>
+							<tbody class="invoice_tbody">
+								<tr t-foreach="o.invoice_line_ids" t-as="l">
+									<td><span t-field="l.name"/></td>
+									<td class="hidden"><span t-field="l.origin"/></td>
+									<td class="text-right">
+										<span t-field="l.quantity"/>
+										<span t-field="l.uom_id"  groups="product.group_uom"/>
+									</td>
+									<td class="text-right">
+										<span t-field="l.price_unit"/>
+									</td>
+									<td t-if="display_discount" class="text-right">
+										<span t-field="l.discount"/>
+									</td>
+									<td class="text-right">
+										<span t-esc="', '.join(map(lambda x: (x.description or x.name), l.invoice_line_tax_ids))"/>
+									</td>
+									<td class="text-right">
+										<span t-field="l.price_subtotal"
+											t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="row">
+							<div class="col-xs-4 pull-right">
+								<table class="table table-condensed">
+									<tr class="border-black">
+										<td><strong>Subtotal</strong></td>
+										<td class="text-right">
+											<span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+										</td>
+									</tr>
+									<t t-foreach="o._get_tax_amount_by_group()" t-as="amount_by_group">
+										<tr>
+											<td><span t-esc="amount_by_group[0] if len(o.tax_line_ids) > 1 else (o.tax_line_ids.tax_id.description or o.tax_line_ids.tax_id.name)"/></td>
+											<td class="text-right">
+												<span t-esc="amount_by_group[1]" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+											</td>
+										</tr>
+									</t>
+									<tr class="border-black">
+										<td><strong>Total</strong></td>
+										<td class="text-right">
+											 <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+										</td>
+									</tr>
+									<tr t-if="o.state != 'draft'" class="border-black">
+										<td><strong>Amount Paid</strong></td>
+										<td class="text-right">
+											<span t-esc="o._get_paid_amount()" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+										</td>
+									</tr>
+									<tr t-if="o.state != 'draft'" class="border-black">
+										<td><strong>Balance Amount</strong></td>
+										<td class="text-right">
+											 <span t-field="o.residual" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+
+						<div class="row">
+							<div name="o.comment" class="col-xs-12">
+								<strong>Remarks:</strong>
+								<p t-field="o.comment" style="border:1px; border-style:solid; border-color:#000000"/>
+							</div>
+						</div>
+
+						<div class="row mt32 mb32" style="page-break-inside:avoid;">
+							<div name="signature" class="col-xs-6">
+								<p><strong>Customer</strong></p>
+								<p><strong>Signature:</strong></p>
+								<p><br></br></p>
+								<p><strong>Consultant</strong></p>
+								<p><strong>Signature:</strong></p>
+							</div>
+							<div name="signature_date" class="col-xs-6">
+								<p><br></br></p>
+								<p><strong>Date:</strong></p>
+								<p><br></br></p>
+								<p><br></br></p>
+								<p><strong>Date:</strong></p>
+							</div>
+						</div>
+						<div class="row" style="font-size:10px; page-break-inside:avoid;">
+							<div name="sales_tc" class="col-xs-12">
+								<p style="text-align:center"><strong>I HEREBY ACKNOWLEDGE AND IRRECOVERABLY CONSENT TO THE FOLLOWING</strong></p>
+								<p t-field="o.sales_tc" style="border:1px; border-style:solid; border-color:#000000;"/>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="footer">
+
+				</div>
+		</t>
+	</template>
+</openerp>

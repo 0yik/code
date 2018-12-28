@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+        <report 
+            id="dzh_invioce"
+            model="account.invoice"
+            string="DZH Invoice"
+            report_type="qweb-pdf"
+            name="dzh_modifier_printout.dzh_invoice_receip_template"
+            file="dzh_modifier_printout.dzh_invoice_receip_template"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,171 @@
+<odoo>
+    <data>
+        <record id="dzh_customer_invoice_inherit_form" model="ir.ui.view">
+            <field name="name">dzh.customer.invoice.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <!--<xpath expr="//form/header/button[@name='action_invoice_sent']" position="after">-->
+                    <!--<button name="onchane_status" string="Update Monthly Revenue" type="object"/>-->
+                <!--</xpath>-->
+                <xpath expr="//form/sheet/notebook/page[@name='other_info']/group/group[2]/field[@name='name']"
+                       position='attributes'>
+                    <attribute name="string">Quickbook Invoice Number</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[@name='other_info']/group/group[2]/field[@name='name']"
+                       position='after'>
+                    <field name="cr_number"/>
+                </xpath>
+                <xpath expr="//page[1]/field[@name='invoice_line_ids']/tree" position="replace">
+                    <tree string="Invoice Lines">
+                        <field name="sequence" widget="handle"/>
+                        <field name="number_user_id"/>
+                        <field name="product_id"/>
+                        <field name="origin" invisible="1"/>
+                        <field name="name"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="account_id" groups="account.group_account_user" domain="[('company_id', '=', parent.company_id), ('internal_type', '=', 'other')]"/>
+                        <field name="account_analytic_id" groups="analytic.group_analytic_accounting" domain="[('company_id', '=', parent.company_id)]"/>
+                        <field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags"/>
+                        <field name="quantity"/>
+                        <field name="uom_id" groups="product.group_uom"/>
+                        <field name="price_unit"/>
+                        <field name="discount" groups="base.group_no_one"/>
+                        <field name="invoice_line_tax_ids" widget="many2many_tags" context="{'type':parent.type}" domain="[('type_tax_use','=','sale'),('company_id', '=', parent.company_id)]" options="{'no_create': True}"/>
+                        <field name="price_subtotal"/>
+                        <field name="currency_id" invisible="1"/>
+                    </tree>
+                    <form>
+                        <group>
+                            <group>
+                                <field name="number_user_id" invisible="1"/>
+                                <field name="partner_from_io" invisible="1" />
+                                <field name="account_user_id" string="User ID" widget="many2many_tags"
+                                            domain="[('dzh_partner_id', '=', partner_from_io)]" context="{'dzh_partner_id' : invoice_order_partner_id}"/>
+                                <field name="product_id"/>
+                                <field name="quantity"/>
+                                <field name="price_unit"/>
+                            </group>
+                            <group>
+                                <field name="discount" groups="base.group_no_one"/>
+                                <field name="account_id" groups="account.group_account_user" domain="[('company_id', '=', parent.company_id), ('internal_type', '=', 'other')]"/>
+                                <field name="invoice_line_tax_ids" widget="many2many_tags" context="{'type':parent.type}" domain="[('type_tax_use','=','sale'),('company_id', '=', parent.company_id)]" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <label for="name" string="Description"/>
+                        <field name="name"/>
+                    </form>
+                </xpath>
+                <!--<xpath expr="//page[1]/field[@name='invoice_line_ids']/tree/field[@name='product_id']"-->
+                       <!--position="before">-->
+                    <!--<field name="partner_from_io" invisible="1" />-->
+                    <!--<field name="account_user_id" string="User ID" widget="many2many_tags"-->
+                           <!--domain="[('dzh_partner_id', '=', partner_from_io)]"/>-->
+                    <!--&lt;!&ndash;<field name="start_date"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="end_date"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="subscription_period"/>&ndash;&gt;-->
+                <!--</xpath>-->
+                <xpath expr="//page[1]/field[@name='invoice_line_ids']"
+                       position="attributes">
+                    <attribute name="context">{'invoice_order_partner_id': partner_id, 'quantity' : x_month_number}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="x_contact_term"/>
+                    <field name="terminal_date"/>
+                </xpath>
+                <xpath expr="//field[@name='date_invoice']" position="after">
+                    <label for="x_subscription_period" />
+                    <div>
+                        <field name="x_month_number" nolabel="1"/>
+                        <br/>
+                        <div class="o_row">
+                            <field name="x_subscription_period" nolabel="1"/>To
+                            <field name="x_end_date" nolabel="1"/>
+                        </div>
+                    </div>
+                </xpath>
+
+                <xpath expr="//form/sheet/notebook/page" position="after">
+                    <page string="Monthly Revenue">
+                        <field name="monthly_revenue_ids">
+                            <tree>
+                                <field name="date"/>
+                                <field name="terminal_amount"/>
+                                <field name="data_amount"/>
+                                <field name="total_amount"/>
+                                <field name="count_line_invoice" invisible="True"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="dzh_customer_invoice_inherit_tree" model="ir.ui.view">
+            <field name="name">dzh.customer.invoice.inherit.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="date_invoice" position="after">
+                    <field name="terminal_date" string="Termination Date"/>
+                    <field name="x_subscription_period" string="Subscription Start Date"/>
+                </field>
+                <field name="date_due" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="origin" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="sales_invoice_form_inherit" model="ir.ui.view">
+            <field name="name">Sales Invoice Form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="sale.account_invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="team_id" position="attributes">
+                    <attribute name="attrs">{'readonly': [['state', 'not in', ['draft']]]}</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="dzh_customer_invoice_refund_inherit_form" model="ir.ui.view">
+            <field name="name">dzh.customer.invoice.refund.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="before">
+                    <field name="account_user_id" string="User ID" widget="many2many_tags" domain="[('dzh_partner_id', '=', partner_from_io)]"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="action_invoice_refund_tree1" model="ir.actions.act_window">
+            <field name="name">Customer Invoices Refund</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=',('out_refund'))]</field>
+            <field name="context">{'type':'out_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a customer invoice.
+              </p><p>
+                Odoo's electronic invoicing allows to ease and fasten the
+                collection of customer payments. Your customer receives the
+                invoice by email and he can pay online and/or import it
+                in his own system.
+              </p><p>
+                The discussions with your customer are automatically displayed at
+                the bottom of each invoice.
+              </p>
+            </field>
+        </record>
+
+        <menuitem name="Customer Invoices" action="account.action_invoice_tree1" id="menu_action_invoice_tree1_edit" parent="account.menu_finance" sequence="2"/>
+        <menuitem name="Customer Refund" action="action_invoice_refund_tree1" id="menu_action_invoice_refund_tree1_edit" parent="account.menu_finance" sequence="3"/>
+    </data>
+</odoo>

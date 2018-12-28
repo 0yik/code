@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+
+        <record id="view_zone_inherit_custom_biocare_form" model="ir.ui.view">
+            <field name="name">zone.zone.form</field>
+            <field name="model">zone.zone</field>
+            <field name="inherit_id" ref="zone_and_postal_code_configuration.zone_zone_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tester_ids']" position="replace">
+                    <field name="team_ids">
+                            <tree string="Team">
+                                <field name="name"/>
+                                <field name="team_leader"/>
+                                <field name="vehicle_new_id"/>
+                            </tree>
+                        </field>
+
+                </xpath>
+
+                <xpath expr="//notebook/page[2]" position="attributes">
+                    <attribute name="string">Allocated Teams</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

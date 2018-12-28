@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_generate_queue,access_generate_queue,model_generate_queue,,1,0,0,0
+access_loading_queue,access_loading_queue,model_loading_queue,,1,0,0,0
+access_loading_queue_lines,access_loading_queue_lines,model_loading_queue_lines,,1,0,0,0

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+	<record id="financial_ratio_report_view" model="ir.ui.view">
+		<field name="name">financial.ratio.report.view</field>
+		<field name="model">financial.ratio</field>
+		<field name="arch" type="xml">
+		<form string="Financial Ratio">
+		    <field name="company_id" invisible="1"/>
+		    <group col="4">
+		        <field name="target_move" widget="radio"/>
+		        <field name="date_from"/>
+		        <field name="date_to"/>
+		    </group>
+		    <footer>
+		        <button name="check_financial_report" string="Generate XLS File" type="object" default_focus="1" class="oe_highlight"/>
+		        or 
+		        <button string="Cancel" class="oe_link" special="cancel"/>
+		    </footer>
+		</form>
+		</field>
+    	</record>
+
+    	<record id="action_financial_ratio_menu" model="ir.actions.act_window">
+		<field name="name">action.financial.ratio.menu</field>
+		<field name="res_model">financial.ratio</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="financial_ratio_report_view"/>
+		<field name="target">new</field>
+    	</record>
+	<menuitem name="Financial Ratio" action="action_financial_ratio_menu" id="menu_action_financial_ratio" parent="account.account_reports_business_intelligence_menu" sequence="21"/>
+		
+    </data>
+</odoo>

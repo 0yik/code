@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_employee_form_inherit_modifier" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/div[2]" positon="after">
+                    <div class="container">
+                        <div class="row">
+                            <group col="8">
+                                <group colspan="3">
+                                    <!--<label for="known_as" class="oe_inline"/>-->
+                                    <field name="known_as" string="Know As" style="height:22"/>
+                                </group>
+                                <group colspan="3">
+                                    <!--<label for="employee_id" class="oe_inline"/>-->
+                                    <field name="employee_id" string="Employee ID" style="height:22"/>
+                                </group>
+                            </group>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[1]/group" positon="after">
+                    <group string="Other">
+                        <group>
+                            <field name="service_date" string="Service Date"/>
+
+                        </group>
+                        <group>
+                            <field name="cessation_date" string="Cessation Date"/>
+                        </group>
+                    </group>
+                    <group></group>
+                    <group>
+                        <field name="cessation_reason" string="Cessation Reason"/>
+                        <field name="division" string="Division"/>
+                        <field name="job_family" string="Job Family"/>
+                    </group>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[2]/group/group" positon="after">
+                    <field name="employee_race_id" string="Employee Race"/>
+                    <field name="employee_religion_id" string="Employee Religion"/>
+                    <field name="employee_qualification_id" string="Employee Qualification"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[2]/group" positon="after">
+                    <group string="Bank Information">
+                        <field name="bank_name" string="Bank Name"/>
+                        <field name="bank_code" string="Bank Code"/>
+                        <field name="branch_code" string="Branch Code"/>
+                    </group>
+                    <group string="Child Details">
+                        <!--<div class="row">-->
+                        <!--<label for="child_full_name"/>-->
+                        <!--<div class="col-md-2"><field name="child_full_name" string="Child Full Name"/></div>-->
+                        <!--<label for="child_nationality"/>-->
+                        <!--<div class="col-md-2"><field name="child_nationality" string="Child Nationlity"/></div>-->
+                        <!--<label for="child_birth_cert_no"/>-->
+                        <!--<div class="col-md-2"><field name="child_birth_cert_no" string="Birth Cert No"/></div>-->
+                        <!--<label for="child_date_of_birth"/>-->
+                        <!--<div class="col-md-2"><field name="child_date_of_birth" string="Date of Birth"/></div>-->
+                        <!--<label for="child_place_of_birth"/>-->
+                        <!--<div class="col-md-2"><field name="child_place_of_birth" string="Place of Birth"/></div>-->
+                        <!--</div>-->
+                        <field name="child_detail_ids" string=" ">
+                            <tree editable="bottom">
+                                <field name="child_full_name"/>
+                                <field name="child_nationality"/>
+                                <field name="child_birth_cert_no"/>
+                                <field name="child_date_of_birth"/>
+                                <field name="child_place_of_birth"/>
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+                <xpath expr="//form/sheet/notebook" positon="after">
+                    <page string="Other Inputs">
+                        <field name="other_input_ids">
+                            <tree editable="bottom">
+                                <field name="salary_code_sub" invisible="1"/>
+                                <field name="salary_name"/>
+                                <field name="salary_code"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Remark">
+                        <field name="remark_ids">
+                            <tree editable="bottom">
+                                <field name="remark"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[2]/group/group[1]" positon="after">
+                    <field name="expiry_date" string="MSOC Expiry Date"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

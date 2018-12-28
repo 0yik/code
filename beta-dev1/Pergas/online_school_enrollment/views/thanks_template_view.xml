@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="thanks" name="Successfully">
+	<t t-call="website.layout">
+		<div class="col-md-12">
+	        <img class="img img-responsive" style="width: 30%; height:200px;margin:auto" src="/online_school_enrollment/static/src/img/logo.jpg"/>
+	    </div>
+		<div id="wrap">
+			<div class="oe_structure"/>
+			<div class="container">
+				<h1>Thanks!</h1>
+			</div>
+			<div class="oe_structure"/>
+		</div>
+	</t>
+	</template>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_pos_config_syncing">
+            <field name="name">pos.config.sync</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="complex_kds.view_pos_config_syncing"/>
+            <field name="arch" type="xml">
+                <field name="category_summery_lines" position="after">
+                    <field name="category_takeaway_lines" attrs="{'invisible': [['screen_type', '!=', 'waiter']]}">
+                        <tree editable="1">
+                            <field name="categ_ids" widget="many2many_tags" required="1"/>
+                            <field name="next_pos_config_id" string="POS Take Away Screen" domain="[('screen_type', '=', 'takeaway'),('bus_id', '=', parent.bus_id), ('branch_id', '=', parent.branch_id
+                                )]" required="1"/>
+                            <field name="ip_address" invisible="1"/>
+                        </tree>
+                    </field>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

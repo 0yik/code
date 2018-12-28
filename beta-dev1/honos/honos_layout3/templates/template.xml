@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="honos_layout3_homepage" name="honos_home">
+		<t t-call="website.layout">
+			<div class="mask_cover"></div>
+			<div class="oe_structure">
+				<section class="h3_style_21_snippet_wrap">
+					<section class="style_21_bg_container" style="background-image:url('/honos_snippet_style_21/static/src/img/style_21_img_1.jpg')">
+						<div class="style_21_snippet_main_container">
+							<div class="style_21_heading_main_div">
+								<div class="s_21_title_main">
+								ENJOY THE NEW<span class="title_span_text">FASHION EXPERIENCE</span>
+								</div>
+								<p class="s_21_sub_title">New look of 2017</p>
+							</div>
+							
+							<div class="s_21_empty_content_div">
+							</div>
+							<section>
+							<div class="s_21_content_row_div">
+								<div class="s_21_content_div content1_align">
+								<div class="s_21_sub_content_1">
+									<div class="s_21_pointer">
+									<section><img src="/honos_snippet_style_21/static/src/img/pointer_line_left.png"></img></section>
+									</div>
+									<div class="s_21_content_name">
+										top
+									</div>
+									<span class="s21_sep_line"></span>
+									<div class="s_21_price">
+										$89.99
+									</div>
+									
+									<a class="b_fashion_btn" href="#">shop now</a>
+									</div>
+								</div>
+							</div>
+							</section>
+							<section>
+							<div class="s_21_content_row_div">
+								<div class="s_21_content_div content2_align">
+								<div class="s_21_sub_content_2">
+									<div class="s_21_pointer">
+									<section><img src="/honos_snippet_style_21/static/src/img/pointer_line_right.png"></img></section>
+									</div>
+									<div class="s_21_content_name">
+										Blue Jacket
+									</div>
+									<span class="s21_sep_line"></span>
+									<div class="s_21_price">
+										$89.99
+									</div>
+									
+									<a class="b_fashion_btn" href="#">shop now</a>
+									</div>
+								</div>
+							</div>
+							</section>
+							<section>
+							<div class="s_21_content_row_div">
+								<div class="s_21_content_div content3_align">
+									<div class="s_21_sub_content_3">
+									<div class="s_21_pointer">
+									<section><img  src="/honos_snippet_style_21/static/src/img/pointer_line_left.png"></img></section>
+									</div>
+									<div class="s_21_content_name">
+										pants
+									</div>
+									<span class="s21_sep_line"></span>
+									<div class="s_21_price">
+										$89.99
+									</div>
+									<a class="b_fashion_btn" href="#">shop now</a>
+									</div>
+								</div>
+							</div>
+						</section>
+						</div>
+					</section>
+				</section>
+				</div>
+				<div class="oe_structure">
+				<section class="img_banner_snippet">
+					<div class="img_banner_snippet_img_div">
+						<a href="#"><section><img class="s_image_common" src="/honos_snippet_style_16/static/src/img/style_16_img_2.jpg"></img></section></a>
+					</div>
+				</section>
+				</div>
+				<div class="oe_structure">
+				<section class="s22_main_wrap">
+					<div class="s22_container">
+						<div class="style_22_heading_main_div">
+							<h4 class="chs_heading">Brands</h4>
+							<p class="s_22_sub_title">We offer finest brands in our store</p>
+						</div>
+						<div class="brand_img_div">
+							<a href="#"><section><img  class="s_image_common" src="/honos_snippet_style_22/static/src/img/style_22_img_1.jpg"></img></section></a>
+						</div>
+						<div class="brand_img_div">
+							<a href="#"><section><img  class="s_image_common" src="/honos_snippet_style_22/static/src/img/style_22_img_2.jpg"></img></section></a>
+						</div>
+						<div class="brand_img_div">
+							<a href="#"><section><img  class="s_image_common" src="/honos_snippet_style_22/static/src/img/style_22_img_3.jpg"></img></section></a>
+						</div>
+						<div class="brand_img_div">
+							<a href="#"><section><img  class="s_image_common" src="/honos_snippet_style_22/static/src/img/style_22_img_4.jpg"></img></section></a>
+						</div>
+						<div class="brand_img_div">
+							<a href="#"><section><img class="s_image_common" src="/honos_snippet_style_22/static/src/img/style_22_img_5.jpg"></img></section></a>
+						</div>
+					</div>
+				</section>
+				</div>
+				<div class="oe_structure">
+				<section class="h3_style_21_snippet_wrap">
+					<section class="style_21_bg_container" style="background-image:url('/honos_snippet_style_21/static/src/img/style_21_img_2.png')">
+						<div class="style_21_snippet_main_container">
+							<div class="style_21_heading_main_div">
+								<div class="s_21_title_main">
+								ENJOY THE NEW<span class="title_span_text">FASHION EXPERIENCE</span>
+								</div>
+								<p class="s_21_sub_title">New look of 2017</p>
+							</div>
+							
+							<div class="s_21_empty_content_div">
+							</div>
+							<section>
+							<div class="s_21_content_row_div">
+								<div class="s_21_content_div content1_align">
+								<div class="s_21_sub_content_1">
+									<div class="s_21_pointer">
+									<section><img src="/honos_snippet_style_21/static/src/img/pointer_line_left.png"></img></section>
+									</div>
+									<div class="s_21_content_name">
+										top
+									</div>
+									<span class="s21_sep_line"></span>
+									<div class="s_21_price">
+										$89.99
+									</div>
+									
+									<a class="b_fashion_btn" href="#">shop now</a>
+									</div>
+								</div>
+							</div>
+							</section>
+							<section>
+							<div class="s_21_content_row_div">
+								<div class="s_21_content_div content2_align">
+								<div class="s_21_sub_content_2">
+									<div class="s_21_pointer">
+									<section><img src="/honos_snippet_style_21/static/src/img/pointer_line_right.png"></img></section>
+									</div>
+									<div class="s_21_content_name">
+										Pink Jacket
+									</div>
+									<span class="s21_sep_line"></span>
+									<div class="s_21_price">
+										$89.99
+									</div>
+									
+									<a class="b_fashion_btn" href="#">shop now</a>
+									</div>
+								</div>
+							</div>
+							</section>
+							<section>
+							<div class="s_21_content_row_div">
+								<div class="s_21_content_div content3_align">
+									<div class="s_21_sub_content_3">
+									<div class="s_21_pointer">
+									<section><img  src="/honos_snippet_style_21/static/src/img/pointer_line_left.png"></img></section>
+									</div>
+									<div class="s_21_content_name">
+										Skirt
+									</div>
+									<span class="s21_sep_line"></span>
+									<div class="s_21_price">
+										$89.99
+									</div>
+									<a class="b_fashion_btn" href="#">shop now</a>
+									</div>
+								</div>
+							</div>
+						</section>
+						</div>
+					</section>
+				</section>
+				</div>
+				<div class="oe_structure" />
+		</t>
+	</template>
+</odoo>

@@ -1,0 +1,36 @@
+<odoo>
+	<data>
+
+        <record id="mail_template_successfull_verify_customer" model="mail.template">
+            <field name="name">Account Confirmation</field>
+            <field name="subject">Account Confirmed</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="email_from">${(object.company_id.email and '%s &lt;%s&gt;' % (object.company_id.name, object.company_id.email) or '')|safe}</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[<html>
+                <head></head>
+                <body style="margin: 0; padding: 0;">
+                <table border="0" width="100%" cellpadding="0" bgcolor="#ededed" style="padding: 20px; background-color: #ededed" summary="o_mail_notification">
+                    <tbody>
+                      <!-- CONTENT -->
+                      <tr>
+                        <td align="center" style="min-width: 590px;">
+                          <table width="590" border="0" cellpadding="0" bgcolor="#ffffff" style="min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px;">
+                            <tbody>
+                              <td valign="top" style="font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;">
+								Your Account has been Confirmed.
+                              </td>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+                </body>
+                </html>
+            ]]></field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_sale_order_inherit_part_name">
+            <field name="name">sale.order.form.inherits</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="before">
+                    <field name="part_name"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_sale_requisition_inherit_part_name">
+            <field name="name">sale.requisition.form.inherits</field>
+            <field name="model">sale.requisition</field>
+            <field name="inherit_id" ref="so_blanket_order.view_sale_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']/tree//field[@name='product_id']" position="before">
+                    <field name="part_name"/>
+                    <field name="part_number_mitsuyoshi"/>
+                    <field name="customer_pmb_no"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

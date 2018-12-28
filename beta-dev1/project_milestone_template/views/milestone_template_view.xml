@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="template_menu" name="Template" parent="project.menu_project_config"/>
+        
+        <record model="ir.ui.view" id="milestone_template_tree_view">
+            <field name="name">milestone.template.tree.view</field>
+            <field name="model">milestone.template</field>
+            <field name="view_mode">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Milestone List">
+                    <field name="name" string="Template Name" />
+                    <field name="is_actived" string="Active" />
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="milestone_template_form_view">
+            <field name="name">milestone.template.form</field>
+            <field name="model">milestone.template</field>
+            <field name="arch" type="xml">
+                <form string="Milestone Template">
+                    <sheet>
+                        <group>
+                            <field name="name" string="Template Name: "/>
+                        </group>
+                        <group col="4">
+                            <field name="gowns"/>
+                            <field name="suites"/>
+                            <field name="dresses"/>
+                            <field name="bouquets"/>
+                            <field name="is_actived"/>
+                        </group>
+                        <field name="milestone_lines">
+                            <tree editable="bottom">
+                                <field name="milestone_id" />
+                                <field name="sequence" />
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        
+        <record model="ir.actions.act_window" id="milestone_template_action">
+            <field name="name">Milestone Template</field>
+            <field name="res_model">milestone.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first Milestone Template</p>
+            </field>
+        </record>
+        
+        <menuitem id="milestone_template__menu" parent="template_menu" action="milestone_template_action" />
+
+    </data>
+</odoo>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_vehicle_config_tree" model="ir.ui.view">
+            <field name="name">vehicle.config.tree</field>
+            <field name="model">vehicle.config</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <tree string="Vehicle Management">
+                <field name="vehicle_id"/>
+                <field name="team_id"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_vehicle_config_form" model="ir.ui.view">
+            <field name="name">vehicle.config.form</field>
+            <field name="model">vehicle.config</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <form string="Vehicle">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="vehicle_id" required="1" context="{'default_is_equipment': True}"/>
+                            <field name="team_id" required="1" />
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Services">
+                            <field name="vehicle_service_line_ids">
+                                <tree string="Services" editable="top">
+                                    <field name="product_id" required="1"
+                                        context="{'tree_view_ref': 'biocare_field_modifier.view_product_product_service_tree',
+                                        'form_view_ref': 'biocare_field_modifier.view_product_product_service_form',
+                                        'default_type': 'service',
+                                        }"/>
+                                </tree>
+                                <form string="Services">
+                                    <field name="product_id"/>
+                                    <field name="vehicle_config_id"/>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Products">
+                            <field name="vehicle_product_ids">
+                                <tree string="Product" editable="top">
+                                    <field name="vehicle_prod_id" required="1" />
+                                </tree>
+                                <form string="Products">
+                                    <field name="vehicle_prod_id" required="1" />
+                                    <field name="vehicle_config_id"/>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+        <record id="view_vehicle_config_search" model="ir.ui.view">
+            <field name="name">vehicle.config.search</field>
+            <field name="model">vehicle.config</field>
+            <field name="type">search</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <search string="Vehicle Management">
+                <field name="vehicle_id"/>
+            </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_vehicle_config_view">
+            <field name="name">Vehicle Management</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vehicle.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_vehicle_config_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_vehicle_config_view_form">
+            <field name="act_window_id" ref="act_open_vehicle_config_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_vehicle_config_form"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_vehicle_config_view_tree">
+            <field name="act_window_id" ref="act_open_vehicle_config_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_vehicle_config_tree"/>
+        </record>
+
+        <!--menuitem id="menu_vehicle_config"
+            parent="sales_team.menu_sale_config"
+            sequence="1"
+            action="act_open_vehicle_config_view"/-->
+
+    </data>
+</odoo>

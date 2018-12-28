@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_partner_form_address_modifier11" model="ir.ui.view">
+            <field name="name">view.partner.form.address.modifier</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <!-- For address format according to Matahari requirement -->
+                <xpath expr="//form/sheet/group[1]" position="replace">
+
+                    <group attrs="{'invisible':[('vendor_localization','=','local')]}">
+                        <group>
+                            <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
+                            <label for="street" string="Alamat Lengkap"/>
+                            <div class="o_address_format">
+                                <div class="oe_edit_only">
+                                    <button name="open_parent" type="object" string="(edit)" class="oe_link" attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"/>
+                                </div>
+                                <label for="foreign_street" string="Nama Jalan" style="font-weight:600"/>
+                                <field name="foreign_street" placeholder="NAMA JALAN" style="text-transform:uppercase" class="o_address_street text_value_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+
+                                <field name="street2" placeholder="STREET 2..." style="text-transform:uppercase" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" invisible="1"/>
+
+                                <div>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <label for="nomor_rumah" string="Nomor Rumah" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="nomor_rumah"/>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <label for="level_no" string="Level No" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="level_no"/>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <label for="unit_no" string="Unit No" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="unit_no"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div>
+                                        <div class="col-md-5">
+                                            <label for="kota" string="Kota" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="kota" style="text-transform: uppercase;" placeholder="KOTA"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="negara_bagian" string="Negara Bagian" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="negara_bagian" style="text-transform: uppercase;" placeholder="NEGARA BAGAIN"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="kode_pos" string="KODE POS" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="kode_pos" style="text-transform: uppercase;" placeholder="KODE POS"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-xs-12">
+                                            <label for="negara" string="NEGARA" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="negara" placeholder="NEGARA" style="text-transform: uppercase;"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--                                <div class="col-xs-12 oe_read_only">
+                                                                    <p style="display: inline;" class="oe_read_only">KOTA.</p>
+                                                                <field name="kota" style="text-transform: uppercase;"
+                                                                       class="o_address_state"/>
+                                                                <p style="display: inline;" class="oe_read_only">NAGARA BAGIAN.</p>
+                                                                <field name="negara_bagian" style="text-transform: uppercase;"
+                                                                       class="o_address_state"/>
+                                                                <p style="display: inline;" class="oe_read_only">KODE POS.</p>
+                                                                <field name="kode_pos" style="text-transform: uppercase;"
+                                                                       class="o_address_state"/>
+                                                                <br/>
+                                                                <p style="display: inline;" class="oe_read_only">NEGARA.</p>
+                                                                <field name="negara" style="text-transform: uppercase;"
+                                                                       class="o_address_state"/>
+                                                                </div>-->
+
+                            </div>
+                        </group>
+                        <group>
+                            <label for="street" string="Informasi Lain"/>
+                            <div class="row">
+                                <div class="col-xs-12" attrs="{'invisible': [('is_company','=', True)]}">
+                                    <div class="col-xs-6">
+                                        <label for="fv_function" string="Job Position" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="fv_function" string="Job Position" style="text-transform:uppercase" placeholder="e.g SALES MANAGER"/>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="fv_title" string="Gelar" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="fv_title"/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-6">
+                                        <label for="fv_phone" string="Telepon 1" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="fv_phone" placeholder="TELEPON 1"/>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="fv_phone2" string="Telepon 2" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="fv_phone2" placeholder="TELEPON 2"/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-6">
+                                        <label for="fv_mobile" string="Ponsel" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="fv_mobile" placeholder="PONSEL"/>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="fv_fax" string="Faksimile" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="fv_fax" placeholder="FAKSIMILE"/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-12">
+                                        <label for="fv_email" string="Alamat Email" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="fv_email" placeholder="ALAMAT EMAIL"/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-12">
+                                        <label for="fv_website" string="Alamat Situs" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="fv_website" placeholder="e.g www.hashmicro.com"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </group>
+                    </group>
+
+                    <group attrs="{'invisible':[('vendor_localization','=','foreign')]}">
+                        <group>
+                            <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
+                            <label for="street" string="Alamat Lengkap"/>
+                            <div class="o_address_format">
+                                <div class="oe_edit_only">
+                                    <button name="open_parent" type="object" string="(edit)" class="oe_link" attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"/>
+                                </div>
+                                <field name="street" placeholder="NAMA JALAN" style="text-transform:uppercase" class="o_address_street text_value_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+
+                                <field name="street2" placeholder="STREET 2..." style="text-transform:uppercase" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" invisible="1"/>
+
+                                <div>
+                                    <table width="100%">
+                                        <tr width="100%">
+                                            <td style="border:none; width:25%">
+                                                <h6 style="font-size: 13px;">Blok</h6>
+                                            </td>
+                                            <td style="border:none; padding-left:5px; width:25%">
+                                                <h6 style="font-size: 13px;">Nomor</h6>
+                                            </td>
+                                            <td style="border:none; width:25%">
+                                                <h6 style="font-size: 13px;">RT</h6>
+                                            </td>
+                                            <td style="border:none; padding-left:5px; width:25%">
+                                                <h6 style="font-size: 13px;">RW</h6>
+                                            </td>
+                                        </tr>
+
+                                        <tr width="100%">
+                                            <td style="border:none; padding-top:5px; width:25%">
+                                                <span>
+                                                    <field name="blok2" style="text-transform: uppercase;" placeholder="BLOK"/>
+                                                </span>
+                                            </td>
+                                            <td style="border:none; padding-top:5px; width:25%">
+                                                <span>
+                                                    <field name="nomor2" placeholder="NO"/>
+                                                </span>
+                                            </td>
+                                            <td style="border:none; padding-top:5px; width:25%">
+                                                <span>
+                                                    <field name="rt2" placeholder="RT"/>
+                                                </span>
+                                            </td>
+                                            <td style="border:none; padding-top:5px; width:25%">
+                                                <span>
+                                                    <field name="rw2" placeholder="RW"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="row oe_edit_only">
+                                    <div>
+                                        <div class="col-xs-6">
+                                            <label for="state_id" string="Propinsi" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="state_id" style="text-transform: uppercase;" placeholder="PROVINSI" options='{"no_open": True}' attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip, 'order_display': 'name' }"/>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label for="city_id" string="Kabupaten/Kota" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="city_id" style="text-transform: uppercase;" placeholder="KOTA/KAB"
+
+                                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" domain="[('state_id','=',state_id)]" options='{"no_open": True}'/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-xs-6">
+                                            <label for="kecamatan_id2" string="Kecamatan" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="kecamatan_id2" placeholder="KECAMATAN" style="text-transform: uppercase;" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" domain="[('kota_id','=',city_id)]" options='{"no_open": True}'/>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label for="kelurahan_id2" string="Kelurahan" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="kelurahan_id2" style="text-transform: uppercase;" placeholder="KELURAHAN" domain="[('kecamatan_id','=',kecamatan_id2)]" options='{"no_open": True}'/>
+                                        </div>
+                                    </div>
+                                    <div>
+
+                                        <div class="col-xs-6">
+                                            <label for="zip" string="Kode Pos" style="font-weight:600"/>
+                                            <br/>
+                                            <field name="zip" readonly="1" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" options='{"no_open": True}'/>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <field name="country_id" placeholder="COUNTRY" class="o_address_country" options='{"no_open": True, "no_create": True}' attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" invisible="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p style="display: inline;" class="oe_read_only">KEL.</p>
+                                <field name="kelurahan_id2_related" style="text-transform: uppercase;" class="oe_read_only o_address_state"/>
+                                <p style="display: inline;" class="oe_read_only">KEC.</p>
+                                <field name="kecamatan_id2_related" style="text-transform: uppercase;" class="oe_read_only o_address_state"/>
+                                <br/>
+                                <p style="display: inline;" class="oe_read_only">KOTA/KAB.</p>
+                                <field name="city_id_related" style="text-transform: uppercase;" class="oe_read_only o_address_state"/>
+                                <br/>
+                                <p style="display: inline;" class="oe_read_only">PROV.</p>
+                                <field name="state_id_related" style="text-transform: uppercase;" class="oe_read_only o_address_state"/>
+                                <field name="zip_related" style="text-transform: uppercase;" class="oe_read_only o_address_state"/>
+
+                            </div>
+                        </group>
+                        <group>
+                            <label for="street" string="Informasi Lain"/>
+                            <div class="row">
+                                <div class="col-xs-12" attrs="{'invisible': [('is_company','=', True)]}">
+                                    <div class="col-xs-6">
+                                        <label for="function" string="Job Position" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="function" string="Job Position" style="text-transform:uppercase" placeholder="e.g SALES MANAGER"/>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="title" string="Gelar" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="title"/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-6">
+                                        <label for="phone" string="Telepon 1" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="phone" placeholder="TELEPON 1"/>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="phone2" string="Telepon 2" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="phone2" placeholder="TELEPON 2"/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-6">
+                                        <label for="mobile" string="Ponsel" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="mobile" placeholder="PONSEL"/>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="fax" string="Faksimile" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="fax" placeholder="FAKSIMILE"/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-12">
+                                        <label for="email" string="Alamat Email" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="email" placeholder="ALAMAT EMAIL"/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-12">
+                                        <label for="website" string="Alamat Situs" style="font-weight:600"/>
+                                        <br/>
+                                        <field name="website" placeholder="e.g www.hashmicro.com"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </group>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

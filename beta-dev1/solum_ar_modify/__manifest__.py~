@@ -1,0 +1,20 @@
+{
+    "name": "Luminiare Access Rights Modify",
+    "version": "1.0",
+    "depends": ["sale",
+                "account",
+                "solum_sale",
+                ],
+    "author": "Hashmicro/Kunal",
+    "website": "http://www.hashmicro.com",
+    "category": "Solum",
+    'sequence': 1,
+    "description": """
+Hide some menus based on the user's company
+""",
+    'data': [
+    ],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+}

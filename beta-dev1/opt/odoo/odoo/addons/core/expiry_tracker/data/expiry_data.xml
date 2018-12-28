@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+	<record id="default_expiration_product_subject" model="ir.config_parameter">
+        <field name="key">expiration.product.subject</field>
+        <field name="value">EQUIP Notification for Expiring Products</field>
+    </record>
+        
+	<record model="ir.cron" id="expiry_days_alert_cron">
+        <field name="name">Expiry Days Alert</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model" eval="'stock.location'"/>
+        <field name="function" eval="'_cron_get_expiry_product'"/>
+        <field name="args" eval="'()'" />
+    </record>
+</odoo>

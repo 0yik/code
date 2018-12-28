@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="report_purchase_request_document">
+            <t t-call="beumer_modifer_printout.external_layout_purchase_request">
+                <t t-set="o" t-value="o.with_context({})"/>
+                <div class="page">
+                    <table class="table table-condensed"
+                           style="collapse; border:1px solid black ;margin-left:7px">
+                        <thead>
+                            <tr style="collapse; border:1px solid black">
+                                <th style="collapse; border:1px solid black;width:25%;">
+                                    <strong>For:</strong>
+                                </th>
+                                <th colspan="3" style="collapse; border:1px solid black">
+                                    <input type="checkbox"/>
+                                    <span>PROJECT</span>
+                                    <input type="checkbox" style="margin-left:35px;"/>
+                                    <span>OVERHEAD</span>
+                                    <input type="checkbox" style="margin-left:35px;" checked="True"/>
+                                    <span>TRADE SALES</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black">
+                                    <strong>PR NO:</strong>
+                                </td>
+                                <td style="collapse; border:1px solid black;width:35%;">
+                                    <span><t t-esc="o.name"/></span>
+                                </td>
+                                <td style="collapse; border:1px solid black;width:22%;">
+                                    <strong>PR Date:</strong>
+                                </td>
+                                <td style="collapse; border:1px solid black;width:18%;">
+                                    <span><t t-esc="o.date_start"/></span>
+                                </td>
+                            </tr>
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black;">
+                                    <strong>BIPO Order No:</strong>
+                                </td>
+                                <td style="collapse; border:1px solid black">
+                                    <span/>
+                                </td>
+                                <td style="collapse; border:1px solid black">
+                                    <strong>Award Date:</strong>
+                                </td>
+                                <td style="collapse; border:1px solid black">
+                                    <span/>
+                                </td>
+                            </tr>
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black;">
+                                    <strong>Project Name:</strong>
+                                </td>
+                                <td style="collapse; border:1px solid black;">
+                                    <span/>
+                                </td>
+                                <td style="collapse; border:1px solid black">
+                                    <strong>Project No:</strong>
+                                </td>
+                                <td style="collapse; border:1px solid black">
+                                    <span/>
+                                </td>
+                            </tr>
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black">
+                                    <strong>Sale Quotation/ Customer PO No:</strong>
+                                </td>
+                                <td style="collapse; border:1px solid black;">
+                                    <span/>
+                                </td>
+                                <td style="collapse; border:1px solid black;">
+                                    <strong>Sale Quotation/ Customer PO Date:</strong>
+                                </td>
+                                <td style="collapse; border:1px solid black;">
+                                    <span/>
+                                </td>
+                            </tr>
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black;">
+                                    <strong>Goods And Services Requested:</strong>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;">
+                                    <span/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table table-condensed mt48"
+                           style="collapse; border:1px solid black ;margin-left:7px">
+                        <tbody>
+                            <thead>
+                                <tr style="collapse; border:1px solid black">
+                                    <th style="collapse; border:1px solid black;width:5%;">
+                                        <strong>Cost Element:</strong>
+                                    </th>
+                                    <th colspan="4" style="collapse; border:1px solid black;width:5%;">
+                                        <span/>
+                                    </th>
+                                    <th colspan="4" style="collapse; border:1px solid black;width:5%;">
+                                        <strong>Budget Balance<br/>Prior To Purchase
+                                        </strong>
+                                    </th>
+                                    <th colspan="4" style="collapse; border:1px solid black;width:5%;">
+                                        <span/>
+                                    </th>
+                                </tr>
+                                <tr style="collapse; border:1px solid black">
+                                    <th style="collapse; border:1px solid black;width:5%;">
+                                        <strong>Budgeted Cost:</strong>
+                                    </th>
+                                    <th colspan="4" style="collapse; border:1px solid black;width:5%;">
+                                        <span/>
+                                    </th>
+                                    <th colspan="4" style="collapse; border:1px solid black;width:5%;">
+                                        <strong>Budget Balance<br/>After To Purchase
+                                        </strong>
+                                    </th>
+                                    <th colspan="4" style="collapse; border:1px solid black;width:5%;">
+                                        <span/>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black;width:5%;">
+                                    <strong>Check box to select:</strong>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <input type="checkbox"/>
+                                    <span>1<sup>st</sup> Quotation</span>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <input type="checkbox"/>
+                                    <span>2<sup>nd</sup> Quotation</span>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <input type="checkbox"/>
+                                    <span>3<sup>rd</sup> Quotation</span>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span>SALES PRICE TO CUSTOMER</span>
+                                </td>
+                            </tr>
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black;width:5%;">
+                                    <strong>Name Of Supplier or Customer:</strong>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                            </tr>
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black;width:5%;">
+                                    <strong>Price (wio GST):</strong>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                            </tr>
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black;width:5%;">
+                                    <strong>Descriptions</strong>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                                <td colspan="3" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                            </tr>
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black;width:5%;">
+                                    <strong>Reasons for Final Selection:</strong>
+                                </td>
+                                <td colspan="12" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                            </tr>
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black;width:5%;">
+                                    <strong>Vonue of Delivery:</strong>
+                                </td>
+                                <td colspan="12" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                            </tr>
+                            <tr style="collapse; border:1px solid black">
+                                <td style="collapse; border:1px solid black;width:5%;">
+                                    <strong>Delivery Date:</strong>
+                                </td>
+                                <td colspan="12" style="collapse; border:1px solid black;width:5%;">
+                                    <span/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row " style="margin-top: 60px;">
+                        <div class="col-xs-2">Requested By
+                        </div>
+                        <div class="col-xs-10">
+                        <t t-call="beumer_modifer_printout.report_purchase_request_signature"/>
+                        </div>
+                        <br/>
+                         <div class="col-xs-2">Approved By Procurement
+                        </div>
+                        <div class="col-xs-10">
+                        <t t-call="beumer_modifer_printout.report_purchase_request_signature"/>
+                        </div>
+                        <br/>
+                         <div class="col-xs-2">Reviewed By (O&amp;M MGR)
+                        </div>
+                        <div class="col-xs-10">
+                        <t t-call="beumer_modifer_printout.report_purchase_request_signature"/>
+                        </div>
+                         <br/>
+                        <div class="col-xs-2">Reviewed By (IT Dept)
+                        </div>
+                        <div class="col-xs-10">
+                        <t t-call="beumer_modifer_printout.report_purchase_request_signature"/>
+                        </div>
+                        <br/>
+                         <div class="col-xs-2">Approved By (GM/PM/Mgr)
+                        </div>
+                        <div class="col-xs-10">
+                        <t t-call="beumer_modifer_printout.report_purchase_request_signature"/>
+                        </div>
+                         <br/>
+                        <div class="col-xs-2">Approved By (CEO/CFO)
+                        </div>
+                        <div class="col-xs-10">
+                        <t t-call="beumer_modifer_printout.report_purchase_request_signature"/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <span>Note:</span>
+                        <ol style="margin-left: 50px;" >
+                            <li> At least 3 quotations are required for any purchases above $500.00.</li>
+                            <li> Attach all quotations with the Requisition Form.</li>
+                            <li> Capital Expenditure Request is required for overhead purchase above $500.00.</li>
+                            <li> Reviewed By Procurement is not required if no Purchase Order issued.</li>
+                            <li> Please ensure Manager/Project Manager has agreed to this purchase before submitting your request.</li>
+                        </ol>
+                    </div>
+
+
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_purchase_request">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="beumer_modifer_printout.report_purchase_request_document"/>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_purchase_request_signature">
+            <div class="col-xs-4">
+                <table class="table table-condensed " style="collapse;">
+                    <thead>
+                        <tr style="collapse;">
+                            <th style="collapse; width:5%;">
+                                <span></span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="collapse; border-bottom:none !important; border-top: none;width:5%;">
+                                <span>Name</span>
+                            </th>
+                        </tr>
+
+                    </thead>
+                </table>
+            </div>
+            <div class="col-xs-4">
+                 <table class="table table-condensed " style="collapse;">
+                    <thead>
+                        <tr style="collapse;">
+                            <th style="collapse; width:5%;">
+                                <span></span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="collapse; border-bottom:none !important; border-top: none;width:5%;">
+                                <span>Signature</span>
+                            </th>
+                        </tr>
+
+                    </thead>
+                </table>
+            </div>
+            <div class="col-xs-4">
+                 <table class="table table-condensed " style="collapse;">
+                    <thead>
+                        <tr style="collapse;">
+                            <th style="collapse; width:5%;">
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="collapse; border-bottom:none !important; border-top: none;width:5%;">
+                                <span>Date</span>
+                            </th>
+                        </tr>
+
+                    </thead>
+                </table>
+            </div>
+        </template>
+        <!-- QWeb Reports -->
+        <report
+                id="picking_purchase_request"
+                model="purchase.request"
+                string="Purchase Request"
+                report_type="qweb-pdf"
+                name="beumer_modifer_printout.report_purchase_request"
+                file="beumer_modifer_printout.report_purchase_request"
+        />
+
+    </data>
+</odoo>

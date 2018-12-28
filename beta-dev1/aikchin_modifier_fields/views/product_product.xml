@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="product_search_form_view_inherit">
+			<field name="name">product.product.search.form.inherited</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_search_form_view" />
+			<field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="default_code" string="Product Code"/>
+                </field>
+			</field>
+		</record>
+
+        <record model="ir.ui.view" id="product_normal_form_view_inherit">
+			<field name="name">	product.product.form.inherited</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view" />
+			<field name="arch" type="xml">
+                <field name="default_code" position="attributes">
+                    <attribute name="string">Product Code</attribute>
+                </field>
+			</field>
+		</record>
+
+        <record model="ir.ui.view" id="product_product_tree_view_inherit">
+			<field name="name">product.product.tree.inherited</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_product_tree_view" />
+			<field name="arch" type="xml">
+                <field name="default_code" position="attributes">
+                    <attribute name="string">Product Code</attribute>
+                </field>
+			</field>
+		</record>
+    </data>
+</odoo>

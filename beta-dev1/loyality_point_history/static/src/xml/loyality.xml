@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    
+   <t t-extend='OrdersScreenWidget'>
+        <t t-jquery='.wk_order_list thead tr' t-operation='append'>
+            <th>Earning Point</th>
+        </t>
+    </t>
+     <t t-extend='WkOrderLine'>
+        <t t-jquery='.wk-order-line' t-operation='append'>
+            <td><t t-esc='order.loyalty_points' /></td>
+        </t>
+    </t>
+
+   
+</templates>

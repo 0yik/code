@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.module.category" id="module_category_avanta_fields_modifier">
+            <field name="name">CRM</field>
+            <field name="description">Helps you to manage sale leads of your marketing campaigns step by step.</field>
+            <field name="sequence">2</field>
+        </record>
+
+    </data>
+</odoo>

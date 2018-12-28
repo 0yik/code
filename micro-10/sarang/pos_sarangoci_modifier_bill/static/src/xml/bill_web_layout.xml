@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+    <t t-name="BillPreview">
+        <div class="pos-sale-ticket" style="font-size:13px !important">
+            <div>
+                <h2><t t-esc="widget.pos.company.name"/></h2>
+                <t t-if="widget.pos.db.res_branch and widget.pos.db.res_branch[0]">
+                    <t t-esc="widget.pos.db.res_branch[0].address or ''"/><br />
+                </t>
+                <t t-esc="widget.pos.company.street"/>
+                <t t-esc="widget.pos.company.city"/>,<t t-esc="widget.pos.company.country_id[1]"/><br />
+                <!--<t t-esc="widget.pos.company.street2"/><br/>-->
+            </div>
+            <t t-if="widget.pos.db.res_branch and widget.pos.db.res_branch[0]">
+                <div class="receipt-phone" style="text-align:left;">
+                    Telp : <t t-esc="widget.pos.db.res_branch[0].telephone_no || ''"/><br />
+                </div>
+            </t>
+            <br />
+            <div style="height: 17px;overflow: hidden;">=======================================================</div>
+            <div>DUPLICATE BILL #1</div>
+            <div class="receipt-phone">
+                Print By : <t t-esc="widget.pos.user.name"/><br />
+            </div>
+            <div class="receipt-phone">
+                Print At : <t t-esc="order.formatted_validation_date"/>
+            </div>
+            <div style="height: 17px;overflow: hidden;">=======================================================</div>
+            <br/>
+            <div class="receipt-phone">
+               # <t t-esc="order.name"/> /
+            </div>
+            <div style="height: 17px;overflow: hidden;">----------------------------------------------------------------------------------------------------------------</div>
+            <table style="table-layout: auto;">
+            <tr class="receipt-phone"><td style="padding-left: 0px;width: 52px;">Initiated</td><td style="padding-left: 0px;">:</td><td style="padding-left: 0px;"><t t-esc="order.formatted_validation_date"/></td></tr>
+            <tr class="receipt-phone"><td style="padding-left: 0px;width: 52px;">Settled</td><td style="padding-left: 0px;">:</td><td style="padding-left: 0px;"><t t-esc="order.formatted_validation_date"/></td></tr>
+            <tr class="receipt-phone"><td style="padding-left: 0px;width: 52px;">Waiter</td><td style="padding-left: 0px;">:</td><td style="padding-left: 0px;"><t t-esc="widget.pos.cashier ? widget.pos.cashier.name : widget.pos.user.name"/></td></tr>
+            <tr class="receipt-phone"><td style="padding-left: 0px;width: 52px;">Cashier</td><td style="padding-left: 0px;">:</td><td style="padding-left: 0px;"><t t-esc="widget.pos.cashier ? widget.pos.cashier.name : widget.pos.user.name"/></td></tr>
+            <tr class="receipt-phone"><td style="padding-left: 0px;width: 52px;">POS ID#</td><td style="padding-left: 0px;">:</td><td style="padding-left: 0px;"><t t-esc="widget.pos.config.name || ''"/></td></tr>
+            </table>
+            <div style="height: 17px;overflow: hidden;">----------------------------------------------------------------------------------------------------------------</div>
+            <div>
+                <div>
+                    <div >
+                        <span ><t t-esc="widget.pos.get_order().customer_count"/> Pax</span>
+                    </div>
+                </div>
+                <div align="right">
+                    <h3 style="margin: 10px 0 10px;">Table <t t-esc="widget.pos.table.name"/></h3>
+                </div>
+                <div>
+                    <div>
+                        Welcome, @<t t-esc="widget.pos.get_order().customer_count"/>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 17px;overflow: hidden;">=======================================================</div>
+            <t t-set="orderlines" t-value="order.get_orderlines()"/>
+            <table style="table-layout: auto;">
+                <t t-foreach="orderlines" t-as="orderline" t-if="orderline.state == 'Confirmed'">
+                    <tr>
+                        <td style="padding:0px"><t t-esc="orderline.get_product().display_name"/></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0px">
+                            <div><t t-esc="orderline.quantity"/> x     <t t-esc="widget.format_currency_receipt(orderline.price)"/></div>
+                        </td>
+                        <td>=</td>
+                        <td style="text-align:right">
+                            <div><t t-esc="widget.format_currency_receipt(orderline.get_total_price_without_discount())"/></div>
+                        </td>
+                    </tr>
+                    <tr t-if="orderline.discount">
+                        <td style="padding:0px">
+                            [<t t-esc="orderline.discount"/>%]
+                        </td>
+                        <td></td>
+                        <td style="text-align:right">
+                            <div>-<t t-esc="widget.format_currency_receipt(orderline.get_total_discount_line())"/></div>
+                        </td>
+                    </tr>
+                    <tr t-if="orderline.is_complimentary">
+                        <td style="padding:0px">[Compl]</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </t>
+            </table>
+            <div align="right">--------------------</div>
+            <t t-set="calculation" t-value="order.calculation_order_confirmed()"/>
+            <table style="table-layout: auto;">
+                <tr>
+                    <td style="padding:0px">Subtotal</td>
+                    <td style="text-align:right"><t t-esc="widget.format_currency_receipt(calculation.total_price_with_discount)"/></td>
+                </tr>
+                <tr t-if="calculation.service_ce">
+                    <td style="padding:0px">Service charge (<t t-esc="calculation.service_charge_amount"/>)</td>
+                    <td style="text-align:right"><t t-esc="widget.format_currency_receipt(calculation.service_ce)"/></td>
+                </tr>
+
+                <tr>
+                    <td style="padding:0px">PB1 (<t t-esc="calculation.tax_amount"/>)</td>
+                    <td style="text-align:right"><t t-esc="widget.format_currency_receipt(calculation.tax_val)" /></td>
+                </tr>
+                <tr>
+                    <td style="padding:0px">Rounding</td>
+                    <td style="text-align:right"><t t-esc="widget.format_currency_receipt(calculation.rounding)" /></td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td style="padding:0px"><h4 style="margin: 25px 0 15px;">Total</h4></td>
+                    <td style="text-align:right"><h4 style="margin: 25px 0 15px;"><t t-esc="widget.format_currency_receipt(calculation.total)"/></h4></td>
+                </tr>
+            </table>
+            <br/>
+            <div>
+                Terima kasih atas kunjungan Anda, kami tunggu kedatangan Anda kembali
+            </div>
+            <!--END RECEIPT-->
+        </div>
+    </t>
+</template>
+

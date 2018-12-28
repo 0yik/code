@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="assets_backend" name="web_gantt assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/mgm_sale_orde_gantt_view/static/src/js/gantt.js"></script>
+            </xpath>
+        </template>
+</odoo>

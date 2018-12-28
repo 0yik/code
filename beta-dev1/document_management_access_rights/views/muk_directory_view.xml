@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="muk_dms_directory_form_doc_mgm" model="ir.ui.view">
+        <field name="name">muk_dms_directory.form.document</field>
+        <field name="model">muk_dms.directory</field>
+        <field name="inherit_id" ref="muk_dms.muk_dms_directory_form"/>
+        <field name="arch" type="xml">
+            <field name="perm_create" readonly="1" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="perm_read"  readonly="1"  position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="perm_write" readonly="1"  position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="perm_unlink" readonly="1"  position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <xpath expr="//field[@name='perm_create']" position="after">
+                <field name="doc_mgm_access_group_ids" options="{'no_create': True, 'no_open': True}" width="50%">
+                    <tree editable="bottom" create="false">
+                        <field name="name" readonly="1"/>
+                        <field name="access_group_ids" options="{'no_create': True, 'no_open': True}" widget="many2many_tags"/>
+                    </tree>
+                </field>
+           </xpath>
+        </field>
+    </record>
+
+    <!--<record id="muk_dms_directory_form_edit" model="ir.ui.view">-->
+		<!--<field name="name">muk_dms_directory.form</field>-->
+		<!--<field name="model">muk_dms.directory</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<form string="Directory" create="false">-->
+				<!--<sheet>-->
+					<!--<label for="name" class="oe_edit_only" />-->
+					<!--<h1>-->
+						<!--<field name="name" />-->
+					<!--</h1>-->
+					<!--<separator string="Information" />-->
+					<!--<group>-->
+						<!--<field name="path_object" widget="dms_path" options="{'last_seperator':True}"/>-->
+					<!--</group>-->
+					<!--<group>-->
+						<!--<group>-->
+							<!--<field name="root" />-->
+						<!--</group>-->
+						<!--<group>-->
+							<!--<field name="parent_id" />-->
+							<!--<field name="is_root_directory" />-->
+						<!--</group>-->
+					<!--</group>-->
+					<!--<group>-->
+						<!--<group>-->
+							<!--<field name="count_files" />-->
+						<!--</group>-->
+						<!--<group>-->
+							<!--<field name="count_dirctories" />-->
+						<!--</group>-->
+					<!--</group>-->
+					<!--<notebook>-->
+						<!--<page string="Files">-->
+							<!--<field name="files">-->
+								<!--<tree string="Files">-->
+									<!--<field name="name" />-->
+									<!--<field name="file_size" />-->
+									<!--<field name="write_date" />-->
+								<!--</tree>-->
+							<!--</field>-->
+						<!--</page>-->
+						<!--<page string="Subdirectories">-->
+							<!--<field name="child_id">-->
+								<!--<tree string="Subdirectories">-->
+									<!--<field name="name" />-->
+									<!--<field name="path_text" />-->
+									<!--<field name="root" />-->
+								<!--</tree>-->
+							<!--</field>-->
+						<!--</page>-->
+						<!--<page string="Meta Information" groups="base.group_no_one">-->
+							<!--<group>-->
+								<!--<field name="id" />-->
+							<!--</group>-->
+							<!--<group>-->
+								<!--<group>-->
+									<!--<field name="create_date" readonly="1" />-->
+									<!--<field name="create_uid" readonly="1" />-->
+								<!--</group>-->
+								<!--<group>-->
+									<!--<field name="write_date" readonly="1" />-->
+									<!--<field name="write_uid" readonly="1" />-->
+								<!--</group>-->
+							<!--</group>-->
+						<!--</page>-->
+						<!--<page string="Access Information">-->
+							<!--<field name="perm_create" readonly="1" invisible="1"/>-->
+							<!--<field name="perm_read" readonly="1" invisible="1"/>-->
+							<!--<field name="perm_write" readonly="1" invisible="1" />-->
+							<!--<field name="perm_unlink" readonly="1" invisible="1"/>-->
+							<!--&lt;!&ndash;<field name="doc_mgm_access_group_ids" options="{'no_create': True, 'no_open': True}">&ndash;&gt;-->
+								<!--&lt;!&ndash;<tree editable="bottom" create="false">&ndash;&gt;-->
+									<!--&lt;!&ndash;<field name="name" readonly="1"/>&ndash;&gt;-->
+									<!--&lt;!&ndash;<field name="access_group_ids" options="{'no_create': True, 'no_open': True}" widget="many2many_tags"/>&ndash;&gt;-->
+								<!--&lt;!&ndash;</tree>&ndash;&gt;-->
+							<!--&lt;!&ndash;</field>&ndash;&gt;-->
+						<!--</page>-->
+					<!--</notebook>-->
+				<!--</sheet>-->
+				<!--<div class="oe_chatter">-->
+					<!--<field name="message_follower_ids" widget="mail_followers" />-->
+					<!--<field name="message_ids" widget="mail_thread" />-->
+				<!--</div>-->
+			<!--</form>-->
+		<!--</field>-->
+	<!--</record>-->
+
+
+    <!--<record id="muk_dms_directory_form_read" model="ir.ui.view">-->
+		<!--<field name="name">muk_dms_directory.form</field>-->
+		<!--<field name="model">muk_dms.directory</field>-->
+		<!--<field name="arch" type="xml">-->
+			<!--<form string="Directory" edit="false" create="false" delete="false">-->
+				<!--<sheet>-->
+					<!--<label for="name" class="oe_edit_only" />-->
+					<!--<h1>-->
+						<!--<field name="name" />-->
+					<!--</h1>-->
+					<!--<separator string="Information" />-->
+					<!--<group>-->
+						<!--<field name="path_object" widget="dms_path" options="{'last_seperator':True}"/>-->
+					<!--</group>-->
+					<!--<group>-->
+						<!--<group>-->
+							<!--<field name="root" />-->
+						<!--</group>-->
+						<!--<group>-->
+							<!--<field name="parent_id" />-->
+							<!--<field name="is_root_directory" />-->
+						<!--</group>-->
+					<!--</group>-->
+					<!--<group>-->
+						<!--<group>-->
+							<!--<field name="count_files" />-->
+						<!--</group>-->
+						<!--<group>-->
+							<!--<field name="count_dirctories" />-->
+						<!--</group>-->
+					<!--</group>-->
+					<!--<notebook>-->
+						<!--<page string="Files">-->
+							<!--<field name="files">-->
+								<!--<tree string="Files">-->
+									<!--<field name="name" />-->
+									<!--<field name="file_size" />-->
+									<!--<field name="write_date" />-->
+								<!--</tree>-->
+							<!--</field>-->
+						<!--</page>-->
+						<!--<page string="Subdirectories">-->
+							<!--<field name="child_id">-->
+								<!--<tree string="Subdirectories">-->
+									<!--<field name="name" />-->
+									<!--<field name="path_text" />-->
+									<!--<field name="root" />-->
+								<!--</tree>-->
+							<!--</field>-->
+						<!--</page>-->
+						<!--<page string="Meta Information" groups="base.group_no_one">-->
+							<!--<group>-->
+								<!--<field name="id" />-->
+							<!--</group>-->
+							<!--<group>-->
+								<!--<group>-->
+									<!--<field name="create_date" readonly="1" />-->
+									<!--<field name="create_uid" readonly="1" />-->
+								<!--</group>-->
+								<!--<group>-->
+									<!--<field name="write_date" readonly="1" />-->
+									<!--<field name="write_uid" readonly="1" />-->
+								<!--</group>-->
+							<!--</group>-->
+						<!--</page>-->
+						<!--<page string="Access Information">-->
+							<!--<field name="perm_create" invisible="1" readonly="1" />-->
+							<!--<field name="perm_read" invisible="1" readonly="1" />-->
+							<!--<field name="perm_write" invisible="1" readonly="1" />-->
+							<!--<field name="perm_unlink" invisible="1" readonly="1" />-->
+                            <!--&lt;!&ndash;<field name="doc_mgm_access_group_ids" options="{'no_create': True, 'no_open': True}">&ndash;&gt;-->
+								<!--&lt;!&ndash;<tree editable="bottom" create="false">&ndash;&gt;-->
+									<!--&lt;!&ndash;<field name="name" readonly="1"/>&ndash;&gt;-->
+									<!--&lt;!&ndash;<field name="access_group_ids" options="{'no_create': True, 'no_open': True}" widget="many2many_tags"/>&ndash;&gt;-->
+								<!--&lt;!&ndash;</tree>&ndash;&gt;-->
+							<!--&lt;!&ndash;</field>&ndash;&gt;-->
+						<!--</page>-->
+					<!--</notebook>-->
+				<!--</sheet>-->
+				<!--<div class="oe_chatter">-->
+					<!--<field name="message_follower_ids" widget="mail_followers" />-->
+					<!--<field name="message_ids" widget="mail_thread" />-->
+				<!--</div>-->
+			<!--</form>-->
+		<!--</field>-->
+	<!--</record>-->
+
+</odoo>

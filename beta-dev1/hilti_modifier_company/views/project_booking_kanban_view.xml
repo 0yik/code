@@ -1,0 +1,31 @@
+<odoo>
+    <!-- Case Teams Salesteams dashboard view -->
+   <record id="project_booking_view_kanban" model="ir.ui.view" >
+        <field name="name">project.booking.dashboard</field>
+        <field name="model">project.booking</field>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard o_projectbooking_kanban" create="0" style='display: flex;' js_class="project_booking_dashboard">
+                <!-- <field name="name"/> -->
+                <field name="user_id"/>
+                <!-- <field name="member_ids"/> -->
+                <!-- <field name="color"/> -->
+                <templates>
+                    <t t-name="kanban-box">
+					</t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
+    <record id="project_booking_dashboard_act" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">project.booking</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="context">{}</field>
+        <!-- <field name="view_id" ref="crm_team_salesteams_search"/> -->
+    </record>
+    
+    <menuitem id="menu_project_booking_dahboard_act" action="project_booking_dashboard_act" sequence="1" parent="hilti_modifier_company.menu_customer_admin" name="Dashboard"/>
+
+</odoo>

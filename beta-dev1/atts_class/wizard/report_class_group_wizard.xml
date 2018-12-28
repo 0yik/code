@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_class_group_wizard" model="ir.ui.view">
+            <field name="name">class.group.wizard</field>
+            <field name="model">class.group.wizard</field>
+            <field name="arch" type="xml">
+            <form string="Class Group Report">
+                <group col="4" colspan="6">
+                    
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_class_group_wizard" model="ir.actions.act_window">
+	        <field name="name">Class Group</field>
+	        <field name="res_model">class.group.wizard</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">form</field>
+	        <field name="target">new</field>
+    	</record>
+    	
+    <!-- <menuitem name="Class Group" action="action_class_group_wizard" id="wizard_class_group" parent="atts_class.menu_action_class_report" sequence="12" /> -->
+
+
+</odoo>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Registration Form View -->
+    <record id="view_registration_form" model="ir.ui.view">
+        <field name="name">class.registration.form</field>
+        <field name="model">class.registration</field>
+        <field name="arch" type="xml">
+            <form string="Registration" name="registration">
+                <header>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box"></div>
+                    <group>
+                        <group>
+                            <field name="class_id"/>
+                            <field name="student_id" invisible="1"/>
+                            <field name="name"/>
+                            <field name="date_of_birth"/>
+                            <field name="contact_number"/>
+                        </group>
+                        <group>
+                            <field name="email"/>
+                            <field name="mail_address"/>
+                            <field name="certi_mailing_add"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="nric_passport"/>
+                            <field name="company_name"/>
+                            <field name="job_title"/>
+                            <field name="nationality"/>
+                            <field name="country_id" attrs="{'invisible': [('nationality','!=','others')]}"/>
+                            <field name="dietary_request"/>
+                            <field name="dietary_request_comment"/>
+                        </group>
+                        <group>
+                            <field name="payment_method"/>
+                            <field name="payment_deadline"/>
+                            <field name="individual_billing"/>
+                            <field name="registration_type"/>
+                        </group>
+                        <field name="delegate_lines" attrs="{'invisible': [('registration_type','=','individual')]}">
+                            <tree name="delegate_lines">
+                                <field name="is_delegate"/>
+                                <field name="delegate_name"/>
+                                <field name="delegate_date"/>
+                                <field name="delegate_nationality"/>
+                                <field name="country_id" attrs="{'invisible': [('delegate_nationality','!=','others')]}"/>
+                                <field name="delegate_designation"/>
+                                <field name="dietary_request"/>
+                                <field name="delegate_number"/>
+                                <field name="delegate_email"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+   <!-- Registration list view -->
+   <record id="view_registration_tree" model="ir.ui.view">
+        <field name="name">class.registration.tree</field>
+        <field name="model">class.registration</field>
+        <field name="arch" type="xml">
+            <tree string="Class">
+                <field name="class_id"/>
+                <field name="name"/>
+                <field name="contact_number"/>
+                <field name="date_of_birth"/>
+                <field name="email"/>
+                <field name="payment_deadline"/>
+                <field name="registration_type"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Registration action -->
+    <record id="action_registration" model="ir.actions.act_window">
+        <field name="name">Registration</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">class.registration</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help">Create new Registration.</field>
+    </record>
+
+    <!-- Menu item for Registration -->
+    <menuitem id="menu_action_registration" name='Registration' parent="atts_class.menu_action_root" action="action_registration" sequence="2"/>
+</odoo>

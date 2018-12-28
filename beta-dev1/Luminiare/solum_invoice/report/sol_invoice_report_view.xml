@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <template id="report.external_layout_invoice_sol">
+			<!-- Multicompany -->
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+		
+			<t t-call="solum_invoice.external_layout_inv_header_sol"/>
+			<t t-raw="0" />
+			<t t-call="solum_invoice.external_layout_inv_footer_sol" />
+		</template>
+
+		<template id="external_layout_inv_header_sol">
+			<div class="header">
+				<div class="col-xs-12 pull-left">
+					<center><img src='/solum_sale/static/src/images/sol_luminaire.jpeg' style="width:300px;height:110px;"/></center>
+				</div>
+			</div>
+		</template>
+
+		<template id="external_layout_inv_footer_sol">
+			<div class="footer" style="font-family:Calibri (Body); font-size:16px;">
+				<div style="background-color: #FF8C00; height:70px;">
+					<center>
+						<span>Sol Luminaire Pte Ltd</span><br/>
+						<span>Showroom &amp; Office: Eunos avenue 7 Richfield Industrial centre Block 122 #07-10</span><br/>
+						<span>tel: +65 6282 8020 | fax: +65 6282 8332 | www.solluminaire.com</span><br/>
+					</center>
+					<br/>
+				</div>
+				<br/>
+			</div>
+		</template>
+        
+    	<template id="sol_invoice_report_template_id">
+		    <t t-call="report.html_container">
+		        <t t-foreach="docs" t-as="o">
+		            <t t-call="report.external_layout_invoice_sol">
+		                <div class="page" style="font-family:Calibri (Body); font-size:16px;">
+		                    <table>
+								<tr style="border:none; height:20px;">
+									<td style="width:22cm; height:20px;"><b>Date <span style="float:right;">:</span></b></td>
+									<td style="width:140cm; height:20px; padding-left:20px;">
+										<b><span t-if="o.date_invoice" t-field="o.date_invoice"/></b>
+									</td>
+									<td style="width:18cm; height:20px;"><b>Invoice No <span style="float:right;">:</span></b></td>
+									<td style="width:40cm; height:20px; padding-left:20px;">
+										<b><span t-if="o.number" t-field="o.number"/></b>
+									</td>
+								</tr>
+								<tr style="border:none; height:20px;">
+									<td style="width:22cm; height:20px;"><b>Project <span style="float:right;">:</span></b></td>
+									<td style="width:140cm; height:20px; padding-left:20px;">
+										<b><span t-if="o.sale_project_id" t-field="o.sale_project_id.name"/></b>
+									</td>
+									<td style="width:18cm; height:20px;"><b>Currency <span style="float:right;">:</span></b></td>
+									<td style="width:40cm; height:20px; padding-left:20px;">
+										<b><span t-if="o.currency_id" t-field="o.currency_id.name"/></b>
+									</td>
+								</tr>
+								<tr style="border:none; height:20px;">
+									<td style="width:22cm; height:20px;"><b>Attention <span style="float:right;">:</span></b></td>
+									<td style="width:140cm; height:20px; padding-left:20px;">
+										<b><span t-if="o.attention" t-field="o.attention"/></b>
+									</td>
+									<td style="width:18cm; height:20px;"><b>Prepared by <span style="float:right;">:</span></b></td>
+									<td style="width:40cm; height:20px; padding-left:20px;">
+										<b><span t-if="o.user_id" t-field="o.user_id.name"/></b>
+									</td>
+								</tr>
+								<tr style="border:none; height:20px;">
+									<td style="width:22cm; height:20px;"><b>PO No <span style="float:right;">:</span></b></td>
+									<td style="width:140cm; height:20px; padding-left:20px;">
+										<b><span t-if="o.po_no" t-field="o.po_no"/></b>
+									</td>
+									<td style="width:18cm; height:20px;"><b>Ref. No <span style="float:right;">:</span></b></td>
+									<td style="width:40cm; height:20px; padding-left:20px;">
+										<b><span t-if="o.reference_no" t-field="o.reference_no"/></b>
+									</td>
+								</tr>
+								<tr style="border:none; height:20px;">
+									<td style="width:22cm; height:20px;"><b>Company <span style="float:right;">:</span></b></td>
+									<td style="width:140cm; height:20px; padding-left:20px;">
+										<b><span t-if="o.partner_id" t-field="o.partner_id.name"/></b>
+									</td>
+									<td style="width:18cm; height:20px;"><b>Terms <span style="float:right;">:</span></b></td>
+									<td style="width:40cm; height:20px; padding-left:20px;">
+										<b><span t-if="o.payment_term_id" t-field="o.payment_term_id.name"/></b>
+									</td>
+								</tr>
+								<tr style="border:none; height:20px;">
+									<td style="width:22cm; height:20px;"></td>
+									<td style="width:140cm; height:20px; padding-left:20px;"></td>
+									<td style="width:18cm; height:20px;"><b>Designer <span style="float:right;">:</span></b></td>
+									<td style="width:40cm; height:20px; padding-left:20px;">
+										<b><span t-esc="o.get_designer(o.inchange_ids)"/></b>
+									</td>
+								</tr>
+							</table>
+							<br/><br/>
+							<span style="font-size:32px;"><center><strong>INVOICE</strong></center></span>
+							<br/>
+							<table class="table table-condensed" t-if='o.inv_type == "led_strip"'>
+								<thead>
+								    <tr>
+								        <th style="border-top:1px solid black;">ITEM</th>
+								        <th style="border-top:1px solid black;">PRODUCT</th>
+								        <th style="border-top:1px solid black;">AREA</th>
+								        <th style="border-top:1px solid black;">LOCATION</th>
+								        <th style="border-top:1px solid black;">UNIT PRICE</th>
+								        <th style="border-top:1px solid black;">QTY</th>
+								        <th style="border-top:1px solid black;">NETT PRICE</th>
+								        <th style="border-top:1px solid black;">AMOUNT</th>
+								    </tr>
+							   </thead>
+							   <tbody class="sale_tbody" style="font-weight: bold;">
+								    <t t-set="i" t-value="0" />
+								    <tr t-foreach="o.invoice_line_ids" t-as="l">
+								        <t t-set="i" t-value="i+1" />
+								        <td>
+								           <span t-esc="i"/>
+								        </td>
+								        <td>
+								           <span t-if="l.product_id" t-field="l.product_id.name"/>
+								        </td>
+								        <td>
+								           <span t-if="l.area_id" t-field="l.area_id.name"/>
+								        </td>
+								        <td>
+								           <span t-if="l.product_location_id" t-field="l.product_location_id.name"/>
+								        </td>
+								        <td>
+								           <span t-esc="'%.2f'% l.price_unit"/>
+								        </td>
+								        <td>
+								           <span t-esc="int(l.quantity)"/> <span t-if="l.uom_id" t-field="l.uom_id.name"/>
+								        </td>
+								        <td>
+								           <span t-esc="'%.2f'% l.price_subtotal"/>
+								        </td>
+								        <td>
+								           <span t-esc="'%.2f'% l.price_subtotal"/>
+								        </td>
+								    </tr>
+								</tbody>
+							</table>
+							
+							<table class="table table-condensed" t-if='o.inv_type == "led_attach"'>
+								<thead>
+								    <tr>
+								        <th style="border-top:1px solid black;">ITEM</th>
+								        <th style="border-top:1px solid black;">MODEL</th>
+								        <th style="border-top:1px solid black;">DESCRIPTION</th>
+								        <th style="border-top:1px solid black;">COLOUR</th>
+								        <th style="border-top:1px solid black;">QTY</th>
+								        <th style="border-top:1px solid black;">UNIT PRICE</th>
+								        <th style="border-top:1px solid black;">AMOUNT</th>
+								    </tr>
+							   	</thead>
+							   	<tbody class="sale_tbody" style="font-weight: bold;">
+								    <t t-set="i" t-value="0" />
+								    <tr t-foreach="o.invoice_line_ids" t-as="l">
+								        <t t-set="i" t-value="i+1" />
+								        <td>
+								           <span t-esc="i"/>
+								        </td>
+								        <td>
+								           <span t-if="l.product_id" t-field="l.product_id.name"/>
+								        </td>
+								        <td>
+								           <span t-if="l.name" t-field="l.name"/>
+								        </td>
+								        <td>
+								           <span t-if="l.colour_id" t-field="l.colour_id.name"/>
+								        </td>
+								        <td>
+								           <span t-esc="int(l.quantity)"/> <span t-if="l.uom_id" t-field="l.uom_id.name"/>
+								        </td>
+								        <td>
+								           <span t-esc="'%.2f'% l.price_unit"/>
+								        </td>
+								        <td>
+								           <span t-esc="'%.2f'% l.price_subtotal"/>
+								        </td>
+								    </tr>
+								</tbody>
+							</table>
+							
+							<t t-foreach="o.get_line_length(o.invoice_line_ids,o.inv_type)" t-as="l">
+								<br/><span style="color:white;">.</span>
+							</t>
+							
+							<div style="display: inline-block;">
+								<div class="col-xs-12">
+									<div class="col-xs-8">
+										<table class="table table-condensed" style="border-top:none; margin-left:-35px; font-size:15px;">
+											<tr style="border-top:none; line-height:12px;" t-foreach="o.remarks_ids" t-as="r">
+											    <td style="border-top:none; font-weight: bold; line-height:12px;">
+											        *<span t-if="r.name" t-field="r.name.name"/>
+											    </td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div class="col-xs-12" style="border-bottom:solid; border-top:solid; border-top-style: double;">
+									<div class="col-xs-4 pull-right" style="height:92px;">
+										<table class="table table-condensed" style="border-top:none; border-bottom:none;">
+											<tr style="border-top:none; line-height:12px;">
+											    <td style="border-top:none; line-height:12px;"><strong>SUB-TOTAL</strong></td>
+											    <td class="text-right" style="border-top:none; font-weight: bold; line-height:12px;">
+											        <span t-field="o.amount_untaxed"/>
+											    </td>
+											</tr>
+											<tr style="border-top:none; line-height:12px;">
+											    <td style="border-top:none; line-height:12px;"><strong>DISCOUNT</strong></td>
+											    <td class="text-right" style="border-top:none; font-weight: bold; line-height:12px;">
+											        <span t-field="o.amount_discount"/>
+											    </td>
+											</tr>
+											<tr style="border-top:none; line-height:12px;">
+											    <td style="border-top:none; line-height:12px;"><strong>TAX</strong></td>
+											    <td class="text-right" style="border-top:none; font-weight: bold; line-height:12px;">
+											        <span t-field="o.amount_tax"/>
+											    </td>
+											</tr>
+											<tr style="border-top:none; line-height:12px;">
+											    <td style="border-top:none; line-height:12px;"><strong>GRAND TOTAL</strong></td>
+											    <td class="text-right" style="border-top:none; font-weight: bold; line-height:12px;">
+											        <span t-if="o.currency_id" t-field="o.currency_id.symbol"/> 
+											        <span t-esc="'%.2f'% (o.amount_untaxed+o.amount_tax-o.amount_discount)"/>
+											    </td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							
+								<div class="col-xs-12">
+									<div class="col-xs-6">
+										<span style="border-top:2px solid black; margin-top:130px; float:left; font-size:18px;">
+											<b>CUSTOMER ACKNOWLEDGEMENT</b>
+										</span>
+									</div>
+									<div class="col-xs-6 pull-right">
+										<br/>
+										*<span>Invoice payable to <u>"Sol Luminiare Pte Ltd"</u> via cheque</span><br/><br/>
+										*<span>You can pay by telegraphic transfer to:</span><br/>
+										<span style="margin-left:5px;"><b>OCBC BANK</b></span><br/>
+										<span style="margin-left:5px;"><b>Account Name : Sol Luminiare Pte Ltd</b></span><br/>
+										<span style="margin-left:5px;"><b>A/C No : 594-223307-001</b></span><br/>
+									</div>
+								</div>
+							</div>
+							
+							<br/>
+		                </div>
+		            </t>
+		        </t>
+		    </t>
+		</template>
+   </data>
+</openerp>

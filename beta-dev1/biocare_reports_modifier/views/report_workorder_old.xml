@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="report_workorder_document">
+    <t t-call="biocare_reports_modifier.external_layout_new">
+        <t t-set="doc" t-value="doc.with_context({'lang':doc.partner_id.lang})" />
+        <div class="page" style="font-size: 18px;">
+            <div class="oe_structure"/>
+                <div class="row col-xs-12" style="padding:0 !important;">
+                    <div class="col-xs-9">
+                        <img class="img img-responsive" t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 150px; width: 300px;"/>
+                    </div>
+                    <!--div class="col-xs-9 text-right" style="margin-top:20px;" t-field="company.rml_header1"/-->
+                    <div class="col-xs-3" style="float:right;">
+                        <img class="img img-responsive"
+                            style="height: 80px; width: 200px; padding:0 !important;"
+                            src="biocare_reports_modifier/static/logo/bizsafe3-n.png"/>
+                    </div>
+                </div>
+                <!--div class="row zero_min_height">
+                    <div class="col-xs-12">
+                        <div style="border-bottom: 1px solid black;"></div>
+                    </div>
+                </div-->
+                <div class="row">
+                    <div class="col-xs-6" name="company_address">
+                        <!--span t-field="company.partner_id"
+                            t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'
+                            style="border-bottom: 1px solid black; display:inline-block;"/-->
+                        <b> <span t-field="company.partner_id"/> </b> <br/>
+                        <span t-field="company.street"/><t t-if="company.street2">, <span t-field="company.street2"/></t>
+                        <t t-if="company.city"><span t-field="company.city"/></t>
+                        <t t-if="company.state_id"><span t-field="company.state_id.name"/></t>
+                        <t t-if="company.country_id"><br/> <span t-field="company.country_id.name"/></t>
+                        <t t-if="company.zip"><span t-field="company.zip"/><br/></t>
+                        <t t-if="company.phone"> Tel: <span t-field="company.phone"/> <b>&#183;</b> </t>
+                        <t t-if="company.fax"> Fax: <span t-field="company.fax"/><br/></t>
+                        <t t-if="company.website"><span t-field="company.website"/></t>
+                        <!--t t-if="company.comapany_registry"><span t-field="company.comapany_registry"/></t-->
+                    </div>
+                </div>
+                <div class="row zero_min_height">
+                    <div class="col-xs-12">
+                        <div style="border-bottom: 1px solid black;"></div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <strong> 
+                            <!--div t-field="doc.partner_id"
+                                t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True, "phone_icons": True}'/-->
+                         <span t-field="doc.partner_id"/> <br/>
+                         <span t-field="doc.partner_id.street"/><t t-if="doc.partner_id.street2">, <span t-field="doc.partner_id.street2"/></t><br/>
+                        <t t-if="doc.partner_id.city"><span t-field="doc.partner_id.city"/></t>
+                        <t t-if="doc.partner_id.state_id"><span t-field="doc.partner_id.state_id.name"/><br/></t>
+                        <t t-if="doc.partner_id.country_id"> <span t-field="doc.partner_id.country_id.name"/></t>
+                        <t t-if="doc.partner_id.zip"><span t-field="doc.partner_id.zip"/><br/></t>
+                        <t t-if="doc.partner_id.phone"> Tel: <span t-field="doc.partner_id.phone"/><br/> </t>
+                        <t t-if="doc.partner_id.fax"> Fax: <span t-field="doc.partner_id.fax"/></t>
+                        <!--t t-if="doc.website"><span t-field="doc.website"/></t-->
+                        </strong>        
+                    </div>
+                    <div class="col-xs-4 pull-right">
+                        <table>
+                            <tr>
+                                <td style="padding-bottom: 12px;"> <strong> NO: </strong> </td>
+                                <td style="padding-bottom: 12px;"> <strong><span t-field="doc.origin"></span> </strong></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 12px;"> <strong>DATE: </strong> </td> 
+                                <td style="padding-bottom: 12px;"> <t t-if="doc.sudo().get_bo_info(doc)">
+                                        <strong><span t-esc="doc.sudo().get_bo_info(doc).date_order"/></strong>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 12px;"> <strong> TERMS: </strong> </td> 
+                                <td style="padding-bottom: 12px;"> <t t-if="doc.sudo().get_bo_info(doc).payment_term_id"> 
+                                        <strong> <span t-esc="doc.sudo().get_bo_info(doc).payment_term_id.name"/> </strong>
+                                    </t> 
+                                </td>
+                            </tr>
+                            <!--tr>
+                                <td style="padding-bottom: 5px;"> <strong> PAGE: </strong> </td> 
+                                <td style="padding-bottom: 5px;"> <span class="page"/>/<span class="topage"/> </td>
+                            </tr-->
+                        </table>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <table class="table table-condensed" style="border-style:hidden !important; page-break-inside: avoid;" border="0">
+                    <thead>
+                        <tr>
+                            <th><strong>ITEM</strong></th>
+                            <th class="text-left"><strong>DESCRIPTION</strong></th>
+                            <th class="text-right"><strong>AMOUNT</strong> </th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+                        <t t-if="doc.sudo().get_bo_info(doc).order_line">
+                            <t t-foreach="doc.sudo().get_bo_info(doc).order_line" t-as="l">
+                                <tr>
+                                    <td style="border-bottom: solid 1px white !important;" ><span t-esc="l_index+1">.</span></td>
+                                    <td style="border-bottom: solid 1px white !important;" clss="text-center"><span t-field="l.name"/></td>
+                                    <td style="border-bottom: solid 1px white !important;" class="text-right"><span t-field="l.price_subtotal"
+                                            t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'></span></td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+                <div style="position:absolute;top:1150px; page-break-inside: avoid;">
+                    <div class="row">
+                        <div class="col-xs-4 pull-right">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td> <strong>SUB-TOTAL </strong></td>
+                                    <td class="text-right"> 
+                                        <span t-esc="doc.sudo().get_bo_info(doc).amount_untaxed"
+                                            t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                    </td>
+                                </tr>
+                                <!--tr style="border-bottom: 1px solid black;"-->
+                                <tr>
+                                    <td>ADD: GST 7%</td>
+                                    <td class="text-right">
+                                        <span t-esc="doc.sudo().get_bo_info(doc).amount_tax"
+                                            t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                            <div class="row zero_min_height">
+                                <div class="col-xs-12">
+                                    <div style="border-bottom: 1px solid black;"></div>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+                <div style="position:absolute;top:1310px; page-break-inside: avoid;">
+                    <div class="row">
+                        <div class="col-xs-5" style="font-size: 15px;">
+                            <p> Note:<br/> 
+                                Payment should be made by crossed cheque in favour of<br/>
+                                <b>"BIO-CARE GREASE CONTROL PTE LTD" </b> <br/>
+                                Payment must be made within your credit terms, otherwise
+                             a late payment charge of 2% will be imposed on the amount
+                             outstanding.
+                         </p>
+                         E. &amp; O. E.
+                     </div>
+                     <div class="col-xs-4 pull-right" >
+                         <table class="table" style="border-style:hidden !important;" border="0">
+                             <!--tr>
+                                 <td><strong>SUB-TOTAL: </strong></td>
+                                 <td class="text-right">
+                                     <span t-esc="doc.get_bo_info(doc).amount_untaxed"
+                                         t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td>ADD: GST 7%</td>
+                                 <td class="text-right">
+                                     <span t-esc="doc.get_bo_info(doc).amount_tax"
+                                         t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                                 </td>
+                             </tr
+                             -->
+                             <tr>
+                                 <td style="font-size: 17px;"><strong>TOTAL</strong></td>
+                                 <td style="font-size: 17px;" class="text-right">
+                                     <strong><span t-field="doc.get_bo_info(doc).amount_total"
+                                         t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/></strong>
+                                 </td>
+                             </tr>
+                         </table>
+                         <p  style="font-size: 15px !important;"><b>BIO-CARE GREASE CONTROL PTE LTD</b></p>
+                         <br/>
+                         <br/>
+                         <p> _________________________________</p>
+                     </div>
+                 </div>
+             </div>
+            <!--div class="row" name="total">
+                <div class="col-xs-4 pull-right">
+                    <table class="table table-condensed">
+                        <tr class="border-black">
+                            <td><strong>SUB-TOTAL: </strong></td>
+                            <td class="text-right">
+                                <span t-esc="doc.get_bo_info(doc).amount_untaxed"
+                                    t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ADD: GST 7%</td>
+                            <td class="text-right">
+                                <span t-esc="doc.get_bo_info(doc).amount_tax"
+                                    t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            </td>
+                        </tr>
+                        <tr class="border-black">
+                            <td><strong>TOTAL</strong></td>
+                            <td class="text-right">
+                                <span t-field="doc.get_bo_info(doc).amount_total"
+                                    t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div-->
+         <p style="page-break-before:always;"> </p>
+         <div class="row col-xs-12">
+            <div class="col-xs-3">
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 150px; width: 300px;"/>
+            </div>
+            <!--img class="img img-responsive col-xs-9 pull-right" style="max-height: 45px; max-width: 150px" src="biocare_reports_modifier/static/logo/bizsafe3.png"/-->
+            <!--div class="col-xs-9 text-right" style="margin-top:20px;" t-field="company.rml_header1"/-->
+            
+            <div class="col-xs-9 text-right" style="margin-top:20px; font-size: 19px !important;">
+                <span class="col-xs-3 pull-right"> Work Order </span><br/>
+                <span class="col-xs-6 pull-right" t-field="doc.name"> </span>
+            </div> 
+        </div>
+        
+        <div class="row">
+            <div class="col-xs-6" name="company_address">
+                <!--span t-field="company.partner_id"
+                    t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'
+                    style="border-bottom: 1px solid black; display:inline-block;"/-->
+                <!--span t-field="company.partner_id"
+                    t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'
+                    /-->
+                <b> <span t-field="company.partner_id"/> </b> <br/>
+                        <span t-field="company.street"/><t t-if="company.street2">, <span t-field="company.street2"/></t>
+                        <t t-if="company.city"><span t-field="company.city"/></t>
+                        <t t-if="company.state_id"><span t-field="company.state_id.name"/></t>
+                        <t t-if="company.country_id"><br/> <span t-field="company.country_id.name"/></t>
+                        <t t-if="company.zip"><span t-field="company.zip"/><br/></t>
+                        <t t-if="company.phone"> Tel: <span t-field="company.phone"/> <b>&#183;</b> </t>
+                        <t t-if="company.fax"> Fax: <span t-field="company.fax"/> <b>&#183;</b></t>
+                        <!--t t-if="company.website"><span t-field="company.website"/></t-->
+                        <t t-if="company.company_registry">Co. Reg.No: <span t-field="company.company_registry"/></t>
+
+            </div>
+            <div class="col-xs-6">
+                <img class="img img-responsive"
+                    style="height: 70px; width: 200px; float:left; margin-left:-100px;"
+                    src="biocare_reports_modifier/static/logo/bizsafe3-n.png"/>
+            </div>
+        </div>
+        <div class="row zero_min_height">
+            <div class="col-xs-12">
+                <div style="border-bottom: 1px solid black;"></div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-xs-7">
+                <b> Work Location </b><br/>
+                 <!--div t-field="doc.partner_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True, "phone_icons": True}'/-->
+                            <span t-field="doc.partner_id"/> <br/>
+                            <span t-field="doc.partner_id.street"/><t t-if="doc.partner_id.street2">, <span t-field="doc.partner_id.street2"/></t><br/>
+                            <t t-if="doc.partner_id.city"><span t-field="doc.partner_id.city"/></t>
+                            <t t-if="doc.partner_id.state_id"><span t-field="doc.partner_id.state_id.name"/><br/></t>
+                            <t t-if="doc.partner_id.country_id"> <span t-field="doc.partner_id.country_id.name"/></t>
+                            <t t-if="doc.partner_id.zip"><span t-field="doc.partner_id.zip"/><br/></t>
+                            <t t-if="doc.partner_id.phone"> Tel: <span t-field="doc.partner_id.phone"/><br/> </t>
+                            <t t-if="doc.partner_id.fax"> Fax: <span t-field="doc.partner_id.fax"/></t>
+
+            </div>
+        </div>
+        <br/>
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th><strong>Appointment Date</strong></th>
+                    <th><strong>Appointment Time</strong></th>
+                    <th><strong>Actual Date</strong></th>
+                    <th><strong>Time In</strong></th>
+                    <th><strong>Time Out</strong></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span t-field="doc.scheduled_start" t-field-options='{"format": "dd-MMMM-y"}'/></td>
+                    <td><span t-esc="doc.sudo().get_time_format_schedule_start(doc)"/></td>
+                    <td><span t-field="doc.actual_start" t-field-options='{"format": "dd-MM-y"}'/></td>
+                    <!--td><span t-field="doc.actual_start" t-field-options='{"format": "HH:MM"}'/></td-->
+                    <td><span t-esc="doc.sudo().get_time_format_start(doc)"/></td>
+                    <!--td><span t-field="doc.actual_end" t-field-options='{"format": "HH:MM"}'/></td-->
+                    <td><span t-esc="doc.sudo().get_time_format_end(doc)"/></td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+        <br/>
+        <!--table class="table table-condensed" t-if="doc.move_lines"-->
+        <table class="table table-condensed" t-if="doc.move_lines">
+            <thead>
+                <tr>
+                    <th><strong>Service Name</strong></th>
+                    <th><strong>Service Description</strong></th>
+                    <!--th><strong>JET</strong></th>
+                    <th><strong>EM</strong></th>
+                    <th><strong>VAC</strong></th>
+                    <th><strong>S. Treat</strong></th>
+                    <th><strong>Others</strong></th-->
+                </tr>
+                
+            </thead>
+            <tbody>
+                
+                <tr t-foreach="doc.move_lines.sudo()" t-as="pack_operation" >
+                    <td style="border-bottom: solid 1px white !important;" ><span t-field="pack_operation.product_id"/> </td>
+                    <td style="border-bottom: solid 1px white !important;"> <span t-field="pack_operation.name"/> </td>
+                    <!--td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td-->
+                </tr>
+            </tbody>
+        </table>
+        <div style="position:absolute;top:2520px;">
+            <table style="border: 2px solid #000000;padding: 20px;width: 1000px;height: 90px; border-radius: 10px 10px 10px 10px !important;">
+                <tr style="border-radius: 10px 10px 10px 10px !important;">
+                <td style="padding-left: 10px; border-radius: 10px 10px 10px 10px !important;"> REMARKS:<br/> <span t-field="doc.remarks"/> </td>
+                </tr>
+            </table>
+            <br/>
+            <br/>
+            <table class="col-xs-12 row" style="border: none;">
+                <tr>
+                    <td class="col-xs-4 pull-left">Payment Made:$ _______________</td>
+                    <td class="col-xs-4 pull-left">Collected:  _______________</td>
+                    <td class="col-xs-4 pull-left">Cash/Cheque No: _______________</td>
+                </tr>
+            </table>
+            <br/>
+            <div class="row">
+                <div class="col-xs-4">
+                    <br/>
+                    Acknowledgement by client:<br/>
+                    I/We Certify that the work done<br/>
+                    has been satisfactorily completed<br/>
+                    <br/>
+                    <p>
+                        <span> __________________________<br/>
+                            <span style="text-indent: 5em;">Signature &amp; Co.Stamp</span>
+                        </span> 
+                    </p>
+                    <p><br/><br/>
+                        <span> __________________________<br/>
+                            <span style="text-indent: 5em;"> Name &amp; Date </span>      
+                        </span>
+                    </p>
+                </div>
+                <br/>
+                <div class="col-xs-4 pull-right" style="font-size: 15px !important;" >
+                    for <b> BIO-CARE GREASE CONTROL PTE LTD </b>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <p><br/>
+                        <span> __________________________<br/>
+                            <span style="text-align: center; font-size: 17px !important;">Signature &amp; Co.Stamp</span>
+                        </span>
+                    </p>
+                    <p><br/>
+                    <br/>
+                        <span> __________________________<br/>
+                            <span style="text-align: center; font-size: 17px !important;"> Name &amp; Date </span>      
+                        </span>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="oe_structure"/>
+
+</t>
+</template>
+
+<template id="report_workorder">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="biocare_reports_modifier.report_workorder_document" t-lang="doc.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

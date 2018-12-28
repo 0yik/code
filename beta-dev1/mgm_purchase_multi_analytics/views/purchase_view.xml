@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<record model="ir.ui.view" id="view_purchase_order_form_custom_inherit">
+            <field name="name">purchase.order.custom.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                    <button name="analytic_account" string="Analytic Account" type="object" class="btn-primary" style="width:10%;"/>
+                </xpath>
+            </field>
+        </record>
+
+
+		<record model="ir.ui.view" id="view_purchase_requisition_form_custom_inherit">
+            <field name="name">purchase.requisition.custom.form.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                    <button name="analytic_account" string="Analytic Account" type="object" class="btn-primary" style="width:10%;"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

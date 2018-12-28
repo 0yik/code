@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+{
+    'name' : 'Pos Program Modifier',
+    'version' : '1.0',
+    'category': 'POS',
+    'author': 'GYBIT Soluction',
+    'description': """
+    """,
+    'website': 'www.hashmicro.com',
+    'depends' : [
+	'pos_promotion', 'program_branch_assignment', 'branch', 'assign_inventory_store',
+    ],
+    'data': [
+    'wizard/assign_inventory_store.xml',
+    ],
+    'demo': [
+    ],
+    'qweb': [],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

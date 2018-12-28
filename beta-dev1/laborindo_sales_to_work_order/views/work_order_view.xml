@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="worker_form_labo" model="ir.ui.view">
+        <field name="name">Worker Form</field>
+        <field name="model">worker.worker</field>
+        <field name="arch" type="xml">
+            <form string="Worker Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                        <group>
+                            <field name="email" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="work_order_form_labo" model="ir.ui.view">
+        <field name="name">Work Order Form</field>
+        <field name="model">work.order.so</field>
+        <field name="arch" type="xml">
+            <form string="Work Order Form">
+                <header>
+                    <button name="button_progress" string="Set In Progress" type="object" states="draft" class="btn btn-primary"/>
+                    <button name="button_cancel" string="Cancel" type="object" states="draft"/>
+                    <button name="button_validate" string="Validate" type="object" states="progress" class="btn btn-primary"/>
+                    <field name="state" readonly="1" widget="statusbar" statusbar_visible="draft,progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label string="Work Order"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sale_order_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="start_date" required="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="end_date" required="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="worker_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="duration" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="note" attrs="{'readonly': [('state','!=','draft')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="work_order_tree_labo" model="ir.ui.view">
+        <field name="name">Work Order Tree</field>
+        <field name="model">work.order.so</field>
+        <field name="arch" type="xml">
+            <tree string="Work Order Tree" decoration-success="state=='done'" decoration-info="state=='progress'">
+                <field name="name"/>
+                <field name="sale_order_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="worker_id"/>
+                <field name="duration"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="work_order_search_labo" model="ir.ui.view">
+        <field name="name">Work Order Filter</field>
+        <field name="model">work.order.so</field>
+        <field name="arch" type="xml">
+            <search string="Work Order Filter">
+                <field name="name"/>
+                <field name="sale_order_id"/>
+                <separator/>
+                <filter string="Waiting" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="In Progress" name="progress" domain="[('state', '=', 'progress')]"/>
+                <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                <filter string="Cancel" name="cancel" domain="[('state', '=', 'cancel')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" domain="[]" context="{'group_by': 'state'}"/>
+                    <filter string="Sale Order" domain="[]" context="{'group_by': 'sale_order_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_work_order_labo" model="ir.actions.act_window">
+        <field name="name">Work Order</field>
+        <field name="res_model">work.order.so</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a work order.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_work_order_so_root" name="Work Order" parent="sales_team.menu_base_partner" sequence="5"/>
+    <menuitem id="menu_work_order_so" name="Orders" parent="menu_work_order_so_root" action="action_work_order_labo" sequence="5"/>
+
+</odoo>

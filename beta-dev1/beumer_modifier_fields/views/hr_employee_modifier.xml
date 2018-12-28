@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--Employee race-->
+        <record model="ir.ui.view" id="hr_employee_race_form_view">
+            <field name="name">hr.employee.race.tree</field>
+            <field name="model">hr.employee.race</field>
+            <field name="arch" type="xml">
+                <form string="Employee Race Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_employee_race_tree_view">
+            <field name="name">hr.employee.race.tree</field>
+            <field name="model">hr.employee.race</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Employee Race list">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="hr_employee_race_action">
+            <field name="name">Employee Race</field>
+            <field name="res_model">hr.employee.race</field>
+        </record>
+
+
+        <menuitem id="hr_employee_race_menu" name="Employee Race"
+                  parent="hr.menu_human_resources_configuration"
+                  action="hr_employee_race_action"/>
+
+        <!--Employee Religion-->
+        <record model="ir.ui.view" id="hr_employee_religion_form_view">
+            <field name="name">hr.employee.religion.tree</field>
+            <field name="model">hr.employee.religion</field>
+            <field name="arch" type="xml">
+                <form string="Employee Religion Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_employee_religion_tree_view">
+            <field name="name">hr.employee.religion.tree</field>
+            <field name="model">hr.employee.religion</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Employee Religion list">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="hr_employee_religion_action">
+            <field name="name">Employee Religion</field>
+            <field name="res_model">hr.employee.religion</field>
+        </record>
+
+
+        <menuitem id="hr_employee_religion_menu" name="Employee Religion"
+                  parent="hr.menu_human_resources_configuration"
+                  action="hr_employee_religion_action"/>
+
+        <!--Highest Qualification -->
+        <record model="ir.ui.view" id="hr_employee_qualification_form_view">
+            <field name="name">hr.employee.qualification.tree</field>
+            <field name="model">hr.employee.qualification</field>
+            <field name="arch" type="xml">
+                <form string="Employee Qualification Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_employee_qualification_tree_view">
+            <field name="name">hr.employee.qualification.tree</field>
+            <field name="model">hr.employee.qualification</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Employee Qualification list">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="hr_employee_qualification_action">
+            <field name="name">Employee Qualification</field>
+            <field name="res_model">hr.employee.qualification</field>
+        </record>
+
+
+        <menuitem id="hr_employee_qualification_menu" name="Employee Qualification"
+                  parent="hr.menu_human_resources_configuration"
+                  action="hr_employee_qualification_action"/>
+
+
+
+    </data>
+</odoo>

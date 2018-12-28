@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="pos_categ_food" model="pos.category">
+            <field name="name">Makanan</field>
+        </record>
+
+        <record id="pos_categ_drink" model="pos.category">
+            <field name="name">Minuman</field>
+        </record>
+
+    </data>
+</odoo>

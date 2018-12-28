@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_team_view_form_inherit_target" model="ir.ui.view">
+            <field name="name">crm.team.form.inherit</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+                <page name="members" position="after">
+                    <page string="Target &amp; Achievement" name="target_achievement">
+                        <field name="target_id" context="{'crm_team_id':active_id,'model':active_model}">
+                            <tree editable="bottom">
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                                <field name="branch_id" widget="many2many_tags"/>
+                                <field name="target"/>
+                                <field name="achievement"/>
+                            </tree>
+                            <form>
+                                <sheet>
+                                    <group col="4">
+                                        <field name="branch_id" widget="many2many_tags"/>
+                                        <field name="date_from"/>
+                                        <field name="date_to"/>
+                                        <field name="target"/>
+                                        <field name="achievement"/>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+        <record id="crm_team_sale_target_form_inherit" model="ir.ui.view">
+            <field name="name">crm.team.sale.target.form.inherit</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="crm.crm_team_salesteams_view_kanban"/>
+            <field name="arch" type="xml">
+            <xpath expr="//div[@class='mb4']" position="after">
+                  <div class="mb4">
+                      <a name="%(pdp_sales_target_achievement.crm_team_popup_sale_target_action)d" type="action">
+                          Sales Target &amp; Achievement
+                      </a>
+                  </div>
+            </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

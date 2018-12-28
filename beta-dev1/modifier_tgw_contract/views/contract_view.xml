@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="booking_contract_account_analytic_account_form" model="ir.ui.view">
+        <field name="name">booking.contract.account.analytic.account.invoice.form.inherit</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='set_pending']" position="after">
+                <button name="action_validate" string="Confirm" type="object" states="draft"/>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,validate,open,close</attribute>
+            </xpath>
+            <!-- Hide To renew button -->
+            <xpath expr="//button[@name='set_pending']" position="replace">
+            </xpath>
+            <xpath expr="//button[@name='set_close']" position="attributes">
+                <attribute name="states">validate,open,pending</attribute>
+            </xpath>
+            <xpath expr="//button[@name='set_open']" position="attributes">
+                <attribute name="states">validate,pending,close,cancelled,draft</attribute>
+            </xpath>
+            <xpath expr="//button[@name='set_cancel']" position="attributes">
+                <attribute name="states">validate,open,pending</attribute>
+            </xpath>
+            <!-- Add button -->
+            <xpath expr="//button[@name='toggle_active']" position="after">
+                <button class="oe_inline oe_stat_button" name="get_invoices" type="object" 
+                    icon="fa-pencil-square-o" help="Invoices">
+                        <field string="Invoices" name="invoice_count" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="before">
+        		<group>
+                    <group name="contract_detail">
+                        <field name="contract_number" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="customer_id" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="bridal_specialist" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                    </group>
+                    <group name="contract_user_detail">
+                        <field name="date" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="backup_bridal_specialist" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="user_id" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}" invisible="1"/>
+                        <field name="user_id2" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}" invisible="1"/>
+                        <field name="company_id" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                    </group>
+                </group>
+                <group>
+                    <group string="Bride" name="bride_detail">
+                        <field name="bride_firstname" required="1" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="bride_lastname" required="1" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="bride_email" attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                        <field name="bride_phone" required="1" attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                        <label for="bride_street" string="Address"/>
+                        <div class="o_address_format">
+                            <field name="bride_street" placeholder="Street address 1" class="o_address_street" attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="bride_street2" placeholder="Street address 2" class="o_address_street" attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="bride_city" placeholder="City" class="o_address_city" attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="bride_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}' attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="bride_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="bride_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}' attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="bride_birthdate" placeholder="DOB" class="o_address_street" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                            <field name="bride_nric" placeholder="NRIC..." class="o_address_street" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        </div>
+                    </group>
+                    <group string="Groom" name="groom_detail">
+                        <field name="groom_firstname" required="1" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="groom_lastname" required="1" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="groom_email" attrs="{'readonly':[('state','in',['close','cancelled'])]}" required="1"/>
+                        <field name="groom_phone" required="1" attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                        <label for="groom_street" string="Address"/>
+                        <div class="o_address_format">
+                            <field name="groom_street" placeholder="Street address 1" class="o_address_street" attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="groom_street2" placeholder="Street address 2" class="o_address_street" attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="groom_city" placeholder="City" class="o_address_city" attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="groom_state_id" class="o_address_state" placeholder="State"
+                                options='{"no_open": True}' attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="groom_zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="groom_country_id" placeholder="Country" class="o_address_country"
+                                   options='{"no_open": True, "no_create": True}' attrs="{'readonly':[('state','in',['close','cancelled'])]}"/>
+                            <field name="groom_birthdate" placeholder="DOB" class="o_address_street" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                            <field name="groom_nric" placeholder="NRIC..." class="o_address_street" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        </div>
+                    </group>
+                </group>
+                <group col="6" colspan="2" name="contact_detail">
+                    <field name="contact_name" class="oe_inline" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                    <field name="contact_num" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                    <field name="contact_email" widget="email" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                </group>
+                <group>
+                    <group name="wed_date_detail">
+                        <field name="date_rom" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="date_wedd" string="Pre-Wedding" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="date_wedd2" string="Actual" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="meet_up_date" string="Appointment Date" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="photography_date" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                    </group>
+                    <group name="wed_date_venue">
+                        <field name="wedd_venue" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="wedding" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        <field name="num_guests" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                    </group>
+                </group>
+        	</xpath>
+            <!-- <xpath expr="//page[2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath> -->
+            <xpath expr="//notebook" position="after">
+                <group class="oe_subtotal_footer oe_right" name="footer">
+                    <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="amount_total" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                </group>
+                <group name="terms_conditions">
+                    <div>
+                        <field name="agree_bool"/>
+                        I agree and accept the contract
+                        <button type="action" name="%(action_contract_terms_and_conditions)d"
+                                string="terms and conditions" class="oe_link"/>
+                    </div>
+                </group>
+                <field name="sign"  nolabel="1" class="oe_inline" placeholder="Signature"/>
+                <div class="oe_clear"/>
+            </xpath>
+            <xpath expr="//page" position="before">
+                <page string="Contract Detail" name="contract_detail">
+                    <field name="account_analytic_account_line_id">
+                        <tree editable="bottom" name="account_analytic_account_line_id">
+                            <field name="line_type"/>
+                            <field name="categ_id"/>
+                            <field name="product_id" domain="[('categ_id','child_of', categ_id)]"/>
+                            <field name="qty"/>
+                            <field name="tax_ids" widget="many2many_tags"/>
+                            <field name="price"/>
+                            <field name="price_subtotal"/>
+                        </tree>
+                        <form name="account_analytic_account_line_id">
+                            <group col="4">
+                                <field name="line_type"/>
+                                <field name="categ_id"/>
+                                <field name="product_id" domain="[('categ_id','child_of', categ_id)]"/>
+                                <field name="qty"/>
+                                <field name="tax_ids" widget="many2many_tags"/>
+                                <field name="price"/>
+                                <field name="price_subtotal"/>
+                            </group>
+                        </form>
+                    </field>
+                    <group string="Payment Terms" col="2">
+                        <field name="payment_terms" nolabel="1" attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}">
+                            <tree>
+                                <field name="percentage"/>
+                                <field name="milestone_id"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group name="promo_code">
+                        <h1>
+                            <field name="promo_code" placeholder="PROMO123" class="oe_inline"
+                                   attrs="{'readonly':[('state','in',['open','validate','pending','close','cancelled'])]}"/>
+                        </h1>
+                    </group>
+                </page>
+                <page string="Milestone" name="milestone_detail">
+                    <field name="analytic_milestone_line_id">
+                        <tree editable="bottom" name="analytic_milestone_line_id">
+                            <field name="milestone_id"/>
+                            <field name="date"/>
+                            <field name="start_time" widget="float_time" invisible="1"/>
+                            <field name="end_time" widget="float_time" invisible="1"/>
+                            <field name="location"/>
+                            <field name="vendor_ids" widget="many2many_tags" domain="[('supplier','=',True)]" context="{'default_supplier':True,'default_customer':False}"/>
+                            <field name="state"/>
+                        </tree>
+                        <form name="analytic_milestone_line_id">
+                            <group col="4">
+                                <field name="milestone_id"/>
+                                <field name="date"/>
+                                <field name="start_time" widget="float_time" invisible="1"/>
+                                <field name="end_time" widget="float_time" invisible="1"/>
+                                <field name="location"/>
+                                <field name="vendor_ids" widget="many2many_tags" domain="[('supplier','=',True)]" context="{'supplier':True,'customer':False}"/>
+                                <field name="state"/>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_analytic_account_search_contract" model="ir.ui.view">
+        <field name="name">account.analytic.account.search.conttract</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="stable_account_analytic_analysis.view_account_analytic_account_overdue_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="before">
+                <field string="Bride’s FirstName" name="bride_firstname" filter_domain="[('bride_firstname','ilike',self)]"/>
+                <field string="Bride’s Last name" name="bride_lastname" filter_domain="[('bride_lastname','ilike',self)]"/>
+                <field string="Groom’s First name" name="groom_firstname" filter_domain="[('groom_firstname','ilike',self)]"/>
+                <field string="Groom’s Lirst name" name="groom_lastname" filter_domain="[('groom_lastname','ilike',self)]"/>
+                <field string="Bride’s Email" name="bride_email" filter_domain="[('bride_email','ilike',self)]"/>
+                <field string="Groom’s Email" name="groom_email" filter_domain="[('groom_email','ilike',self)]"/>
+                <field string="Bride’s Phone" name="bride_phone" filter_domain="[('bride_phone','ilike',self)]"/>
+                <field string="Groom’s Phone" name="groom_phone" filter_domain="[('groom_phone','ilike',self)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_analytic_account_list_contract" model="ir.ui.view">
+        <field name="name">account.analytic.account.list.contract</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree string="Contracts">
+                    <field name="contract_number"/>
+                    <field name="bride_firstname"/>
+                    <field name="bride_lastname"/>
+                    <field name="groom_firstname"/>
+                    <field name="groom_lastname"/>
+                    <field name="date_wedd"/>
+                    <field name="user_id" string="Bridal Advisor"/>
+                    <field name="bridal_specialist"/>
+                    <field name="state"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+</odoo>

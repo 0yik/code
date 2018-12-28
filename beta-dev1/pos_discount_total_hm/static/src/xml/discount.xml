@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+     <t t-name="DiscountPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup" style="width:500px;height:300px;">
+                <div class="pos-payment-container">
+					<div class="payment-due-total">$ 0.00</div>
+					<div class="payment-lines">
+						<div class="paymentline selected">
+							<div class="paymentline-name">
+								Discount
+							</div>
+							<input class="paymentline-input" id="discount_input" step="0.01" type="number" value="0.00" pattern="[0-9]+([\.][0-9]+)?"/>
+							<span class="paymentline-delete">
+								<img src="/pos_discount_total_hm/static/src/img/search_reset.gif"/>
+							</span>
+						</div>
+					</div>
+				</div>
+                <div class="footer">
+                    <div class="button pos_aces_retail confirm">
+                        Confirm
+                    </div>
+                    <div class="button press_cancel cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="DiscountButton">
+        <div class='control-button button_discount'  >
+            Discount On Total
+        </div>
+    </t>
+    <t t-extend="OrderWidget">
+        <t t-jquery="div.line" t-operation="replace">
+            <div class="line">
+                <div class='entry total'>
+                    <span class="label">Total: </span> <span class="value">$ 0.00</span>
+                    <div class='discount'>Discount: <span class="value">$ 0.00</span></div>
+                </div>
+            </div><br/><br/><br/>
+            <div class="line">
+                <div class='untax_amount total'>
+                    <span class="label">Untaxed Amount: </span> <span class="amount">$ 0.00</span>
+                    <div class='subentry'>Taxes: <span class="value">$ 0.00</span></div>
+                </div>
+            </div><br/><br/><br/>
+            <div class="line">
+                <div class='grand_total'>
+                    <span class="label">Grand Total: </span> <span class="value">$ 0.00</span>
+                </div>
+            </div>
+        </t>
+    </t>
+     <t t-extend="PaymentScreen-Paymentlines">
+        <t t-jquery="div.paymentlines-empty" t-operation="replace">
+            <t t-if="order != null">
+                <t t-if="order.is_return_order">
+                    <div class='paymentlines-empty'>
+                        <div class='total' style="color:#2b8b8e">
+                            <t t-esc="widget.format_currency(order.get_total_with_discount_and_tax())"/>
+                        </div>
+                        <div class='message'>
+                            Please select a refund method.
+                        </div>
+                    </div>
+                </t>
+                <t t-if="!order.is_return_order">
+                    <div class='paymentlines-empty'>
+                        <div class='total'>
+                            <t t-esc="widget.format_currency(order.get_total_with_discount_and_tax())"/>
+                        </div>
+                        <div class='message'>
+                            Please select a payment method.
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </t>
+    <t t-extend="PosTicket">
+        <t t-jquery=".receipt-total" t-operation="after">
+            <t t-if="order.discount">
+                <table class="receipt-total">
+                <tbody>
+                    <tr>
+                        <td>Discount:</td>
+                        <td class="pos-right-align"><t t-esc="widget.format_currency(order.get_discount())"/></td>
+                    </tr>
+                    <tr></tr>
+                    <tr class="emph">
+                        <td>Grand Total:</td>
+                        <td class="pos-right-align"><t t-esc="widget.format_currency(order.get_total_with_discount_and_tax())"/></td>
+                    </tr>
+                </tbody>
+                </table>
+            </t>
+        </t>
+    </t>
+
+
+</templates>

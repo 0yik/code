@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="account_transfer_form_view">
+            <field name="name">account.transfer.form</field>
+            <field name="model">account.transfer</field>
+            <field name="arch" type="xml">
+                <form string="Account Transfer">
+                    <header>
+                        <button name="action_post" states="unposted" string="Post" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" nolabel="1"/>
+                   </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="type"/>
+                                <field name="journal_id" required="1"/>
+                                <field name="date" required="1"/>
+                            </group>
+                            <group>
+                                <field name="reference" required="1"/>
+                                <field name="account_id" required="1"/>
+                                <field name="amount" required="1"/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Bank">
+                                <field name="buku_expense_line_ids">
+                                    <tree string="Buku Expense Lines" editable="bottom">
+                                        <field name="c_account"/>
+                                        <field name="amount_currency" required="1"/>
+                                        <field name="c_description"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="account_transfer_tree_view">
+            <field name="name">account.transfer.form</field>
+            <field name="model">account.transfer</field>
+            <field name="arch" type="xml">
+                <tree string="Account Transfer">
+                    <field name="type"/>
+                    <field name="journal_id"/>
+                    <field name="date"/>
+                    <field name="reference"/>
+                    <field name="account_id"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_account_transfer">
+            <field name="name">Account Transfer</field>
+            <field name="res_model">account.transfer</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_account_transfer" parent="account.menu_finance_entries" name="Account Transfer" sequence="14"
+                  action="action_account_transfer"/>
+
+        <record model="ir.ui.view" id="account_transfer_line_fiorm_view">
+            <field name="name">account.transfer.line.form</field>
+            <field name="model">account.transfer.line</field>
+            <field name="arch" type="xml">
+                <form string="Account Transfer Line">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="c_account"/>
+                                <field name="amount_currency"/>
+                                <field name="c_description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+        <record id="view_order_form_inherit" model="ir.ui.view">
+			<field name="name">sale order form view</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <attribute name="delete">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form//field[@name='layout_category_id']" position="after">
+                    <field name="special_start" string="Free Gift"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                    <field name="special_start" string="Free Gift"/>
+                </xpath>
+                <notebook>
+                    <page string="Bundle/Gift Information">
+                        <header>
+                            <button name="add_bundle" type="object" string="Add" class="oe_highlight"/>
+                        </header>
+                        <field name="bundle_line_ids" mode="tree,kanban">
+                            <form string="Bundle/Gift" attrs="{'readonly': True}">
+                                <field name="bundle_id" attrs="{'readonly': True, 'invisible': True}"></field>
+                                <field name="product_name" attrs="{'readonly': True}"></field>
+                                <field name="name" attrs="{'readonly': True}"/>
+                                <field name="gift_qty_on_hand" attrs="{'readonly': True}"/>
+                                <field name="gift_qty_to_give"/>
+
+                            </form>
+                            <tree string="Bundle/Gift" editable="bottom" create="false">
+                                <field name="product_name" attrs="{'readonly': True}"></field>
+                                <field name="name" attrs="{'readonly': True}"/>
+                                <field name="gift_qty_on_hand" attrs="{'readonly': True}"/>
+                                <field name="gift_qty_to_give" />
+
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</odoo>

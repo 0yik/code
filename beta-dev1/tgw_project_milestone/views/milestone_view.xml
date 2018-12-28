@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="modifier_project_milestone_tree_view" model="ir.ui.view">
+        <field name="name">modifier.milestone.milestone.tree</field>
+        <field name="model">milestone.milestone</field>
+        <field name="inherit_id" ref="project_milestone.project_milestone_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="contract_id" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="modifier_project_milestone_kanban_view">
+        <field name="name">modifier.milestone.milestone.kanban</field>
+        <field name="model">milestone.milestone</field>
+        <field name="inherit_id" ref="project_milestone.project_milestone_kanban_view"/>
+        <field name="arch" type="xml">
+            <field name="sequence" position="after">
+                <field name="contract_id"/>
+                <field name="contract_number"/>
+                <field name="bridal_specialist"/>
+            </field>
+            <xpath expr="//div[@name='sequence']//field[@name='sequence']" position="replace">
+                <strong>
+                    <field name="contract_number"/>
+                </strong>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- MILESTONE FORM -->
+    <record id="modifier_project_milestone_form_view" model="ir.ui.view" >
+        <field name="name">modifier.milestone.milestone.form</field>
+        <field name="model">milestone.milestone</field>
+        <field name="inherit_id" ref="project_milestone.project_milestone_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bridal_specialist']" position="attributes">
+                <attribute name="string">Bridal Specialist</attribute>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="contract_id"/>
+                <field name="involve_vendor"/>
+                <field name="milestone_vendor_ids" attrs="{'invisible': [('involve_vendor', '!=', True)]}">
+                    <tree editable="bottom">
+                        <field name="vendor_type"/>
+                        <field name="service_charged" widget="many2many_tags"/>
+                        <field name="vendor_id" context="{'default_supplier':True,'default_customer':False}"/>
+                        <field name="check_intime"/>
+                    </tree>
+                </field>
+                <!-- remove comment if in future needed  this code-->
+                <!--  <field name="involve_staff"/>
+                <field name="milestone_staffs" attrs="{'invisible': [('involve_staff', '!=', True)]}"/> -->
+                <field name="involve_product"/>
+                <field name="milestone_products" attrs="{'invisible': [('involve_product', '!=', True)]}"/>
+            </xpath>
+            <!-- change task page in to 3 tab -->
+            <xpath expr="//page[@name='task']" position="replace">
+                <page string="Pre Appointment" name="pre_appointment">
+                    <field name="pre_appointment_lines"
+                           context="{'default_todo_type':'pre', 'default_milestone_id': active_id, 'default_task_date': due_date}">
+                        <tree editable="bottom">
+                            <field name="complete" string="Select"/>
+                            <field name="vendor_ids" widget="many2many_tags" string="Job"/>
+                            <field name="days"/>
+                            <field name="task_date" string="Date"/>
+                            <field name="name" style="word-wrap: break-word;;white-space:normal !important;"/>
+                            <field name="todo_type" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="During Appointment" name="during_appointment">
+                    <field name="during_appointment_lines"
+                           context="{'default_todo_type':'during', 'default_milestone_id': active_id}">
+                        <tree editable="bottom">
+                            <field name="complete" string="Select"/>
+                            <field name="vendor_ids" widget="many2many_tags" string="Job"/>
+                            <field name="days"/>
+                            <field name="task_date" string="Date"/>
+                            <field name="name" style="word-wrap: break-word;white-space:normal !important;"/>
+                            <field name="todo_type" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Post Appointment" name="post_appointment">                    
+                    <field name="post_appointment_lines"
+                           context="{'default_todo_type':'post', 'default_milestone_id': active_id}">
+                        <tree editable="bottom">
+                            <field name="complete" string="Select"/>
+                            <field name="vendor_ids" widget="many2may_tags" string="Job"/>
+                            <field name="days"/>
+                            <field name="task_date" string="Date"/>
+                            <field name="name" style="word-wrap: break-word;white-space:normal !important;"/>
+                            <field name="todo_type" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='contract_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="project_milestone.project_milestone_action">
+        <field name="name">Milestone Template</field>
+        <field name="res_model">milestone.milestone</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the first Milestone</p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="project_milestone_template.milestone_template_action">
+        <field name="name">Milestone Packages</field>
+        <field name="res_model">milestone.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the first Milestone Template</p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="milestone_records_action">
+        <field name="name">Milestone</field>
+        <field name="res_model">milestone.milestone</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{'default_is_tmpl': False}
+        </field>
+        <field name="domain">[('is_tmpl', '=', False)]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the first Milestone</p>
+        </field>
+    </record>
+
+    
+    <menuitem id="milestone_contract_bookings_menu" name="Milestone Records" parent="project_milestone.milestone_menu" action="milestone_records_action"/>
+
+    <menuitem id="project_milestone.child_milestone_menu" name="Milestone Template" parent="project_milestone_template.template_menu" action="project_milestone.project_milestone_action"/>
+
+    <menuitem id="project_milestone_template.milestone_template__menu" parent="project_milestone_template.template_menu" action="project_milestone_template.milestone_template_action" string="Milestone Packages"/>
+
+
+    <!-- ======== New chamges ==== 25/10/2017 -->
+    <record model="ir.ui.view" id="modifier_milestone_template_form_view">
+        <field name="name">modifier.milestone.template.form</field>
+        <field name="model">milestone.template</field>
+        <field name="inherit_id" ref="project_milestone_template.milestone_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='gowns']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='suites']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='dresses']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='bouquets']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='is_actived']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>

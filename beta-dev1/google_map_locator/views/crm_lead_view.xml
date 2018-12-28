@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    
+        <record id="view_crm_lead_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button class="oe_inline oe_stat_button fa fa-map-marke" type="object"
+                        name="show_google_map" icon="fa-map-marker" context="{'default_lead_id': active_id}">
+                        <div class="o_stat_info o_form_field"><b>Locate on Map</b></div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_crm_lead_map" model="ir.ui.view">
+            <field name="name">Locate on Map</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <form string="Locate Map">
+
+                    <group colspan="2" >
+                        <group>
+                            <field name="km" invisible="1"/>
+                            <field name="g_map" widget="map" nolabel="1"/>
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button special="cancel" type="object" string="Ok" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_crm_lead_gmap" model="ir.ui.view">
+            <field name="name">Leads on Map</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <form string="All Leads">
+                    <group>
+                        <field name="g_map" widget="leadmap" nolabel="1" context="{'default_lead_id': active_id}"/>
+                    </group>
+                    <footer>
+                        <button special="cancel" type="object" string="Ok" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Google map" res_model="crm.lead" src_model="crm.lead" view_mode="form" target="new" 
+            view_id="view_crm_lead_gmap" key2="client_action_multi" multi="True" id="act_google_map"/>
+    </data>
+</openerp>

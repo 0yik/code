@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+        <record id="view_res_branch_form" model="ir.ui.view">
+            <field name="name">res.branch.form</field>
+            <field name="model">res.branch</field>
+            <field name="inherit_id" ref="branch.view_res_branch_form"/>
+            <field name="arch" type="xml">
+            <!-- moved in  brand_sales_report module -->
+<!--                 <field name="address" position="before">
+                    <field name="brand_id" />
+                </field> -->
+                <xpath expr="//form/sheet/group" position="after">
+                    <notebook>
+                        <page string="Point of Sale" >
+                            <field name="pos_session_ids">
+                                <tree string="POS Session" editable="top5">
+                                    <field name="pos_session_id" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	<record id="pos_restaurant_kitchen.assets" model="ir.ui.view">
+    		<field name="priority">60</field>
+    	</record>
+        <template id="assets" inherit_id="pos_restaurant_kitchen.assets">
+            <xpath expr="//script[last()]" position="after">
+                <script type="text/javascript" src="/complex_kds/static/src/js/chrome.js"></script>
+                <link rel="stylesheet" type="text/css" href="/complex_kds/static/src/css/pos_restaurant_kitchen.css" />
+                <script type="text/javascript" src="/complex_kds/static/src/js/kitchen_screen.js"></script>
+                <script type="text/javascript" src="/complex_kds/static/src/js/summary_screen.js"></script>
+                <script type="text/javascript" src="/complex_kds/static/src/js/models.js"></script>
+                <script type="text/javascript" src="/complex_kds/static/src/js/gui.js"></script>
+
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

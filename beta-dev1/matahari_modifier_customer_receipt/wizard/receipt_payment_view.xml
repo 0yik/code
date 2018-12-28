@@ -1,0 +1,44 @@
+<odoo>
+
+    <record model="ir.ui.view" id="set_rec_pay_wiz_form_view">
+        <field name="name">receipt.payment.wizardform</field>
+        <field name="model">receipt.payment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Set Color" create="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" invisible="1"/>
+                            <field name="receipt_payment_id" invisible="1"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="receipt_payment_line_ids" nolabel="1">
+                            <tree editable="bottom" create="false" delete="false">
+                                <field name="account_payment_id" invisible="1"/>
+                                <field name="referensi" readonly="1"/>
+                                <field name="receipt_payment_id" readonly="1"/>
+                                <field name="amount" readonly="1"/>
+                                <field name="journal_id" readonly="1"/>
+                                <field name="date" readonly="0"/>
+                                <field name="currency_id" readonly="0"/>
+                                <button name="apply_line" type="object" string="Apply"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rec_pay_wiz" model="ir.actions.act_window">
+        <field name="name">Payments</field>
+        <field name="target">new</field>
+        <field name="res_model">receipt.payment.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+    </record>
+
+</odoo>

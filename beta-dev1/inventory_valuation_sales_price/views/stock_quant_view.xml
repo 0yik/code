@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+   <record model="ir.ui.view" id="view_stock_quant_form_sale_price">
+        <field name="name">stock.quant.form.sale.price</field>
+        <field name="model">stock.quant</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <form string="Inventory Sale Valuation" create="false" edit="false" delete="false">
+                <group>
+                    <group>
+                        <field name="product_id"/>
+                        <field name="qty"/>
+                        <field name="product_uom_id" groups="product.group_uom"/>
+                        <field name="lot_id" groups="stock.group_production_lot"/>
+                        <field name="package_id" groups="stock.group_tracking_lot"/>
+                        <field name="location_id"/>
+                        <field name="owner_id" groups="stock.group_tracking_owner"/>
+                    </group>
+                    <group>
+                        <field name="in_date"/>
+                        <field name="reservation_id"/>
+                        <field name="propagated_from_id"/>
+                        <field name="inventory_sale_value"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="history_ids" string="History">
+                        <tree readonly="1" default_order="date">
+                            <field name="picking_id"/>
+                            <button type="object" name="show_picking" icon="fa-list-alt" attrs="{'invisible': [('picking_id', '=', False)]}"/>
+                            <field name="product_uom_qty"/>
+                            <field name="date"/>
+                            <field name="location_id" groups="stock.group_stock_multi_locations" string="Source Location Zone"/>
+                            <field name="location_dest_id" groups="stock.group_stock_multi_locations" string="Destination Location Zone"/>
+                            <field name="state" invisible="1"/>
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+   </record>
+
+    <record model="ir.ui.view" id="view_stock_quant_tree_sale_price">
+        <field name="name">stock.quant.tree.sale.price</field>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml">
+            <tree string="Inventory Valuation" create="0" delete="0">
+               <field name="product_id"/>
+                <field name="qty"/>
+                <field name="product_uom_id" groups="product.group_uom"/>
+                <field name="location_id"/>
+                <field name="owner_id" groups="stock.group_tracking_owner"/>
+                <field name="lot_id" groups="stock.group_production_lot"/>
+                <field name="package_id" groups="stock.group_tracking_lot"/>
+                <field name="packaging_type_id" invisible="1"/>
+                <field name="in_date"/>
+                <field name="inventory_sale_value" sum="Total"/>
+                <field name="reservation_id" invisible='1'/>
+                <field name="propagated_from_id" invisible='1'/>
+                <field name='company_id' groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="quantsact_sale_price">
+        <field name="name">Inventory Valuation Sales Price</field>
+        <field name="res_model">stock.quant</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="context">{'search_default_internal_loc': 1, 'search_default_stockable': 1, 'group_by': ['product_id', 'location_id']}</field>
+        <field name="help">This analysis gives you a fast overview on the current stock level of your products and their current inventory sale value.</field>
+    </record>
+
+    <record id="ir_action_view_stock_quant_tree_sale_price" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_stock_quant_tree_sale_price"/>
+        <field name="act_window_id" ref="quantsact_sale_price"/>
+    </record>
+
+    <record id="action_view_stock_quant_form_sale_price" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_stock_quant_form_sale_price"/>
+        <field name="act_window_id" ref="quantsact_sale_price"/>
+    </record>
+    <menuitem id="menu_quants_sale" name="Inventory Valuation Sales Price" parent="stock.menu_warehouse_report" sequence="130" action="quantsact_sale_price"/>
+
+</odoo>

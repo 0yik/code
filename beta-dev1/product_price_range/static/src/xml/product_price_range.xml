@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="assets_backend" name="product_price_range product" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/product_price_range/static/src/js/product_price_range.js"></script>
+        </xpath>
+    </template>
+</odoo>

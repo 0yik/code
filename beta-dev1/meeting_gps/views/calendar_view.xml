@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_calendar_event_inherit" model="ir.ui.view">
+        <field name="name">view.calendar.event.inherit</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_title']" position="after">
+                <button string="Sign In" class="oe_highlight"
+                        custom="click" attrs="{'invisible': [('sign_in', '!=', False)]}"/>
+
+                <button string="Cancel Sign In" class="oe_highlight" name="cancel_sign_in"
+                        attrs="{'invisible': ['|',('sign_in', '!=', True),('sign_out', '!=', False)]}"
+                        type="object"/>
+                <span style="display:inline-block; width: 10px;"></span>
+
+                <button string="Sign Out" class="oe_highlight"
+                        custom="click_sign_out"
+                        attrs="{'invisible': ['|',('sign_out', '!=', False),('sign_in', '!=', True)]}"/>
+
+                <button string="Cancel Sign Out" class="oe_highlight" name="cancel_sign_out"
+                        attrs="{'invisible': [('sign_out', '!=', True)]}"
+                        type="object"/>
+
+            </xpath>
+            <xpath expr="//page[1]" position="inside">
+                <group>
+                    <field name="sign_in" invisible="1"/>
+                    <field name="sign_out" invisible="1"/>
+                    <field name="notee_field"/>
+                </group>
+                <separator string="Sign In Location"/>
+                <group>
+                    <field name="sign_in_location" widget="map"  nolabel="1"/>
+                </group>
+
+                <separator string="Sign Out Location"/>
+                <group>
+                    <field name="sign_out_location" widget="map"  nolabel="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

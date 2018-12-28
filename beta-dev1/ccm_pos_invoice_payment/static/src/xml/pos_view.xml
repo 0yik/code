@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="PaymentScreenWidget">
+        <t t-jquery=".js_set_customer" t-operation="after">
+            <div id="pending_invoice">
+                <t t-if='widget.pos.config.iface_invoicing'>
+                    <t t-if='widget.pos.get_order()'>
+                        <div t-attf-class='button js_invoice_pending #{ widget.pos.get_order().js_invoice_pending ? "highlight" : ""} '>
+                            <i class='fa fa-file-text-o' /> <center> Invoice - Pending payment </center>
+                        </div>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </t>
+
+</templates>

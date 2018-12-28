@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="create_sale_order_template" inherit_id="pos_to_sales_order.template" xml:space="preserve">
+
+<!--	<t t-extend="CreateSalesOrderWidget">
+		<t t-jquery="div[class='control-button']" t-operation="replace">
+
+            <div class='control-button create_sale_order_from_takeaway'>
+            	<i class='fa fa-star' />Create Sales Order
+        	</div>
+
+		</t>
+	</t>-->
+
+</templates>

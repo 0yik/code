@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="product.product" id="product_bank_receivable">
+            <field name="name">Bank Receivable</field>
+        </record>
+        <record model="product.product" id="product_bank_charge">
+            <field name="name">Bank Charges</field>
+        </record>
+    </data>
+</odoo>

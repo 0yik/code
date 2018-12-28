@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+	
+		<template id="report.custom_ips_quotation_layout">
+			<!-- Multicompany -->
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+
+			<t t-call="product_quotation_customize.quotation_header_layout" />
+			<t t-raw="0" />
+			<t t-call="product_quotation_customize.quotation_footer_layout" />
+		</template>
+
+		<template id="quotation_header_layout">
+			<div class="header">
+				<div class="col-xs-12 pull-left">
+					<div class="col-xs-6 pull-left">
+						<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="width:200px;height:150px;margin-top:-25px; margin-left:-45px;" />
+						<strong>
+							<span style="font-size:15px; color:red; align: right; margin-left:100px; margin-top:-40px; font-style: italic; display:inline-block;" t-if="company.rml_header1" t-field="company.rml_header1" /><br/>
+						</strong>
+						<div style="margin-top:15px;">
+							<strong>
+								<span style="font-size:16px;" t-if="company.name" t-field="company.name" /><br/>
+							</strong>
+							<strong>Your NPWP No:</strong> <span t-if="o.partner_id.vat_number" t-field="o.partner_id.vat_number" /> 
+							<br/>
+							<strong>Enquiry No:</strong> 
+							<span t-if="o.opportunity_id" t-field="o.opportunity_id.en_number" />
+						</div>
+					</div>
+					<div class="col-xs-6 pull-right">
+						<div style="border:1px solid black; border-radius: 5px;margin-bottom:10px;">
+							<strong><span style="font-size:20px; margin-left:10px;">Quotation</span></strong><br/>
+						</div>
+						<div class="col-xl-3 pull-left">
+							<div style="margin-bottom:10px;">
+								<strong>Quotation:</strong><br/> 
+								<span t-field="o.name" /><br/>
+							</div>
+							<div style="margin-bottom:10px;">
+								<strong>Quotation Date:</strong><br/>
+								<span t-esc="o.get_date_order(o.date_order)" /><br/>
+							</div>
+							<div style="margin-bottom:10px;">
+								<strong>Our Reference:</strong><br/>
+								<span t-if="o.user_id" t-field="o.user_id.name" />
+							</div>
+						</div>
+						<div class="col-xl-3 pull-right">
+							<div style="margin-bottom:10px;">
+								<strong>Customer Code:</strong><br/>
+								<span t-if="o.partner_id.partner_code" t-field="o.partner_id.partner_code"/><br/>
+							</div>
+							<div style="margin-bottom:10px;">
+								<strong>Printout Date:</strong><br/>
+								<span t-esc="o.get_printout_date()" /><br/>
+							</div>
+							<div style="margin-bottom:10px;">
+								<strong>Your Reference:</strong><br/>
+								<span t-if="o.contact_id" t-field="o.contact_id.name" /> <br/>
+							</div >
+							<strong>Page:</strong> <span class="page"/> <strong>of</strong> <span class="topage"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="quotation_footer_layout">
+			<div class="footer">
+				<t t-if="o and o.state == 'approved'">
+					<img t-if="o" t-att-src="'data:image/png;base64,%s' % company.get_approved_image(o,company)" style="width:100px;height:100px;" /><br/>
+					<span>........................</span><br/>
+					<span t-if="o" t-esc="company.get_approved(o)" />
+				</t>
+				<br/><br/>
+				<div class="col-xs-12 pull-left" style="border-top:1px solid black;">
+					<div class="col-xs-4 pull-left">
+						<strong>Mailing Address</strong><br/>
+						<span t-if="company" t-field="company.name" /><br/>
+						<span t-if="company.street" t-field="company.street" /><br/>
+						<span t-if="company.city" t-field="company.city" />
+						<span t-if="company.state_id" t-field="company.state_id.name"/>
+						<span t-if="company.zip" t-field="company.zip" /><br/>
+						<span t-if="company.country_id" t-field="company.country_id.name" /><br/>
+						<span t-if="company.email" t-field="company.email" />
+					</div>
+					<div class="col-xs-4 pull-left">
+						<strong>Contact Us</strong><br/>
+						<span t-if="company.phone" t-field="company.phone" /><br/>
+						<span t-if="company.fax" t-field="company.fax" /><br/>
+						<span t-if="company.email" t-field="company.email" /><br/>
+						<span t-if="company.website" t-field="company.website" />
+					</div>
+					<div class="col-xs-4 pull-right">
+						<br/>
+						NPWP No.: <span t-if="company.npwp_no" t-field="company.npwp_no" /><br/>
+						Dom: <span t-if="company.dom" t-field="company.dom" /><br/>
+						Bank Acc No.: <span t-if="company.bank_acc_number" t-field="company.bank_acc_number" /><br/>
+						Bank Name: <span t-if="company.bank_bin" t-field="company.bank_bin" /><br/>
+					</div>
+				</div>
+				<span style="margin-left:700px;"><strong>Dok No.: FR/IPT-SM-01/01/00</strong></span>
+			</div>
+		</template>
+		
+		
+		<template id="ips_quotation_report_template_id">
+			<t t-foreach="docs" t-as="o">
+				<t t-call="report.custom_ips_quotation_layout">
+					<div class="page">
+						<style type="text/css">
+							.table_delivery tr td{
+								padding:10px;
+							}
+							.table delivery th td{
+								padding:10px;
+							}
+						</style>
+						<div class="oe_structure"/>
+						<div class="col-xs-12 pull-left" style="border:1px solid black; border-radius: 5px;">
+							<div class="col-xs-6 pull-left">
+								<strong>Delivery Address</strong><br/>
+								<div>
+								    <span t-field="o.partner_id.name" /><br/>
+								    <span t-if="o.partner_id.street_delivery" t-field="o.partner_id.street_delivery"/> <br/>
+								    <span t-if="o.partner_id.city_delivery" t-field="o.partner_id.city_delivery"/> 
+								    <span t-if="o.partner_id.zip_delivery" t-field="o.partner_id.zip_delivery"/><br/>
+								    <span t-if="o.partner_id.country_id" t-field="o.partner_id.country_id.name"/><br/>
+								    Phone: <span t-if="o.partner_id.phone" t-field="o.partner_id.phone"/>
+								</div>
+							</div>
+							<div class="col-xs-6 pull-right">
+								<strong>Delivery Address</strong><br/>
+								<div>
+								    <span t-field="o.partner_id.name" /><br/>
+								    <span t-if="o.partner_id.street2_delivery" t-field="o.partner_id.street2_delivery"/><br/>
+								    <span t-if="o.partner_id.city2_delivery" t-field="o.partner_id.city2_delivery"/> 
+								    <span t-if="o.partner_id.zip2_delivery" t-field="o.partner_id.zip2_delivery"/><br/>
+								    <span t-if="o.partner_id.country_id" t-field="o.partner_id.country_id.name"/><br/>
+								    Phone: <span t-if="o.partner_id.phone" t-field="o.partner_id.phone"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12" style="margin-top:20px;margin-bottom:20px;">
+							<div class="col-xs-6 pull-left">
+								<span><b>Terms Of Delivery : </b></span>
+								<span t-if="o.delivery_term_id" t-field="o.delivery_term_id.name"/><br/>
+								<span><b>Delivery Method : </b></span>
+								<span t-if="o.carrier_id" t-field="o.carrier_id.name"/><br/>
+								<span><b>Valid Through : </b></span>
+								<span t-if="o.validity_new_date" t-field="o.validity_new_date.name"/><br/>
+							</div>
+							<div class="col-xs-6 pull-right">
+								<span><b>Terms Of Payment : </b></span>
+								<span t-if="o.payment_term_id" t-field="o.payment_term_id.name"/><br/>
+								<span><b>Delivery Time : </b></span>
+								<span t-if="o.delivery_time_id" t-field="o.delivery_time_id.name"/><br/>
+								<span><b>Goods Label : </b></span>
+								<span t-esc="o.get_order_name(o)"></span><br/>
+							</div>
+						</div>
+						
+						<table class="table table-condensed">
+						    <thead>
+						        <tr style="border:1px solid black;">
+						            <th><strong>Pos</strong></th>
+						            <th><strong>Part No</strong></th>
+						            <th><strong>Description</strong></th>
+						            <th class="text-right"><strong>Qty</strong></th>
+						            <th class="text-right"><strong>Unit Price %</strong></th>
+						            <th class="text-right"><strong>Amount</strong></th>
+						        </tr>
+						    </thead>
+						    <tbody class="invoice_tbody">
+						        <t t-set="i" t-value="0"/>
+						        <tr t-foreach="o.order_line" t-as="l">
+						            <t t-set="i" t-value="i+1"/>
+						            <td style="border:none;"><span t-esc="i"/></td>
+						            <td style="border:none;"><span t-if="l.part_number_product" t-field="l.part_number_product.name"/></td>
+						            <td style="border:none;">
+						                <span t-field="l.product_id.name"/>
+						                <span t-field="l.drawing_number"/>
+						            </td>
+						            <td style="border:none;" class="text-right">
+						                <span t-esc="int(l.product_uom_qty)"/> <span t-field="l.product_uom.name"/>
+						            </td>
+						            <td style="border:none;" class="text-right"><span t-esc="'%.2f'%(l.price_unit)"/></td>
+						            <td style="border:none;" class="text-right"><span t-esc="'%.2f'%(l.price_subtotal)"/></td>
+						        </tr>
+						    </tbody>
+						</table>
+						<div class="row">
+						    <div class="col-xs-4 pull-right" style="border:1px solid black; border-radius: 5px;">
+						        <table class="table table-condensed" style="border:none;">
+						            <tr style="border:none;">
+						                <td style="border:none;"><strong>Total excl. PPN (IDR)</strong></td>
+						                <td style="border:none;" class="text-right">
+						                     <span t-esc="'%.2f'%(o.amount_total)"/>
+						                </td>
+						            </tr>
+						        </table>
+						    </div>
+						</div>
+					</div>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

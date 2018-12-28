@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-name="TakeAwayScreenWidget">
+        <div class="paylaterlist-screen clientlist-screen screen">
+            <div class="summary_screen">
+                <section class="full-content" style="top:1px">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix-takeawaykkkkkkkkkkkkkkkk touch-scrollable scrollable-x scrollable-y' style="overflow-y: scroll !important;height: 90%;">
+                                    <div id="takeaway_orders" >
+                                        <div class='wk_table_body'>
+                                            <table class='wk_order_table_takeaway'>
+                                                <thead>
+                                                    <tr class="wk_table_header_takeaway">
+                                                        <th>Customer</th>
+                                                        <th>Phone Number</th>
+                                                        <th>Order Time</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class='order-list-contents-takeaway'>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+    <t t-name="TakeAwayKanban">
+        <tr class="order-line" t-att-id='order.uid'>
+            <td><t t-if="customer"><t t-esc="customer.name"/></t></td>
+            <td><t t-if="customer"><t t-if="customer.mobile" t-esc="customer.mobile"/></t></td>
+            <td><t t-esc='date'></t></td>
+            <td><t t-esc='state'/></td>         
+        </tr>
+    </t>
+</templates>

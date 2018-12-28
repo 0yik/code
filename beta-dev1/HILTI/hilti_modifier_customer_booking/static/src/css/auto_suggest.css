@@ -1,0 +1,53 @@
+#info {
+	position:absolute;
+	display:none;
+	top:58px;
+	_top:95px;
+	left:15px;
+	width:300px;
+	max-height:350px;
+	border:solid 1px #CCCCCC;
+	overflow-y:auto;
+	z-index:10;
+}
+#columnInfo table{ border:0px solid #999999; border-top:0px; }
+tr.ticked {
+	background-color:#EEEEEE;
+	color:#333333;
+	cursor:pointer;
+	font-size:12px;
+	font-family:verdana,arial,helvetica;
+}
+tr.unticked {
+	background-color:#FFFFFF;
+	color:#333333;
+	font-size:12px;
+	cursor:pointer;
+	font-family:verdana,arial,helvetica;
+}
+tr.selected {
+	background-color:#999999;
+	color:#333333;
+	font-size:12px;
+	cursor:pointer;			
+	font-family:verdana,arial,helvetica;
+}
+td.datarow {
+	padding:6px;
+}
+#map {
+	width:500px;
+	height:500px;
+	position:absolute;
+	top:10px;
+	left:10px;
+}
+#Layer1 {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	width:auto;
+	height:80px;
+	z-index:1;
+	left:530px;
+	top:20px;
+}

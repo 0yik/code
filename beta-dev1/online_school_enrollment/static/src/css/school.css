@@ -1,0 +1,18 @@
+@media screen and (max-width: 499px) {
+	.col-md-12 img.img-responsive {
+		width: 50% !important;
+	}
+	.table td input[type=text] {
+		width: 115px !important;
+	}
+	.mt16 input[type=text], .mt16 select, .mt16 textarea {
+		width: 280px !important;
+	}
+	.mt32 .nav-tabs > li {
+		width: 50%;
+	}
+	.mb16 table {
+		overflow-x: scroll;
+		display: block;
+	}
+}

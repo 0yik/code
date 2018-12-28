@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="hr_holidays_urgent_leave_extended" model="ir.ui.view">
+        <field name="name">Hr Holidays Urgent Leave Form</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+        <field name="arch" type="xml">
+            <field name="name" position="attributes">
+                <attribute name="string">Remarks</attribute>
+            </field>
+            <!--<field name="name" position="after">-->
+                <!--<field name="is_urgent" string="Urgent"/>-->
+            <!--</field>-->
+            <xpath expr="//div[@groups='hr_holidays.group_hr_holidays_manager']" position="replace">
+                <div attrs="{'invisible':[('type','=','add')]}">
+                    <separator string="Reason For Urgent Leave" attrs="{'invisible':[('is_urgent','!=',True)]}"/>
+                    <separator string="Reason For Leave" attrs="{'invisible':[('is_urgent','!=',False)]}"/>
+                    <field name="report_note" placeholder="e.g. Report to the next month..." attrs="{'required':[('is_urgent','!=',False),('type','!=','add')]}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_holidays_filter_urget" model="ir.ui.view">
+            <field name="name">hr.holidays.filter</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.view_hr_holidays_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <filter name="is_urgent" string="Urgent Leave" domain="[('is_urgent', '=', True)]"/>
+                </field>
+            </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="hr_holiday_multiple_form_inherit" model="ir.ui.view">
+            <field name="name">Leave Request Inherit</field>
+            <field name="model">hr.holidays.multiple</field>
+            <field name="inherit_id" ref="multiple_leave_application.hr_holiday_multiple_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='holiday_line_ids']/form/group/group" position="before">
+                    <group name="change_shift_info">
+                        <field name="covering_staff"/>
+                        <field name="change_shift_date"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='holiday_line_ids']/tree/field[@name='date_to']" position="after">
+                    <field name="covering_staff"/>
+                    <field name="change_shift_date"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

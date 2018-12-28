@@ -1,0 +1,139 @@
+<odoo>
+    <data>
+        <record id="account_bank_statement_form_view_inherit_cash" model="ir.ui.view">
+            <field name="name">account bank statement cash view form inherit</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="sg_pettycash.view_cash_statement_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/group[2]" position="replace">
+                    <group>
+                        <field name="contract_id"/>
+                        <field name="cost_element_id1" required="True"/>
+                        <field name="cost_element_id2" required="True"/>
+                        <field name="cost_element_id3" required="True"/>
+                        <field name="cost_element_code_sub"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='name']" position="after">
+                    <field name="analytic_distribution_bank_id" invisible="1"/>
+                    <button name="create_analytic" string="Analytic Distribution" type="object" class="oe_highlight"/>
+                </xpath>
+                <field name="date" position="after">
+                    <label for="balance_start"/>
+                    <div>
+                        <field class="oe_inline" name="balance_start"/>
+                        <button class="oe_inline oe_link oe_edit_only"
+                                name="%(account.action_view_account_bnk_stmt_cashbox)d"
+                                string="&#8594; Count" type="action"
+                                attrs="{'invisible':['|','|',('state2','=','confirm'),('journal_type','!=','cash'),('cashbox_start_id','!=',False)]}"
+                                context="{'balance':'start'}"/>
+                        <button name="open_cashbox_id"
+                                attrs="{'invisible': ['|','|',('state2','=','confirm'),('journal_type','!=','cash'),('cashbox_start_id', '=', False)]}"
+                                string="&#8594; Count" type="object" class="oe_edit_only oe_link oe_inline"
+                                context="{'balance':'start', 'cashbox_id': cashbox_start_id}"/>
+                    </div>
+                    <label for="balance_end_real"/>
+                    <div>
+                        <field class="oe_inline" name="balance_end_real"/>
+                        <button class="oe_inline oe_link oe_edit_only"
+                                name="%(account.action_view_account_bnk_stmt_cashbox)d"
+                                string="&#8594; Count" type="action"
+                                attrs="{'invisible':['|','|',('state2','=','confirm'),('journal_type','!=','cash'),('cashbox_end_id','!=',False)]}"
+                                context="{'balance':'close'}"/>
+                        <button name="open_cashbox_id"
+                                attrs="{'invisible': ['|','|',('state2','=','confirm'),('journal_type','!=','cash'),('cashbox_end_id', '=', False)]}"
+                                string="&#8594; Count" type="object" class="oe_edit_only oe_link oe_inline"
+                                context="{'balance':'close', 'cashbox_id': cashbox_end_id}"/>
+                    </div>
+                </field>
+            </field>
+        </record>
+
+        <record id="account_bank_statement_form_view_inherit_cash_accessright" model="ir.ui.view">
+            <field name="name">account bank statement cash view form inherit ap accounting</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="beumer_modifier_fields.account_bank_statement_form_view_inherit_cash"/>
+            <field name="groups_id" eval="[(4, ref('beumer_modifier_access_right.accsess_user_ap_manager')),(4, ref('beumer_modifier_access_right.accounting_access_product'))]"/>
+            <field name="arch" type="xml">
+                <field name="cost_element_id1" position="attributes">
+                    <attribute name="options">{'no_create_edit': True,'no_create': True, 'no_open': True}</attribute>
+                </field>
+				<field name="cost_element_id2" position="attributes">
+                    <attribute name="options">{'no_create_edit': True,'no_create': True, 'no_open': True}</attribute>
+                </field>
+				<field name="cost_element_id3" position="attributes">
+                    <attribute name="options">{'no_create_edit': True,'no_create': True, 'no_open': True}</attribute>
+                </field>
+            </field>
+        </record>
+
+
+
+        <record id="account_bank_statement_form_view_inherit" model="ir.ui.view">
+            <field name="name">account bank statement view form inherit</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/group[2]" position="replace">
+                    <group>
+                        <field name="contract_id"/>
+                        <field name="cost_element_id1" required="True"/>
+                        <field name="cost_element_id2" required="True"/>
+                        <field name="cost_element_id3" required="True"/>
+                        <field name="cost_element_code_sub"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='name']" position="after">
+                    <field name="analytic_distribution_bank_id" invisible="1"/>
+                    <button name="create_analytic" string="Analytic Distribution" type="object" class="oe_highlight"/>
+                </xpath>
+                <field name="date" position="after">
+                    <label for="balance_start"/>
+                    <div>
+                        <field class="oe_inline" name="balance_start"/>
+                        <button class="oe_inline oe_link oe_edit_only" name="150" string="→ Count" type="action"
+                                attrs="{'invisible':['|','|',('state','!=','open'),('journal_type','!=','cash'),('cashbox_start_id','!=',False)]}"
+                                context="{'balance':'start'}"/>
+                        <button name="open_cashbox_id"
+                                attrs="{'invisible': ['|','|',('state','!=','open'),('journal_type','!=','cash'),('cashbox_start_id', '=', False)]}"
+                                string="→ Count" type="object" class="oe_edit_only oe_link oe_inline"
+                                context="{'balance':'start', 'cashbox_id': cashbox_start_id}"/>
+                    </div>
+                    <label for="balance_end_real"/>
+                    <div>
+                        <field class="oe_inline" name="balance_end_real"/>
+                        <button class="oe_inline oe_link oe_edit_only" name="150" string="→ Count" type="action"
+                                attrs="{'invisible':['|','|',('state','!=','open'),('journal_type','!=','cash'),('cashbox_end_id','!=',False)]}"
+                                context="{'balance':'close'}"/>
+                        <button name="open_cashbox_id"
+                                attrs="{'invisible': ['|','|',('state','!=','open'),('journal_type','!=','cash'),('cashbox_end_id', '=', False)]}"
+                                string="→ Count" type="object" class="oe_edit_only oe_link oe_inline"
+                                context="{'balance':'close', 'cashbox_id': cashbox_end_id}"/>
+                    </div>
+
+                </field>
+            </field>
+        </record>
+
+
+
+        <record id="account_bank_statement_form_view_inherit_accessright" model="ir.ui.view">
+            <field name="name">account bank statement view form inherit ap accounting</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="beumer_modifier_fields.account_bank_statement_form_view_inherit"/>
+            <field name="groups_id" eval="[(4, ref('beumer_modifier_access_right.accsess_user_ap_manager')),(4, ref('beumer_modifier_access_right.accounting_access_product'))]"/>
+            <field name="arch" type="xml">
+                <field name="cost_element_id1" position="attributes">
+                    <attribute name="options">{'no_create_edit': True,'no_create': True, 'no_open': True}</attribute>
+                </field>
+				<field name="cost_element_id2" position="attributes">
+                    <attribute name="options">{'no_create_edit': True,'no_create': True, 'no_open': True}</attribute>
+                </field>
+				<field name="cost_element_id3" position="attributes">
+                    <attribute name="options">{'no_create_edit': True,'no_create': True, 'no_open': True}</attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

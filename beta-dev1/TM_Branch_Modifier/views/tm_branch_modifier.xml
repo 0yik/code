@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+	    <record id="tm_branch_modifier" model="ir.ui.view">
+            <field name="name">res.branch.form.inherit</field>
+            <field name="model">res.branch</field>
+            <field name="inherit_id" ref="branch.view_res_branch_form"/>
+            <field name="arch" type="xml">
+				<xpath expr="//form/sheet" position="replace">
+					<sheet>
+            			<group cols="4">
+            				<group>
+            					<field name="name"/>
+								<field name="branch"/>
+            					<field name="company_id"/>
+        					</group>
+        					<group>
+								<field name="telephone_no"/>
+            					<field name="address"/>
+        					</group>
+            			</group>
+        			</sheet>
+				 </xpath>
+            </field>
+        </record>
+		
+		<record id="tm_branch_modifier_tree" model="ir.ui.view">
+            <field name="name">res.branch.form.inherit</field>
+            <field name="model">res.branch</field>
+            <field name="inherit_id" ref="branch.view_res_branch_tree"/>
+            <field name="arch" type="xml">
+				<xpath expr="//tree/field[@name='name']" position="after">
+					<field name="branch"/>
+				</xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+

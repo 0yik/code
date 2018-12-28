@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="school_payment_inherit" inherit_id="online_school_enrollment.school_payment" name="School Payment Inherit">
+		<xpath expr="//div[@class='container']" position="replace">
+			<div class="container">
+				<form t-att-action="url" method="post" class="o_website_form form-horizontal container-fluid mt32" enctype="multipart/form-data">
+					<h1>You need to pay below amount</h1>
+					<div class="row" style="margin: 0 0 20px 0;">
+						<div class="col-sm-4 form-group">
+					        <label for="name">Name</label>
+					        <input type="text" class="form-control o_website_form_input" t-attf-value="#{name or ''}" id="name" name="name" disabled="True"/>
+					    </div>
+					    <div class="col-sm-4 form-group">
+					        <label for="amount">Amount</label>
+					        <input type="text" class="form-control o_website_form_input" t-attf-value="#{amount or ''}" id="amount" name="amount" disabled="True"/>
+					    </div>
+					</div>
+					
+					<div class="row text-center">
+						<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+						<button type="submit" id="submit_payment" class="btn btn-lg btn-info" name="submit_admission_register" style="border-radius: 5px; height:43px; background-color: #494949;
+			            sborder-color: #494949;" value="Save">Pay Now</button>
+					</div>
+				</form>
+			</div>
+			<div class="oe_structure"/>
+		</xpath>
+	</template>
+</odoo>

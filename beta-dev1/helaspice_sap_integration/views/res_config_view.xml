@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+
+        <record id="view_stock_config_settings_sap_config" model="ir.ui.view">
+            <field name="name">stock.config.settings.sap.config</field>
+            <field name="model">stock.config.settings</field>
+            <field name="inherit_id" ref="stock.view_stock_config_settings"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='traceability']" position="after">
+                    <group string="SAP Integration">
+                        <field name="sap_url" style="width:45%%"/>
+                        <field name="sap_username" style="width:25%%"/>
+                        <field name="sap_password" style="width:25%%"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

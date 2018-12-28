@@ -1,0 +1,26 @@
+<odoo>
+	<data>
+
+		<record id="create_invoice_wizard_form" model="ir.ui.view">
+			<field name="name">Create Invoice Wizard</field>
+			<field name="model">create.invoice.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Create Invoice">
+					<group>
+						<field name="journal_id" options="{'no_create': True}" />
+						<field name="account_id" domain="[('internal_type','=', 'receivable'), ('deprecated', '=', False)]" />
+					</group>
+					<footer>
+						<button name="create_invoice" string="Create Invoice" type="object"
+							class="btn-primary" />
+						<button string="Cancel" class="btn-default" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<act_window id="action_create_invoice_sale_order_line"
+			name="Create Invoice" src_model="sale.order.line" res_model="create.invoice.wizard"
+			view_type="form" view_mode="form" key2="client_action_multi" target="new" />
+	</data>
+</odoo>

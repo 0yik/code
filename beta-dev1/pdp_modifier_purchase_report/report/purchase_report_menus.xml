@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report 
+            id="report_purchase_order_global"
+            string="Global Purchase Order Vendor"
+            model="global.purchase.report.wizard" 
+            report_type="qweb-pdf"
+            file="pdp_modifier_purchase_report.report_global_purchaseorder"
+            name="pdp_modifier_purchase_report.report_global_purchaseorder"
+        />
+
+        <report 
+            id="report_purchase_order_per_supplier"
+            string="Purchase Reports Per Vendor"
+            model="purchase.reports.wizard"
+            report_type="qweb-pdf"
+            file="pdp_modifier_purchase_report.report_purchaseorder_per_supplier"
+            name="pdp_modifier_purchase_report.report_purchaseorder_per_supplier"
+        />
+
+        <report 
+            id="report_Purchase_order_realization"
+            string="Purchase Reports Realization"
+            model="purchase.reports.wizard"
+            report_type="qweb-pdf"
+            file="pdp_modifier_purchase_report.report_purchaseorder_realization"
+            name="pdp_modifier_purchase_report.report_purchaseorder_realization"
+        />
+
+    </data>
+</odoo>

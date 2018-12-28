@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <menuitem action="account.action_tax_form"
+            id="menu_action_tax_biocare" parent="biocare_field_modifier.configuration_bo_order"
+            sequence="3"/> 
+    </data>
+</odoo>

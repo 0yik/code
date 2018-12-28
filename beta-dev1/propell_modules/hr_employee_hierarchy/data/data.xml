@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+<!--     <record model="hr.department" id="dept_technician"> -->
+<!--         <field name="name">Technician/Worker</field> -->
+<!--     </record> -->
+<!--     <record model="hr.department" id="dept_supervisor"> -->
+<!--         <field name="name">Supervisor/Forman</field> -->
+<!--     </record> -->
+<!--     <record model="hr.department" id="dept_engineer"> -->
+<!--         <field name="name">Engineer</field> -->
+<!--     </record> -->
+<!--     <record model="hr.department" id="dept_site_manager"> -->
+<!--         <field name="name">SIC/Manager/Site-Manager</field> -->
+<!--     </record> -->
+<!--     <record model="hr.department" id="dept_assistance_hod"> -->
+<!--         <field name="name">TIC/OIC/Assistant HOD</field> -->
+<!--     </record> -->
+<!--     <record model="hr.department" id="dept_hod"> -->
+<!--         <field name="name">HOD</field> -->
+<!--     </record> -->
+<!--     <record model="hr.department" id="dept_general_manager"> -->
+<!--         <field name="name">General Manager</field> -->
+<!--     </record> -->
+<!--     <record model="hr.department" id="dept_executive_manager"> -->
+<!--         <field name="name">Executive Director</field> -->
+<!--     </record> -->
+<!--     <record model="hr.department" id="dept_managing_manager"> -->
+<!--         <field name="name">Managing Director</field> -->
+<!--     </record> -->
+
+    </data>
+</openerp>

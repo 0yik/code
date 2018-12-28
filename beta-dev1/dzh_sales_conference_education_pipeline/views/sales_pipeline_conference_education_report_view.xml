@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <!--# REPORT-->
+        <report
+            id="action_sales_pipeline_conference_education_report"
+            model="sales.pipeline.event.report"
+            string="Sales Conference &amp; Education Report"
+            name="dzh_sales_conference_education_pipeline.sale_pipeline_conference_education_report"
+            file="dzh_sales_conference_education_pipeline.sale_pipeline_conference_education_report"
+            report_type="qweb-pdf"/>
+
+        <record id="report_sales_pipeline_conference_education_qweb_paperformat" model="report.paperformat">
+            <field name="name">Sales Revenue</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_sales_pipeline_conference_education_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report_sales_pipeline_conference_education_qweb_paperformat"/>
+        </record>
+
+        <!-- Headers and Footers for Credit Note Report -->
+        <template id="external_layout_sales_pipeline_conference_education">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="dzh_sales_conference_education_pipeline.external_layout_header_sales_pipeline_conference_education" />
+            <t t-raw="0" />
+            <t t-call="dzh_sales_conference_education_pipeline.external_layout_footer_sales_pipeline_conference_education" />
+        </template>
+
+        <template id="dzh_sales_conference_education_pipeline.external_layout_header_sales_pipeline_conference_education">
+            <div class="header">
+                <div class="row">
+                    <div>
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:40px;width:160px;float:right"/>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="dzh_sales_conference_education_pipeline.external_layout_footer_sales_pipeline_conference_education">
+            <div class="footer" style="font-size:10pt;">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <div class="text-right" style="float:right">
+                            <ul class="list-inline">
+                                <li>Page:</li>
+                                <li><span class="page"/></li>
+                                <li>of</li>
+                                <li><span class="topage"/></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+
+        <template id="dzh_sales_conference_education_pipeline.sale_pipeline_conference_education_report">
+            <t t-call="dzh_sales_conference_education_pipeline.external_layout_sales_pipeline_conference_education">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet"/>
+                        <table class="table table-bordered">
+                            <thead style="background-color:#EEEEEE;display:table-header-group;display:none;">
+                                <tr style="background-color:#0060a8;page-break-inside:avoid;color:white;">
+                                    <th colspan="8" class="text-center">
+                                        <t style="color:white;font-size:20px;text-align:center;">Conference &amp; Education – Sales Pipeline as at
+                                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %b %Y')"/>
+                                        </t>
+                                    </th>
+                                </tr>
+                                <tr style="background-color:#95b3d7;page-break-inside:avoid;">
+                                    <th>Company</th>
+                                    <th>Country</th>
+                                    <th>Account Manager</th>
+                                    <th>Services/Solutions</th>
+                                    <th>Potential Revenue</th>
+                                    <!--<th>Potential Revenue Annual</th>-->
+                                    <th style="white-space:nowrap;">
+                                        <span class="text-left">Start Date/</span>
+                                        <span class="text-right">Billing</span>
+                                    </th>
+                                    <th>Probability</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color:#0060a8;page-break-inside:avoid;color:white;">
+                                    <th colspan="8" class="text-center">
+                                        <t style="font-size:20px;text-align:center;">Conference &amp; Education – Sales Pipeline as at
+                                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %b %Y')"/></t>
+                                    </th>
+                                </tr>
+                                <t t-if="o.invoice_filter[0]">
+                                <div t-foreach="o.invoice_filter[0]" t-as="f">
+                                    <t t-set="total_planned" t-value="0"/>
+                                    <t t-set="annual_planned" t-value="0"/>
+                                    <tr style="background-color:#95b3d7;page-break-inside:avoid;">
+                                        <th>Company</th>
+                                        <th>Country</th>
+                                        <th>Account Manager</th>
+                                        <th>Services/Solutions</th>
+                                        <th>Potential Revenue</th>
+                                        <!--<th>Potential Revenue Annual</th>-->
+                                        <th style="white-space:nowrap;">
+                                            <span class="text-left">Start Date/</span>
+                                            <span class="text-right">Billing</span>
+                                        </th>
+                                        <th>Probability</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                    <tr style="page-break-inside:avoid;color:white;font-weight:700;background-color:#366092;">
+                                        <td colspan="9">
+                                            <span style="text-transform:uppercase;" t-esc="f"></span>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach="o.currency_ids" t-as="currency">
+                                        <t t-set="total_planned_newsale" t-value="0"/>
+                                        <t t-set="total_planned_potential" t-value="0"/>
+                                        <t t-set="fla" t-value="0"/>
+                                        <t t-foreach="o.date_filter1[0]" t-as="invoice_order">
+                                            <t t-foreach="o.invoice_ids" t-as="invoice">
+                                                <t t-if="invoice_order == invoice.id and invoice.id in o.invoice_filter[0][f]['ids'] and invoice.currency_id.id == currency.id">
+                                                    <tr style="page-break-inside:avoid;">
+
+                                                    <td style="font-family: 'Noto Sans TC', sans-serif;">
+                                                        <span t-field="invoice.partner_name"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="invoice.country_id.name"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="invoice.user_id"/>
+                                                    </td>
+                                                    <td>
+                                                        <p t-if="invoice.product_id">
+                                                            <span t-field="invoice.name"></span>
+                                                            <p t-foreach="invoice.product_id" t-as="product">
+                                                                <span t-field="product.name"></span>
+                                                            </p>
+                                                        </p>
+                                                        <p t-else="">
+                                                                <span t-field="invoice.name"></span>
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <span t-esc="'{0:,.2f}'.format(invoice.one_time_revenue)"></span>
+                                                    </td>
+                                                    <!--<td>-->
+                                                        <!--<span t-field="invoice.annual_revenue"/>-->
+                                                        <!--<t t-set="annual_planned" t-value="annual_planned + invoice.annual_revenue"/>-->
+                                                    <!--</td>-->
+                                                    <td>
+                                                        <span style="white-space:nowrap;" t-field="invoice.x_subscription_period" t-field-options="{&quot;format&quot;: &quot;d-MMM-yy&quot;}" />
+                                                    </td>
+                                                    <td>
+                                                        <span t-esc="int(invoice.probability)"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="invoice.remarks"/>
+                                                    </td>
+                                                    </tr>
+                                                    <t t-set="fla" t-value="1"/>
+                                                    <t t-if="invoice.probability == 100">
+                                                        <t t-set="total_planned_newsale" t-value="total_planned_newsale + invoice.one_time_revenue"/>
+                                                    </t>
+                                                    <t t-if="invoice.probability != 100">
+                                                        <t t-set="total_planned_potential" t-value="total_planned_potential + invoice.one_time_revenue"/>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-if="fla == 1">
+                                            <t t-set="currency_rate" t-value="0"/>
+                                            <t t-set="currency_rate_sin" t-value="0"/>
+                                            <t t-foreach="o.curency_rate_ids" t-as="currency_rate_id">
+                                                <t t-if="currency_rate_id.currency_id.id == currency.id">
+                                                    <t t-set="currency_rate" t-value="currency_rate_id.rate"/>
+                                                </t>
+                                                <t t-if="currency_rate_id.currency_id.id == o.currency_sin_obj">
+                                                    <t t-set="currency_rate_sin" t-value="currency_rate_id.rate"/>
+                                                </t>
+                                            </t>
+                                            <t t-if="currency.name != 'SGD'">
+                                                <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                    <td colspan="3">
+                                                        <span>New Sales Revenue - <t t-esc="currency.name"/></span>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>
+                                                        <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                        <span t-esc="'{0:,.2f}'.format(total_planned_newsale)"></span>
+                                                        <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                    </td>
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.symbol" t-if="currency.position == 'before'"/>-->
+                                                        <!--<span t-esc="'{0:,.2f}'.format(annual_planned_currency_newsale)"></span>-->
+                                                        <!--<span t-esc="currency.symbol" t-if="currency.position == 'after'"/>-->
+                                                    <!--</td>-->
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                    <td colspan="3">
+                                                        <span>New Sales Revenue - SGD</span>
+                                                    </td>
+                                                    <td></td>
+                                                    <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(total_planned_newsale / currency_rate) * currency_rate_sin))"></span></td>
+                                                    </t>
+                                                    <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                        <td><span>$ 0.00</span></td>
+                                                    </t>
+                                                    <!--<t t-if="currency_rate != 0 and currency_rate_sin != 0">-->
+                                                        <!--<td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(annual_planned_currency_newsale / currency_rate) * currency_rate_sin))"></span></td>-->
+                                                    <!--</t>-->
+                                                    <!--<t t-if="currency_rate == 0 or currency_rate_sin == 0">-->
+                                                        <!--<td><span>$ 0.00</span></td>-->
+                                                    <!--</t>-->
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                    <td colspan="3">
+                                                        <span>Potential Revenue - <t t-esc="currency.name"/></span>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>
+                                                        <span t-esc="currency.symbol" t-if="currency.position == 'before'"/>
+                                                        <span t-esc="'{0:,.2f}'.format(total_planned_potential)"></span>
+                                                        <span t-esc="currency.symbol" t-if="currency.position == 'after'"/>
+                                                    </td>
+                                                    <!--<td>-->
+                                                        <!--<span t-esc="currency.symbol" t-if="currency.position == 'before'"/>-->
+                                                        <!--<span t-esc="'{0:,.2f}'.format(annual_planned_currency_potential)"></span>-->
+                                                        <!--<span t-esc="currency.symbol" t-if="currency.position == 'after'"/>-->
+                                                    <!--</td>-->
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                    <td colspan="3">
+                                                        <span>Potential Revenue - SGD</span>
+                                                    </td>
+                                                    <td></td>
+                                                    <t t-if="currency_rate != 0 and currency_rate_sin != 0">
+                                                        <td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(total_planned_potential / currency_rate) * currency_rate_sin))"></span></td>
+                                                    </t>
+                                                    <t t-if="currency_rate == 0 or currency_rate_sin == 0">
+                                                        <td><span>$ 0.00</span></td>
+                                                    </t>
+                                                    <!--<t t-if="currency_rate != 0 and currency_rate_sin != 0">-->
+                                                        <!--<td><span>$ </span><span t-esc="'{0:,.2f}'.format(float(float(annual_planned_currency_potential / currency_rate) * currency_rate_sin))"></span></td>-->
+                                                    <!--</t>-->
+                                                    <!--<t t-if="currency_rate == 0 or currency_rate_sin == 0">-->
+                                                        <!--<td><span>$ 0.00</span></td>-->
+                                                    <!--</t>-->
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </t>
+                                            <t t-if="currency.name == 'SGD'">
+                                                <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                    <td colspan="3">
+                                                        <span>New Sales Revenue - SGD</span>
+                                                    </td>
+                                                    <td></td>
+                                                    <td><span>$ </span><span t-esc="'{0:,.2f}'.format(total_planned_newsale)"></span></td>
+                                                    <!--<td><span>$ </span><span t-esc="'{0:,.2f}'.format(annual_planned_currency_newsale)"></span></td>-->
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                                    <td colspan="3">
+                                                        <span>Potential Revenue - SGD</span>
+                                                    </td>
+                                                    <td></td>
+                                                    <td><span>$ </span><span t-esc="'{0:,.2f}'.format(total_planned_potential)"></span></td>
+                                                    <!--<td><span>$ </span><span t-esc="'{0:,.2f}'.format(annual_planned_currency_potential)"></span></td>-->
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </div>
+                                </t>
+                                <t t-else="">
+                                    <tr style="background-color:#95b3d7;page-break-inside:avoid;">
+                                        <th>Company</th>
+                                        <th>Country</th>
+                                        <th>Account Manager</th>
+                                        <th>Services/Solutions</th>
+                                        <th>Potential Revenue</th>
+                                        <!--<th>Potential Revenue Annual</th>-->
+                                        <th style="white-space:nowrap;">
+                                            <span class="text-left">Start Date/</span>
+                                            <span class="text-right">Billing</span>
+                                        </th>
+                                        <th>Probability</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                        <td colspan="3">
+                                            <span>New Sales Revenue - SGD</span>
+                                        </td>
+                                        <td></td>
+                                        <td>0</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr style="page-break-inside:avoid;background-color:#00b0f0;">
+                                        <td colspan="3">
+                                            <span>Potential Revenue - SGD</span>
+                                        </td>
+                                        <td></td>
+                                        <td>0</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+            </t>
+        </template>
+
+
+       <!--# SHOW POP UP-->
+        <record id="sales_pipeline_conference_education_report_view" model="ir.ui.view">
+            <field name="name">Sales Pipeline Conference Education</field>
+            <field name="model">sales.pipeline.event.report</field>
+            <field name="arch" type="xml">
+            <form string="Report Options" style="height:240px">
+                <label string=""/>  <!-- binding for inherited views -->
+                <group col="4">
+                    <field name="country"/>
+                    <field name="sales_person"/>
+                    <field name="start_date" string="Start Date"/>
+                    <field name="end_date" string="End Date"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_print_pipeline_conference_education_report" model="ir.actions.act_window">
+            <field name="name">Sales Pipeline Conference Education</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.pipeline.event.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id='menu_sales_pipeline_conference_education_report'
+                  name='Sales Pipeline Conference &amp; Education Report'
+                  parent="sales_team.menu_sale_report"
+                  action="action_print_pipeline_conference_education_report"/>
+    </data>
+</odoo>

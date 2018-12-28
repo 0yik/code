@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="lab_res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">lab.res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="vit_efaktur.partner_efaktur"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='alamat_lengkap']" position="replace"/>
+			<xpath expr="//field[@name='npwp']" position="after">
+				<field name="nama_wajib_pajak" style="text-transform: uppercase;"/>
+				<field name="alamat_lengkap" style="text-transform: uppercase;" string="Alamat" readonly="0" />
+			</xpath>
+			<xpath expr="//field[@name='is_efaktur_exported']" position="replace"/>
+			<xpath expr="//field[@name='date_efaktur_exported']" position="replace"/>
+			<xpath expr="//field[@name='rw']" position="after">
+				<field name="provinsi" style="text-transform: uppercase;"/>
+			</xpath>
+			<xpath expr="//field[@name='kelurahan_id']" position="after">
+				<field name="kodepos" readonly="1"/>
+				<field name="is_efaktur_exported"/>
+				<field name="date_efaktur_exported"/>
+			</xpath>
+			<xpath expr="//field[@name='kota_id']" position="attributes">
+				<attribute name="domain">[('state_id','=',provinsi)]</attribute>
+			</xpath>
+			<field name="blok" position="replace">
+				<field name="blok" style="text-transform: uppercase;"/>
+			</field>
+        </field>
+     </record>
+</odoo>

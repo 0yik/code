@@ -1,0 +1,1026 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<!-- SALE ORDER VIEW -->
+
+		<record model="ir.ui.view" id="quotation_per_quotation_form_view">
+			<field name="name">Quotation</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//button[@name='action_quotation_send']" position="replace"></xpath>
+					<xpath expr="//button[@name='action_quotation_send']" position="replace">
+						<button name="%(action_send_email_approval_quotation_action)d" states="approved" string="Send Quotation" type="action" class="btn-primary"/>
+					</xpath>
+					<xpath expr="//button[@name='action_confirm']" position="replace"></xpath>
+					<xpath expr="//button[@name='action_confirm']" position="replace">
+						<button name="%(action_crm_crm_askcode_ponumber_action)d" attrs="{'invisible': [('hide_confirm', '=', True)]}"  string="Confirm Sale" class="btn-primary o_sale_confirm" type="action" />
+						<button name="%(action_pricelist_line_by_partner)d" type="action" string="Pricelist Orderline" class="oe_highlight" attrs="{'invisible': [('partner_id', '=', False)]}" context="{'partner_id':partner_id,'pricelist_id':pricelist_id}"/>
+					</xpath>
+					<xpath expr="//field[@name='partner_id']" position="attributes">
+						<attribute name="domain">[('supplier','!=',True)]</attribute>
+					</xpath>
+					<xpath expr="//field[@name='order_line']/form/group/group//field[@name='product_id']" position="before">
+						<field name="check_uid" invisible="1"/>
+						<field name="confirm_line_box" string="Confirm Line" attrs="{'invisible': [('stat_line', '=', 'so')]}"/>
+						<field name="stat_line" invisible="1"></field>
+					</xpath>
+					<xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="before">
+						<field name="confirm_line_box" nolabel="1"/>
+					</xpath>
+					<xpath expr="//field[@name='order_line']/tree//field[@name='price_total']" position="after">
+						<field name="stat_line"/>
+						<field name="check_uid" invisible="1"/>
+					</xpath>
+					<xpath expr="//field[@name='partner_shipping_id']" position="after">
+						<field name="hide_confirm" invisible="1"/>
+					</xpath>
+					<xpath expr="//field[@name='date_order']" position="after">
+						<field name="validity_new_date"/>
+					</xpath>
+					<xpath expr="//field[@name='validity_date']" position="attributes">
+						<attribute name="invisible">1</attribute>
+					</xpath>
+					<xpath expr="//field[@name='partner_id']" position="before">
+						<field name="po_num" attrs="{'invisible': [('state','!=','sale')]}"/>
+					</xpath>
+					<xpath expr="//field[@name='order_line']/form/group/group//field[@name='product_id']" position="attributes">
+						<attribute name="string">Product Variant</attribute>
+					</xpath>
+					<xpath expr="//field[@name='order_line']/form/group/group//field[@name='product_id']" position="after">
+						<field name="part_name"/>
+					</xpath>
+					<xpath expr="//field[@name='order_line']/form/group/group//field[@name='price_unit']" position="replace">
+						<field name="price_unit" attrs="{'readonly':[('check_uid','=',True)]}"></field>
+						<field name="add_name_1"/>
+						<field name="add_name_2"/>
+					</xpath>
+					<xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="replace">
+						<field name="price_unit" attrs="{'readonly':[('check_uid','=',True)]}"></field>
+					</xpath>
+					<xpath expr="//field[@name='order_line']" position="attributes">
+						<attribute name="context">{'partner_id':partner_id}</attribute>
+					</xpath>
+					<xpath expr="//field[@name='order_line']/form/group/group//field[@name='tax_id']" position="before">
+						<field name="partner_id" invisible="1"/>
+						<field name="part_number" domain="[('product_id', '=', product_id),('sequence_id','=',partner_id)]" attrs="{'readonly':[('check_uid','=',True)]}"/>
+						<field name="part_number_product" domain="[('product_id', '=', product_id),('partner_id','=',partner_id)]"></field>
+						<field name="drawing_number"/>
+						<field name="workpiece_grade"/>
+						<field name="kind_of_machine"/>
+						<field name="workpiece_material"/>
+						<field name="coating_en"/>
+						<field name="pricing_date"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="quotation_per_quotation_trre_crm_phonecall_view">
+			<field name="name">Phonecall</field>
+			<field name="model">crm.phonecall</field>
+			<field name="inherit_id" ref="crm_phonecall.crm_case_inbound_phone_tree_view"/>
+			<field name="arch" type="xml">
+				<data>
+					<field name="partner_id" position="after">
+						<field name="contact_name"/>
+						<field name="prospect_id" invisible="1"/>
+					</field>
+					<field name="partner_id" position="attributes">
+						<attribute name="string">Account</attribute>
+					</field>
+				</data>
+			</field>
+		</record>
+		
+		<!-- FOR LEAD FIELD READONLY -->
+
+		<record id="view_crm_prospect_sales_person_ref_readonly" model="ir.ui.view">
+			<field name="name">crm.lead.sales.person.readonly.cust</field>
+			<field name="model">crm.lead</field>
+			<field name="priority" eval="20"/>
+			<field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+			<field name="groups_id" eval="[(6, 0, [ref('quotation_pit_extended_ten.group_field_readonly_forad')])]"/>
+			<field name="arch" type="xml">
+				<field name='user_id' position="attributes">
+					<attribute name="readonly">0</attribute>
+				</field>
+			</field>
+		</record>
+
+		<!-- FOR ACCOUTN FIELD READONLY -->
+
+		<record id="view_res_paerner_sales_manager_ref_readonly" model="ir.ui.view">
+			<field name="name">res.partner.sales.manager.readonly.cust</field>
+			<field name="model">res.partner</field>
+			<field name="priority" eval="20"/>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="groups_id" eval="[(6, 0, [ref('quotation_pit_extended_ten.group_field_readonly_forad')])]"/>
+			<field name="arch" type="xml">
+				<field name='user_id' position="attributes">
+					<attribute name="readonly">0</attribute>
+				</field>
+			</field>
+		</record>
+
+		<!-- FOR ENQUIRY FIELD READONLY -->
+
+		<record id="view_crm_enquiry_sales_manager_ref_readonly" model="ir.ui.view">
+			<field name="name">crm.lead.sales.manager.readonly.cust</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="quotation_pit_extended_ten.quotation_per_opportunity_form_view"/>
+			<field name="groups_id" eval="[(6, 0, [ref('quotation_pit_extended_ten.group_field_readonly_forad')])]"/>
+			<field name="arch" type="xml">
+				<field name='user_id' position="attributes">
+					<attribute name="readonly">0</attribute>
+				</field>
+			</field>
+		</record>
+
+		<!-- FOR QUOTATION FIELD READONLY -->
+
+		<record id="view_quotation_cust_ref_readonly" model="ir.ui.view">
+			<field name="name">quotation.form.readonly.cust</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr='//notebook/page[2]/group/group/field[@name="user_id"]' position="replace">
+					<field name="user_id" string="Our Referece" readonly="1"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_quotation_sales_manager_ref_readonly" model="ir.ui.view">
+			<field name="name">quotation.sales.manager.readonly.cust</field>
+			<field name="model">sale.order</field>
+			<field name="priority" eval="20"/>
+			<field name="inherit_id" ref="quotation_pit_extended_ten.view_quotation_cust_ref_readonly"/>
+			<field name="groups_id" eval="[(6, 0, [ref('quotation_pit_extended_ten.group_field_readonly_forad')])]"/>
+			<field name="arch" type="xml">
+				<xpath expr='//notebook/page[2]/group/group/field[@name="user_id"]' position="replace">
+					<field name="user_id" string="Our Referece" readonly="0"/>
+				</xpath>
+			</field>
+		</record>
+
+
+		<!-- PRICELIST FORM VIEW -->
+
+		<record id="view_changer_product_pricelist_form_view" model="ir.ui.view">
+			<field name="name">change.product.price</field>
+			<field name="model">product.pricelist</field>
+			<field name="inherit_id" ref="product.product_pricelist_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='item_ids']/tree//field[@name='name']" position="after">
+					<field name="part_number_product"/>
+					<field name="drawing_number"/>
+					<field name="pricing_date"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_product_pricelist_item_filter" model="ir.ui.view">
+			<field name="name">product.pricelist.ytm.select</field>
+			<field name="model">product.pricelist.item</field>
+			<field name="arch" type="xml">
+				<search string="Search Priselist Line">
+					<field name="product_id"/>
+					<field name="drawing_number"/>
+					<field name="part_number_product"/>
+					<separator/>
+					<group expand="0" string="Group By">
+						<filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+						<filter string="Part Number" domain="[]" context="{'group_by':'part_number_product'}"/>
+						<filter string="Price Date" domain="[]" context="{'group_by':'pricing_date'}"/>
+					</group>
+			   </search>
+			</field>
+		</record>
+
+		<record id="view_changer_product_pricelist_tree_view" model="ir.ui.view">
+			<field name="name">change.product.price.tree</field>
+			<field name="model">product.pricelist.item</field>
+			<field name="arch" type="xml">
+				<tree string="Add Pricelist line">
+					<field name="product_id"/>
+					<field name="part_number_product"/>
+					<field name="drawing_number"/>
+					<field name="product_id"/>
+					<field name="fixed_price"/>
+					<field name="pricing_date"/>
+				</tree>
+			</field>
+		</record>
+	
+		<record id="product_template_form_view_intipresisi_tn" model="ir.ui.view">
+			<field name="name">product.template.common.form.tn.intipresisi</field>
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_form_view"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//notebook/page[@name='general_information']/group/group[@name='group_general']/field[@name='type']" position="after">
+						<field name="part_code"/>
+						<field name="product_group"/>
+					</xpath>
+					<xpath expr="//notebook/page[@name='general_information']" position="attributes">
+						<attribute name="invisible">1</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+
+		<menuitem id="coating_report_part_code" name="Coating Report" parent="sales_team.menu_sale_report" sequence="5" action="quotation_pit_extended_ten.coating_wizard_report_action" />
+
+		<record id="view_product_part_number_partner_filter" model="ir.ui.view">
+			<field name="name">product.price.history.select</field>
+			<field name="model">sequence.number.partner</field>
+			<field name="arch" type="xml">
+				<search string="Price History">
+					<field name="product_id"/>
+					<field name="name"/>
+					<field name="sequence_id"/>
+					<separator/>
+					<group expand="0" string="Group By">
+						<filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+						<filter string="Partner" domain="[]" context="{'group_by':'sequence_id'}"/>
+					</group>
+			   </search>
+			</field>
+		</record>
+
+		<record id="view_config_sequence_partner_form" model="ir.ui.view">
+			<field name="name">sequence.number.partner</field>
+			<field name="model">sequence.number.partner</field>
+			<field name="arch" type="xml">
+				<form string="Price History">
+					<group>
+						<field name="name"/>
+						<field name="sequence_id"></field>
+						<field name="product_id"></field>
+						<field name="sequence_number"></field>
+						<field name="seq_price"></field>
+						<field name="pricing_date"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_config_customer_treesequence_partner" model="ir.ui.view">
+			<field name="name">customer.group.sequence.partnertree</field>
+			<field name="model">sequence.number.partner</field>
+			<field name="arch" type="xml">
+				<tree string="Sequence Price History">
+					<field name="name"/>
+					<field name="sequence_id"></field>
+					<field name="product_id"></field>
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_config_sequence_partner" model="ir.actions.act_window">
+			<field name="name">Price History</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sequence.number.partner</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_sequence_partner_form" parent="menu_account_item" action="action_config_sequence_partner" sequence="10"/>
+
+		<record id="view_config_vat_code_form" model="ir.ui.view">
+			<field name="name">vat.code.partner</field>
+			<field name="model">vat.code</field>
+			<field name="arch" type="xml">
+				<form string="Vat Code">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_configvat_codesequence_partner" model="ir.ui.view">
+			<field name="name">customer.vat.code.partnertree</field>
+			<field name="model">vat.code</field>
+			<field name="arch" type="xml">
+				<tree string="Vat Code">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_config_vat_code" model="ir.actions.act_window">
+			<field name="name">Vat Code</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">vat.code</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_sequence_vat_code" parent="menu_account_item" action="action_config_vat_code" sequence="10"/>
+
+		<record id="view_product_part_number_product_filter" model="ir.ui.view">
+			<field name="name">product.part.number.ytm.select</field>
+			<field name="model">sequence.number.product</field>
+			<field name="arch" type="xml">
+				<search string="Part Number">
+					<field name="product_id"/>
+					<field name="drawing_number"/>
+					<field name="partner_id"/>
+					<separator/>
+					<group expand="0" string="Group By">
+						<filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+						<filter string="Partner" domain="[]" context="{'group_by':'partner_id'}"/>
+					</group>
+			   </search>
+			</field>
+		</record>
+
+		<record id="view_config_customer_treesequence_product" model="ir.ui.view">
+			<field name="name">customer.group.sequence.productrtree</field>
+			<field name="model">sequence.number.product</field>
+			<field name="arch" type="xml">
+				<tree string="Part Number">
+					<field name="name"/>
+					<field name="partner_id"></field>
+					<field name="product_id"></field>
+					<field name="drawing_number"></field>
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_config_sequence_product_part" model="ir.actions.act_window">
+			<field name="name">Part Number</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sequence.number.product</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_sequence_product_form" parent="menu_presisi_item" action="action_config_sequence_product_part" sequence="10"/>
+
+<!--(accounts) CUSTOMER GROUP -->
+
+		<menuitem id="menu_account_item" name="Accounts" parent="sales_team.menu_sale_config" sequence="1"/>
+
+		<record id="view_config_customer_form" model="ir.ui.view">
+			<field name="name">customer.group.form</field>
+			<field name="model">customer.group</field>
+			<field name="arch" type="xml">
+				<form string="customer group">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_customer_tree" model="ir.ui.view">
+			<field name="name">customer.group.tree</field>
+			<field name="model">customer.group</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="customer group">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_customer_form" model="ir.actions.act_window">
+			<field name="name">Customer Group</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">customer.group</field>
+			<field name="view_id" ref="view_config_customer_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_customer_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_customer_view_tree">
+			<field name="act_window_id" ref="action_config_customer_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_customer_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_customer_view_form">
+			<field name="act_window_id" ref="action_config_customer_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_customer_form"/>
+		</record>
+
+		<menuitem id="menu_customer_form" parent="menu_account_item" action="action_config_customer_form" sequence="10"/>
+
+
+		<!-- DELIVERY METHOD-->
+
+		<menuitem id="delivery.sale_menu_action_delivery_carrier_form" parent="menu_account_item" sequence="11" name="Delivery method" action="delivery.action_delivery_carrier_form" />
+
+
+
+
+
+		<!--(enquiry)WORKPIECE GRADE-->
+
+		<menuitem id="menu_presisi_item" name="Enquiry" parent="sales_team.menu_sale_config" sequence="1"/>
+
+		<record id="view_config_grade_form" model="ir.ui.view">
+			<field name="name">workpiece.grade.form</field>
+			<field name="model">workpiece.grade</field>
+			<field name="arch" type="xml">
+				<form string="work piece grade">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_grade_tree" model="ir.ui.view">
+			<field name="name">workpiece.grade.tree</field>
+			<field name="model">workpiece.grade</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="work piece grade">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_grade_form" model="ir.actions.act_window">
+			<field name="name">Workpiece Grade</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">workpiece.grade</field>
+			<field name="view_id" ref="view_config_grade_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_grade_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_grade_view_tree">
+			<field name="act_window_id" ref="action_config_grade_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_grade_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_grade_view_form">
+			<field name="act_window_id" ref="action_config_grade_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_grade_form"/>
+		</record>
+
+		<menuitem id="menu_workpiece_form" parent="menu_presisi_item" action="action_config_grade_form" sequence="2"/>
+
+<!-- KIND OF MACHINE-->
+		
+		<record id="view_config_machine_form" model="ir.ui.view">
+			<field name="name">kind.of.machine.form</field>
+			<field name="model">kind.of.machine</field>
+			<field name="arch" type="xml">
+				<form string="kind of machine">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_machine_tree" model="ir.ui.view">
+			<field name="name">kind.of.machine.tree</field>
+			<field name="model">kind.of.machine</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="kind of machine">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_machine_form" model="ir.actions.act_window">
+			<field name="name">Kind Of Machine</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">kind.of.machine</field>
+			<field name="view_id" ref="view_config_machine_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_machine_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_machine_view_tree">
+			<field name="act_window_id" ref="action_config_machine_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_machine_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_machine_view_form">
+			<field name="act_window_id" ref="action_config_machine_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_machine_form"/>
+		</record>
+
+		<menuitem id="menu_machine_form" parent="menu_presisi_item" action="action_config_machine_form" sequence="3"/>
+
+
+<!--WORK PIECE MATERIAL -->
+
+		<record id="view_config_material_form" model="ir.ui.view">
+			<field name="name">workpiece.material.form</field>
+			<field name="model">workpiece.material</field>
+			<field name="arch" type="xml">
+				<form string="workpiece material">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_material_tree" model="ir.ui.view">
+			<field name="name">workpiece.material.tree</field>
+			<field name="model">workpiece.material</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="workpiece material">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_material_form" model="ir.actions.act_window">
+			<field name="name">Workpiece Material</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">workpiece.material</field>
+			<field name="view_id" ref="view_config_material_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_material_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_material_view_tree">
+			<field name="act_window_id" ref="action_config_material_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_material_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_material_view_form">
+			<field name="act_window_id" ref="action_config_material_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_material_form"/>
+		</record>
+
+		<menuitem id="menu_material_form" parent="menu_presisi_item" action="action_config_material_form" sequence="4"/>
+
+<!-- COATING -->
+
+		<record id="view_config_coating_form" model="ir.ui.view">
+			<field name="name">coating.enquiry.form</field>
+			<field name="model">coating.enquiry</field>
+			<field name="arch" type="xml">
+				<form string="coating enquiry">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_coating_tree" model="ir.ui.view">
+			<field name="name">coating.enquiry.tree</field>
+			<field name="model">coating.enquiry</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="coating enquiry">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_coating_form" model="ir.actions.act_window">
+			<field name="name">Coating</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">coating.enquiry</field>
+			<field name="view_id" ref="view_config_coating_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_coating_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_coating_view_tree">
+			<field name="act_window_id" ref="action_config_coating_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_coating_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_coating_view_form">
+			<field name="act_window_id" ref="action_config_coating_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_coating_form"/>
+		</record>
+
+		<menuitem id="menu_coating_form" parent="menu_presisi_item" action="action_config_coating_form" sequence="5"/>
+
+<!-- TYPE-->
+
+		<record id="view_config_type_form" model="ir.ui.view">
+			<field name="name">attachment.type.en.form</field>
+			<field name="model">attachment.type.en</field>
+			<field name="arch" type="xml">
+				<form string="Type">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_config_type_tree" model="ir.ui.view">
+			<field name="name">attachment.type.en.tree</field>
+			<field name="model">attachment.type.en</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="Type">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_type_form" model="ir.actions.act_window">
+			<field name="name">Type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">attachment.type.en</field>
+			<field name="view_id" ref="view_config_type_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_type_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_type_view_tree">
+			<field name="act_window_id" ref="action_config_type_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_type_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_type_view_form">
+			<field name="act_window_id" ref="action_config_type_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_type_form"/>
+		</record>
+
+		<menuitem id="menu_type_form" parent="menu_presisi_item" action="action_config_type_form" sequence="1"/>
+
+
+
+<!-- (Prospect)  / PROSPECT STATUS -->
+
+		<menuitem id="menu_prospect_item" name="Prospect" parent="sales_team.menu_sale_config" sequence="1"/>
+
+		<record id="view_config_status_form" model="ir.ui.view">
+			<field name="name">crm.new.case.form</field>
+			<field name="model">crm.new.case</field>
+			<field name="arch" type="xml">
+				<form string="prospect status">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_status_tree" model="ir.ui.view">
+			<field name="name">crm.new.case.tree</field>
+			<field name="model">crm.new.case</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="prospect status">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_status_form" model="ir.actions.act_window">
+			<field name="name">Prospect Status</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.new.case</field>
+			<field name="view_id" ref="view_config_status_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_status_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_status_view_tree">
+			<field name="act_window_id" ref="action_config_status_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_status_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_status_view_form">
+			<field name="act_window_id" ref="action_config_status_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_status_form"/>
+		</record>
+
+		<menuitem id="menu_status_form" parent="menu_prospect_item" action="action_config_status_form" sequence="2"/>
+<!-- TITLE-->
+
+		<record id="view_config_title_form" model="ir.ui.view">
+			<field name="name">res.partner.title.form</field>
+			<field name="model">res.partner.title</field>
+			<field name="arch" type="xml">
+				<form string="Title">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_title_tree" model="ir.ui.view">
+			<field name="name">res.partner.title.tree</field>
+			<field name="model">res.partner.title</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="Title">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_title_form" model="ir.actions.act_window">
+			<field name="name">Title</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.title</field>
+			<field name="view_id" ref="view_config_title_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_title_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_title_view_tree">
+			<field name="act_window_id" ref="action_config_title_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_title_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_title_view_form">
+			<field name="act_window_id" ref="action_config_title_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_title_form"/>
+		</record>
+
+		<menuitem id="menu_title_form" parent="menu_prospect_item" action="action_config_title_form" sequence="1"/>
+
+
+
+	
+<!-- PROSPECT SOURCE-->
+
+		<record id="view_config_source_form" model="ir.ui.view">
+			<field name="name">prospect.source.form</field>
+			<field name="model">prospect.source</field>
+			<field name="arch" type="xml">
+				<form string="prospect source">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_source_tree" model="ir.ui.view">
+			<field name="name">prospect.source.tree</field>
+			<field name="model">prospect.source</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="prospect source">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_source_form" model="ir.actions.act_window">
+			<field name="name">Prospect Source</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">prospect.source</field>
+			<field name="view_id" ref="view_config_source_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_source_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_source_view_tree">
+			<field name="act_window_id" ref="action_config_source_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_source_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_source_view_form">
+			<field name="act_window_id" ref="action_config_source_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_source_form"/>
+		</record>
+
+		<menuitem id="menu_source_form" parent="menu_prospect_item" action="action_config_source_form" sequence="3"/>
+
+<!--  INDUSTRY-->
+
+		<record id="view_config_industry_form" model="ir.ui.view">
+			<field name="name">industry.source.form</field>
+			<field name="model">industry.source</field>
+			<field name="arch" type="xml">
+				<form string="industry source">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_industry_tree" model="ir.ui.view">
+			<field name="name">industry.source.tree</field>
+			<field name="model">industry.source</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="industry source">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_industry_form" model="ir.actions.act_window">
+			<field name="name">Industry Source</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">industry.source</field>
+			<field name="view_id" ref="view_config_industry_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_industry_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_industry_view_tree">
+			<field name="act_window_id" ref="action_config_industry_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_industry_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_industry_view_form">
+			<field name="act_window_id" ref="action_config_industry_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_industry_form"/>
+		</record>
+
+		<menuitem id="menu_industry_form" parent="menu_prospect_item" action="action_config_industry_form" sequence="4"/>
+
+<!-- QUANTITY OF MACHINE-->
+
+		<record id="view_config_qty_form" model="ir.ui.view">
+			<field name="name">qty.machine.form</field>
+			<field name="model">qty.machine</field>
+			<field name="arch" type="xml">
+				<form string="quantity of machine">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_qty_tree" model="ir.ui.view">
+			<field name="name">qty.machine.tree</field>
+			<field name="model">qty.machine</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="quantity of machine">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_qty_form" model="ir.actions.act_window">
+			<field name="name">Quantity Of Machine</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">qty.machine</field>
+			<field name="view_id" ref="view_config_qty_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_qty_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_qty_view_tree">
+			<field name="act_window_id" ref="action_config_qty_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_qty_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_qty_view_form">
+			<field name="act_window_id" ref="action_config_qty_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_qty_form"/>
+		</record>
+
+		<menuitem id="menu_qty_form" parent="menu_prospect_item" action="action_config_qty_form" sequence="5"/>
+
+<!-- PRODUCTION -->
+
+		<record id="view_config_production_form" model="ir.ui.view">
+			<field name="name">prospect.production.form</field>
+			<field name="model">prospect.production</field>
+			<field name="arch" type="xml">
+				<form string="prospect production">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_production_tree" model="ir.ui.view">
+			<field name="name">prospect.production.tree</field>
+			<field name="model">prospect.production</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="prospect production">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_production_form" model="ir.actions.act_window">
+			<field name="name">Prospect Production</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">prospect.production</field>
+			<field name="view_id" ref="view_config_production_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_production_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_production_view_tree">
+			<field name="act_window_id" ref="action_config_production_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_production_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_production_view_form">
+			<field name="act_window_id" ref="action_config_production_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_production_form"/>
+		</record>
+
+		<menuitem id="menu_production_form" parent="menu_prospect_item" action="action_config_production_form" sequence="6"/>
+
+<!-- (meeting) TAGS -->
+
+
+		<menuitem id="menu_log_history_menu" parent="sales_team.menu_sale_config" name="Log History" sequence="1"/>
+
+		<menuitem id="menu_cal_meetings" name="Meetings" parent="menu_log_history_menu" sequence="2"/>
+
+		<menuitem id="calendar.menu_calendar_event_type" name="Tags" parent="menu_cal_meetings" sequence="3"/>
+
+<!--REMINDERS -->
+	
+		<menuitem id="calendar.menu_calendar_alarm" name="Reminders" groups="base.group_user" action="calendar.action_calendar_alarm" parent="menu_cal_meetings" sequence="3"/>
+
+
+		<record id="action_calender_event_type_form" model="ir.actions.act_window">
+			<field name="name">Tags</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">calendar.event.type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_calender_event_type" parent="menu_cal_meetings" action="action_calender_event_type_form" sequence="1"/>
+
+
+
+<!--LOCATION-->
+
+		<record id="view_config_calloc_form" model="ir.ui.view">
+			<field name="name">location.calnder.form</field>
+			<field name="model">location.calnder</field>
+			<field name="arch" type="xml">
+				<form string="location">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="view_config_calloc_tree" model="ir.ui.view">
+			<field name="name">location.calnder.tree</field>
+			<field name="model">location.calnder</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="location">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="action_config_calloc_form" model="ir.actions.act_window">
+			<field name="name">Location</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">location.calnder</field>
+			<field name="view_id" ref="view_config_calloc_tree"/>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_config_calloc_form"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_calloc_view_tree">
+			<field name="act_window_id" ref="action_config_calloc_form"/>
+			<field name="sequence" eval="0"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_config_calloc_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="action_config_calloc_view_form">
+			<field name="act_window_id" ref="action_config_calloc_form"/>
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_config_calloc_form"/>
+		</record>
+
+		<menuitem id="menu_calloc_form" parent="menu_cal_meetings" action="action_config_calloc_form" sequence="2"/>
+
+		
+	 </data>
+</openerp>

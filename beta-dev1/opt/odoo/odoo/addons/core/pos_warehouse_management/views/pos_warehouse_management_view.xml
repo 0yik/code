@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_pos_config_form_inherit_stock_form" model="ir.ui.view">
+		<field name="name">POS Configuration</field>
+		<field name="model">pos.config</field>
+		<field name="inherit_id" ref="pos_stocks.wk_pos_stock_qtys"/>
+		<field name="arch" type="xml">
+			<xpath expr="//group/group" position="inside">
+				<field name="related_stock_location_ids" widget="many2many_tags" />
+			</xpath>
+		</field>
+	</record>
+	<record id="pos_warehouse_management_inherit_pos_order_form" model="ir.ui.view">
+		<field name="name">POS Orders</field>
+		<field name="model">pos.order</field>
+		<field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//page[@name='extra']" position="after">
+				<page string="Related Pickings" >
+                        <field name="related_picking_id"/>
+                    </page>	
+			</xpath>
+		</field>
+	</record>
+</odoo>

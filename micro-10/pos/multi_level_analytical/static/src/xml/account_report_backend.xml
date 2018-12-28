@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-extend="accountReports.searchView">
+        <t t-jquery="div.o_account_reports_date-filter-bool" t-operation="after">
+            <div class="btn-group o_dropdown o_account_reports_analytic_levels" t-if="report_type.comparison">
+                <a type="button" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="fa fa-bars"/> Analytic Levels:
+                    <t t-foreach="context.analytic_levels" t-as="level">
+                        <t t-if="context.selected_analytic_level_id == level[0]">
+                            <t t-raw='level[1]'/>
+                        </t>
+                    </t>
+                    <span class="caret"/>
+                </a>
+                <ul class="dropdown-menu o_filters_menu" role="menu">
+                    <t t-foreach="context.analytic_levels" t-as="level">
+                        <li t-if="level[0] != 0" t-att-id="level[0]" t-att-data-value="level[0]" t-att-class="'o_search_analytic_level o_filters_menu li ' + ((context.selected_analytic_level_id == level[0]) and 'selected' or '')">
+                            <a><t t-esc="level[1]"/></a>
+                        </li>
+                    </t>
+                </ul>
+            </div>
+        </t>
+    </t>
+
+</templates>

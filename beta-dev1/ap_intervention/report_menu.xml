@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<report 
+            string="Master List" 
+            id="report_master_list" 
+            model="master.list.wizard" 
+            report_type="qweb-pdf"
+            name="ap_intervention.master_list_report" 
+            file="ap_intervention.master_list_report"
+        />
+        
+	</data>
+</openerp>

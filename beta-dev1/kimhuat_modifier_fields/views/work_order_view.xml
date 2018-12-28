@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+         <record id="view_work_order_form" model="ir.ui.view">
+            <field name="name">stock.picking.work.order.form</field>
+            <field name="model">stock.picking</field>
+            <field eval="120" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Transfer" create="false" delete="false">
+                <header>
+                    <button name="action_check" attrs="{'invisible': [('state', '!=', ('pending'))]}" string="Check" type="object" groups="hr.group_hr_user,booking_service_V2.group_user,booking_service_V2.group_manager" class="oe_stat_button" />
+                    <button name="action_start" attrs="{'invisible': [('state', '!=', ('pending'))]}" string="Start" type="object" groups="hr.group_hr_user,booking_service_V2.group_user,booking_service_V2.group_manager" class="oe_stat_button"/>
+                    <button name="action_validate" attrs="{'invisible': [('state', '!=', ('started'))]}" string="End" type="object" groups="hr.group_hr_user,booking_service.group_user,booking_service.group_manager" class="oe_stat_button"/>
+                    <button name="action_cancel" states="started,pending" string="Cancel" groups="base.group_user" type="object"/>
+                    <button string="Re-Schedule" invisible="1" type="action"
+                        name="%(act_open_reschedule_booking_view)d" class="oe_stat_button"
+                        attrs="{'invisible': [('state', 'not in', ['pending'])]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="pending,started,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <h1 class="hidden-xs">
+                        <field name="name" attrs="{'invisible': [('name','=','/')]}" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="is_booking" invisible="1" />
+                            <field name="is_validated" invisible="1"/>
+                            <field name="partner_id" string="Customer" attrs="{'invisible': [('picking_type_code', '=', 'internal')]}"/>
+                            <field name="scheduled_start" required="1" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}"/>
+                            <field name="scheduled_end" required="1" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}" />
+                            <field name="actual_start"/>
+                            <field name="actual_end"/>
+                            <field name="team" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}"/>
+                            <field name="team_leader" invisible="1" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}"/>
+                            <field name="team_employees" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}">
+                               <tree editable="bottom">
+                                    <field name="employee_id"/>
+                                </tree>
+                                <form>
+                                    <field name="employee_id"/>
+                                </form>
+                            </field>
+                            <field name="product_ids" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" invisible="1">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="lot_id"/>
+                                </tree>
+                                <form>
+                                    <field name="product_id"/>
+                                    <field name="lot_id"/>
+                                </form>
+                            </field>
+                            <field name="location_id" groups="stock.group_stock_multi_locations"
+                                   attrs="{'invisible': [('picking_type_code', '=', 'outgoing')],'readonly': [('state', 'not in', ['pending','started'])]}"/>
+                            <field name="location_dest_id" groups="stock.group_stock_multi_locations"
+                                   attrs="{'invisible': [('picking_type_code', '=', 'incoming')],'readonly': [('state', 'not in', ['pending','started'])]}"/>
+                            <field name="backorder_id" readonly="1"
+                                   attrs="{'invisible': [('backorder_id','=',False)],'readonly': [('state', 'not in', ['pending','started'])]}"/>
+                        </group>
+                        <group>
+                            <field name="min_date" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}"/>
+                            <field name="origin" placeholder="e.g. PO0032" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" class="oe_inline"/>
+                            <field name="contract_id" string="Contract" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}"/>
+                            <label for="job_street" string="Job Site" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" />
+                                <div class="o_address_format" >
+                                    <field name="job_house_no" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" style="width: 40%" placeholder="House No" class="oe_inline"/>
+                                    <field name="job_level_no" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" style="width: 37%" placeholder="Level No" class="oe_inline"/>
+                                    <field name="job_unit_no" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" style="width: 20%" placeholder="Unit No" class="oe_inline"/>
+                                    <field name="job_street" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" placeholder="Street..." class="o_address_street"/>
+                                    <field name="job_street2" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" placeholder="Street 2..." class="o_address_street"/>
+                                    <field name="job_city" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" placeholder="City" class="o_address_city"/>
+                                    <field name="job_state_id" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" class="o_address_state" placeholder="State" options='{"no_open": True}' />
+                                    <field name="job_zip" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" placeholder="ZIP" class="o_address_zip"/>
+                                    <field name="job_country_id" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                </div>
+                            <field name="job_location" invisible="1" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}"/>
+                            <field name="job_category_id" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}"/>
+                            <field name="job_detail" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}"/>
+                            <field name="reminder" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" widget="many2many_tags"/>
+                            <field name="remarks" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}"/>
+                            <label for="owner_id" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}" groups="stock.group_tracking_owner"/>
+                            <div groups="stock.group_tracking_owner">
+                                <field name="owner_id"/>
+                                <button name="action_assign_owner" string="Assign Owner" type="object" attrs="{'invisible': ['|',('pack_operation_exist', '=', False),('state', 'not in', ('draft','started','confirmed','pending'))]}"
+                                    class="oe_link oe_edit_only"/>
+                            </div>
+                            <field name="is_reschedule" invisible="1" />
+                            <field name="reschedule_reason" attrs="{'invisible': [('is_reschedule','=', False)]}" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Operations" invisible="1" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}">
+                            <button name="do_prepare_partial" type="object" string="Recompute" attrs="{'invisible': [('recompute_pack_op','=', False)]}"/>
+                            <field name="recompute_pack_op" invisible="1"/>
+                            <field name="pack_operation_ids" invisible="1"/>
+                            <field name="pack_operation_product_ids" options="{'reload_on_button': True}" context="{'default_picking_id': id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id}" mode="tree,kanban">
+                                <tree editable="bottom" decoration-muted="result_package_id" decoration-danger="qty_done&gt;product_qty" decoration-success="qty_done==product_qty and state!='done' and not result_package_id">
+                                    <field name="package_id" groups="stock.group_tracking_lot" invisible="1"/>
+                                    <field name="product_id" required="1" attrs="{'readonly': [('fresh_record', '=', False)]}"/>
+                                    <field name="fresh_record" invisible="1"/>
+                                    <field name="product_uom_id" attrs="{'readonly': [('fresh_record', '=', False)]}" groups="product.group_uom"/>
+                                    <field name="lots_visible" invisible="1"/>
+                                    <field name="owner_id" groups="stock.group_tracking_owner"/>
+                                    <field name="location_id" domain="[('id', 'child_of', parent.location_id)]" invisible="1"/>
+                                    <field name="location_dest_id" domain="[('id', 'child_of', parent.location_dest_id)]" invisible="1"/>
+                                    <field name="from_loc" groups="stock.group_stock_multi_locations,stock.group_tracking_lot"/>
+                                    <field name="to_loc" groups="stock.group_stock_multi_locations,stock.group_tracking_lot"/>
+                                    <field name="result_package_id" groups="stock.group_tracking_lot" context="{'default_location_id': location_dest_id}" invisible="1"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="product_qty" readonly="1" attrs="{'required': [('product_id', '!=', False)]}"/>
+                                    <field name="qty_done" attrs="{'readonly': [('lots_visible', '=', True)]}"/>
+                                    <button name="split_lot" string="Lot Split" type="object" icon="fa-list" groups="stock.group_production_lot"
+                                            attrs="{'invisible': ['|', ('lots_visible', '=', False), ('state', 'not in', ['confirmed', 'started', 'waiting', 'partially_available','done'])]}"/>
+                                    <button name="show_details" string="Modify" type="object" icon="fa-pencil" groups="stock.group_stock_multi_locations"
+                                            states="confirmed,started,waiting,partially_available"/>
+                                </tree>
+                                <kanban class="o_kanban_mobile">
+                                    <field name="package_id" groups="stock.group_tracking_lot" invisible="1"/>
+                                    <field name="product_id" required="1" attrs="{'readonly': [('fresh_record', '=', False)]}"/>
+                                    <field name="fresh_record" invisible="1"/>
+                                    <field name="product_uom_id" attrs="{'readonly': [('fresh_record', '=', False)]}" groups="product.group_uom"/>
+                                    <field name="lots_visible" invisible="1"/>
+                                    <field name="owner_id" groups="stock.group_tracking_owner"/>
+                                    <field name="location_id" domain="[('id', 'child_of', parent.location_id)]" invisible="1"/>
+                                    <field name="location_dest_id" domain="[('id', 'child_of', parent.location_dest_id)]" invisible="1"/>
+                                    <field name="from_loc" groups="stock.group_stock_multi_locations,stock.group_tracking_lot"/>
+                                    <field name="to_loc" groups="stock.group_stock_multi_locations,stock.group_tracking_lot"/>
+                                    <field name="result_package_id" groups="stock.group_tracking_lot" context="{'default_location_id': location_dest_id}" invisible="1"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="product_qty" readonly="1" attrs="{'required': [('product_id', '!=', False)]}"/>
+                                    <field name="qty_done" attrs="{'readonly': [('lots_visible', '=', True)]}"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div t-attf-class="oe_kanban_card oe_kanban_global_click
+                                                               #{record.qty_done.raw_value&gt;record.product_qty.raw_value ? 'oe_kanban_color_2' : ''}
+                                                               #{record.qty_done.raw_value==record.product_qty.raw_value &amp;&amp; record.state.raw_value!='done' &amp;&amp; ! record.result_package_id.raw_value ? 'oe_kanban_color_3' : ''}">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <strong><span><t t-esc="record.product_id.value"/></span></strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 text-muted">
+                                                        <span><t t-esc="record.from_loc.value"/> to <t t-esc="record.to_loc.value"/></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 text-muted">
+                                                        <span><t t-esc="record.qty_done.value"/> of <t t-esc="record.product_qty.value"/> <t t-esc="record.product_uom_id.value"/></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                            <field name="picking_type_entire_packs" invisible="1"/>
+                            <field name="pack_operation_pack_ids" options="{'reload_on_button': True}" attrs="{'invisible': [('pack_operation_pack_ids', '=', []), ('picking_type_entire_packs', '=', False)]}" context="{'default_picking_id': id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'default_picking_id': id}" groups="stock.group_tracking_lot">
+                                <tree editable="bottom" decoration-muted="qty_done&gt;0">
+                                    <field name="package_id" required="1" string="Package To Move" domain="[('location_id', '=', location_id)]"/>
+                                    <field name="location_id" domain="[('id', 'child_of', parent.location_id)]" invisible="1"/>
+                                    <field name="from_loc" groups="stock.group_stock_multi_locations,stock.group_tracking_lot"/>
+                                    <field name="to_loc" groups="stock.group_stock_multi_locations,stock.group_tracking_lot"/>
+                                    <field name="location_dest_id" domain="[('id', 'child_of', parent.location_dest_id)]" invisible="1"/>
+                                    <field name="result_package_id" groups="stock.group_tracking_lot" context="{'default_location_id': location_dest_id}" invisible="1"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="qty_done" invisible="1"/>
+                                    <field name="lots_visible" invisible="1"/>
+                                    <field name="is_done"/>
+                                    <button name="show_details" string="Modify" type="object" icon="fa-pencil"
+                                            states="confirmed,started,waiting,partially_available" groups="base.group_no_one"/>
+                                </tree>
+                            </field>
+                            <button class="oe_link oe_right" name="put_in_pack" type="object" string="&#8627;Put in Pack" attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}" groups="stock.group_tracking_lot"/>
+                        </page>
+                        <page string="Initial Demand">
+                            <field name="move_lines" attrs="{'readonly': [('state', 'in', ('cancel', 'partially_available', 'started', 'done','pending'))]}" options="{'reload_on_button': True}" mode="tree,kanban" context="{'address_in_id': partner_id, 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree', 'default_picking_type_id': picking_type_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id}">
+                                    <kanban class="o_kanban_mobile">
+                                    <field name="product_id"/>
+                                    <field name="availability"/>
+                                    <field name="product_uom_qty"/>
+                                    <field name="product_uom" options="{'no_open': True, 'no_create': True}"/>
+                                    <field name="location_dest_id"/>
+                                    <field name="scrapped"/>
+                                    <field name="state"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <strong><span><t t-esc="record.product_id.value"/></span></strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-8 text-muted">
+                                                        <span><t t-esc="record.availability.value"/> on <t t-esc="record.product_uom_qty.value"/> <t t-esc="record.product_uom.value"/></span>
+                                                    </div>
+                                                    <div class="col-xs-4 text-muted">
+                                                        <span class="pull-right text-right"><t t-esc="record.location_dest_id.value"/></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                            <field name="pack_operation_exist" invisible="1"/>
+                            <field name="note" placeholder="Add an internal note that will be printed on the Picking Operations sheet" class="oe_inline"/>
+                        </page>
+                        <page string="Additional Info" name="extra">
+                            <group>
+                                <group>
+                                    <field name="move_type" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}"/>
+                                    <field name="picking_type_id" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}"/>
+                                    <field name="picking_type_code" invisible="1"/>
+                                    <field name="quant_reserved_exist" invisible="1"/>
+                                </group>
+                                <group>
+                                    <field name="company_id" groups="base.group_multi_company" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}" options="{'no_create': True}"/>
+                                    <field name="group_id" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}"/>
+                                    <field name="priority" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Kim Huat Service Chit" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}">
+                        <field name="service_chit">
+                            <tree editable="bottom">
+                                <field name="no_number"/>
+                                <field name="brand"/>
+                                <field name="model_make"/>
+                                <field name="serial"/>
+                                <field name="type"/>
+                                <field name="on_coil_temp"/>
+                                <field name="off_coil_temp"/>
+                                <field name="suctn"/>
+                            </tree>
+                            <group>
+                                <group>
+                                    <field name="no_number"/>
+                                    <field name="brand"/>
+                                    <field name="model_make"/>
+                                    <field name="serial"/>
+                                </group>
+                                <group>
+                                    <field name="type"/>
+                                    <field name="on_coil_temp"/>
+                                    <field name="off_coil_temp"/>
+                                    <field name="suctn"/>
+                                </group>
+                            </group>
+                        </field>
+                       <group>
+                           <group string="Notes" name="notes">
+                               <field name="replacement" attrs="{'invisible': [('state', 'not in', ['pending','started','done'])]}"/>
+                               <field name="observations"  attrs="{'invisible': [('state', 'not in', ['pending','started','done'])]}"/>
+                               <field name="recommendation"  attrs="{'invisible': [('state', 'not in', ['pending','started','done'])]}"/>
+                               <field name="repair"  attrs="{'invisible': [('state', 'not in', ['pending','started','done'])]}"/>
+                               <field name="symptoms_observations" invisible="1" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                               <field name="service_rendered" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                               <field name="recommendations" invisible="1" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                           </group>
+                           <group name="service" string="Service">
+                               <label for="id" string="Routine Service"/>
+                                <div>
+                                    <div>
+                                        <field name="air_filter_cleaned"/>
+                                        <label for="air_filter_cleaned" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="bearings_oiled"/>
+                                        <label for="bearings_oiled" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="coils_cleaned"/>
+                                        <label for="coils_cleaned" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="condenser_coil_cleaned"/>
+                                        <label for="condenser_coil_cleaned" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="controls_checked"/>
+                                        <label for="controls_checked" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+
+                                    <div>
+                                        <field name="discharged_pressure_checked"/>
+                                        <label for="discharged_pressure_checked" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="drain_tray_drain_pipe_cleaned"/>
+                                        <label for="drain_tray_drain_pipe_cleaned" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="drives_checked"/>
+                                        <label for="drives_checked" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="evaporator_coil"/>
+                                        <label for="evaporator_coil" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="fan_blower_cleaned"/>
+                                        <label for="fan_blower_cleaned" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+
+                                    <div>
+                                        <field name="fan_coil_cover_cleaned"/>
+                                        <label for="fan_coil_cover_cleaned" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="flushed_drainage"/>
+                                        <label for="flushed_drainage" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="suction_pressure_checked"/>
+                                        <label for="suction_pressure_checked" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="thermostat_checked"/>
+                                        <label for="thermostat_checked" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                    <div>
+                                        <field name="pumps_checked"/>
+                                        <label for="pumps_checked" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    </div>
+                                </div>
+                           </group>
+                           <group>
+                               <group string="Attachment" name="attachment" col="4" colspan="2" attrs="{'invisible': [('state', 'not in', ['pending','started','done'])]}">
+                                   <field name="photo" widget="image" class="oe_avatar" height="100" width="100"/>
+                                   <field name="stamp" widget="image" class="oe_avatar" height="100" width="100"/>
+                               </group>
+                           </group>
+                        </group>
+                        <group>
+                            <group string="Customer Signature" name="customer" attrs="{'invisible': [('state', 'not in', ['pending','started','done'])]}">
+                                 <field name="signature"  widget="image" class="oe_avatar" height="100" width="100"/>
+                                 <field name="signature_full_name"/>
+                                 <field name="signature_date"/>
+                            </group>
+                            <group string="Service Man Signature" name="service" attrs="{'invisible': [('state', 'not in', ['pending','started','done'])]}">
+                                <field name="service_signature" widget="image" class="oe_avatar" height="100" width="100"/>
+                                <field name="service_signature_full_name"/>
+                                <field name="service_signature_date"/>
+                            </group>
+                        </group>
+                        <group string="Payment" name="payment">
+                            <group>
+                                <field name="payment_mode" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                            </group>
+                            <group>
+                                <field name="payment_made" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="PCF Service Chit" attrs="{'readonly': [('state', 'not in', ['pending','started'])]}">
+                        <field name="pcf_service_chit_tree_1_ids" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}" string="PCF Service Chit">
+                            <tree editable="bottom">
+                                <field name="type_of_aircon"/>
+                                <field name="units_to_service"/>
+                                <field name="units_serviced"/>
+                            </tree>
+                            <group>
+                                <group>
+                                    <field name="type_of_aircon"/>
+                                </group>
+                                <group>
+                                    <field name="units_to_service"/>
+                                    <field name="units_serviced"/>
+                                </group>
+                            </group>
+                        </field>
+                        <field name="pcf_service_chit_tree_2_ids" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}" string="PCF Service Chit">
+                            <tree editable="bottom">
+                                <field name="type_of_fan"/>
+                                <field name="units_to_service"/>
+                                <field name="units_serviced"/>
+                            </tree>
+                            <group>
+                                <group>
+                                    <field name="type_of_fan" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    <field name="units_to_service" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    <field name="units_serviced" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                </group>
+                                <group>
+                                    <field name="time_in" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                    <field name="time_out" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                                </group>
+                            </group>
+                        </field>
+                        <group>
+                            <group>
+                                <field name="time_in_pcf" invisible="1" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                            </group>
+                            <group>
+                                <field name="time_out_pcf" invisible="1" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                            </group>
+                        </group>
+                        <!--<lable for="pcf_service_chit_tree_3_ids" string="Type of Equipment"/>-->
+                        <div>
+                            <h4>Type of Equipment</h4>
+                            <field name="pcf_service_chit_tree_3_ids" attrs="{'readonly': [('state', 'in', ['cancel','done'])]}" string="Type of Equipment">
+                                <tree editable="bottom">
+                                    <field name="brand"/>
+                                    <field name="model_no"/>
+                                    <field name="type"/>
+                                    <field name="serial_no"/>
+                                    <field name="location"/>
+                                </tree>
+                                <group>
+                                    <group>
+                                        <field name="brand"/>
+                                        <field name="model_no"/>
+                                        <field name="type"/>
+                                        <field name="serial_no"/>
+                                    </group>
+                                    <group>
+                                        <field name="location"/>
+                                        <field name="header"/>
+                                    </group>
+                                </group>
+                            </field>
+                            <group>
+                                <field name="header"/>
+                            </group>
+                        </div>
+                    </page>
+                        <page string="Installation">
+                            <field name = "booking_installation_id">
+                                <tree>
+                                    <field name = "location"/>
+                                    <field name = "designation_cu"/>
+                                    <field name = "designation_fcu"/>
+                                    <field name = "model_cu"/>
+                                    <field name = "model_fcu"/>
+                                    <field name = "serial_no_cu"/>
+                                    <field name = "serial_no_fcu"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                             <field name = "location"/>
+                                            <field name = "designation_cu"/>
+                                            <field name = "designation_fcu"/>
+                                            <field name = "model_cu"/>
+                                        </group>
+                                        <group>
+                                            <field name = "model_fcu"/>
+                                            <field name = "serial_no_cu"/>
+                                            <field name = "serial_no_fcu"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="work_order_tree" model="ir.ui.view">
+            <field name="name">work.order.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <tree create="false" edit="false" decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" decoration-danger="state not in ('cancel', 'done')">
+                    <field name="name" string="Work Order"/>
+                    <field name="partner_id"/>
+                    <field name="scheduled_start"/>
+                    <field name="scheduled_end"/>
+                    <field name="actual_start"/>
+                    <field name="actual_end"/>
+                    <field name="origin" string="Booking Reference"/>
+                    <field name="state" string="Status"/>
+                </tree>
+            </field>
+        </record>
+
+         <record id="view_work_order_search" model="ir.ui.view">
+            <field name="name">work.order.search</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <search string="Picking Lists">
+                    <field name="name" string="Work Order" filter_domain="['|',('name','ilike', self),('origin','ilike',self)]"/>
+                    <filter name="pending" string="Pending" domain="[('state','=','pending')]" help="Pending Order"/>
+                    <filter name="start" string="Started" domain="[('state','=','started')]" help="Orders are in started state"/>
+                    <filter name="done" string="Done" domain="[('state','=', 'done')]" help="Orders are in Done state"/>
+                    <separator/>
+                    <filter name="cancel" string="Cancelled" domain="[('state','=', 'cancel')]" help="Cancelled Order"/>
+                    <separator/>
+                    <field name="partner_id" string="Customer" filter_domain="[('partner_id','child_of',self)]"/>
+                    <field name="product_id"/>
+                    <!--<field name="picking_type_id"/>-->
+                    <!--<field name="group_id"/>-->
+                    <group expand="0" string="Group By">
+                        <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Order Date" domain="[]"  context="{'group_by':'date'}"/>
+                        <filter string="Expected Date" domain="[]"  context="{'group_by':'min_date'}"/>
+                        <filter string="Origin" domain="[]" context="{'group_by':'origin'}"/>
+                        <filter name="picking_type" string="Picking Type" domain="[]" context="{'group_by':'picking_type_id'}"/>
+                        <filter string="Booking Order" domain="[]" context="{'group_by':'group_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="booking_service_V2.work_order_action">
+            <field name="name">Work Order</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="context">{'form_view_ref':'kimhuat_modifier_fields.view_work_order_form','search_view_ref':'kimhuat_modifier_fields.view_work_order_search',
+                'tree_view_ref':'kimhuat_modifier_fields.work_order_tree','default_is_booking':True}</field>
+            <field name="view_id" ref="kimhuat_modifier_fields.work_order_tree"/>
+            <field name="search_view_id" ref="kimhuat_modifier_fields.view_work_order_search"/>
+            <field name="domain">[('is_booking', '=',True)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first Work Order
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

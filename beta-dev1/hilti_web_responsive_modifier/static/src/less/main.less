@@ -1,0 +1,30 @@
+.o_web_client {
+    .o_main_content {
+        .o-flex(1, 1, auto);
+        .o-flex-display();
+        .o-flex-flow(column, nowrap);
+
+        .o_control_panel {
+            .o-flex(0, 0, auto);
+        }
+        @media (max-width: 768px) {
+            .o_content {
+                .o-flex(1, 1, auto);
+                height: 100%;
+                overflow: auto;
+                position: relative;
+
+                .o_view_manager_content {
+                    .o-position-absolute(0, 0, 0, 0);  // Get the 100% height of its flex parent
+                    height: 100%;
+
+                    .o_view_manager_content {
+                        position: static;  // Reset position for nested view managers
+                        height: auto;  // reset height inheritance for nested view managers
+                        overflow: scroll;
+                    }
+                }
+            }
+        }
+    }
+}

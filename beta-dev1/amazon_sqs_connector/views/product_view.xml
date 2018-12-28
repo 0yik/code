@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="custom_product_product_form_view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.template</field>
+            <field eval="7" name="priority"/>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="brand_name"/>
+                    <field name="minimum" string="Minimum"/>
+                    <field name="special_discount" string="Special Discount"/>
+                    <field name="level" string="Level"/>
+                    <field name="has_expiry" string="Has Expiry"/>
+                    <field name="is_liquid" string="Is Liquid"/>
+                    <field name="is_upc_checked" string="Is UPC Checked"/>
+                </field>
+                <field name="purchase_method" position="after">
+                    <field name="product_id"/>
+                    <field name="model"/>
+                    <field name="upc"/>
+                    <field name="jan"/>
+                    <field name="isbn"/>
+                    <field name="mpn"/>
+                <field name="sku" string="SKU"/>
+                </field>    
+            </field>
+        </record>
+        <record model="ir.ui.view" id="custom_product_product_tree_view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.template</field>
+            <field eval="7" name="priority"/>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="replace">
+                    <field name="product_id"/>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="sku" string="SKU"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

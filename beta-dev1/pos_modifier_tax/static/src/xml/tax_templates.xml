@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="TaxButton">
+        <div class='control-button tax_remove' data-mode='tax'>
+            <i class='fa fa-tag' /> Tax/ Non-Tax
+        </div>
+    </t>
+
+</templates>

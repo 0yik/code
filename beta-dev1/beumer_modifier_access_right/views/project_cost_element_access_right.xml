@@ -1,0 +1,125 @@
+<odoo>
+    <data>
+        <!--Project Access Right-->
+        <record id="view_account_analytic_account_list_inherit1" model="ir.ui.view">
+            <field name="name">view account analytic account list inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_list"/>
+            <field name="groups_id" eval="[(4, ref('project.group_project_user')),(4, ref('tiemsheet_hlc_groups')),(4, ref('project.group_project_manager')) ]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_analytic_account_list_inherit4" model="ir.ui.view">
+            <field name="name">view account analytic account list inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_list"/>
+            <field name="groups_id" eval="[(4, ref('tiemsheet_hlc_groups')),(4, ref('project.group_project_manager')) ]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">true</attribute>
+                    <attribute name="delete">true</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_analytic_account_form_inherit" model="ir.ui.view">
+            <field name="name">view account analytic account form inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="groups_id" eval="[(4, ref('project.group_project_user'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                    <attribute name="delete">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_analytic_account_form_inherit2" model="ir.ui.view">
+            <field name="name">view account analytic account form inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="groups_id" eval="[(4, ref('tiemsheet_hlc_groups')),(4, ref('project.group_project_manager')) ]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">true</attribute>
+                    <attribute name="edit">true</attribute>
+                    <attribute name="delete">true</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Cost Element Access Right-->
+        <record id="cost_element_tree_view_inherit" model="ir.ui.view">
+            <field name="name">cost element tree view inherit</field>
+            <field name="model">project.cost_element</field>
+            <field name="inherit_id" ref="cost_element.cost_element_tree_view"/>
+            <field name="groups_id" eval="[(4, ref('project.group_project_user'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="cost_element_from_view_inherit" model="ir.ui.view">
+            <field name="name">cost element from view inherit</field>
+            <field name="model">project.cost_element</field>
+            <field name="inherit_id" ref="cost_element.cost_element_from_view"/>
+            <field name="groups_id" eval="[(4, ref('project.group_project_user'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                    <attribute name="delete">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="analytic_account_budget_log_inherit3" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.analytic_account_budget_log_inherit"/>
+            <field name="groups_id" eval="[(4, ref('tiemsheet_hlc_groups'))]"/>
+            <field name="arch" type="xml">
+                <field name="budget_log_ids" position="replace">
+                    <field name="budget_log_ids" modifiers="{'readonly': false}" position="replace">
+                        <tree string="Cost Element Tree">
+                            <field name="budge_change_number"/>
+                            <field name="old_budget"/>
+                            <field name="new_budget"/>
+                            <field name="cost_element_id"/>
+                            <field name="remarks"/>
+                            <field name="date"/>
+                            <field name="user_id"/>
+                        </tree>
+                    </field>
+                </field>
+            </field>
+        </record>
+
+        <record id="account_analytic_account_form_inherit_baan1" model="ir.ui.view">
+            <field name="name">analytic.analytic.account.form.project.baan</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="beumer_modifier_project_baan.account_analytic_account_form_inherit_baan"/>
+            <field name="arch" type="xml">
+                <field name="baan_number_id" position="replace">
+                    <field name="is_right" invisible="1"/>
+                    <field name="baan_number_id" attrs="{'readonly' : [('is_right', '=', True)]}">
+                        <tree editable="bottom">
+                            <field name="product"/>
+                            <field name="phase"/>
+                            <field name="baan"/>
+                            <field name="invoice_type" string="Owner"/>
+                        </tree>
+                    </field>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

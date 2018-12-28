@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="three_interface_pos.assets_custom">
+      <xpath expr="." position="inside">
+          <link rel="stylesheet" href="/pos_layout/static/src/css/pos.css" type="text/css"/>
+          <script type="text/javascript" src="/pos_layout/static/src/js/screen.js"></script>
+          <script type="text/javascript" src="/pos_layout/static/src/js/models.js"></script>
+      </xpath>
+    </template>
+</odoo>

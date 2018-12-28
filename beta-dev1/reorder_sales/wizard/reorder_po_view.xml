@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_reorder_po" model="ir.ui.view">
+        <field name="name">reorder.po</field>
+        <field name="model">reorder.po</field>
+        <field name="arch" type="xml">
+            <form string="Reorder PO">
+                <group>
+                    <h5>Reorder PO based on POS sales</h5>
+                </group>
+                <footer>
+                    <button string='Reorder PO' name="reorder_po_calculation" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_reorder_po" model="ir.actions.act_window">
+        <field name="name">Reorder PO</field>
+        <field name="res_model">reorder.po</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_reorder_po"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Reorder PO" id="menu_reorder_po" sequence="55" parent="purchase.menu_purchase_control" action="action_reorder_po"/>
+    
+</odoo>

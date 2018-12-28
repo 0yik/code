@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+    <!--Department-->
+
+        <record id="dep_worker" model="hr.department">
+              <field name="name">Technician/Worker</field>
+        </record>
+
+        <record id="dep_supervisor" model="hr.department">
+            <field name="name">Supervisor/Forman</field>
+        </record>
+
+        <record id="dep_engineer" model="hr.department">
+            <field name="name">Engineer</field>
+        </record>
+
+        <record id="dep_sic" model="hr.department">
+            <field name="name">SIC/Manager/site-manager</field>
+        </record>
+
+        <record id="dep_tic" model="hr.department">
+            <field name="name">TIC/OIC/Assistant HOD</field>
+        </record>
+
+        <record id="dep_hod" model="hr.department">
+            <field name="name">HOD</field>
+        </record>
+
+        <record id="dep_general" model="hr.department">
+            <field name="name">General Manager</field>
+        </record>
+
+        <record id="dep_ed" model="hr.department">
+            <field name="name">Executive Director</field>
+        </record>
+
+        <record id="dep_md" model="hr.department">
+            <field name="name">Managing Director</field>
+        </record>
+
+    </data>
+</odoo>

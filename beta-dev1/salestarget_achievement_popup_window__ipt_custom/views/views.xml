@@ -1,0 +1,111 @@
+<odoo>
+   <data>
+        
+      <record id="crm_team_popup_view_form" model="ir.ui.view">
+            <field name="name">crm.team.popup.form.view</field>
+            <field name="model">crm.team</field>
+            <field name="arch" type="xml">
+                <form string="Sales Target &amp; Achievement" create="false" edit="false" delete="false">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Sales team"/>
+                            <h1>
+                                <field name="name" readonly="1" placeholder="Salesteam name..."/>
+                            </h1>
+                            <!-- <div name="options_active"> -->
+                                 <!-- <div class="o_row"> -->
+                                    <!-- <field name="use_quotations" readonly="1"/><label for="use_quotations"/> -->
+                                    <!-- <field name="use_invoices" readonly="1" groups="account.group_account_invoice"/><label for="use_invoices" groups="account.group_account_invoice"/> -->
+                                <!-- </div> -->
+                                <!-- <div class="o_row"> -->
+                                    <!-- <span groups="crm.group_use_lead" class="o_row"> -->
+                                        <!-- <field name="use_leads" readonly="1"/> -->
+                                        <!-- <label for="use_leads" string="Prospects"/> -->
+                                    <!-- </span> -->
+                                    <!-- <field name="use_opportunities" readonly="1"/> -->
+                                    <!-- <label for="use_opportunities" string="Enquiries"/> -->
+                                <!-- </div> -->
+                            <!-- </div> -->
+                        </div>
+                        <group>
+                            <group name="left">
+                                <!-- <field name="user_id" readonly="1" domain="[('share', '=', False)]"> -->
+                                    
+                                <!-- </field> -->
+                                 <!-- <label for="alias_name" string="Email Alias" attrs="{'invisible': [('use_leads', '=', False), ('use_opportunities', '=', False)]}"/> -->
+                                <!-- <div name="alias_def" attrs="{'invisible': [('use_leads', '=', False), ('use_opportunities', '=', False)]}"> -->
+                                    <!-- <field name="alias_id" readonly="1" class="oe_read_only oe_inline" string="Email Alias" required="0"/> -->
+                                    <!-- <div class="oe_edit_only oe_inline" name="edit_alias" style="display: inline;"> -->
+                                        <!-- <field name="alias_name" class="oe_inline" readonly="1"/>@<field name="alias_domain" class="oe_inline" readonly="1"/> -->
+                                    <!-- </div> -->
+                                <!-- </div> -->
+                                <field name="start_date" readonly="1" style="width:25%"/>
+                                <field name="end_date" readonly="1" style="width:25%"/>
+                                <field name="team_target" readonly="1" style="width:25%"/>
+                                <field name="team_achievement" readonly="1" style="width:25%"/>                                
+                            </group>
+                            <group name="right">
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="members" string="Team Members">
+                                <field name="member_ids" widget="many2many_kanban" options="{'not_delete': True}" readonly="1">
+                                    <kanban quick_create="false" create="true" delete="true">
+                                        <field name="name"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click" style="position: relative">
+                                                    <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                                    <div class="oe_module_vignette">
+                                                        <img t-att-src="kanban_image('res.users', 'image_small', record.id.value)" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                                        <div class="oe_module_desc">
+                                                            <field name="name"/>
+                                                            <br/>
+                                                            <strong> Target: <field name="sale_target"/></strong>
+                                                            <br/>
+                                                            <strong>Archievement: <field name="achievement"/></strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+   
+      <record id="crm_team_sale_target_form_inherit" model="ir.ui.view">
+          <field name="name">crm.team.sale.target.form.inherit</field>
+          <field name="model">crm.team</field>
+          <field name="inherit_id" ref="crm.crm_team_salesteams_view_kanban"/>
+          <field name="arch" type="xml">          
+          <xpath expr="//div[@class='mb4']" position="after">
+              <div class="mb4">
+                  <a name="open_popup_id" type="object">
+                      Sales Target &amp; Achievement
+                  </a>
+              </div>
+		  </xpath>
+          </field>
+      </record>
+      
+      <record id="res_user_viewlog_form_inherit" model="ir.ui.view">
+          <field name="name">res.users.viewlog.form.inherit</field>
+          <field name="model">res.users</field>
+          <field name="inherit_id" ref="salestarget_achievement__ipt_custom.res_users_simplified_form_inherit"/>
+          <field name="arch" type="xml">
+          <xpath expr="//field[@name='achievement']" position="after">
+              <field name="phonelog_ids"/>
+              <field name="email_log_ids"/>
+              <field name="meeting_log_ids" string="Meeting Log"/>
+		  </xpath>
+          </field>
+      </record>
+      
+
+  </data>
+</odoo>

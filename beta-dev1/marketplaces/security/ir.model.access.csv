@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_marketplaces_data_update,marketplaces.marketplaces_data_update,model_marketplaces_data_update,,1,0,0,0
+access_marketplaces_data_product,marketplaces.marketplaces_data_product,model_marketplaces_data_product,,1,0,0,0

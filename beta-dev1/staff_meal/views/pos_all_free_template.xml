@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+      <xpath expr="." position="inside">
+          <link rel="stylesheet" href="/staff_meal/static/src/css/pos_all_free.css" />
+          <script type="text/javascript" src="/staff_meal/static/src/js/pos_all_free.js"></script>
+          <script type="text/javascript" src="/staff_meal/static/src/js/staff_meal_option.js"></script>
+          <script type="text/javascript" src="/staff_meal/static/src/js/pos_confirmed_email.js"></script>
+      </xpath>
+    </template>
+</odoo>

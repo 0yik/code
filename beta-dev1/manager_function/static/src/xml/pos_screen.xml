@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="ProductScreenWidget">
+        <t t-jquery=".seat_number_btn" t-operation="before">
+            <button class="control-button btn btn-default btn-fill btn-wd manager-button">Manager Function</button>
+        </t>
+    </t>
+
+    <t t-name="ManagerFunctionWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-confirm" style="height: 210px !important;">
+                <p class="title" style="background-color: rgb(110,200,155); color: #fff;">Select Function :</p>
+                <div class="body">
+                    <button class="control-button btn btn-default btn-fill btn-wd search-bill-button">Search Bill</button>
+                    <button class="control-button btn btn-default btn-fill btn-wd no-sale-button">No Sale</button>
+                </div>
+                <div class="footer" style="background-color: rgb(110,200,155); color: #fff;">
+                    <div class="button cancel" style="background-color: #0075AC; color: #fff;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

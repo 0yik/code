@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <template id="assets" inherit_id="point_of_sale.assets">
+			<xpath expr="." position="inside">
+				<script type="text/javascript" src="/delivery_orders_kds/static/src/js/pos_delivery_option.js"></script>
+				<script type="text/javascript" src="/delivery_orders_kds/static/src/js/payment_plan.js"></script>
+				<script type="text/javascript" src="/delivery_orders_kds/static/src/js/list_invoice.js"></script>
+				<script type="text/javascript" src="/delivery_orders_kds/static/src/js/delivery_list.js"></script>
+				<script type="text/javascript" src="/delivery_orders_kds/static/src/js/branch_option.js"></script>
+				<script type="text/javascript" src="/delivery_orders_kds/static/src/js/delivery_man.js"></script>
+				<script type="text/javascript" src="/delivery_orders_kds/static/src/js/order.js"></script>
+                <script  src="/delivery_orders_kds/static/src/js/pos_delivery.js"></script>
+				<link rel="stylesheet" href="/delivery_orders_kds/static/src/css/custom.css"/>
+
+			</xpath>
+		</template>
+    </data>
+</odoo>

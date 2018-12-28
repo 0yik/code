@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+   <t t-name="OptionsPopupWidget">
+	    <div class="modal-dialog options-dialog">
+	        <div class="popup popup-options">
+	            <p class="title"><t t-esc=" widget.options.title || '' " /></p>
+	            <div class='popup-option frst'>
+	                <button class="button icon cancel" data-action='1'><img src="/pizzahut_modifier_startscreen/static/src/img/dinein.png"></img><span>Dine-in</span></button>
+	                <button class="button icon" data-action='2'><img src="/pizzahut_modifier_startscreen/static/src/img/takeaway.png"></img><span>Take Away</span></button>
+	                <button class="button icon" data-action='3'><img src="/pizzahut_modifier_startscreen/static/src/img/delivery.png"></img><span>Delivery</span></button>
+	            </div>
+				<br />
+				<div class='popup-option scnd'>
+					<button class="button icon" data-action='4'><img src="/pizzahut_modifier_startscreen/static/src/img/staff_meal.png"></img><span>Staff Meal</span></button>
+					<button class="button icon" data-action='5' style="width:25% !important;"><img src="/pizzahut_modifier_startscreen/static/src/img/transfer.png"></img><span>Transfer Out</span></button>
+				</div>
+	        </div>
+	    </div>
+    </t>   
+</templates>

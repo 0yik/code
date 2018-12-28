@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Invoices -->
+        <record id="view_account_invoice_pono" model="ir.ui.view">
+            <field name="name">account.invoice.pono</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_invoice']" position="after">
+                    <field name="po_no"/>
+                    <field name="job_po_no"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- Picking -->
+        <record id="view_stock_picking_pono" model="ir.ui.view">
+            <field name="name">stock.picking.pono</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='min_date']" position="after">
+                    <field name="job_po_no"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- Sale Order -->
+        <record id="view_sale_order_pono" model="ir.ui.view">
+            <field name="name">sale.order.pono</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='confirmation_date']" position="after">
+                    <field name="job_po_no"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+    
+<!-- Header and Footers for Request for Quote report -->	
+<template id="external_layout_invoice_tax">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="ham_modifier_printout.external_layout_header_invoice_tax" />
+    <t t-raw="0" />
+    <t t-call="ham_modifier_printout.external_layout_footer_invoice_tax" />
+</template>
+
+
+<template id="external_layout_header_invoice_tax">
+     <div class="header">
+        <div class="row">
+            <div class="col-xs-8">
+                <span style="font-weight:bold;font-size:18px;" t-esc="company.partner_id.name" />
+                <br/>
+                <span style="font-size:14px;" t-esc="company.partner_id.street"/>
+                <span style="font-size:14px;" t-esc="company.partner_id.street2"/>
+                <br/>
+                <span style="font-size:14px;" t-esc="company.partner_id.city"/> <span style="font-size:14px;" t-esc="company.partner_id.zip"/>
+                <br/>
+                <span style="font-size:14px;">Tel:</span>
+                <span style="font-size:14px;" t-esc="company.partner_id.phone and company.partner_id.phone or ''"/>
+                <br/>
+                <span style="font-size:14px;">Fax:</span>
+                <span style="font-size:14px;" t-esc="company.partner_id.fax and company.partner_id.fax or ''"/>
+                <br/>
+                <span style="font-size:14px;">Email:</span>
+                <span style="font-size:14px;" t-esc="company.partner_id.email and company.partner_id.email or ''"/>
+                <br/>
+                <br/>
+                <span style="font-size:14px;">R.O.C #</span>
+                <span style="font-size:14px;" t-esc="company.company_registry and company.company_registry or ''"/>
+                <br/>
+                <span style="font-size:14px;">GST #</span>
+                <span style="font-size:14px;" t-esc="company.company_registry and company.company_registry or ''"/>
+            </div>
+            <div class="col-xs-4">
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 80px;width: 300px;"/>
+                <br/>
+                <br/>
+                <span style="font-size:50px;"><b>Tax Invoice</b></span>
+                <br/>
+                <span style="font-size:14px;">GST Reg No: </span> <span style="font-size:14px;" t-esc="company.company_registry and company.company_registry or ''"/>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="external_layout_footer_invoice_tax">
+    <div class="footer">
+        <div class="col-xs-5 text-center" style="border-top: 1px solid black;">            
+                <span>Authorised Signatory </span>
+        </div>
+        <div class="col-xs-12 text-center">            
+            <span> E.&amp;O.E  </span>
+        </div>
+            <!-- <ul class="list-inline">
+                <li>Page:</li>
+                <li><span class="page"/></li>
+                <li>/</li>
+                <li><span class="topage"/></li>
+            </ul> -->
+    </div>           
+</template>
+		
+<template id="report_tax_invoice_document">
+    <t t-call="ham_modifier_printout.external_layout_invoice_tax">
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+        <div class="page">
+            <div class="row">
+            <br/>
+            <br/>
+            <div class="col-xs-8">
+                <span style="font-weight:bold">Bill To</span>
+                <br/>
+                <address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+                    <span t-if="o.partner_id.vat">TIN: <span t-field="o.partner_id.vat"/></span>
+                <table>
+                    <tr>
+                        <td style="font-weight:bold">Attention</td>
+                        <td>: <span t-esc="o.partner_id.name"/></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Phone</td>
+                        <td>: <span t-esc="o.partner_id.phone"/></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-xs-4">
+                <table class="table table-condensed"  style="border-collapse: collapse; border:1px solid black">
+                    <tr style="border:1px solid black;">
+                        <td style="border:1px solid black;font-weight:bold;">Invoice</td>
+                        <td t-esc="o.number and o.number or ''" style="border:1px solid black;font-weight:bold;"></td>
+                    </tr>
+                    <tr style="border:1px solid black;">
+                        <td style="border:1px solid black;font-weight:bold;">Date:</td>
+                        <td style="border:1px solid black;font-weight:bold;"><span t-field="o.date_invoice"/></td>
+                    </tr>
+                    <tr style="border:1px solid black;">
+                        <td style="border:1px solid black;font-weight:bold;">Pages:</td>
+                        <td style="border:1px solid black;font-weight:bold;"> <span class="page"> 1 </span> </td>
+                    </tr>
+                </table>
+                </div>
+                <div class="col-xs-12">
+                    <table class="table table-condensed"  style="border-collapse: collapse; border:1px solid black">
+                        <thead>
+                            <tr>
+                                <th style="border:1px solid black;"><strong>JOB ORDER/PURCHASE ORDER</strong></th>
+                                <th style="border:1px solid black;"><strong>PAYMENT DUE DATE</strong></th>
+                                <th style="border:1px solid black;"><strong>CREDIT TERMS</strong></th>
+                                <th style="border:1px solid black;"><strong>PAGE NO.</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border:1px solid black;"> <span t-esc="o.job_po_no"/> </td>
+                                <td style="border:1px solid black;"> <span t-field="o.date_due" /> </td>
+                                <td style="border:1px solid black;" t-esc="o.payment_term_id and o.payment_term_id.name or ''"></td>
+                                <td style="border:1px solid black;"> <span> 1 </span> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- Is there a discount on at least one line? -->
+                    <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
+                    <table class="table table-condensed"  style="border-collapse: collapse; border:1px solid black">
+                        <thead>
+                            <tr>
+                                <th style="border:1px solid black;"><strong>Item Code</strong></th>
+                                <th style="border:1px solid black;"><strong>Description</strong></th>
+                                <th style="border:1px solid black;"><strong>UNIT PRICE</strong></th>
+                                <th style="border:1px solid black;"><strong>UNIT</strong></th>
+                                <th style="border:1px solid black;"><strong>PRICE</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_tbody">
+                            <tr t-foreach="o.invoice_line_ids" t-as="l" style="border:1px solid black;">
+                                <td style="border:1px solid black;"><span t-field="l.product_id.default_code"/></td>
+                                <td style="border:1px solid black;"><span t-field="l.name"/></td>
+                                <td style="border:1px solid black;" class="text-right">
+                                    <span t-field="l.price_unit"/>
+                                </td>
+                                <td style="border:1px solid black;" class="text-right">
+                                    <span t-field="l.quantity"/>
+                                    <span t-field="l.uom_id" groups="product.group_uom"/>
+                                </td>
+                                <td style="border:1px solid black;" t-if="display_discount" class="text-right">
+                                    <span t-field="l.discount"/>
+                                </td>
+                                <td style="border:1px solid black;" class="text-right">
+                                    <span t-field="l.price_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                    <div class="col-xs-8">
+                        <strong> Remarks: </strong>
+                        <div style="height:60px;">
+                            <span t-field="o.comment"/>
+                        </div>
+                        <strong> BANK DETAILS: </strong>
+                        <table>
+                            <tr>
+                                <td>
+                                        Beneficiary Name 
+                                    <br/>
+                                        Bank Name        
+                                    <br/>
+                                        Bank Branch      
+                                    <br/>
+                                        Bank Address     
+                                    <br/>
+                                        Bank Code        
+                                    <br/>
+                                        Branch Code      
+                                    <br/>
+                                        Account No.      
+                                    <br/>
+                                        Account Currency 
+                                    <br/>
+                                        Swift Code       
+                                </td>
+                                <td>
+                                        : H.A.M. Creations Pte Ltd
+                                    <br/>
+                                        : Standard Chartered Bank
+                                    <br/>
+                                        : Serangoon Garden
+                                    <br/>
+                                        : 67 Serangoon Garden Way,Singapore 555963
+                                    <br/>
+                                        : 7144
+                                    <br/>
+                                        : 012
+                                    <br/>
+                                        : 1210051203
+                                    <br/>
+                                        : Singapore Dollars
+                                    <br/>
+                                        : SCBLSGSG
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                            Remarks: All bank transfer charges and fees to be borne by sender.
+                    </div>
+                    <div class="col-xs-4">
+                        <table class="table table-condensed">
+                            <tr>
+                                <td style="border-bottom:1px solid white;border-top:1px solid white;"><strong>Total</strong></td>
+                                <td class="text-right" style="border-top:1px solid black;border-right:1px solid black;border-left:1px solid black;border-bottom:1px solid white;">
+                                    <span t-field="o.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border-bottom:1px solid white;"><strong>Add: 7% GST</strong></td>
+                                <td class="text-right" style="border-right:1px solid black;border-left:1px solid black;border-bottom:1px solid white;">
+                                    <span t-field="o.amount_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border-bottom:1px solid white;"><strong>Total Inc GST</strong></td>
+                                <td class="text-right" style="border-right:1px solid black;border-left:1px solid black;border-bottom:1px solid black;">
+                                     <span t-field="o.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border-bottom:1px solid white;"><strong>BALANCE DUE</strong></td>
+                                <td class="text-right" style="border:1px solid black;">
+                                     <span t-field="o.residual" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </t>
+</template>
+
+<template id="report_tax_invoice">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="ham_modifier_printout.report_tax_invoice_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+<!-- QWeb Reports -->
+        <report 
+            id="account_tax_invoices"
+            model="account.invoice"
+            string="Tax Invoice"
+            report_type="qweb-pdf"
+            name="ham_modifier_printout.report_tax_invoice"
+            file="ham_modifier_printout.report_tax_invoice"
+        />
+</odoo>

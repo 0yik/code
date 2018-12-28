@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="wizard_flow" name="Wizard Checkout">
+	    <ul class="wizard pull-right ">
+	        <li class="color-code text-muted" id="step10">
+                <span class="chevron " style="color: white;">Project Selection</span>
+	        </li>
+	        <li class="text-muted wizard-color-code" id="step20">
+                <span class="chevron " style="color: white;">Anchor Selection</span>
+	        </li>
+	        <li class="text-muted wizard-color-code" id="step40">
+	            <span class="chevron " style="color: white;">Date and Timeslot Selection</span>
+	        </li>
+	    </ul>
+	</template>
+	
+	<template id="wizard_checkout_flow" name="Wizard Checkout">
+        <ul class="wizard pull-right booking_progress_bar">
+            <!--<li class="color-code" style="color: white;" id="step10">-->
+            <li class="color-code first" id="step10">
+                Project Selection<span class="chevron one span-color-code active"></span>
+            </li>
+            <!--<li class="wizard-color-code" style="color: white;" id="step20">-->
+            <li class="wizard-color-code" id="step20">
+                Anchor Selection<span class="chevron two span-color-code"/>
+            </li>
+            <!--<li class="wizard-color-code" style="color: white;" id="step40">-->
+            <li class="wizard-color-code" id="step40">
+                Date and Timeslot Selection<span class="chevron three span-color-code"></span>
+            </li>
+        </ul>
+    </template>
+    
+</odoo>

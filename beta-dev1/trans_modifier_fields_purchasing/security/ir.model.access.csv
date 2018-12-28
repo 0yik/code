@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pr_approving_matrix_line_all_user,pr_approving_matrix_line_all_user,model_pr_approving_matrix_line,,1,1,1,1
+access_pr_approving_matrix_all_user,pr_approving_matrix_all_user,model_pr_approving_matrix,,1,1,1,1

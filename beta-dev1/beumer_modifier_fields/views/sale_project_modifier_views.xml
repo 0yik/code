@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_account_analytic_account_form_inherit_remove_field" model="ir.ui.view">
+            <field name="name">account.analytic.account</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"/>
+            <field name="arch" type="xml">
+                <page name="contract_information" position="replace">
+                    <page name="contract_information" string="Contract Information" invisible="1">
+                        <field name="fix_price_invoices" class="oe_inline" invisible="1"/>
+                        <field class="oe_inline" name="amount_max"
+                               attrs="{'invisible': [('fix_price_invoices','=',False)]}" invisible="1"/>
+                        <field class="oe_inline" name="ca_invoiced"
+                               attrs="{'invisible': [('fix_price_invoices','=',False)]}" invisible="1"/>
+                        <field class="oe_inline" name="remaining_ca"
+                               attrs="{'invisible': [('fix_price_invoices','=',False)]}" invisible="1"/>
+                        <field class="oe_inline" name="fix_price_to_invoice"
+                               attrs="{'invisible': [('fix_price_invoices','=',False)]}" invisible="1"/>
+                        <field name="invoice_on_timesheets" invisible="1"/>
+                        <field name="est_total" class="oe_inline"
+                               attrs="{'invisible': [('invoice_on_timesheets','=',False)]}" invisible="1"/>
+                        <field name="invoiced_total" class="oe_inline" invisible="1"/>
+                        <field name="remaining_total" class="oe_inline" invisible="1"/>
+                        <field name="toinvoice_total" class="oe_inline" invisible="1"/>
+                        <field name="recurring_invoices" class="oe_inline" invisible="1"/>
+                        <field name="pricelist_id"
+                                       class="oe_inline"
+                                       attrs="{'required': [('invoice_on_timesheets', '=', True)]}"
+                                       invisible="1"/>
+                        <field class="oe_inline" name="hours_qtt_est"
+                                           attrs="{'invisible': [('invoice_on_timesheets','=',False)]}" invisible="1"/>
+                        <field class="oe_inline" name="remaining_hours_to_invoice"
+                                           attrs="{'invisible': [('invoice_on_timesheets','=',False)]}" invisible="1"/>
+                        <field class="oe_inline" name="ca_to_invoice"
+                                           attrs="{'invisible': [('invoice_on_timesheets','=',False)]}" invisible="1"/>
+                        <field name="to_invoice"
+                                       class="oe_inline"
+                                       widget="selection"
+                                       attrs="{'required': [('invoice_on_timesheets', '=', True)], 'invisible': [('invoice_on_timesheets','=',False)]}"
+                                       invisible="1"/>
+                    </page>
+                </page>
+
+            </field>
+        </record>
+    </data>
+</odoo>

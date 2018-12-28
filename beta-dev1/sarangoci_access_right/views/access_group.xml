@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--Create category group-->
+        <record id="management_category" model="ir.module.category">
+            <field name="name">Management</field>
+            <field name="sequence" eval="20" />
+        </record>
+
+        <record id="outlet_category" model="ir.module.category">
+            <field name="name">Outlet Operations</field>
+            <field name="sequence" eval="25" />
+        </record>
+
+        <record id="back_end_category" model="ir.module.category">
+            <field name="name">Back End Operations</field>
+            <field name="sequence" eval="30" />
+        </record>
+
+        <record id="regular_employee_category" model="ir.module.category">
+            <field name="name">Regular Employee</field>
+            <field name="sequence" eval="35" />
+        </record>
+        <!--Create group in Management category-->
+        <record id="shareholder_group" model="res.groups">
+            <field name="name">Shareholder</field>
+            <field name="category_id" ref="management_category"/>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_manager')),(4, ref('hr.group_hr_manager')),(4, ref('point_of_sale.group_pos_manager')),
+            (4, ref('stock.group_stock_manager')),(4, ref('purchase.group_purchase_user')),(4, ref('account.group_account_manager')),(4, ref('base.group_system')),
+            (4, ref('mrp.group_mrp_manager')),(4, ref('purchase_request.group_purchase_request_manager')),(4, ref('hr_timesheet.group_hr_timesheet_user')),(4, ref('website.group_website_designer')),(4, ref('hr_payroll.group_hr_payroll_manager')),
+            (4, ref('hr_attendance.group_hr_attendance_manager')),(4, ref('hr_expense.group_hr_expense_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="managing_director_group" model="res.groups">
+            <field name="name">Managing Director</field>
+            <field name="category_id" ref="management_category"/>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_manager')),(4, ref('hr.group_hr_manager')),(4, ref('point_of_sale.group_pos_manager')),
+            (4, ref('stock.group_stock_manager')),(4, ref('purchase_request.group_purchase_manager_threestep')),(4, ref('account.group_account_manager')),(4, ref('base.group_system')),(4, ref('mrp.group_mrp_manager')),(4, ref('purchase_request.group_purchase_request_manager')),(4, ref('hr_timesheet.group_hr_timesheet_user')),(4, ref('website.group_website_designer')),(4, ref('hr_payroll.group_hr_payroll_manager')),
+            (4, ref('hr_attendance.group_hr_attendance_manager')),(4, ref('hr_expense.group_hr_expense_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="directors_group" model="res.groups">
+            <field name="name">Directors</field>
+            <field name="category_id" ref="management_category"/>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_manager')),(4, ref('hr.group_hr_manager')),(4, ref('point_of_sale.group_pos_manager')),
+            (4, ref('stock.group_stock_manager')),(4, ref('purchase.group_purchase_user')),(4, ref('account.group_account_manager')),(4, ref('base.group_system')),(4, ref('mrp.group_mrp_manager')),(4, ref('purchase_request.group_purchase_request_manager')),(4, ref('hr_timesheet.group_hr_timesheet_user')),(4, ref('website.group_website_designer')),(4, ref('hr_payroll.group_hr_payroll_manager')),
+            (4, ref('hr_attendance.group_hr_attendance_manager')),(4, ref('hr_expense.group_hr_expense_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+        <!--Create group in Outlet Operations category-->
+        <record id="supervisor_group" model="res.groups">
+            <field name="name">Supervisor</field>
+            <field name="category_id" ref="outlet_category"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="cashier_group" model="res.groups">
+            <field name="name">Cashier</field>
+            <field name="category_id" ref="outlet_category"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user')),(4,ref('point_of_sale.group_pos_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="waiter_group" model="res.groups">
+            <field name="name">Waiter</field>
+            <field name="category_id" ref="outlet_category"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user')),(4,ref('point_of_sale.group_pos_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="chef_outlet_group" model="res.groups">
+            <field name="name">Chef Outlet</field>
+            <field name="category_id" ref="outlet_category"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user')),(4,ref('purchase_request.group_purchase_request_user')),(4,ref('stock.group_stock_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="central_kitchen_group" model="res.groups">
+            <field name="name">Central Kitchen Chef</field>
+            <field name="category_id" ref="outlet_category"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user')),(4,ref('purchase_request.group_purchase_request_user')),(4,ref('stock.group_stock_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="inventory_manager_group" model="res.groups">
+            <field name="name">Inventory Manager</field>
+            <field name="category_id" ref="outlet_category"/>
+            <field name="implied_ids" eval="[(4, ref('stock.group_stock_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+        <!--Create group in Back end operations category-->
+        <record id="system_manager_group" model="res.groups">
+            <field name="name">System Manager</field>
+            <field name="category_id" ref="back_end_category"/>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_manager')),(4, ref('hr.group_hr_manager')),(4, ref('point_of_sale.group_pos_manager')),
+            (4, ref('stock.group_stock_manager')),(4, ref('purchase_request.group_purchase_manager_threestep')),(4, ref('account.group_account_manager')),(4, ref('base.group_system'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="finance_admin_group" model="res.groups">
+            <field name="name">Finance Admin</field>
+            <field name="category_id" ref="back_end_category"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="purchasing_admin_group" model="res.groups">
+            <field name="name">Purchasing Admin</field>
+            <field name="category_id" ref="back_end_category"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user')),(4,ref('purchase.group_purchase_manager')),(4,ref('purchase_request.group_purchase_request_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="invoice_admin_group" model="res.groups">
+            <field name="name">Invoice Admin</field>
+            <field name="category_id" ref="back_end_category"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user')),(4,ref('account.group_account_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="hr_admin_group" model="res.groups">
+            <field name="name">HR Admin</field>
+            <field name="category_id" ref="back_end_category"/>
+            <field name="implied_ids" eval="[(4, ref('hr.group_hr_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="accounting_admin_group" model="res.groups">
+            <field name="name">Accounting Admin</field>
+            <field name="category_id" ref="back_end_category"/>
+            <field name="implied_ids" eval="[(4, ref('account.group_account_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+        <!--Create group in Regular Employee category-->
+        <record id="regular_employee_group" model="res.groups">
+            <field name="name">Regular Employee</field>
+            <!--<field name="category_id" ref="regular_employee_category"/>-->
+            <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <!--Add group to menuitem-->
+        <!--Point of Sale-->
+        <record id="point_of_sale.menu_point_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('supervisor_group'))]"/>
+        </record>
+
+        <record id="account.menu_finance" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('finance_admin_group'))]"/>
+        </record>
+
+        <record id="purchase_request.parent_menu_purchase_request" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('purchasing_admin_group'))]"/>
+        </record>
+    </data>
+</odoo>

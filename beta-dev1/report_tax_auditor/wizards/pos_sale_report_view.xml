@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_pos_sale_report_form" model="ir.ui.view">
+        <field name="name">POS Sale Report Form</field>
+        <field name="model">pos.sale.report</field>
+        <field name="arch" type="xml">
+            <form string="POS Sale Report">
+                <group>
+                    <field name="branch_id"/>
+                    <field name="start_date" required="1"/>
+                    <field name="end_date" required="1"/>
+                    <field name="filename" invisible="1"/>
+                    <field name="file" filename="filename" readonly="1" invisible="not context.get('download_file')"/>
+                </group>
+                <footer>
+                    <button name="generate_xls" string="Generate XLS" type="object" icon="fa-file-excel-o" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pos_sale_report" model="ir.actions.act_window">
+        <field name="name">POS Sale Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.sale.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_pos_sale_report" action="action_pos_sale_report" parent="point_of_sale.menu_point_rep" sequence="5"/>
+
+</odoo>

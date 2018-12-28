@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="res_department_form_view">
+            <field name="name">res.department.form</field>
+            <field name="model">res.department</field>
+            <field name="arch" type="xml">
+                <form string="Department">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" reqiured="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_department_tree_view">
+            <field name="name">res.department.tree</field>
+            <field name="model">res.department</field>
+            <field name="arch" type="xml">
+                <tree string="Departments" editable="bottom">
+                    <field name="name" required="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_res_department">
+            <field name="name">Department</field>
+            <field name="res_model">res.department</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_res_department" parent="base.menu_users" name="Departments"
+            sequence="12" action="action_res_department"/>
+
+    </data>
+</odoo>

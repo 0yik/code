@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="dpt_total_payroll_report_temp">
+			<t t-set="data_report_margin_top" t-value="2"/>
+			<t t-call="report.html_container">
+            <!-- <t t-call="report.internal_layout"> -->
+                <div class="page">
+                        	<div class="row">
+                        		<b><span><left>TEO GARMENT CORPORATION PTE LTD</left></span></b>
+                    		</div>
+                    		<div class="row">
+                        		<b><span><left>PAYROLL DETAIL REPORT</left></span></b>
+                    		</div>
+                    		<div class="row">
+                    		</div>
+                    		<table width="100%">
+                                <tr>
+                                	<td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                		<b>Month:</b>
+									</td>
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                    	End Month
+                                    </td>
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                    </td>
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                    </td>
+                                    
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                        <b>Page</b>
+                                    </td>
+                                    <td width="5%">
+                                        <b>:</b>
+                                    </td>
+                                    <td width="80%" style="font-family: 'Helvetica';font-size: 15px;">
+                                       1 
+                                    </td>
+                                </tr>
+                                <tr>
+                                	<td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                		<b>Query:</b>
+                                    </td>
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                    	All Plus
+                                    </td>
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                    </td>
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                    </td>
+                                    
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                        <b>Date</b>
+                                    </td>
+                                    <td width="5%">
+                                        <b>:</b>
+                                    </td>
+                                    <td width="80%" style="font-family: 'Helvetica';font-size: 15px;">
+                                        <span t-esc="time.strftime('%Y-%m-%d')"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                	<td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                		<b>Department</b>
+                                    </td>
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                    </td>
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                    </td>
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                    </td>
+                                    
+                                    <td width="15%" style="font-family: 'Helvetica';font-size: 15px;">
+                                        <b>UserId</b>
+                                    </td>
+                                    <td width="5%">
+                                        <b>:</b>
+                                    </td>
+                                    
+                                    <td width="80%" style="font-family: 'Helvetica';font-size: 15px;">
+                                        <span t-esc="user.name"></span>
+                                    </td>
+                                </tr>
+                                
+                            </table>
+							<div class="row">
+                    		</div>
+                    		<div style="color: blue; font-weight: bold; size: 9px;text-align:center">
+							<table width="100%">
+								<tr class="text-center">
+									<td colspan="2">
+										<strong></strong>
+									</td>
+								</tr>
+								
+							</table>
+						</div>
+						<table class="table table-condensed" width="100%">
+								<tr>
+									<td class="text-center" width="10%">
+										<b>Basic</b>
+	                                </td>
+									<td class="text-center" width="10%">
+										<b>NPL</b>
+	                                </td>
+									<td class="text-center" width="10%">
+										<b>OT</b>
+	                                </td>
+									<td class="text-center" width="10%">
+										<b>Shift/Rest Bonus</b>
+	                                </td>
+									<td class="text-center" width="10%">
+										<b>Allowance</b>
+	                                </td>
+									<td class="text-center" width="10%">
+										<b>Gross Wage</b>
+	                                </td>
+									<td class="text-center" width="10%">
+										<b>Deduction</b>
+	                                </td>
+									<td class="text-center" width="10%">
+										<b>EeCPF</b>
+	                                </td>
+	                                <td class="text-center" width="10%">
+										<b>Nett wage</b>
+	                                </td>
+	                                <td class="text-center" width="10%">
+										<b>ErCPF/FWL</b>
+	                                </td>
+	                                <td class="text-center" width="10%">
+										<b>SDF</b>
+	                                </td>
+								</tr>
+								
+								<tr>
+									<td class="text-left" width="10%">
+										<b>Department</b>
+	                                </td>
+									<td class="text-center" width="10%">
+										<b>:</b>
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+	                                <td class="text-center" width="10%">
+	                                </td>
+	                                <td class="text-center" width="10%">
+	                                </td>
+	                                <td class="text-center" width="10%">
+	                                </td>
+								</tr>
+								<tr>
+									<td class="text-left" width="10%">
+										<b>Employee</b>
+	                                </td>
+									<td class="text-center" width="10%">
+										<b>:</b>
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+	                                <td class="text-center" width="10%">
+	                                </td>
+	                                <td class="text-center" width="10%">
+	                                </td>
+	                                <td class="text-center" width="10%">
+	                                </td>
+								</tr>
+								
+								<tr t-foreach="get_name" t-as="lines">
+										<td width="10%" class="text-center">
+										<span t-esc="lines['twage']"/>	
+										</td>
+										<td width="10%" class="text-center">
+											
+										</td>
+										<td width="10%" class="text-center">
+											<span t-esc="lines['ot']"/>
+										</td>
+										<td width="10%" class="text-center">
+											
+										</td>
+										<td width="10%" class="text-center">
+											<span t-esc="lines['alw']"/>
+										</td>
+										<td width="10%" class="text-center">
+											<span t-esc="lines['gross']"/>
+										</td>
+										<td width="10%" class="text-center">
+											<span t-esc="lines['ded']"/>
+										</td>
+										<td width="10%" class="text-center">
+											<span t-esc="lines['cpf']"/>
+										</td>
+										<td width="10%" class="text-center">
+											<span t-esc="lines['net']"/>
+										</td>
+										<td width="10%" class="text-center">
+											<span t-esc="lines['pf']"/>
+											
+										</td>
+										<td width="10%" class="text-center">
+											
+											
+										</td>
+										
+									</tr>
+						</table>
+						<table>
+						<tr>
+									<td class="text-center" width="40%">
+										<b>Departmental Head Counts By Query=</b>
+	                                </td>
+									<td class="text-center" width="10%">
+										<span t-esc="count_line"/>
+	                                </td>
+									<td class="text-center" width="10%">
+										
+	                                </td>
+									<td class="text-center" width="10%">
+										<b>CPF Wages</b>
+	                                </td>
+									<td class="text-center" width="10%">
+										
+	                                </td>
+									<td class="text-center" width="5%">
+										
+	                                </td>
+									<td class="text-center" width="10%">
+	                                </td>
+									<td class="text-center" width="5%">
+	                                </td>
+	                                 
+					</tr>
+					</table>
+					</div>
+				</t>
+		</template>
+	</data>
+</odoo>

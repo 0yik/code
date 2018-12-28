@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<!-- Wedding Type -->
+		<record id="view_wedding_type_form" model="ir.ui.view">
+			<field name="name">wedding.type.form</field>
+			<field name="model">wedding.type</field>
+			<field name="arch" type="xml">
+				<form string="Wedding Type">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_wedding_type_list" model="ir.ui.view">
+            <field name="name">wedding.type.list</field>
+            <field name="model">wedding.type</field>
+            <field name="arch" type="xml">
+                <tree string="Wedding Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_view_wedding_type_form" model="ir.actions.act_window">
+            <field name="name">Wedding Type</field>
+            <field name="res_model">wedding.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+		<!--
+        <menuitem
+            id="menu_view_wedding_type_form"
+            action="open_view_wedding_type_form"
+            parent=""
+			sequence="1"/>
+		-->
+
+		<!-- Venus Type -->
+		<record id="view_venus_type_form" model="ir.ui.view">
+			<field name="name">venus.type.form</field>
+			<field name="model">venus.type</field>
+			<field name="arch" type="xml">
+				<form string="Venus Type">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_venus_type_list" model="ir.ui.view">
+            <field name="name">venus.type.list</field>
+            <field name="model">venus.type</field>
+            <field name="arch" type="xml">
+                <tree string="Venus Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_view_venus_type_form" model="ir.actions.act_window">
+            <field name="name">Venus Type</field>
+            <field name="res_model">venus.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+		<!--
+        <menuitem
+            id="menu_view_wedding_type_form"
+            action="open_view_wedding_type_form"
+            parent=""
+			sequence="1"/>
+		-->
+
+		<!-- Gowns Trying -->
+		<record id="view_gowns_trying_form" model="ir.ui.view">
+			<field name="name">gowns.trying.form</field>
+			<field name="model">gowns.trying</field>
+			<field name="arch" type="xml">
+				<form string="Gowns Trying Type">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_gowns_trying_list" model="ir.ui.view">
+            <field name="name">gowns.trying.list</field>
+            <field name="model">gowns.trying</field>
+            <field name="arch" type="xml">
+                <tree string="Gowns Trying Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_view_gowns_trying_form" model="ir.actions.act_window">
+            <field name="name">Gowns Trying</field>
+            <field name="res_model">gowns.trying</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+		<!--
+        <menuitem
+            id="menu_view_wedding_type_form"
+            action="open_view_wedding_type_form"
+            parent=""
+			sequence="1"/>
+		-->
+
+		<!-- Gowns Shapes -->
+		<record id="view_gowns_shapes_form" model="ir.ui.view">
+			<field name="name">gowns.shapes.form</field>
+			<field name="model">gowns.shapes</field>
+			<field name="arch" type="xml">
+				<form string="Gowns Shapes">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_gowns_shapes_list" model="ir.ui.view">
+            <field name="name">gowns.shapes.list</field>
+            <field name="model">gowns.shapes</field>
+            <field name="arch" type="xml">
+                <tree string="Gowns Shapes">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_view_gowns_shapes_form" model="ir.actions.act_window">
+            <field name="name">Gowns Shapes</field>
+            <field name="res_model">gowns.shapes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+		<!--
+        <menuitem
+            id="menu_view_wedding_type_form"
+            action="open_view_wedding_type_form"
+            parent=""
+			sequence="1"/>
+		-->
+
+		<!-- Gowns Styles -->
+		<record id="view_gowns_styles_form" model="ir.ui.view">
+			<field name="name">gowns.styles.form</field>
+			<field name="model">gowns.styles</field>
+			<field name="arch" type="xml">
+				<form string="Gowns Styles">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_gowns_styles_list" model="ir.ui.view">
+            <field name="name">gowns.styles.list</field>
+            <field name="model">gowns.styles</field>
+            <field name="arch" type="xml">
+                <tree string="Gowns Styles">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_view_gowns_styles_form" model="ir.actions.act_window">
+            <field name="name">Gowns Styles</field>
+            <field name="res_model">gowns.styles</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+		<!--
+        <menuitem
+            id="menu_view_wedding_type_form"
+            action="open_view_wedding_type_form"
+            parent=""
+			sequence="1"/>
+		-->
+
+		<!-- Items Required -->
+		<record id="view_items_required_form" model="ir.ui.view">
+			<field name="name">items.required.form</field>
+			<field name="model">items.required</field>
+			<field name="arch" type="xml">
+				<form string="Items Required">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_items_required_list" model="ir.ui.view">
+            <field name="name">items.required.list</field>
+            <field name="model">items.required</field>
+            <field name="arch" type="xml">
+                <tree string="Items Required">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_view_items_required_form" model="ir.actions.act_window">
+            <field name="name">Items Required</field>
+            <field name="res_model">gowns.styles</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+		<!--
+        <menuitem
+            id="menu_view_wedding_type_form"
+            action="open_view_wedding_type_form"
+            parent=""
+			sequence="1"/>
+		-->
+
+        <!-- Photography Requirement -->
+		<record id="view_photography_requirement_form" model="ir.ui.view">
+			<field name="name">photography.requirement.form</field>
+			<field name="model">photography.requirement</field>
+			<field name="arch" type="xml">
+				<form string="Photography Requirement">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_photography_requirement_list" model="ir.ui.view">
+            <field name="name">photography.requirement.list</field>
+            <field name="model">photography.requirement</field>
+            <field name="arch" type="xml">
+                <tree string="Photography Requirement">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_view_photography_requirement_form" model="ir.actions.act_window">
+            <field name="name">Photography Requirement</field>
+            <field name="res_model">photography.requirement</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Reference Source -->
+		<record id="view_reference_source_form" model="ir.ui.view">
+			<field name="name">reference.source.form</field>
+			<field name="model">reference.source</field>
+			<field name="arch" type="xml">
+				<form string="Reference Source">
+					<group>
+						<field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_reference_source_list" model="ir.ui.view">
+            <field name="name">reference.source.list</field>
+            <field name="model">reference.source</field>
+            <field name="arch" type="xml">
+                <tree string="Reference Source">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_view_reference_source_form" model="ir.actions.act_window">
+            <field name="name">Reference Source</field>
+            <field name="res_model">reference.source</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+	</data>
+</openerp>

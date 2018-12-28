@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="corporate_access_page_bradcum">
+        <div class="container">
+            <h1>    
+                <span><span>Corporate Access</span></span>
+            </h1>
+            <ul class="breadcrumb">
+                <li><a href="/page/homepage">Home</a></li>
+                <li><a href="/page/corporate_access">Corporate Access</a></li>
+            </ul>
+        </div>
+    </template>
+
+    <template id="website.corporate_access" name="Corporate Access" page="True">
+        <t t-call="website.layout">
+            <t t-if="not website.is_breadcum">
+                <t t-if="website.bread_cum_image">
+                    <t t-set="bread_cum" t-value="website.image_url(website,'bread_cum_image')"/>
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs" t-attf-style="background-image:url(#{bread_cum}#)">
+                            <t t-call="theme_atts.corporate_access_page_bradcum" />  
+                        </nav>
+                    </t>
+                    <t t-if="not website.bread_cum_image">
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs">
+                            <t t-call="theme_atts.corporate_access_page_bradcum" />  
+                        </nav>
+                    </t>  
+                <!-- </t>  -->
+            </t>  
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <section class="as-feature-t" style="background: none !important;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="ab-feature clearfix">
+                                    <div class="feature-icon">
+                                        <i class="fa fa-lightbulb-o"></i>
+                                    </div>
+                                    <h3 class="title"><a href="/course/0">Find a Course</a></h3>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="ab-feature clearfix">
+                                    <div class="feature-icon">
+                                        <i class="fa fa-lightbulb-o"></i>
+                                    </div>
+                                    <h3 class="title"><a href="/page/search_certificate">Search certification</a></h3>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="ab-feature clearfix">
+                                    <div class="feature-icon">
+                                        <i class="fa fa-lightbulb-o"></i>
+                                    </div>
+                                    <h3 class="title"><a href="/page/document_download">Document Download</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="document_download_page_bradcum">
+        <div class="container">
+            <h1>    
+                <span><span>Document Download</span></span>
+            </h1>
+            <ul class="breadcrumb">
+                <li><a href="/page/homepage">Home</a></li>
+                <li><a href="/page/document_download">Document Download</a></li>
+            </ul>
+        </div>
+    </template>
+
+    <template id="website.document_download" name="Document Download" page="True">
+        <t t-call="website.layout">
+            <t t-if="not website.is_breadcum">
+                <t t-if="website.bread_cum_image">
+                    <t t-set="bread_cum" t-value="website.image_url(website,'bread_cum_image')"/>
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs" t-attf-style="background-image:url(#{bread_cum}#)">
+                            <t t-call="theme_atts.document_download_page_bradcum" />  
+                        </nav>
+                    </t>
+                    <t t-if="not website.bread_cum_image">
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs">
+                            <t t-call="theme_atts.document_download_page_bradcum" />  
+                        </nav>
+                    </t>  
+                <!-- </t>  -->
+            </t>  
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <section class="as-feature-t" style="background: none !important;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="table-responsive mb16">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr style="font-size: 20px;">
+                                            <th class="text-left" width="90%">Document Name</th>
+                                            <th class="text-left">Document</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-if="not document_ids">
+                                            <td colspan="2" class="left">no documents uploded!</td>
+                                        </tr>
+                                        <t t-foreach="document_ids" t-as="document_id">
+                                            <tr>
+                                                <td class="text-left"><t t-esc="document_id.name or ''"/></td>
+                                                <td class="text-center">
+                                                    <a  t-att-href="document_id.local_url" download="">
+                                                        <img src="/theme_atts/static/src/img/document.png" title="Download Document" alt="Download Document" style="height: 10%; width: 30%;"/>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+</odoo>

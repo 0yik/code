@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_multi_reordering_tree" model="ir.ui.view">
+            <field name="name">stock.multi.reordering.tree</field>
+            <field name="model">stock.multi.reordering</field>
+            <field name="arch" type="xml">
+                <tree string="Multi Reordering Rules">
+                    <field name="name"/>
+                    <field name="active" invisible="1"/>
+                    <field name="type"/>
+                    <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="multi_reordering_search">
+            <field name="name">stock.multi.reordering.search</field>
+            <field name="model">stock.multi.reordering</field>
+            <field name="arch" type="xml">
+                <search string="Multi Reordering Rules Search">
+                    <field name="name" string="Multi Reordering Rules"/>
+                    <field name="type"/>
+                    <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Type" domain="[]"  context="{'group_by':type}"/>
+                        <filter string="Location" domain="[]" context="{'group_by':'location_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_multi_reordering_form" model="ir.ui.view">
+            <field name="name">stock.multi.reordering.form</field>
+            <field name="model">stock.multi.reordering</field>
+            <field name="arch" type="xml">
+                <form string="Multi Reordering Rules">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                            <button name="%(stock.do_view_procurement_op)d" type="action" string="Procurements" class="oe_stat_button" icon="fa-refresh"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" />
+                            </group>
+                            <group>
+                                <field name="type"/>
+                                <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                                <field name="group_id" groups="stock.group_adv_location"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                            </group>
+                            <group string="Misc">
+                                <label for="lead_days"/>
+                                <div class="o_row">
+                                    <field name="lead_days"/>
+                                    <field name="lead_type"/>
+                                </div>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <field name="line_ids">
+                                    <tree>
+                                        <field name="code"/>
+                                        <field name="product_id"/>
+                                        <field name="categ_id"/>
+                                        <field name="movement"/>
+                                        <field name="product_min_qty"/>
+                                        <field name="product_max_qty"/>
+                                        <field name="qty_multiple"/>
+                                        <field name="sale_price"/>
+                                        <field name="previous_min_qty"/>
+                                        <field name="product_uom"/>
+                                        <field name="previous_min_price"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group cols="4">
+                                                <field name="code"/>
+                                                <field name="product_id"/>
+                                                <field name="categ_id"/>
+                                                <field name="movement"/>
+                                                <field name="product_min_qty"/>
+                                                <field name="product_max_qty"/>
+                                                <field name="qty_multiple"/>
+                                                <field name="sale_price"/>
+                                                <field name="previous_min_qty"/>
+                                                <field name="product_uom"/>
+                                                <field name="previous_min_price"/>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_orderpoint_form" model="ir.actions.act_window">
+            <field name="name">Multi Reordering Rules</field>
+            <field name="res_model">stock.multi.reordering</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_multi_reordering_tree"/>
+            <field name="search_view_id" ref="multi_reordering_search" />
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a reordering rule.
+              </p><p>You can define your minimum stock rules, so that Odoo will automatically create draft manufacturing orders or request for quotations according to the stock level. Once the virtual stock of a product (= stock on hand minus all confirmed orders and reservations) is below the minimum quantity, Odoo will generate a procurement request to increase the stock up to the maximum quantity.</p>
+            </field>
+        </record>
+        <menuitem
+            id="menu_reordering_rules_config"
+            action="action_orderpoint_form"
+            name="Multi Reordering Rules" parent="stock.menu_stock_inventory_control" sequence="10"/>
+
+        <act_window
+            context="{}"
+            id="act_stock_multi_reordering"
+            name="Multi Reordering Rules"
+            res_model="stock.multi.reordering"
+            src_model="stock.warehouse"
+            groups="stock.group_stock_user"/>
+    </data>
+</odoo>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="ProductScreenWidget">
+        <t t-jquery=".transfer-button" t-operation="after">
+            <button class="control-button btn btn-default btn-fill btn-wd transfer-item-button"><i class="pe-7s-shuffle"></i> Transfer Item</button>
+        </t>
+    </t>
+</templates>

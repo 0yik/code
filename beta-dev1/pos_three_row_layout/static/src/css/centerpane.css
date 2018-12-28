@@ -1,0 +1,109 @@
+.pos .actionpad { 
+    display: -webkit-inline-box !important;
+    width:46% !important;
+    margin-bottom: 0px !important;
+}
+.pos .order-container {
+    height: 93%!important;
+}
+.pos .actionpad .button.pay .pay-circle .fa {
+    position: relative;
+    top: 1px !important;
+    left: 7px !important;
+}
+h1 {
+    margin:0px 15px !important;
+}
+.pos .window{
+    height: 104% !important;
+}
+.pos .numpad button {
+    width:100px !important;
+    height: 80px !important;
+}
+#all_orders{
+    margin-bottom: 1px !important;
+}
+.pos .actionpad .button .fa-user{
+    top:13px !important;
+}
+.pos .payment-numpad {
+    padding: 16px 0px !important;
+}
+.pos .payment-numpad .numpad {
+    width: 100% !important;
+    border-left: 1px solid #bfbfbf !important;
+}
+.pos .numpad {
+    width: 92% !important;
+    border-left: 1px solid #bfbfbf !important;
+}
+.pos .control-buttons{
+    display: inline-flex !important;
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+}
+.pos .actionpad .button.pay {
+    height: 55px !important; 
+    margin-left: 3px !important;
+    line-height: 29px !important;
+    padding-left: 18px !important;
+    border-top: 1px solid #bfbfbf !important;
+    border-left: 1px solid #bfbfbf !important;
+}
+.pos .actionpad .button.set-customer{
+    height: 55px !important; 
+}
+.pos .control-button {
+    line-height: 33px !important;
+    margin-bottom: 4px !important;
+}
+.pos .actionpad .button.pay .pay-circle {
+    display: -webkit-inline-box !important;
+    font-size: 18px !important;
+    line-height: 30px !important;
+     padding-top: 0px !important; 
+    background: rgb(86, 86, 86);
+    color: white;
+    width: 30px !important;
+    margin: auto;
+    border-radius: 30px !important;
+     margin-bottom: 0px !important; 
+     float: left;
+}
+.pos .centerpane {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+            box-sizing: border-box;
+    position:absolute;
+    left:350px;;
+    width:440px;
+    top:0px;
+    bottom:0;
+    border-right: solid 1px #CECBCB;
+    border-right: solid 3px #787878;
+    background: #e2e2e2;
+}
+.pos .centerpane .pads {
+    border-top: solid 3px rgb(110, 200, 155);
+}
+.pos .rightpane{
+    left:790px !important;
+}
+.pos .leftpane{
+     width:350px !important;
+}
+.btn.btn-fill{
+    color:white;
+    background-color:#929292;
+}
+/*.pos .control-button.btn{
+    line-height:100px;
+}*/
+.pos .pos-branding .username{
+    margin-right: 98px !important;
+}
+.order-selector {
+    margin-left: -93px !important;
+}

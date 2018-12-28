@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<data>
+		<record id="hr_holiday_multiple_form_inherit" model="ir.ui.view">
+			<field name="name">Leave Request Inherit</field>
+			<field name="model">hr.holidays.multiple</field>
+			<field name="inherit_id"
+				ref="multiple_leave_application.hr_holiday_multiple_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//button[@name='action_refuse']" position="attributes">
+					<attribute name="string">Reject</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/group/group/field[@name='holiday_status_id']"
+					position="replace">
+					<field name="check_access_group_manager" invisible="1" />
+					<field name="holiday_status_id" options='{"no_create_edit": 1,"no_open" : 1}'
+						context="{'employee_id':employee_id}" />
+				</xpath>
+                <field name="holiday_type" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="employee_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="department_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+			</field>
+		</record>
+
+        <record id="hr_holiday_multiple_form_inherit1" model="ir.ui.view">
+			<field name="name">Leave Request Inherit</field>
+			<field name="model">hr.holidays.multiple</field>
+            <field name="group_id"
+                   eval="[(4,ref('beumer_modifier_access_right.hr_admin_group')),(4,ref('beumer_modifier_access_right.hr_manager_group')),(4,ref('beumer_modifier_access_right.cfo_group'))]"/>
+			<field name="inherit_id" ref="multiple_leave_application.hr_holiday_multiple_form" />
+			<field name="arch" type="xml">
+                <field name="holiday_type" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </field>
+                <field name="employee_id" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </field>
+                <field name="department_id" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </field>
+            </field>
+        </record>
+
+		<record id="edit_holiday_new_inherit" model="ir.ui.view">
+			<field name="name">Leave Request Inherit</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr_holidays.edit_holiday_new" />
+			<field name="arch" type="xml">
+				<xpath expr="//button[@name='action_refuse']" position="attributes">
+					<attribute name="string">Reject</attribute>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_hr_expense_sheet_form" model="ir.ui.view">
+			<field name="name">hr.expense.sheet.form.inherit</field>
+			<field name="model">hr.expense.sheet</field>
+			<field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form" />
+			<field name="arch" type="xml">
+				<field name="department_id" position="after">
+					<field name="country_id" />
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

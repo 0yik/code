@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record model="partner.country.code" id="customer_singapore_code">
+            <field name="name">+65</field>
+            <field name="country" ref="base.sg"/>
+        </record>
+        <function model="partner.country.code" name="prepare_all_country_code"/>
+    </data>
+</odoo>

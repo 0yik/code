@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template xml:space="preserve">
+
+    <t t-name="HrBarcodeKiosk">
+        <div class="o_hr_barcode_kiosk_container">
+            <div class="o_hr_barcode_kiosk">
+                <h1>Welcome to <t t-esc="widget.company_name"/></h1>
+                <input name="badge_id" placeholder="Enter Badge ID" class="o_badge_id"/><br/><br/><br/>
+                <button class="o_hr_button_barcode_kiosk btn btn-primary btn-lg">Start Stock</button>
+            </div>
+        </div>
+    </t>
+	
+	<t t-name="main_menu">
+        <div class="o_stock_barcode_main_menu_container">
+            <div class="o_stock_barcode_main_menu">
+                <h1>Barcode Scanning</h1>
+                <div t-if="widget.message_demo_barcodes" class="message_demo_barcodes alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true" class="fa fa-times"></span>
+                    </button>
+                    We have created a few demo data and barcodes for you to explore the features. Print the
+                    <a href="/barcode_kiosk/static/description/barcodes_demo_data.pdf" class='o_stock_barcodes_sheet' target="_blank">stock barcodes sheet</a>
+                     to check out what this module can do !
+                </div>
+                <img src="/barcode_kiosk/static/img/barcode.png"/>
+                <p>Scan a location to create a new transfer from this location.<br/>Scan a document to open it.</p>
+                <button class="button_stock_in btn btn-primary btn-sm">Stock In</button>
+                <button class="button_stock_out btn btn-primary btn-sm">Stock Out</button>
+				<button class="button_stock_take btn btn-primary btn-sm">Stock Take</button>
+            </div>
+        </div>
+    </t>
+</template>

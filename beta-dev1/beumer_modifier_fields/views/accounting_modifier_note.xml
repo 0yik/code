@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="credit_debit_note.action_out_refund" model="ir.actions.act_window">
+            <field name="name">Debit Note</field>
+        </record>
+
+         <record id="credit_debit_note.action_in_refund" model="ir.actions.act_window">
+            <field name="name">Debit Note</field>
+        </record>
+
+    </data>
+</odoo>

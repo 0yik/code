@@ -1,0 +1,44 @@
+<odoo>
+	<data>
+		
+		<record id="email_template_for_reminder_id" model="mail.template">
+            <field name="name">Project Testing</field>
+            <field name="subject">Testing reminder for ${object.booking_no}</field>
+            <field name="model_id" ref="hilti_modifier_company.model_project_booking"/>
+            <field name="email_from">${(object.user_id.company_id.email and '%s &lt;%s&gt;' % (object.user_id.company_id.name, object.user_id.company_id.email) or '')|safe}</field>
+            <field name="partner_to">${ctx.get('partner_email')}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[<html>
+                <head></head>
+                % set company = object and object.user_id.company_id or user.company_id
+                <body style="margin: 0; padding: 0;">
+                <table border="0" width="100%" cellpadding="0" bgcolor="#ededed" style="padding: 20px; background-color: #ededed" summary="o_mail_notification">
+                    <tbody>
+
+                      <!-- HEADER -->
+                      <tr>
+                        <td align="center" style="min-width: 590px;">
+                          <table width="590" border="0" cellpadding="0" bgcolor="#875A7B" style="min-width: 590px; background-color: rgb(135,90,123); padding: 20px;">
+                            <tr>
+                              <td valign="middle">
+                                  <span style="font-size:20px; color:white; font-weight: bold;">
+                                      Tester is waiting for ${object.booking_no} testing.
+                                  </span>
+                              </td>
+                              <td valign="middle" align="right">
+                                  <img src="/logo.png?company=${company.id}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" alt="${company.name}">
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                </table>
+                </body>
+                </html>
+            ]]></field>
+        </record>
+        
+    </data>
+</odoo>

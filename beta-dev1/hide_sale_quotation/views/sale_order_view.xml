@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="custom_sale_order_form_view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field eval="7" name="priority"/>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/field[@name='state']" position="replace">
+                        <field name="state" widget="statusbar" statusbar_visible="sale"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Group created with no users -->
+        <record id="group_hide_menus" model="res.groups">
+            <field name="name">Restricted Menus Group</field>
+            <field name="comment">Restricted Menus Group</field>
+        </record>
+
+        <!-- Hide Quotations menu -->
+        <record model="ir.ui.menu" id="sale.menu_sale_quotations">
+            <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+        </record>
+
+    </data>
+</odoo>
+

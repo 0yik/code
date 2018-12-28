@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+   <t t-name="OptionsPopupWidget">
+
+	    <div class="modal-dialog options-dialog" style="width: 102%; height: 102%;">
+	        <div class="popup popup-options">
+	            <p class="title"><t t-esc=" widget.options.title || '' " /></p>
+	            <div class='popup-option frst'>
+	                <button class="button icon dinein_btn" data-action='1'><img src="/pos_startscreen/static/src/img/dinein.png"></img><span>Dine-in</span></button>
+	                <button class="button icon takeaway_btn" data-action='2'><img src="/pos_startscreen/static/src/img/takeaway.png"></img><span>Take Away</span></button>
+                    <button class="button icon delivery_btn" data-action='3'><img src="/pos_startscreen/static/src/img/delivery.png"></img><span>Delivery</span></button>
+	            </div>
+				<br/>
+				<!--<div class='popup-option scnd'>-->
+					<!--<button class="button icon staffmeal_btn" data-action='4'><img src="/pos_startscreen/static/src/img/staff_meal.png"></img><span>Staff Meal</span></button>-->
+                    <!--<button class="button icon transferout_btn" data-action='3'><img src="/pos_startscreen/static/src/img/delivery.png"></img><span>Transfer Out</span></button>-->
+				<!--</div>-->
+				<div class="footer custom_footer">
+                    <div class="button cancel close_session">
+                        <u>Close</u>
+                    </div>
+                </div>
+	        </div>
+	    </div>
+    </t>
+
+      <!-- <t t-name="OrderSelectorWidget"> -->
+    <t t-extend="Chrome">
+         <t t-jquery=".pos-branding span" t-operation="before">
+            <span>
+                <button class="back_home_screen_button"> Back to Home</button>
+            </span>
+         </t>
+    </t>
+
+	<t t-extend="ButtonDoneAll">
+        <t t-jquery="button" t-operation="replace">
+            <button class="btn btn-default btn-fill btn-wd control-button done_all_btn"><i class="pe-7s-check"/> Done all</button>
+        </t>
+    </t>
+
+    <t t-extend="ButtonExitHighPriority">
+        <t t-jquery="button" t-operation="replace">
+            <button class="btn btn-default btn-fill btn-wd control-button exit_priority_btn"><i class="pe-7s-bottom-arrow"/> Exit priority</button>
+        </t>
+    </t>
+
+	<t t-extend="ButtonHighPriority">
+        <t t-jquery="button" t-operation="replace">
+            <button class="btn btn-default btn-fill btn-wd control-button high_priority"><i class="pe-7s-gleam"/> High Priority</button>
+        </t>
+    </t>
+	<t t-name="CreateSalesOrderPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup wk_popup">
+                <p class="title">Create Sales Order <span style="font-size:12px;float: right;">Delivery Date: <input type="text" class="input_date" id="datepicker" placeholder="MM/DD/YYYY"/></span>
+                </p>
+                <script>
+                $(function() {
+                    $("#tabs").tabs();
+                    $("#datepicker").datepicker();
+					$("#datepicker").datepicker( "setDate", new Date() );
+                });
+                </script>
+                <div id="tabs" style="font-size:12px">
+                    <ul>
+                        <li><a href="#tabs-2" style=" font-size: 15px !important;">Shipping Address</a></li>
+                        <li><a href="#tabs-1" style=" font-size: 15px !important;">Extra Fees</a></li>
+                        <li><a href="#tabs-3" style=" font-size: 15px !important;">Note</a></li>
+                    </ul>
+                    <div id="tabs-1" style="height:250px">
+                        <table>
+                            <tr>
+                                <td>Use Extra Fee</td>
+                                <td>
+                                    <input type="checkbox" class="extra_fee" style="width: 13px; min-height:0px;" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <input type="text" class="extra_fee_value" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="tabs-2" style="height:250px">
+                        <table>
+                            <tr>
+                                <td>Ship to Diffrent Address</td>
+                                <td>
+                                    <input type="checkbox" class="diffrent_address" style="width: 13px; min-height:0px;" />
+                                </td>
+                            </tr>
+                        </table>
+                        <form name="address_form">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input class="wk_address" type="text" placeholder="Name" name="name" />
+                                    </td>
+                                    <td>
+                                        <input class="wk_address" type="text" placeholder="Email" name="email" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input class="wk_address" type="text" placeholder="Street" name="street" />
+                                    </td>
+                                    <td>
+                                        <input class="wk_address" type="text" placeholder="City" name="city" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input class="wk_address" type="text" placeholder="Zip" name="zip" />
+                                    </td>
+                                    <td>
+                                        <select class='wk_address' name='country_id' style="font-size: 15px !important;width: 229px;float: left;margin-left: 29px;">
+                                            <option value=''>Country:None</option>
+                                            <t t-foreach='widget.pos.countries' t-as='country'>
+                                                <option t-att-value='country.id'>
+                                                    <t t-esc='country.name' />
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input class="wk_address" type="text" placeholder="Mobile" name="mobile" />
+                                    </td>
+                                    <td>
+                                        <input class="wk_address" type="text" placeholder="Phone" name="phone" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <div id="tabs-3" style="height:250px">
+                        <textarea class="wk_note" rows="7" cols="35" placeholder="Add a Note..........." />
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button wk_create_order">
+                        Create
+                    </div>
+                    <div class="button  cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-extend="NumpadWidget">
+        <t t-jquery="button[data-mode='discount']" t-operation="replace">
+            <button class="mode-button oe_hidden" data-mode='discount'>Disc</button>
+        </t>
+        <t t-jquery="button[data-mode='price']" t-operation="replace">
+            <button class="mode-button oe_hidden" data-mode='price'>Price</button>
+        </t>
+    </t>
+</templates>

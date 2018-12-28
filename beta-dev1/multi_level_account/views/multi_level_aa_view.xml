@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_multi_level_aa_tree" model="ir.ui.view">
+            <field name="name">multi.level.aa.tree</field>
+            <field name="model">multi.level.aa</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <tree string="Generate Multi Level Analytic Account">
+                <field name="name"/>
+                <field name="level"/>
+                <field name="state"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_multi_level_aa_form" model="ir.ui.view">
+            <field name="name">multi.level.aa.form</field>
+            <field name="model">multi.level.aa</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <form string="Generate Multi Level Analytic Account">
+                <header>
+                    <button string="Confirm" icon="" 
+                        states="draft" type="object" name="action_confirm" class="oe_highlight"/>
+                    <button string="Set to Draft" icon=""
+                        states="confirm" type="object" name="action_confirm" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" attrs="{'readonly': [('state','=', 'confirm')]}"/>
+                            <field name="level" attrs="{'readonly': [('state','=', 'confirm')]}" />
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="level1" 
+                                attrs="{'invisible': [('level','in', [False])],'readonly': [('state','=', 'confirm')]}"
+                                />
+                            <field name="level2"
+                                attrs="{'invisible': [('level','in', ['one' , False])],'readonly': [('state','=', 'confirm')]}" 
+                                />
+                            <field name="level3"
+                                attrs="{'invisible': [('level','in', ['one', 'two', False])],'readonly': [('state','=', 'confirm')]}"/>
+                            <field name="level4"
+                                attrs="{'invisible': [('level','in', ['one', 'two', 'three' ,False])],'readonly': [('state','=', 'confirm')]}"/>
+                            <field name="level5"
+                                attrs="{'invisible': [('level','in', ['one', 'two', 'three', 'four', False])],'readonly': [('state','=', 'confirm')]}"
+                                />
+                        </group>
+                        <group>
+                            <field name="level6"
+                                attrs="{'invisible': [('level','in', ['one', 'two', 'three', 'four', 'five', False])],'readonly': [('state','=', 'confirm')]}"
+                                />
+                            <field name="level7"
+                                attrs="{'invisible': [('level','in', ['one', 'two', 'three', 'four', 'five','six', False])],'readonly': [('state','=', 'confirm')]}"
+                                />
+                            <field name="level8"
+                                attrs="{'invisible': [('level','in', ['one', 'two', 'three', 'four', 'five','six', 'seven',False])],'readonly': [('state','=', 'confirm')]}"
+                                />
+                            <field name="level9"
+                                attrs="{'invisible': [('level','in', ['one', 'two', 'three', 'four', 'five','six', 'seven', 'eight', False])],'readonly': [('state','=', 'confirm')]}"
+                                />
+                            <field name="level10"
+                                attrs="{'invisible': [('level','in', ['one', 'two', 'three', 'four', 'five','six', 'seven', 'eight', 'nine', False])],'readonly': [('state','=', 'confirm')]}"
+                                />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+        <record id="view_multi_level_aa_search" model="ir.ui.view">
+            <field name="name">multi.level.aa.search</field>
+            <field name="model">multi.level.aa</field>
+            <field name="type">search</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <search string="Generate Multi Level Analytic Account">
+                <field name="level"/>
+            </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_multi_level_aa_view">
+            <field name="name">Generate Multi Level Analytic Account</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">multi.level.aa</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_multi_level_aa_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_multi_level_aa_view_form">
+            <field name="act_window_id" ref="act_open_multi_level_aa_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_multi_level_aa_form"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_multi_level_aa_view_tree">
+            <field name="act_window_id" ref="act_open_multi_level_aa_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_multi_level_aa_tree"/>
+        </record>
+
+        <menuitem id="menu_multi_level_aa"
+            parent="account.menu_analytic_accounting"
+            sequence="20"
+            action="act_open_multi_level_aa_view"/>
+
+        <!-- analytic multi level view-->
+        <record id="view_analytic_multi_level_tree" model="ir.ui.view">
+            <field name="name">analytic.multi.level.tree</field>
+            <field name="model">analytic.multi.level</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <tree string="Multi Level Analytic Account">
+                <field name="analytic_id"/>
+                <field name="analytic_level_id"/>
+                <field name="parent_analytic_id"/>
+                <field name="unit"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_analytic_multi_level_form" model="ir.ui.view">
+            <field name="name">analytic.multi.level.form</field>
+            <field name="model">analytic.multi.level</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <form string="Multi Level Analytic Account">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="analytic_id" required="1" />
+                            <field name="analytic_level_id" domain="[('state','=', 'confirm')]"/>
+                        </group>
+                        <group>
+                            <field name="parent_analytic_id" 
+                                attrs="{'required': [('analytic_level_id','>=', 2)]}"/>
+                            <field name="unit"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+        <record id="view_analytic_multi_level_search" model="ir.ui.view">
+            <field name="name">analytic.multi.level.search</field>
+            <field name="model">analytic.multi.level</field>
+            <field name="type">search</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <search string="Multi Level Analytic Account">
+                <field name="analytic_id"/>
+                <field name="analytic_level_id"/>
+                <field name="parent_analytic_id"/>
+                <field name="unit"/>
+            </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_analytic_multi_level_view">
+            <field name="name">Multi Level Analytic Account</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">analytic.multi.level</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_analytic_multi_level_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_analytic_multi_level_view_form">
+            <field name="act_window_id" ref="act_open_analytic_multi_level_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_analytic_multi_level_form"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_analytic_multi_level_view_tree">
+            <field name="act_window_id" ref="act_open_analytic_multi_level_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_analytic_multi_level_tree"/>
+        </record>
+
+        <menuitem id="menu_analytic_multi_level"
+            parent="account.menu_analytic_accounting"
+            sequence="21"
+            action="act_open_analytic_multi_level_view"/>
+
+    </data>
+</odoo>

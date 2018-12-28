@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="todo_list_tree_view">
+        <field name="name">milestone.todo.list.tree.view</field>
+        <field name="model">milestone.todo.list</field>
+        <field name="view_mode">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Todo List">
+                <field name="name"/>
+                <field name="milestone_id"/>
+                <field name="vendor_ids" widget="many2many_tags"/>
+                <field name="task_date"/>
+                <field name="todo_type"/>
+                <field name="complete"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="todo_list_form_view">
+        <field name="name">milestone.todo.list.form.view</field>
+        <field name="model">milestone.todo.list</field>
+        <field name="arch" type="xml">
+            <form string="To Do List Form">
+                <sheet>
+                    <div>
+                    	<label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group cols="4">
+                        <field name="milestone_id" string="Milestone"/>
+                        <field name="vendor_ids" widget="many2many_tags"/>
+                        <field name="task_date"/>
+                        <field name="todo_type"/>
+                        <field name="complete" string="Complete"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="todo_list_action">
+        <field name="name">Todo List</field>
+        <field name="res_model">milestone.todo.list</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the first To Do</p>
+        </field>
+    </record>
+
+    <record id="action_milestone_tmpl_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="todo_list_form_view"/>
+        <field name="act_window_id" ref="todo_list_action"/>
+    </record>
+    <record id="action_milestone_tmpl_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="0"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="todo_list_tree_view"/>
+        <field name="act_window_id" ref="todo_list_action"/>
+    </record>
+
+    <menuitem id="todo_list_menu" name="To-do List" parent="milestone_menu" action="todo_list_action"
+    	sequence="10"/>
+</odoo>

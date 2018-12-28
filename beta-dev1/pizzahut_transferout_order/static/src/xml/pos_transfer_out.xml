@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="DestinationButton">
+        <div class='btn btn-default btn-fill btn-wd button-section control-button oe_hidden destination-button'>
+            <i class="pe-7s-share"/> Destination
+        </div>
+    </t>
+
+    <t t-name="ChooseDestinationBranch">    
+        <div class="modal-dialog">
+            <div class="popup popup-number" style="height:450px; width: 370px;">
+                <p class="title">
+                    <t t-esc=" widget.options.title || '' " />
+                </p>
+                <table class="table">
+                    <tr>
+                        <td>Branch</td>
+                        <td>
+                            <select name="transfer_out_branch" id="transfer_out_branch">
+                                <option value="0">Select Branch</option>
+                                <t t-if="widget.options.branch"> 
+                                    <t t-foreach="widget.options.branch" t-as="branch">
+                                        <option t-att-value="branch.id"><t t-esc="branch.name"/></option>
+                                    </t>
+                                </t>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Address</td>
+                        <td>
+                            <input type="text" required="True" name="transfer_out_address" id="transfer_out_address"/>
+
+                        </td>
+                    </tr>
+                </table>
+                
+                <div class="footer centered">
+                    <div class="button cancel">Cancel </div>
+                    <div class="button confirm">Ok</div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="TransferOutOptionsPopupWidget">
+        <div class="modal-dialog options-dialog">
+            <div class="popup popup-options">
+                <p class="title"><t t-esc=" widget.options.title || '' " /></p>
+                <div class='popup-option once'>
+                    <button class="button icon transfer_out_send_btn" data-action='1'><img src="/pizzahut_modifier_startscreen/static/src/img/staff_meal.png"></img><span>Send</span></button>
+                    <button class="button icon transfer_out_receive_btn" data-action='2'><img src="/pizzahut_modifier_startscreen/static/src/img/staff_meal.png"></img><span>Receive</span></button>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="posorderListLine">
+        <tr class='posorder-line' t-att-data-id='item.id'>
+            <td><t t-esc='item.name'/></td>
+            <td><t t-esc='item.pos_reference' /></td>
+            <td><t t-esc='item.partner_id[1]' /></td>
+            <td><t t-esc='item.date_order' /></td>
+            <td><t t-esc='item.amount_total' /></td>
+            <td><t t-esc='item.session_id' /></td>
+            <td><t t-esc='item.source_branch[1]' /></td>
+            <td><t t-esc='item.state' /></td>
+            <!-- <td>To Invoice</td> -->
+        </tr>
+    </t>
+
+    <t t-name="ListPOSOrderScreenWidget">
+        <div class="invoicelist-screen clientlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </span>
+                   <!--  <span class='searchbox'>
+                        <input placeholder='Search Invoices' />
+                        <span class='search-clear'></span>
+                    </span> -->
+                    <!-- <span class='searchbox'></span> -->
+                    <span class='button next oe_hidden highlight'>
+                        Select Customer
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                    <span class='button process_next next'>
+                        Process
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix client-details-contents'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                    <table class='invoice-list'>
+                                        <thead>
+                                            <tr>
+                                                <th>Order Ref.</th>
+                                                <th>Receipt Ref</th>
+                                                <th>Customer</th>
+                                                <th>Order Date</th>
+                                                <!-- <th>salesman</th> -->
+                                                <th>Total</th>
+                                                <th>Session</th>
+                                                <th>Source Branch</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class='invoice-list-contents'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+</templates>

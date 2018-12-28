@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_commission_quarter,access_commission_quarter,model_commission_quarter,,1,1,1,1
+access_target_group,access_target_group,model_target_group,,1,1,1,1
+access_target_lines,access_target_lines,model_target_lines,,1,1,1,1
+access_generate_sales_person,access_generate_sales_person,model_generate_sales_person,,1,1,1,1
+access_sales_person_commision,access_sales_person_commision,model_sales_person_commision,,1,1,1,1
+access_sales_person_commision_order_line,access_sales_person_commision_order_line,model_sales_person_commision_order_line,,1,1,1,1

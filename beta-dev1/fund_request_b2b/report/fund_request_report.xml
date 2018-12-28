@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="report_fund_request_document">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page" style="font-size:10px">
+                            <h2 style="margin-left:15px;" >Document Number: <span t-field="o.name"/></h2>
+                            <table class="col-xs-6" style="margin-left:15px;">
+                                <tbody style="font-size:12px">
+                                    <tr>
+                                        <td class="text-left">
+                                            <span>Request Date</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-if="o.request_date">
+                                                <span t-esc="datetime.datetime.strptime(o.request_date, '%Y-%m-%d').strftime('%d/%m/%Y')"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            <span>Contract</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-if="o.contract_id">
+                                                <span t-esc="o.contract_id.name"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            <span>Project Number</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-if="o.so_id">
+                                                <span t-esc="o.so_id.name"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            <span>Plus Employee</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-if="o.emp_id">
+                                                <span t-esc="o.emp_id.name"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            <span>Designamtion</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-if="o.designation">
+                                                <span t-esc="o.designation.name"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            <span>Department</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-if="o.department_id">
+                                                <span t-esc="o.department_id.name"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <table class="table table-condensed mt48"
+                                   style="margin-left:15px;width:95%;border-collapse: collapse;border-top: 3px solid black;font-size:12px;border-bottom:3px solid black;border-left:1px solid black;border-right:1px solid black">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="border: 1px solid black">Type of expenses</th>
+                                        <th class="text-center" style="border: 1px solid black;">Currency</th>
+                                        <th class="text-center" style="border: 1px solid black">Amount</th>
+                                        <th class="text-center" style="border: 1px solid black;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.fun_req_line" t-as="line">
+                                        <td class="text-center"
+                                            style="border-right:1px solid black;border-bottom:hidden;">
+                                            <span t-esc="line.type_of_expense"/>
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-right:1px solid black;border-bottom:hidden;">
+                                            <t t-if="line.currency">
+                                                <span t-esc="line.currency.name"/>
+                                            </t>
+
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-right:1px solid black;border-bottom:hidden;">
+                                            <span t-esc="'{0:,.2f}'.format(line.amount)"/>
+                                        </td>
+                                        <td class="text-center"
+                                            style="border-right:1px solid black;border-bottom:hidden;">
+                                            <span t-esc="line.status" style="text-transform: capitalize"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+
+            </t>
+        </template>
+
+
+        <template id="report_fund_request">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="fund_request_b2b.report_fund_request_document"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- QWeb Reports -->
+        <report
+                id="printout_fund_request"
+                model="fund.request"
+                string="Fund Request"
+                report_type="qweb-pdf"
+                name="fund_request_b2b.report_fund_request"
+                file="fund_request_b2b.report_fund_request"
+        />
+
+    </data>
+</odoo>

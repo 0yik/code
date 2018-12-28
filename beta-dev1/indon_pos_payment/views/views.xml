@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_custom" inherit_id="point_of_sale.assets" name="indon_pos_payment assets">
+        
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/indon_pos_payment/static/src/js/pos.js" />
+        </xpath>
+    </template>
+</odoo>

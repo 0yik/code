@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<odoo>
+
+	<template id="student_fees_header">
+	    <div class="header">
+	    	<div class="row">
+	    		<div class="col-xs-3">
+	                <!-- <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/> -->
+	                <img class="img img-responsive" style="width: 175px; height:140px;margin:auto" src="/modifier_online_school_enrollment/static/src/img/fee_receipt.png"/>
+	                <!-- <span style="margin-left:50px;">PERGAS</span> -->
+	                <!-- <img class="img img-responsive" style="width: 175px; height:140px;margin:auto" t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"/> -->
+	            </div>
+	            <div class="col-xs-9">
+	            	<span><strong>Persatuan Ulama dan Guru-Guru Agama Islam (Singapura)</strong></span><br/>
+	            	<span t-if="company.partner_id" t-field="company.partner_id.name"></span><br/>
+	            	<span t-if="company.street" t-field="company.street"/><t t-if="company.street">,</t><span t-if="company.street2" t-field="company.street2"/><br/>
+	            	<span t-if="company.city" t-field="company.city"/><t t-if="company.city">,</t><span t-if="company.state_id" t-field="company.state_id.name"/><br/>
+	            	<span t-if="company.zip" t-field="company.zip"/><br/>
+	            	<span t-if="company.website" t-field="company.website"/>
+	            </div>
+	    	</div>
+	    </div>
+	</template>
+
+	<template id="student_fees_footer">
+		<div class="footer">
+	        <div class="text-left" style="border-top: 1px solid black;">
+	        	Cheque should be crossed A/C payee only and made payable to PERGAS
+	        </div>
+	        <div class="text-left">
+	        	UEN No : S57SS0012G
+	        </div>
+	    </div>
+	</template>
+
+	<template id="student_fees_header_footer">
+		<t t-if="o and 'company_id' in o">
+			<t t-set="company" t-value="o.company_id"></t>
+		</t>
+		<t t-if="not o or not 'company_id' in o">
+			<t t-set="company" t-value="res_company"></t>
+		</t>
+		<t t-call="modifier_online_school_enrollment.student_fees_header" />
+		<t t-raw="0" />
+		<t t-call="modifier_online_school_enrollment.student_fees_footer" />
+	</template>
+
+	<template id="student_payslip_fees_receipt">
+		<t t-call="report.html_container">
+			<t t-call="modifier_online_school_enrollment.student_fees_header_footer">
+				<t t-foreach="docs" t-as="doc">
+					<t t-set="payslip" t-value="doc.get_payslip_id()"/>
+            		<div class="page">
+            			<div class="row" id="header">
+		    				<div class="col-md-12 mt16 mb16 text-left text-muted">
+								<h2 style="color: #1d6833;margin-left: 30px; font-weight:bold;margin-top: -20px;">Receipt</h2>
+		    				</div>
+		    			</div>
+		    			<div class="row" id="received_form">
+		    				<div class="col-md-6 mt16 mb16 text-left" style="margin-left: 30px; font-size:16px;">
+    						 	<strong><span>Received From</span></strong><br/>
+    						 	<span t-esc="doc.student_id and doc.student_id.name or ''"/><br/>
+    						 	<span t-if="doc.student_id.street" t-field="doc.student_id.street"/><br/>
+                                <span t-if="doc.student_id.city" t-field="doc.student_id.city"/> 
+                                <span t-if="doc.student_id.zip" t-field="doc.student_id.zip"/> 
+                                <span t-if="doc.student_id.country_id" t-field="doc.student_id.country_id.name"/><br/><br/>
+                        		<span><b>NRIC:</b></span> <span t-if="doc.nric" t-field="doc.nric"/><br/>
+		    				</div>
+		    				<div class="col-md-6 mt16 mb16 text-right">
+	    					 	<strong>Date:</strong><span style="margin-left:30px;" t-field="doc.date"/><br/>
+	    					 	<strong>Payment Method:</strong><span style="margin-left:30px;" t-field="doc.number"/><br/>
+	    					 	<strong>Reference No:</strong><span style="margin-left:30px;" t-field="doc.number"/>
+		    				</div>
+		    			</div>
+		                <table class="table">
+		                    <thead style="background: #d7ded3;">
+		                        <tr>
+		                            <th class="text-center" style="color: #1d6833; font-weight: normal;">Invoice Number</th>
+		                            <th class="text-center" style="color: #1d6833; font-weight: normal;">Invoice Date</th>
+		                            <th class="text-center" style="color: #1d6833; font-weight: normal;">Due Date</th>
+		                            <th class="text-center" style="color: #1d6833; font-weight: normal;">Original Amount</th>
+		                            <th class="text-center" style="color: #1d6833; font-weight: normal;">Balance</th>
+		                            <th class="text-center" style="color: #1d6833; font-weight: normal;">Payment</th>
+		                        </tr>
+		                   </thead>
+		                   <tbody class="sale_tbody">
+                                <tr>
+                                    <td class="text-center"><span t-field="payslip.number"/></td>
+                                    <td class="text-center"><span t-field="payslip.date_invoice"/></td>
+                                    <td class="text-center"><span t-field="payslip.date_due"/></td>
+                                    <td class="text-right"><span t-field="payslip.amount_total"/></td>
+                                    <td class="text-right"><span t-field="payslip.residual"/></td>
+                                    <td class="text-right"><span t-esc="'%.2f'% (payslip.amount_total - payslip.residual)"/>&amp;nbsp;<span t-esc="payslip.company_id.currency_id.symbol"/></td>
+                                </tr>
+		                    </tbody>
+		                </table>
+		                <hr style="border-top: dotted 2px;"/>
+		                <div class="row" name="memo">
+		                	<div class="col-xs-4 pull-left">
+		                		<table style="width:100%;">
+			                        <tr>
+			                            <td><span style="margin-left: 30px;">Memo:</span></td>
+			                            <td>
+			                                <span>Attended by: Laiyinah</span>
+			                            </td>
+			                        </tr>
+			                    </table>
+		                	</div>
+			                <div class="col-xs-4 pull-right" name="total">
+			                    <table style="width:100%;">
+			                        <tr>
+			                            <td><span>Amount Credited:</span></td>
+			                            <td class="text-right">
+			                                <span t-field="payslip.amount_untaxed"
+			                                    t-options='{"widget": "monetary", "display_currency": payslip.company_id.currency_id}'/>
+			                            </td>
+			                        </tr>
+			                        <tr>
+			                            <td><span>Total</span></td>
+			                            <td class="text-right">
+			                                <span t-field="payslip.amount_total"
+			                                    t-options='{"widget": "monetary", "display_currency": payslip.company_id.currency_id}'/>
+			                            </td>
+			                        </tr>
+			                    </table>
+			                    <div class="mt32">
+			                    	<span>Signature:</span>------------------------------------
+			                    </div>
+			                </div>
+			            </div>
+		    		</div>
+		    	</t>
+		    </t>
+		</t>
+	</template>
+</odoo>

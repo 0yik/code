@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	 <record id="enrolment_by_gender_report_view" model="ir.ui.view">
+        <field name="name">Enrolment By Gender</field>
+        <field name="model">enrolment.by.gender</field>
+        <field name="arch" type="xml">
+        	<form string="Enrolment By Gender Report">
+        		<group>
+	        	 <group>
+	        	 	 <field name="enrolment_date" required='1'/>
+	        	 </group>
+	        	<footer>
+		            <button string='Print' name="check_report" type="object" class="btn-primary"/>
+		            <button string="Cancel" class="btn-default" special="cancel"/>
+	            </footer>
+	            </group>
+              </form>
+            </field>
+    </record>
+
+    <record id="action_enrolment_by_gender_report_menu" model="ir.actions.act_window">
+        <field name="name">Enrolment By Gender</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">enrolment.by.gender</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="enrolment_by_gender_report_view"/>
+        <field name="target">new</field>
+    </record>
+    
+    <!-- <menuitem
+        id="menu_enrolment_by_gender_report"
+        name="Enrolment by Gender"
+        string='Enrolment By Gender'
+        parent="atts_course.menu_students_parents"
+        action="action_enrolment_by_gender_report_menu"
+       /> -->
+    
+ 	</data>
+</odoo>

@@ -1,0 +1,15 @@
+<odoo>
+  <data>
+    <record id="inventory_form_inherit" model="ir.ui.view">
+      <field name="name">inventory.form.inherit</field>
+      <field name="model">low.stock.notification</field>
+      <field name="inherit_id" ref="low_stock_notification.low_stock_notification_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='product_id']" position="after">
+          <field name="product_code"/>
+          <field name="unit_of_measure"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

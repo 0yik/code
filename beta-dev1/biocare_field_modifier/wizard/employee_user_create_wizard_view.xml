@@ -1,0 +1,18 @@
+<openerp>
+    <data>
+        <record id="view_assign_users_from_employee" model="ir.ui.view">
+            <field name="name">Assign Users from Employee</field>
+            <field name="model">hr.employee.user.access.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Create Users">
+                    <p>Do you want to create User for this Employee ?</p>
+                    <footer>
+                        <button string="Create" type="object" name="create_users" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

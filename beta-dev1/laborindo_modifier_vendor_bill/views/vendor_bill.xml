@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="invoice_supplier_form_inherited_laborindo" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherited</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="purchase.view_invoice_supplier_purchase_form" />
+            <field name="arch" type="xml">
+                <field name="date_invoice" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+                <field name="reference" position="attributes">
+                    <attribute name="string">Vendor Invoice</attribute>
+                </field>
+                <field name="purchase_id" position="after">
+                    <field name="doc_date"/>
+                </field>
+            </field>
+        </record>
+        <record id="invoice_vendor_no_form_inherited_laborindo" model="ir.ui.view">
+            <field name="name">account.invoice.form.vendor.no</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="vendor_bill_no"/>
+                </field>
+            </field>
+        </record>
+        <record id="invoice_transaction_no_form_inherited_laborindo" model="ir.ui.view">
+            <field name="name">account.invoice.form.transaction.no</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="vit_efaktur.invoice_supplier_efaktur"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='efaktur_masukan']" position="before">
+                    <field name="transaction_no"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

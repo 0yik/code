@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<data>
+
+<template id="custom_report_invoice_document">
+    <t t-call="modifier_account_invoice_report.external_invoice_layouts">
+      <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+        <div class="page">
+            <div class="row" style="padding-top:30px;font-family: Arial;font-size:15px;padding-bottom:5px;padding-left:10px;">
+                <div class="col-xs-8" ><div style="width:16%;display:inline-block;"> Name </div> :
+                <span  t-field="o.partner_id" style="border-bottom: 1px solid black;"/>
+                </div>
+                <div class="col-xs-4 pull-right" ><div style="width:50%;display:inline-block;">Invoice No</div>:<span class="oe_inline" t-field="o.number" style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;padding-bottom:5px;padding-left:10px;">
+                <div class="col-xs-8"><div style="width:16%;display:inline-block;">Company</div> :
+                <span class="oe_inline" t-field="o.partner_id.parent_id.name" style="border-bottom: 1px solid black;"/>
+                </div>
+                <div class="col-xs-4 pull-right"><div style="width:50%;display:inline-block;">Payment Method</div>:<span t-esc="o.get_payment_methods(o)"
+                        style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;padding-bottom:5px;padding-left:10px;">
+                <div class="col-xs-8" ><div style="width:17%;display:inline-block;">Address </div>: <span class="oe_inline" t-field="o.partner_id.street" style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+                <div class="col-xs-4 pull-right"><div style="width:50%;display:inline-block;">Date</div>:<span t-field="o.date_invoice"
+                        style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;padding-bottom:5px;padding-left:10px;">
+                <div class="col-xs-8" >
+                    <div style="width:18%;display:inline-block;">  </div><span class="oe_inline" t-field="o.partner_id.street2" style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+                <div class="col-xs-4 pull-right" ><div style="width:50%;display:inline-block;">Phone</div>:
+                    <span t-field="o.partner_id.phone"
+                        style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom:15px;font-family: Arial;font-size: 15px;">
+                <div class="col-xs-8" >
+                <span style="width:19.5%;display:inline-block;">  </span><span class="oe_inline" t-field="o.partner_id.city" style="border-bottom: 1px solid black; display:inline-block;"/>
+                    <span t-field="o.partner_id.state_id.name" style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom:15px;font-family: Arial;font-size: 15px;">
+                <div class="col-xs-8" >    
+                <span style="width:19.5%;display:inline-block;"></span><span t-field="o.partner_id.country_id.name" style="border-bottom: 1px solid black;"/>
+                    <span t-field="o.partner_id.zip" style="border-bottom: 1px solid black;display:inline-block;"/>
+                </div>
+            </div>
+
+            <table class="table table-bordered"  style="border: 2px solid black;margin:0;font-family: Arial;font-size: 15px; ">
+                <thead>
+                    <tr class="border-black">
+                        <th class="text-center" style="border: 2px solid black;width:600px;height:40px;">Description</th>
+                        <th class="hidden" >Source Document</th>
+                        <th class="text-center" style="border: 2px solid black;width:300px;height:40px;">Quantity</th>
+                        <th class="text-center" style="border: 2px solid black;width:200px;height:40px;">Amount</th>
+                    </tr>
+                </thead>
+                <t t-set="advance_lines" t-value="o.invoice_line_ids.filtered(lambda s: s.product_id.type == 'service')" />
+                <t t-set="promo_line" t-value="o.invoice_line_ids.filtered(lambda s: s.product_id.type == 'service' and s.product_id.default_code == 'PS')"/>
+                <t t-set="advance_total" t-value="sum(o.payment_ids.mapped('amount'))"/>
+                <t t-set="refndable_deposit" t-value="sum([a.quantity * a.price_unit for a in advance_lines])"/>
+                <t t-set="total" t-value="0"/>
+                <tbody class="invoice_tbody">
+                    <tr t-foreach="o.invoice_line_ids - advance_lines" t-as="l" style="border: 2px solid black;">
+                        <td style="border: 2px solid black;width:600px;height:40px;"><span t-field="l.name"/></td>
+                        <td class="hidden"><span t-field="l.origin"/></td>
+                        <td class="text-right" style="border: 2px solid black;width:300px;height:40px;">
+                            <span t-esc="int(l.quantity)"/>
+                            <span t-field="l.uom_id"  groups="product.group_uom"/>
+                        </td>
+                        <td class="text-right" style="border: 2px solid black;">
+                            <span t-field="l.price_unit"/>
+                        </td>
+                        <t t-set="total" t-value="total + (l.quantity * l.price_unit)"/>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row" style="font-family: Arial;font-size: 15px;margin-left:5px;">
+                <div class="col-xs-6" ><div style="width:35%;display:inline-block;">Collection Date</div>: 
+                <span t-esc="o.get_date(o,'start_date')" t-field-options="{&quot;format&quot;: &quot;MM/dd/yyyy&quot;}"
+                        style="border-bottom: 1px solid black; display:inline-block;width:39%;"/>
+               
+                </div>
+            <div  class="col-xs-6 text-right">
+                <t t-if="any(promo_line)">Sub Total(Promotion <b><t t-esc="sum(promo_line.mapped('price_unit'))" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></b> Applied) 
+                    <t t-set="total" t-value="total - abs(sum(promo_line.mapped('price_unit')))"/>
+                </t>
+                <t t-if="not any(promo_line)">Sub Total</t><span style="color:white;">.</span>
+                <div class="text-right pull-right" style="border-left: 2px solid black;border-right: 2px solid black;border-bottom: 2px solid black;width:169px;height:23px;" >
+                    <t t-if="any(promo_line)">
+                        <span t-esc="total" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                    </t>
+                    <t t-if="not any(promo_line)">
+                        <span t-esc="total" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                    </t>
+                    
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- Booking Deposit -->
+            <div class="row" style="font-family: Arial;font-size: 15px;margin-left:5px;">
+                <div class="col-xs-6" ><div style="width:35%;display:inline-block;">Return date</div>:
+                <span t-esc="o.get_date(o,'end_date')" t-field-options="{&quot;format&quot;: &quot;MM/dd/yyyy&quot;}"
+                        style="border-bottom: 1px solid black; display:inline-block;width:39%;"/>
+               
+                <div class="form-check text-danger" style="display:inline-block;">
+                  <input type="checkbox" class="form-check-input" style="margin-bottom:5px;"/>  
+                  <span>before 3pm</span>
+                </div> 
+                </div>
+                <div class="col-xs-6 text-right">Booking Deposit<span style="color:white;">.</span>
+                <div class="text-right pull-right" style="border-left: 2px solid black;border-right: 2px solid black;border-bottom: 2px solid black;width:169px;height:23px;" >
+                    <t t-if="advance_total == total + refndable_deposit">
+                        <span t-esc="advance_total - refndable_deposit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </t>
+                    <t t-else="">
+                        <span t-esc="advance_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </t>
+                </div>
+                </div>
+            </div>
+
+            <!-- Total charges -->
+            <div class="row" style="font-family: Arial;font-size: 15px;margin-left:5px;">
+                <div class="col-xs-6" ><div style="width:35%;display:inline-block;">Refundable Deposit</div>: <span class="oe_inline"  style="border-bottom: 1px solid black; display:inline-block;width:39%;"><span t-esc="refndable_deposit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></div>
+                <div class="col-xs-6 text-right">Total Charges<span style="color:white;">.</span>
+                <div class="text-right pull-right" style="border-left: 2px solid black;border-right: 2px solid black;border-bottom: 2px solid black;width:169px;height:23px;" >
+                    <span t-esc="total + refndable_deposit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></div>
+                </div>
+            </div>
+
+            <!-- Total paid -->
+            <div class="row" style="font-family: Arial;font-size: 15px;margin-left:5px;">
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6 text-right">Total Paid<span style="color:white;">.</span>
+                <div class="text-right pull-right" style="border-left: 2px solid black;border-right: 2px solid black;border-bottom: 2px solid black;width:169px;height:23px;" >
+                    <span t-esc="advance_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></div>
+                </div>
+                
+            </div>
+
+            <!-- Balance Due -->
+            <div class="row" style="font-family: Arial;font-size: 15px;margin-left:5px;">
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6 text-right">Balance due<span style="color:white;">.</span>
+                <div class="text-right pull-right" style="border-left: 2px solid black;border-right: 2px solid black;border-bottom: 2px solid black;width:169px;height:23px;" >
+                    <span t-esc="total + refndable_deposit - advance_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></div>
+                </div>
+            </div>
+            <div class="row zero_min_height" style="margin-top:25px;margin-left:15px;">
+                <div class="col-xs-6">
+                    <img t-if="o.collect_sign" t-att-src="'data:image/png;base64,%s' % o.collect_sign" style="width:200px;height:150px;" />
+                    
+                    <div style="border-bottom: 2px solid black;width:80%"></div>
+                </div>
+                <div class="col-xs-6 pull-right">
+                    <img t-if="o.return_sign" t-att-src="'data:image/png;base64,%s' % o.return_sign" style="width:200px;height:150px;" />
+                    <div style="border-bottom: 2px solid black;width:80%"></div>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;margin-left:15px;">
+                <div class="col-xs-6"><span>Sign for Collection</span></div>
+                <div class="col-xs-6"><span>Sign for Return</span>
+                    <div>
+                        <t t-if="o.recv_ref_depo">
+                            <input type="checkbox" id="RecRefDepoChecked" checked="1"/>
+                        </t>
+                        <t t-if="not o.recv_ref_depo">
+                            <input type="checkbox" id="RecRefDepo"/>
+                        </t>
+                        <span class="checkbox-inline">Received Refundable Deposit</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;padding-bottom:5px;margin-left:15px;">
+                <div class="form-check text-danger" style="margin-top:15px;">
+                      <t t-if="o.tc_template_id and o.tc_template_id.subject">
+                        <input type="checkbox" checked="1" class="form-check-input" style="margin-bottom:5px;margin-left:5px;"/>
+                        <span t-field="o.tc_template_id.subject"/> <!--t-options='{"widget": "html"}'/-->
+                      </t>
+                      <t t-if="not o.tc_template_id">
+                        <input type="checkbox"  class="form-check-input" style="margin-bottom:5px;margin-left:5px;"/>
+                        <span t-field="o.tc_template_id.subject"/>
+                      </t>
+                      
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <div class="row zero_min_height" style="margin-top:25px;margin-left:15px;">
+                <div class="col-xs-6">
+                    <img t-if="o.customer_signature" t-att-src="'data:image/png;base64,%s' % o.customer_signature" style="width:200px;height:150px;" />
+                    
+                    <div style="border-bottom: 2px solid black;width:80%"></div>
+                </div>
+                <div class="col-xs-6 pull-right">
+                    <img t-if="o.consultant_signature" t-att-src="'data:image/png;base64,%s' % o.consultant_signature" style="width:200px;height:150px;" />
+                    <div style="border-bottom: 2px solid black;width:80%"></div>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;margin-left:15px;">
+                <div class="col-xs-6"><span>Signature</span></div>
+                <div class="col-xs-6"><span> Staff Signature</span></div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;margin-left:15px;">
+                <div class="col-xs-6">IC/Passport No: <div style="display:inline-block;border-bottom: 1px solid black; width:100px;"></div>
+                </div>
+                <div class="col-xs-6 pull-right">Any Alterations?
+                    <div class="checkbox-inline">
+                      <input type="checkbox" id="inlineCheckbox1" value="option1"/> Yes
+                    </div>
+                    <div class="checkbox-inline">
+                      <input type="checkbox" id="inlineCheckbox2" value="option2"/> No
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="font-family: Arial;font-size: 15px;margin-left:7px">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-lg-6" style="padding: 0;margin: 0;">
+                 <span class="checkbox-inline">Booking</span> <input type="checkbox" id="inlineCheckbox1" />
+                  <span class="checkbox-inline">Collection</span> <input class="oe_inline" type="checkbox" name="radio" />
+                  <span class="checkbox-inline">Return</span> <input class="oe_inline" type="checkbox" name="radio" /> 
+                </div>
+            </div>
+            <t t-if="o.tc_template_id">
+            <p style="page-break-before:always;"> </p>
+            <div class="row" style="font-family: Arial;font-size: 15px;padding-bottom:5px;margin-left:15px;">
+                <span t-if="o.tc_template_id" t-field="o.tc_template_id.terms" t-options='{"widget": "html"}'/>
+            </div>
+        </t>
+        </div>
+        
+    </t>
+</template>
+<template id="custom_report_invoice">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="modifier_account_invoice_report.custom_report_invoice_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+<template id="account_invoice_report_duplicate" inherit_id="modifier_account_invoice_report.custom_report_invoice_document" primary="True">
+        
+</template>
+</data>
+</odoo>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actual pages -->
+    <template id="homepage" inherit_id="website.homepage" name="Homepage">
+        <xpath expr="//div[@id='wrap']" position="replace">
+            <div id="wrap" class="oe_structure">
+                <section id="as_home_slider02" class="carousel s_banners_home_slider02 slide as-home-slider02" data-ride="carousel" data-interval="8000">
+                      <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                      <li data-target="#as_home_slider02" data-slide-to="0" class="active"></li>
+                      <li data-target="#as_home_slider02" data-slide-to="1"></li>
+                    </ol>
+
+                    <div class="carousel-inner">
+                        <div class="item active" style="background-image: url(/theme_atts/static/src/img/banner1.png)">
+                            <div class="container">
+                                <blockquote class="col-md-6 col-sm-6 col-xs-6">
+                                    <h2 class="o_default_snippet_text">Dignissim semper velit</h2>
+                                    <p class="o_default_snippet_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                    <div class="btn-box">
+                                      <a class="o_default_snippet_text" href="/course/0">REGISTER</a>
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                        <div class="item" style="background-image: url(/theme_atts/static/src/img/banner1.png)">
+                            <div class="container">
+                                <blockquote class="col-md-6 col-sm-6 col-xs-6">
+                                    <h2 class="o_default_snippet_text">Dignissim semper velit</h2>
+                                    <p class="o_default_snippet_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                    <div class="btn-box">
+                                      <a class="o_default_snippet_text" href="/course/0">REGISTER</a>
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="left carousel-control" data-target="#as_home_slider02" role="button" data-slide="prev">
+                        <span class="fa fa-angle-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" data-target="#as_home_slider02" role="button" data-slide="next">
+                        <span class="fa fa-angle-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                  </section>
+            </div>
+            <div class="oe_structure"/>
+            <section class="as-company-feature">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <section class="as-t-title">
+                                <h2 class="o_default_snippet_text">Popular Courses</h2>
+                            </section>
+                            <div class="row">
+                                <t t-foreach="website.get_courses(is_popular=True)" t-as="course">
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="cf-content">
+                                            <div class="img">
+                                                <img t-attf-src="/web/image/subject.subject/#{course.id}/image_thumb" class="img-responsive oe_slides_grid_thumbnail"/>
+                                            </div>
+                                            <div class="cfc-info">
+                                                <h5><a href="#" class="tran3s" t-field="course.name"></a></h5>
+                                                <p class="course_description" t-field="course.description"></p>
+                                            </div>
+                                            <div class="btn-box mt8">
+                                                <a class="asb-btn o_default_snippet_text" t-attf-href="/course/detail/#{course.id}">FIND MORE</a>
+                                                <a class="asb-btn-trs o_default_snippet_text" t-attf-href="/course/#{course.id}">REGISTER</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12 quick_search">
+                            <section class="as-t-title">
+                                <h4><spna style="border-bottom: 2px solid #ff9c00;">Quick Search</spna></h4>
+                            </section>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-10 mt32">
+                                    <form action="/course" method="post" class="form-horizontal">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <div class="form-group form-field">
+                                            <label class="align-left control-label" for="course_title">Course Title</label>
+                                            <select id="course_title" class="form-control o_website_form_input" name="course_title">
+                                                <option value="0">Select Course</option>
+                                                <t t-foreach="website.get_courses()" t-as="course_id">
+                                                    <option t-att-value="course_id.id"><t t-esc="course_id.name"/></option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="form-group form-field">
+                                            <label class="align-left control-label" for="course_date">Course Date</label>
+                                            <select class="form-control o_website_form_input" name="class_date" data-init="1">
+                                                <option value="0">Select Date</option>
+                                                <t t-foreach="website.get_course_class()" t-as="class_id">
+                                                    <option t-att-value="class_id.id"><t t-esc="class_id.class_schedule"/></option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="btn-box">
+                                                <input type="hidden" name="search" value="1"/>
+                                                <button type="submit" class="asb-btn-trs o_default_snippet_text">Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mt16">
+                                    <a href="/course_calendar/pdf" download="">
+                                        <img src="/theme_atts/static/src/img/course_calendar.png" title="Course Calendar" alt="Course Calendar" />
+                                    </a>
+                                    <t t-foreach="website.get_registration_files()" t-as="file">
+                                        <a t-attf-href="/course_calendar/pdf/#{file.id}" class="download_link" download=""><i class="fa fa-download" aria-hidden="true"></i>Registration File Download (<span t-field="file.student_type"/>)</a>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="oe_structure"/>
+            <section class="as-client-slider" style="background-image: url(/theme_atts/static/src/img/classroom2.jpg)">
+                <div class="container">
+                    <div id="as-client-slider-a" class="carousel s_banners_client_slider slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#as-client-slider-a" data-slide-to="0" class="active"></li>
+                            <li data-target="#as-client-slider-a" data-slide-to="1"></li>
+                        </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <blockquote> 
+                                  <div class="acs-img">
+                                    <div class="acs-img-in">
+                                      <img src="/theme_stoneware/static/src/img/acs-2.png" title="" alt="" />
+                                    </div>
+                                    <i class="fa fa-quote-right"></i>
+                                  </div>
+                                  <div class="asc-text">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, a quam quae dolore blanditiis eveniet cum amet quasi sunt nostrum, suscipit commodi sequi sapiente deserunt dolorem iusto? Ipsa, quas ut!. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                    <div class="asc-author">
+                                      <label>John Smith</label>
+                                      <span>CEO</span>
+                                    </div>
+                                  </div>
+                                </blockquote>
+                            </div>
+                            <div class="item">
+                                 <blockquote> 
+                                  <div class="acs-img">
+                                    <div class="acs-img-in">
+                                      <img src="/theme_stoneware/static/src/img/acs-1.png" title="" alt="" />
+                                    </div>
+                                    <i class="fa fa-quote-right"></i>
+                                  </div>
+                                  <div class="asc-text">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, a quam quae dolore blanditiis eveniet cum amet quasi sunt nostrum, suscipit commodi sequi sapiente deserunt dolorem iusto? Ipsa, quas ut!. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                    <div class="asc-author">
+                                      <label>John Smith</label>
+                                      <span>CEO</span>
+                                    </div>
+                                  </div>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="oe_structure"/>
+        </xpath>
+    </template>
+</odoo>

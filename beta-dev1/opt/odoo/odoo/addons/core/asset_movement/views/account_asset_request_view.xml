@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record model="ir.ui.view" id="view_account_asset_request_form">
+        <field name="name">account.asset.request.form</field>
+        <field name="model">account.asset.request</field>
+        <field name="arch" type="xml">
+            <form string="Asset Request">
+
+                <header>
+                    <button name="submit_for_approval" type="object" states='draft' string="Submit for Approval" class="oe_highlight"/>
+                    <button name="approve_request" type="object" string="Approve"  states='waiting_approval' class="oe_highlight"/>
+                    <button name="reject_request" type="object" string="Reject" states='waiting_approval' class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting_approval,approved,rejected,cancel" />
+                </header>
+                 <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Request Referece code" class="oe_edit_only"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="requester_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="reason" attrs="{'readonly':[('state','!=','draft')]}" required="1"/>
+                            <field name="current_assets_location"/>
+                        </group>
+                        <group>
+                            <field name="asset_category_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="asset_id"  domain="[('category_id', '=', asset_category_id)]" attrs="{'required':[('state','=','waiting_approval')], 'invisible': [('state','=','draft')], 'readonly':[('state', '!=', 'waiting_approval')]}"/>
+                            <field name="is_asset" invisible="1"/>
+                            <field name="current_user_id" readonly="1" attrs="{'invisible': [('is_asset','=', False)]}"/>
+                            <field name="date_transferrd" readonly="1"/>
+                            <field name="new_assets_location"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+     </record>
+
+    <record model="ir.ui.view" id="view_account_asset_request_tree">
+        <field name="name">account.asset.request.tree</field>
+        <field name="model">account.asset.request</field>
+        <field name="arch" type="xml">
+            <tree string="Asset Request">
+                <field name="name"/>
+                <field name="requester_id"/>
+                <field name="asset_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_account_asset_request">
+        <field name="name">Asset Request</field>
+        <field name="res_model">account.asset.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new asset request.
+            </p>
+        </field>
+    </record>
+
+    <menuitem parent="account.menu_finance" id="menu_action_account_asset_asset_request_menu" name="Asset Request" sequence="4"/>
+    <menuitem parent="menu_action_account_asset_asset_request_menu" id="menu_action_account_asset_asset_request" name="Asset Request" action="action_account_asset_request" sequence="1"/>
+
+</odoo>

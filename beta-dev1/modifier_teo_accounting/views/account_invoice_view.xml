@@ -1,0 +1,288 @@
+<odoo>
+	<data>
+
+		<record id="debit_note_form_view" model="ir.ui.view">
+			<field name="name">debit.note.form.view</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="credit_debit_note.invoice_form_inhert" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='invoice_date']" position="replace">
+					<field name="invoice_date" invisible="1" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="accounting_xls_reports.account_aged_partner_balance_inherit_finance"
+			model="ir.ui.view">
+			<field name="name">Aged Partner Balance</field>
+			<field name="model">account.aged.trial.balance</field>
+			<field name="inherit_id" ref="account.account_aged_balance_view" />
+			<field name="arch" type="xml">
+				<field name="target_move" position="after">
+					<field name="xls_theme_id" invisible="1"
+						options="{'no_open':True,'no_create':True,'no_create_edit':True}" />
+				</field>
+				<xpath expr="//button[@name='check_report']" position="after">
+					<button name="print_aged_xls_report" type="object" string="Print xls" invisible="1"
+						class="oe_highlight" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_invoice_form_view" model="ir.ui.view">
+			<field name="name">account.invoice.form.view</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/group/group/div" position="after">
+					<field name="rate" />
+					<field name="dd_invoice_no" attrs="{'invisible': [('type','!=','out_invoice')]}" />
+					<field name="season" attrs="{'invisible': [('type','!=','out_invoice')]}" />
+					<field name="agent" attrs="{'invisible': [('type','!=','out_invoice')]}" />
+				</xpath>
+				<xpath
+					expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']"
+					position="attributes">
+					<attribute name="string">Style No.</attribute>
+				</xpath>
+				<xpath
+					expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']"
+					position="before">
+					<field name="po_no" />
+					<field name="margin_required" />
+					<field name="commision_payable" />
+				</xpath>
+				<xpath
+					expr="//field[@name='invoice_line_ids']/tree/field[@name='analytic_tag_ids']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='number']" position="replace">
+					<field name="number" readonly="1" class="oe_inline"
+						invisible="1" attrs="{'invisible': [('state','in',('draft',))]}" />
+					<field name="c_number" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_invoice_tree_view" model="ir.ui.view">
+			<field name="name">account.invoice.tree.view</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='number']" position="replace">
+					<field name="c_number" string="Number" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_invoice_supplier_form_view" model="ir.ui.view">
+			<field name="name">account.invoice.supplier.form.view</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='currency_id']" position="after">
+					<field name="rate" />
+				</xpath>
+				<xpath
+					expr="//field[@name='invoice_line_ids']/tree/field[@name='analytic_tag_ids']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='number']" position="replace">
+					<field name="number" invisible="1" class="oe_inline"
+						attrs="{'invisible': [('state', '=', 'draft')]}" />
+					<field name="c_number" attrs="{'invisible': [('state', '=', 'draft')]}" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_invoice_supplier_tree_view" model="ir.ui.view">
+			<field name="name">account.invoice.supplier.tree.view</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='number']" position="replace">
+					<field name="c_number" string="Number" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_voucher_form_view" model="ir.ui.view">
+			<field name="name">account.voucher.form.view</field>
+			<field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_purchase_receipt_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='number']" position="replace">
+					<field name="number" readonly="1" invisible="1" />
+					<field name="av_number" />
+				</xpath>
+				<xpath expr="//field[@name='company_id']" position="after">
+					<field name="cheque_number" />
+					<field name="cheque_date" />
+				</xpath>
+				<xpath expr="//field[@name='journal_id']" position="after">
+					<field name="remarks" />
+				</xpath>
+				<xpath expr="//field[@name='currency_id']" position="replace">
+					<field name="currency_id" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_voucher_tree_view" model="ir.ui.view">
+			<field name="name">account.voucher.tree.view</field>
+			<field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_voucher_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='number']" position="replace">
+					<field name="av_number" string="Number" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_voucher_sale_form_view" model="ir.ui.view">
+			<field name="name">account.voucher.sale.form.view</field>
+			<field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_sale_receipt_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='number']" position="replace">
+					<field name="number" readonly="1" invisible="1" />
+					<field name="av_number" />
+				</xpath>
+				<xpath expr="//field[@name='account_id']" position="after">
+					<field name="cheque_number" />
+					<field name="cheque_date" />
+				</xpath>
+				<xpath expr="//field[@name='paid']" position="after">
+					<field name="remarks" />
+				</xpath>
+				<xpath expr="//field[@name='currency_id']" position="replace">
+					<field name="currency_id" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_move_form_view" model="ir.ui.view">
+			<field name="name">account.move.form.view</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_move_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="replace">
+					<field name="name" invisible="1" readonly="True"
+						attrs="{'invisible':[('name','=','/')]}" />
+					<field name="j_name" attrs="{'invisible':[('name','=','/')]}" />
+				</xpath>
+				<xpath expr="//field[@name='ref']" position="after">
+					<field name="remark" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_move_tree_view" model="ir.ui.view">
+			<field name="name">account.move.tree.view</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_move_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="replace">
+					<field name="j_name" string="Number" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="customer_receipt_form_view" model="ir.ui.view">
+			<field name="name">customer.receipt.form.view</field>
+			<field name="model">receipt.payment</field>
+			<field name="inherit_id" ref="sg_partner_payment.view_customer_receipt_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='currency_id']" position="after">
+					<field name="rate" />
+				</xpath>
+				<xpath expr="//field[@name='line_dr_ids']/tree" position="replace">
+					<tree string="Debits" editable="bottom" delete="false">
+						<field name="move_line_id" />
+						<field name="invoice_id" invisible="1" />
+						<field name="account_id" />
+						<field name="date" />
+						<field name="date_maturity" />
+						<field name="amount_residual" invisible="1" />
+						<field name="currency_id" invisible="1" />
+						<field name="move_currency_id" invisible="1" />
+						<field name="original_amount_currency" />
+						<field name="original_amount" />
+						<field name="amount_unreconciled_currency" />
+						<field name="amount_unreconciled" />
+						<field name="reconcile" context="{'reconcile': True}" />
+						<field name="amount" sum="Total Allocation" context="{'amount': True}" />
+					</tree>
+				</xpath>
+				<xpath expr="//field[@name='line_cr_ids']/tree" position="replace">
+					<tree string="Credits" editable="bottom" delete="false">
+						<field name="move_line_id" />
+						<field name="invoice_id" invisible="1" />
+						<field name="account_id" />
+						<field name="date" />
+						<field name="date_maturity" />
+						<field name="amount_residual" invisible="1" />
+						<field name="currency_id" invisible="1" />
+						<field name="move_currency_id" invisible="1" />
+						<field name="original_amount_currency" />
+						<field name="original_amount" />
+						<field name="amount_unreconciled_currency" />
+						<field name="amount_unreconciled" />
+						<field name="reconcile" context="{'reconcile': True}" />
+						<field name="amount" sum="Total Allocation" context="{'amount': True}" />
+					</tree>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="supplier_receipt_form_view" model="ir.ui.view">
+			<field name="name">supplier.receipt.form.view</field>
+			<field name="model">receipt.payment</field>
+			<field name="inherit_id" ref="sg_partner_payment.view_supplier_payment_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='currency_id']" position="after">
+					<field name="rate" />
+				</xpath>
+				<xpath expr="//field[@name='line_dr_ids']/tree" position="replace">
+					<tree string="Debits" editable="bottom" delete="false">
+						<field name="move_line_id" />
+						<field name="invoice_id" invisible="1" />
+						<field name="account_id" />
+						<field name="date" />
+						<field name="date_maturity" />
+						<field name="amount_residual" invisible="1" />
+						<field name="currency_id" invisible="1" />
+						<field name="move_currency_id" invisible="1" />
+						<field name="original_amount_currency" />
+						<field name="original_amount" />
+						<field name="amount_unreconciled_currency" />
+						<field name="amount_unreconciled" />
+						<field name="reconcile" context="{'reconcile': True}" />
+						<field name="amount" sum="Total Allocation" context="{'amount': True}" />
+					</tree>
+				</xpath>
+				<xpath expr="//field[@name='line_cr_ids']/tree" position="replace">
+					<tree string="Credits" editable="bottom" delete="false">
+						<field name="move_line_id" />
+						<field name="invoice_id" invisible="1" />
+						<field name="account_id" />
+						<field name="date" />
+						<field name="date_maturity" />
+						<field name="amount_residual" invisible="1" />
+						<field name="currency_id" invisible="1" />
+						<field name="move_currency_id" invisible="1" />
+						<field name="original_amount_currency" />
+						<field name="original_amount" />
+						<field name="amount_unreconciled_currency" />
+						<field name="amount_unreconciled" />
+						<field name="reconcile" context="{'reconcile': True}" />
+						<field name="amount" sum="Total Allocation" context="{'amount': True}" />
+					</tree>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

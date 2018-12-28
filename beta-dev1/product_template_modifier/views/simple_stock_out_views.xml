@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="simple_stock2.stock_out_list_action">
+            <field name="name">Stock Out</field>
+            <field name="res_model">simple.stock.out</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="form_view_id" ref="simple_stock2.view_simple_stock_out_form"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first Stock Out
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

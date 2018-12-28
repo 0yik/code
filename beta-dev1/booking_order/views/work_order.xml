@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_work_order_form" model="ir.ui.view">
+			<field name="name">work.order.form</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//header/button[@name='do_new_transfer']"
+					position="inside">
+					<button name="check" type="object" class="oe_highlight"
+						string="Check" />
+					<button name="start"
+						attrs="{'invisible':[('state','in',['assigned','done'])]}" type="object"
+						class="oe_highlight" string="Start" />
+				</xpath>
+
+				<xpath expr="//page[@name='extra']" position="inside">
+					<group>
+						<field name="is_a_booking" />
+					</group>
+					<group>
+						<group>
+							<field name="scheduled_start" attrs="{'invisible':[('is_a_booking','=',False)]}" />
+							<field name="scheduled_end" attrs="{'invisible':[('is_a_booking','=',False)]}" />
+						</group>
+						<group>
+							<field name="actual_start" attrs="{'invisible':[('is_a_booking','=',False)]}"
+								readonly="1" />
+							<field name="actual_end" attrs="{'invisible':[('is_a_booking','=',False)]}"
+								readonly="1" />
+						</group>
+						</group>
+					<group>
+						<field name="booking_team_id" attrs="{'invisible':[('is_a_booking','=',False)]}" />
+						<field name="team_leader_id" attrs="{'invisible':[('is_a_booking','=',False)]}" />
+						<field name="employee_ids" attrs="{'invisible':[('is_a_booking','=',False)]}" />
+						<field name="equipment_serial_ids" attrs="{'invisible':[('is_a_booking','=',False)]}">
+							<tree editable="Top">
+								<field name="product_id" />
+								<field name="serial_id" />
+							</tree>
+						</field>
+					</group>
+				</xpath>
+
+			</field>
+		</record>
+
+
+
+		<record id="action_work_orders" model="ir.actions.act_window">
+			<field name="name">work</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.picking</field>
+			<field name="view_type">form</field>
+			<field name="context">{'default_is_a_booking':True}</field>
+			<field name="view_mode">tree,form,calendar</field>
+
+			<field name="domain">[('is_a_booking','=',True)]</field>
+			<field name="help" type="html">
+				<p>
+					You will find here all orders that are ready to be invoiced.
+				</p>
+				<p>
+					You can select all orders and invoice them in batch, or check
+					every order and invoice them one by one.
+				</p>
+			</field>
+
+		</record>
+
+		<menuitem id="menu_work_order" parent="booking_order.menu_booking_order"
+			sequence="2" name="Work Order" action="action_work_orders" />
+
+
+	</data>
+</odoo>

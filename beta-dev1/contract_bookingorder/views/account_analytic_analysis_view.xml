@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_analytic_biocare_contract_form" model="ir.ui.view">
+            <field name="name">account.analytic.account.form</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='manager_id']" position="after">
+                    <field name="book_type"/>
+                </xpath>
+                <!--xpath expr="//field[@name='date_end']" position="after">
+                    <field name="book_interval" required="1" />
+                    <field name="interval_date"
+                        attrs="{'invisible': [('book_interval','!=', 'weekly')],
+                        'required': [('book_interval', '=', 'weekly')]
+                        }"/>
+                    <field name="twice_week_first_date"
+                        attrs="{'invisible': [('book_interval','!=', 'twice_weekly')],
+                        'required': [('book_interval', '=', 'twice_weekly')]
+                        }"/>
+                    <field name="twice_week_second_date"
+                        attrs="{'invisible': [('book_interval','!=', 'twice_weekly')],
+                        'required': [('book_interval', '=', 'twice_weekly')]
+                        }"/>
+                    <field name="fort_nightly_date"
+                        attrs="{'invisible': [('book_interval','!=', 'fortnightly')],
+                        'required': [('book_interval', '=', 'fortnightly')]
+                        }"/>
+                    <field name="monthly_date"
+                        attrs="{'invisible': [('book_interval','!=', 'monthly')],
+                        'required': [('book_interval', '=', 'monthly')]
+                        }"/>
+                    <field name="bi_monthly_date"
+                        attrs="{'invisible': [('book_interval','!=', 'bi_mothly')]}"/>
+                    <field name="quarterly_month_date"
+                        attrs="{'invisible': [('book_interval','!=', 'quarterly')],
+                        'required': [('book_interval', '=', 'quarterly')]
+                        }"/>
+                    <field name="half_month_date"
+                        attrs="{'invisible': [('book_interval','!=', 'half_yearly')],
+                        'required': [('book_interval', '=', 'half_yearly')]
+                        }"/>
+                </xpath-->
+                <xpath expr="//separator[@name='toinvoice']" position="before">
+                    <separator string="Recurring Booking Order"
+                        attrs="{'invisible': [('recurring_booking_order','!=',True)]}"/>
+                    <div>
+                        <div attrs="{'invisible': [('type','!=', 'contract'), ('recurring_invoices', '=', False)]}">
+                            <field name="recurring_booking_order" class="oe_inline" />
+                            <label for="recurring_booking_order" />
+                        </div>
+                    </div>
+                <!--group attrs="{'invisible': [('recurring_booking_order','!=',True)]}">
+                    <field name="recurring_bo_next_date"/>
+                </group-->
+
+                <!-- added tree view for the multiple interval-->
+                <field name="bo_line_ids" attrs="{'invisible': [('recurring_booking_order','=', False)]}">
+                    <tree string="List of Services" editable="bottom">
+                        <field name="product_id" required="1" domain="[('type','=', 'service')]"/>
+                        <field name="book_interval" required="1" />
+                        <field name="tree_interval_date1" required="1" />
+                        <field name="tree_interval_date2"
+                            attrs="{'readonly': [('book_interval','!=', 'twice_weekly')]}"/>
+                        <field name="remarks"/>
+                        <field name="st_time" required="1" widget="float_time"/>
+                        <field name="recurring_bo_next_date" readonly="0" />
+                        <field name="state" readonly="1" invisible="1" />
+                        <field name="analytic_new_id" invisible="1" />
+                        <button string="View Bookings" class="oe_highlight"
+                             type="object" name="view_booking_order"/>
+                    </tree>
+                    <form string="List of Services">
+                        <group>
+                            <group>
+                                <field name="book_interval"/>
+                                <field name="product_id" domain="[('type','=', 'service')]"/>
+                                <field name="tree_interval_date1"/>
+                            </group>
+                            <group>
+                                <field name="st_time" widget="float_time" required="1" />
+                                <field name="tree_interval_date2"/>
+                                <field name="state"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="analytic_new_id"/>
+                            <field name="remarks"/>
+                        </group>
+                    </form>
+                </field>
+
+                </xpath>
+                <xpath expr="//div[@class='oe_button_box']" position="inside">
+                    <button class="oe_stat_button" type="object" 
+                        name="action_bo_history" context="{'default_partner_id': partner_id}"
+                        icon="fa-bars"  widget="statinfo" attrs="{'invisible': [('total_bo_count','=', 0)]}">
+                        <field name="total_bo_count" widget="statinfo" string="Booking Order"/>
+                    </button>
+                </xpath>
+                
+            </field>
+        </record>
+    </data>
+</odoo>

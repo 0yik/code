@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+
+	<t t-name="CreateSalesOrderPopupWidget">
+	    <div class="modal-dialog">
+	        <div class="popup wk_popup">
+	            <p class="title">Create Sales Order <span style="font-size:12px;float: right;">Delivery Date: <input type="text" class="input_date" id="datepicker" placeholder="MM/DD/YYYY"/></span>
+	            </p>
+	            <script>
+	            $(function() {
+	                $("#tabs").tabs();
+	                $("#datepicker").datepicker();
+	            });
+	            </script>
+	            <div id="tabs" style="font-size:12px">
+	                <ul>
+	                    <li><a href="#tabs-2" style=" font-size: 15px !important;">Shipping Address</a></li>
+	                    <li><a href="#tabs-1" style=" font-size: 15px !important;">Extra Fees</a></li>
+	                    <li><a href="#tabs-3" style=" font-size: 15px !important;">Note</a></li>
+	                    <li><a href="#tabs-4" style="font-size: 15px !important;">Promotion</a></li>
+	                </ul>
+	                <div id="tabs-1" style="height:250px">
+	                    <table>
+	                        <tr>
+	                            <td>Use Extra Fee</td>
+	                            <td>
+	                                <input type="checkbox" class="extra_fee" style="width: 13px; min-height:0px;" />
+	                            </td>
+	                        </tr>
+	                    </table>
+	                    <table>
+	                        <tr>
+	                            <td>
+	                                <input type="text" class="extra_fee_value" />
+	                            </td>
+	                        </tr>
+	                    </table>
+	                </div>
+	                <div id="tabs-2" style="height:250px">
+	                    <table>
+	                        <tr>
+	                            <td>Ship to Diffrent Address</td>
+	                            <td>
+	                                <input type="checkbox" class="diffrent_address" style="width: 13px; min-height:0px;" />
+	                            </td>
+	                        </tr>
+	                    </table>
+	                    <form name="address_form">
+	                        <table>
+	                            <tr>
+	                                <td>
+	                                    <input class="wk_address" type="text" placeholder="Name" name="name" />
+	                                </td>
+	                                <td>
+	                                    <input class="wk_address" type="text" placeholder="Email" name="email" />
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td>
+	                                    <input class="wk_address" type="text" placeholder="Street" name="street" />
+	                                </td>
+	                                <td>
+	                                    <input class="wk_address" type="text" placeholder="City" name="city" />
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td>
+	                                    <input class="wk_address" type="text" placeholder="Zip" name="zip" />
+	                                </td>
+	                                <td>
+	                                    <select class='wk_address' name='country_id' style="font-size: 15px !important;width: 229px;float: left;margin-left: 29px;">
+	                                        <option value=''>Country:None</option>
+	                                        <t t-foreach='widget.pos.countries' t-as='country'>
+	                                            <option t-att-value='country.id'>
+	                                                <t t-esc='country.name' />
+	                                            </option>
+	                                        </t>
+	                                    </select>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td>
+	                                    <input class="wk_address" type="text" placeholder="Mobile" name="mobile" />
+	                                </td>
+	                                <td>
+	                                    <input class="wk_address" type="text" placeholder="Phone" name="phone" />
+	                                </td>
+	                            </tr>
+	                        </table>
+	                    </form>
+	                </div>
+	                <div id="tabs-3" style="height:250px">
+	                    <textarea class="wk_note" rows="7" cols="35" placeholder="Add a Note..........." />
+	                </div>
+	                <div id="tabs-4" style="height:250px">
+	                	<table>
+	                	    <tr>
+	                	        <td>Apply Promotion</td>
+	                	        <td>
+	                	            <input type="checkbox" class="apply_promotion" style="width: 13px; min-height:0px;" />
+	                	        </td>
+	                	        <td></td>
+	                	        <td style="color:white;">.....</td>
+	                	        <td>
+	                	        	<button type="text" class="remove_promotion" disabled="disabled">Remove Promotion</button>
+	                	        </td>
+	                	    </tr>
+	                	</table>
+	                	<div id="promotions_list_so"></div>
+	                </div>
+	            </div>
+	            <div class="footer">
+	                <div class="button wk_create_order">
+	                    Create
+	                </div>
+	                <div class="button  cancel">
+	                    Cancel
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</t>
+
+</template>
+

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="seq_account_move" model="ir.sequence">
+			<field name="name">Account Move</field>
+			<field name="code">account.move</field>
+			<field name="prefix">JV%(y)s%(month)s</field>
+			<field name="padding">4</field>
+		</record>
+
+		<record id="seq_account_invoice_customer" model="ir.sequence">
+			<field name="name">Customer Invoice</field>
+			<field name="code">account.invoice.customer</field>
+			<field name="prefix">IV%(y)s%(month)s</field>
+			<field name="padding">4</field>
+		</record>
+
+		<record id="seq_account_invoice_vendor" model="ir.sequence">
+			<field name="name">Vendor Bill</field>
+			<field name="code">account.invoice.vendor</field>
+			<field name="prefix">SI%(y)s%(month)s</field>
+			<field name="padding">4</field>
+		</record>
+
+		<record id="seq_account_invoice_credit" model="ir.sequence">
+			<field name="name">Credit Note</field>
+			<field name="code">account.invoice.credit</field>
+			<field name="prefix">PCN-TG%(y)s%(month)s</field>
+			<field name="padding">4</field>
+		</record>
+
+		<record id="seq_account_invoice_debit" model="ir.sequence">
+			<field name="name">Debit Note</field>
+			<field name="code">account.invoice.debit</field>
+			<field name="prefix">CDN%(y)s%(month)s</field>
+			<field name="padding">4</field>
+		</record>
+		
+		<record id="seq_account_invoice_supp_debit" model="ir.sequence">
+            <field name="name">Supplier Debit Note</field>
+            <field name="code">account.invoice.supp.debit</field>
+            <field name="prefix">SDN%(y)s%(month)s</field>
+            <field name="padding">4</field>
+        </record>
+
+		<record id="sg_partner_payment.customer_receipts_seq" model="ir.sequence">
+			<field name="name">Customer Receipts</field>
+			<field name="code">receipt.payment.customer</field>
+			<field name="prefix">OR%(y)s%(month)s</field>
+			<field name="padding">4</field>
+		</record>
+
+		<record id="sg_partner_payment.supplier_payment_seq" model="ir.sequence">
+			<field name="name">Supplier Payments</field>
+			<field name="code">receipt.payment.supplier</field>
+			<field name="prefix">PM%(y)s%(month)s</field>
+			<field name="padding">4</field>
+		</record>
+		
+		<record id="seq_account_expense" model="ir.sequence">
+            <field name="name">Expense</field>
+            <field name="code">account.voucher.expense</field>
+            <field name="prefix">SCN%(y)s%(month)s</field>
+            <field name="padding">4</field>
+        </record>
+        
+        <record id="seq_other_income" model="ir.sequence">
+            <field name="name">Other Income</field>
+            <field name="code">other.income</field>
+            <field name="prefix">OI%(y)s%(month)s</field>
+            <field name="padding">4</field>
+        </record>
+
+	</data>
+</odoo>

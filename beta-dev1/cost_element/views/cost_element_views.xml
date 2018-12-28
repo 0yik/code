@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="action_cost_element">
+            <field name="name">Cost Element</field>
+            <field name="res_model">project.cost_element</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="cost_element_tree_view">
+            <field name="name">project.cost_element.tree</field>
+            <field name="model">project.cost_element</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Idea list">
+                    <field name="cost_element_code"/>
+                    <field name="name"/>
+                    <field name="parent_cost_element"/>
+                    <field name="level"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="cost_element_from_view">
+            <field name="name">project.cost_element.from</field>
+            <field name="model">project.cost_element</field>
+            <field name="priority" eval="17"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="cost_element_code"/>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="parent_cost_element"/>
+                            <field name="level"/>
+                            </group>
+                        </group>
+                        <!--<group colspan="4">-->
+                        <!--</group>-->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <menuitem name="Cost Element" action="action_cost_element"
+              id="menu_action_cost_element"
+              parent="project.menu_project_config" sequence="21"/>
+    </data>
+</odoo>

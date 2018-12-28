@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="find_course_page_bradcum">
+        <div class="container">
+            <h1>
+                <span t-if="is_all_industry or is_all_course"><span>All</span></span>
+                <span t-if="course and is_course and not is_all_course"><span t-esc="course.name"/></span>
+                <span t-if="industry and is_industry and not is_all_industry"><span t-esc="industry.name"/></span>
+            </h1>
+            <ul class="breadcrumb">
+                <li><a href="/page/homepage">Home</a></li>
+                <li t-if="course and is_course and not is_all_course"><a t-attf-href="/course/level/#{course.id}"><span t-esc="course.name"/></a></li>
+                <li t-if="industry and is_industry and not is_all_industry"><a t-attf-href="/industry/#{industry.id}"><span t-esc="industry.name"/></a></li>
+                <li t-if="is_all_industry or is_all_course"><a href="#">All</a></li>
+            </ul>
+        </div>
+    </template>
+
+    <template id="course_industry" name="Find A Course" >
+        <t t-call="website.layout">
+            <t t-if="not website.is_breadcum">
+                <t t-if="website.bread_cum_image">
+                    <t t-set="bread_cum" t-value="website.image_url(website,'bread_cum_image')"/>
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs" t-attf-style="background-image:url(#{bread_cum}#)">
+                            <t t-call="theme_atts.find_course_page_bradcum" />  
+                        </nav>
+                    </t>
+                    <t t-if="not website.bread_cum_image">
+                        <nav class="is-breadcrumb shop-breadcrumb" role="navigation" aria-label="breadcrumbs">
+                            <t t-call="theme_atts.find_course_page_bradcum" />  
+                        </nav>
+                    </t>  
+                <!-- </t>  -->
+            </t>  
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <div class="container">
+                    <div class="row mb32">
+                        <div class="col-md-8">
+                            <div style="border-bottom: 2px solid gray;">
+                                <t t-if="course and is_course and not is_all_course"><h3 class="text-uppercase"><span t-esc="course.name"/></h3></t>
+                                <t t-if="industry and is_industry and not is_all_industry"><h3 class="text-uppercase"><span t-esc="industry.name"/></h3></t>
+                                <t t-if="is_all_industry or is_all_course"><h3 class="text-uppercase">all</h3></t>
+                            </div>
+                            <div class="mt8">
+                                <t t-foreach="course_ids" t-as="course">
+                                    <t t-set="class_ids" t-value="website.get_course_class(course)"/>
+                                    <div style="border-bottom: 2px solid gray;" class="mt32" t-if="class_ids">
+                                        <h4><span t-esc="course.name"/></h4>
+                                        <div class="btn-box mb32">
+                                            <form t-attf-action="/course/#{course.id}/register" method="post">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <select style="height: 33px;width: 50%;" name="course_class">
+                                                    <t t-foreach="class_ids" t-as="cls">
+                                                        <option t-att-value="cls.id" t-att-selected="int(search_class_id or 0) == cls.id and 'selected' or null"><t t-esc="cls.class_schedule"/></option>
+                                                    </t>
+                                                </select>
+                                                <button class="btn o_default_snippet_text pull-right"><b>REGISTER</b></button>
+                                                <a class="asb-btn o_default_snippet_text pull-right" style="line-height: 30px;height: 33px;border-radius: 5px;" t-attf-href="/course/detail/#{course.id}"><b>VIEW</b></a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="products_grid_before">
+                            <ul class="nav nav-pills nav-stacked mt16" id="o_shop_collapse_category">
+                                <li>
+                                    <i t-att-class="'text-primary fa fa-chevron-down' if is_course else 'text-primary fa fa-chevron-right'"></i>
+                                    <h3><a t-attf-href="/course/0">By Course Type</a></h3>
+                                    <ul t-att-class="'nav nav-pills nav-stacked nav-hierarchy view-block' if is_course else 'nav nav-pills nav-stacked nav-hierarchy view-none'">
+                                        <li t-att-class="'active' if is_all_course else ''"><a t-attf-href="/course/level/0">All</a></li>
+                                        <t t-foreach="website.get_courses_level()" t-as="course">
+                                            <li t-att-class="'active' if is_course and course.id == course_id else ''"><a t-attf-href="/course/level/#{course.id}"><span t-esc="course.name"/></a></li>
+                                        </t>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <i t-att-class="'text-primary fa fa-chevron-down' if is_industry else 'text-primary fa fa-chevron-right'"></i>
+                                    <h3><a t-attf-href="/industry/0">By Industry</a></h3>
+                                    <ul t-att-class="'nav nav-pills nav-stacked nav-hierarchy view-block' if is_industry else 'nav nav-pills nav-stacked nav-hierarchy view-none'">
+                                        <li t-att-class="'active' if is_all_industry else ''"><a t-attf-href="/industry/0">All</a></li>
+                                        <t t-foreach="website.get_indusreys()" t-as="industry">
+                                            <li t-att-class="'active' if is_industry and industry.id == industry_id else ''"><a t-attf-href="/industry/#{industry.id}"><span t-esc="industry.name"/></a></li>
+                                        </t>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+    <template id="course_detail" name="Course Detail">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <section class="as-feature-t" style="background: none !important;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 style="text-align: right;">
+                                    <span style="font-weight: 700; color: rgb(255, 0, 0); font-family: Lato, sans-serif; font-size: 18px; text-align: -webkit-left;">
+                                        <span t-esc="course.name"/>
+                                    </span>
+                                    <br/>
+                                </h3>
+                                <p t-field="course.description" style="color: rgb(102, 102, 102); font-family: Lato, sans-serif; font-size: 13px;"/>
+                            </div>
+                            <div class="col-md-6">
+                                <img t-attf-src="/web/image/subject.subject/#{course.id}/image_thumb" class="img-responsive oe_slides_grid_thumbnail pull-left mb16" alt="Hashmicro text and image block"/>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>

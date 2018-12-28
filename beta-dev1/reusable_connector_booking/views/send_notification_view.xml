@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+    <data>
+        <record model="ir.cron" id="send_notification_cron">
+            <field name="name">Send Notification to App reminder</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'send.notification.app'"/>
+            <field name="function" eval="'send_update_to_app'"/>
+            <field name="args" eval="'()'" />
+        </record>
+    </data>
+</odoo>

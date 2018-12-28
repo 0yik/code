@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="TableSeatNumbersButton">
+        <div class='control-button btn btn-default btn-fill btn-wd'>
+            <i class="pe-7s-check"></i> Seat Number: <t t-esc="widget.seatnumber()"/>
+        </div>
+    </t>
+
+    <t t-extend="Orderline">
+        <t t-jquery=".seatnumber" t-operation="replace">
+            <li class="info">
+                <em>
+                    Seat Number :<t t-esc="line.get_seat_number_count()" />
+                </em>
+            </li>
+        </t>
+    </t>
+
+    <t t-extend="BillReceipt">
+        <t t-jquery='.cashier' t-operation='append'>
+            <t t-if='receipt.table'>
+                at table <t t-esc='receipt.table' />
+            </t>
+            <t t-if='receipt.customer_count'>
+                <div>Guests: <t t-esc='receipt.customer_count' /></div>
+            </t>
+            <t t-if='receipt.customer_count'>
+                <div>SeatNumber: <t t-esc='receipt.customer_count' /></div>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="PosTicket">
+        <t t-jquery="[t-esc='orderline.get_product().display_name']" t-operation="append">
+            <t t-if="orderline.get_seat_number_count() > 0">
+                <div class="pos-disc-font">
+                    Seat number : <t t-esc="orderline.get_seat_number_count()"/>
+                </div>
+            </t>
+        </t>
+        <t t-jquery=".receipt-user" t-operation="after">
+                Table No: <t t-esc="order.table and order.table.name or ''"/>
+            <br/>
+        </t>
+    </t>
+
+</templates>

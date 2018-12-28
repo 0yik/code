@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_team_popup_sale_target_form" model="ir.ui.view">
+            <field name="name">crm.team.popup.sale.target.form</field>
+            <field name="model">crm.team.popup</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="4">
+                            <field name="branch_id" widget="many2many_tags"/>
+                            <field name="input_method" required="1"/>
+                            <field name="year_id" required="1"/>
+                            <field name="monthy_id" attrs="{'required':[('input_method','=','daily')]}"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Print" type="object" name="print_crm_team" class="btn-primary"/>
+                        or
+                        <button string="Cancel" special="cancel" class="btn-default"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="crm_team_popup_sale_target_action" model="ir.actions.act_window">
+            <field name="name">Target &amp; Achievement Report</field>
+            <field name="res_model">crm.team.popup</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="crm_team_popup_sale_target_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <template id="pdp_sales_target_achievement.external_layout_target_achievement_report">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="pdp_sales_target_achievement.external_layout_header_target_achievement_report" />
+            <t t-raw="0" />
+            <t t-call="pdp_sales_target_achievement.external_layout_footer_target_achievement_report" />
+        </template>
+
+        <template id="pdp_sales_target_achievement.external_layout_header_target_achievement_report">
+             <div class="header">
+                <div class="row">
+                </div>
+            </div>
+        </template>
+
+        <template id="pdp_sales_target_achievement.external_layout_footer_target_achievement_report">
+             <div class="footer">
+                <div class="text-right">
+                    <ul class="list-inline">
+                        <li>Page:</li>
+                        <li><span class="page"/></li>
+                        <li>/</li>
+                        <li><span class="topage"/></li>
+                    </ul>
+                </div>
+            </div>
+        </template>
+
+        <report
+            id="pdp_sales_target_achievement.target_achievement"
+            model="crm.team.popup"
+            string="Target &amp; Achievement Report"
+            report_type="qweb-pdf"
+            name="pdp_sales_target_achievement.target_achievement_report"
+            file="pdp_sales_target_achievement.target_achievement_report"
+        />
+
+        <record id="pdp_sales_target_achievement.paper_target_achievement_report" model="report.paperformat">
+            <field name="name">Target &amp; Achievement Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">50</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="pdp_sales_target_achievement.target_achievement" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="pdp_sales_target_achievement.paper_target_achievement_report"/>
+        </record>
+
+        <template id="pdp_sales_target_achievement.target_achievement_report">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="pdp_sales_target_achievement.external_layout_target_achievement_report"/>
+                <div class="page" style="font-size:10px;">
+                    <div class="row">
+                        <table class="table" style="width:100%;">
+                            <thead>
+                                <th class="text-left" style="text-align:left">Period</th>
+                                <th class="text-left" style="text-align:left">Target</th>
+                                <th class="text-left" style="text-align:left">Achievement</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="range(0,len(target))" t-as="i">
+                                    <tr>
+                                        <td class="text-center"><span t-esc="list_date[i]"/></td>
+                                        <td class="text-center"><span t-esc="'{0:,.0f}'.format(float(target[i]))"/></td>
+                                        <td class="text-center"><span t-esc="achievement[i]"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </t>
+        </template>
+    </data>
+</odoo>

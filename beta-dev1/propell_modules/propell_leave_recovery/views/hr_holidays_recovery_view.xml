@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="hr_holidays_leave_recovery_form_extend" model="ir.ui.view">
+        <field name="name">Hr Holidays Urgent Leave recovery Form extend</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="modifier_leave_recovery.hr_holidays_leave_recovery_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button string="Approve by SIC/Manager" name="approve_sic" states="confirm" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_sic"/>
+                <button string="Approve by TIC/OIC" name="approve_tic" states="tic_approval" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_tic"/>
+                <button string="Approve by HOD" name="approve_hod" states="hod_approval" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_hod"/>
+                <button string="Approve by GM" name="approve_gm" states="gm_approval" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_gm"/>
+                <button string="Approve by ED" name="approve_ed" states="ed_approval" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_ed"/>
+                <button string="Approve by MD" name="approve_md" states="md_approval" type="object" class="oe_highlight" groups="hr_employee_hierarchy.group_leave_md"/>
+                <button string="Approve by Next Manager" name="approve_next" states="next_approval" type="object" class="oe_highlight" groups=""/>
+                <button string="Validate" name="validate_allocate_leave" states="validate1" type="object" class="oe_highlight" groups=""/>
+            </xpath>
+			<xpath expr="//button[@name='action_approve']" position="replace">
+            </xpath>
+			<xpath expr="//button[@name='action_refuse']" position="replace">
+                <button string="Refuse" name="action_refuse" states="confirm,validate,validate1,emp_approval,tic_approval,hod_approval,gm_approval,ed_approval,md_approval,next_approval" type="object" groups="hr_holidays.group_hr_holidays_user"/>
+            </xpath>			
+		</field>
+	</record>
+	
+</odoo>

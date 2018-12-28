@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+
+    	<record id="employee_leave_request_template" model="mail.template">
+            <field name="name">Employee: Leave Request</field>
+            <field name="email_from">${object.employee_id.user_id.email}</field>
+            <field name="subject">${ctx['emp_name']}: Leave Request</field>
+            <field name="model_id" ref="hr_holidays.model_hr_holidays"/>
+            <field name="email_to" >${ctx['boss_users'] or ctx['hr_manager_email']|safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="notification" eval="True"/>
+            <field name="body_html"><![CDATA[
+            <p>Hello,</p>
+            <p> ${ctx['emp_name']} apply for ${object.holiday_status_id.name} Leave in ${user.company_id.name}.</p>
+            <p> To accept the Leave Request, click on the following link:</p>
+            <div style="text-align: center; margin-top: 16px;">
+                 <a href="${ctx['action_url']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">Accept Leave Request</a>
+            </div>
+            <p>Best regards,</p>
+            ]]></field>
+        </record>
+
+        <record id="employee_leave_request_approved_template" model="mail.template">
+            <field name="name">Employee: Leave Request Approved</field>
+            <field name="email_from">${object.user_id.email or ''}</field>
+            <field name="subject">${ctx['emp_name']}: Leave Request Approved</field>
+            <field name="model_id" ref="hr_holidays.model_hr_holidays"/>
+            <field name="email_to" >${ctx['hr_account_email']|safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="notification" eval="True"/>
+            <field name="body_html"><![CDATA[
+            <p>Hello,</p>
+            <p> ${ctx['emp_name']} apply for ${object.holiday_status_id.name} Leave in ${user.company_id.name} and leave approved by ${object.user_id.name}.</p>
+            <p> To view Approved Leave, click on the following link:</p>
+            <div style="text-align: center; margin-top: 16px;">
+                 <a href="${ctx['action_url']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">View Leave</a>
+            </div>
+            <p>Best regards,</p>
+            ]]></field>
+        </record>
+	</data>
+</odoo>

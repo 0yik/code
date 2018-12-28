@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_wave_form_inherit" model="ir.ui.view">
+        <field name="name">view.picking.wave.form.inherit</field>
+        <field name="model">stock.picking.wave</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="stock_picking_wave.view_picking_wave_form"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="vehicle_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+
+	<t t-name="ProjectBookingDashboard">
+        <div class="o_booking_dashboard">
+        	<div>
+                <table class="table table-condensed">
+                    <tr>
+                        <td class="o_text">
+                            <div class="o_highlight">To do</div>
+                            Today
+                        </td>
+                        <td class="o_main" title="Today Bookings">
+                            <a href="#" class="o_dashboard_action" t-att-name="booking_action" data-extra="today">
+                                <span class="o_highlight">
+									<t t-esc="values['bookings']['today']"/>
+                                </span><br/>
+                                Bookings
+                            </a>
+                        </td>
+                        <td class="o_main" title="Today Requests" t-if='type_of_user != "hilti_customer" and type_of_user != "hilti_tester"'>
+                            <a href="#" class="o_dashboard_action" t-att-name="request_action" data-extra="today">
+                                <span class="o_highlight">
+									<t t-esc="values['requests']['today']"/>
+                                </span> <br/>
+                                Requests
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="o_text">Next 7 days</td>
+                        <td class="o_main" title="7 Days Bookings">
+                            <a href="#" class="o_dashboard_action" t-att-name="booking_action" data-extra="this_week">
+                                <t t-esc="values['bookings']['next_7_days']"/>
+                            </a>
+                        </td>
+                        <td class="o_main" title="7 Days Requests" t-if='type_of_user != "hilti_customer" and type_of_user != "hilti_tester"'>
+                            <a href="#" class="o_dashboard_action" t-att-name="request_action" data-extra="this_week">
+                                <t t-esc="values['requests']['next_7_days']"/>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div>
+                <table class="table table-condensed">
+                    <tr>
+                        <td class="o_text">
+                            <div class="o_highlight" style="overflow-wrap : break-word">Performance</div>
+                            Today
+                        </td>
+                        <td class="o_secondary" title="Today Pending Bookings">
+                            <a href="#" class="o_dashboard_action" t-att-name="booking_action" data-extra="pending_booking_today">
+                                <span class="o_highlight">
+                                    <t t-esc="values['pending_bookings']['today']"/>
+                                </span><br/>
+                                Pending Bookings
+                            </a>
+                        </td>
+                        <td class="o_secondary" title="Today Completed Bookings">
+                            <a href="#" class="o_dashboard_action" t-att-name="booking_action" data-extra="completed_booking_today">
+                                <span class="o_highlight">
+                                    <t t-esc="values['completed_bookings']['today']"/>
+                                </span> <br/>
+                                Completed Bookings
+                            </a>
+                        </td>
+                        <td class="o_secondary" title="Today Delayed Bookings">
+                            <a href="#" class="o_dashboard_action" t-att-name="booking_action" data-extra="delayed_booking_today">
+                                <span class="o_highlight">
+                                    <t t-esc="values['deleyed_bookings']['today']"/>
+                                </span> <br/>
+                                Delayed Bookings
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="o_text">This Month</td>
+                        <td class="o_secondary" title="This Month Pending Bookings">
+                            <a href="#" class="o_dashboard_action" t-att-name="booking_action" data-extra="pending_booking_this_month">
+                                <t t-esc="values['pending_bookings']['this_month']"/>
+                            </a>
+                        </td>
+                        <td class="o_secondary" title="This Month Completed Bookings">
+                            <a href="#" class="o_dashboard_action" t-att-name="booking_action" data-extra="completed_booking_this_month">
+                                <t t-esc="values['completed_bookings']['this_month']"/>
+                            </a>
+                        </td>
+                        <td class="o_secondary" title="This Month Delayed Bookings">
+                            <a href="#" class="o_dashboard_action" t-att-name="booking_action" data-extra="delayed_booking_this_month">
+                                <t t-esc="values['deleyed_bookings']['this_month']"/>
+                            </a>
+                        </td>
+                    </tr>
+					<tr>
+                        <td class="o_text">Last Month</td>
+                        <td class="o_secondary" title="Last Month Pending Bookings">
+                            <a href="#" class="o_dashboard_action" t-att-name="booking_action" data-extra="pending_booking_last_month">
+                                <t t-esc="values['pending_bookings']['last_month']"/>
+                            </a>
+                        </td>
+                        <td class="o_secondary" title="Last Month Completed Bookings">
+                            <a href="#" class="o_dashboard_action" t-att-name="booking_action" data-extra="completed_booking_last_month">
+                                <t t-esc="values['completed_bookings']['last_month']"/>
+                            </a>
+                        </td>
+                        <td class="o_secondary" title="Last Month Delayed Bookings">
+                            <a href="#" class="o_dashboard_action" t-att-name="booking_action" data-extra="delayed_booking_last_month">
+                                <t t-esc="values['deleyed_bookings']['last_month']"/>
+                            </a>
+                        </td>
+                    </tr>                    
+                </table>
+            </div>
+        </div>
+        <div class="o_kanban_record">
+            <div class="o_kanban_card_header">
+                <div class="o_kanban_card_header_title">
+                    <div class="o_primary">Bookings</div>
+                </div>
+                <div class="o_kanban_manage_button_section">
+                    <a class="o_kanban_manage_toggle_button" href="#">More <i class="fa fa-caret-down"/></a>
+                </div>
+            </div>
+            <div class="container o_kanban_card_content o_visible">
+                <div class="row">
+                    <div class="col-xs-6 o_kanban_primary_left">
+                    	<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="delayed_start">
+                            Delayed Start
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                    	<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="delayed_end">
+                            Delayed End
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="container o_kanban_card_manage_pane o_invisible">
+                <div class="row">
+                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_view">
+                    	<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="sic_bookings">
+                            <span>SIC Bookings</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_new">
+						<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="normal_bookings">
+                            <span>Normal Bookings</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_reports">
+						<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="dedicated_support">
+                            <span>Dedicated Support</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_reports">
+                        <button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="vip_bookings">
+                            <span>VIP Bookings</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="o_kanban_record" t-if='type_of_user != "hilti_customer" and type_of_user != "hilti_tester"'>
+            <div class="o_kanban_card_header">
+                <div class="o_kanban_card_header_title">
+                    <div class="o_primary">Customers</div>
+                </div>
+                <div class="o_kanban_manage_button_section">
+                    <a class="o_kanban_manage_toggle_button" href="#">More <i class="fa fa-caret-down"/></a>
+                </div>
+            </div>
+            <div class="container o_kanban_card_content o_visible">
+                <div class="row">
+                    <div class="col-xs-6 o_kanban_primary_left">
+                    	<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" name="base.action_partner_form" data-extra="vip_customers">
+                            <span>VIP Customers</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                    	<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" name="base.action_partner_form" data-extra="non_vip_customers">
+                            <span>Non-VIP Customers</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="container o_kanban_card_manage_pane o_invisible">
+                <div class="row">
+                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_view">
+                    	<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" name="hilti_modifier_loginsignup.action_res_users_inactive" data-extra="inactive_users">
+                            <span>Unverified Customers</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_new">
+						<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" name="hilti_modifier_loginsignup.action_res_users_inactive" data-extra="active_users">
+                            <span>Verified Customers</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="o_kanban_record" t-if='type_of_user != "hilti_customer" and type_of_user != "hilti_tester"'>
+            <div style="height: 50px"  class="o_kanban_card_header">
+                <div class="o_kanban_card_header_title">
+                    <div class="o_primary">Testers</div>
+                </div>
+            </div>
+            <div class="container o_kanban_card_content o_visible">
+                <div class="row">
+                    <div class="col-xs-6 o_kanban_primary_left">
+                    	<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" name="hilti_modifier_customer_booking.action_view_testing_timeslot_admin">
+                            <span>Available</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                    	<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" name="hilti_modifier_tester_myrequests.action_my_request_admin_view" data-extra="unavailable_request">
+                            <span>Unavailable</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                    	<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" name="hilti_modifier_tester_myrequests.action_my_request_admin_view" data-extra="overtime_request">
+                            <span>Overtime</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="o_kanban_record">
+            <div style="height: 50px" class="o_kanban_card_header">
+                <div  class="o_kanban_card_header_title">
+                    <div class="o_primary">Projects</div>
+                </div>
+            </div>
+            <div class="container o_kanban_card_content o_visible">
+                <div class="row">
+                    <div class="col-xs-6 o_kanban_primary_left">
+                    	<button style="width:140px;" class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="pending_bookings">
+                            <span>Bookings</span>
+                        </button>
+                    </div>
+                <!--    <div class="col-xs-6 o_kanban_primary_right">
+                    	<button class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="started_bookings">
+                            <span>Started</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                    	<button class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="rescheduled_bookings">
+                            <span>Rescheduled</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                    	<button class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="reconfirmed_bookings">
+                            <span>Re-Confirmed</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                    	<button class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="completed_bookings">
+                            <span>Completed</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6 o_kanban_primary_right">
+                    	<button class="o_dashboard_kanban_action btn btn-primary" t-att-name="booking_action" data-extra="cancelled_bookings">
+                            <span>Cancelled</span>
+                        </button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </t>
+    
+</templates>

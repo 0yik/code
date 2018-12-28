@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_order_purchase_order_form_labo" model="ir.ui.view">
+        <field name="name">purchase.order.form.sale.image</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="is_picking_done" invisible="1"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="%(action_landed_cost_wizard)d" type="action"
+                        string="Biaya Landing" attrs="{'invisible':[ ('is_picking_done', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button type="object" name="action_view_landed_cost" class="oe_stat_button" icon="fa-money" attrs="{'invisible':[('lc_ids','=',[])]}">
+                    <field name="lc_count" widget="statinfo" string="Biaya Landing" help="Landed Cost"/>
+                    <field name="lc_ids" invisible="1"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

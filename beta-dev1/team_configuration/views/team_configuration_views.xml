@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="team_configuration_form_view">
+            <field name="name">team.configuration.form</field>
+            <field name="model">team.configuration</field>
+            <field name="arch" type="xml">
+                <form string="Team Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="working_schedule_id"/>
+                            <field name="description"/>
+                        </group>
+                        <notebook>
+                            <page string="Team Members">
+                                <field name="employee_ids">
+                                    <tree string="Employees" editable="bottom">
+                                        <field name="employee_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="team_configuration_tree_view">
+            <field name="name">team.configuration.tree</field>
+            <field name="model">team.configuration</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Team list">
+                    <field name="name"/>
+                    <field name="working_schedule_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="team_configuration_action">
+            <field name="name">Team Configuration</field>
+            <field name="res_model">team.configuration</field>
+        </record>
+
+        <menuitem id="team_configuration_menu" name="Team Team"
+                  parent="hr.menu_human_resources_configuration"
+                  action="team_configuration_action"/>
+    </data>
+</odoo>

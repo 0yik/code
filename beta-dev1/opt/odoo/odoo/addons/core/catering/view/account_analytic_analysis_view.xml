@@ -1,0 +1,93 @@
+<odoo>
+	<data>
+		<record id="account_analytic_account_form_form1_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(analytic.account_analytic_line_action)d']" position="after">
+					<button name="get_related_invoices" class="oe_stat_button" icon="fa-pencil-square-o" type="object" attrs="{'invisible': [('no_of_invoices', '=', 0)]}">
+                        <div class="o_stat_info">
+                            <field name="no_of_invoices" class="o_stat_value"/>
+                            <span class="o_stat_text"> Invoices </span>
+                        </div>
+                    </button>
+					<button type="object"
+                        name="get_delivery_orders"
+                        class="oe_stat_button"
+                        icon="fa-truck"
+                        attrs="{'invisible': [('delivery_count', '=', 0)]}">
+                        <field name="delivery_count" widget="statinfo" string="Delivery Orders"/>
+                    </button>
+				</xpath>
+				<xpath expr="//label[@for='recurring_interval']" position="replace">
+					<label for="invoice_type"/>
+				</xpath>
+				<xpath expr="//field[@name='recurring_interval']" position="replace">
+					<field name="invoice_type" class="oe_inline" attrs="{'required': [('recurring_invoices', '=', True)]}"/>
+				</xpath>
+				<xpath expr="//field[@name='recurring_rule_type']" position="replace">
+					<field name="recurring_rule_type" invisible="1" required="0"/>
+				</xpath>
+				<xpath expr="//field[@name='recurring_next_date']" position="before">
+					<field name="invoice_date" attrs="{'invisible': [('invoice_type','!=','monthly')],'required': [('invoice_type', '=', 'monthly')] }" />
+				</xpath>
+				<xpath expr="//separator[3]" position="before">
+					<separator string="Delivery Order" attrs="{'invisible': [('recurring_invoices','!=',True)]}"/>
+					<field name="is_deliviery_order" attrs="{'invisible': [('recurring_invoices','!=',True)]}"/>
+					<label for="is_deliviery_order" attrs="{'invisible': [('recurring_invoices','!=',True)]}"/>
+					<group attrs="{'invisible': [('is_deliviery_order','!=',True)]}">
+						<field name="delivery_time_id" attrs="{'required': [('is_deliviery_order', '=', True)]}"/>
+						<label string="Delivery Date"/>
+						<div>
+							<field name="mon" attrs="{'invisible': [('is_deliviery_order','!=',True)]}"/>
+							<label for="mon"/>
+							<field name="tue" attrs="{'invisible': [('is_deliviery_order','!=',True)]}"/>
+							<label for="tue"/>
+							<field name="wed" attrs="{'invisible': [('is_deliviery_order','!=',True)]}"/>
+							<label for="wed"/>
+							<field name="thu" attrs="{'invisible': [('is_deliviery_order','!=',True)]}"/>
+							<label for="thu"/>
+							<field name="fri" attrs="{'invisible': [('is_deliviery_order','!=',True)]}"/>
+							<label for="fri"/>
+							<field name="sat" attrs="{'invisible': [('is_deliviery_order','!=',True)]}"/>
+							<label for="sat"/>
+							<field name="sun" attrs="{'invisible': [('is_deliviery_order','!=',True)]}"/>
+							<label for="sun"/>
+						</div>
+					</group>
+				</xpath>
+            </field>
+        </record>
+
+		<record model="ir.ui.view" id="time_time_id">
+			<field name="name">time.time</field>
+			<field name="model">time.time</field>
+			<field name="priority" eval="16"/>
+			<field name="arch" type="xml">
+				<form string="Idea form">
+					<field name="time" class="oe_inline"/>
+					<field name="am_or_pm" nolabel="1" class="oe_inline"/>
+				</form>
+			</field>
+		</record>
+
+		<record id="mrp.menu_mrp_root" model="ir.ui.menu">
+			<field name="name">Cooking List</field>
+		</record>
+		<record id="mrp.menu_mrp_production_action" model="ir.ui.menu">
+			<field name="name">Cooking List</field>
+		</record>
+		<record id="mrp.menu_mrp_production_report" model="ir.ui.menu">
+			<field name="name">Cooking List</field>
+		</record>
+		<record id="mrp.mrp_production_action" model="ir.actions.act_window">
+			<field name="name">Cooking List</field>
+		</record>
+		<record id="mrp.mrp_production_report" model="ir.actions.act_window">
+			<field name="name">Cooking List</field>
+		</record>
+
+
+	</data>
+</odoo>

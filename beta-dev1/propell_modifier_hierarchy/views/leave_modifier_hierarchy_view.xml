@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="hr_holidays_leave_approval_hierarchy_form" model="ir.ui.view">
+        <field name="name">Hr Holidays Leave approval hierarchyForm</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button string="Approve by SIC/Manager" name="approve_sic" states="confirm" type="object" class="oe_highlight" groups="propell_modifier_hierarchy.group_leave_sic"/>
+                <button string="Approve by Employee" name="approve_emp" states="emp_approval" type="object" class="oe_highlight" groups="propell_modifier_hierarchy.group_leave_employee"/>
+                <button string="Approve by TIC/OIC" name="approve_tic" states="tic_approval" type="object" class="oe_highlight" groups="propell_modifier_hierarchy.group_leave_tic"/>
+                <button string="Approve by HOD" name="approve_hod" states="hod_approval" type="object" class="oe_highlight" groups="propell_modifier_hierarchy.group_leave_hod"/>
+                <button string="Approve by GM" name="approve_gm" states="gm_approval" type="object" class="oe_highlight" groups="propell_modifier_hierarchy.group_leave_gm"/>
+                <button string="Approve by ED" name="approve_ed" states="ed_approval" type="object" class="oe_highlight" groups="propell_modifier_hierarchy.group_leave_ed"/>
+                <button string="Approve by MD" name="approve_md" states="md_approval" type="object" class="oe_highlight" groups="propell_modifier_hierarchy.group_leave_md"/>
+                <button string="Approve by Next Manager" name="approve_next" states="next_approval" type="object" class="oe_highlight" groups=""/>
+                <button string="Validate" name="validate_allocate_leave" states="validate1" type="object" class="oe_highlight" groups=""/>
+
+            </xpath>
+
+            <xpath expr="//button[@name='action_refuse']" position="replace">
+                <button string="Refuse" name="action_refuse" states="confirm,validate,validate1,emp_approval,tic_approval,hod_approval,gm_approval,ed_approval,md_approval,next_approval" type="object" groups="hr_holidays.group_hr_holidays_user"/>
+            </xpath>
+            <xpath expr="//button[@name='action_approve']" position="replace">
+                <button string="Approve" name="action_approve" type="object" groups="hr_holidays.group_hr_holidays_user" class="oe_highlight" attrs="{'invisible': ['|',('type','!=', 'add'),('state','=','validate')]}"/>
+            </xpath>
+                        
+        </field>
+    </record>
+    
+		
+</odoo>

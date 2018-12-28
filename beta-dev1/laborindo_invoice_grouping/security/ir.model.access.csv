@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_laborindo_modifier_invoice_number_laborindo_modifier_invoice_number,laborindo_modifier_invoice_number.laborindo_modifier_invoice_number,model_laborindo_modifier_invoice_number_laborindo_modifier_invoice_number,,1,0,0,0

@@ -1,0 +1,57 @@
+/*.pos .pos-topheader {
+    
+    background: #c7202a !important;
+}
+.all_disconnected {
+	color: #FFFFFF !important;
+}
+.pos .oe_status .oe_red, .pos .oe_icon.oe_red {
+	color: #FFFFFF !important;
+}
+.pos .oe_statu .oe_green, .pos .oe_icon.oe_green {
+    color: #FFFFFF !important;
+}
+.pos .pos-rightheader .header-button {
+	color: #FFFFFF !important;
+}
+.printer_name {
+	background: #c7202a !important;
+	color: #FFFFFF !important;
+}
+.printer_disconnected {
+    color: #FFFFFF !important;
+}
+.pos .order-button {
+	background: #900000 !important;
+	color: #FFFFFF !important;
+}
+.pos .pos-rightheader > * {
+    border-right: 1px solid #c7202a !important;
+}
+.pos .pos-rightheader .header-button:last-child {
+    border-left: 1px solid #c7202a !important;
+}
+
+.pos .order-button.selected {
+	background:  #FFFFFF !important;
+	color: #000000 !important;
+
+}
+
+.pos .order-button.floor-button{
+	background:  #6EC89B !important;
+
+}
+
+.pos .pos-branding{
+
+	border-right: #c7202a !important;
+}*/
+
+
+.pos .pos-logo{
+
+	height: 45px !important;
+}	
+
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="bank_accounts_inherit_view_tree" model="ir.ui.view">
+            <field name="name">bank accounts inherit view tree</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_bank_journal_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="replace">
+                    <tree string="Account Journal">
+                        <field name="bank_id" string="Bank"/>
+                        <field name="bank_acc_number" string="Account Number"/>
+                        <field name="currency_id" string="Currency"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <!-- Headers and Footers for Credit Note Report -->
+        <template id="external_layout_sales_cancel">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="sales_cancellation_report_reusable.external_layout_header_sales_cancel" />
+            <t t-raw="0" />
+            <t t-call="sales_cancellation_report_reusable.external_layout_footer_sales_cancel" />
+        </template>
+
+        <template id="sales_cancellation_report_reusable.external_layout_header_sales_cancel">
+            <div class="header">
+                <div class="row">
+                    <div>
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:40px;width:160px;float:right"/>
+                    </div>
+                    <div>
+                        <span  style="font-size:24px;font-weight:bold">Cancellation Report as at
+                                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %b %Y')"/></span>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="sales_cancellation_report_reusable.external_layout_footer_sales_cancel">
+            <div class="footer" style="font-size:10pt;">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <div class="text-right" style="float:right">
+                            <ul class="list-inline">
+                                <li>Page:</li>
+                                <li><span class="page"/></li>
+                                <li>of</li>
+                                <li><span class="topage"/></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!--# REPORT-->
+        <report
+            id="action_sales_cancel_report"
+            model="sales.cancel.report"
+            string="Sales Cancel Report"
+            name="sales_cancellation_report_reusable.sales_cancel_report"
+            file="sales_cancellation_report_reusable.sales_cancel_report"
+            report_type="qweb-pdf"/>
+
+        <record id="report_cancellation_qweb_paperformat" model="report.paperformat">
+            <field name="name">Sales Cancel</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">280</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">15</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_sales_cancel_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report_cancellation_qweb_paperformat"/>
+        </record>
+
+        <template id="sales_cancellation_report_reusable.sales_cancel_report">
+            <t t-call="sales_cancellation_report_reusable.external_layout_sales_cancel">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet"/>
+                        <t t-set="total_all_cancel" t-value="0"/>
+                        <t t-set="count" t-value="0"/>
+                        <t t-foreach="o.country_ids" t-as="country">
+                            <t t-set="count" t-value="count + 1"/>
+                            <!--<t t-foreach="o.currency_ids" t-as="currency">-->
+                                <!--<t t-if="currency.currency_id.name == 'SGD'">-->
+                                    <!--<t t-set="currency_rate_sg" t-value="currency.rate"/>-->
+                                <!--</t>-->
+                                <!--<t t-if="currency.currency_id.id == country.currency_id.id">-->
+                                    <!--<t t-set="currency_rate_ot" t-value="currency.rate"/>-->
+                                <!--</t>-->
+                            <!--</t>-->
+                            <table class="table table-bordered" style="font-size:14px;page-break-inside:avoid;" >
+                                <thead>
+                                    <!--<tr t-if="count == 1" style="background-color:#0060a8;page-break-inside:avoid;color:white;">-->
+                                        <!--<th colspan="8" class="text-center">-->
+                                            <!--<t style="color:white;font-size:20px;text-align:center;">Summary Cancel 17 by month</t>-->
+                                        <!--</th>-->
+                                    <!--</tr>-->
+                                    <tr>
+                                        <th style="font-size: 15px" t-field="country.name"></th>
+                                        <th colspan="10"/>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="text-right" style="background-color:#EEEEEE; width:13%;">Company</th>
+                                        <th class="text-right" style="background-color:#EEEEEE; width:5%;">Dec/Stop</th>
+                                        <th class="text-right" style="background-color:#EEEEEE; width:12%;">Userid</th>
+                                        <th class="text-right" style="background-color:#EEEEEE; width:11%;">End date</th>
+                                        <t t-if="country.code == 'SG'">
+                                        <th class="text-right" style="background-color:#EEEEEE; width:5%;">SGD</th>
+                                        </t>
+                                        <t t-if="country.code != 'SG'">
+                                        <th  class="text-right" style="background-color:#EEEEEE; width:5%;"><t t-esc="country.currency_id.name"/> </th>
+                                        </t>
+                                        <th class="text-right" style="background-color:#EEEEEE; width:5%;">X-Change</th>
+                                        <th class="text-right" style="background-color:#EEEEEE; width:10%;">Billing (per mth) (SGD)</th>
+                                        <th class="text-right" style="background-color:#EEEEEE; width:10%;">FY-Booking (SGD)</th>
+                                        <th class="text-right" style="background-color:#EEEEEE; width:12%;">Service</th>
+                                        <th class="text-right" style="background-color:#EEEEEE; width:8%;">Remarks</th>
+                                        <th class="text-right" style="background-color:#EEEEEE; width:9%;">Sales person</th>
+                                        <!--<th class="text-right" style="background-color:#EEEEEE; width:7%;">Credit Note no</th>-->
+                                        <!--<th class="text-right" style="background-color:#EEEEEE; width:6%;">Date of the CN</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="f_month" t-value="0"/>
+                                    <t t-set="total_month" t-value="0"/>
+                                    <t t-set="total_country" t-value="0"/>
+                                    <t t-set="orther_total_month" t-value="0"/>
+                                    <t t-set="orther_total_country" t-value="0"/>
+                                    <!--<t t-set="total_month_refund" t-value="0"/>-->
+                                    <!--<t t-set="total_country_refund" t-value="0"/>-->
+                                    <t t-set="c_month" t-value="'Jan'"/>
+                                    <span t-foreach="o.invoice_refund_ids" t-as="invoice_refund">
+                                        <t t-if="f_month == 1" t-set="c_month" t-value="'Jan'"/>
+                                        <t t-if="f_month == 2" t-set="c_month" t-value="'Feb'"/>
+                                        <t t-if="f_month == 3" t-set="c_month" t-value="'Mar'"/>
+                                        <t t-if="f_month == 4" t-set="c_month" t-value="'Apr'"/>
+                                        <t t-if="f_month == 5" t-set="c_month" t-value="'May'"/>
+                                        <t t-if="f_month == 6" t-set="c_month" t-value="'Jun'"/>
+                                        <t t-if="f_month == 7" t-set="c_month" t-value="'Jul'"/>
+                                        <t t-if="f_month == 8" t-set="c_month" t-value="'Aug'"/>
+                                        <t t-if="f_month == 9" t-set="c_month" t-value="'Sep'"/>
+                                        <t t-if="f_month == 10" t-set="c_month" t-value="'Oct'"/>
+                                        <t t-if="f_month == 11" t-set="c_month" t-value="'Nov'"/>
+                                        <t t-if="f_month == 12" t-set="c_month" t-value="'Dec'"/>
+                                        <tr t-if="invoice_refund.team_id.country.id == country.id and int(invoice_refund.create_date.split('-')[1]) != f_month">
+                                            <t t-if="f_month == 0">
+                                            <tr style="background-color:#33FF66;font-size:12px;font-weight:bold">
+                                                <td colspan="6">
+                                                    <span> Total Revenue Month of 2017 </span>
+                                                </td>
+                                                <td>$</td>
+                                                <td>$</td>
+                                                <td colspan="5"></td>
+                                            </tr>
+                                            </t>
+                                            <t t-if="f_month != 0">
+                                            <tr style="background-color:#33FF66;font-size:12px;font-weight:bold">
+                                                <td colspan="4">
+                                                    <span> Total Revenue Month of <t t-esc="c_month"/> 2017 </span>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="country.currency_id.symbol" t-if="country.currency_id.position == 'before'"/>
+                                                    <span t-esc="'{0:,.2f}'.format(orther_total_month)"></span>
+                                                    <span t-esc="country.currency_id.symbol" t-if="country.currency_id.position == 'after'"/>
+                                                </td>
+                                                <td></td>
+                                                <td>$ <t t-esc="'{0:,.2f}'.format(total_month)"/></td>
+                                                <td></td>
+                                                <td colspan="5"></td>
+                                                <!--<td>$ <t t-esc="total_month_refund"/></td>-->
+                                                <!--<td></td>-->
+                                            </tr>
+                                            </t>
+                                            <t t-set="total_month" t-value="0"/>
+                                            <t t-set="orther_total_month" t-value="0"/>
+                                            <!--<t t-set="total_month_refund" t-value="0"/>-->
+                                            <t t-set="f_month" t-value="0"/>
+                                        </tr>
+                                        <tr t-if="invoice_refund.refund_invoice_id.team_id.country.id == country.id">
+                                            <td style="font-family: 'Noto Sans TC', sans-serif;">
+                                                <span t-field="invoice_refund.refund_invoice_id.partner_id"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="invoice_refund.refund_invoice_id.invoice_arrange"/>
+                                            </td>
+                                            <td  style="font-family: 'Noto Sans TC', sans-serif;">
+                                                <!--<t t-if="invoice_refund.partner_id.partner_users">-->
+                                                    <!--<t t-foreach="invoice_refund.partner_id.partner_users" t-as="user_id">-->
+                                                        <!--<span t-esc="user_id.name"></span> ,-->
+                                                    <!--</t>-->
+                                                <!--</t>-->
+                                                <t t-foreach="invoice_refund.invoice_line_ids" t-as="line">
+                                                    <span t-esc="line.account_user_id.name"></span><br/>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <span t-esc="invoice_refund.create_date.split(' ')[0]"/>
+                                            </td>
+                                            <t t-set="curency_rate" t-value="0"/>
+                                            <t t-foreach="o.curency_rate_ids" t-as="curency_rate_id">
+                                                <t t-if="curency_rate_id.currency_id.id == country.currency_id.id">
+                                                    <t t-set="curency_rate" t-value="curency_rate_id.rate"/>
+                                                </t>
+                                            </t>
+                                            <td>
+                                                <t t-if="curency_rate != 0">
+                                                    <span t-esc="'{0:,.2f}'.format(invoice_refund.amount_total * curency_rate)"/>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="curency_rate != 0">
+                                                    <span t-esc="'{0:,.2f}'.format(curency_rate)"/>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <span t-esc="'{0:,.2f}'.format(invoice_refund.amount_total)"/>
+                                            </td>
+                                            <td>
+                                                <t t-set="current_month" t-value="context_timestamp(datetime.datetime.now()).month"/>
+                                                <t t-set="number_of_month" t-value="12 - current_month"/>
+                                                <span><t t-esc="'{0:,.2f}'.format(number_of_month * invoice_refund.amount_total)"/> </span>
+                                            </td>
+                                            <td>
+                                                <t t-foreach="o.product_ids" t-as="product">
+                                                    <t t-if="product.invoice_id.id == invoice_refund.refund_invoice_id.id">
+                                                        <span t-esc="product.name"></span>
+                                                    </t>
+                                                </t>
+                                                <span t-esc="name_product"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="invoice_refund.refund_invoice_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="invoice_refund.refund_invoice_id.user_id"/>
+                                            </td>
+                                            <!--<td>-->
+                                                <!--<span t-field="invoice_refund.refund_invoice_id.number"/>-->
+                                            <!--</td>-->
+                                            <!--<td>-->
+                                                <!--<span t-field="invoice_refund.date_invoice"/>-->
+                                            <!--</td>-->
+                                            <t t-set="orther_total_month" t-value="orther_total_month + invoice_refund.amount_total * curency_rate"/>
+                                            <t t-set="total_month" t-value="total_month + invoice_refund.amount_total"/>
+                                            <t t-set="f_month" t-value="int(invoice_refund.create_date.split('-')[1])"/>
+                                            <t t-set="orther_total_country" t-value="orther_total_country + invoice_refund.amount_total * curency_rate"/>
+                                            <t t-set="total_country" t-value="total_country + invoice_refund.amount_total"/>
+                                            <!--<t t-set="total_month_refund" t-value="total_month_refund + invoice_refund.amount_total_signed"/>-->
+                                            <!--<t t-set="total_country_refund" t-value="total_country_refund + invoice_refund.amount_total_signed"/>-->
+                                        </tr>
+                                    </span>
+                                    <tr style="background-color:#33FF66;font-size:12px;font-weight:bold">
+                                        <td colspan="4">
+                                            <span> Total Revenue Month of <t t-esc="c_month"/> 2017 </span>
+                                        </td>
+                                        <td>
+                                            <span t-esc="country.currency_id.symbol" t-if="country.currency_id.position == 'before'"/>
+                                            <span t-esc="'{0:,.2f}'.format(orther_total_month)"></span>
+                                            <span t-esc="country.currency_id.symbol" t-if="country.currency_id.position == 'after'"/>
+                                        </td>
+                                        <td></td>
+                                        <td>$ <t t-esc="'{0:,.2f}'.format(total_month)"/></td>
+                                        <td>
+                                            <t t-set="current_month" t-value="context_timestamp(datetime.datetime.now()).month"/>
+                                            <t t-set="number_of_month" t-value="12 - current_month"/>
+                                            <span><t t-esc="'{0:,.2f}'.format(number_of_month * total_month)"/> </span>
+                                        </td>
+                                        <td colspan="5"></td>
+                                        <!--<td><t t-esc="total_month_refund"/></td>-->
+                                        <!--<td></td>-->
+                                    </tr>
+                                    <tr style="background-color:#FFFF00; color:red ;font-size:15px;font-weight:bold" >
+                                        <td colspan="4">Total Cancellation in <t t-esc="country.name"/></td>
+                                        <td>
+                                            <span t-esc="country.currency_id.symbol" t-if="country.currency_id.position == 'before'"/>
+                                            <span t-esc="'{0:,.2f}'.format(orther_total_country)"></span>
+                                            <span t-esc="country.currency_id.symbol" t-if="country.currency_id.position == 'after'"/>
+                                        </td>
+                                        <td>SGD</td>
+                                        <td>$ <t t-esc="'{0:,.2f}'.format(total_country)"/></td>
+                                        <td>
+                                            <t t-set="current_month" t-value="context_timestamp(datetime.datetime.now()).month"/>
+                                            <t t-set="number_of_month" t-value="12 - current_month"/>
+                                            <span><t t-esc="'{0:,.2f}'.format(number_of_month * total_country)"/> </span>
+                                        </td>
+                                        <td colspan="5"></td>
+                                        <!--<td><t t-esc="total_country_refund"/></td>-->
+                                        <!--<td></td>-->
+                                    </tr>
+                                    <t t-set="total_all_cancel" t-value="total_all_cancel + total_country"/>
+                                </tbody>
+                                <t t-if="o.country_ids[len(o.country_ids._ids)-1].id == country.id">
+                                    <tr style="background-color:#3399FF; font-size:15px;font-weight:bold" >
+                                        <td colspan="5">Total Cancellation</td>
+                                        <td>SGD</td>
+                                        <td>$ <t t-esc="'{0:,.2f}'.format(total_all_cancel)"/></td>
+                                        <td>
+                                            <t t-set="current_month" t-value="context_timestamp(datetime.datetime.now()).month"/>
+                                            <t t-set="number_of_month" t-value="12 - current_month"/>
+                                            <span><t t-esc="'{0:,.2f}'.format(number_of_month * total_all_cancel)"/> </span>
+                                        </td>
+                                        <td colspan="5"></td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </t>
+                    </div>
+                </t>
+            </t>
+            </t>
+        </template>
+
+
+
+        <!--# SHOW POP UP-->
+        <record id="sales_revenue_report_view" model="ir.ui.view">
+            <field name="name">Sales Cancel</field>
+            <field name="model">sales.cancel.report</field>
+            <field name="arch" type="xml">
+            <form string="Report Options" style="height:240px">
+                <label string=""/>  <!-- binding for inherited views -->
+                 <group>
+                     <group>
+                         <field name="country"/>
+                         <field name="start_date" string="Start Date"/>
+                    </group>
+                    <group>
+                        <field name="sales_person"/>
+                        <field name="end_date" string="End Date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="sales_cancel_report_menu" model="ir.actions.act_window">
+            <field name="name">Sales Cancel</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.cancel.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="sales_cancel_menu"
+            name="Sales Cancellation Report"
+            parent="sales_team.menu_sale_report"
+            action="sales_cancel_report_menu"
+        />
+    </data>
+</odoo>

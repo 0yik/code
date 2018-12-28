@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!DOCTYPE html>
+
+<odoo>
+	<!-- inherit admission register view -->
+	<record id="view_student_student_form2" model="ir.ui.view">
+        <field name="name">student.student.form</field>
+        <field name="model">student.student</field>
+        <field name="inherit_id" ref="school.view_student_student_form_2"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//form/sheet/group[2]" position="after">
+                    <group name="other_information" colspan="4" string="Other Information">
+                    	<group>
+                    		<field name="citizenship"/>
+                    		<field name="nric"/>
+                    		<field name="hp_no"/>
+                    		<field name="occupation"/>
+                    	</group>
+                    	<group>
+                    		<field name="income"/>
+                    		<field name="highest_qualification_id"/>
+                    		<field name="general_survey_id"/>
+                    	</group>
+                    </group>
+                </xpath>
+                <xpath expr="//page[4]" position="after">
+                    <page string="Education Background" name="education_background">
+                        <field name="education_background_id"/>
+                    </page>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="student_profile_view_student_student_form2" model="ir.ui.view">
+        <field name="name">student.student.form</field>
+        <field name="model">student.student</field>
+        <field name="inherit_id" ref="school.view_student_student_form_1"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//form/sheet/group[2]" position="after">
+                    <group name="other_information" colspan="4" string="Other Information">
+                        <group>
+                            <field name="citizenship"/>
+                            <field name="nric"/>
+                            <field name="hp_no"/>
+                            <field name="occupation"/>
+                        </group>
+                        <group>
+                            <field name="income"/>
+                            <field name="highest_qualification_id"/>
+                            <field name="general_survey_id"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//page[4]" position="after">
+                    <page string="Education Background" name="education_background">
+                        <field name="education_background_id"/>
+                    </page>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="view_student_student_tree_2_modifier" model="ir.ui.view">
+        <field name="name">student.student.tree.modifier</field>
+        <field name="model">student.student</field>
+        <field name="inherit_id" ref="school.view_student_student_tree_2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="nric"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_student_student_search_2_modifier" model="ir.ui.view">
+        <field name="name">student.student.search.modifier</field>
+        <field name="model">student.student</field>
+        <field name="inherit_id" ref="school.view_student_student_search_2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='standard_id']" position="after">
+                <field name="nric"/>
+            </xpath>
+            <xpath expr="//field[@name='student_name']" position="attributes">
+                <attribute name="invisible">0</attribute>
+                <!-- <field name="nric"/> -->
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>

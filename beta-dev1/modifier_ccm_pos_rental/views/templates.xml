@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="assets" inherit_id="point_of_sale.assets">
+            <xpath expr="." position="inside">
+				<link rel="stylesheet" href="/modifier_ccm_pos_rental/static/src/css/ccm_pos_rental.css" />
+				<link rel="stylesheet" href="/modifier_ccm_pos_rental/static/src/css/pos_zoom_image.css" />
+                <script type="text/javascript" src="/modifier_ccm_pos_rental/static/src/js/pos_partner.js"></script>
+                <script type="text/javascript" src="/modifier_ccm_pos_rental/static/src/js/pos_receipt.js"></script>
+                <script type="text/javascript" src="/modifier_ccm_pos_rental/static/src/js/pos_booking_calendar.js"></script>
+                <script type="text/javascript" src="/modifier_ccm_pos_rental/static/src/js/pos_gui.js"></script>
+                <script type="text/javascript" src="/modifier_ccm_pos_rental/static/src/js/pos_product.js"></script>
+                <script type="text/javascript" src="/modifier_ccm_pos_rental/static/src/js/pos_zoom_image.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

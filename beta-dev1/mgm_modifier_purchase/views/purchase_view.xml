@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="purchase_order_form_modifier_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.modifier.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//sheet/div[2]" position="replace">
+                    <div class="oe_edit_only">
+                        <label string="Request for Quotation " class="oe_inline"
+                               attrs="{'invisible': [('state','not in',('draft','sent','bid'))]}"/>
+                        <label string="Purchase Order " class="oe_inline"
+                               attrs="{'invisible': [('state','in',('draft','sent','bid'))]}"/>
+                        <label for="reference_number" style="margin-left:65px" class="oe_inline"/>
+                    </div>
+                    <h1>
+                        <field name="name" class="oe_inline" readonly="1"/>
+                        <field name="reference_number" style="margin-left:50px" class="oe_inline" required="1"/>
+                    </h1>
+
+                </xpath>
+
+                <field name="partner_ref" position="after">
+                    <field name="asset_id"/>
+                </field>
+                <!--xpath expr="//field[@name='currency_id']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath-->
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/tree/field[@name='product_id']"
+                       position="attributes">
+                    <attribute name="string">Product Name</attribute>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/form//group/field[@name='product_id']"
+                       position="attributes">
+                    <attribute name="string">Product Name</attribute>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/tree/field[@name='product_id']"
+                       position="before">
+                    <field name="product_code"/>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/form/sheet//field[@name='product_id']"
+                       position="before">
+                    <field name="product_code"/>
+                </xpath>
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/tree/field[@name='price_subtotal']"
+                       position="after">
+                    <field name="total"/>
+                </xpath>
+                <xpath expr="//notebook/page[1]/field[@name='order_line']/tree/field[@name='taxes_id']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_purchase_requisition_form_inherit">
+            <field name="name">purchase.requisition.custom.form.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/group[2]" position="replace">
+                    <group>
+                        <field name="origin" placeholder="e.g. PR0025" options="{'no_create': True}"
+                               attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="ordering_date" string="Request Date"
+                               attrs="{'readonly': [('state','not in',('draft','in_progress','open'))]}"/>
+                        <field name="date_end" string="Due Date"
+                               attrs="{'readonly': [('state','not in',('draft','in_progress','open'))]}"/>
+                        <field name="schedule_date" invisible="1"
+                               attrs="{'readonly': [('state','not in',('draft','in_progress','open'))]}"/>
+                        <field name="picking_type_id" widget="selection" groups="stock.group_adv_location"
+                               attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"
+                               attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//field[@name='account_analytic_id']" position="after">
+                    <field name="asset_id"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="invoice_supplier_form_inherit">
+            <field name="name">vendor.invoice.custom.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="currency_id" position="after">
+                    <field name="delivery_document" required="0" readonly="0"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

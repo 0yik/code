@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="report_purchase_order_document">
+            <t t-call="kimhuat_modifier_printouts.external_layout_offer_modifier">
+            <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+            <div class="page">
+                <div class="col-xs-5 pull-right text-left" style="font-size:22px;">
+                            <span>Purchase Order</span>
+                        </div>
+                <div class="col-xs-8">
+                    <span t-field="o.company_id.name" style="font-weight:bold"></span><br/>
+                    <span t-field="o.partner_id.street"></span><br t-if="o.partner_id.street"/>
+                    <span t-field="o.partner_id.street2"></span><br t-if="o.partner_id.street2"/>
+                    <span t-field="o.partner_id.city"></span><br t-if="o.partner_id.city"/>
+                    <span t-field="o.partner_id.state_id.name"></span><br t-if="o.partner_id.state_id"/>
+                    <span t-field="o.partner_id.country_id.name"></span>
+                    <t t-if="o.partner_id.country_id">
+                        <span t-field="o.partner_id.zip"></span>
+                    </t>
+                    <br/><br/>
+                    <span>Attn:</span><span t-if="o.partner_id.child_ids" t-esc="o.partner_id.child_ids[0].name"></span><br/><br/>
+                </div>
+                <div class="col-xs-4">
+                    <span>Purchase No: </span><span t-field="o.name"></span>
+                    <br/>
+                    <span>Date: </span><span t-field="o.date_order" t-options ='{"format": "MM/dd/yyyy"}'></span>
+                    <br/>
+                    <span>Customer PO: </span><span t-field="o.partner_id.name"></span>
+                    <br/>
+                </div>
+                <table class="table table-condensed mt48" style="collapse; border:1px solid black ;margin-left:15px;width:96%;">
+                    <thead>
+                        <tr style="collapse; border:1px solid black">
+                            <th style="collapse; border:1px solid black;width:5%;">
+                                <strong>No.</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;width:47%;">
+                                <strong>Description</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;width:9%;">
+                                <strong>Qty</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;width:10%;">
+                                <strong>UOM</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;width:14%;">
+                                <strong>Unit Price</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;width:15%;">
+                                <strong>Amount</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="No" t-value="0"/>
+                        <tr t-foreach="o.order_line" t-as="line" style="collapse; border:1px solid black">
+                            <t t-set="No" t-value="No + 1"/>
+                            <td style="collapse; border:1px solid black">
+                                <span t-esc="No"/>
+                            </td>
+                            <td style="collapse; border:1px solid black">
+                                <span t-field="line.product_id.name"/>
+                            </td>
+                            <td style="collapse; border:1px solid black">
+                                <span t-esc="int(line.product_qty)"/>
+                            </td>
+                            <td style="collapse; border:1px solid black">
+                                <span t-field="line.product_uom"/>
+                            </td>
+                            <td style="collapse; border:1px solid black">
+                                <span>$ </span><span t-esc="line.price_unit"/>
+                            </td>
+                            <td style="collapse; border:1px solid black">
+                                <span>$ </span><span t-esc="line.price_subtotal"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col-xs-4 pull-right">
+                    <table style="border:0;">
+                        <tr>
+                            <th class="col-xs-3 col-xs-offset-6">Total Price:</th>
+                            <td class="col-xs-3" style="padding-left: 0px;">
+                                <span>$ </span><span t-esc="o.amount_untaxed"/>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom:1px solid black">
+                            <td class="col-xs-3 col-xs-offset-6"><span>7% GST:</span></td>
+                            <td>
+                                <span>$ </span><span t-esc="o.amount_tax"/>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom:1px solid black">
+                            <th class="col-xs-3 col-xs-offset-6" style="padding-right:1px">Grand Total:</th>
+                            <td>
+                                <span>$ </span><span t-esc="o.amount_total"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!--<table class="col-xs-3 pull-right text-left mt10">-->
+                    <!--<tr>-->
+                        <!--<td><span>  </span><span>Total Price &#160;&#160;&#160;:</span></td>-->
+                        <!--<td><span>$ </span><span t-esc="o.amount_untaxed"></span></td>-->
+                    <!--</tr>-->
+                    <!--<tr style="border-bottom:1px solid black">-->
+                        <!--<td><span>  </span><span>7% GST &#160;&#160;&#160;&#160;&#160;&#160;:</span></td>-->
+                        <!--<td><span>$ </span><span t-esc="o.amount_tax"></span></td>-->
+                    <!--</tr>-->
+                    <!--<tr style="border-bottom:1px solid black">-->
+                        <!--<td><span>  </span><span>Grand Total&#160;&#160;:</span></td>-->
+                        <!--<td><span>$ </span><span t-esc="o.amount_total"></span></td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+
+                <span class="col-xs-5 col-xs-offset-7 text-left" style="postion:absolute;bottom:-150px;border-top:1px solid black">Authorised Signature &amp; Company Stamp</span>
+
+            </div>
+            </t>
+        </template>
+
+
+        <template id="report_purchase_order">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="kimhuat_modifier_printouts.report_purchase_order_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+        </template>
+
+        <!-- QWeb Reports -->
+        <report
+            id="picking_purchase_order"
+            model="purchase.order"
+            string="Purchase Order"
+            report_type="qweb-pdf"
+            name="kimhuat_modifier_printouts.report_purchase_order"
+            file="kimhuat_modifier_printouts.report_purchase_order"
+        />
+
+    </data>
+</odoo>

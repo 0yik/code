@@ -1,0 +1,78 @@
+<odoo>
+    <data>
+
+        <record id="view_booking_service_config_tree" model="ir.ui.view">
+            <field name="name">booking.settings.tree</field>
+            <field name="model">booking.settings</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <tree string="Booking Configuration" create="false" delete="false" >
+                <field name="pre_booking_time"/>
+                <field name="post_booking_time"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="booking_service_configuration" model="ir.ui.view">
+            <field name="name">booking.service</field>
+            <field name="model">booking.settings</field>
+            <field name="arch" type="xml">
+                <form string="Booking Configuration"  create="false" delete="false" >
+                    <!--header>
+                        <button string="Save" type="object"
+                            name="execute" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" type="object"
+                            name="cancel" class="oe_link"/>
+                    </header-->
+                    <sheet>
+                        <group string="Booking">
+                            <group>
+                                <field name="pre_booking_time" required="1" />
+                                <field name="post_booking_time" required="1" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--record id="booking_settings_action" model="ir.actions.act_window">
+            <field name="name">Booking configuration</field>
+            <field name="res_model">booking.settings</field>
+            <field name="view_id" ref="booking_service_configuration"/>
+            <field name="view_mode">tree,form</field>
+            <field name="target">inline</field>
+        </record-->
+
+        <record id="booking_settings_action_new" model="ir.actions.act_window">
+            <field name="name">Booking configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">booking.settings</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_booking_service_config_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_booking_setting_tree1_view1" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_booking_service_config_tree"/>
+            <field name="act_window_id" ref="booking_settings_action_new"/>
+        </record>
+
+        <record id="action_booking_setting_form_view2" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="booking_service_configuration"/>
+            <field name="act_window_id" ref="booking_settings_action_new"/>
+        </record>
+
+
+        <menuitem id="booking_settings_menu_new" name="Settings" sequence="10"
+            parent="main_booking_menu" action="booking_settings_action_new" groups="group_manager"/>
+
+        
+    </data>
+</odoo>

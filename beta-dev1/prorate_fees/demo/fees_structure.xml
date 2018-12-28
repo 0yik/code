@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+    <data>
+        
+        <!-- Pro Rate Fees Structure Line-->
+        <record id="pro_rate_fee_structure" model="student.fees.structure.line">
+            <field name="name">Pro-Rate Fee</field>
+            <field name="code">20</field>
+            <field name="type">month</field>
+            <field name="amount">1000.00</field>
+        </record>
+    </data>
+</odoo>

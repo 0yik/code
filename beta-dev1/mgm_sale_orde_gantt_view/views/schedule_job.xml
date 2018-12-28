@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!--sale order order gantt view-->
+        <record id="so_all_schedule_job_gantt_view" model="ir.ui.view">
+            <field name="name">all.sale.order.schedule.gantt</field>
+            <field name="model">sale.order</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <gantt date_start="start_date" date_stop="end_date" string="Schedule Job"
+                       default_group_by="asset,mother_vessel">
+                </gantt>
+            </field>
+        </record>
+
+        <record id="action_so_all_schedule_job_gantt_view" model="ir.actions.act_window">
+            <field name="name">Schedule Job</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">gantt</field>
+            <field name="view_id" ref="so_all_schedule_job_gantt_view"/>
+            <field name="search_view_id" ref="sale_order_view_search_inherit_sale_custom"/>
+            <field name="context">{'gantt_pass': True}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field>
+        </record>
+        
+        <menuitem name="Schedule Job" action="action_so_all_schedule_job_gantt_view" id="menu_action_so_all_schedule_job_gantt_view"
+                  parent="sales_team.menu_sale_report"/>
+
+    </data>
+</odoo>

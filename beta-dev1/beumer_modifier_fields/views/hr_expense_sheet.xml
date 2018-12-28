@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <template id="assets_backend" name="hm_expense_sheet system" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/beumer_modifier_fields/static/src/js/hr_expense.js"></script>
+            </xpath>
+        </template>
+
+    <data>
+        <record id="view_hr_expense_sheet_form_inherit_name" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.form.inherit</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml">
+                <button name="%(hr_expense.hr_expense_refuse_wizard_action)d" position="attributes">
+                    <attribute name="string">Reject</attribute>
+                    <attribute name="attrs">{'invisible': ['|',('check_user_show_approve','=', False)]}</attribute>
+                </button>
+                <button name="action_get_attachment_view" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="approve_expense_sheets" position="before">
+                    <field name="check_user_show_approve" invisible="True"/>
+                </button>
+                <button name="approve_expense_sheets" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|',('check_user_show_approve','=', False)]}</attribute>
+                </button>
+                <xpath expr="//field[@name='refused_reason']" position="attributes">
+                    <attribute name="string">Rejected Reason</attribute>
+                </xpath>
+                <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <field name="employee_id" position="attributes">
+                     <attribute name="options">{'no_create_edit': 1,'no_open': 1}</attribute>
+                     <!--<attribute name="widget">selection</attribute>-->
+                </field>
+                <!--<xpath expr="//form" position="attributes">-->
+                    <!--<attribute name="edit">0</attribute>-->
+                <!--</xpath>-->
+            </field>
+        </record>
+
+        <record id="view_hr_expense_sheet_tree_inherit_name" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.tree.inherit</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_tree"/>
+            <field name="arch" type="xml">
+                <field name="total_amount" position="replace">
+                    <field name="amount_total" sum="Total Amount"/>
+                </field>
+            </field>
+        </record>
+
+        <!--<record id="view_form_hr_holiday_public" model="ir.ui.view">-->
+            <!--<field name="name">Hr Holiday Public Form</field>-->
+            <!--<field name="model">hr.holiday.public</field>-->
+            <!--<field name="inherit_id" ref="sg_hr_holiday.hr_holiday_public_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="name" position="after">-->
+                    <!--<field name="fields_view" invisible="True"/>-->
+                <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <record id="hr_expense_refuse_wizard_view_form_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.refuse.wizard.form.inherit</field>
+            <field name="model">hr.expense.refuse.wizard</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_refuse_wizard_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Expense reject reason</attribute>
+                </xpath>
+                <xpath expr="//form/separator" position="attributes">
+                    <attribute name="string">Reason to reject expense</attribute>
+                </xpath>
+                <xpath expr="//button[@name='expense_refuse_reason']" position="attributes">
+                    <attribute name="string">Reject</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_expense.hr_expense_refuse_wizard_action" model="ir.actions.act_window">
+            <field name="name">Reject Expense</field>
+        </record>
+
+        <record id="hr_expense.action_hr_expense_refused_expenses" model="ir.actions.act_window">
+            <field name="name">Rejected Expenses</field>
+        </record>
+
+        <menuitem id="hr_expense.menu_hr_expense_my_expenses_refused" name="Rejected Expenses" sequence="2" parent="hr_expense.menu_hr_expense_my_expenses" action="hr_expense.action_hr_expense_refused_expenses"/>
+        <menuitem id="hr_expense.menu_hr_expense_to_approve" name="To Approve" sequence="2" parent="hr_expense.menu_hr_expense_root" groups="beumer_modifier_access_right.hr_manager_group,beumer_modifier_access_right.cfo_group"/>
+        <menuitem id="sg_hr_employee.menu_root_hr_parent" name="Human Resources" action="hr_expense.hr_expense_actions_my_unsubmitted"/>
+    </data>
+</odoo>

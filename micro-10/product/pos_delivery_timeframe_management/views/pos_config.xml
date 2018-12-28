@@ -1,0 +1,44 @@
+<odoo>
+	<record id="inherit_pos_config" model="ir.ui.view">
+	    <field name="name">pos.config.form</field>
+	    <field name="model">pos.config</field>
+	    <field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+	    <field name="arch" type="xml">
+	    	<xpath expr="//group[@name='features']" position="before">
+                <group string="Delivery Timeframe">
+                    <field name="delivery_timeframe"/>
+                </group>
+            </xpath>
+	    </field>
+    </record>
+
+    <record id="time_frame_tree" model="ir.ui.view">
+        <field name="name">time.frame.tree</field>
+        <field name="model">time.frame</field>
+        <field name="arch" type="xml">
+            <tree string="Time Frame">
+            	
+            	<field name="start"/>
+            	<field name="finish"/>
+            	<field name="price"/>
+            	<field name="qty"/>
+            
+            </tree>
+        </field>
+    </record>
+    
+    <record id="action_time_frame_form" model="ir.actions.act_window">
+            <field name="name">Time Frame</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">time.frame</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        parent="point_of_sale.menu_point_config_product"
+        action="action_time_frame_form"
+        id="menu_time_frame"
+        sequence="31"
+        groups="pos_delivery_timeframe_management.time_from_management_group" />
+</odoo>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<template id="snippet_style_tewnty" inherit_id="honos_snippets.honos_snippets"
+		name="honos snippet" priority="20">
+		<xpath
+			expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']"
+			position="inside">
+			<t t-snippet="honos_snippet_style_20.snippet_style_20_template"
+			t-thumbnail="/honos_snippet_style_20/static/src/img/style_20.jpg" />
+		</xpath>
+	</template>
+	
+	<template id="snippet_style_20_template" name="Style 20">
+		<section class="honos_fashion_snippet_wrap">
+				<div class="honos_fasion_snippet_container">
+					<div class="b_fashion_part_one">
+						<div class="b_fashion_part_img_div part_one_bg">
+							<section>
+								<a href="#">
+									<img class="s_image_common" src="/honos_snippet_style_20/static/img/style_20_img_1.png"></img>
+								</a>
+							</section>
+						</div>
+						<div class="b_fashion_catg_info">
+					<div class="bf_text-row">
+								<p class="b_fashion_sub_heading">wear</p>
+							</div>
+							<div class="bf_text-row">
+								<span class="b_fashion_para">
+									Lorem Ipsum is simply dummy
+									<br/>
+										text of the printing and typesetting industry.
+									<br/>
+									Lorem Ipsum has
+								</span>
+							</div>
+							<div class="bf_text-row">
+								<a href="#" class="b_fashion_btn f_btn_margin">shop now</a>
+							</div>
+						</div>
+					</div>
+					<div class="b_fashion_part_two">
+						<div class="b_fashion_part_img_div part_two_bg">
+							<section>
+								<a href="#">
+									<img class="s_image_common" src="/honos_snippet_style_20/static/img/style_20_img_2.png"></img>
+								</a>
+							</section>
+						</div>
+						<div class="b_fashion_catg_info">
+							<div class="bf_text-row">
+								<p class="b_fashion_sub_heading">style</p>
+							</div>
+							<div class="bf_text-row">
+								<span class="b_fashion_para">
+									Lorem Ipsum is simply dummy
+									<br/>
+										text of the printing and typesetting industry.
+									<br/>
+									Lorem Ipsum has
+								</span>
+							</div>
+							<div class="bf_text-row">
+								<a href="#" class="b_fashion_btn f_btn_margin">shop now</a>
+							</div>
+						</div>
+					</div>
+					<div class="b_fashion_part_three">
+						<div class="b_fashion_part_img_div part_three_bg">
+							<section>
+								<a href="#">
+									<img class="s_image_common" src="/honos_snippet_style_20/static/img/style_20_img_3.png"></img>
+								</a>
+							</section>
+						</div>
+						<div class="b_fashion_catg_info">
+							<div class="bf_text-row">
+								<p class="b_fashion_sub_heading">new</p>
+							</div>
+							<div class="bf_text-row">
+								<span class="b_fashion_para">
+									Lorem Ipsum is simply dummy
+									<br/>
+										text of the printing and typesetting industry.
+									<br/>
+									Lorem Ipsum has
+								</span>
+							</div>
+							<div class="bf_text-row">
+								<a href="#" class="b_fashion_btn f_btn_margin">shop now</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>	
+	</template>
+</odoo>

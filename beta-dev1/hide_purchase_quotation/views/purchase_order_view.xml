@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="custom_purchase_order_form_view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/field[@name='state']" position="replace">
+                        <field name="state" widget="statusbar" statusbar_visible="purchase"/>
+                </xpath> 
+                 <xpath expr="//page[1]/field[@name='order_line']/tree/field[@name='price_unit']" position="after">
+                        <field name="pack_barcode"/>
+                </xpath>      
+                <!--  <xpath expr="//notebook/page/field[@name='order_line']" position="after">
+                        <field name="pack_barcode"/>
+                </xpath>  -->
+                <xpath expr="//notebook/page/field[@name='order_line']" position="before"> 
+                          <button name="hide_purchase_quotation.action_purchase_product_pack_wizard" string="ADD PACK" type="action" attrs= "{'invisible':[('state','=', 'manual')]}" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Group created with no users -->
+        <record id="group_hide_menus" model="res.groups">
+            <field name="name">Restricted Menus Group</field>
+            <field name="comment">Restricted Menus Group</field>
+        </record>
+
+        <!-- Hide Purchase Request Quotations menu -->
+        <record model="ir.ui.menu" id="purchase.menu_purchase_rfq">
+            <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+        </record>
+
+
+        <record model="ir.ui.view" id="custom_purchase_order_line_tree_view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='price_unit']" position="after">
+                        <field name="pack_barcode"/>
+                </xpath>
+                
+
+            </field>
+        </record>
+        <record model="ir.ui.view" id="custom_purchase_order_line_form_view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//field[@name='price_unit']" position="after">
+                        <field name="pack_barcode"/>
+                </xpath>
+                
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
+

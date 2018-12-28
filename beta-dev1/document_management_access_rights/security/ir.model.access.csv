@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+muk_dms_root_manager,muk_dms.root_manager,model_muk_dms_root,group_muk_dms_manager,1,1,1,1
+muk_dms_root_user,muk_dms.root_user,model_muk_dms_root,,1,0,0,0
+muk_dms_lock_manager,muk_dms.lock_manager,model_muk_dms_lock,group_muk_dms_manager,1,1,1,1
+muk_dms_lock_user,muk_dms.lock_user,model_muk_dms_lock,,1,0,0,0
+muk_dms_data_database_manager,muk_dms.data_manager,model_muk_dms_database_data,group_muk_dms_manager,1,1,1,1
+muk_dms.muk_dms_directories_all,muk_dms.directories_all,document_management_access_rights.model_muk_dms_directory,,1,1,1,1
+muk_dms.muk_dms_file_employee,muk_dms.file_employee,document_management_access_rights.model_muk_dms_file,,1,1,1,1
+document_mgm_access_rights_all_access,document_mgm_access_rights_all,document_management_access_rights.model_document_mgm_access_rights,,1,1,1,1
+res_users_write,res_user_write_access,mail.model_res_users,base.group_user,1,1,1,1

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="student_registration_template_id" model="mail.template">
+            <field name="name">Student Registration</field>
+            <field name="email_from">${'noreply@localhost'|safe}</field>
+            <field name="subject">Registration ${object.name}</field>
+            <field name="model_id" ref="school.model_student_student"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+            <div>
+                <p>Dear ${object.name}</p>
+                <p>Thank you for registering our programme.</p>  
+
+                <p>Please make the registration fee by 7 days from the date of your registration. You are require to submit the copy of your relevant certificates at Pergas counter (for SPLI & DPI only).</p> 
+
+                <p>Your application will not be process until the payment has been made and relevant document has been submitted.</p>
+
+                <p>You will receive a confirmation 3 weeks before commencement of the class via email. Please get back to us if you do not anything after that period.</p>
+
+                <p>Thank you</p>
+                <p>Wassalamualaikum Wr Wb</p>
+            </div>
+            ]]></field>
+        </record>
+
+        <record id="student_registration_confirmation_template_id" model="mail.template">
+            <field name="name">Student Confirmation Email</field>
+            <field name="email_from">${'noreply@localhost'|safe}</field>
+            <field name="subject">Registration Confirmation</field>
+            <field name="model_id" ref="school.model_student_student"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+            <div>
+                <p>Dear ${object.name}</p>
+                
+                <p>We are pleased to inform that your application of the programme has been approved. You will receive the details of your class soon.</p><br/>
+                
+                <p>Thank you</p>
+                <p>Wassalamualaikum Wr Wb </p>
+            </div>
+            ]]></field>
+        </record>
+
+        <!-- <record id="student_payment_confirmation_template_id" model="mail.template">
+            <field name="name">Student Payment Confirmation Email</field>
+            <field name="email_from">${'noreply@localhost'|safe}</field>
+            <field name="subject">Payment Confirmation</field>
+            <field name="model_id" ref="school.model_student_student"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+            <div>
+                <p>Dear ${object.name}</p>
+                
+                <p>We are pleased to inform that your application of the programme Payment has been confirm</p><br/>
+                
+                <p>Thank you</p>
+                <p>Wassalamualaikum Wr Wb </p>
+            </div>
+            ]]></field>
+        </record> -->
+    </data>
+</odoo>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		
+		<record id="report.paperformat_euro" model="report.paperformat">
+	        <field name="margin_top">50</field>
+	        <field name="header_spacing">45</field>
+		</record>
+				
+        <template id="report_stock_picking_new">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <table class="table table-condensed">
+	                         	<tr style="font-size:15;border-top-style:hidden;">
+	                                <td><span t-field="o.company_id.name"/></td>
+									<td><span t-field="o.name"/></td>
+	                            </tr>
+								<tr style="font-size:15;border-top-style:hidden;">
+									<td>Phone:<span t-field="o.company_id.partner_id.phone"/></td>
+									<td></td>
+								</tr>
+								<tr style="font-size:15;border-top-style:hidden;">
+									<td>Mail:<span t-field="o.company_id.partner_id.email"/></td>
+									<td></td>
+								</tr>                           
+                            </table>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th><strong>SKU</strong></th>
+                                        <th><strong>Product Name</strong></th>
+                                        <th class="text-right"><strong>Quantity</strong></th>
+                                        <th class="text-right"><strong>Current Quantity</strong></th>
+                                        <th><strong>Location</strong></th>
+                                    </tr>
+                                </thead>
+                                <tr t-foreach="o.move_lines" t-as="line">
+                                    <td><span t-field="line.name"/></td>
+                                    <td><span t-field="line.product_id.name"/></td>
+                                    <td class="text-right"><span t-field="line.product_uom_qty"/></td>
+                                    <td class="text-right"><span t-field="line.product_id.qty_available"/></td>
+                                    <td><span t-field="line.location_id.name"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                 </t>
+             </t>
+        </template>
+		
+	    <record id="view_picking_form_inherit_sku" model="ir.ui.view">
+	      <field name="name">stock.picking.form.sku</field>
+	      <field name="model">stock.picking</field>
+	      <field name="inherit_id" ref="stock.view_picking_form"/>
+	      <field name="priority" eval="21"/>
+	      <field name="arch" type="xml">
+	        <data>
+	          <xpath expr="//form/header/button[@name='do_print_picking']" position="after">
+				  <button name="do_print_sku" string="Print SKU" type="object"/>
+	          </xpath>
+	        </data>
+	      </field>
+	    </record>
+		
+    </data>
+</odoo>

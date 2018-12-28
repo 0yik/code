@@ -1,0 +1,22 @@
+.all-free-on{
+    background: #6EC89B !important;
+    border: solid 1px #64AF8A !important;
+    color: white !important;
+}
+.pos .control-button.btn {
+    line-height: 50px;
+}
+.pos .payment-list{
+    width: 100%;
+    font-size: 16px;
+    line-height: 40px;
+}
+.pos .payment-line{
+    transition: all 150ms linear;
+    background: #e6e6e6;
+}
+.pos .payment-list .highlight{
+    transition: all 150ms linear;
+    background: rgb(110,200,155) !important;
+    color: white;
+}

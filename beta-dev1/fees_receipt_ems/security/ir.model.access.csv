@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_move_courses,access_move_courses,model_move_courses,,1,1,1,1
+access_enrolled_student,access_enrolled_student,model_enrolled_student,,1,1,1,1

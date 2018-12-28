@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_list_equipment,access_list_equipment,model_list_equipment,,1,1,1,1
+access_list_equipment_line,access_list_equipment_line,model_list_equipment_line,,1,1,1,1
+assign_user_to_employee_all,assign_user_to_employee,model_hr_employee_user_access_wizard,,1,1,1,1
+access_sale_attention,access_sale_attention,model_sale_attention,,1,1,1,0
+access_sale_from,access_sale_from,model_sale_from,,1,1,1,0
+

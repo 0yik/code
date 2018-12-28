@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+        
+        <record id="view_inventory_valuation_comparison_sql_report_pivot" model="ir.ui.view">
+            <field name="name">inventory.valuation.comparison.sql.report.pivot</field>
+            <field name="model">inventory.valuation.comparison.sql.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Inventory Valuation Comparison" disable_linking="True">
+                <field name="product_id" type="row"/>
+                <field name="location_id" type="row"/>
+                <field name="so_count" type="measure"/>
+                <field name="so_amount" type="measure"/>
+                <field name="po_count" type="measure"/>
+                <field name="po_amount" type="measure"/>
+                <field name="so_po_diff_count" type="measure"/>
+                <field name="so_po_diff_amount" type="measure"/>
+             </pivot>
+            </field>
+        </record>
+
+        <record id="view_inventory_valuation_comparison_sql_report_tree" model="ir.ui.view">
+	    <field name="name">inventory.valuation.comparison.sql.report.tree</field>
+	    <field name="model">inventory.valuation.comparison.sql.report</field>
+	    <field name="arch" type="xml">
+	        <tree string="Inventory Valuation Comparison" create="false">
+                <field name="date"/>
+				<field name="product_id"/>
+				<field name="location_id"/>
+				<field name="sale_order_id"/>
+				<field name="so_count"/>
+				<field name="so_amount"/>
+                <field name="purchase_id"/>
+				<field name="po_count"/>
+				<field name="po_amount"/>
+				<field name="so_po_diff_count"/>
+				<field name="so_po_diff_amount"/>
+            </tree>
+	    </field>
+	</record>
+      
+    <record id="view_inventory_valuation_comparison_sql_report_filter" model="ir.ui.view">
+        <field name="name">inventory.valuation.comparison.sql.report</field>
+        <field name="model">inventory.valuation.comparison.sql.report</field>
+        <field name="arch" type="xml">
+            <search string="Inventory Valuation Comparison">
+                <field name="date"/>
+				<field name="product_id"/>
+				<field name="location_id"/>
+				<field name="sale_order_id"/>
+				<field name="so_count"/>
+				<field name="so_amount"/>
+                <field name="purchase_id"/>
+				<field name="po_count"/>
+				<field name="po_amount"/>
+				<field name="so_po_diff_count"/>
+				<field name="so_po_diff_amount"/>
+                <group expand="1" string="Group By">
+                    <filter name="Date" string="Date" context="{'group_by':'date'}"/>
+                    <filter name="Product" string="Product" context="{'group_by':'product_id'}"/>
+					<filter name="Location" string="Location" context="{'group_by':'location_id'}"/>
+                    <filter name="Sale Order" string="Sale Order" context="{'group_by':'sale_order_id'}"/>
+                    <filter name="Purchase Order" string="Purchase Order" context="{'group_by':'purchase_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+        
+        <!-- action -->
+        <record id="action_inventory_valuation_comparison_sql_report" model="ir.actions.act_window">
+            <field name="name">Inventory Valuation Comparation</field>
+            <field name="res_model">inventory.valuation.comparison.sql.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">pivot,tree</field>
+            
+        </record>
+        
+        <menuitem id="menu_action_inventory_valuation_comparison_sql_report" name="Inventory Valuation Comparision" parent="stock.menu_warehouse_report" action="inventory_valuation_comparison.action_inventory_valuation_comparison_sql_report"/>
+        
+    </data>
+</odoo>

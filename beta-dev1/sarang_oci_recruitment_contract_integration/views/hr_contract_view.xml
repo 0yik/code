@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <record id="hr_contract_view_form_inherit" model="ir.ui.view">
+            <field name="name">hr.contract.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <!-- find field description and add the field
+                     idea_ids after it -->
+                <xpath expr="//notebook/page[2]" position="before">
+                    <page string="Leaves">
+                        <group>
+                            <group>
+                                <field name="leave_all_bool" invisible="1"/>
+                                <field name="leave_config_id" required="True"/>
+                                <field name="user_id" required="True"/>
+                                <button name="allocate_leaves_mannualy" type="object"
+                                        confirm="Are you sure to allocate leaves as per leave structure selected for this employee ? "
+                                        string="Allocate Leaves" class="oe_inline oe_highlight"
+                                        attrs="{'invisible':['|',('leave_config_id','=',False),('leave_all_bool','=',True)]}"/>
+                            </group>
+                            <group>
+
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

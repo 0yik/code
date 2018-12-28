@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_book_order_settings_cft" model="ir.ui.view">
+            <field name="name">booking.order.settings.inherit</field>
+            <field name="model">booking.order.settings</field>
+            <field name="arch" type="xml">
+                <form>        
+                        <field name="pre_booking"/>
+                        <field name="post_booking"/>
+                </form>
+            </field>
+        </record>
+   
+
+
+<record id="action_booking_setting" model="ir.actions.act_window">
+    <field name="name">Booking Settings</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">booking.order.settings</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{}</field>
+</record> 
+
+
+ <menuitem  id= "menu_booking_order_setting_menu"
+            parent= "menu_booking_order"
+            sequence= "3"
+            name= "Booking Order Settings"
+            action="action_booking_setting"/>
+
+ </data>
+</odoo>

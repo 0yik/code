@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="view_supplier_payment_tree_teo" model="ir.ui.view">
+			<field name="name">view.supplier.payment.tree.teo</field>
+			<field name="model">receipt.payment</field>
+			<field name="inherit_id" ref="sg_partner_payment.view_supplier_payment_tree" />
+			<field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="ref_cr" invisible="1"/>
+                    <field name="ref_dr" invisible="1"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_supplier_payment_form_teo" model="ir.ui.view">
+			<field name="name">view.supplier.payment.form.teo</field>
+			<field name="model">receipt.payment</field>
+			<field name="inherit_id" ref="sg_partner_payment.view_supplier_payment_form" />
+			<field name="arch" type="xml">
+                <field name="type" position="before">
+                    <field name="ref_cr" invisible="1"/>
+                    <field name="ref_dr" invisible="1"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_supplier_payment_search_teo" model="ir.ui.view">
+			<field name="name">view.supplier.payment.search.teo</field>
+			<field name="model">receipt.payment</field>
+			<field name="inherit_id" ref="sg_partner_payment.view_supplier_payment_filter" />
+			<field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="ref_cr"/>
+                    <field name="ref_dr"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

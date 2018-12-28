@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_custom_tm_layout" inherit_id="point_of_sale.assets" name="TM POS Layout assets">
+        
+        <xpath expr="//script[last()]" position="after">
+            <link rel="stylesheet" href="/TM_POS_layout/static/src/css/centerpane.css" />
+        </xpath>
+    </template>
+</odoo>

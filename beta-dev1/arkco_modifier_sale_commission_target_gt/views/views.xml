@@ -1,0 +1,50 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="arkco_modifier_sale_commission_target_gt_form_view">
+      <field name="name">target.group.form.view</field>
+      <field name="model">target.group</field>
+      <field name="inherit_id" ref="sale_commission_target_gt.target_group_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//form/group[1]" position="replace">
+          <group>
+            <group>
+                <field name="commission_type" string="Incentive Type" invisible="1"/>
+                <field name="team_id" options="{'no_create':True}"/>
+            </group>
+            <group>
+              <field name="start_date"/>
+              <field name="end_date"/>
+            </group>
+          </group>
+        </xpath>
+        <xpath expr="//field[@name='target_lines']/tree/field[@name='amount']" position="replace">
+          <field name="amount" string="Incentive Amount"/>
+        </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="arkco_modifier_sale_commission_target_gt_tree_view">
+      <field name="name">target.group.tree.view</field>
+      <field name="model">target.group</field>
+      <field name="inherit_id" ref="sale_commission_target_gt.target_group_tree_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//tree/field[@name='commission_type']" position="replace">
+          <field name="commission_type" string="Incentive Type" invisible="1"/>
+          <field name="team_id"/>
+          <field name="start_date"/>
+          <field name="end_date"/>
+        </xpath>
+      </field>
+    </record>
+    <menuitem 
+          id="menu1_sale_reward" 
+          name="Sales Reward"
+          sequence="30" 
+          parent="sales_team.menu_base_partner" />
+    <menuitem 
+          id="sale_commission_target_gt.target_group_menu" 
+          name="Target Group" 
+          sequence="1"
+          parent="arkco_modifier_sale_commission_target_gt.menu1_sale_reward" 
+          action="sale_commission_target_gt.action_target_group"/>
+  </data>
+</odoo>

@@ -1,0 +1,127 @@
+.pos .numpad-change{
+    width: 96% !important;
+}
+.pos .numpad-change .qty_change{
+    width: 168px !important;
+}
+.pos .numpad-change .disc_change{
+    width: 168px !important;
+}
+.pos .numpad-change .price_change{
+    width: 168px !important;
+    margin-right: 83px;
+}
+.pos .numpad button{
+    width: 84px !important;
+}
+
+.pos .remove_misc{
+    background-color: #6EC89B !important;
+    border: solid 1px #64AF8A !important;
+    color: white !important;
+}
+
+.pos .category-simple-button{
+    margin-right: 5px !important;
+    margin-bottom: 5px !important;
+    margin-left: 5px;
+    margin-top: 5px;
+
+}
+
+.pos .main_button{
+    height: 40px;
+    font-size: 15px;
+}
+
+.pos .order{
+    font-size: 12px !important;
+}
+
+.pos .product {
+    height: 80px !important;
+    width: 84px !important;
+}
+
+.pos .l-table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.pos .l-table td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.pos .actionpad{
+    width: 100% !important;
+}
+
+.pos .actionpad .button{
+    width:100% important;
+}
+.pos .actionpad .button.pay{
+    height: 73px !important;
+}
+.pos .actionpad .button.pay .pay-circle{
+        line-height: 37px !important;
+        font-size: 19px !important;
+        width: 40px !important;
+}
+.pos .actionpad .button.set-customer{
+    display:none !important;
+}
+
+.pos .l-table tr:nth-child(even) {
+    background-color: #6EC89B;
+}
+
+.pos .category-list span:nth-child(even){
+    background-color: #6EC89B;
+}
+
+.pos .pos-rightheader{
+    left: 650px !important;
+}
+.pos .session_infos{
+    font-size:10px !important;
+}
+.pos .pos-branding{
+    width: 534px !important;
+}
+.pos .pos-branding .username{
+    margin-right: 0px !important;
+}
+.pos .payment-numpad .numpad button{
+    width: 74px !important;
+}
+
+.pos .leftpanes{
+       width: 35% !important;
+}
+
+.pos .rightpanes{
+    left: 35% !important;
+}
+
+@media only screen and (min-width: 768px) and (max-height: 1024px) {
+    .pos .numpad-change{
+        width: 96% !important;
+    }
+    .pos .numpad-change .qty_change{
+        width: 184px !important;
+    }
+    .pos .numpad-change .disc_change{
+        width: 123px !important;
+    }
+    .pos .numpad-change .price_change{
+        width: 182px !important;
+        margin-right: 122px;
+    }
+    .pos .numpad button{
+        width: 61px !important;
+    }
+
+}

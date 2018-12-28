@@ -1,0 +1,30 @@
+<odoo>
+    <menuitem name="Sales"
+              id="sales_team.menu_base_partner"
+              groups="purchase.group_purchase_user,purchase.group_purchase_manager,sales_team.group_sale_salesman,sales_team.group_sale_manager,account.group_account_user,account.group_account_manager"
+              web_icon="sale,static/description/icon.png"/>
+
+    <menuitem action="sale.action_orders"
+              id="sale.menu_sale_order" parent="sales_team.menu_sales"
+              sequence="12"
+              groups="account.group_account_user,account.group_account_manager,purchase.group_purchase_user,purchase.group_purchase_manager,sales_team.group_sale_salesman,sales_team.group_sale_manager"/>
+
+
+
+    <record id="sale_order_form_view_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <button name="action_confirm" states="sent" position="attributes">
+                    <attribute name="groups">sales_team.group_sale_manager,account.group_account_manager</attribute>
+                </button>
+                <button name="action_confirm" states="draft" position="attributes">
+                    <attribute name="groups">sales_team.group_sale_manager,account.group_account_manager</attribute>
+                </button>
+            </field>
+    </record>
+
+
+
+</odoo>

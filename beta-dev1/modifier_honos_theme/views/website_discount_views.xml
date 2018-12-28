@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_website_discount_form">
+        <field name="name">website.discount.form</field>
+        <field name="model">website.discount</field>
+        <field name="arch" type="xml">
+            <form string="Discount on website proudcts">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                            options='{"terminology": "active"}'/>
+                        </button>
+                    </div>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="sequence"/>
+                        <!-- <field name="discount_for"/> -->
+                        <field name="discount"/>
+                        <field name="applied_on"/>
+                        <field name="category_id" attrs="{'invisible': [('applied_on', '!=', 'category')], 'required': [('applied_on', '=', 'category')]}" options="{'no_create': True}"/>
+                        <field name="all_products" attrs="{'invisible': [('applied_on', '!=', 'product')], 'required': [('applied_on', '=', 'product'), ('product_ids', '=', False)]}"/>
+                        <field name="product_ids" attrs="{'invisible': ['|', ('applied_on', '!=', 'product'), ('all_products', '=', True)], 'required': [('applied_on', '=', 'product'), ('all_products', '=', False)]}" options="{'no_create': True}" widget="many2many">
+                            <tree string="Products">
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                        <field name="start_datetime"/>
+                        <field name="end_datetime"/>
+                        <!-- <field name="pricelist_id" readonly="True"/> -->
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_website_discount_tree">
+        <field name="name">website.discount.tree</field>
+        <field name="model">website.discount</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <!-- <field name="discount_for"/> -->
+                <field name="discount"/>
+                <field name="applied_on"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_website_discount" model="ir.actions.act_window">
+        <field name="name">Website Discount</field>
+        <field name="res_model">website.discount</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="website_discount" name="Discount" action="action_website_discount" parent="website.menu_website_global_configuration" sequence='0'/>
+
+</odoo>

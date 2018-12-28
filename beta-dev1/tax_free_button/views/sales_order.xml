@@ -1,0 +1,41 @@
+<odoo>
+    <data noupdate="1">
+        <function model="sale.order" name="default_tax_free_button"/>
+    </data>
+    <data>
+        <record id="view_sales_config_inherit" model="ir.ui.view">
+            <field name="name">sale.config.settings.inherit</field>
+            <field name="model">sale.config.settings</field>
+            <field name="inherit_id" ref="sale.view_sales_config"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='main']" position="inside">
+                    <group string="Tax Free">
+                        <label string="Tax Free"/>
+                        <div>
+                            <field name="tax_free_button" class="oe_inline"/>
+                            <label for="tax_free_button"/>
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group/group[2]" position="inside">
+                    <!--<group>-->
+                        <!--<group></group>-->
+                        <!--<group>-->
+                            <field name="check_tax_free_button" invisible="1"/>
+                            <button name="tax_free_button" string="Tax free / Applied" type="object" class="btn-primary" attrs="{'invisible':[('check_tax_free_button','=',False)]}"/>
+                        <!--</group>-->
+                    <!--</group>-->
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="account_analytic_account_tree_view_inherit_stable" model="ir.ui.view">
+            <field name="name">account.analytic.account.tree.stable</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="stable_account_analytic_analysis.view_account_analytic_account_tree_c2c_3"/>
+            <field name="arch" type="xml">
+                <field name="manager_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="date_end" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="date_start" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="remaining_hours" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="toinvoice_total" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="last_invoice_date" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="code" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="account_analytic_account_tree_view_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.account.tree</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_list"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <xpath expr="//tree" position="replace">
+                    <tree string="Analytic Accounts">
+                        <field name="project_number"/>
+                        <field name="name" string="Project Name"/>
+                        <field name="state"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_analytic_account_form_view_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.account.form</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.analytic_account_inherit"/>
+            <field name="arch" type="xml">
+                <field name="actual_budget" position="attributes">
+                    <attribute name="string">Actual Cost</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="account_analytic_account_form_view_inherit_prnumber" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.prnumber</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="beumer_modifier_project.account_analytic_account_form_form_inherit"/>
+            <field name="arch" type="xml">
+                <field name="project_number" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

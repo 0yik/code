@@ -1,0 +1,67 @@
+<odoo>
+	<data>
+		<record id="admin_configuration_view" model="ir.ui.view">
+			<field name="name">admin.configuration.view</field>
+			<field name="model">admin.configuration</field>
+			<field name="arch" type="xml">
+				<form string="Admin Configuration">
+					<sheet string="Admin Configuration">
+						<group>
+							<group>
+								<field name="total_reminder" />
+								<label for="reminder_duration"/>
+								<div>
+									<field name="reminder_duration" />
+									<span> minutes </span>
+								</div>
+								<label for="delay_time"/>
+								<div>
+									<field name="delay_time"/>
+									<span> minutes </span>
+								</div>
+								<label for="customer_booking_days"/>
+								<div>
+									<field name="customer_booking_days"/>
+									<span> days </span>
+								</div>
+							</group>
+							<group>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="admin_configuration_view_tree" model="ir.ui.view">
+			<field name="name">admin.configuration.view.tree</field>
+			<field name="model">admin.configuration</field>
+			<field name="arch" type="xml">
+				<tree string="Admin Configuration">
+					<field name="total_reminder" />
+					<field name="reminder_duration" />
+					<field name="delay_time"/>
+					<field name="customer_booking_days"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_admin_configuration_view_tree" model="ir.actions.act_window">
+			<field name="name">Admin Configuration</field>
+			<field name="res_model">admin.configuration</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Admin Configuration
+				</p>
+				<p>
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_action_admin_configuration_view_tree"
+			parent="sales_team.menu_sale_config" sequence="0"
+			action="hilti_modifier_customer_booking.action_admin_configuration_view_tree" />
+
+	</data>
+</odoo>

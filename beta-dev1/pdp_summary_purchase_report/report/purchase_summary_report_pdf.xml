@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Report header & footer-->
+    <template id="external_layout_header_summary_report">
+        <div class="header">
+            <div class="row">
+                <div class="col-xs-3">
+                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                </div>
+            </div>
+            <div class="row zero_min_height">
+                <div class="col-xs-12">
+                    <div style="border-bottom: 1px solid black;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6" name="company_address">
+                    <span t-field="company.partner_id"
+                        t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="external_layout_footer_summary_report">
+        <div class="header">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <ul t-if="not company.custom_footer" class="list-inline">
+                    <t t-set="company" t-value="company.sudo()"/>
+                    <li t-if="company.phone">Phone: <span t-field="company.phone"/></li>
+
+                    <li t-if="company.fax and company.phone">&amp;bull;</li>
+                    <li t-if="company.fax">Fax: <span t-field="company.fax"/></li>
+
+                    <li t-if="company.email and company.fax or company.email and company.phone">&amp;bull;</li>
+                    <li t-if="company.email">Email: <span t-field="company.email"/></li>
+
+                    <li t-if="company.website and company.email or company.website and company.fax or company.website and company.phone">&amp;bull;</li>
+                    <li t-if="company.website">Website: <span t-field="company.website"/></li>
+                </ul>
+
+                <ul t-if="not company.custom_footer" class="list-inline" name="financial_infos">
+                    <li t-if="company.vat">TIN: <span t-field="company.vat"/></li>
+                </ul>
+
+                <t t-if="company.custom_footer">
+                    <span t-raw="company.rml_footer"/>
+                </t>
+
+                <ul class="list-inline">
+                    <li>Page:</li>
+                    <li><span class="page"/></li>
+                    <li>/</li>
+                    <li><span class="topage"/></li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <!--Report layout-->
+    <template id="external_layout_summary_report">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+
+        <t t-call="pdp_summary_purchase_report.external_layout_header_summary_report" />
+        <t t-raw="0" />
+        <t t-call="pdp_summary_purchase_report.external_layout_footer_summary_report" />
+    </template>
+
+    <!--Report template-->
+    <template id="summary_purchase_report">
+        <t t-call="report.html_container">
+        <t t-set="o" t-value="o"/>
+            <t t-call="pdp_summary_purchase_report.external_layout_summary_report">
+                <br/>
+                <br/>
+                <div class="page">
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <!-- <thead> -->
+                            <tr>
+                                <td class="text-center" style="border-bottom: 1px solid black;border: 1px solid black;">
+                                    <strong>Product</strong>
+                                </td>
+
+                                <td class="text-center" style="border-bottom: 1px solid black;border: 1px solid black;">
+                                    <strong>Price</strong>
+                                </td>
+
+                                <td class="text-center" style="border-bottom: 1px solid black;border: 1px solid black;">
+                                    <strong>Location Quantity</strong>
+                                </td>
+
+                                <td class="text-center" style="border-bottom: 1px solid black;border: 1px solid black;">
+                                    <strong>Monthly Sales</strong>
+                                </td>
+
+                                <td class="text-center" style="border-bottom: 1px solid black;border: 1px solid black;">
+                                    <strong class="text-right">Total Sales</strong>
+                                </td>
+
+                                <td class="text-center" style="border-bottom: 1px solid black;border: 1px solid black;">
+                                    <strong class="text-right">Total Stock</strong>
+                                </td>
+
+                                <td class="text-center" style="border-bottom: 1px solid black;border: 1px solid black;">
+                                    <strong>Display (Min Stock)</strong>
+                                </td>
+
+                                <td class="text-center" style="border-bottom: 1px solid black;border: 1px solid black;">
+                                    <strong>Forecasted Order</strong>
+                                </td>
+
+                                <td class="text-center" style="border-bottom: 1px solid black;border: 1px solid black;">
+                                    <strong>% Buffer For Lead Time</strong>
+                                </td>
+                            </tr>
+                        <!-- </thead>
+                        <tbody> -->
+                            <tr t-foreach="o.get_purchase_data()" t-as="p">
+                                <t t-set="monthly_total" t-value="0"/>
+                                <t t-set="sales_total" t-value="0"/>
+                                <t t-set="stock_total" t-value="0"/>
+                                <t t-set="forecast_total" t-value="0"/>
+                                <t t-set="buffer_total" t-value="0"/>
+                                <tr t-foreach="o.get_purchase_data()[p]" t-as="l">
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;">
+                                        <span t-att-style="style" t-esc="l.get('product')"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        <span t-att-style="style" t-esc="l.get('price')"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        <span t-att-style="style" t-esc="l.get('location')"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        Rp <span t-att-style="style" t-esc="'{0:,.2f}'.format(l.get('monthly_sales'))"/>
+                                        <t t-set="monthly_total" t-value="monthly_total+l.get('monthly_sales')"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        Rp <span t-att-style="style" t-esc="'{0:,.2f}'.format(l.get('total_sales'))"/>
+                                        <t t-set="sales_total" t-value="sales_total+l.get('total_sales')"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        <span t-att-style="style" t-esc="int(l.get('total_stock'))"/>
+                                        <t t-set="stock_total" t-value="stock_total+l.get('total_stock')"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        <span t-att-style="style" t-esc="int(l.get('minimum_qty'))"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        <span t-att-style="style" t-esc="int(l.get('total_stock') - l.get('minimum_qty'))"/>
+                                        <t t-set="forecast_total" t-value="forecast_total+l.get('total_stock') - l.get('minimum_qty')"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        <span t-att-style="style" t-esc="l.get('buffer_lead')"/>
+                                        <t t-set="buffer_total" t-value="buffer_total+l.get('buffer_lead')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;">
+                                        <strong>Total</strong>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;"></td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;"></td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        Rp <span t-esc="'{0:,.2f}'.format(monthly_total)"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        Rp <span t-esc="'{0:,.2f}'.format(sales_total)"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        <span t-esc="int(stock_total)"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;"></td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        <span t-esc="int(forecast_total)"/>
+                                    </td>
+
+                                    <td class="text-center" style="border-bottom: 1px solid black;border-right: 1px solid black;">
+                                        <span t-esc="buffer_total"/>
+                                    </td>
+                                </tr>
+                            </tr>
+                        <!-- </tbody> -->
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_summary">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="pdp_summary_purchase_report.summary_purchase_report"/>
+        </t>
+    </template>
+
+
+</odoo>

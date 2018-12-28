@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="purchase.menu_procurement_management_supplier_name" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+
+        <record id="purchase.menu_procurement_partner_contact_form" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+
+        <menuitem id="menu_purchase_vendor" name="Vendors"
+                  parent="purchase.menu_purchase_root"
+                  action="base.action_partner_supplier_form" sequence="1"/>
+
+        <menuitem name="Products" id="menu_purchase_product" action="purchase.product_normal_action_puchased"
+                  parent="purchase.menu_purchase_root" sequence="2"/>
+
+        <menuitem
+                id="purchase_requisition.menu_purchase_requisition_pro_mgt"
+                sequence="3"
+                parent="purchase.menu_procurement_management"
+                action="purchase_requisition.action_purchase_requisition"/>
+
+        <menuitem id="purchase_tender_comparison.menu_procurement_purchase_tender" name="Purchase Tender"
+                  parent="purchase.menu_procurement_management"
+                  action="purchase_tender_comparison.action_purchase_tender" sequence="4"/>
+
+        <menuitem id="purchase_tender_comparison.menu_procurement_blanket_order" name="Blanket Order"
+                  parent="purchase.menu_procurement_management"
+                  action="purchase_tender_comparison.action_blanket_order" sequence="5"/>
+
+        <menuitem action="purchase.purchase_rfq" id="purchase.menu_purchase_rfq"
+                  parent="purchase.menu_procurement_management"
+                  sequence="6"/>
+
+        <menuitem action="purchase.purchase_form_action" id="purchase.menu_purchase_form_action"
+                  parent="purchase.menu_procurement_management" sequence="7"/>
+
+        <menuitem id="menu_purchase_vendor" name="Vendor"
+                  parent="purchase.menu_purchase_root" sequence="2"/>
+
+        <menuitem id="menu_purchase_product" name="Products"
+                  parent="purchase.menu_purchase_root" sequence="3"/>
+
+        <record id="purchase_line_form_action" model="ir.actions.act_window">
+            <field name="name">Purchase Lines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="purchase_line_form_action_tree"
+                model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="purchase.purchase_order_line_tree"/>
+            <field name="act_window_id"
+                   ref="purchase_line_form_action"/>
+        </record>
+
+        <menuitem
+                action="purchase_line_form_action"
+                id="menu_purchase_order_line"
+                parent="purchase.menu_procurement_management" sequence="8"/>
+
+        <menuitem name="Purchase Lines" id="purchase_lines"
+                  parent="purchase.menu_procurement_management" sequence="9"/>
+
+        <menuitem
+                action="purchase_request.purchase_request_line_form_action"
+                id="purchase_request.menu_purchase_request_line"
+                parent="purchase_lines" sequence="10"/>
+
+
+        <record id="purchase_tender_comparison.menu_procurement_purchase_tender" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+
+        <record id="purchase_tender_comparison.menu_procurement_blanket_order" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+
+        <menuitem id="menu_purchase_tender" name="Purchase Tender" sequence="1" parent="purchase.menu_purchase_root"/>
+
+        <menuitem id="menu_purchase_request_pro_mgt" parent="mgm_purchase_menu_changes.menu_purchase_tender"
+                  action="purchase_request.purchase_request_form_action" sequence="1"/>
+
+        <menuitem id="menu_purchase_tender_purchase_request" parent="mgm_purchase_menu_changes.menu_purchase_tender"
+                  action="purchase_tender_comparison.action_purchase_tender" sequence="2"/>
+
+        <menuitem id="menu_purchase_tender_blanket_order" parent="mgm_purchase_menu_changes.menu_purchase_tender"
+                  action="purchase_tender_comparison.action_blanket_order" sequence="3"/>
+
+        <menuitem id="menu_purchase_tender_rfq" parent="mgm_purchase_menu_changes.menu_purchase_tender"
+                  action="purchase.purchase_rfq" sequence="4"/>
+
+        <menuitem id="menu_purchase_tender_po" parent="mgm_purchase_menu_changes.menu_purchase_tender"
+                  action="purchase.purchase_form_action" sequence="5"/>
+
+        <menuitem id="menu_purchase_tender_po_lines" parent="mgm_purchase_menu_changes.menu_purchase_tender"
+                  action="mgm_purchase_menu_changes.purchase_line_form_action" sequence="6"/>
+
+        <menuitem id="menu_purchase_tender_pr_lines"
+                  parent="mgm_purchase_menu_changes.menu_purchase_tender"
+                  action="purchase_request.purchase_request_line_form_action" sequence="7"/>
+
+    </data>
+</odoo>

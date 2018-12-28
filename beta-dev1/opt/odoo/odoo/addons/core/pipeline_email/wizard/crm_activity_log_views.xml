@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="crm_activity_log_form_inherit" model="ir.ui.view">
+        <field name="name">CRM Activity Log Form Inherit</field>
+        <field name="model">crm.activity.log</field>
+        <field name="inherit_id" ref="crm.crm_activity_log_view_form_schedule"/>
+        <field name="arch" type="xml">
+            <field name="title_action" position="after">
+                <field name="email_from"/>
+            </field>
+            <xpath expr="//form/group" position="inside">
+                <field name="body" widget="html" nolabel="1"/>
+            </xpath>
+            <button name="action_schedule" position="after">
+                <button name="action_send_email" string="Send Email" type="object" class="btn btn-primary"/>
+            </button>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="company_type" position="attributes">
+                    <attribute name="attrs">{'invisible': [('supplier', '=', True)]}</attribute>
+                </field>
+                <field name="parent_id" position="attributes">
+                    <attribute name="attrs">{'invisible': [('supplier', '=', True)]}</attribute>
+                </field>
+                <field name="category_id" position="attributes">
+                    <attribute name="attrs">{'invisible': [('supplier', '=', True)]}</attribute>
+                </field>
+                <field name="function" position="attributes">
+                    <!--<attribute name="attrs">{'invisible': [('supplier', '=', True)]}</attribute>-->
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="fax" position="after">
+                    <field name="fax2"/>
+                </field>
+                <field name="title" position="attributes">
+                    <attribute name="attrs">{'invisible': [('supplier', '=', True)]}</attribute>
+                </field>
+                <field name="title" position="after">
+                    <field name="note"/>
+                </field>
+                <field name="lang" position="attributes">
+                    <!--<attribute name="attrs">{'invisible': [('supplier', '=', True)]}</attribute>-->
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_res_partner_inherited" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="PDP_modifier_customer.view_res_partner_inherited"/>
+            <field name="arch" type="xml">
+                <field name="customer_code" position="attributes">
+                    <attribute name="attrs">{'invisible': [('supplier', '=', True)]}</attribute>
+                    <attribute name="required">0</attribute>
+                </field>
+                <field name="customer_code" position="after">
+                    <field name="vendor_code" placeholder="Vendor Code" attrs="{'invisible': [('supplier', '=', False)], 'required': [('supplier','=', True)]}"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_partner_tree_inherit">
+            <field name="name">res.partner.tree.inherited</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="display_name" position="after">
+                    <field name="vendor_code" string="Vendor Code" invisible="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

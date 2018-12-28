@@ -1,0 +1,33 @@
+<openerp>
+    <data>
+        <record id="view_contract_terms_and_conditions" model="ir.ui.view">
+            <field name="name">Contract Terms&amp;Conditions</field>
+            <field name="model">contract.tc.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Contract Terms&amp;Conditions">
+                    <div>
+                        <center>
+                            <h2>TERMS &amp; CONDITIONS ("T&amp;Cs")</h2>
+                        </center>
+                    </div>
+                    <div style="width:95%;">
+                        <field name="terms" readonly="1" />
+                    </div>
+                    <footer>
+                        <button string="Back" class="oe_highlight oe_right" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_contract_terms_and_conditions" model="ir.actions.act_window">
+            <field name="name">Contract Terms&amp;Conditions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">contract.tc.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_contract_terms_and_conditions" />
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+    </data>
+</openerp>

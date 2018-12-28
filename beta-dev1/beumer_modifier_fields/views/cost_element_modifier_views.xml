@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem name="Cost Element" action="cost_element.action_cost_element"
+                  id="cost_element.menu_action_cost_element"
+                  parent="sales_team.menu_sale_config" sequence="1"/>
+
+
+
+    </data>
+</odoo>

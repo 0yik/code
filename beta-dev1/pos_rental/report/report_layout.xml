@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<!-- <record id="purchase.action_report_purchase_order" model="ir.actions.report.xml">
+    <field name="paperformat_id" ref="paperformat_euro_landscape"/>
+</record>   -->
+
+<template id="external_invoice_layouts">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="pos_rental.external_invoice_custom_header" />
+    <t t-raw="0" />
+    <t t-call="pos_rental.external_layout_footer" />
+</template>
+
+<template id="external_invoice_custom_header">
+      <div class="header" >
+        <style type="text/css">
+            /* Declare fonts */
+            @font-face {
+                font-family:DKJambo;
+                src: url(/pos_rental/static/src/font/DK_Jambo.ttf) format('truetype');
+                font-weight: normal;
+                font-style: normal;
+            }
+        </style>
+        <div class="row" >
+            <div class="col-xs-3">
+               <img src="/pos_rental/static/src/img/ccm_bw_logo.png" width="220" height="150" />
+            </div>
+            
+            <div class="col-xs-5 text-left" style="margin-top:10px;font-size:25pt;font-family:DKJambo;">
+            It's not <span style="font-size:40pt;font-family:DKJambo;">Magic</span> 
+            <p class="text-right" style="padding-left:20px; ">It's Just Costumes!</p></div>
+            <div class="col-xs-3 text-right" style="margin-top:120px;" t-field="company.email"/>
+                <div class="col-xs-12">
+                    <div style="border-bottom: 2px solid black;"></div>
+                </div>
+            </div>
+        </div>
+</template>
+
+<template id="external_layout_footer">
+    <div class="footer">
+        <div class="text-center" >
+            <h4 style="font-family: Arial;">Thank You!</h4>
+            <ul t-if="not company.custom_footer" class="list-inline" style="padding: 0;margin:0 ">
+                <t t-set="company" t-value="company.sudo()"/>
+                <li t-if="company.street"><span t-field="company.street"/></li>
+                <li t-if="company.street2">,<span t-field="company.street2"/></li>
+                <li t-if="company.country_id"><span t-field="company.country_id"/></li>
+                <li t-if="company.zip"><span t-field="company.zip"/></li>
+                <li t-if="company.website">(Reg/No.201612587G)</li>
+            </ul>
+            <ul t-if="not company.custom_footer" class="list-inline">
+                <t t-set="company" t-value="company.sudo()"/>
+                <li><i class="fa fa-phone" aria-hidden="true"></i></li>
+                <li t-if="company.phone"><span t-field="company.phone"/></li>
+                <li><i class="fa fa-envelope" aria-hidden="true"></i></li>
+                <li t-if="company.email"><span t-field="company.email"/></li>
+            </ul>
+
+            <ul t-if="not company.custom_footer" class="list-inline" name="financial_infos">
+                <li t-if="company.vat">TIN: <span t-field="company.vat"/></li>
+            </ul>
+
+            <t t-if="company.custom_footer">
+                <span t-raw="company.rml_footer"/>
+            </t>
+        </div>
+    </div>      
+</template>
+
+    </data>
+</odoo>

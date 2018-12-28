@@ -1,0 +1,50 @@
+<odoo>
+    <record id="product_template_only_form_view_laborindo" model="ir.ui.view">
+        <field name="name">product.template.product.form.laborindo</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="product_alias"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="style">width: 600px;</attribute>
+            </xpath>
+            <xpath expr="//div[@name='options'][1]" position="after">
+                <div>
+                    <field name="is_breakdown"/>
+                    <label for="is_breakdown"/>
+                </div>
+            </xpath>
+            <xpath expr="//div[@name='options'][1]" position="before">
+                <div>
+                    <group>
+                    <!--<label for="catelog_number"/>-->
+                    <field name="catelog_number"/>
+                    </group>
+                </div>
+            </xpath>
+            <field name="product_alias" position="after">
+                <field name="brand"/>
+                <field name="category" domain="[('brand_id', '=', brand)]"/>
+                <field name="sub_category" domain="[('category_id', '=', category)]"/>
+            </field>
+
+            <field name="uom_po_id" position="after">
+                <field name="minimum_purchase" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                <field name="minimum_sales" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_only_form_view_add_sale_uom" model="ir.ui.view">
+        <field name="name">product.template.product.form.sale.uom</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="purchase.view_product_supplier_inherit"/>
+        <field name="arch" type="xml">
+            <field name="purchase_method" position="before">
+                <field name="uom_so_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

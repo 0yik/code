@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="res_users_note_form_view" model="ir.ui.view">
+            <field name="name">res.users.note.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <h2 position="after">
+                    <group>
+                        <field name="color" class="oe_kanban_colorpicker"/>
+                    </group>
+                </h2>
+            </field>
+        </record>
+
+        <record id="res_users_note_form_view_simple" model="ir.ui.view">
+            <field name="name">res.users.preferences.note.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+            <field name="arch" type="xml">
+                <button name="preference_change_password" position="after">
+                    <group>
+                        <field name="color" class="oe_kanban_colorpicker"/>
+                    </group>
+                </button>
+            </field>
+        </record>
+    </data>
+</odoo>
+

@@ -1,0 +1,191 @@
+<odoo>
+	<data>
+		<record id="anchor_master_view" model="ir.ui.view">
+			<field name="name">anchor.master.view</field>
+			<field name="model">anchor.master</field>
+			<field name="arch" type="xml">
+				<form string="Anchors Master">
+					<sheet string="Anchor Master">
+						<group>
+							<group>
+								<field name="anchor_type_id" required="1" />
+								<field name="anchor_size_id" required="1" widget="many2many_tags" />
+							</group>
+							<group>
+							</group>
+						</group>
+						<group>
+							<group>
+								<field name="simple_time" widget="float_time"/>
+								<field name="medium_time" widget="float_time"/>
+								<field name="complex_time" widget="float_time"/>
+							</group>
+							<group>
+								<field name="simple_image"/>
+								<field name="medium_image"/>
+								<field name="complex_image"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="anchor_master_view_tree" model="ir.ui.view">
+			<field name="name">anchor.master.view.tree</field>
+			<field name="model">anchor.master</field>
+			<field name="arch" type="xml">
+				<tree string="Anchor Master Tree View">
+					<field name="anchor_type_id" />
+					<field name="anchor_size_id" widget="many2many_tags" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_master_anchor_view" model="ir.actions.act_window">
+			<field name="name">Anchor Management</field>
+			<field name="res_model">anchor.master</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Anchor Master
+				</p>
+				<p>
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_action_master_anchor_view" parent="sales_team.menu_sale_config"
+			sequence="0" action="hilti_modifier_customer_booking.action_master_anchor_view" />
+
+		<record id="anchor_type_view" model="ir.ui.view">
+			<field name="name">anchor.type.view</field>
+			<field name="model">anchor.type</field>
+			<field name="arch" type="xml">
+				<form string="Anchors type">
+					<sheet string="Anchor type">
+						<group>
+							<group>
+								<field name="name" required="1" />
+							</group>
+							<group>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="anchor_type_view_tree" model="ir.ui.view">
+			<field name="name">anchor.type.view.tree</field>
+			<field name="model">anchor.type</field>
+			<field name="arch" type="xml">
+				<tree string="Anchor type Tree View">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_type_anchor_view" model="ir.actions.act_window">
+			<field name="name">Anchor Type</field>
+			<field name="res_model">anchor.type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Anchor Type
+				</p>
+				<p>
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_action_type_anchor_view" parent="sales_team.menu_sale_config"
+			sequence="0" action="hilti_modifier_customer_booking.action_type_anchor_view" />
+
+
+		<record id="anchor_size_view" model="ir.ui.view">
+			<field name="name">anchor.size.view</field>
+			<field name="model">anchor.size</field>
+			<field name="arch" type="xml">
+				<form string="Anchors Size">
+					<sheet string="Anchor Size">
+						<group>
+							<group>
+								<field name="name" required="1" />
+							</group>
+							<group>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="anchor_size_view_tree" model="ir.ui.view">
+			<field name="name">anchor.size.view.tree</field>
+			<field name="model">anchor.size</field>
+			<field name="arch" type="xml">
+				<tree string="Anchor size Tree View">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_size_anchor_view" model="ir.actions.act_window">
+			<field name="name">Anchor Size</field>
+			<field name="res_model">anchor.size</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Anchor Size
+				</p>
+				<p>
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_action_size_anchor_view" parent="sales_team.menu_sale_config"
+			sequence="0" action="hilti_modifier_customer_booking.action_size_anchor_view" />
+		
+		<record id="equipment_equipment_form_view" model="ir.ui.view">
+			<field name="name">equipment.equipment.form.view</field>
+			<field name="model">equipment.equipment</field>
+			<field name="arch" type="xml">
+				<form string="Equipment">
+					<sheet string="equipment">
+						<group>
+							<field name="name" required="1" />
+							<field name="anchor_type_id" required="1" />
+							<field name="anchor_size_ids" required="1" widget="many2many_tags"/>
+							<field name="is_special"/>
+							<field name="qty"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record id="equipment_equipment_tree_view" model="ir.ui.view">
+			<field name="name">equipment.equipment.tree.view</field>
+			<field name="model">equipment.equipment</field>
+			<field name="arch" type="xml">
+				<tree string="Equipment">
+					<field name="name"/>
+					<field name="anchor_type_id"/>
+					<field name="anchor_size_ids"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="equipment_equipment_action" model="ir.actions.act_window">
+			<field name="name">Equipment Management</field>
+			<field name="res_model">equipment.equipment</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_equipment_equipment" parent="sales_team.menu_sale_config"
+			sequence="1" action="hilti_modifier_customer_booking.equipment_equipment_action" />
+		
+	</data>
+</odoo>

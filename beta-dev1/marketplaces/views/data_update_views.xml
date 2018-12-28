@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="marketplaces_form_view">
+            <field name="name">marketplaces.data.update.form</field>
+            <field name="model">marketplaces.data.update</field>
+            <field name="arch" type="xml">
+                <form string="Marketplaces Form">
+                    <header>
+                        <button string="Get Products" type="object" name="action_get_products" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="service"/>
+                            <field name="app_id"/>
+                            <field name="app_secret"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="marketplaces_tree_view">
+            <field name="name">marketplaces.data.update.tree</field>
+            <field name="model">marketplaces.data.update</field>
+            <field name="arch" type="xml">
+                <tree string="Marketplaces List">
+                    <field name="service"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="marketplaces_list_action">
+            <field name="name">Marketplaces</field>
+            <field name="res_model">marketplaces.data.update</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create the first marketplaces
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="main_marketplaces_menu" name="Marketplaces"/>
+        <menuitem id="marketplaces_menu" name="Marketplaces"
+                  parent="main_marketplaces_menu"/>
+        <menuitem id="marketplaces_list_menu" name="Marketplaces" parent="marketplaces_menu"
+                  action="marketplaces_list_action" sequence="20"/>
+    </data>
+</odoo>

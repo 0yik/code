@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <template id="repacking_label_template">
+            <t t-set="doc" t-value="doc"/>
+            <div class="page">
+                <table width="100%">
+                    <tr width="100%">
+                        <td width="50%" style="padding-left:50px;text-align:left;width:60%;">
+                            <h2>Art No</h2>
+                            <h1>
+                                <strong>
+                                    <span t-field="doc.repack_product_id.art_no"/>
+                                </strong>
+                            </h1>
+                        </td>
+                        <td width="50%" style="padding-right:50px;text-align:right;width:40%;">
+                            <h2>Contents</h2>
+                            <h1>
+                                <strong>
+                                    <span t-field="doc.repack_product_id.contents"/>
+                                </strong>
+                            </h1>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%">
+                    <tr width="100%" t-if="doc.batch_no">
+                        <td style="text-align:center;width:100%;">
+                            <h1>
+                                Batch <span t-field="doc.batch_no" class="oe_inline"/>
+                            </h1>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%" t-if="doc.lot_id">
+                    <tr width="100%">
+                        <td style="text-align:center;width:100%;">
+                            <strong>
+                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', doc.lot_id.name, 660, 110)" style="width:700px;height:50px"/>
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;width:100%;">
+                            <h2>
+                                <span t-field="doc.lot_id.name"/>
+                            </h2>
+                        </td>
+                    </tr>
+                </table>
+                <br/><br/>
+                <table width="100%">
+                    <tr width="100%" t-if="doc.repack_product_id.repack_label">
+                        <td style="padding-left:50px;text-align:center;width:100%;">
+                            <h2>
+                                <strong>
+                                    <span t-field="doc.repack_product_id.repack_label"/>
+                                </strong>
+                            </h2>
+                        </td>
+                    </tr>
+                    <tr width="100%">
+                        <td style="padding-left:50px;text-align:center;width:100%;">
+                            <h1>
+                                <strong>
+                                    <span t-field="doc.repack_product_id.name"/>
+                                </strong>
+                            </h1>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%">
+                    <tr t-if="doc.repack_product_id.directions_of_use" width="100%">
+                        <td style="padding-left:50px;text-align:center;width:100%;">
+                            <h2>
+                                <strong>Directions for use: </strong><span t-field="doc.repack_product_id.directions_of_use"/>
+                            </h2>
+                        </td>
+                    </tr>
+                    <tr t-if="doc.repack_product_id.ingredients" width="100%">
+                        <td style="padding-left:50px;text-align:center;width:100%;">
+                            <h2>
+                                <strong>Ingredients: </strong><span t-field="doc.repack_product_id.ingredients"/>
+                            </h2>
+                        </td>
+                    </tr>
+                </table>
+                <br/><br/><br/><br/>
+                <table width="100%">
+                    <tr width="100%">
+                        <td style="text-align:left;width:70%;padding-left:50px;">
+                            <h2>
+                                <span t-field="doc.repack_product_id.storage_place"/>
+                            </h2>
+                        </td>
+                        <td style="text-align:right;width:40%;padding-right:60px;">
+                            <h2>
+                                Best before
+                            </h2>
+                            <h2>
+                                <strong><span t-field="doc.bbd" t-options='{"widget": "date"}'/></strong>
+                            </h2>
+                        </td>
+                    </tr>
+                </table>
+                <br/><br/><br/>
+                <table width="100%" t-if="doc.repack_product_id.barcode">
+                    <tr width="100%">
+                        <td width="70%"/>
+                        <td style="text-align:center;width:30%">
+                            <strong>
+                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', doc.repack_product_id.barcode, 660, 110)" style="width:300px;height:50px"/>
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="70%"/>
+                        <td style="text-align:center;width:30%">
+                            <h3>
+                                <span t-field="doc.repack_product_id.barcode"/>
+                            </h3>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </template>
+
+        <template id="report_repacking_label">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="helaspice_receiving_import.repacking_label_template"/>
+                </t>
+           </t>
+        </template>
+
+</odoo>

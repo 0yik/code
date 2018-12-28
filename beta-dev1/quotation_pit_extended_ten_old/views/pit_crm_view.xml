@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <!-- OPPORTUNITY VIEW -->
+
+        <record model="ir.ui.view" id="quotation_per_opportunity_form_view">
+            <field name="name">Quotation Per Enquiry</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='partner_id']" position="attributes">
+                        <attribute name="string">Account Name</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='user_id']" position="attributes">
+                        <attribute name="string">Enquiry Owner</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='partner_name']" position="attributes">
+                        <attribute name="string">Name</attribute>
+                    </xpath>
+                    <xpath expr="//label[@for='name']" position="attributes">
+                        <attribute name="string">Enquiry</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='name']" position="before">
+                        <div class="oe_title">
+                            <h1>
+                                <field name="en_number" readonly="1"/>
+                            </h1>
+                        </div>
+                    </xpath>
+                    <xpath expr="//field[@name='date_deadline']" position="attributes">
+                        <attribute name="string">Close Date</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='priority']" position="replace"></xpath>
+                    <xpath expr="//field[@name='partner_id']" position="after">
+                        <field name="enquiry_type"/>
+                    </xpath>
+                    <xpath expr="//field[@name='date_deadline']" position="after">
+                        <field name="stage"/>
+                        <field name="priority" widget="priority"/>
+                    </xpath>
+                    
+                    <xpath expr="//field[@name='tag_ids']" position="after">
+                        <field name="en_status"/>
+                        <field name="en_stages"/>
+                    </xpath>
+                    <xpath expr="//notebook" position="inside">
+                        <page string="Additional Information">
+                            <group col="4">
+                                <field name="prospects_source_id"/>
+                                <field name="reason_enquiry"/>
+                                <field name="next_step"/>
+                            </group>
+                        </page>
+                        <page string="Negotiation Information">
+                            <group>
+                                <field name="nagotiation_note" nolabel="1" placeholder="Negotiation Information..."/>
+                            </group>
+                        </page>
+                        <page string="Description Information">
+                            <group>
+                                <field name="description_te" nolabel="1" placeholder="Description..."/>
+                            </group>
+                        </page>
+                        <page string="System Information">
+                            <group col="4">
+                                <field name="created_by_en"/>
+                                <field name="last_modified_by_en"/>
+                            </group>
+                        </page>
+                        <page string="Attachments">
+                            <group col="4">
+                                <field name="attachment_type_id"/>
+                                <field name="created_by_attch"/>
+                                <field name="title_attach"/>
+                                <field name="last_modified_attach"/>
+                            </group>
+                        </page>
+                        <page string="Product Pricelisting">
+                            <group col="4">
+                                <field name="product_en"/>
+                                <field name="internal_code_en"/>
+                                <field name="qty_en"/>
+                                <field name="part_number"/>
+                                <field name="unit_price_en"/>
+                                <field name="workpiece_material"/>
+                                <field name="total_price_en"/>
+                                <field name="coating_en"/>
+                                <field name="pricing_date"/>
+                            </group>
+                            <group string="Remarks">
+                                <field name="remarks_en" nolabel="1" placeholder="remarks..."/>
+                            </group>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="quotation_per_enquiry_tree_view">
+            <field name="name">Enquiry</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_tree_activity"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='name']" position="attributes">
+                        <attribute name="string">Enquiry</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="q_enquiry_filters_view">
+            <field name="name">Enquiry.filters</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//filter[@name='assigned_to_me']" position="attributes">
+                        <attribute name="string">My Enquiry</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="crm_lead_opportunities_new">
+            <field name="name">Opportunities</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">tree,graph,pivot,form,calendar,kanban</field>
+            <field name="domain">[('type','=','opportunity')]</field>
+            <field name="context">{
+                    'default_type': 'opportunity',
+                    'default_user_id': uid
+                }
+            </field>
+            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+        </record>
+
+        <record id="crm.view_partners_form_crm1" model="ir.ui.view">
+            <field name="name">view.res.partner.form.crm.inherited1</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field eval="18" name="priority"/>
+            <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="arch" type="xml">
+                <data>
+                    <div name="button_box" position="inside">
+                        <button class="oe_stat_button o_res_partner_tip_opp" type="action"
+                            attrs="{'invisible': [('customer', '=', False)]}"
+                            name="%(quotation_pit_extended_ten.crm_lead_opportunities_new)d"
+                            icon="fa-star"
+                            context="{'search_default_partner_id': active_id}">
+                            <field string="Opportunities" name="opportunity_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object"
+                            name="schedule_meeting"
+                            icon="fa-calendar"
+                            context="{'partner_id': active_id, 'partner_name': name}">
+                            <field string="Meetings" name="meeting_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="action"
+                            name="%(crm.crm_activity_report_action_tree)d"
+                            icon="fa-clock-o">
+                            <field string="Activities" name="activities_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                </data>
+            </field>
+        </record>
+
+
+        <!-- LEED VIEW -->
+
+        <record model="ir.ui.view" id="quotation_per_enquiry_filters_view">
+            <field name="name">Prospects.filters</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//filter[@name='assigned_to_me']" position="attributes">
+                        <attribute name="string">My Prospects</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="quotation_per_prospects_tree_view">
+            <field name="name">Prospect</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='name']" position="attributes">
+                        <attribute name="string">Prospect</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="quotation_per_opportunity_form_view_lead_view">
+            <field name="name">quotation.per.opportunity.form.view.lead.view</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//label[@for='name']" position="attributes">
+                        <attribute name="string">Prospect</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='name']" position="attributes">
+                        <attribute name="placeholder">Describe the Prospect...</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='partner_id']" position="replace">
+                    </xpath>
+                    <xpath expr="//header/button" position="replace">
+                        <button name="%(quotation_pit_extended_ten.action_crm_askcode_partner_action)d" string="Convert to Account" type="action" help="Convert to Accounts" class="oe_highlight" attrs="{'invisible': [('partner_id','!=',False)]}"/>
+                    </xpath>
+
+                    <xpath expr="//field[@name='user_id']" position="attributes">
+                        <attribute name="string">Prospect Owner</attribute>
+                    </xpath>
+                    <xpath expr="//sheet/group/group/label[@for='contact_name']" position="replace"></xpath>
+                    <xpath expr="//field[@name='contact_name']" position="replace"></xpath>
+                    <xpath expr="//field[@name='title']" position="replace"></xpath>
+                    <xpath expr="//field[@name='function']" position="replace"></xpath>
+                    <xpath expr="//field[@name='tag_ids']" position="attributes">
+                        <attribute name="invisible">True</attribute>
+                    </xpath>
+                    <xpath expr="//sheet/group/group/div[@class='o_row']" position="replace"></xpath>
+                    <xpath expr="//field[@name='partner_name']" position="replace">
+                        <field name="partner_id"/>
+                        <label for="partner_name" string="Name"/>
+                        <div class="o_row">
+                            <field name="partner_name"/>
+                            <field name="title" placeholder="Title" domain="[]" options='{"no_open": True}'/>
+                        </div>
+                        <field name="comp_name"/>
+                    </xpath>
+                    <xpath expr="//field[@name='partner_id']" position="attributes">
+                        <attribute name="string">Account</attribute>
+                    </xpath>
+                    <xpath expr='//field[@name="priority"]' position='replace'>
+                        <field name="stage_new_pr" string="Prospect Status"/>
+                        <field name="prospect_quality"/>
+                    </xpath>
+                    <xpath expr="//form/sheet/group/group/div[@class='o_address_format']" position="after">
+                        <field name="website" widget="url" placeholder="Website..."></field>
+                    </xpath>
+                    <xpath expr="//notebook/page" position="replace"></xpath>
+                    <xpath expr="//notebook/page[@name='extra']" position="attributes">
+                        <attribute name="invisible">True</attribute>
+                    </xpath>
+                    <xpath expr="//notebook" position="inside">
+                        <page string="Additional Information" autofocus="True">
+                            <group col="4">
+                                <field name="no_of_employee"/>
+                                <field name="prospect_source"/>
+                                <field name="annual_revenue"/>
+                                <field name="industry_source_id"/>
+                            </group>
+                            <group string="Email">
+                                <field name="opt_out"/>
+                                <field name="message_bounce" readonly="1" groups="base.group_no_one"/>
+                            </group>
+                        </page>
+                        <page string="Prospect Scoring">
+                            <group col="4">
+                                <field name="special_carbide_tools"/>
+                                <field name="quantity_of_machine"/>
+                                <field name="qty_per_month"/>
+                                <field name="prospect_production"/>
+                                <field name="special_carbide_tools_score"/>
+                                <field name="total_score"/>
+                                <field name="quantity_per_month_score"/>
+                                <field name="production_score"/>
+                                <field name="quantity_of_machine_score"/>
+                            </group>
+                        </page>
+                        <page string="Description Information">
+                            <group>
+                                <field name="description_prospect"  nolabel="1" placeholder="Description..."/>
+                            </group>
+                        </page>
+                        <page string="System Information">
+                            <group>
+                                <field name="created_by"/>
+                                <field name="last_modified_by"/>
+                            </group>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <!-- PARTNER VIEW -->
+
+        <record model="ir.ui.view" id="quotation_per_partner_extednd_form_view">
+            <field name="name">parner.litter.change</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='is_company']" position="after">
+                        <field name="partner_code" placeholder="Account Code"/>
+                    </xpath>
+                    <xpath expr="//label[@for='street']" position="attributes">
+                        <attribute name="string">Mailing Address 1</attribute>
+                    </xpath>
+                    <xpath expr="//label[@for='street']" position="before">
+                        <field name="mailing_address_name" placeholder="Name..." />
+                    </xpath>
+                    <xpath expr="//field[@name='street2']" position="replace"></xpath>
+                    <xpath expr="//field[@name='country_id']" position="replace"></xpath>
+                    <xpath expr="//field[@name='website']" position="before">
+                        <label for="street2" string="Mailing Address 2"/>
+                        <div class="o_address_format">
+                            <field name="street2" placeholder="Street..." class="o_address_street"/>
+                            <field name="city2_mailing" placeholder="City" class="o_address_city"/>
+                            <field name="state_id2" placeholder="State" class="o_address_state"/>
+                            <field name="zip2_mailing" placeholder="ZIP"  class="o_address_zip"/>
+                        </div>
+                        <field name="country_id" placeholder="Country..." />
+
+                        <field name="delivery_address_name" placeholder="Name..."/>
+                        
+                        <label for="street_delivery" string="Delivery Address 1" />
+                        <div class="o_row">
+                            <field name="street_delivery" placeholder="Street..."/>
+                            <field name="zip_delivery" placeholder="ZIP" />
+                        </div>
+                        <label for="street2_delivery" string="Delivery Address 2" />
+                        <div class="o_row">
+                            <field name="street2_delivery" placeholder="Street..." />
+                            <field name="zip2_delivery" placeholder="ZIP"/>
+                        </div>
+                    </xpath>
+                    <xpath expr="//field[@name='function']" position="replace"></xpath>
+                    <xpath expr="//field[@name='category_id']" position="attributes">
+                        <attribute name="invisible">True</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='title']" position="replace"></xpath>
+                    <xpath expr="//field[@name='email']" position="after">
+                        <field name="customer_group_id"/>
+                        <field name="vat_code"/>
+                        <field name="vat_number"/>
+                    </xpath>
+                    <!--xpath expr="//field[@name='lang']" position="after">
+                        <field name="currency_new_id" options="{'no_create': True}"/>
+                    </xpath-->
+                    <xpath expr="//notebook/page" position="after">
+                        <page string="Reference">
+                            <group string="Referece Details" col="4">
+                                <field name="ref_name"/>
+                                <field name="ref_phone"/>
+                                <field name="ref_email"/>
+                                <field name="ref_mobile"/>
+                            </group>                          
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="quotation_per_partner_extednd_kanaban_view">
+            <field name="name">parner.litter.change.kanaban</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div[@class='oe_kanban_details']//strong[@class='oe_partner_heading']" position="before">
+                        <h4 style="margin:0px;padding:0px;">
+                            <a type="open">
+                                <field name="partner_code"/>
+                            </a>
+                        </h4>
+                    </xpath>
+                </data>
+            </field>
+        </record>  
+
+        <!-- SALE ORDER VIEW -->
+
+        <record model="ir.ui.view" id="quotation_per_quotation_form_view">
+            <field name="name">Quotation</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='partner_id']" position="attributes">
+                        <attribute name="domain">[('supplier','!=',True)]</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="crm.crm_case_category_act_leads_all">
+            <field name="name">Prospects</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">['|', ('type','=','lead'), ('type','=',False)]</field>
+            <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+            <field name="context">{
+                    'default_type':'lead',
+                    'stage_type':'lead',
+                    'needaction_menu_ref': 'crm.menu_crm_opportunities',
+                    'search_default_unassigned':1,
+                }
+            </field>
+            <field name="help" type="html">
+                <p>
+                    Use leads if you need a qualification step before creating an
+                    opportunity or a customer. It can be a business card you received,
+                    a contact form filled in your website, or a file of unqualified
+                    prospects you import, etc.
+                </p><p>
+                    Once qualified, the lead can be converted into a business
+                    opportunity and/or a new customer in your address book.
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="crm.crm_case_category_act_oppor11">
+            <field name="name">Enquiry</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">kanban,tree,graph,form,calendar</field>
+            <field name="domain">[('type','=','opportunity')]</field>
+            <field name="context">{
+                    'stage_type': 'opportunity',
+                    'default_type': 'opportunity',
+                    'default_user_id': uid
+                }
+            </field>
+            <field name="view_id" eval="False"/>
+            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+            <field name="help" type="html">
+                <p>
+                    Odoo helps you keep track of your sales pipeline to follow
+                    up potential sales and better forecast your future revenues.
+                </p><p>
+                    You will be able to plan meetings and phone calls from
+                    opportunities, convert them into quotations, attach related
+                    documents, track all discussions, and much more.
+                </p>
+            </field>
+        </record>
+
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="name">Accounts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{"search_default_customer":1}</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a contact in your address book.
+              </p><p>
+                Odoo helps you easily track all activities related to
+                a customer; discussions, history of business opportunities,
+                documents, etc.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem id="sales_team.menu_partner_form" name="Accounts" parent="sales_team.menu_sales" action="base.action_partner_form" sequence="2"/>
+
+        <menuitem name="Prospects" id="crm.menu_crm_leads" parent="sales_team.menu_sales" sequence="3"
+                action="crm.crm_case_category_act_leads_all"/>
+
+        <menuitem id="crm.crm_lead_menu_activities" name="Enquiry" parent="sales_team.menu_sales" sequence="5"
+                    action="crm.crm_lead_action_activities" />
+
+    </data>
+</openerp>

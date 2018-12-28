@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- TAGS FOR RETRIEVING THE DEMO ACCOUNTS -->
+
+        <record id="service_name_account" model="service.used.check">
+            <field name="name">Account</field>
+            <field name="check">False</field>
+        </record>
+        
+        <record id="service_name_Tax" model="service.used.check">
+            <field name="name">Tax</field>
+            <field name="check">False</field>
+        </record>
+
+        <record id="service_name_audit" model="service.used.check">
+            <field name="name">Audit</field>
+            <field name="check">False</field>
+        </record>
+        
+        <record id="service_name_FS" model="service.used.check">
+            <field name="name">FS</field>
+            <field name="check">False</field>
+        </record>
+
+        <record id="service_name_corp_Sec" model="service.used.check">
+            <field name="name">Corp Sec</field>
+            <field name="check">False</field>
+        </record>
+        <record id="service_name_admnistrative" model="service.used.check">
+            <field name="name">Administrative</field>
+        </record>
+         
+            
+    </data>
+</odoo>

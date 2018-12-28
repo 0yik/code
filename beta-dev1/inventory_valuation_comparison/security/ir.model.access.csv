@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_status_by_location,access_status_by_location,model_status_by_location,,1,1,0,0
+access_inventory_valuation_comparison_sql_report,access_inventory_valuation_comparison_sql_report,model_inventory_valuation_comparison_sql_report,,1,1,0,0

@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+    <record id="product_category_modifier_cust" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.pulsa</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+			<!--<xpath expr="//form/sheet/notebook/page[@name='general_information']/group/group[1]/field[@name='categ_id']" position="after">-->
+    			<!--<field name="pulsa"/>-->
+			<!--</xpath>-->
+            <xpath expr="//form/sheet/notebook/page[@name='notes']" position="after">
+    			<page string="Product Type" name="product_type_page">
+                  <group string="Type">
+                    <field name="product_type" widget="radio"/>
+                  </group>
+                </page>
+                <page string="Pulsa Component" name="pulsa_component" attrs="{'invisible': [('product_type','!=', 'pulsa')]}">
+                  <group string="Components">
+                    <field name="pulsa_component_lines">
+                        <tree editable="bottom">
+                            <field name='product_template_id' domain="[('sale_ok','=',True),('purchase_ok','=',False)]"/>
+                            <!--<field name='qty'/>-->
+                            <field name="balance"/>
+                        </tree>
+                    </field>
+                  </group>
+                </page>
+                <page string="Smartphone" name="smartphone_page" attrs="{'invisible': [('product_type','!=', 'smartphone')]}">
+                  <group string="Components">
+                      <field name="smphone_full_name"/>
+                      <field name="smphone_description"/>
+                  </group>
+                </page>
+			</xpath>
+
+        </field>
+    </record>
+  </data>
+</odoo>

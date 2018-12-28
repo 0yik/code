@@ -1,0 +1,18 @@
+<odoo>
+	<data>
+
+		<record id="view_hr_employee_configuration_inherit_attendance" model="ir.ui.view">
+			<field name="name">view.hr.employee.configuration.inherit</field>
+			<field name="model">hr.employee.config.settings</field>
+			<field name="inherit_id" ref="sg_hr_config.view_hr_employee_configuration"/>
+			<field name="arch" type="xml">
+                <field name="module_sg_document_expiry" position="before" >
+                    <field name="timesheet_duration" class="oe_inline" />
+                    <label for="timesheet_duration" />
+                    <br />
+               	</field>
+			</field>
+		</record>
+
+	</data>
+</odoo>

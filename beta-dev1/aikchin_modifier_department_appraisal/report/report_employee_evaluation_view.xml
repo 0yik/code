@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+        <template id="report_department_evaluation_document" inherit_id="employee_appraisal.report_employee_evaluation">
+            <xpath expr="//t[@t-call='report.html_container']" position="replace">
+                <t t-call="report.html_container">
+                    <t t-if="docs[0].env.context.get('group_by_department')">
+                        <t t-call="report.external_layout">
+                            <div class="page">
+                                <div class="oe_structure"/>
+                                <center><h3><strong>Evaluation Report</strong></h3></center>
+                                <div style="width:400px; float:left">
+                                    <table>
+                                        <tr>
+                                            <td><strong>Year</strong></td>
+                                            <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                            <td><span t-field="docs[0].year"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Quarter</strong></td>
+                                            <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                            <td><span t-field="docs[0].quarter"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Department</strong></td>
+                                            <td><![CDATA[&nbsp;]]>:<![CDATA[&nbsp;]]></td>
+                                            <td><span t-field="docs[0].emp_id.department_id"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="clear: both;"/>
+                                <p></p>
+                                <center><strong><t>Ratings</t></strong></center>
+                                <div>
+                                    <table cellspacing="0" style="width:100%; border:1px solid black;" class="table table-bordered">
+                                        <tr>
+                                            <th>Employee ID</th>
+                                            <th>Employee Name</th>
+                                            <t t-foreach="docs[0].department_id.weightage_line_ids" t-as="rating">
+                                                <th>
+                                                    <span t-field="rating.rating_id"/>
+                                                </th>
+                                            </t>
+                                            <th>Total</th>
+                                        </tr>
+                                        <tr t-foreach="docs" t-as="doc">
+                                            <td><span t-field="doc.employee_id"/></td>
+                                            <td><span t-field="doc.emp_id"/></td>
+                                            <t t-set="total_row_score" t-value="0"/>
+                                            <td t-foreach="docs[0].department_id.weightage_line_ids" t-as="dept_rating">
+                                                <t t-as="emp_rating" t-foreach="doc.emp_rating_ids">
+                                                    <t t-if="emp_rating.rating_label_id==dept_rating.rating_id">
+                                                        <span t-esc="emp_rating.rating_float"/>
+                                                        <t t-set="total_row_score" t-value="total_row_score+emp_rating.rating_float"/>
+                                                    </t>
+                                                </t>
+                                            </td>
+                                            <td><span t-esc="total_row_score"/></td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Total Ratings:</th>
+                                            <t t-set="total_row_score" t-value="0"/>
+                                            <t t-set="total_score" t-value="0"/>
+                                            <td t-foreach="docs[0].department_id.weightage_line_ids" t-as="dept_rating">
+                                                <t t-set="total_row_score" t-value="0"/>
+                                                <t t-foreach="docs" t-as="doc">
+                                                    <t t-as="emp_rating" t-foreach="doc.emp_rating_ids">
+                                                        <t t-if="emp_rating.rating_label_id==dept_rating.rating_id">
+                                                            <!-- <span t-esc="emp_rating.rating_float"/> -->
+                                                            <t t-set="total_row_score" t-value="total_row_score+emp_rating.rating_float"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <span t-esc="total_row_score"/>
+                                                <t t-set="total_score" t-value="total_row_score+total_score"/>
+                                            </td>
+                                            <td t-esc="total_score"/>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-if="not docs[0].env.context.get('group_by_department')">
+                        <t t-foreach="docs" t-as="doc">
+                            <t t-call="employee_appraisal.report_employee_evaluation_document"/>
+                        </t>
+                    </t>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>

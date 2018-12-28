@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_student_payslip_tree_modifier" model="ir.ui.view">
+        <field name="name">student.payslip.tree.modifier</field>
+        <field name="model">student.payslip</field>
+        <field name="inherit_id" ref="school_fees.view_student_payslip_tree"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='register_id']" position="after">
+				<field name="nric"/>
+			</xpath>
+        </field>
+    </record>
+
+    <record id="view_student_payslip_form_modifier" model="ir.ui.view">
+        <field name="name">student.payslip.tree.modifier</field>
+        <field name="model">student.payslip</field>
+        <field name="inherit_id" ref="school_fees.view_student_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='division_id']" position="after">
+                <field name="nric"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_student_payslip_search_modifier" model="ir.ui.view">
+        <field name="name">student.payslip.search.modifier</field>
+        <field name="model">student.payslip</field>
+        <field name="inherit_id" ref="school_fees.view_student_payslip_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='number']" position="after">
+                <field name="nric"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

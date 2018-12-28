@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_class_placement_wizard" model="ir.ui.view">
+            <field name="name">class.placement.wizard</field>
+            <field name="model">class.placement.wizard</field>
+            <field name="arch" type="xml">
+            <form string="Class Placement">
+                <p>
+                        Allocate all class placement in the background.
+                </p>
+                <footer>
+                    <button name="run_placement" string="Run Placement" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_class_placement_wizard" model="ir.actions.act_window">
+	        <field name="name">Class Placement</field>
+	        <field name="res_model">class.placement.wizard</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">form</field>
+	        <field name="target">new</field>
+    	</record>
+    	
+
+
+</odoo>

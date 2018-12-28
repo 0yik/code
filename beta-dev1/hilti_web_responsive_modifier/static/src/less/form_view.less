@@ -1,0 +1,45 @@
+.o_form_view {
+    // No overflowing buttons or titles
+    .oe_button_box, .oe_title {
+        width: inherit !important;
+        max-width: 100%;
+    }
+
+    // Groups
+    .o_group {
+        &.o_label_nowrap {
+            .o_form_label {
+                white-space: nowrap;
+            }
+        }
+
+        .o_form_label {
+            font-weight: normal;
+        }
+        .o_td_label .o_form_label {
+            font-weight: bold;
+            margin-right: 0px;
+        }
+    }
+    &.oe_form_configuration {
+        .o_group .o_form_label {
+            white-space: nowrap;
+
+        }
+        @media (max-width: 768px) {
+            overflow: scroll;
+        }
+    }
+
+    // One2Many, Many2Many outside of group
+    .o_form_field {
+        &.o_view_manager_content, &.o_form_field_one2many, &.o_form_field_many2many {
+            width: 100%;
+            > div {
+                width: 100%;
+                display:table;
+            }
+        }
+    }
+
+}

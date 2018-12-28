@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+    <record model="ir.ui.menu" id="sale.menu_sale_quotations">
+      <field name="name">Draft PO Customer</field>
+    </record>
+
+    <record model="ir.ui.menu" id="so_blanket_order.menu_sale_requisition_pro_mgt">
+      <field name="name">Sales Forecast</field>
+    </record>
+
+    <record model="ir.ui.menu" id="sale.menu_sale_order">
+      <field name="name">PO Customer</field>
+    </record>
+
+
+  </data>
+</odoo>

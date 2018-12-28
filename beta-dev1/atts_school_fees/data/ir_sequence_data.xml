@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_invoice_registration" model="ir.sequence">
+            <field name="name">Invoice Fee</field>
+            <field name="code">fee.invoice</field>
+            <field name="prefix">INV %(year)s%(month)s%(day)s</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="bank_journal" model="account.journal">
+            <field name="name">Bank</field>
+            <field name="code">ATBNK</field>
+            <field name="type">bank</field>
+        </record>
+        <record id="cash_journal" model="account.journal">
+            <field name="name">Cash</field>
+            <field name="code">ATCSH</field>
+            <field name="type">cash</field>
+        </record>
+    </data>
+	<record model="ir.cron" id="registration_cancle">
+        <field name="name">Auto Cancel the Reservation</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field><!-- it s every day -->
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model" eval="'class.registration'"/>
+        <field name="function" eval="'process_cancel_reservation'"/>
+        <field name="args" eval="'()'"/>
+    </record>
+    <record model="ir.cron" id="registration_payment_reminder">
+        <field name="name">Reminder: Payment Required</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field><!-- it s every day -->
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model" eval="'class.registration'"/>
+        <field name="function" eval="'process_payment_reminder'"/>
+        <field name="args" eval="'()'"/>
+    </record>
+</odoo>

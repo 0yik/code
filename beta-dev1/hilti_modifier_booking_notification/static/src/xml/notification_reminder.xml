@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+   
+    <t t-name="BookingNotification">
+        <li class="QuotationReminder" title="Booking Notification">
+            <span class="o_reminder_counter">0</span>
+            <a id="reminder_open" class="dropdown-toggle" data-toggle="dropdown" href="#" style="font-size:16px;cursor: pointer;">
+                <i class="fa fa-globe" aria-hidden="true"></i>
+            </a>
+            <div class="o_reminder_dropdown_channels dropdown-menu" role="menu"/>
+        </li>
+    </t>
+
+    <t t-name="reminder_order">
+    	<table class="table table-striped" style="max-height: 560px;overflow: auto;display: block;">
+			<thead>
+				<tr>
+					<th>Create Date</th>
+			        <th>Notification No.</th>
+			        <th>Detail</th>
+				</tr>
+		    </thead>
+		    <tbody>
+		    	<t t-foreach='orders' t-as="order">
+		    		<t t-if="order.booking_id">
+						<tr class="recorddata" t-att-data-id="order.booking_id[0]" data-model="project.booking" style='cursor: pointer;'>
+							<td><t t-esc="order.create_date or ''" /></td>
+					        <td><t t-esc="order.notification_no or ''" /></td>
+					        <td><t t-esc="order.name or ''" /></td>
+						</tr>
+					</t>
+					<t t-if="order.tester_request_id">
+						<tr class="recorddata" t-att-data-id="order.tester_request_id[0]" data-model="my.request" style='cursor: pointer;'>
+							<td><t t-esc="order.create_date or ''" /></td>
+					        <td><t t-esc="order.notification_no or ''" /></td>
+					        <td><t t-esc="order.name or ''" /></td>
+						</tr>
+					</t>
+					<t t-if="order.project_id">
+						<tr class="recorddata" t-att-data-id="order.project_id[0]" data-model="project.project" style='cursor: pointer;'>
+							<td><t t-esc="order.create_date or ''" /></td>
+					        <td><t t-esc="order.notification_no or ''" /></td>
+					        <td><t t-esc="order.name or ''" /></td>
+						</tr>
+					</t>
+					<t t-if="order.user_id">
+						<tr class="recorddata" t-att-data-id="order.user_id[0]" data-model="res.users" style='cursor: pointer;'>
+							<td><t t-esc="order.create_date or ''" /></td>
+					        <td><t t-esc="order.notification_no or ''" /></td>
+					        <td><t t-esc="order.name or ''" /></td>
+						</tr>
+					</t>
+					
+				</t>
+			</tbody>
+		</table>
+    </t>
+
+</templates>

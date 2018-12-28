@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_invoice_repated_booking" model="ir.actions.act_window">
+        <field name="name">Invoices</field>
+        <field name="res_model">account.invoice</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+        <field name="domain">[('booking_order_id','=',active_id)]</field>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+    </record>
+
+    <record id="action_booking_order_picking_tree_ready" model="ir.actions.act_window">
+        <field name="name">To Do</field>
+        <field name="res_model">stock.picking</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,kanban,form,calendar</field>
+        <field name="domain">[('booking_order_id','=',active_id)]</field>
+        <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+    </record>
+
+    <record id="action_product_serial_number_calendar" model="ir.actions.act_window">
+        <field name="name">Product Serial Number</field>
+        <field name="res_model">product.serial.number</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">calendar,tree,form</field>
+        <field name="domain">[('booking_order_id','=',active_id)]</field>
+    </record>
+
+    <!--Booking Order Form-->
+    <record id="view_booking_order_view" model="ir.ui.view">
+        <field name="name">booking.order.form.view</field>
+        <field name="model">booking.order</field>            
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="validate_booking" 
+                                string="Validate"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible':[('state','not in',['draft'])]}"
+                                />
+                    <button name="sell_product" 
+                                string="Sell"
+                                type="object"
+                                class="oe_highlight"/>
+                    <field name="state" 
+                            widget="statusbar" 
+                            nolabel="1" 
+                            statusbar_visible="draft,pending,out,returned,sold"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_invoice_repated_booking)d" 
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-clock-o" style="width:165px ! important;">
+                            <field name="count_invoices" widget="statinfo" string="Invoices"/>
+                        </button>
+                        <button name="%(action_product_serial_number_calendar)d" 
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-clock-o" style="width:165px ! important;">
+                            <field name="count_bookings" widget="statinfo" string="Calendar Bookings"/>
+                        </button>
+                        <button name="%(action_booking_order_picking_tree_ready)d" 
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-truck">
+                            <field name="count_delivery" widget="statinfo" string="Delivery Orders"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" 
+                            context="{'search_default_customer':1, 'show_address': 1}" 
+                            options="{&quot;always_reload&quot;: True}"/>
+                        </group>
+                        <group>
+                            <field name="def_start_date"/>
+                            <field name="def_end_date"/>
+                            <field name="user_id"/>
+                            <field name="location"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="booking_lines" string="Booking Items" >
+                            <field name="booking_lines" attrs="{'readonly':[('state','not in',['draft'])]}" context="{'default_start_date':def_start_date,'default_end_date':def_end_date}">
+                                <tree name="booking_items" editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="serial_no"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="actual_start_date"/>
+                                    <field name="actual_end_date"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group name="customer_remarks" string="Cusomer Remarks">
+                        <field name="customer_remarks" placeholder="Customer remarks..." nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree-->
+    <record id="view_tree_tree" model="ir.ui.view">
+        <field name="name">booking.order.tree.view</field>
+        <field name="model">booking.order</field>            
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="def_start_date"/>
+                <field name="def_end_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!--Action-->
+    <record id="action_booking_order" model="ir.actions.act_window">
+        <field name="name">Booking Order</field>
+        <field name="res_model">booking.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem id="menu_booking_order" name="Booking Order"  parent="sales_team.menu_sales" action="action_booking_order" sequence="100"/>
+
+    <!--Booking Order Line Form-->
+    <record id="view_booking_order_line_tree_view" model="ir.ui.view">
+        <field name="name">booking.order.line.tree.view</field>
+        <field name="model">booking.order.line</field>            
+        <field name="arch" type="xml">
+            <tree string="Booking Items">
+                <field name="product_id"/>
+                <field name="serial_no"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="actual_start_date"/>
+                <field name="actual_end_date"/>
+                <field name="state"/>
+                <field name="order_id"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!--Booking Order Line Form-->
+    <record id="view_booking_order_line_view" model="ir.ui.view">
+        <field name="name">booking.order.line.form.view</field>
+        <field name="model">booking.order.line</field>            
+        <field name="arch" type="xml">
+            <form string="Booking Items">
+                <group name="booking_items" string="Booking Items" col="4">
+                    <field name="product_id"/>
+                    <field name="serial_no"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="actual_start_date"/>
+                    <field name="actual_end_date"/>
+                    <field name="state"/>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>

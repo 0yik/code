@@ -1,0 +1,13 @@
+.green-cls{
+	background-color: green;
+    border-radius: 48%;
+    transition: background-color 1s ease-out;
+}
+
+.red-cls {
+	background-color: red;
+    border-radius: 48%;
+    transition: background-color 1s ease-out;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}

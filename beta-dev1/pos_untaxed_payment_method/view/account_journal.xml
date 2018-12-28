@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="tax_pos_journal_account_form_inherit" model="ir.ui.view">
+            <field name="name">tax_pos_journal_account_form_inherit</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="point_of_sale.view_account_journal_pos_user_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_authorized_diff']" position="after">
+                    <field name="usage_tax"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="pos_usage_tax_config">
+            <field name="name">journal_tax_pos_config</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_ids']//tree//field[@name='type']" position="after">
+                    <field name="usage_tax"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

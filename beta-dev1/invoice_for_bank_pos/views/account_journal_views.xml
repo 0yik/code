@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_journal_bank_account_form" model="ir.ui.view">
+            <field name="name">account.journal.invoice.bank.pos</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="Bank Charges" attrs="{'invisible': [('type','not in',['bank'])], 'required': [('type','in',['bank'])]}">
+                        <group name="main_group">
+                        <group name="group1">
+                            <field name="fixed_amount"  attrs="{'required': [('type','in',['bank'])]}"/>
+                            <label for="rate_amount" attrs="{'required': [('type','in',['bank'])]}"/>
+                            <div attrs="{'required': [('type','in',['bank'])]}">
+                                <field name="rate_amount"
+                                       attrs="{'required': [('type','in',['bank'])]}" class="oe_inline" widget="monetary"/>
+                                <label string="%%" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group name="group2">
+                            <field name="bank_charge_account" attrs="{'required': [('type','in',['bank'])]}"/>
+                            <field name="bank_charge_product" attrs="{'required': [('type','in',['bank'])]}"/>
+                        </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="customer" attrs="{'invisible': [('type','not in',['bank'])], 'required': [('type','in',['bank'])]}"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="receivable_product" attrs="{'invisible': [('type','not in',['bank'])], 'required': [('type','in',['bank'])]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

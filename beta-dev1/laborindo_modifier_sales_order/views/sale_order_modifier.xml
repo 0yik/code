@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_sale_order_modifier_for_laborindo" model="ir.ui.view">
+            <field name="name">inheirt.sale.order.modifier.labarindo</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="attributes">
+                    <attribute name="context">{'default_sale_order':1,'show_address': 1,'search_default_customer': 1}
+                    </attribute>
+                </field>
+                <field name="partner_id" position="before">
+                    <field name="quotation_reference" placeholder="Quotation Reference" attrs="{'invisible':[('state','in',['draft','sent'])]}"/>
+                </field>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="after">
+                    <field name="franco"/>
+                    <field name="note"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group[1]" position="inside">
+                    <field name="franco"/>
+                    <field name="note"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form//field[@name='product_uom']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <xpath expr="//group[@name='technical']" position="after">
+                    <group name="cancel_order" string="Cancellation" attrs="{'invisible':[('state','!=','cancel')]}">
+                        <field name="cancel_reason"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="wizard_form_view">
+            <field name="name">wizard.cancel.so</field>
+            <field name="model">cancel.sale.order.reason</field>
+            <field name="arch" type="xml">
+                <form string="Cancel Sale Order">
+                    <group>
+                        <field name="cancel_reason"/>
+                    </group>
+                    <footer>
+                        <button name="cancel_os" type="object"
+                                string="Validate" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

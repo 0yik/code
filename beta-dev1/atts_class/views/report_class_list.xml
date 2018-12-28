@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<odoo>
+
+    <!--Template Class List -->
+    <template id="report_class_list">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <div class="page">
+                	
+                <div class="row">
+                	<span><left><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y')"/> Sessions</left></span>
+                	<h5>
+                	<span><left>Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></left></span>
+                   </h5>
+                 </div>
+                
+                    <table class="table table-condensed">
+                    	<tr>
+                            <td><strong>Age</strong></td>
+                            <td><strong>7</strong></td>
+                            <td><strong>8</strong></td>
+                            <td><strong>9</strong></td>
+                            <td><strong>10</strong></td>
+                            <td><strong>11</strong></td>
+                            <td><strong>12</strong></td>
+                            <td><strong>13</strong></td>
+                            <td><strong>14</strong></td>
+                            <td><strong>15</strong></td>
+                            <td><strong>16</strong></td>
+                            <td><strong>17</strong></td>
+                            <td><strong>18</strong></td>
+                            <td><strong>Grand Total</strong></td>
+                            
+                        </tr>
+                        <tr t-foreach="class_level_data" t-as="a">
+                        	
+                            <td><strong><span t-esc="a['name']"/> <span t-esc="a['class_no']"/></strong></td>
+                            <td ><span t-esc="a['total_class7']"/></td>
+                            <td><span t-esc="a['total_class8']"/></td>
+                            <td><span t-esc="a['total_class9']"/></td>
+                            <td><span t-esc="a['total_class10']"/></td>
+                            <td><span t-esc="a['total_class11']"/></td>
+                            <td><span t-esc="a['total_class12']"/></td>
+                            <td><span t-esc="a['total_class13']"/></td>
+                            <td><span t-esc="a['total_class14']"/></td>
+                            <td><span t-esc="a['total_class15']"/></td>
+                            <td><span t-esc="a['total_class16']"/></td>
+                            <td><span t-esc="a['total_class17']"/></td>
+                            <td><span t-esc="a['total_class18']"/></td>
+                            <td><span t-esc="a['total_class']"/></td>
+                            
+                        
+                        <tr>
+                            <td><strong><center><span t-esc="a['teacher']"/></center></strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            
+                        </tr>
+                        <tr>
+                            <td><center><span t-esc="a['female']"/></center></td>
+                            <td ><span t-esc="a['female7']"/></td>
+                            <td><span t-esc="a['female8']"/></td>
+                            <td><span t-esc="a['female9']"/></td>
+                            <td><span t-esc="a['female10']"/></td>
+                            <td><span t-esc="a['female11']"/></td>
+                            <td><span t-esc="a['female12']"/></td>
+                            <td><span t-esc="a['female13']"/></td>
+                            <td><span t-esc="a['female14']"/></td>
+                            <td><span t-esc="a['female15']"/></td>
+                            <td><span t-esc="a['female16']"/></td>
+                            <td><span t-esc="a['female17']"/></td>
+                            <td><span t-esc="a['female18']"/></td>
+                            <td><span t-esc="a['total_female']"/></td>
+                            
+                        </tr>
+                        <tr>
+                            <td><center><span t-esc="a['asd']"/></center></td>
+                            <td><span t-esc="a['female7_asd']"/></td>
+                            <td><span t-esc="a['female8_asd']"/></td>
+                            <td><span t-esc="a['female9_asd']"/></td>
+                            <td><span t-esc="a['female10_asd']"/></td>
+                            <td><span t-esc="a['female11_asd']"/></td>
+                            <td><span t-esc="a['female12_asd']"/></td>
+                            <td><span t-esc="a['female13_asd']"/></td>
+                            <td><span t-esc="a['female14_asd']"/></td>
+                            <td><span t-esc="a['female15_asd']"/></td>
+                            <td><span t-esc="a['female16_asd']"/></td>
+                            <td><span t-esc="a['female17_asd']"/></td>
+                            <td><span t-esc="a['female18_asd']"/></td>
+                            <td><span t-esc="a['total_female_asd']"/></td>
+                            
+                        </tr>
+                        <tr>
+                            <td><center><span t-esc="a['mid']"/></center></td>
+                            <td><span t-esc="a['female7_mid']"/></td>
+                            <td><span t-esc="a['female8_mid']"/></td>
+                            <td><span t-esc="a['female9_mid']"/></td>
+                            <td><span t-esc="a['female10_mid']"/></td>
+                            <td><span t-esc="a['female11_mid']"/></td>
+                            <td><span t-esc="a['female12_mid']"/></td>
+                            <td><span t-esc="a['female13_mid']"/></td>
+                            <td><span t-esc="a['female14_mid']"/></td>
+                            <td><span t-esc="a['female15_mid']"/></td>
+                            <td><span t-esc="a['female16_mid']"/></td>
+                            <td><span t-esc="a['female17_mid']"/></td>
+                            <td><span t-esc="a['female18_mid']"/></td>
+                            <td><span t-esc="a['total_female_mid']"/></td>
+                            
+                        </tr>
+                        <tr>
+                            <td><center><span t-esc="a['imid']"/></center></td>
+                            <td><span t-esc="a['female7_imid']"/></td>
+                            <td><span t-esc="a['female8_imid']"/></td>
+                            <td><span t-esc="a['female9_imid']"/></td>
+                            <td><span t-esc="a['female10_imid']"/></td>
+                            <td><span t-esc="a['female11_imid']"/></td>
+                            <td><span t-esc="a['female12_imid']"/></td>
+                            <td><span t-esc="a['female13_imid']"/></td>
+                            <td><span t-esc="a['female14_imid']"/></td>
+                            <td><span t-esc="a['female15_imid']"/></td>
+                            <td><span t-esc="a['female16_imid']"/></td>
+                            <td><span t-esc="a['female17_imid']"/></td>
+                            <td><span t-esc="a['female18_imid']"/></td>
+                            <td><span t-esc="a['total_female_imid']"/></td>
+                            
+                        </tr>
+                        <tr>
+                            <td><center><span t-esc="a['male']"/></center></td>
+                            <td><span t-esc="a['male7']"/></td>
+                            <td><span t-esc="a['male8']"/></td>
+                            <td><span t-esc="a['male9']"/></td>
+                            <td><span t-esc="a['male10']"/></td>
+                            <td><span t-esc="a['male11']"/></td>
+                            <td><span t-esc="a['male12']"/></td>
+                            <td><span t-esc="a['male13']"/></td>
+                            <td><span t-esc="a['male14']"/></td>
+                            <td><span t-esc="a['male15']"/></td>
+                            <td><span t-esc="a['male16']"/></td>
+                            <td><span t-esc="a['male17']"/></td>
+                            <td><span t-esc="a['male18']"/></td>
+                            <td><span t-esc="a['total_male']"/></td>
+                            
+                        </tr>
+                        <tr>
+                            <td><center><span t-esc="a['asd']"/></center></td>
+                            <td><span t-esc="a['male7_asd']"/></td>
+                            <td><span t-esc="a['male8_asd']"/></td>
+                            <td><span t-esc="a['male9_asd']"/></td>
+                            <td><span t-esc="a['male10_asd']"/></td>
+                            <td><span t-esc="a['male11_asd']"/></td>
+                            <td><span t-esc="a['male12_asd']"/></td>
+                            <td><span t-esc="a['male13_asd']"/></td>
+                            <td><span t-esc="a['male14_asd']"/></td>
+                            <td><span t-esc="a['male15_asd']"/></td>
+                            <td><span t-esc="a['male16_asd']"/></td>
+                            <td><span t-esc="a['male17_asd']"/></td>
+                            <td><span t-esc="a['male18_asd']"/></td>
+                            <td><span t-esc="a['total_male_asd']"/></td>
+                            
+                        </tr>
+                        <tr>
+                            <td><center><span t-esc="a['mid']"/></center></td>
+                            <td><span t-esc="a['male7_mid']"/></td>
+                            <td><span t-esc="a['male8_mid']"/></td>
+                            <td><span t-esc="a['male9_mid']"/></td>
+                            <td><span t-esc="a['male10_mid']"/></td>
+                            <td><span t-esc="a['male11_mid']"/></td>
+                            <td><span t-esc="a['male12_mid']"/></td>
+                            <td><span t-esc="a['male13_mid']"/></td>
+                            <td><span t-esc="a['male14_mid']"/></td>
+                            <td><span t-esc="a['male15_mid']"/></td>
+                            <td><span t-esc="a['male16_mid']"/></td>
+                            <td><span t-esc="a['male17_mid']"/></td>
+                            <td><span t-esc="a['male18_mid']"/></td>
+                            <td><span t-esc="a['total_male_mid']"/></td>
+                            
+                        </tr>
+                        <tr>
+                            <td><center><span t-esc="a['imid']"/></center></td>
+                            <td><span t-esc="a['male7_imid']"/></td>
+                            <td><span t-esc="a['male8_imid']"/></td>
+                            <td><span t-esc="a['male9_imid']"/></td>
+                            <td><span t-esc="a['male10_imid']"/></td>
+                            <td><span t-esc="a['male11_imid']"/></td>
+                            <td><span t-esc="a['male12_imid']"/></td>
+                            <td><span t-esc="a['male13_imid']"/></td>
+                            <td><span t-esc="a['male14_imid']"/></td>
+                            <td><span t-esc="a['male15_imid']"/></td>
+                            <td><span t-esc="a['male16_imid']"/></td>
+                            <td><span t-esc="a['male17_imid']"/></td>
+                            <td><span t-esc="a['male18_imid']"/></td>
+                            <td><span t-esc="a['total_male_imid']"/></td>
+                            
+                        </tr>
+                        </tr>
+                        <tr>
+                            <td><strong>Grand Total</strong></td>
+                            <td><strong><span t-esc="gtotal_class7"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class8"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class9"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class10"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class11"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class12"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class13"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class14"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class15"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class16"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class17"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class18"/></strong></td>
+                            <td><strong><span t-esc="gtotal_class"/></strong></td>
+                        </tr>
+                    </table>
+                   
+                   
+                </div>
+            </t>
+        </t>
+    </template>
+
+    
+
+</odoo>

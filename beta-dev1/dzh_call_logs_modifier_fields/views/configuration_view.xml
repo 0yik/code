@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="market_segment_action" model="ir.actions.act_window">
+        <field name="name">Market Segment</field>
+        <field name="res_model">market.segment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="dzh_call_logs_modifier_fields.market_segment_tree_view"/>
+    </record>
+
+    <record id="member_type_action" model="ir.actions.act_window">
+        <field name="name">Member Type</field>
+        <field name="res_model">member.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="dzh_call_logs_modifier_fields.member_type_tree_view"/>
+    </record>
+
+    <menuitem action="market_segment_action" name="Market Segment"
+              id="menu_market_segment-act" parent="crm_phonecall.menu_crm_config_phonecall"/>
+
+    <menuitem action="member_type_action" name="Member Type"
+              id="menu_member_type-act" parent="crm_phonecall.menu_crm_config_phonecall"/>
+</odoo>

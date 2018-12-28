@@ -1,0 +1,23 @@
+<odoo>
+	<data>
+
+		<record id="po_fabric_wizard_form" model="ir.ui.view">
+			<field name="name">PO Fabric Wizard</field>
+			<field name="model">po.fabric.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Create PO (Fabric) Report">
+						Click Generate Button to Create PO (Fabric) Report.
+					<footer>
+						<button name="generate_po_fabric" string="Generate" type="object"
+							class="btn-primary" />
+						<button string="Cancel" class="btn-default" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<act_window id="action_po_fabric_report" name="PO (Fabric) Report"
+			src_model="purchase.order" res_model="po.fabric.wizard" view_type="form"
+			view_mode="form" key2="client_action_multi" target="new" />
+	</data>
+</odoo>

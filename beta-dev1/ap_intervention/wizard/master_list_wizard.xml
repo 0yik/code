@@ -1,0 +1,23 @@
+<odoo>
+	<data>
+
+		<record id="master_list_wizard_form" model="ir.ui.view">
+			<field name="name">Master List Wizard</field>
+			<field name="model">master.list.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Generate Master List">
+						Click Generate Button to Generate Master List Printout.
+					<footer>
+						<button name="generate_master_list" string="Generate" type="object"
+							class="btn-primary" />
+						<button string="Cancel" class="btn-default" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<act_window id="action_generate_master_list" name="Generate Master List"
+			src_model="master.list" res_model="master.list.wizard" view_type="form"
+			view_mode="form" key2="client_action_multi" target="new" />
+	</data>
+</odoo>

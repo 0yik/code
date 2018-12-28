@@ -1,0 +1,13 @@
+import backend
+import quick_account_invoice
+import quick_customer
+import quick_vendor
+import quick_product
+import quick_sales
+import quick_account
+import quick_purchase
+import quick_payment_method
+import payment_term
+import quick_account_tax
+import quick_TaxRate
+import quick_payment

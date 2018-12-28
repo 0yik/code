@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="main_login" inherit_id="web.login" name="Login Inherit">
+		<xpath expr="//div[@class='clearfix oe_login_buttons']" position="inside">
+			<a t-attf-href="/enrolment" class="btn btn-primary" type="button">Admission Register</a>
+		</xpath>
+	</template>
+</odoo>

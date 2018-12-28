@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <!-- inherting bo order-->
+        <record id="view_tree_view_wo_inherit_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="booking_service_V2.view_quote_wo_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_employees']" position="replace">
+                    <field name="worker_name"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- inheritin search view-->
+        <record id="view_inheirting_search_view_for_wo" model="ir.ui.view">
+            <field name="name">sale.order.search</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="booking_service_V2.view_sales_order_filter_booking_order"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="inside">
+                    <filter string="Worker" domain="[]" context="{'group_by':'worker_name'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_move_picking_tree_wo" model="ir.ui.view">
+            <field name="name">stock.move.tree</field>
+            <field name="model">stock.move</field>
+            <field eval="10000" name="priority"/>
+            <field name="arch" type="xml">
+                <tree decoration-muted="scrapped == True" string="Stock Moves" editable="bottom">
+                    <field name="product_id" domain="[('type','=', 'service')]"/>
+                    <field name="name" invisible="1"/>
+                    <field name="product_uom_qty"/>
+                    <field name="product_uom" options="{'no_open': True, 'no_create': True}" string="Unit of Measure" groups="product.group_uom"/>
+                    <field name="location_id" invisible="1"/>
+                    <field name="create_date" invisible="1" />
+                    <field name="date_expected" invisible="1" />
+                    <field name="picking_type_id" invisible="1"/>
+                    <field name="scrapped" invisible="1"/>
+                    <field name="availability" invisible="1"/>
+                    <field name="reserved_availability" invisible="1"/>
+                    <field name="location_dest_id" invisible="1"/>
+                    <field name="remaining_qty" invisible="1"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+    </record>
+    
+        <record id="view_move_picking_form_wo" model="ir.ui.view">
+            <field name="name">stock.move.form</field>
+            <field name="model">stock.move</field>
+            <field eval="10000" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Stock Moves">
+                <header>
+                        <field name="state" widget="statusbar"/>
+                </header>
+                <field name="scrapped" invisible="1"/>
+                <group>
+                    <group string="#Products">
+                        <field name="product_id" domain="[('type', '=', 'service')]"/>
+                        <field name="picking_type_id" invisible="1"/>
+                        <field name="group_id" invisible="1"/>
+                        <label for="product_uom_qty"/>
+                        <div>
+                            <field name="product_uom_qty"/>
+                            <field name="product_uom" options="{'no_open': True, 'no_create': True}" string="Unit Of Measure" groups="product.group_uom" class="oe_inline"/>
+                        </div>
+                        <field name="product_tmpl_id" invisible="1"/>
+                    </group>
+                    <group string="Locations" groups="base.group_no_one">
+                        <field name="name"/>
+                        <field name="location_id"/>
+                        <field name="location_dest_id"/>
+                    </group>
+                </group>
+                <group>
+                    <group string="Conditions">
+                       <field name="procure_method" attrs="{'readonly': [('state', '!=', 'draft')]}" groups="stock.group_adv_location"/>
+                        <field name="create_date" invisible="1"/>
+                        <field name="date_expected"/>
+                        <field name="move_dest_id" groups="base.group_no_one" readonly="1"/>
+                    </group>
+                    <group name="quants_grp" string="Reserved" attrs="{'invisible': [('state', '=', 'draft')]}">
+                        <field name="string_availability_info"/>
+                    </group>
+                    <group name="moved_quants_grp" string="Moved Quants" colspan="4" groups="base.group_no_one" attrs="{'invisible': [('state', '!=', 'done')]}">
+                        <field name="quant_ids" readonly="1" nolabel="1"/>
+                    </group>
+                </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_bo_tree_inherit_form" model="ir.ui.view">
+            <field name="name">sale.order.address.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="booking_service_V2.view_quote_wo_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="work_location_address"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sale_form_inherit_bo_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state_booking', 'in', ['sale', 'done', 'cancel'])]}</attribute>
+                </xpath>
+                <xpath expr="//button[4]" position="replace">
+                    <button name="print_quotation"
+                        string="Print" type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': ['|', ('is_booking', '=', True), ('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//button[7]" position="replace">
+                    <button name="print_quotation"
+                        string="Print" type="object"
+                        attrs="{'invisible': ['|', ('is_booking', '=', True), ('state', 'not in', ('sent', 'sale'))]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_biocare_modifier_fields_boking" model="ir.ui.view">
+            <field name="name">biocare.modifier.booking</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="booking_service_V2.view_order_form_inherit"/>
+            <field name="arch" type="xml">
+
+                <field name="start_date" position="replace"/>
+                <field name="end_date" position="replace"/>
+
+
+                <field name="team" position="before">
+                    <field name="pic_id" string="Contact Number"
+                        attrs="{'invisible': [('is_booking', '=', False)], 'readonly': [('state', 'in', ['sale', 'done'])]}"/>
+                    <!--field name="work_order" attrs="{'invisible':[('is_booking','=',False)]}"/-->
+                    <field name="work_location_address" 
+                        attrs="{'invisible': [('is_booking', '=', False)], 'readonly': [('state', 'in', ['sale', 'done'])]}"/>
+                    <field name="postal_code" 
+                        attrs="{'invisible': [('is_booking', '=', False)], 'readonly': [('state', 'in', ['sale', 'done'])]}"/>
+                    <field name="start_date" string="Appointment Start Date &amp; Time" 
+                        attrs="{'invisible': [('is_booking', '=', False)], 'required': [('is_booking', '=', True)], 'readonly': [('state', 'in', ['sale', 'done'])]}"/>
+                    <field name="end_date" string="Appointment End Date &amp; Time" 
+                        attrs="{'invisible': [('is_booking', '=', False)], 'required': [('is_booking', '=', True)], 'readonly': [('state', 'in', ['sale', 'done'])]}"/>
+                    <field name="is_reschedule" invisible="1" />
+                    <!--field name="reschedule_start_date" attrs="{'invisible': [('is_reschedule','=', False)]}" readonly="1"/>
+                    <field name="reschedule_end_date" attrs="{'invisible': [('is_reschedule','=', False)]}" readonly="1"/-->
+                </field>
+
+                <!--xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes"-->
+                <xpath expr="//button[1]" position="replace">
+                    <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+                        type="action" class="btn-primary"
+                        attrs="{'invisible': ['|', ('invoice_status', '!=', 'to invoice'), ('is_booking', '=', True)]}"/>
+                </xpath>
+                <!--xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes"-->
+                <xpath expr="//button[2]" position="replace">
+                    <!--attribute name="attrs">{'invisible': ['|', ('is_booking', '=', True)]}</attribute>
+                    <attribute name="string">create invoice345</attribute-->
+                    <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+                        type="action" context="{'default_advance_payment_method': 'percentage'}"
+                        attrs="{'invisible': ['|',('invoice_status', '!=', 'no'),'|', ('state', '!=', 'sale'), ('is_booking', '=', True)]}"/>
+                </xpath>
+
+
+                <!--field name="start_date" position="attributes">
+                    <attribute name="string">Appointment Start Date &amp; Time</attribute>
+                    <attribute name="required">1</attribute>
+                </field>
+                <field name="end_date" position="attributes">
+                    <attribute name="string">Appointment End Date &amp; Time</attribute>
+                    <attribute name="required">1</attribute>
+                </field-->
+                <field name="team_employees" position="replace">
+                    <field name="team_employees"
+                        attrs="{'invisible': [('is_booking', '=', False)], 'readonly': [('state', 'in', ['sale', 'done'])]}"
+                        mode="tree"
+                        string="Workers">
+                        <tree editable="bottom">
+                            <field name="employee_id" string="Worker"/>
+                        </tree>
+                        <form>
+                            <field name="employee_id" string="Worker"/>
+                        </form>
+                    </field>
+                </field>
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                    <button string="Allocate Team" type="object"
+                        name="allocate_team" class="oe_stat_button"
+                        attrs="{'invisible': ['|', ('is_booking','=', False), ('state', 'not in', ['draft'])]}"/>
+                </xpath>
+                <field name="equipment_ids" position="replace">
+                    <!--field name="equipment_ids" attrs="{'invisible': [('is_booking', '=', False)], 'readonly': [('state', 'in', ['sale', 'done'])]}" string="Vehicles">
+                        <tree editable="bottom">
+                            <field name="product_id" string="Vehicle Number"/>
+                            <field name="lot_id" string="Plate Number"/>
+                        </tree>
+                        <form string="Vehicles">
+                            <field name="product_id" string="Vehicle"/>
+                            <field name="lot_id" string="Plate Number" invisible="1"/>
+                        </form>
+                    </field-->
+                <field name="vehicle_new_id" domain="[('is_equipment','=', True)]" 
+                        attrs="{'invisible': [('is_booking', '=', False)], 'readonly': [('state', 'in', ['sale', 'done'])]}"/>
+            </field>
+            <xpath expr="//notebook/page[2]" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_booking', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="reschedule_reason"
+                    attrs="{'invisible': [('is_reschedule','=', False)]}" readonly="1"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="List Of Equipments" attrs="{'invisible': [('is_booking','=', False)]}">
+                    <field name="equip_ids" attrs="{'invisible': [('is_booking', '=', False)], 'readonly': [('state', 'in', ['sale', 'done'])]}">
+                        <tree string="Equipments" editable="top">
+                            <field name="equipment_id" required="1" />
+                            <field name="checked"/>
+                        </tree>
+                        <form string="Equipment">
+                            <group>
+                                <field name="equipment_id" />
+                                <field name="order_id" invisible="1" />
+                                <field name="checked"/>
+                            </group>
+                        </form>
+                    </field>
+
+                </page>
+            </xpath>
+            <field name="pick_id" position="after">
+                <field name="calendar_id" readonly="1" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- stock.picking-->
+
+    <record id="view_view_wo_search_form" model="ir.ui.view">
+        <field name="name">stock.picking.search</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="booking_service_V2.vpicktree_wo"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='team_employees']" position="replace">
+                <field name="worker_name"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_tree_view_inherit_stock_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="booking_service_V2.view_picking_wo_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <filter string="Worker" domain="[]" context="{'group_by':'worker_name'}"/>
+            </xpath>
+        </field>
+    </record>
+
+        <record id="stock.action_picking_tree_all" model="ir.actions.act_window">
+        <field name="domain">[('is_booking', '=', False)]</field>
+        </record>
+        
+
+    <record id="view_biocare_modifier_fields_work_order" model="ir.ui.view">
+        <field name="name">biocare.modifier.work.order</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='min_date']" position="attributes">
+                <attribute name="attrs">{'invisible': {'is_booking': True}}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_scrap']" position="attributes">
+                <attribute name="attrs">{'invisible': {'is_booking': True}}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='do_prepare_partial']" position="attributes">
+                <attribute name="attrs">{'invisible': {'is_booking': True}}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_dest_id']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='location_id']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="replace">
+            </xpath>
+            <field name="origin" position="after">
+                <!--field name="type_of_vehicle" attrs="{'invisible':[('is_booking','=',False)]}"/>
+                    <field name="vehicle_name" attrs="{'invisible':[('is_booking','=',False)]}"/-->
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                    <field name="picking_type_id" attrs="{'invisible': [('is_booking','=', True)]}"/>
+                    <field name="remarks" attrs="{'invisible':[('is_booking','=',False)], 'readonly': [('state', 'in', ['assigned', 'done'])]}"/>
+                    <field name="reschedule_reason" attrs="{'invisible': [('is_reschedule','=', False)] }" readonly="1"/>
+                </field>
+                <xpath expr="//notebook/page[1]" position="attributes">
+                    <attribute name="attrs">{'invisible': {'is_booking': True}}</attribute>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="List Of Equipments"
+                        attrs="{'invisible': [('is_booking','=', False)]}">
+                        <field name="equip_ids" attrs="{'readonly': [('state','not in', ['pending'])]}">
+                            <tree string="Equipments" editable="top">
+                                <field name="equipment_id" required="1" />
+                                <field name="checked"/>
+                            </tree>
+                            <form string="Equipment">
+                                <group>
+                                    <field name="equipment_id" />
+                                    <field name="workorder_id" invisible="1" />
+                                    <field name="checked"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='move_lines']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_booking','=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[3]" position="attributes">
+                    <attribute name="attrs">{'invisible': {'is_booking': True}}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="replace">
+                    <button name="action_cancel"
+                        states="confirmed,partially_available,draft,waiting" 
+                        string="Cancel" groups="base.group_user" type="object"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_inheriting_search_picking_reschedule_search" model="ir.ui.view">
+            <field name="name">stock.picking.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="booking_service_V2.view_picking_wo_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='done']" position="after">
+                    <separator/>
+                    <filter name="reschedule" string="Reschedule" domain="[('is_reschedule','=',True)]"
+                        help="List-out Rescheduled Workorders."/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_biocare_rename_employee_work_order" model="ir.ui.view">
+            <field name="name">biocare.modifier.rename.work.order</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="booking_service_V2.view_picking_form_booking"/>
+            <field name="arch" type="xml">
+                <field name="team_employees" position="replace">
+                    <field name="team_employees" attrs="{'invisible': [('is_booking', '=', False)], 'readonly': [('state', 'in', ['assigned', 'done'])]}" mode="tree"
+                        string="Workers">
+                        <tree editable="bottom">
+                            <field name="employee_id" string="Worker"/>
+                        </tree>
+                        <form>
+                            <field name="employee_id" string="Worker"/>
+                        </form>
+                    </field>
+                </field>
+                <xpath expr="//button[@name='action_todo']" position="after">
+                    <button string="Re-Schedule" type="action"
+                        name="%(act_open_reschedule_booking_view)d" class="oe_stat_button"
+                        groups="booking_service_V2.group_manager,booking_service_V2.group_teamleader"
+                        attrs="{'invisible': ['|', ('is_booking','=', False), ('state', 'in', ['draft', 'done', 'assigned', 'cancel'])]}"/>
+                </xpath>
+                <xpath expr="//field[@name='scheduled_end']" position="after">
+                    <field name="is_reschedule" invisible="1" />
+                    <!--field name="reschedule_start_date" attrs="{'invisible': [('is_reschedule','=', False)]}" readonly="1"/>
+                    <field name="reschedule_end_date" attrs="{'invisible': [('is_reschedule','=', False)]}" readonly="1"/-->
+                </xpath>
+                <field name="product_ids" position="replace">
+                    <!--field name="product_ids" attrs="{'invisible': [('is_booking', '=', False)]}" string="Vehicles">
+                        <tree editable="bottom">
+                            <field name="product_id" string="Vehicle Number"/>
+                            <field name="lot_id" string="Plate Number" invisible="1"/>
+                        </tree>
+                        <form string="Vehicles">
+                            <field name="product_id" string="Vehicle Number"/>
+                            <field name="lot_id" string="Plate Number" invisible="1"/>
+                        </form>
+                    </field-->
+                    <field name="vehicle_new_id" domain="[('is_equipment','=', True)]"
+                        attrs="{'invisible': [('is_booking','=', False)], 'readonly': [('state', 'in', ['assigned', 'done'])]}"/>
+                </field>
+                <field name="total_time" position="replace">
+                     <field name="duration_app" class="oe_inline"/><b attrs="{'invisible': [('is_booking', '=', False)]}"> hours</b>
+                </field>
+            </field>
+        </record>
+
+        <!--Modifier Team Order-->
+
+        <record id="view_booking_team_inherit_tree" model="ir.ui.view">
+            <field name="name">booking.team.tree</field>
+            <field name="model">booking.team</field>
+            <field name="inherit_id" ref="booking_service_V2.view_booking_team_new_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_leader']" position="after">
+                    <field name="vehicle_new_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_biocare_rename_booking_team" model="ir.ui.view">
+            <field name="name">biocare.modifier.rename.booking.team</field>
+            <field name="model">booking.team</field>
+            <field name="inherit_id" ref="booking_service_V2.team_form_view"/>
+            <field name="arch" type="xml">
+                <field name="team_employees" position="replace">
+                    <field name="team_employees" mode="tree" string="Workers">
+                        <tree editable="bottom">
+                            <field name="employee_id" string="Worker"/>
+                        </tree>
+                        <form>
+                            <field name="employee_id" string="Worker"/>
+                        </form>
+                    </field>
+                </field>
+                <field name="product_ids" position="replace">
+                    <!--field name="product_ids" string="Vehicles">
+                        <tree editable="bottom">
+                            <field name="product_id" string="Vehicle Number"
+                                   domain="[('is_equipment','=', True)]" context="{'default_is_equipment': True}"/>
+                            <field name="lot_id" string="Plate Number"/>
+                        </tree>
+                        <form string="Vehicles">
+                            <field name="product_id" string="Vehicle Number"/>
+                            <field name="lot_id" string="Plate Number"/>
+                        </form>
+                    </field-->
+                    <field name="vehicle_new_id" 
+                        domain="[('is_equipment','=', True)]"
+                        context="{'default_is_equipment': True}" required="1"/>
+                </field>
+                <field name="team_leader" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!--Setting Booking-->
+        <record id="booking_setting_inherit_view" model="ir.ui.view">
+            <field name="name">booking.setting.inherit</field>
+            <field name="model">booking.settings</field>
+            <field name="inherit_id" ref="booking_service_restriction_reusable.booking_setting_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <field name="block_by_worker" position="attributes">
+                    <attribute name="string">Block the date and time from being booked if the worker is booked already
+                        (Not Available)
+                    </attribute>
+                </field>
+                <field name="blook_by_equipment" position="attributes">
+                    <attribute name="string">Block the date and time from being booked if the vehicles is booked already
+                        (Not Available)
+                    </attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,244 @@
+<odoo>
+
+    <menuitem id="menu_invoicing"
+        name="Invoice"
+        parent="atts_course.menu_ems"
+        groups="atts_course.group_school_administration,atts_course.group_school_student,atts_course.group_school_parent"
+        sequence="10"/>
+
+    <record id="view_account_payment_fee_invoice_form" model="ir.ui.view">
+        <field name="name">account.payment.form</field>
+        <field name="model">account.payment</field>
+        <field name="arch" type="xml">
+            <form string="Register Payment" version="7">
+                <sheet>
+                    <field name="id" invisible="1"/>
+                    <div class="oe_title" attrs="{'invisible': [('state', '=', 'draft')]}">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <field name="payment_type" invisible="1"/>
+                        <field name="partner_type" invisible="1"/>
+                        <field name="invoice_ids" invisible="1"/>
+                        <field name="partner_id" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                        <group>
+                            <field name="journal_id" widget="selection"/>
+                            <field name="hide_payment_method" invisible="1"/>
+                            <field name="payment_method_id" widget="radio" attrs="{'invisible': [('hide_payment_method', '=', True)]}"/>
+                            <field name="payment_method_code" invisible="1"/>
+                            <label for="amount"/>
+                            <div name="amount_div" class="o_row">
+                                <field name="amount" readonly="1"/>
+                                <field name="currency_id" options="{'no_create': True, 'no_open': True}" groups="base.group_multi_currency"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="registration_id" readonly="1"/>
+                            <field name="fee_invoice_id" readonly="1"/>
+                            <field name="payment_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="communication" string="Remarks" attrs="{'invisible': [('state', '!=', 'draft'), ('communication', '=', False)], 'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string='Validate' name="create_payment" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_fee_registration_form" model="ir.actions.act_window">
+        <field name="name">Register Payment</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_account_payment_fee_invoice_form"/>
+        <field name="context">{'default_fee_invoice_id': active_id, 'default_partner_type': 'customer', 'default_payment_type': 'inbound'}</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_open_fee_refund_form" model="ir.actions.act_window">
+        <field name="name">Refund Payment</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_account_payment_fee_invoice_form"/>
+        <field name="context">{'default_fee_invoice_id': active_id, 'default_partner_type': 'customer', 'default_payment_type': 'outbound'}</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_student_fees_invoice_form" model="ir.ui.view">
+        <field name="name">student.fees.invoice.form</field>
+        <field name="model">student.fees.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Student Fees Invoice">
+                <header>
+                    <button name="%(action_open_fee_registration_form)d" type="action" string="Register Payment" class="oe_highlight" attrs="{'invisible': [('state','not in',('draft'))]}"/>
+                    <button name="%(action_open_fee_refund_form)d" type="action" string="Refund Invoice" class="oe_highlight" attrs="{'invisible': [('state','not in',('paid'))]}"/>
+                    <field name="state" widget="statusbar" readonly="1" statusbar_visible="draft,paid,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Invoice"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="registration_id" readonly="1"/>
+                            <field name="fee_registration_id" readonly="1"/>
+                            <field name="student_name" readonly="1"/>
+                            <field name="student_email" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="date" attrs="{'readonly':[('state','not in','draft')]}"/>
+                            <field name="dead_line" attrs="{'readonly':[('state','not in','draft')]}"/>
+                            <field name="payment_term_id" attrs="{'readonly':[('state','not in','draft')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Invoice Lines">
+                            <field name="invoice_lines" required='1' attrs="{'readonly':[('state','not in','draft')]}">
+                                <tree string="Invoice lines" editable="bottom">
+                                    <field name="fee_head_id"/>
+                                    <field name="details"/>
+                                    <field name="amount"/>
+                                    <field name="quantity"/>
+                                    <field name="tax"/>
+                                    <field name="total"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                <field name="total"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_student_fees_invoice_tree" model="ir.ui.view">
+        <field name="name">student.fees.invoice.tree</field>
+        <field name="model">student.fees.invoice</field>
+        <field name="arch" type="xml">
+            <tree string="Student Fees Invoice">
+                <field name="name"/>
+                <field name="registration_id"/>
+                <field name="student_name"/>
+                <field name="date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_student_fees_invoice" model="ir.actions.act_window">
+        <field name="name">Student Invoice</field>
+        <field name="res_model">student.fees.invoice</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_student_fees_invoice_tree"/>
+    </record>
+
+    <menuitem id="menu_student_fees_invoice"
+        name="Student Invoice"
+        parent="menu_invoicing"
+        action="action_student_fees_invoice"
+        groups="atts_course.group_school_administration,atts_course.group_school_student,atts_course.group_school_parent"
+        sequence="1"/>
+
+    <record id="view_account_payment_form" model="ir.ui.view">
+        <field name="name">account.payment.form</field>
+        <field name="model">account.payment</field>
+        <field name="arch" type="xml">
+            <form string="Register Payment" create="false" write="false">
+                <sheet>
+                    <field name="id" invisible="1"/>
+                    <div class="oe_title" attrs="{'invisible': [('state', '=', 'draft')]}">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <field name="payment_type" invisible="1"/>
+                        <field name="partner_type" invisible="1"/>
+                        <field name="invoice_ids" invisible="1"/>
+                        <field name="partner_id" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                        <group>
+                            <field name="journal_id" widget="selection"/>
+                            <field name="hide_payment_method" invisible="1"/>
+                            <field name="payment_method_id" widget="radio" attrs="{'invisible': [('hide_payment_method', '=', True)]}"/>
+                            <field name="payment_method_code" invisible="1"/>
+                            <label for="amount"/>
+                            <div name="amount_div" class="o_row">
+                                <field name="amount" invisible="1"/>
+                                <field name="sign_amount"/>
+                                <field name="currency_id" options="{'no_create': True, 'no_open': True}" groups="base.group_multi_currency"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="registration_id" readonly="1"/>
+                            <field name="fee_invoice_id" readonly="1"/>
+                            <field name="payment_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="communication" string="Remarks" attrs="{'invisible': [('state', '!=', 'draft'), ('communication', '=', False)], 'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_invoice_payment_tree" model="ir.ui.view">
+        <field name="name">account.payment.fee.tree</field>
+        <field name="model">account.payment</field>
+        <field name="arch" type="xml">
+            <tree string="Payment" create="false" write="false">
+                <field name="payment_date"/>
+                <field name="name"/>
+                <field name="journal_id"/>
+                <field name="amount" sum="Amount" invisible="1"/>
+                <field name="sign_amount" sum="Amount"/>
+                <field name="state" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="partner_type" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_fees_credit_note" model="ir.actions.act_window">
+        <field name="name">Credit Note / Customer Refund Action</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('fee_invoice_id', '!=', False), ('payment_type', '=', 'outbound')]</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('view_invoice_payment_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_account_payment_form')})]"/>
+    </record>
+
+    <menuitem id="menu_invoice_credit_note"
+        name="Credit Note / Customer Refund Action"
+        parent="menu_invoicing"
+        action="action_fees_credit_note"
+        groups="atts_course.group_school_administration,atts_course.group_school_student,atts_course.group_school_parent"
+        sequence="2"/>
+
+    <record id="action_fees_invoice" model="ir.actions.act_window">
+        <field name="name">Payments</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('fee_invoice_id', '!=', False), ('payment_type', '=', 'inbound')]</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('view_invoice_payment_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_account_payment_form')})]"/>
+    </record>
+    <menuitem id="menu_invoice_payment"
+        name="Payments"
+        parent="menu_invoicing"
+        action="action_fees_invoice"
+        groups="atts_course.group_school_administration,atts_course.group_school_student,atts_course.group_school_parent"
+        sequence="3"/>
+</odoo>

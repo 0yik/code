@@ -1,0 +1,31 @@
+<odoo>
+  <data>
+     <record id="custom_product_pricelist_item_form_view" model="ir.ui.view">
+        <field name="name">product.pricelist.item.form.custom</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[3]" position="after">
+                <!-- <div attrs="{'invisible':[('compute_price', 'not in', ('percentage','multi_disc'))]}">
+                  <field name="multi_discount"  class="oe_inline"/>%%
+                  <field name="percent_price" nolabel="1" class="oe_inline"/>%%
+                </div> -->
+                <group col="6" attrs="{'invisible':[('compute_price', '!=', 'multi_disc')]}">
+                    <field name="base" colspan="6"/>
+
+                    <label string="New Price ="/>
+                    <div>
+                        <span>Public Price  -  </span>
+                    </div>
+                    <label for="multi_discount"/>
+                    <div class="o_row">
+                        <field name="multi_discount"/>
+                        <span>%%</span>
+                    </div>
+                </group>
+            
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="lbs_sale_order_modifier" model="ir.ui.view">
+        <field name="name">Laborindo Sale Order Modifier</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"></field>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="before">
+                <field name="quotation_revision"/>
+            </field>
+            <field name="user_id" position="before">
+                <field name="is_direct_so" invisible="0"/>
+            </field>
+            <field name="validity_date" position="after">
+                <field name="order_date" attrs="{'invisible':[('state','in',['draft','sent'])]}"/>
+                <field name="delivery_deadline"/>
+            </field>
+            <field name="partner_shipping_id" position="after">
+                <field name="po_number_reference"/>
+                <field name="po_date"/>
+                <field name="po_file" filename="file_name" string="PO File"/>
+                <field name="file_name" invisible="1"/>
+                <field name="special_notes"/>
+            </field>
+
+            <field name="validity_date" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+
+            <field name="payment_term_id" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+
+            <field name="partner_id" position="replace">
+            <field name="partner_id" domain="[('customer','=',True),('parent_id','=',False)]" context="{'default_sale_order':1,'show_address': 1,'search_default_customer': 1}
+                    " options="{'always_reload': True}" on_change="1" can_create="true" can_write="true" modifiers="{'readonly': [['state', 'not in', ['draft', 'sent']]], 'required': true}"/>
+             </field>
+
+            <field name="partner_invoice_id" position="replace">
+                <field name="partner_invoice_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'invoice'}" domain="['|',('id', '=', partner_id),('parent_id','=',partner_id)]"/>
+            </field>
+            <field name="partner_shipping_id" position="replace">
+                <field name="partner_shipping_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'invoice'}" domain="['|',('id', '=', partner_id),('parent_id','=',partner_id)]"/>
+            </field>
+
+
+            <field name="partner_shipping_id" position="attributes">
+                <!--<attribute name="domain">[('id', '=', partner_id)]</attribute>-->
+            </field>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="sale.action_orders">
+        <field name="context">{'default_is_direct_so': 1}</field>
+    </record>
+    <record model="ir.actions.act_window" id="sale.action_quotations">
+        <field name="context">{'default_is_direct_so': 0}</field>
+    </record>
+
+    <record id="lbs_delivery_sale_order_modifier_required" model="ir.ui.view">
+        <field name="name">Laborindo Delivery Sale Order Modifier</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="delivery.view_order_form_with_carrier"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='carrier_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

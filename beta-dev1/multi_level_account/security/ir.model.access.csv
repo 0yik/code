@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_multi_level_aa,access_multi_level_aa,model_multi_level_aa,,1,1,1,1
+access_analytic_multi_level,access_analytic_multi_level,model_analytic_multi_level,,1,1,1,1

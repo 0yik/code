@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <!-- Featured Products -->
+    <record model="ir.ui.view" id="view_featured_products_form">
+        <field name="name">featured.products.form</field>
+        <field name="model">featured.products</field>
+        <field name="arch" type="xml">
+            <form string="Featured Products">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                    <notebook>
+                        <page string="Featured Products Lines">
+                            <group>
+                                <field name="featured_products_line_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="featured_products_id" invisible="1"/>
+                                        <field name="name"/>
+                                        <field name="products_id" domain="[('website_published', '=', True)]"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_featured_products_tree">
+        <field name="name">featured.products.tree</field>
+        <field name="model">featured.products</field>
+        <field name="arch" type="xml">
+            <tree> 
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_featured_products" model="ir.actions.act_window">
+        <field name="name">Featured Products</field>
+        <field name="res_model">featured.products</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="featured_products_id" name="Featured Products" action="action_featured_products" parent="website.menu_website_global_configuration" sequence='0'/>
+    
+    <!-- New Arrival block code -->
+    <record model="ir.ui.view" id="view_new_arrival_form">
+        <field name="name">new.arrival.form</field>
+        <field name="model">new.arrival</field>
+        <field name="arch" type="xml">
+            <form string="New Arrival Products">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                    <notebook>
+                        <page string="New Arrival Products Lines">
+                            <group>
+                                <field name="new_arrival_products_line_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="new_arrival_products_id" invisible="1"/>
+                                        <field name="name"/>
+                                        <field name="products_id" domain="[('website_published', '=', True)]"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_new_arrival_tree">
+        <field name="name">new.arrival.tree</field>
+        <field name="model">new.arrival</field>
+        <field name="arch" type="xml">
+            <tree> 
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_new_arrival" model="ir.actions.act_window">
+        <field name="name">New Arrivals</field>
+        <field name="res_model">new.arrival</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="new_arrival_id" name="New Arrivals" action="action_new_arrival" parent="website.menu_website_global_configuration" sequence='0'/>
+    
+    <!-- Homepage Top Banner block code -->
+    <record model="ir.ui.view" id="view_top_banner_form">
+        <field name="name">top.banner.form</field>
+        <field name="model">top.banner</field>
+        <field name="arch" type="xml">
+            <form string="Top Banner Configuration">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" placeholder="Name of Image or Video"/>
+                            <field name="video"/>
+                            <field name="product_id" attrs="{'required':[('video','=',False)],'invisible':[('video','=',True)]}"/>
+                            <field name="text_content" attrs="{'required':[('video','=',False)],'invisible':[('video','=',True)]}"/>
+                            <field name="sequence"/>
+                            <field name="pro_banner_img" widget="image" attrs="{'required':[('video','=',False)],'invisible':[('video','=',True)]}"/>
+                            <field name="pro_banner_video" filename="file_name" attrs="{'required':[('video','=',True)],'invisible':[('video','=',False)]}"/>
+                            <field name="file_name" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_top_banner_tree">
+        <field name="name">top.banner.tree</field>
+        <field name="model">top.banner</field>
+        <field name="arch" type="xml">
+            <tree> 
+                <field name="sequence"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_top_banner" model="ir.actions.act_window">
+        <field name="name">Top Banner</field>
+        <field name="res_model">top.banner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="top_banner_id" name="Top Banner" action="action_top_banner" parent="website.menu_website_global_configuration" sequence='0'/>
+    
+    </data>
+</odoo>

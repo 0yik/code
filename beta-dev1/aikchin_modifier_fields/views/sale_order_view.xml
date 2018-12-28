@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+		<record model="ir.ui.view" id="sale_order_form_inherited">
+			<field name="name">sale.order.form.inherited</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='order_line']/tree/field[@name='analytic_tag_ids']" position="after">
+					<field name="location_id"/>
+				</xpath>
+				<xpath expr="//field[@name='order_line']/form/group/group/field[@name='price_unit']" position="after">
+					<field name="location_id"/>
+				</xpath>
+				<field name="partner_invoice_id" position="after">
+					<field name="invoice_address"/>
+				</field>
+				<field name="partner_invoice_id" position="attributes">
+					<attribute name="context">{'show_address':1,'default_type':'delivery','get_contact_address': 1}</attribute>
+					<attribute name="options">{"always_reload": True}</attribute>
+					<attribute name="invisible">1</attribute>
+				</field>
+				<field name="project_id" position="replace">
+
+				</field>
+				<field name="payment_term_id" position="after">
+					<field name="project_id" attrs="{'invisible':[('state','=','sale')]}"
+						   context="{'default_partner_id':partner_invoice_id, 'default_name':name}" groups="analytic.group_analytic_accounting"/>
+				</field>
+			</field>
+		</record>
+
+
+
+
+		<!--<record model="ir.ui.view" id="delivery_view_order_form_with_carrier_inherit1">-->
+			<!--<field name="name">sale.order.form.inherited</field>-->
+			<!--<field name="model">sale.order</field>-->
+			<!--<field name="inherit_id" ref="delivery.view_order_form_with_carrier" />-->
+			<!--<field name="arch" type="xml">-->
+				<!--<field name="payment_term_id" position="after">-->
+					<!--<field name="project_id" attrs="{'invisible':[('state','=','sale')]}"-->
+						   <!--context="{'default_partner_id':partner_invoice_id, 'default_name':name}" groups="analytic.group_analytic_accounting"/>-->
+				<!--</field>-->
+			<!--</field>-->
+		<!--</record>-->
+
+
+		<record id="view_order_form_inherit_sale_stock_aikchin" model="ir.ui.view">
+			<field name="name">sale.order.form.sale.stock</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='order_line']/tree//field[@name='route_id']" position="after">
+					<field name="cost_price"/>
+				</xpath>
+				<xpath expr="//button/field[@name='delivery_count']" position="attributes">
+					<attribute name="string">DO</attribute>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_order_form_inherit_delivery_address_inherit">
+			<field name="name">view order form inherit delivery address inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="multiple_customer_delivery_address.view_order_form_inherit_delivery_address" />
+			<field name="arch" type="xml">
+				<field name="partner_delivery_address_id" position="after">
+					<field name="customer_po"/>
+				</field>
+			</field>
+		</record>
+
+		<record id="view_stock_product_template_tree_inherit" model="ir.ui.view">
+		    <field name="name">product.template.stock.tree.inherit.view</field>
+		    <field name="model">product.template</field>
+		    <field name="inherit_id" ref="stock.view_stock_product_template_tree"/>
+		    <field name="arch" type="xml">
+		       <field name="default_code" position="replace">
+				<field name="default_code" string="Product Code"/>
+		       </field>
+		    </field>
+		</record>
+		<record id="stock_move_view_trees_inherit" model="ir.ui.view">
+			<field name="name">stock.move.tree.inherit</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='pack_operation_product_ids']/tree/field[@name='qty_done']" position="after">
+					<field name="remarks"/>
+				</xpath>
+			</field>
+		</record>
+  		<record id="inherit_sale_order1" model="ir.ui.view">
+            <field name="name">sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="delivery.view_order_form_with_carrier"/>
+            <field name="arch" type="xml">
+				<xpath expr="//field[@name='carrier_id']" position="replace">
+					<field name="carrier_id" context="{'order_id': id}" class="oe_inline"
+						   options="{'no_create': True, 'no_open': True}"
+						   attrs="{'readonly':[('state','not in',('draft','sent'))]}"  on_change="1" can_create="true" can_write="true" modifiers="{'readonly': [['state', 'not in', ['draft', 'sent']]], 'required': true}"/>
+                </xpath>
+            </field>
+        </record>
+
+		<record id="inherit_sale_order3" model="ir.ui.view">
+            <field name="name">sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="branch.view_sale_order_branch_added_form1"/>
+            <field name="arch" type="xml">
+				<xpath expr="//field[@name='branch_id']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
+		<record id="inherit_sale_order4" model="ir.ui.view">
+            <field name="name">sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="aikchin_modifier_fields_sales.view_order_form_inherit"/>
+            <field name="arch" type="xml">
+				<xpath expr="//field[@name='issuer_id']" position="before">
+					<field name="branch_id"/>
+                </xpath>
+            </field>
+        </record>
+
+		<record id="purchase_purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.order</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+				<xpath expr="//field[@name='payment_term_id']" position="replace">
+                </xpath>
+				<xpath expr="//field[@name='company_id']" position="after">
+						<field name="payment_term_id" options="{'no_open': True, 'no_create': True}" attrs="{'readonly': ['|', ('invoice_status','=', 'invoiced'), ('state', '=', 'done')]}" can_create="true" can_write="true" modifiers="{'readonly': ['|', ['invoice_status', '=', 'invoiced'], ['state', '=', 'done']]}"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

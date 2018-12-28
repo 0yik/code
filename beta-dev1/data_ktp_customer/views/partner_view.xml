@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="data_ktp_customer_form_view_inherit1" model="ir.ui.view">
+            <field name="name">Data Ktp Customer Form View Inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="vit_efaktur.partner_efaktur"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Master KTP" autofocus="autofocus">
+                        <field name="kit_ids" mode="kanban">
+                            <kanban>
+                                <field name="color"/>
+                                <field name="partner_id"/>
+                                <field name="name"/>
+                                <field name="tempat_lahir"/>
+                                <field name="tanggal_lahir"/>
+                                <field name="alamat"/>
+                                <field name="blok"/>
+                                <field name="nomor"/>
+                                <field name="rt"/>
+                                <field name="rw"/>
+                                <field name="provinsi_id" style="text-transform: uppercase;"/>
+                                <field name="kota_id" style="text-transform: uppercase;"/>
+                                <field name="kecamatan_id" style="text-transform: uppercase;"/>
+                                <field name="kelurahan_id" style="text-transform: uppercase;"/>
+                                <field name="kodepos"/>
+                                <!--<field name="permilik_akun_poin"/>-->
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                                        <div t-att-class="color + ' oe_kanban_global_click'">
+                                            <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
+                                            <div class="oe_kanban_details">
+                                                <field name="nik"/>
+                                                <div t-if="record.name.raw_value">Nama: <field name="name"/></div>
+                                                <div t-if="record.tempat_lahir.raw_value">Tempat Lahir: <field name="tempat_lahir"/></div>
+                                                <div t-if="record.tanggal_lahir.raw_value">Tanggal Lahir: <field name="tanggal_lahir"/></div>
+                                                <div t-if="record.alamat.raw_value">Alamat: <field name="alamat"/></div>
+                                                <div t-if="record.blok.raw_value">Blok: <field name="blok"/></div>
+                                                <div t-if="record.blok.raw_value">Nomor: <field name="nomor"/></div>
+                                                <div t-if="record.rt.raw_value">RT: <field name="rt"/></div>
+                                                <div t-if="record.rw.raw_value">RW: <field name="rw"/></div>
+                                                <div>
+                                                    <field t-if="record.kelurahan_id.raw_value" name="kelurahan_id"/>
+                                                    <field t-if="record.kecamatan_id.raw_value" name="kecamatan_id"/>
+                                                    <field t-if="record.kota_id.raw_value" name="kota_id"/>
+                                                    <field t-if="record.provinsi_id.raw_value" name="provinsi_id"/>
+                                                </div>
+                                                <div t-if="record.kodepos.raw_value">Kodepos: <field name="kodepos"/></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form string="Master KTP">
+                                <sheet>
+                                    <group>
+                                        <group>
+                                            <field name="nik" string="NIK" required="1"/>
+                                            <field name="name"/>
+                                            <field name="tempat_lahir"/>
+                                            <field name="tanggal_lahir" required="1"/>
+                                        </group>
+                                        <group>
+                                            <field name="alamat"/>
+                                            <field name="blok"/>
+                                            <field name="nomor"/>
+                                            <field name="rt"/>
+                                            <field name="rw"/>
+                                        </group>
+                                        <group>
+                                            <field name="provinsi_id" style="text-transform: uppercase;" />
+                                            <field name="kota_id" style="text-transform: uppercase;" domain="[('state_id','=',provinsi_id)]" options='{"no_open": True}'/>
+                                            <field name="kecamatan_id" style="text-transform: uppercase;" domain="[('kota_id','=',kota_id)]" options='{"no_open": True}'/>
+                                            <field name="kelurahan_id" style="text-transform: uppercase;" domain="[('kecamatan_id','=',kecamatan_id)]" options='{"no_open": True}'/>
+                                        </group>
+                                        <group>
+                                            <field name="kodepos" readonly="1"/>
+                                            <!--<field name="permilik_akun_poin"/>-->
+                                        </group>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</odoo>

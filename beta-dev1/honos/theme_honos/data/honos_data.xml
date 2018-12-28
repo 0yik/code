@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="website.homepage" model="ir.ui.view">
+			<field name="website_meta_title">Honos - Fully Responsive Odoo eCommerce Theme for Fashion</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+		
+		<record id="honos_layout1.honos_layout1_homepage" model="ir.ui.view">
+			<field name="website_meta_title">Honos - Fully Responsive Odoo eCommerce Theme for Fashion</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+		
+		<record id="honos_product.honos_product_product" model="ir.ui.view">
+			<field name="website_meta_title">Honos Product</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+		
+		<record id="honos_shop.honos_shop_products" model="ir.ui.view">
+			<field name="website_meta_title">Honos Shop</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+		
+		<record id="website.contactus" model="ir.ui.view">
+			<field name="website_meta_title">Honos Contact Us</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+		
+		<record id="honos_cart.honos_cart" model="ir.ui.view">
+			<field name="website_meta_title">Honos Cart</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+		
+		 <record id="honos_wishlist.honos_wishlist_wishlist_template" model="ir.ui.view">
+			<field name="website_meta_title">Honos Wishlist</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record> 
+		
+		<record id="honos_compare.honos_compare_page_template" model="ir.ui.view">
+			<field name="website_meta_title">Honos Compare</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record> 
+	</data>
+</odoo>

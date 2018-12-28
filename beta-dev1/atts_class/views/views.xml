@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+        <!-- class Form View -->
+        <record id="view_class_form" model="ir.ui.view">
+	        <field name="name">class.form</field>
+	        <field name="model">class.class</field>
+	        <field name="arch" type="xml">
+	        <form string="Class">
+	            <sheet>
+	                <group>
+    	                <group>
+    	                    <field name="course_id" required='1'/>
+    	                    <field name="location" />
+	                    </group>
+    	                <group>
+    	                	<field name="course_title"/>
+    	                </group>
+	                </group>
+                    <group>
+                        <group>
+                            <field name="time_start"  widget="timepicker"/>
+                            <field name="time_end" widget="timepicker"/>
+                        </group>
+                        <group>
+                            <field name="date_start" />
+                            <field name="date_end" />
+                        </group>
+                    </group>
+	                
+                    <label name="student_ids" string="Student List"/>
+                    <field name="student_ids">
+    	                <tree string="Student List">
+                           <field name="student_id" required='1'/>
+                           <field name="student_name"/>
+                           <field name="attended"/>
+                           <field name="module1"/>
+                           <field name="module2"/>
+                           <field name="module3"/>
+                           <field name="module4"/>
+                           <field name="module5"/>
+                           <field name="module6"/>
+                           <field name="training_date"/>
+                           <field name="completion_date"/>
+                           <field name="certification_no"/>
+                           <field name="certification_course"/>
+                           <field name="certified"/>
+                           <field name="remarks"/>
+                           <field name="awarded_date"/>
+                           <field name="certification_received_printed_date"/>
+                           <field name="certification_sent_out_date"/>
+                           <field name="retention_period"/>
+                           <field name="date_of_expiry"/>
+    	                </tree>
+                      <form string="Student List">
+                        <group>
+                          <group>
+                            <field name="student_id" required='1'/>
+                            <field name="attended"/>
+                            <field name="training_date"/>
+                            <field name="completion_date"/>
+                            <field name="certified"/>
+                            <field name="certification_no"/>
+                            <field name="certification_course"/>
+                          </group>
+                          <group>
+                            <field name="student_name"/>
+                            <field name="remarks"/>
+                            <field name="awarded_date"/>
+                            <field name="certification_received_printed_date"/>
+                            <field name="certification_sent_out_date"/>
+                            <field name="retention_period"/>
+                            <field name="date_of_expiry"/>
+                          </group>
+                        </group>
+                        <group>
+                          <group>
+                            <field name="module1"/>
+                            <field name="module1_comment" attrs="{'invisible': [('module1', '!=', 'fail')]}"/>
+                            <field name="module2"/>
+                            <field name="module2_comment" attrs="{'invisible': [('module2', '!=', 'fail')]}"/>
+                            <field name="module3"/>
+                            <field name="module3_comment" attrs="{'invisible': [('module3', '!=', 'fail')]}"/>
+                          </group>
+                          <group>
+                            <field name="module4"/>
+                            <field name="module4_comment" attrs="{'invisible': [('module4', '!=', 'fail')]}"/>
+                            <field name="module5"/>
+                            <field name="module5_comment" attrs="{'invisible': [('module5', '!=', 'fail')]}"/>
+                            <field name="module6"/>
+                            <field name="module6_comment" attrs="{'invisible': [('module6', '!=', 'fail')]}"/>
+                          </group>
+                        </group>
+                      </form>
+	                </field>
+
+                    <label name="session_ids" string="Session List"/>
+                    <field name="session_ids">
+                        <tree string="Session List">
+                           <field name="session_no"/>
+                           <field name="date"/>
+                           <field name="time_start"/>
+                           <field name="time_end"/>
+                           <field name="instructor1"/>
+                           <field name="instructor2"/>
+                           <field name="instructor3"/>
+                           <field name="instructor4"/>
+                           <field name="location"/>
+                       </tree>
+                       <form string="Session List">
+                        <group>
+                          <group>
+                            <field name="session_no"/>
+                            <field name="date"/>
+                            <field name="time_start" widget="timepicker"/>
+                            <field name="time_end" widget="timepicker"/>
+                            <field name="location"/>
+                          </group>
+                          <group>
+                            <field name="instructor1"/>
+                            <field name="instructor2"/>
+                            <field name="instructor3"/>
+                            <field name="instructor4"/>
+                          </group>
+                        </group>
+                      </form>
+                    </field>
+	                
+	             </sheet>
+	        </form>
+	        </field>
+       </record>
+       
+       <!-- class list view -->
+       <record id="view_class_tree" model="ir.ui.view">
+            <field name="name">class.tree</field>
+            <field name="model">class.class</field>
+            <field name="arch" type="xml">
+                <tree string="Class">
+                    <field name="course_id"/>
+                	<field name="course_title"/>
+                	<field name="location"/>
+                	<field name="time_start"/>
+                	<field name="time_end"/>
+                    <field name="date_start"/>
+                	<field name="date_end"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- class action -->
+        <record id="action_class" model="ir.actions.act_window">
+            <field name="name">Class</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">class.class</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_class_tree"/>
+            <field name="help">Create and manage students class.</field>
+        </record>
+        
+        <!-- Menu item for class -->
+        <menuitem id="menu_action_root" name='Class' parent="atts_course.menu_ems" sequence="3"/>
+        <menuitem action="action_class" name='Classes' id="menu_action_class" parent="menu_action_root" sequence="1"/>
+        <menuitem id="menu_action_class_report" name='Reports' parent="atts_class.menu_action_root" sequence="10"/>
+        
+        
+        <record id="class_action_placement_mutli" model="ir.values">
+            <field name="name">Placement</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_class_placement_wizard'))"/>
+            <field name="key">action</field>
+            <field name="key2">client_action_multi</field>
+            <field name="model">class.class</field>
+        </record>
+</odoo>

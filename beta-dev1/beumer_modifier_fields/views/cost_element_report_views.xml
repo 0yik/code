@@ -1,0 +1,8 @@
+
+<odoo>
+    <data>
+        <menuitem name="Cost Element Report" action="cost_element.action_cost_element_report"
+              id="cost_element.menu_action_cost_element_report"
+              parent="project.menu_project_report" sequence="21"/>
+    </data>
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <report id="report_crm_lead"
+            string="PRINT"
+            model="crm.lead"
+            report_type="qweb-pdf"
+            name="arkco_modifier_crm_lead.crm_lead_report"
+            file="arkco_modifier_crm_lead.crm_lead_report"
+            menu="False"/>
+    </data>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="menu_my_requests_tester" model="website.menu">
+            <field name="name">My Requests</field>
+            <field name="url">/my_requests</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_customer'), ref('hilti_modifier_accessrights.group_hilti_admin'), ref('hilti_modifier_accessrights.group_hilti_account_manager'), ref('hilti_modifier_accessrights.group_hilti_cs_engineer')])]"/>
+            <field name="sequence" type="int">4</field>
+        </record>
+        
+    </data>
+</odoo>

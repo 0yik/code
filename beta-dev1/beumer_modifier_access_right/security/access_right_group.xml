@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--Create HR Category-->
+        <record model="ir.module.category" id="module_category_hr">
+            <field name="name">HR</field>
+            <field name="description">Helps you manage the your Human Resource.</field>
+            <field name="sequence">20</field>
+        </record>
+        <!--Create HR Admin inherit from employee,holiday officer,expense officer and timesheet officer-->
+        <record id="hr_admin_group" model="res.groups">
+            <field name="name">HR Admin</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user')),(4, ref('hr_timesheet.group_hr_timesheet_user')),(4, ref('hr_expense.group_hr_expense_user')),
+                (4, ref('hr_holidays.group_hr_holidays_user'))]"/>
+            <!--<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="module_category_hr"/>
+        </record>
+        <!--Create HR Executive inherit from employee,employee manager,holiday officer,expense officer and timesheet officer-->
+        <record id="hr_executive_group" model="res.groups">
+            <field name="name">HR Executive</field>
+            <field name="implied_ids" eval="[(4, ref('hr.group_hr_manager')),(4, ref('hr_admin_group')),(4,ref('employee_manager_access_contract_menu'))]"/>
+            <!--<field name="implied_ids" eval="[(4, ref('hr_admin_group'))]"/>-->
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="module_category_hr"/>
+        </record>
+
+        <!--show Leave To Approve group -->
+        <record id="Leave_to_approve_group" model="res.groups">
+            <field name="name">Leave To Approve group</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!--Accounting access sales -->
+        <record id="accounting_access_sales" model="res.groups">
+            <field name="name">Accounting access sales</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!--Accounting access purchase-->
+        <record id="accounting_access_purchase" model="res.groups">
+            <field name="name">Accounting access purchase</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!--Create ePayroll admin inherit from Payroll Manager,Employee Payroll Admin-->
+       
+        <record id="payroll_admin_group" model="res.groups">
+            <field name="name">ePayroll Admin</field>
+            <field name="category_id" ref="base.module_category_hr_payroll"/>
+            <field name="implied_ids"
+                   eval="[(4, ref('hr_payroll.group_hr_payroll_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <!--<field name="comment">The user will be able to manage equipments.</field>-->
+        </record>
+
+        <!--Group Edit ePayroll admin group-->
+        <record id="edit_epayroll_admin_group" model="res.groups">
+            <field name="name">Edit Epayroll Admin Group</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!--visible Employee configuration for HR Admin-->
+        <record id="hr.menu_human_resources_configuration" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('hr_admin_group'))]"/>
+        </record>
+        <!--Create HR Manager inherit from employee payroll admin,holiday office,expense officer,timesheet officer-->
+        <record id="hr_manager_group" model="res.groups">
+            <field name="name">HR Manager</field>
+            <!-- Inherited this group and added l10n_sg_hr_payroll.group_hr_payroll_admin in l10n_sg_hr_payroll modile -->
+            <!-- <field name="implied_ids"
+                   eval="[(4, ref('l10n_sg_hr_payroll.group_hr_payroll_admin')),(4, ref('hr_executive_group'))]"/> -->
+            <!--<field name="implied_ids"-->
+                   <!--eval="[(4, ref('hr_executive_group'))]"/>-->
+            <!--<field name="implied_ids" eval="[(4, ref('hr_executive_group'))]"/>-->
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="module_category_hr"/>
+        </record>
+
+        <!--visible Sale menu for Project Manager-->
+        <record id="project.group_project_manager" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <!--<field name="comment">The user will be able to manage equipments.</field>-->
+        </record>
+
+        <!--Only View the record which user_id, right,status is satisfy-->
+        <!-- <record id="sale_project_record_by_team_member" model="ir.rule">
+            <field name="name">Record by team member</field>
+            <field name="model_id" ref="beumer_modifier_project.model_account_analytic_account"/>
+            <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+            <field name="domain_force">[('team_members.right', '=',
+                'normal'),('team_members.user_id','=',user.id),('team_members.status','=','active')]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record> -->
+        <!--With right is Project Manger and status is active the user can full access-->
+        <!-- <record id="sale_project_record_by_team_member_manager" model="ir.rule">
+            <field name="name">Record by team member manager</field>
+            <field name="model_id" ref="beumer_modifier_project.model_account_analytic_account"/>
+            <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+            <field name="domain_force">['|',('team_members.right', '=', 'manager'),('team_members.right', '=',
+                'controller'),('team_members.user_id','=',user.id),('team_members.status','=','active')]
+            </field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record> -->
+        <!--Set Project Manager in User main menu is view all and full access-->
+        <!-- <record id="sale_project_record_project_manager" model="ir.rule">
+            <field name="name">Project Manager</field>
+            <field name="model_id" ref="beumer_modifier_project.model_account_analytic_account"/>
+            <field name="groups" eval="[(4, ref('project.group_project_manager'))]"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+        </record> -->
+        <!--Visible Sale Menu for project user-->
+        <record id="sales_team.menu_base_partner" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('project.group_project_user'))]"/>
+        </record>
+        <!--Create Timesheet admin-->
+        <record id="timesheet_admin_group" model="res.groups">
+            <field name="name">Timesheet Admin</field>
+            <field name="category_id" ref="base.module_category_hr_timesheet"/>
+            <field name="implied_ids" eval="[(4, ref('hr_timesheet.group_hr_timesheet_user'))]"/>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <!--<field name="comment">The user will be able to manage equipments.</field>-->
+        </record>
+        <!--Visible Employee Configuration for timesheet admin-->
+        <record id="hr.menu_human_resources_configuration" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('timesheet_admin_group'))]"/>
+        </record>
+        
+
+
+        <record id="cfo_group" model="res.groups">
+            <field name="name">CFO</field>
+            <field name="implied_ids"
+                   eval="[(4,ref('stock.group_stock_user')),(4, ref('project.group_project_manager')),(4, ref('payroll_admin_group')),(4, ref('purchase.group_purchase_manager')),(4,ref('hr_expense.group_hr_expense_user'))]"/>
+            <field name="comment">CFO to have Super Admin access along with approval rights as shown below.</field>
+        </record>
+
+        <record id="all_employee_group" model="res.groups">
+            <field name="name">All Employee</field>
+
+            <field name="implied_ids" eval="[(4, ref('hr.group_hr_user')),(4, ref('accounting_access_product')),(4,ref('purchase.group_purchase_user'))]"/>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+
+            <field name="category_id" ref="base.module_category_human_resources"/>
+        </record>
+
+        <record model="ir.module.category" id="module_category_procuremnt">
+            <field name="name">Procurement</field>
+            <field name="sequence">25</field>
+        </record>
+
+        <record id="procurement_executive_group" model="res.groups">
+            <field name="name">Procurement Executive</field>
+            <field name="category_id" ref="module_category_procuremnt"/>
+            <field name="implied_ids"
+                   eval="[(4,ref('stock.group_stock_user')),(4, ref('base.group_user')), (4, ref('purchase.group_purchase_manager'))]"/>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <!--<field name="comment">The user will be able to manage equipments.</field>-->
+        </record>
+
+        <record id="procurement_manager_group" model="res.groups">
+            <field name="name">Procurement Manager</field>
+            <field name="category_id" ref="module_category_procuremnt"/>
+            <field name="implied_ids"
+                   eval="[(4,ref('stock.group_stock_user')),(4, ref('procurement_executive_group')), (4, ref('purchase.group_purchase_manager'))]"/>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <!--<field name="comment">The user will be able to manage equipments.</field>-->
+        </record>
+
+        <record id="sales_team.menu_base_partner" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(4, ref('procurement_manager_group')),(4, ref('procurement_executive_group'))]"/>
+        </record>
+
+        <record id="account.menu_finance" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(4, ref('procurement_manager_group')),(4, ref('procurement_executive_group'))]"/>
+        </record>
+
+        <record id="sale.menu_sale_order" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(4, ref('procurement_manager_group')),(4, ref('procurement_executive_group'))]"/>
+        </record>
+
+        <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(4, ref('procurement_manager_group')),(4, ref('procurement_executive_group'))]"/>
+        </record>
+
+        <record id="account.menu_action_account_payments_payable" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(4, ref('procurement_manager_group')),(4, ref('procurement_executive_group'))]"/>
+        </record>
+
+        <record id="account.menu_action_account_payments_receivable" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(4, ref('procurement_manager_group')),(4, ref('procurement_executive_group'))]"/>
+        </record>
+
+        <record id="cfo_group" model="res.groups">
+            <field name="name">CFO</field>
+            <field name="implied_ids"
+                   eval="[(4,ref('stock.group_stock_user')),(4, ref('project.group_project_manager')),(4, ref('payroll_admin_group')),(4, ref('purchase.group_purchase_manager')),(4,ref('hr_expense.group_hr_expense_user'))]"/>
+            <field name="comment">CFO to have Super Admin access along with approval rights as shown below.</field>
+        </record>
+
+        <record id="hr.menu_open_view_employee_list_my" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(3, ref('hr.group_hr_manager')), (3, ref('all_employee_group')), (4, ref('hr_manager_group')), (4, ref('cfo_group')), (4, ref('hr_executive_group'))]"/>
+        </record>
+
+        <record id="hr_payroll.menu_hr_payroll_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('all_employee_group'))]"/>
+        </record>
+
+        <!--<record id="leave_balance_all_employee" model="ir.rule">-->
+        <!--<field name="name">Leave Balances</field>-->
+        <!--<field name="model_id" ref="hr_holidays.model_hr_holidays"/>-->
+        <!--<field name="groups" eval="[(4, ref('all_employee_group'))]"/>-->
+        <!--<field name="domain_force">['|',('employee_id', '=', False), ('employee_id.id', '=', user.id)]</field>-->
+        <!--</record>-->
+
+        <record id="payslips_employee_record_own_all_employee" model="ir.rule">
+            <field name="name">Payslips Own Record</field>
+            <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+            <field name="groups" eval="[(4, ref('all_employee_group'))]"/>
+            <field name="domain_force">['|',('employee_id', '=', False), ('employee_id.user_id', '=', user.id)]</field>
+        </record>
+
+        <record id="hr_employee_all_employee" model="ir.rule">
+            <field name="name">Employee Record</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="groups" eval="[(4, ref('all_employee_group'))]"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+        </record>
+
+        <record id="hr.menu_hr_department_tree" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(3, ref('hr.group_hr_user')), (3, ref('hr.group_hr_manager')), (4, ref('cfo_group')), (4, ref('hr_manager_group'))]"/>
+        </record>
+        <record id="account.view_partner_property_form" model="ir.ui.view">
+            <field name="groups_id"
+                   eval="[(4,ref('procurement_executive_group')),(4,ref('procurement_manager_group'))]"/>
+        </record>
+
+        <menuitem
+                id="hr_holidays.menu_open_allocation_holidays" parent="hr_holidays.menu_hr_holidays_my_leaves"
+                action="hr_holidays.open_allocation_holidays" groups="hr_executive_group,hr_manager_group,cfo_group"
+                sequence="40"/>
+
+        <record id="hr_payroll.menu_hr_payroll_root" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(4, ref('cfo_group')), (4, ref('hr_manager_group')),(4,ref('payroll_admin_group')),(4,ref('all_employee_group')),(4,ref('base.group_erp_manager')),(4,ref('base.group_system'))]"/>
+        </record>
+        <record id="hr_payroll.menu_hr_payslip_run" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('cfo_group')),(4, ref('hr_manager_group')),(4,ref('payroll_admin_group'))]"/>
+        </record>
+        <record id="hr.menu_hr_root" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(4, ref('cfo_group')),(4, ref('hr_manager_group')),(4, ref('hr_executive_group'))]"/>
+        </record>
+        
+        <record id="stock.menu_stock_config_settings" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(4,ref('procurement_manager_group')),(4,ref('cfo_group')),(4,ref('procurement_executive_group'))]"/>
+        </record>
+
+        <record id="hr_holidays.menu_hr_holidays_approvals" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('Leave_to_approve_group'))]"/>
+        </record>
+
+        <record id="hr_holidays.menu_open_department_leave_approve" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('Leave_to_approve_group'))]"/>
+        </record>
+
+        <record id="hr_holidays.menu_open_department_leave_allocation_approve" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('Leave_to_approve_group'))]"/>
+        </record>
+
+        <record id="account.menu_finance_receivables" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accounting_access_sales'))]"/>
+        </record>
+        <record id="account.menu_finance_payables" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accounting_access_purchase'))]"/>
+        </record>
+        <record id="account.menu_finance_receivables" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accounting_access_sales'))]"/>
+        </record>
+        <record id="account.menu_finance_payables" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accounting_access_purchase'))]"/>
+        </record>
+
+
+        <!--<record id="no_edit_in_hr_holidays_public" model="ir.rule">-->
+        <!--<field name="name">No edit hr holidays public</field>-->
+        <!--<field name="model_id" ref="sg_hr_holiday.model_hr_holiday_public"/>-->
+        <!--<field name="global" eval="True"/>-->
+        <!--<field name="domain_force">[('state','=','draft')]</field>-->
+        <!--<field name="perm_read" eval="False"/>-->
+        <!--<field name="perm_write" eval="True"/>-->
+        <!--<field name="perm_unlink" eval="True"/>-->
+        <!--<field name="perm_create" eval="False"/>-->
+        <!--</record>-->
+
+        <!--<record id="no_edit_hr_holidays_public" model="ir.rule">-->
+        <!--<field name="name">No edit hr holidays public</field>-->
+        <!--<field name="model_id" ref="sg_hr_holiday.model_hr_holiday_public"/>-->
+        <!--<field name="groups" eval="[(4, ref('hr.group_hr_manager')),(4, ref('l10n_sg_hr_payroll.group_hr_payroll_admin'))]"/>-->
+        <!--<field name="perm_read" eval="1"/>-->
+        <!--<field name="perm_write" eval="0"/>-->
+        <!--<field name="perm_create" eval="1"/>-->
+        <!--<field name="perm_unlink" eval="0" />-->
+        <!--<field name="domain_force">[('state','=','confirmed')]</field>-->
+        <!--</record>-->
+
+
+
+        <!--Accounting only view their OWN Payslips-->
+        <record id="accounting_access_only_payslips" model="res.groups">
+            <field name="name">Accounting only view their OWN Payslips</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <record id="hr_payroll.menu_hr_payroll_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accounting_access_only_payslips'))]"/>
+        </record>
+        <record id="hr_payroll.menu_department_tree" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accounting_access_only_payslips'))]"/>
+        </record>
+
+        <record id="hr_payroll.menu_department_tree" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="hr_payroll.menu_hr_payroll_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <!--Rule onl view Payslips-->
+        <record id="rule_hr_payslip_only_view" model="ir.rule">
+            <field name="name">Accounting only view their OWN Payslips</field>
+            <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+            <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('accounting_access_only_payslips'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+
+        <!--Hide Menu Employee Group”  -->
+        <record id="not_to_accsess_employee" model="res.groups">
+            <field name="name">Don’t access Employee</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <record id="hr.menu_hr_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(3, ref('not_to_accsess_employee'))]"/>
+        </record>
+
+        <!--Accounting access Public Holidays-->
+        <record id="accounting_access_hr_holiday" model="res.groups">
+            <field name="name">Accounting access Public Holidays</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <!--Accounting don't access Public Holidays-->
+        <record id="accounting_not_access_hr_holiday" model="res.groups">
+            <field name="name">Accounting don't access Public Holidays</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+
+        <!--Accounting don't access Analytic Accounts-->
+        <record id="accounting_not_access_analytic_account" model="res.groups">
+            <field name="name">Accounting don't access Analytic Accounts</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <record id="rule_accounting_not_access_analytic_account" model="ir.rule">
+            <field name="name">Accounting don't access Analytic Accounts</field>
+            <field name="model_id" ref="analytic.model_account_analytic_account"/>
+            <field name="groups" eval="[(4, ref('accounting_not_access_analytic_account'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+
+        <!--Accounting view Products-->
+        <record id="accounting_access_product" model="res.groups">
+            <field name="name">Accounting view Products</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+
+        <!--Rule  Customer Invoice AR -->
+        <record id="rule_accounting_not_access_analytic_account" model="ir.rule">
+            <field name="name">AR Manager: Customer Invoice</field>
+            <field name="model_id" ref="account.model_account_invoice"/>
+            <field name="domain_force">[('journal_id.code','=','INV')]</field>
+            <field name="groups" eval="[(4, ref('accounting_access_sales'))]"/>
+
+        </record>
+
+
+        <!--Filter  Bill Vendor AP -->
+        <record id="rule_accounting_not_access_analytic_account" model="ir.rule">
+            <field name="name">AP Manger: Purchase</field>
+            <field name="model_id" ref="account.model_account_invoice"/>
+            <field name="domain_force">[('journal_id.code','=','BILl')]</field>
+            <field name="groups" eval="[(4, ref('accounting_access_purchase'))]"/>
+        </record>
+
+
+        <!--Accounting Manager-->
+        <record id="accsess_accounting_manager" model="res.groups">
+            <field name="name">Access Accounting Manager</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <record id="account.menu_account_config" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_accounting_manager'))]"/>
+        </record>
+
+        <record id="hr_expense.menu_hr_expense_to_approve" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_accounting_manager'))]"/>
+        </record>
+
+        <record id="hr_expense.menu_hr_expense_accountant" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_accounting_manager'))]"/>
+        </record>
+
+        <!--Access Adviser-->
+        <record id="accsess_account_adviser" model="res.groups">
+            <field name="name">Accounting access Adviser</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <record id="account.menu_finance_entries" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_account_adviser'))]"/>
+        </record>
+
+
+        <!-- Hide Payslips Batches-->
+        <record id="not_accsess_payslip_run" model="res.groups">
+            <field name="name">Don't access Payslips Batches</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!-- Only see own employee -->
+        <record id="only_see_own_employee" model="res.groups">
+            <field name="name">Only see own employee</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <record id="hr_payroll.menu_hr_payslip_run" model="ir.ui.menu">
+            <field name="groups_id" eval="[(3, ref('not_accsess_payslip_run'))]"/>
+        </record>
+
+        <!--<record id="hr_payroll.menu_hr_payslip_run" model="ir.ui.menu">-->
+            <!--<field name="groups_id" eval="[(3, ref('beumer_modifier_access_right.payroll_admin_group'))]"/>-->
+        <!--</record>-->
+
+
+        <!--Don't acess Leave To Approve-->
+
+        <record id="not_accsess_leave_approve" model="res.groups">
+            <field name="name">Don't access Leave To Approve</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <record id="hr_holidays.menu_hr_holidays_approvals" model="ir.ui.menu">
+            <field name="groups_id" eval="[(3, ref('not_accsess_leave_approve'))]"/>
+        </record>
+
+        <record id="hr_holidays.menu_hr_holidays_approvals" model="ir.ui.menu">
+            <field name="groups_id" eval="[(3, ref('hr_holidays.group_hr_holidays_user'))]"/>
+        </record>
+
+
+        <!--Don't acess Expense Reports To Approve-->
+
+        <record id="not_accsess_report_approve" model="res.groups">
+            <field name="name">Don't access Reports To Approve</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <record id="hr_expense.menu_hr_expense_to_approve" model="ir.ui.menu">
+            <field name="groups_id" eval="[(3, ref('not_accsess_report_approve'))]"/>
+        </record>
+        <record id="hr_expense.menu_hr_expense_sheet_all_to_approve" model="ir.ui.menu">
+            <field name="groups_id" eval="[(3, ref('not_accsess_report_approve'))]"/>
+        </record>
+        <record id="hr_expense.menu_hr_expense_to_approve" model="ir.ui.menu">
+            <field name="groups_id" eval="[(3, ref('hr_expense.group_hr_expense_user'))]"/>
+        </record>
+
+
+        <!--AP, AR Manager-->
+        <record id="accsess_ap_ar_manager" model="res.groups">
+            <field name="name">Accsess AP, AR Manager</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <record id="account.account_reports_management_menu" model="ir.ui.menu">
+            <field name="groups_id" eval="[(3, ref('accsess_ap_ar_manager'))]"/>
+        </record>
+        <record id="account.account_management_menu" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_ap_ar_manager'))]"/>
+        </record>
+
+        <record id="invoice_comp_rule" model="ir.rule">
+            <field name="name">Invoice multi-company</field>
+            <field name="model_id" ref="account.model_account_invoice"/>
+            <field name="global" eval="True"/>
+            <field name="groups" eval="[(4, ref('accounting_access_sales')), (4, ref('accounting_access_purchase'))]"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]
+            </field>
+        </record>
+
+        <!--AP Manager-->
+        <record id="accsess_user_ap_manager" model="res.groups">
+            <field name="name">Accsess User AP Manager</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <record id="hr_expense.menu_hr_expense_accountant" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_user_ap_manager'))]"/>
+        </record>
+
+
+
+        <!--AR Manager-->
+        <record id="accsess_user_ar_manager" model="res.groups">
+            <field name="name">Accsess User AR Manager</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <!--acsess to Sale, not create, edit-->
+
+        <record id="account.menu_finance_receivables" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('accsess_user_ap_manager'))]"/>
+        </record>
+
+        <!-- access Human Resources/Configurations/Payroll/Salary Rule menu -->
+        <record id="hr_payroll.menu_action_hr_salary_rule_form" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('payroll_admin_group'))]"/>
+        </record>
+
+        <!--Access all payment term-->
+        <record id="accsess_create_payment_term_group" model="res.groups">
+            <field name="name">Accsess Create Payment Term</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <!--Edit on HR_expense-->
+        <record id="edit_hr_expense" model="res.groups">
+            <field name="name">Edit Hr Expense Sheet</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!--Edit on HR_expense-->
+        <record id="access_readonly_team_configuration" model="res.groups">
+            <field name="name">Access Readonly Team Configuration</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+
+        <!--HLC Groups-->
+        <record id="tiemsheet_hlc_groups" model="res.groups">
+            <field name="name">HLC Groups</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!--O&M Groups-->
+        <record id="tiemsheet_om_groups" model="res.groups">
+            <field name="name">OM Groups</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+         <!--General Groups-->
+        <record id="timesheet_general_groups" model="res.groups">
+            <field name="name">General Groups</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!-- Employee manager access contract menu in HR  -->
+        <record id="employee_manager_access_contract_menu" model="res.groups">
+            <field name="name">Employee Manager access contract menu</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!--All employee access purchase settings-->
+        <!--Access purchase configuration group-->
+        <record id="access_purchase_configuration" model="res.groups">
+            <field name="name">Access purchase configuration</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!--Auditor-->
+        <record id="accsess_user_auditor" model="res.groups">
+            <field name="name">Accsess User Auditor</field>
+            <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>-->
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <menuitem id="purchase.menu_purchase_general_settings" name="Settings" parent="purchase.menu_purchase_config"
+            sequence="0" action="purchase.action_purchase_configuration" groups="base.group_system,access_purchase_configuration"/>
+
+        <menuitem id="purchase.menu_purchase_config" name="Configuration" parent="purchase.menu_purchase_root" sequence="100" groups="purchase.group_purchase_manager,access_purchase_configuration"/>
+
+	<menuitem id="hr_expense.menu_hr_expense_accountant" name="Accountant" sequence="3" parent="hr_expense.menu_hr_expense_root" groups="hr_expense.group_hr_expense_manager,hr_manager_group"/>
+
+	<menuitem id="hr_expense.menu_hr_expense_reports"
+            name="Expenses" sequence="2"
+            parent="sg_hr_employee.menu_parent_hr_report_summary"
+            groups="hr_expense.group_hr_expense_manager,hr_manager_group"/>
+	 <menuitem
+            id="hr.menu_view_employee_category_form"
+            action="hr.open_view_categ_form"
+            parent="hr.menu_human_resources_configuration"
+            groups="base.group_no_one,hr_manager_group"
+            sequence="1"/>
+
+	 <menuitem
+            id="hr_contract.hr_menu_contract_type"
+            action="hr_contract.action_hr_contract_type"
+            parent="hr.menu_human_resources_configuration"
+            sequence="3"
+            groups="base.group_no_one,hr_manager_group"/>
+
+	 <menuitem id="hr_payroll.menu_hr_payroll_global_settings" name="Settings"
+            parent="hr_payroll.menu_hr_payroll_configuration" sequence="0" action="hr_payroll.action_hr_payroll_configuration" groups="base.group_no_one,hr_manager_group"/>
+
+	<record id="hr_payroll.menu_action_hr_salary_rule_form" model="ir.ui.menu">
+            <field name="name">Salary Rule</field>
+            <field name="parent_id" ref="hr_payroll.menu_hr_payroll_configuration"/>
+            <field name="groups_id"   eval="[(6, 0, [ref('base.group_system'),ref('hr_manager_group')])]"/>
+            <field name="action" ref="hr_payroll.action_salary_rule_form"/>
+            <field name="sequence">13</field>
+        </record>
+	<menuitem id="hr_expense.menu_hr_expense_global_settings" name="Settings"
+            parent="hr_expense.menu_hr_expense_configuration" sequence="0" action="hr_expense.action_hr_expense_configuration" groups="base.group_system,hr_manager_group"/>
+
+	<menuitem id="hr_expense.menu_hr_product" name="Expense Products" parent="hr_expense.menu_hr_expense_configuration"
+            action="hr_expense.hr_expense_product" groups="hr_expense.group_hr_expense_manager,hr_manager_group" sequence="10"/>
+	<menuitem id="hr_expense.menu_hr_expense_sheet_all_all" name="All Expense Reports" sequence="4" parent="hr_expense.menu_hr_expense_reports"
+            action="hr_expense.action_hr_expense_sheet_all_all" groups="hr_expense.group_hr_expense_manager,hr_manager_group"/>
+    </data>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="ir_cron_campaign_sync_participants" model="ir.cron">
+        <field name="name">Marketing Automation: sync participants</field>
+        <field name="model">marketing.automation.campaign</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="function" eval="'sync_participants'"/>
+        <field name="args" eval="'(True,)'"/>
+    </record>
+
+    <record id="ir_cron_campaign_execute_activities" model="ir.cron">
+        <field name="name">Marketing Automation: execute activities</field>
+        <field name="model">marketing.automation.campaign</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="function" eval="'execute_activities'"/>
+        <field name="args" eval="'(True,)'"/>
+    </record>
+
+</odoo>

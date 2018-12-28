@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PrintSessionButton">
+        <div class="oe_status">
+            <div class="print oe_icon">
+                <i class="fa fa-fw fa-print"></i>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="XmlPrintSessionReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' line-ratio='0.6'>
+            <div>
+                <h3><t t-esc="data.session"/></h3>
+            </div>
+            <div>------------------------------------------</div>
+            <t t-foreach='data.product_ids' t-as='product_id'>
+                <line>
+                    <left>
+                        <t t-esc='data.order_lines[product_id].product_name'/>
+                    </left>
+                    <right>
+                        <t t-esc="data.order_lines[product_id].qty"/>
+                        <t t-esc="widget.format_currency(data.order_lines[product_id].price)"/>
+                    </right>
+                </line>
+            </t>
+            <div>------------------------------------------</div>
+            <line size='double-height'>
+                <left>Total:</left>
+                <right>
+                    <t t-esc="widget.format_currency(data.total)"/>
+                </right>
+            </line>
+            <line size='double-height'>
+                <left>Tax:</left>
+            </line>
+            <t t-foreach='data.tax_names' t-as='tax'>
+                <line>
+                    <left>
+                        <t t-esc='tax.name'/>
+                    </left>
+                    <right>
+                        <t t-esc="widget.format_currency(data.taxes[tax.id])"/>
+                    </right>
+                </line>
+            </t>
+            <div>------------------------------------------</div>
+            <line size='double-height'>
+                <left>Total:</left>
+                <right>
+                    <t t-esc="widget.format_currency(data.grand_total)"/>
+                </right>
+            </line>
+            <line>
+                <left>Payment:</left>
+            </line>
+            <t t-foreach='data.payment_ids' t-as='payment_id'>
+            <line>
+                <left><t t-esc="data.payments[payment_id].name"/></left>
+                <right><t t-esc="widget.format_currency(data.payments[payment_id].amount)"/></right>
+            </line>
+            </t>
+        </receipt>
+    </t>
+</templates>
+

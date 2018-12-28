@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+    <t t-extend="PaymentScreenWidget">
+        <t t-jquery=".payment-buttons" t-operation="append">
+            <div class='button js_deposit'>
+                <i class='fa fa-file-text-o' />
+                <span class='js_deposit'>
+                    Deposit
+                </span>
+            </div>
+        </t>
+    </t>
+    <t t-name="ListCustomerDeposit">
+	    <div class="listcustomerdeposit-screen clientlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </span>
+					<span class='button next'>
+                        Next >>
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix client-details-contents'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                    <table class='list-customer-deposit' style="width: 100%;font-size: 16px;">
+                                        <thead>
+                                            <tr>
+                                                <th>Reference</th>
+                                                <th>Name</th>
+                                                <th>Partner</th>
+                                                <th>Payment Date</th>
+                                                <th>Amount</th>
+                                                <th>Remaining Amount</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class='list-customer-deposit-line'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="CustomerDepositLine">
+        <tr class='customer-deposit-line' t-att-data-id='item.id'>
+            <td><t t-esc='item.communication'/></td>
+            <td><t t-esc='item.name' /></td>
+            <td><t t-esc='item.partner_id[1]' /></td>
+            <td><t t-esc='item.payment_date' /></td>
+            <td><t t-esc='item.amount' /></td>
+            <td><t t-esc="item.remaining_amount"></t></td>
+            <td>received</td>
+        </tr>
+    </t>
+
+    <t t-extend="ClientListScreenWidget">
+        <t t-jquery="span.button.next" t-operation="after">
+            <span class='button create_deposit oe_hidden highlight' style="right: 0px;margin-right: 220px;">
+                Create Deposit
+                <i class='fa fa-angle-double-right'></i>
+            </span>
+        </t>
+    </t>
+
+    <t t-name="CreateCustomerDeposit">
+	    <div class="createcustomerdeposit-screen clientlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </span>
+					<span class='button create highlight' style="right: 0px;
+    margin-right: 16px;">
+                        Create
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix client-details-contents'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                    <section class='customer-deposit-details edit'>
+
+                                    </section>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+    <t t-name="FormCreateCustomerDeposit">
+        <div class='client-picture'>
+            <t t-if='!partner.id'>
+                <i class='fa fa-camera'/>
+            </t>
+            <t t-if='partner.id'>
+                <img t-att-src='widget.partner_icon_url(partner.id)' />
+            </t>
+        </div>
+        <input class='detail client-name' name='name' t-att-value='partner.name' placeholder='Name' disabled="true"/>
+        <div class='client-details-box clearfix'>
+            <div class='client-details-left'>
+                <div class="client-detail field-deposit">
+                    <span class='label' style="width: 200px;">Amount</span>
+                    <input class='detail amount' name='amount' type="number"/>
+                </div>
+                <div class="client-detail field-deposit">
+                    <span class='label' style="width: 200px;">Payment date</span>
+                    <input class='detail payment_date' type="date"   name='payment_date'/>
+                </div>
+                <div class="client-detail field-deposit">
+                    <span class='label' style="width: 200px;">Payment method</span>
+                    <div class="render-payment-method"/>
+                </div>
+                <div class="client-detail field-deposit">
+                    <span class='label' style="width: 200px;">Deposit account</span>
+                    <div class="render-deposit-account"/>
+                </div>
+                <!--t-att-value='partner.barcode || ""'-->
+            </div>
+            <div class='client-details-right'>
+                <div class="client-detail field-deposit">
+                    <span class='label' style="width: 200px;">Event</span>
+                    <input class='detail event' name='event' type='text'    />
+                </div>
+                <div class="client-detail field-deposit">
+                    <span class='label' style="width: 200px;">Event date</span>
+                    <input class='detail event_date' name='event_date'    type='date'  />
+                </div>
+                <div class="client-detail field-deposit">
+                    <span class='label' style="width: 200px;">Reference</span>
+                    <input class='detail reference' name='reference' />
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="InputSelectPaymentMethod">
+        <select class='detail payment_method' name='payment_method' style="">
+            <t t-foreach='list' t-as='item'>
+                <option t-att-value='item.id'>
+                    <t t-esc='item.name' />
+                </option>
+            </t>
+        </select>
+    </t>
+    <t t-name="InputSelectDepositAccount">
+        <select class='detail deposit_account' name='deposit_account' style="">
+            <t t-foreach='list' t-as='item'>
+                <option t-att-value='item.id'>
+                    <t t-esc='item.code +" "+ item.name'  />
+                </option>
+            </t>
+        </select>
+    </t>
+</template>
+

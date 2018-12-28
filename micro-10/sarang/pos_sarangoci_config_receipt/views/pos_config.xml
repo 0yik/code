@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="pos_config_sarangoci_symbol" model="ir.ui.view">
+            <field name="name">pos.config.sarangoci.symbol</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='receipt']" position="inside">
+                    <field name="receipt_symbol"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

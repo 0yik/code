@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="stock_pack_operation_lot_tree_view" model="ir.ui.view">
+            <field name="name">stock.pack.operation.lot.tree.view</field>
+            <field name="model">stock.pack.operation.lot</field>
+            <field name="arch" type="xml">
+                <tree string="Quant Stock Moves">
+                    <field name="product_id"/>
+                    <field name="qty"/>
+                    <field name="product_uom"/>
+                    <field name="date"/>
+                    <field name="lot_id"/>
+                    <field name="imei_number"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--<record id="stock_pack_operation_lot_form_view" model="ir.ui.view">-->
+            <!--<field name="name">stock.pack.operation.lot.form.view</field>-->
+            <!--<field name="model">stock.pack.operation.lot</field>-->
+            <!--<field name="type">form</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Quant Stock Moves">-->
+                    <!--<field name="qty"/>-->
+                    <!--<field name="lot_id"/>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+        <record id="action_quant_stock_move" model="ir.actions.act_window">
+            <field name="name">Quant Stock Moves</field>
+            <field name="res_model">stock.pack.operation.lot</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="menu_quant_stock_moves" name="Quant Stock Moves" action="action_quant_stock_move" parent="stock.menu_warehouse_report" sequence='5'/>
+    </data>
+</odoo>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="ccm_about_us" name="about_us">
+		<t t-call="website.layout">
+			<div id="wrap" class="oe_structure">
+				<!-- ***************************************** breadcrumb start *********************************************************  -->
+				<section>
+					<div class="bs_margin"></div>
+				</section>
+				<div class="breadcrumb_main">
+					<div class="breadcrumb_container">
+						<section>
+							<div class="breadcrumb_inner">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+									<li class="breadcrumb-item active">About Us</li>
+								</ol>
+							</div>
+						</section>
+					</div>
+				</div>
+				<!--************************************** breadcrumb start **************************************  -->
+
+				<!--************************************** mission and vision section start **************************************  -->
+				<div class="mis_vis_main">
+					<section>
+						<div class="bs_margin"></div>
+					</section>
+					<div class="mis_vis_container">
+						<div class="col-md-6 mis_vis_inner">
+							<div class="mis_vis_sub">
+								<h3>Mision</h3>
+								<p>CCM wants to help you feel awesome when you are all-dressed up for that special event. We want you to have an unforgettable experience whenever you are wearing our costumes. To be that character that you always wanted to be! And, if you need our costumes to create an entire event? We want our costumes to be an indispensable asset that enhances the atmosphere of the event and contributes to its success!</p>
+							</div>
+						</div>
+						<div class="col-md-6  mis_vis_inner">
+							<div class="mis_vis_sub">
+								<h3>Vision</h3>
+								<p>CCM aspires to be your leading one-stop solution for all your costuming needs all-year-round in Singapore as well as Internationally. Today, we intend to embrace the onset of technological advancements to redefine the costuming experiences with us.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--************************************** mission and vision section start**************************************  -->
+
+				<!--************************************** our service section start**************************************  -->
+				<div class="our_service_main">
+					<div class="our_service_container">
+						<div class="col-md-12 our_service_heading">
+							<h3>Our Services</h3>
+						</div>
+						<div class="row">
+							<div class="col-md-3 col-sm-4 col-xs-12">
+								<div class="service_inner">
+									<p>Product Design &amp; Conceptualization</p>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-4 col-xs-12">
+								<div class="service_inner">
+									<p>Rental of Costumes &amp; Mascots</p>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-4 col-xs-12">
+								<div class="service_inner">
+									<p>Made-to-Measure Costumes</p>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-4 col-xs-12">
+								<div class="service_inner">
+									<p>Mascots Cleaning &amp; Maintenance</p>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-4 col-xs-12">
+								<div class="service_inner">
+									<p>Production of license Mascot</p>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-4 col-xs-12">
+								<div class="service_inner">
+									<p>Retail Merchandise</p>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-4 col-xs-12">
+								<div class="service_inner">
+									<p>Costume Consultation</p>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-4 col-xs-12">
+								<div class="service_inner">
+									<p>Production of fiberglass Mascot</p>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-4 col-xs-12">
+								<div class="service_inner">
+									<p>Mass Production</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--************************************** our service section end**************************************  -->
+
+				<!--************************************** happy client section start**************************************  -->
+				<div class="our_hclient_main">
+					<div class="our_hclient_container">
+						<div class="col-md-12 our_hclient_heading">
+							<h3>our happy clients:</h3>
+						</div>
+						<div class="row">
+							<div class="col-md-1 col-sm-4 col-xs-12"></div>
+							<div class="col-md-2 col-sm-4 col-xs-12">
+								<div class="hclient_img">
+									<img src="/modifier_honos_theme/static/src/img/hc1.png" alt="hc1" />
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-4 col-xs-12">
+								<div class="hclient_img">
+									<img src="/modifier_honos_theme/static/src/img/hc2.png" alt="hc2" />
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-4 col-xs-12">
+								<div class="hclient_img">
+									<img src="/modifier_honos_theme/static/src/img/hc3.png" alt="hc3" />
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-4 col-xs-12">
+								<div class="hclient_img">
+									<img src="/modifier_honos_theme/static/src/img/hc4.png" class="mt20" alt="hc4" />
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-4 col-xs-12">
+								<div class="hclient_img">
+									<img src="/modifier_honos_theme/static/src/img/hc5.png" alt="hc5" />
+								</div>
+							</div>
+							<div class="col-md-1 col-sm-4 col-xs-12"></div>
+						</div>
+					</div>
+				</div>
+				<!--************************************** happy client section end**************************************  -->
+
+				<!--************************************** internationl project section start**************************************  -->
+				<div class="our_iproject_main">
+					<section>
+						<div class="bs_margin"></div>
+					</section>
+					<div class="our_iproject_container">
+						<div class="col-md-12 our_iproject_heading">
+							<h3>International projects</h3>
+						</div>
+						<div class="col-md-12">
+							<div id="Carousel" class="carousel slide">
+
+							    <ol class="carousel-indicators">
+							        <li data-target="#Carousel" data-slide-to="0" class="active"></li>
+							        <li data-target="#Carousel" data-slide-to="1"></li>
+							        <li data-target="#Carousel" data-slide-to="2"></li>
+							    </ol>
+
+							    <div class="carousel-inner">
+
+							        <div class="item active">
+							            <div class="row">
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj1.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj2.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj3.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj4.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							            </div>
+							        </div>
+
+							        <div class="item">
+							            <div class="row">
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj1.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj2.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj3.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj4.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							            </div>
+							        </div>
+
+							        <div class="item">
+							            <div class="row">
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj1.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj2.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj3.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							                <div class="col-md-3 col-sm-3 col-xs-3">
+							                    <a href="#" class="#"><img src="/modifier_honos_theme/static/src/img/oproj4.png" alt="Image" style="max-width:100%;"/></a>
+							                </div>
+							            </div>
+							        </div>
+
+							    </div>
+							    <a data-slide="prev" href="#Carousel" class="left carousel-control">‹</a>
+							    <a data-slide="next" href="#Carousel" class="right carousel-control">›</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--************************************** internationl project section start**************************************  -->
+			</div>
+		</t>
+	</template>
+</odoo>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<!-- Purchase order inheritance and replace purchase orderline -->
+		<record id="custome_view_purchase_order_form_inherit_new" model="ir.ui.view">
+            <field name="name">Purchase Order Inherit view</field>
+            <field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="priority" eval="30"/>
+            <field name="arch" type="xml">
+				<!--xpath expr="//notebook/page/field/form/group/group/field[@name='product_id']" position="after"-->
+				<xpath expr="//notebook/page/field[@name='order_line']" position="replace">
+					<field name="order_line" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}">
+					<form string="Purchase Order Line">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id"
+                                       context="{'partner_id': parent.partner_id}"/>
+                                <label for="product_qty"/>
+                                <div class="div_width" style="width:100%%">
+                                    <field name="product_qty" class="oe_inline product_qty_width" style="width:50%% !important"/>
+                                    <span class="oe_inline">&#160;</span>
+                                    <field name="product_uom" groups="product.group_uom" class="oe_inline product_uom_width" style="width:50%% !important"/>
+                                </div>
+                                <field name="price_unit"/>
+                            </group>
+                            <group>
+                                <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use', '=', 'purchase')]"/>
+                                <field name="date_planned" widget="date"/>
+								<!-- custom field add -->
+                                <field name="account_analytic_id" colspan="2" groups="purchase.group_analytic_accounting"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                        <page string="Notes">
+                            <field name="name"/>
+                        </page><page string="Invoices and Incoming Shipments">
+                            <field name="invoice_lines"/>
+                            <field name="move_ids"/>
+                        </page>
+                        </notebook>
+                    </sheet>
+                </form>
+				<tree string="Purchase Order Lines">
+                    <field name="currency_id" invisible="1"/>
+                    <field name="state" invisible="1"/>
+                    <field name="sequence" widget="handle"/>
+                    <field name="product_id"/>
+                    <field name="name"/>
+                    <field name="date_planned" invisible="1"/>
+
+                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                    <field name="account_analytic_id" context="{'default_partner_id':parent.partner_id}" groups="purchase.group_analytic_accounting" invisible="1"/>
+                    <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting" widget="many2many_tags" invisible="1"/>
+                    <field name="product_qty"/>
+                    <field name="qty_received" invisible="not context.get('show_purchase', False)"/>
+                    <field name="qty_invoiced" invisible="not context.get('show_purchase', False)"/>
+                    <field name="product_uom" groups="product.group_uom" />
+                    <field name="price_unit"/>
+                    <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase'}"/>
+                    <field name="price_subtotal" widget="monetary"/>
+
+                </tree>
+            </field>				
+				</xpath>
+				<xpath expr="//notebook/page/field/form/sheet/group[last()]" position="after">
+					<group>
+						<group string="Product Purchase History">
+						<field name="last_purchase_history"/>
+						<field name="last_purchase_qty"/>
+						</group>
+						<group string="Stock Detail on Current/Display W/H">
+						<field name="warehouse_id" domain="[('is_shop', '!=', True),('usage', '=', 'internal')]"/>
+						<field name="stock_current_warehouse"/>
+						<field name="stock_display_warehouse"/>
+						</group>
+					</group>
+				</xpath>
+			</field>
+		</record>
+		
+		<!-- Purchase order line custom treeview -->
+		<record id="purchase.purchase_order_line_tree" model="ir.ui.view">
+            <field name="name">purchase.order.line.tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Order Lines">
+                    <field name="currency_id" invisible="1"/>
+                    <field name="state" invisible="1"/>
+                    <field name="sequence" widget="handle"/>
+                    <field name="product_id"/>
+					<!--field name="product_id" attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}"/-->
+                    <field name="name"/>
+                    <field name="date_planned"/>
+                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                    <field name="account_analytic_id" context="{'default_partner_id':parent.partner_id}" groups="purchase.group_analytic_accounting"/>
+                    <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting" widget="many2many_tags"/>
+                    <field name="product_qty"/>
+                    <field name="qty_received" invisible="not context.get('show_purchase', False)"/>
+                    <field name="qty_invoiced" invisible="not context.get('show_purchase', False)"/>
+                    <field name="product_uom" groups="product.group_uom" /><!-- attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"-->
+                    <field name="price_unit"/>
+                    <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase'}"/>
+                    <field name="price_subtotal" widget="monetary"/>
+                </tree>
+            </field>
+        </record>
+
+		<!-- Purchase order line custom formview -->
+        <record id="purchase.purchase_order_line_form2" model="ir.ui.view">
+            <field name="name">purchase.order.line.form2</field>
+            <field name="model">purchase.order.line</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <form string="Purchase Order Line">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id"
+                                       context="{'partner_id': parent.partner_id}"/>
+                                <label for="product_qty"/>
+                                <div>
+                                    <field name="product_qty" class="oe_inline"/>
+                                    <span class="oe_inline">&#160;</span>
+                                    <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
+                                </div>
+                                <field name="price_unit"/>
+                            </group>
+                            <group>
+                                <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use', '=', 'purchase')]"/>
+                                <field name="date_planned" widget="date"/>
+                                <field name="account_analytic_id" colspan="2" groups="purchase.group_analytic_accounting"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                        <page string="Notes">
+                            <field name="name"/>
+                        </page><page string="Invoices and Incoming Shipments">
+                            <field name="invoice_lines"/>
+                            <field name="move_ids"/>
+                        </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+</odoo>

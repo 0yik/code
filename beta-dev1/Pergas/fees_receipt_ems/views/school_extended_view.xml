@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Inherited Academic Form View -->
+    <record id="view_academic_year_form_pergas" model="ir.ui.view">
+        <field name="name">acdemic.year.form.pergas</field>
+        <field name="model">academic.year</field>
+        <field name="inherit_id" ref="school.view_academic_year_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/field[@name='grade_id']" position="after">
+                <field name="standard_id"/>
+                <field name="enrollment_fee_id"/>
+                <field name="division_id"/>
+            </xpath>
+            <xpath expr="//page[1]" position="attributes">
+				<attribute name="string">Terms</attribute>
+			</xpath>
+			<xpath expr="//sheet/group/field[@name='code']" position="attributes">
+				<attribute name="required">0</attribute>
+			</xpath>
+        </field>
+    </record>
+    
+    <!-- Inherited Academic Form View -->
+    <record id="view_student_student_form_2_pergas" model="ir.ui.view">
+        <field name="name">student.student.form.2.pergas</field>
+        <field name="model">student.student</field>
+        <field name="inherit_id" ref="school.view_student_student_form_2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group/div[@class='o_address_format']/field[@name='city']" position="attributes">
+				<attribute name='required'>0</attribute>
+			</xpath>
+			<xpath expr="//group/group/div[@class='o_address_format']/field[@name='state_id']" position="attributes">
+				<attribute name='required'>0</attribute>
+			</xpath>
+			<xpath expr="//group/group/div[@class='o_address_format']/field[@name='country_id']" position="attributes">
+				<attribute name='required'>0</attribute>
+			</xpath>
+			<xpath expr="//group/group/field[@name='medium_id']" position="attributes">
+				<attribute name='invisible'>1</attribute>
+			</xpath>
+        </field>
+    </record>
+    
+    
+    <!-- Inherited Daily Attendance Form View -->
+    <record id="view_daily_attendance_form_1_pergas" model="ir.ui.view">
+        <field name="name">daily.attendance.form.pergas</field>
+        <field name="model">daily.attendance</field>
+        <field name="inherit_id" ref="school_attendance.view_daily_attendance_form_1"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page/field[@name='student_ids']/tree/field[@name='is_absent']" position="after">
+                <field name="remarks"/>
+            </xpath>
+            <xpath expr="//notebook/page/field[@name='student_ids']" position="after">
+            	<group string="Remarks">
+            		<field name="remarks" nolabel="1" placeholder="Remarks..."/>
+            	</group>
+            </xpath>
+            <xpath expr="//group/field[@name='standard_id']" position="before">
+                <field name="academic_year_id"/>
+            </xpath>
+            <xpath expr="//group/field[@name='standard_id']" position="attributes">
+				<attribute name='domain'>[]</attribute>
+				<attribute name='readonly'>1</attribute>
+			</xpath>
+        </field>
+    </record>
+    
+    <!-- Inherited Cources Form View -->
+    <record id="view_school_standard_form_pergas" model="ir.ui.view">
+        <field name="name">school.standard.form.pergas</field>
+        <field name="model">school.standard</field>
+        <field name="inherit_id" ref="school.view_school_standard_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/field[@name='user_id']" position="after">
+                <field name="enrollment_fee_id"/>
+            </xpath>
+            <xpath expr="//sheet/group/field[@name='medium_id']" position="attributes">
+				<attribute name="required">0</attribute>
+			</xpath>
+			<xpath expr="//sheet/group/field[@name='medium_id']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+        </field>
+    </record>
+    
+    <!-- Inherited School Form View -->
+    <record id="view_school_school_form_pergas" model="ir.ui.view">
+        <field name="name">school.school.form.pergas</field>
+        <field name="model">school.school</field>
+        <field name="inherit_id" ref="school.view_school_school_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/field[@name='currency_id']" position="after">
+                <field name="application_fee_id"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <!-- Inherited Student Payslip Report View -->
+    <record id="student_payslip_pergas" model="ir.ui.view">
+        <field name="name">student_payslip.pergas</field>
+        <field name="inherit_id" ref="school_fees.student_payslip"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t/t/t/div/div/span/h1" position="replace">
+                <h1>Student Fee Receipt</h1>
+            </xpath>
+        </field>
+    </record>
+    
+    
+    <!-- Move Courses View -->
+  	
+  	<record id="move_courses_tree_view" model="ir.ui.view">
+        <field name="name">move.courses.tree.view</field>
+        <field name="model">move.courses</field>            
+        <field name="arch" type="xml">
+            <tree> 
+                <field name="date"/>
+                <field name="name"/>
+                <field name="course_id"/>
+                <field name="user_id"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_led_strip_order_form" model="ir.ui.view">
+        <field name="name">move.courses.form</field>
+        <field name="model">move.courses</field>
+        <field name="arch" type="xml">
+            <form string="Move Courses">
+            	<header>
+            		<button name="%(fees_receipt_ems.action_move_courses_wizard_form)d" string="Move To Another Courses" type="action" class="btn-primary"/>
+            	</header>
+            	<sheet>
+            		<group>
+            			<group>
+            				<field name="name"/>
+            				<field name="date" readonly="1"/>
+            			</group>
+            			<group>
+            				<field name="course_id" widget="selection"/>
+            				<field name="user_id" readonly="1"/>
+            			</group>
+        			</group>
+            		<notebook>
+            			<page name='enrolled_student' string='Enrolled Student'>
+            				<field name="enrolled_student_ids" nolabel="1">
+            					<tree editable="bottom">
+            						<field name="student_id"/>
+            						<field name="roll_no"/>
+            						<field name="checklist"/>
+            						<field name="move_course_id" invisible="1"/>
+            					</tree>
+            				</field>
+            			</page>
+            		</notebook>
+            	</sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_move_courses" model="ir.actions.act_window">
+        <field name="name">Move Courses</field>
+        <field name="res_model">move.courses</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Move Courses"
+            id="menu_move_courses"
+            parent="school.menu_configuration"
+            action="action_move_courses"
+            sequence="50"/>
+            
+    <!-- Monthly Attendance Sheet View -->
+    <record id="view_monthly_attendance_sheet_pergas" model="ir.ui.view">
+        <field name="name">monthly.attendance.sheet.pergas</field>
+        <field name="model">monthly.attendance.sheet</field>
+        <field name="inherit_id" ref="school_attendance.view_monthly_attendance_sheet"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="replace">
+                <separator string="Academic Year Information" colspan="4" />
+                <group col="4" colspan="2">
+                    <field name="year_id" widget="selection" />
+                    <field name="month_id" domain="[('year_id','=',year_id)]" widget="selection"/>
+                </group>
+                <separator string="Standard Information" col="2" colspan="2"/>
+                <group col="2" colspan="2">
+                    <field name="standard_id"  widget="selection" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+    
+    
+    <record id="view_student_fees_register_form_pergas_1" model="ir.ui.view">
+        <field name="name">student.fees.register.form.pergas.1</field>
+        <field name="model">student.fees.register</field>
+        <field name="inherit_id" ref="school_fees.view_student_fees_register_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//sheet/group/field[@name='fees_structure']" position="before">
+				<field name="intake_id"/>
+			</xpath>
+			<xpath expr="//sheet/group/field[@name='standard_id']" position="attributes">
+				<attribute name="string">Courses</attribute>
+				<attribute name="required">0</attribute>
+				<attribute name="readonly">1</attribute>
+			</xpath>
+        </field>
+    </record>
+    
+	<record id="school_fees.action_student_payslip_form" model="ir.actions.act_window">
+        <field name="name">Fees Receipt</field>
+        <field name="res_model">student.payslip</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'readonly_by_pass': True}</field>
+    </record>
+</odoo>   

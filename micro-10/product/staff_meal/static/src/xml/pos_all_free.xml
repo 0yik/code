@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    
+    <t t-name="AllFreeOrderButton">
+        <div class='btn btn-default btn-fill btn-wd button-section control-button all-free-button oe_hidden'>
+            <i class="fa fa-gift"/>All-Free
+        </div>
+    </t>
+
+    <t t-extend="ProductScreenWidget">
+        <t t-jquery="div.control-buttons" t-operation="after">
+            <div class="all-free-buttons-section">
+            </div>
+        </t>
+    </t>
+    <t t-name="Orderline" t-extend="Orderline">
+        <t t-jquery=".price" t-operation="replace">
+            <span class="price">
+                <t t-if="line.order.all_free">Free</t>
+                <t t-if="!line.order.all_free"><t t-esc="widget.format_currency(line.get_display_price())"/></t>
+            </span>
+        </t>
+    </t>
+    <t t-extend="OptionsPopupWidget">
+         <t t-jquery="button[data-action='4']" t-operation="replace">
+            <button class="button icon staff_meal" data-action='4'><img src="/pizzahut_modifier_startscreen/static/src/img/staff_meal.png"></img><span>Staff Meal</span></button>
+         </t>
+    </t>
+    <!-- pos_to_sales_order -->
+     <t t-extend="CreateSalesOrderWidget">
+        <t t-jquery="div[class='control-button']" t-operation="replace">
+            <div class='control-button CreateSalesOrderbutton' >
+                <i class='fa fa-star' />Create Sales Order
+            </div>
+        </t>
+    </t>
+
+    <!-- pos_restaurant_kitchen     -->
+    <t t-extend="ButtonConfirm">
+        <t t-jquery="button" t-operation="replace">
+            <button class="btn btn-default btn-fill btn-wd control-button send_kitchen"><i class="pe-7s-angle-right-circle"/> Send Kitchen/bar</button>
+        </t>
+    </t>
+
+    <t t-extend="SubmitOrderButton">
+        <t t-jquery="button" t-operation="replace">
+            <button class="control-button btn btn-default btn-fill btn-wd control-button order-submit"><i class="pe-7s-share"/> Order</button>
+        </t>
+    </t>
+
+    <t t-name="ConfirmationOptionPopupWidget">
+         <div class="modal-dialog">
+            <div class="popup popup-alert" style="height: 500px !important;width: 350px !important;">
+                <p class="title"><t t-esc=" widget.options.title || '' " /></p>
+                <div class='row pin_number_button'>
+                    <button class="btn-primary btn-wd control-button" style="width:200px;margin-top:30px;"><h5>PIN</h5></button>
+                </div>
+                <br />
+                <div class='row email_button'>
+                    <button class="btn-primary btn-wd control-button" style="width:200px;"><h5>Email</h5></button>
+                </div>
+                <br />
+                <div class='row sms_button'>
+                    <button class="btn-primary btn-wd control-button" style="width:200px;"><h5>SMS / WhatsApp</h5></button>
+                </div>
+                <!--<div class="footer">-->
+					<!--<div id='wk_apply' class="button" style="display:none;">-->
+						<!--Apply Discount-->
+					<!--</div>-->
+					<!--<div id='wk_cancel' class="button cancel">-->
+						<!--Cancel-->
+					<!--</div>-->
+				<!--</div>-->
+                <div class="footer centered">
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                    <div class="button next_func">
+                        Ok
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </t>
+
+    <t t-name="StaffMeanOptionsPopupWidget">
+	    <div class="modal-dialog options-dialog">
+	        <div class="popup popup-options">
+	            <p class="title"><t t-esc=" widget.options.title || '' " /></p>
+				<div class='popup-option once'>
+					<button class="button icon staff_mean_order_btn" data-action='1'><img src="/pizzahut_modifier_startscreen/static/src/img/staff_meal.png"></img><span>Order</span></button>
+					<button class="button icon staff_mean_confirm_email_btn" data-action='1'><img style="margin-left: 8px;" src="/pizzahut_modifier_startscreen/static/src/img/delivery.png"></img><span>Confirmation</span></button>
+				</div>
+                <div class="footer custom_footer">
+                    <div class="button cancel staff_mean_back">
+                        <u>Back</u>
+                    </div>
+                </div>
+	        </div>
+
+	    </div>
+    </t>
+
+    <t t-name="ListPaymentConfirmScreenWidget">
+	    <div class="paymentconfirm-screen clientlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </span>
+					<span class='button next'>
+                        Payment
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix client-details-contents'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                    <table class='payment-list' style="width: 100%;font-size: 16px;">
+                                        <thead>
+                                            <tr>
+                                                <th>Order Ref</th>
+                                                <th>Branch</th>
+                                                <th>Order Date</th>
+                                                <th>Guests</th>
+                                                <th>Apply All Free?</th>
+                                                <th>Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class='payment-list-contents'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+    <t t-name="PaymentLineComfirm">
+        <tr class='payment-line' t-att-data-id='item.id'>
+            <td><t t-esc='item.name'/></td>
+            <td><t t-esc='item.branch' /></td>
+            <td><t t-esc='item.oder_date' /></td>
+            <td><t t-esc='item.customer_count' /></td>
+            <td><t t-esc='item.all_free' /></td>
+            <td><t t-esc='item.note' /></td>
+        </tr>
+    </t>
+    <t t-name="GoToBackStaffMeal">
+        <button class="control-button btn btn-default btn-fill btn-wd go-back-staff-meal"><i class="pe-7s-back-2"/> Go Back </button>
+    </t>
+
+</templates>

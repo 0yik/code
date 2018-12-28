@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 		
+ 		<!-- Outstanding Fee Report wizard -->
+        <record id="outstanding_fee_report_wizard" model="ir.ui.view">
+            <field name="name">outstanding.report.wizard</field>
+            <field name="model">outstanding.report.wizard</field>
+            <field name="arch" type="xml">
+            <form string="Outstanding Fee Report">
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+		<!-- Outstanding Fee report action-->
+        <record id="action_outstanding_fee_report_wizard" model="ir.actions.act_window">
+	        <field name="name">Outstanding Fee Report</field>
+	        <field name="res_model">outstanding.report.wizard</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">form</field>
+	        <field name="target">new</field>
+    	</record>
+    	<!-- <menuitem name="Outstanding Fee Report" action="action_outstanding_fee_report_wizard" id="wizard_outstanding_fee_report" parent="menu_fees"/> -->
+
+</odoo>

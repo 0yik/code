@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report 
+        id="report_joining_information"
+        string="Joining Information"
+        model="class.registration" 
+        report_type="qweb-pdf"
+        file="atts_school_fees.report_joininginfo" 
+        name="atts_school_fees.report_joininginfo"
+        menu="False"
+    />
+
+    <template id="report_joininginfo">
+        <t t-set="data_report_margin_top" t-value="20"/>
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="header mb32">
+                    <table width="100%">
+                        <tr>
+                            <td width="13%" class="mt16">
+                                <img src="/theme_atts/static/src/img/logo.jpg" title="atts" alt="ATTS" style="max-height: 100px;" />
+                            </td>
+                            <td class="text-center">
+                                <b style="font-size:20px">ASSETS TRAINING &amp; TECHNICAL SERVICES PTE LTD </b><br/>
+                                No.3, Buroh Street, JTC Space One @ Buroh Street, Singapore 627566<br/>
+                                Tel : (65) 6265 2838   Fax : (65) 6265 3138<br/>
+                                Co. Reg. No : 200411848C | GST Reg. No : 200411848C
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="page">
+                    <h2>Joining Information</h2>
+                    <p> Thank you for choosing ATTS, Singapore as your preferred training Centre.</p>
+                    <p style="margin: -10px 0px 0px 0px; !important">We are very pleased to confirm the details as follows:</p>
+                    <br/>
+                    <table width="100%">
+                        <tr>
+                            <td width="20%">Reservation Number</td>
+                            <td width="2%">:</td>
+                            <td><t t-esc="o.display_name"/></td>
+                        </tr>
+                        <tr>
+                            <td>Course Title</td>
+                            <td width="2%">:</td>
+                            <td><t t-esc="o.class_id.course_title"/></td>
+                        </tr>
+                        <tr>
+                            <td>Course Date</td>
+                            <td width="2%">:</td>
+                            <td><t t-esc="o.class_id.date_start"/></td>
+                        </tr>
+                        <tr>
+                            <td>Training Venue</td>
+                            <td width="2%">:</td>
+                            <td><t t-esc="o.class_id.location"/></td>
+                        </tr>
+                    </table>
+                    <table width="100%" class="mt32 mb32">
+                        <tr>
+                            <td width="40%"><b>Delegate(s) Name</b></td>
+                            <td width="20%"><b>DOB</b></td>
+                            <td><b>Nationality</b></td>
+                        </tr>
+                        <t t-if="o.registration_type and o.registration_type == 'individual'">
+                        	<tr>
+                        		<td>1. <t t-esc="o.name"/></td>
+                        		<td><t t-esc="o.date_of_birth"/></td>
+                                <td>
+                                    <t t-if="o.nationality == 'others'" t-esc="o.country_id and o.country_id.name"/>
+                                    <t t-if="o.nationality != 'others'" t-esc="o.nationality"/>
+                                </td>
+                        	</tr>
+                        </t>
+                         <t t-if="o.registration_type and o.registration_type == 'corporate'">
+                         	<t t-set="index" t-value="1"/>
+                        	<t t-foreach="o.delegate_lines" t-as="delegate">
+                        		<tr i-if="delegate.delegate_name">
+	                        		<td><t t-esc="index"/>. <t t-esc="delegate.delegate_name"/></td>
+	                        		<td><t t-esc="delegate.delegate_date"/></td>
+	                        		<td><t t-esc="delegate.delegate_nationality"/></td>
+	                        		<t t-set="index" t-value="index + 1"/>
+                        		</tr>
+                        	</t>
+                        </t>
+                    </table>
+                    <p style="font-size:14px;" class="mb8"> COURSE INFORMATION</p>
+
+                    <h5><b>1. Course Timing</b></h5>
+                    <div style="font-size:12px" class="mb8">
+	                    <p class="ml16" style="margin-top: -10px">Course registration will take place at <t t-esc="o.get_start_time(o.class_id.time_start)"/>hrs on the first day of training.</p>	
+						<p class="ml16" style="margin-top: -10px">On arrival at ATTS, delegates should report to reception on the ground floor to mark attendance. </p>					
+						<p class="ml16" style="margin-top: -10px">Delegates must ensure that they are medically fit and in possession of appropriate pre-requisite documents required for the course. </p>					
+						<p class="ml16" style="margin-top: -10px">Classes begin at <t t-esc="o.get_end_time(o.class_id.time_end)"/>hrs — 17.00hrs daily.</p> 					
+						<p class="ml16" style="margin-top: -10px">Daily lunches and snacks are provided at the training site. </p>
+					</div>
+					<h5><b>2. TRAINING LOCATION </b></h5>
+                    <div style="font-size:12px" class="mb8">
+	                    <p class="ml16" style="margin-top: -10px"><t t-esc="o.class_id.location"/></p>
+	                    <br/>
+	                    <p class="ml16" style="margin-top: -10px">By Public Transport</p>
+						<p class="ml16" style="margin-top: -10px">By Public Transport Train &amp; Bus</p>
+						<p class="ml16" style="margin-top: -10px">Nearest train station - Boon Lay MRT Station (Boon Lay Interchange) </p>
+						<p class="ml16" style="margin-top: -10px">From Boon Lay Bus Interchange =&gt; Bus no. 249 -&gt; alight at Aft Buroh Street #22059</p>
+						<br/>
+						<p class="ml16" style="margin-top: -10px">By Car</p>
+						<p class="ml16" style="margin-top: -10px">On AYE take exit 17 toward Jln Boon Lay / Jurong Pier Rd /Jurong Island • Merge into tip Ahmad Ibrahim • </p>
+						<p class="ml16" style="margin-top: -10px">Turn left onto Jurong Pier Rd • Take the ramp to Jl. Buroh • Continue Straight on to Jl. Buroh • Destination will be on the left</p>
+	                </div>
+	                <h5><b>3. IMPORTANT NOTE—ITEMS TO BRING </b></h5>
+                    <div style="font-size:12px" class="mb8">
+                    	<p class="ml16" style="margin-top: -10px">✓ Bring along Joining instruction letter</p>
+						<p class="ml16" style="margin-top: -10px">✓ Passport Size photo in scanned copy (applicable for MPA Course only)</p>
+						<p class="ml16" style="margin-top: -10px">✓ All delegates are required to supply their own PPE (coveralls, goggles. hand gloves and safety shoes.)</p>
+						<br/>
+						<p class="ml16" style="margin-top: -10px"><b>Evidence of current experience and certification required</b> </p>
+						<p class="ml16" style="margin-top: -10px">✓ Formal Electrical/Instrument Qualifications (Diploma/Degree/ trade certificate)</p>
+						<p class="ml16" style="margin-top: -10px">✓ Employer Letter from current employer indicating the candidate designation. Place of employment and confirmation that he has the relevant trade skill. </p>
+                    </div>
+                    <h5><b>4. CODE OF CONDUCT</b></h5>
+                    <div style="font-size:12px" class="mb8">
+                    	<p class="ml16" style="margin-top: -10px">ATTIRE</p>
+                    	<p class="ml16" style="margin-top: -10px">Appropriate classroom attire — Bermuda shorts, sleeveless top and slippers are not permitted. Delegate attending practical workshops must wear proper attire (Coveralls) and safety shoes.</p>
+                    	<br/>
+                    	<p class="ml16" style="margin-top: -10px">SMOKING</p>
+                    	<p class="ml16" style="margin-top: -10px">There is a NO SMOKING policy in operation in public areas of the building. Designated smoking areas will be pointed out to the delegates during the course registration. </p>
+                    	
+                    </div>
+                    <h5><b>5. CANCELLATION/ NO SHOW POLICY</b></h5>
+                    <div style="font-size:12px" class="mb8">
+                    	<p class="ml16" style="margin-top: -10px">Once registration is confirmed, any cancellation must be made in writing.</p>
+                    	<p class="ml16" style="margin-top: -10px">Substitution: At least 05 working days' notice is received via email (enquiry@ats-asia.com) for the substitution of candidate for the same course and same date.</p>
+                    	<br/>
+                    	<p class="ml16" style="margin-top: -10px">No refund will be made for non-attendance on the course. Non-attendance includes, failure to cancel your booking: cancelling your booking after the close of normal office hours on the last working day before the course; failure to attend the course, and; informing us of cancellation following the start of the course. </p>
+                    </div>
+                    <h5><b>6. CERTIFICATE </b></h5>
+                    <div style="font-size:12px" class="mb8">
+                    	<p class="ml16" style="margin-top: -10px">ATTS certificate of completion will be issued on the last training date. Accredited certificate processing time is within A-6 weeks after completion of course.</p>
+                    	<p class="ml16" style="margin-top: -10px">Candidates taking the CompEx course must ensure that copies of their electrical qualification are provided together with the certificate of employment</p>
+	
+						<p class="ml16" style="margin-top: -10px">ATTS reserved the right to HOLD candidates' certificate if there is a pending amount in the account Once there are no outstanding matters. Result slips or certificates will be issued. </p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

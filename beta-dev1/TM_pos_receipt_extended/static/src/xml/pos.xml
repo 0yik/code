@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+
+	<t t-extend="PosTicket">
+		<t t-jquery=".pos-sale-ticket" t-operation="replace">
+			<div class="pos-sale-ticket">
+			    <h4 class="pos-center-align" style="margin:0px;"><t t-esc="widget.pos.company.name"/></h4>
+			    <div class="pos-center-align">
+			    	<t t-esc="widget.pos.company.street"/>
+			    </div>
+			    <div class="pos-center-align">
+			    	<t t-esc="widget.pos.company.street2"/>
+			    </div>
+			    <div class="pos-center-align">
+			    	<t t-esc="widget.pos.company.city"/><t t-if="widget.pos.company.city">,</t><t t-esc="widget.pos.company.state_id[1]"/><t t-if="widget.pos.company.state_id[1]">,</t><t t-esc="widget.pos.company.country_id[1]"/>
+			    </div>
+			    <div class="pos-center-align">
+			    	Telp: <t t-esc="widget.pos.company.phone || ''"/><br />
+			    </div>
+			    <div class="pos-center-align">
+			    	<t t-esc="widget.pos.company.website || ''"/><br />
+			    </div>
+			    <div class="pos-center-align">
+			    	<t t-esc="widget.pos.company.rml_header1 || ''"/><br />
+			    </div>
+
+			    Nota: <t t-esc="order.name"/>  <br />
+			    Kasir: <t t-esc="widget.pos.cashier ? widget.pos.cashier.name : widget.pos.user.name"/><br />
+			    SPG: <t t-esc="widget.pos.salesman ? widget.pos.salesman.name : widget.pos.user.name"/><br />
+			    <t t-esc="moment().format('L LT')"/> 
+
+			    <t t-if="receipt.header">
+			        <div style='text-align:center'>
+			            <t t-esc="receipt.header" />
+			        </div>
+			        <br />
+			    </t>
+
+			    <hr style="border-top: dotted 2px;"/>
+
+			    <table class='receipt-orderlines'>
+			        <colgroup>
+			            <col width='50%' />
+			            <col width='15%' />
+			            <col width='35%' />
+			        </colgroup>
+			        <tr t-foreach="orderlines" t-as="orderline">
+			            <td>
+			                <t t-esc="orderline.get_product().display_name"/>
+			                 <t t-if="orderline.get_discount() > 0">
+			                    <div class="pos-disc-font">
+			                        With a <t t-esc="orderline.get_discount()"/>% discount
+			                    </div>
+			                </t>
+			            </td>
+			            <td class="pos-center-align">
+			                <t t-esc="orderline.get_quantity_str_with_unit()"/>
+			            </td>
+			            <td class="pos-center-align">
+			                <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+			            </td>
+			        </tr>
+			    </table>
+
+			    <hr style="border-top: dotted 2px;"/>
+			    
+			    <table class='receipt-total'>
+			        <tr>
+			            <td>Jml Item(Cnt) : </td>
+			            <td class="pos-center-align">
+			                (<t t-esc="orderlines.length"/>)
+			            </td>
+			            <td class="pos-right-align">
+			                <t t-esc="widget.format_currency(order.get_total_without_tax())"/>
+			            </td>
+			        </tr>
+			        <tr>
+			            <td>Disc : </td>
+			            <td class="pos-right-align" colspan="2">
+			                <t t-esc="widget.format_currency(order.get_total_discount())"/>
+			            </td>
+			        </tr>
+			    </table>
+
+			    <hr style="border-top: dotted 2px;"/>
+
+				<table class="receipt-total">
+					<tr class="emph">
+					    <td>Total:</td>
+					    <td class="pos-right-align">
+					        <t t-esc="widget.format_currency(order.get_total_with_tax())"/>
+					    </td>
+					</tr>
+				</table>
+
+				<hr style="border-top: dotted 2px;"/>
+				
+				<table>
+		          	<tr>
+		          		<td>ANDA HEMAT : </td>
+			            <td class="pos-right-align">
+		                  	<t t-esc="widget.format_currency(order.get_total_discount())"/>
+		              	</td>
+		          	</tr>
+				</table>
+
+				<hr style="border-top: dotted 2px;"/>
+
+			    <table class='receipt-paymentlines'>
+			        <t t-foreach="paymentlines" t-as="line">
+			          	<tr>
+			          		<td>Bayar : </td>
+				            <td class="pos-right-align">
+			                  	<t t-esc="widget.format_currency(line.get_amount())"/>
+			              	</td>
+			          	</tr>
+			          	<tr>
+			          		<td>PaidBy : </td>
+			          		<td class="pos-right-align"><t t-esc="line.name"/></td>
+			          	</tr>
+			          	<tr>
+			          		<td>CCName : </td>
+			          	</tr>
+			          	<tr>
+			          		<td>CCNumbr : </td>
+			          	</tr>
+			          	<tr>
+			          		<td>CCExpir : </td>
+			          	</tr>
+			        </t>
+			    </table>
+
+			    <hr style="border-top: dotted 2px;"/>
+			    
+			    <t t-if="receipt.footer">
+			        <div style='text-align:center'>
+			            <t t-esc="receipt.footer" />
+			        </div>
+			    </t>
+			</div>
+		</t>
+	</t>
+
+	<t t-name="SalesnameWidget">
+	    <span class="salesname">
+	    	Sales Person : 
+	        <span class="salesperson"> <t t-esc="widget.get_name_salesman()" /></span>
+	    </span>
+	</t>
+
+	<t t-extend="UsernameWidget">
+		<t t-jquery=".username" t-operation="replace">
+		    <span class="username">
+		    	Kasir : 
+		        <span class="salesperson"> <t t-esc="widget.get_name()" /> </span>
+		    </span>
+		</t>
+	</t>
+
+
+	<t t-extend="HomeDelivery">
+		<t t-jquery="div.control-button" t-operation="replace">
+
+		</t>
+	</t>
+
+	<t t-name="HomeDeliveryNew">
+		<div class='control-button'>
+		    <i class="fa fa-home"/> Home Delivery
+		</div>
+	</t>
+
+	<t t-extend="DeliveryOrderWidget">
+		<t t-jquery="input.d_date" t-operation="replace">
+
+			<link rel="stylesheet" href="/TM_pos_receipt_extended/static/src/css/datetimepicker.css" />
+			<script type="text/javascript" src="/TM_pos_receipt_extended/static/src/js/datetimepicker.js"></script>
+            <div class="form-group">
+                <div class='input-group sel_date' id='datetimepicker1'>
+                    <input type='text' class="form-control" id="result"/>
+                </div>
+                <input type="hidden" class="detail d_date" name='delivery_date' value="" />
+            </div>
+            <script>
+            	$('.sel_date').dateTimePicker();
+			</script>
+		</t>
+	</t>
+
+</template>
+

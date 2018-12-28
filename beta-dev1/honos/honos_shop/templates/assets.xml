@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="shop_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" type="text/less"
+				href="/honos_shop/static/src/less/honos_shop.less" />
+			<link rel="stylesheet" type="text/less"
+				href="/honos_shop/static/src/less/responsive_shop.less" />
+			<link rel="stylesheet" type="text/less"
+				href="/honos_shop/static/src/less/compare_wishlist_common.less" />
+			<link rel="stylesheet" type="text/css"
+				href="/honos_shop/static/src/less/jquery.mCustomScrollbar.css" media="(min-width: 600px)" />
+			<script type="text/javascript"
+				src="/honos_shop/static/src/js/honos_shop.js"></script>
+			<script type="text/javascript"
+				src="/honos_shop/static/src/js/honos_shop_json.js"></script>
+		</xpath>
+	</template>
+</odoo>

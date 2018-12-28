@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_tree_tgw_partner" model="ir.ui.view">
+        <field name="name">view.partner.tree.labelle</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Customers" name="tgw_tree_partner">
+                    <field name="customer_id"/>
+                    <field name="bride_firstname"/>
+                    <field name="bride_lastname"/>
+                    <field name="bride_phone"/>
+                    <field name="groom_firstname"/>
+                    <field name="groom_lastname"/>
+                    <field name="phone" string="Groom's Phone"/>
+                    <field name="date_rom"/>
+                    <field name="date_wedd" string="Wedding Date"/>
+                    <field name="bridal_specialist"/>
+                </tree>
+            </field>
+    </record>
+
+
+    <record id="view_partner_form_tgw_partner" model="ir.ui.view">
+        <field name="name">view.partner.form.tgw.partner</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form string="Customers" name="tgw_form_partner">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="action" name="%(sale.act_res_partner_2_sale_order)d"
+                        icon="fa-usd">
+                            <field string="Sales" name="sale_order_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="action" name="%(project.action_view_task)d" 
+                        context="{'search_default_partner_id': active_id, 'default_partner_id': active_id}"
+                        icon="fa-tasks">
+                            <field  string="Tasks" name="task_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object"
+                            name="schedule_meeting"
+                            icon="fa-calendar"
+                            context="{'partner_id': active_id, 'partner_name': name}">
+                            <field string="Meetings" name="meeting_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <field name="image" widget='image' class="oe_left oe_avatar"
+                           options='{"preview_image": "image_medium", "size": [120, 120]}'/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Name"/>
+                        </h1>
+                        <label for="bridal_advisor" invisible="1"/><br/>
+                        <field name="bridal_advisor" default_focus="1" invisible="1"/><br/>
+                        <label for="bridal_advisor2"/><br/>
+                        <field name="bridal_advisor2" default_focus="2"/><br/>
+                        <label for="bridal_specialist" string="Bridal Specialist"/><br/>
+                        <field name="bridal_specialist"/><br/>
+                        <label for="customer_id" string="Customer ID"/>
+                        <field name="customer_id" nolabel="1"/><br/>
+                        <label for="referral_code" string="Referral Code"/>
+                        <field name="referral_code" nolabel="1"/><br/>
+                        <label for="loyalty_points" string="Loyalty Points"/>
+                        <field name="loyalty_points" nolabel="1"/>
+                    </div>
+                    <group>
+                        <group string="Bride" name="bride_detail">
+                            <field name="bride_firstname"/>
+                            <field name="bride_lastname"/>
+                            <field name="bride_email"/>
+                            <field name="bride_phone"/>
+                            <label for="bride_street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="bride_street" placeholder="Street address 1" class="o_address_street"/>
+                                <field name="bride_street2" placeholder="Street address 2" class="o_address_street"/>
+                                <field name="bride_city" placeholder="City" class="o_address_city"/>
+                                <field name="bride_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                                <field name="bride_zip" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="bride_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                            </div>
+                            <field name="bride_birthdate" placeholder="DOB" class="o_address_street" invisible="1"/>
+                            <field name="bride_nric" placeholder="NRIC..." class="o_address_street" invisible="1"/>
+                        </group>
+                        <group string="Groom" name="groom_detail">
+                            <field name="groom_firstname"/>
+                            <field name="groom_lastname"/>
+                            <field name="groom_email"/>
+                            <field name="groom_phone"/>
+                            <label for="groom_street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="groom_street" placeholder="Street address 1" class="o_address_street"/>
+                                <field name="groom_street2" placeholder="Street address 2" class="o_address_street"/>
+                                <field name="groom_city" placeholder="City" class="o_address_city"/>
+                                <field name="groom_state_id" class="o_address_state" placeholder="State"
+                                    options='{"no_open": True}'/>
+                                <field name="groom_zip" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="groom_country_id" placeholder="Country" class="o_address_country"
+                                       options='{"no_open": True, "no_create": True}'/>
+                            </div>
+                            <field name="groom_birthdate" placeholder="DOB" class="o_address_street" invisible="1"/>
+                            <field name="groom_nric" placeholder="NRIC..." class="o_address_street" invisible="1"/>
+                        </group>
+                        <!-- <group col="4" colspan="4" groups="base.group_sale_salesman,purchase.group_purchase_user">
+                            <field name="crm_lead_id"/>
+                            <field name="prospect_onwer"/>
+                            <field name="first_enquiry_venue"/>
+                            <field name="personal_note"/>
+                            <field name="category_id" widget="many2many_tags" placeholder="Tags..."/>
+                        </group> -->
+                        <!-- <group col="6" colspan="2">
+                            <field name="total_wishing_stars"/>
+                            <field name="remaining_wishing_stars"/>
+                        </group> -->
+                    </group>
+                    <notebook>
+                        <page string="Contract" name="contract_detail">
+                            <field name="contract_ids" context="{'default_user_id':bridal_advisor,
+                                                                'default_user_id2':bridal_advisor2,
+                                                                'default_bridal_specialist':bridal_specialist,
+                                                                'default_customer_id':customer_id,}">
+                                <tree name="contract_tree">
+                                    <field name="contract_number"/>
+                                    <field name="bride_firstname"/>
+                                    <field name="bride_lastname"/>
+                                    <field name="groom_firstname"/>
+                                    <field name="groom_lastname"/>
+                                    <field name="date_wedd"/>
+                                    <field name="user_id" string="Bridal Advisor"/>
+                                    <field name="bridal_specialist"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Milestone" name="milestone_detail">
+                            <field name="milestone_ids">
+                                <tree editable="bottom" name="milestone_ids">
+                                    <field name="milestone_id"/>
+                                    <field name="date"/>
+                                    <field name="start_time" widget="float_time"/>
+                                    <field name="end_time" widget="float_time"/>
+                                    <field name="location"/>
+                                    <field name="vendor_ids" widget="many2many_tags" domain="[('supplier','=',True)]" context="{'default_supplier':True,'default_customer':False}"/>
+                                    <field name="staff_ids" widget="many2many_tags"/>
+                                    <field name="state"/>
+                                </tree>
+                                <form name="analytic_milestone_line_id">
+                                    <group col="4">
+                                        <field name="milestone_id"/>
+                                        <field name="date"/>
+                                        <field name="start_time" widget="float_time"/>
+                                        <field name="end_time" widget="float_time"/>
+                                        <field name="location"/>
+                                        <field name="vendor_ids" widget="many2many_tags" domain="[('supplier','=',True)]" context="{'supplier':True,'customer':False}"/>
+                                        <field name="staff_ids" widget="many2many_tags"/>
+                                        <field name="state"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Measurements" name="measurements">
+                            <group>
+                                <group string="Bride" name="bride">
+                                    <field name="bride_thigh"/>
+                                    <field name="bride_above_bust"/>
+                                    <field name="bride_bust"/>
+                                    <field name="bride_waist"/>
+                                    <field name="bride_hips"/>
+                                    <field name="bride_biceps"/>
+                                    <field name="bride_shoulder"/>
+                                    <field name="brides_father_jacket_sleeve"/>
+                                    <field name="brides_father_jacket_shoulder"/>
+                                    <field name="brides_father_jacket_tummy"/>
+                                    <field name="brides_father_jacket_pant_waist"/>
+                                    <field name="brides_father_jacket_pant_length"/>
+                                </group>
+                                <group string="Groom" name="groom">
+                                    <field name="groom_sleeve"/>
+                                    <field name="groom_waist"/>
+                                    <field name="groom_pants"/>
+                                    <field name="groom_hips"/>
+                                    <field name="groom_thigh"/>
+                                    <field name="groom_calf"/>
+                                    <field name="groom_pants_length"/>
+                                    <field name="grooms_father_jacket_sleeve"/>
+                                    <field name="grooms_father_jacket_shoulder"/>
+                                    <field name="grooms_father_jacket_tummy"/>
+                                    <field name="grooms_father_jacket_pant_waist"/>
+                                    <field name="grooms_father_jacket_pant_length"/>
+                                    <field name="grooms_shoulder"/>
+                                    <field name="grooms_biceps"/>
+                                    <field name="grooms_arms"/>
+                                    <field name="grooms_chest"/>
+                                    <field name="groom_jacket_length"/>
+                                    <field name="grooms_jacket_sleeve_length"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Payments" name="payment_ids">
+                            <field name="payment_ids">
+                                <tree>
+                                    <field name="date" string="Date of Payment"/>
+                                    <field name="journal_id" string="Payment Method"/>
+                                    <field name="reference" string="Reference Doc"/>
+                                    <field name="amount" string="Amount"/>
+                                    <field name="date_due" string="Payment to be Made"/>
+                                    <field name="state" string="Status"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Accounting" col="4" name="accounting">
+                            <group>
+                                <group>
+                                    <field name="property_account_position_id" widget="selection"/>
+                                </group>
+                                <group>
+                                    <field name="last_reconciliation_date"/>
+                                </group>
+                                <group>
+                                    <field name="property_account_receivable_id"/>
+                                    <field name="property_payment_term_id" widget="selection"/>
+                                    <field name="credit"/>
+                                </group>
+                            </group>
+                            <field name="bank_ids"
+                                   context="{'default_partner_id': active_id, 'form_view_ref': 'view_partner_form_labelle'}">
+                                <tree string="Bank Details">
+                                    <field name="sequence" invisible="1"/>
+                                    <field name="acc_number"/>
+                                    <field name="bank_name"/>
+                                    <field name="display_name" string="Owner Name"/>
+                                </tree>
+                                <form name="bank_ids">
+                                    <group name="bank_ids_detail" cols="">
+                                        <field name="acc_number"/>
+                                        <field name="bank_id"/>
+                                        <field name="bank_name"/>
+                                        <field name="display_name" string="Owner Name"/>
+                                        <field name="sequence" invisible="1"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Redeem History">
+                            <field name="redeem_ids">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="redeemed_points"/>
+                                    <field name="redeemed_for"/>
+                                    <field name="partner_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Loyalty History">
+                            <field name="loyalty_ids">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="points_earned"/>
+                                    <field name="activity"/>
+                                    <field name="partner_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Customer Kanban View -->
+    <record model="ir.ui.view" id="res_partner_kanban_view_tgw_partner">
+        <field name="name">res.partner.kanban.tgw.partner</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="customer_id"/>
+                <field name="bride_firstname"/>
+                <field name="bride_lastname"/>
+                <field name="bride_phone"/>
+                <field name="groom_firstname"/>
+                <field name="groom_lastname"/>
+                <field name="date_wedd"/>
+                <field name="image_small"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_res_partner_kanban">
+                            <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                            <div class="o_kanban_image">
+                                <t t-if="record.image_small.raw_value">
+                                    <img t-att-src="kanban_image('res.partner', 'image_small', record.id.value)"/>
+                                </t>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <li t-if="record.bride_firstname.raw_value">
+                                        <div>
+                                            <strong>Bride's Name:</strong>
+                                            <field name="bride_firstname"/>
+                                            <field name="bride_lastname"/>
+                                        </div>
+                                    </li>
+                                    <li t-if="record.groom_firstname.raw_value">
+                                        <div>
+                                            <strong>Groom's Name:</strong>
+                                            <field name="groom_firstname"/>
+                                            <field name="groom_lastname"/>
+                                        </div>
+                                    </li>
+                                    <li t-if="record.bride_phone.raw_value">
+                                        <strong>Bride's Phone:</strong>
+                                        <field name="bride_phone"/>
+                                    </li>
+                                    <li t-if="record.date_wedd.raw_value">
+                                        <strong>Wedding Date:</strong>
+                                        <field name="date_wedd"/>
+                                    </li>
+                                </ul>
+                                <div class="oe_kanban_partner_links"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter_tgw_partner" model="ir.ui.view">
+        <field name="name">res.partner.select.tgw.partner</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search string="Search Customer" name="search_tgw_partner">
+                <filter string="Customers" name="customer" domain="[('customer','=',1)]" help="Customer Partners"/>
+                <separator/>
+                <field name="bride_firstname" string="Bride" filter_domain="[('bride_firstname','ilike',self)]"/>
+                <separator/>
+                <field name="groom_firstname" string="Groom" filter_domain="[('groom_firstname','ilike',self)]"/>
+                <separator/>
+                <field name="date_wedd" string="Wedding Date" filter_domain="[('date_wedd','ilike', self)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Bridal Advisor" icon="terp-personal" domain="[]"
+                            context="{'group_by' : 'bridal_advisor'}"/>
+                    <filter string="Bridal Specialist" context="{'group_by': 'bridal_specialist'}"/>
+                    <filter string="Wedding Date" context="{'group_by': 'date_wedd'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="base.action_partner_form" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{"search_default_customer":1, "default_customer": True}</field>
+        <field name="search_view_id" ref="view_res_partner_filter_tgw_partner"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a contact in your address book.
+            </p>
+            <p>
+                Odoo helps you easily track all activities related to a customer; discussions, history of business
+                opportunities, documents, etc.
+            </p>
+        </field>
+    </record>
+
+    <record id="base.action_partner_form_view1" model="ir.actions.act_window.view">
+        <field eval="0" name="sequence"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="res_partner_kanban_view_tgw_partner"/>
+        <field name="act_window_id" ref="base.action_partner_form"/>
+    </record>
+    <record id="base.action_partner_form_view2" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_partner_form_tgw_partner"/>
+        <field name="act_window_id" ref="base.action_partner_form"/>
+    </record>
+    <record id="base.action_partner_tree_view1" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_partner_tree_tgw_partner"/>
+        <field name="act_window_id" ref="base.action_partner_form"/>
+    </record>
+
+    <!-- open new form view of partner -->
+    <record id="view_account_analytic_account_modifier_for_partner" model="ir.ui.view">
+        <field name="name">view.account.analytic.account.modifier.for.partner</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <attribute name="context">{'form_view_ref': 'modifier_tgw_customer.view_partner_form_tgw_partner'}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

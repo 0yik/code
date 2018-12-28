@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 	<!-- Shop Product Listing -->
+	<template id="honos_shop_products" inherit_id="website_sale.products" name="honos Shop Products">
+		<xpath expr="//div[@class='container oe_website_sale']" position="before">
+			<div class="cover-img-div">
+				<a href="#"><section><img class="cover-img" src="/honos_shop/static/src/img/shop.jpg"></img></section></a>
+			</div>
+		</xpath>
+		<xpath expr="//div[@class='container oe_website_sale']" position="before">
+			<div t-att-style="'display:none;' if not bins  else 'display:block;'" id="sub_header_row" class="shop-page-breadcrumb">
+				<div class="honos_product_breadcrumb shop-breadcrumb">
+					<div class="sub_breadcrumb">
+						<div class="nav-view">
+							<div class="nav-selection-div">
+								<a class="home-icon" href="/shop">
+									<i class="fa fa-home" aria-hidden="true"></i>
+								</a>
+								<span class="select-nevigation-span" />
+								<a class="select-nevigation-child"></a>
+							</div>
+						</div>
+						<div class="products_pager"></div>
+						<div id="shop_pager">
+							<t t-call="website.pager" />
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</xpath>
+		<xpath expr="//div[@class='container oe_website_sale']" position="attributes">
+			<attribute name="class">shop-container oe_website_sale</attribute>
+		</xpath>
+		<xpath expr="//div[@class='shop-container oe_website_sale']/div[@class='products_pager']/div/t[@t-call][last()]" position="replace"></xpath>
+		<xpath expr="//div[@class='products_pager']/div/t" position="replace"></xpath>
+		<xpath expr="//div[@class='shop-container oe_website_sale']" position="before">
+			<div class="right-cnt-main">
+			<div class="transparent"></div>
+				<div class="right-cnt-maxW">
+					<div class="view-as">
+						<div class="view-as-maxW">
+							<div class="view-mode">
+								<div class="menu-filter-div">
+									<a class="menu-filter">
+										<i class="fa fa-align-left" aria-hidden="true"></i>
+										Filter
+									</a>
+									<a class="apply-filter shop_view_popup_link_btn">View Filter</a>
+								</div>
+							</div>
+							<div t-att-style="'display:none;' if not bins  else 'display:block;'" class="view-as-right-cnt">
+								<div class="filter-show">
+									<button class="btn btn-2 dropdown-toggle" data-toggle="dropdown">
+										<i class="icon-exchange"></i>
+										<span class="filter-show-label">show</span>
+										<i class="icon-chevron-down"></i>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+		
+										<li class="show_product">
+											<a class="ppg_show" data-id="16">16</a>
+										</li>
+										<li class="show_product">
+											<a class="ppg_show" data-id="20">20</a>
+										</li>
+									</ul>
+								</div>
+								<div class="filter-sort-by"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</xpath>
+		<xpath expr="//div[@id='products_grid_before']" position="replace">
+			<div id="products_grid_before" class="mCustomScrollbar" data-mcs-theme="dark" data-mcs-axis='y'>
+			<div>
+				<span class="mobile-view-filter-close-btn">X</span>
+				<h4 class="category">Product Category</h4>
+				<hr></hr>
+			</div>
+			<ul class="nav nav-pills nav-stacked mt16 products_category_ul" id="o_shop_collapse_category">
+                <li t-att-class=" '' if category else 'active' ">
+                    <a t-att-href="keep('/shop',category=0)" class="o_not_editable">All Products</a>
+                </li>
+                <t t-foreach="categories" t-as="categ">
+                    <t t-call="website_sale.option_collapse_categories_recursive" />
+                </t>
+            </ul>
+            </div>
+		</xpath>
+		<xpath expr="//div[@id='products_grid']/table" position="replace">
+			<table id="product-grid-table" width="100%">
+				<tr>
+					<td>
+						<t t-foreach="bins" t-as="tr_product">
+							<t t-foreach="tr_product" t-as="td_product">
+				                <div class="product-grid-div"> 
+									<p class="p_Count" style="display:none" t-att-data-id="products_count" />
+				                        <t t-if="td_product">
+				                            <t t-set="product" t-value="td_product['product']" />
+				                          <div class="product-row3" t-att-colspan="td_product['x'] != 1 and td_product['x']" t-att-rowspan="td_product['y'] != 1 and td_product['y']" t-attf-class="oe_product product_div oe_grid oe-height-#{td_product['y']*2} #{ td_product['class'] }"> 
+				                                <div class="oe_product_cart" t-att-data-publish="product.website_published and 'on' or 'off'">
+				                                     <t t-set="product_image_big" t-value="td_product['x']+td_product['y'] &gt; 2" /> 
+				                                    <t t-call="website_sale.products_item" />
+				                                </div>
+				                         </div> 
+				                        </t>
+				                        <div t-if="not td_product" class="oe-height-2" />
+				            	</div>
+			            	</t>
+			            </t>
+			         </td>
+				</tr>
+        	</table>
+		</xpath>
+		<xpath expr="//t[@t-if='not bins']" position="replace">
+			<t t-if="not bins">
+				<div class="text-center text-muted not_defined">
+					<div class="left_class">
+						<h3 class="css_editable_display">
+							<i class="fa fa-wheelchair" aria-hidden="true"></i>
+							No product defined.
+						</h3>
+						<a href="/shop" class="b_fashion_btn">Shop now</a>
+					</div>
+					<div class="right_class">
+						<img src="/honos_shop/static/src/img/product_not.jpg"></img>
+					</div>
+				</div>
+			</t>
+		</xpath>
+	</template>
+	
+	<!-- Sort By -->
+	<template id="honos_shop_sort_replace" inherit_id="website_sale.sort">
+		<xpath expr="//div[@class='dropdown btn-group dropdown_sorty_by']"
+			position="replace">
+		</xpath>
+	</template>
+	
+	<template id="honos_shop_sort" inherit_id="honos_shop.honos_shop_products" active="True" customize_show="True" name="Show Sort by">
+        <xpath expr="//div[@class='filter-sort-by']" position="inside">
+            <t t-set="list_price_desc_label">Price <i class="fa fa-arrow-up" aria-hidden="true"/></t>
+            <t t-set="list_price_asc_label">Price <i class="fa fa-arrow-down" aria-hidden="true"/></t>
+            <t t-set="name_asc_label">Name</t>
+            <t t-set="website_sale_sortable" t-value="[
+                (list_price_desc_label, 'list_price desc'),
+                (list_price_asc_label, 'list_price asc'),
+                (name_asc_label, 'name asc')
+            ]"/>
+            <div class="dropdown btn-group dropdown_sorty_by sort">
+                <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown">
+                    <span>Sort by</span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li t-foreach="website_sale_sortable" t-as="sortby">
+                        <a t-att-href="keep('/shop', order=sortby[1])">
+                            <span t-raw="sortby[0]"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </xpath>
+    </template>
+    
+	<!-- Products Item -->
+	<template id="honos_shop_products_item" inherit_id="website_sale.products_item" name="honos Products Item">
+		<xpath expr="//div[@class='oe_product_image']" position="attributes">
+			<attribute name="class">product-image oe_product_image</attribute>
+		</xpath>
+		<xpath expr="//div[@class='product-image oe_product_image']" position="inside">
+			<div id="in-wishlist-shop"></div>
+			<div class="sale-div" t-if="product.label_ept_id">
+				<div t-field="product.label_ept_id" class="sale-btn"></div>
+			</div>
+		</xpath>
+		<xpath expr="//div[@class='product-image oe_product_image']/a/span" position="replace">
+			<div class="image_overlay"></div>
+			 <span itemprop="image" t-field="product.image_medium"
+								t-options="{'widget': 'image'}" t-att-alt="product.name" />
+		</xpath>
+		<xpath expr="//div[@class='ribbon-wrapper']" position="replace"></xpath>
+		<xpath expr="//div[@class='product-image oe_product_image']" position="inside">
+			<div class="product-des">
+				<div class="hover-cnt">
+					<div id="wishlist_shop" class="c_icon_common"></div>
+					<!-- <hr class="product-hover-hr"></hr> -->
+					<div id="compare_shop" class="c_icon_common"></div>
+					<!-- <hr class="product-hover-hr"></hr> -->
+					<div id="quick_view_shop" class="c_icon_common"></div>
+					
+				</div>
+			</div>
+		</xpath>
+		<xpath expr="//div[@itemscope='itemscope']" position="attributes">
+			<attribute name="class">itemscope-main</attribute>
+		</xpath>
+		<xpath expr="//section/h5" position="attributes">
+			<attribute name="class">product-name-h5</attribute>
+		</xpath>
+		<xpath expr="//del[@class='text-danger mr8']" position="attributes">
+			<attribute name="class">mr8 strick-price</attribute>
+		</xpath>
+		<xpath expr="//div[@class='product_price']/b/span[1]" position="attributes">
+			<attribute name="class">product_price fianl-price</attribute>
+		</xpath>
+		<xpath expr="//div[@class='product_price']/b" position="before">
+			<t t-if="(compute_currency(product.lst_price) - product.website_price ) &gt; 0.01  and website.get_current_pricelist().discount_policy=='with_discount'">
+				<p class="deleted_price_responsive">
+					<del class="text-danger mr8 strike-through" style="white-space: nowrap;"
+						t-esc="compute_currency(product.website_public_price)"
+						t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}" />
+				</p>
+			</t>
+		</xpath>
+		<xpath expr="//h5[@class='product-name-h5']" position="after">
+			<div t-if="product.availability == 'in_stock'" class="in-stock">
+				<span>In Stock</span>
+			</div>
+			<div t-if="product.availability == 'warning'" class="warning">
+				<span>Warning</span>
+			</div>
+		</xpath>
+	</template>
+	
+	<!-- Product Description -->
+	<template id="honos_shop_products_description" inherit_id="website_sale.products_description"  name="honos Products Description">
+        <xpath expr="//div[@class='text-info oe_subdescription']" position="replace">
+            <div class="text-info oe_subdescription product-description-div" contenteditable="false">
+                <div itemprop="description" t-field="product.description_sale"></div>
+            </div>
+        </xpath>
+    </template>
+    
+    <!-- Products Categories -->
+     <template id="honos_shop_products_categories" inherit_id="website_sale.products_categories" name="Product Categories">
+    	<xpath expr="//div[@id='products_grid_before']/ul[@class='nav nav-pills nav-stacked mt16']" position="replace"></xpath>
+    	<xpath expr="//div[@id='products_grid_before']" position="attributes">
+            <attribute name="class">mCustomScrollbar</attribute>
+        </xpath>
+    </template> 
+    
+    <!-- Products Collapse Categories -->
+    <template id="honos_shop_option_collapse_products_categories" name="Collapsible Category List" inherit_id="website_sale.products_categories" active="False" customize_show="True" >
+        <xpath expr="//div[@id='products_grid_before']/ul" position="replace">
+            <ul class="nav nav-pills nav-stacked mt16 products_category_ul" id="o_shop_collapse_category">
+                <li t-att-class=" '' if category else 'active' ">
+                    <a t-att-href="keep('/shop',category=0)" class="o_not_editable">All Products</a>
+                </li>
+                <t t-foreach="categories" t-as="categ">
+                    <t t-call="website_sale.option_collapse_categories_recursive" />
+                </t>
+            </ul>
+        </xpath>
+    </template>
+    
+    <!-- Products Attributes -->
+    <template id="honos_shop_products_attributes" inherit_id="website_sale.products_attributes" name="Products Attributes's Filter">
+    	<xpath expr="//li[@t-if='a.value_ids and len(a.value_ids) > 1']/t[3]" position="replace">
+			 <t t-if="a.type == 'color'">
+				<ul class="nav nav-pills nav-stacked attribute-chkbox-ul mCustomScrollbar sub-li-main" data-mcs-axis='y'>
+				  	<t t-foreach="a.value_ids" t-as="v">
+					    <label t-attf-style="background-color:#{v.color or v.name}"
+					        t-attf-class="css_attribute_color #{'active' if v.id in attrib_set else ''}">
+					        <input type="checkbox"
+					            name="attrib"
+					            t-att-value="'%s-%s' % (a.id,v.id)"
+					            t-att-checked="'checked' if v.id in attrib_set else ''"
+					            t-att-title="v.name"/>
+					    </label>
+				  	</t>
+				</ul>
+             </t>
+    	</xpath> 
+    	
+    	<xpath expr="//li/div" position="attributes">
+    		<attribute name="class">attribute-filter-div</attribute>
+    	</xpath>
+    	<xpath expr="//li/div/strong" position="attributes">
+    		<attribute name="class">attribute-filter-heading</attribute>
+    	</xpath>
+    	<xpath expr="//li/div/strong[@class='attribute-filter-heading']" position="before">
+    		<span class="filter-by-span">Filter By </span>
+    	</xpath>
+    	<xpath expr="//li/div/strong[@class='attribute-filter-heading']" position="after">
+    		<a class="clear-all-variant">(Clear all)</a>
+    	</xpath>
+    	<xpath expr="//span[@class='filter-by-span']" position="before">
+    		<i class="down-arrow fa fa-caret-down" aria-hidden="true"></i>
+    	</xpath>
+    	<xpath expr="//li/t/ul[@class='nav nav-pills nav-stacked']" position="attributes">
+    		<attribute name="class">nav nav-pills nav-stacked attribute-chkbox-ul mCustomScrollbar sub-li-main</attribute>
+    	</xpath>
+    	
+    	
+    	<xpath expr="//ul[@class='nav nav-pills nav-stacked mt16']/t/t/li" position="before">
+    		<hr></hr>
+    	</xpath>
+    <!-- 	<xpath expr="//ul[@class='nav nav-pills nav-stacked mt16']/t/t/li" position="attributes">
+    		<attribute name="class">mCustomScrollbar sub-li-main</attribute>
+    	</xpath> -->
+    	<xpath expr="//li/t/ul[@class='nav nav-pills nav-stacked attribute-chkbox-ul mCustomScrollbar sub-li-main']/t/li/label" position="replace">
+    		<label class="type-checkbox">
+				<input class="checkbox-custom" type="checkbox"
+					t-att-data-id="'%s' % v.id" name="attrib"
+					t-att-value="'%s-%s' % (a.id,v.id)"
+					t-att-checked="'checked' if v.id in attrib_set else None" />
+				<label class="checkbox-custom-label" style="font-weight: normal"
+					t-field="v.name" />
+			</label>
+    	</xpath>
+    	
+    	<xpath expr="//t/label" position="replace">
+    		<div class="color-div">
+    			<label t-attf-style="background-color:#{v.html_color or v.name}" t-attf-class="css_attribute_color #{'active' if v.id in attrib_set else ''}">
+                    <input type="checkbox" name="attrib" t-att-value="'%s-%s' % (a.id,v.id)" t-att-checked="'checked' if v.id in attrib_set else None" t-att-title="v.name" />
+                </label>
+                <p class="color-name" t-esc="v.name"></p>
+    		</div>
+    	</xpath>
+    </template>
+ 
+	<template id="honos_shop_pager" inherit_id="website.pager">
+ 		<xpath expr="//li[1]/a" position="inside">
+    		<div class="pager_arrow_left"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+    	</xpath>
+    	<xpath expr="//ul/li[last()]/a" position="inside">
+    		<div class="pager_arrow_right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+    	</xpath>
+ 	</template>
+ 
+    <template id="honos_shop_products_add_to_cart_optional" inherit_id="website_sale.products_add_to_cart">
+    	<xpath expr="//a[@class='btn btn-default btn-xs a-submit']" position="attributes">
+	    	<attribute name="class">btn btn-default btn-xs a-submit honos_cart_btn</attribute>
+	  	</xpath>
+	  	<xpath expr="//a[@class='btn btn-default btn-xs']" position="attributes">
+	    	<attribute name="class">btn btn-default btn-xs honos_cart_btn</attribute>
+	  	</xpath>
+    </template>
+</odoo>

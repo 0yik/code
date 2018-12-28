@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_business_segment,beumer_modifier_project.account_business_segment,model_account_business_segment,,1,1,1,1
+access_account_team_member,beumer_modifier_project.account_team_member,model_account_team_member,,1,1,1,1

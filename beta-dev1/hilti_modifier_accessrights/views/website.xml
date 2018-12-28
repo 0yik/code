@@ -1,0 +1,21 @@
+<odoo>
+
+    <record model="ir.ui.view" id="view_website_menu_inherited_tree_view">
+        <field name="name">Inherited Tree View Website Menu</field>
+        <field name="model">website.menu</field>
+        <field name="inherit_id" ref="website.menu_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="/tree/field[@name='parent_id']" position="after">
+                <field name = "group_id" widget='many2many_tags'/>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="website.action_website_menu" model="ir.actions.act_window">
+        <field name="name">Website Menu</field>
+        <field name="res_model">website.menu</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_my_websites':1, 'backend_menu': True}</field>
+    </record>
+
+</odoo>

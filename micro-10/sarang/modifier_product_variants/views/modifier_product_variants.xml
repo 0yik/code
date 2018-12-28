@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="inherit_replace_product_product_line" model="ir.ui.view">
+            <field name="name">product.product.line</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock.view_stock_product_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='qty_available']" position="after">
+                    <field name="own_wh_qty"/>
+                </xpath>
+                <!--<xpath expr="//field[@name='virtual_available']" position="after">-->
+                    <!--<field name="ir_forcast_qty"/>-->
+                <!--</xpath>-->
+            </field>
+        </record>
+
+        <record id="product_template_form_view_hiden_update_on_hand" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <button name="%(stock.action_view_change_product_quantity)d" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+        
+        <!-- <record id="replace_product_template_pos_categ_field" model="ir.ui.view">
+          <field name="name">product.template.line</field>
+          <field name="model">product.template</field>
+          <field name="inherit_id" ref="point_of_sale.product_template_form_view"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='pos_categ_id']" position="after">
+                  <field name="pos_categ_ids" widget="many2many_tags"/>
+              </xpath>
+          </field>
+    </record> -->
+    </data>
+</odoo>

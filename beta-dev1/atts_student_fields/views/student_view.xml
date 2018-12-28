@@ -1,0 +1,867 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--view inherited to Hide certain tabs in student form-->
+        <record model="ir.ui.view" id="view_student_student_form_1_inherit_view">
+            <field name="name">student.student.form</field>
+            <field name="model">student.student</field>
+            <field name="inherit_id" ref="atts_course.view_student_student_form_1" />
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//div/group/field[@name='pid']" position="replace"/> -->
+                <xpath expr="//div/group/field[@name='pid']" position="replace"/>
+                <xpath expr="//field[@name='age']" position="attributes">
+                    <attribute name="string">Age as in Current Year</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[5]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[8]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[1]/group[1]/group[1]/field[4]" position="after">
+                    <field name="nric_fin"/>
+                </xpath>
+                <xpath expr="//notebook/page[1]/group[1]/group[2]/field[3]" position="after">
+                    <field name="current_level"/>
+                </xpath>
+                 <xpath expr="//field[@name='middle']" position="attributes">
+                    <attribute name="required">False</attribute>
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='last']" position="attributes">
+                    <attribute name="required">False</attribute>
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='year']" position="attributes">
+                    <attribute name="required">False</attribute>
+                </xpath>
+                
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="placeholder">Name</attribute>
+                    <attribute name="required">False</attribute>
+                </xpath>
+                
+                <!-- <xpath expr="//form/header/field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="alumni,terminate,de_register,withdraw" attrs="{'invisible':[('state','=','done')]}"/>
+                </xpath> -->
+                
+                <xpath expr="//form/sheet/group[1]/group[1]" position="replace">
+                    <group string="Student Information">
+                    	<field name="nric_fin" required='1'/>
+                    	<field name="cast_id" attrs="{'readonly':[('state','in',['alumni','terminate'])]}" invisible='1'/>
+                    	<field name="religion_id"/>
+                        <field name="student_code" readonly="1" invisible='1'/>
+                        <field name="roll_no" help="Roll number of Student" readonly="1" invisible='1'/>
+                        <field name="year" placeholder="Year" widget="selection" help="Academic year of Student" attrs="{'readonly':[('state','in',['alumni','terminate'])]}" invisible='1'/>
+                        <field name="school_id" placeholder="School" widget="selection" help="School of Student" attrs="{'readonly':[('state','in',['alumni','terminate'])]}" invisible='1'/>
+                    </group>
+                </xpath>
+                <!--Hidind the address fields from student info-->
+                <xpath expr="//form/sheet/group[2]/group[1]" position="replace">
+                    <group invisible='1'>
+                        <label for="street" string="Address" />
+                        <div class="o_address_format">
+                            <field name="street" class="o_address_street" placeholder="Street..." attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="street2" class="o_address_street" placeholder="Street2..." attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="city" placeholder="City" class="o_address_city" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="state_id" domain="[('country_id','=',country_id)]" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="country_id" placeholder="Country" class="o_address_country,oe_no_button" options="{&quot;no_open&quot;: True}" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                        </div>
+                    </group>
+                </xpath>
+                <!--replacing stand info fields and addingnew fields-->
+                <xpath expr="//form/sheet/group[1]/group[2]" position="replace">
+                    <group string="Standard Information">
+                    	<field name="phone" string="Tel – Home" placeholder="Phone Number" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                        <field name="standard_id" invisible='1' placeholder="Standard" readonly="1" domain="[('school_id','=',school_id)]" widget="selection" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                        <field name="division_id" placeholder="Division" invisible="1" widget="selection" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                        <field name="medium_id" invisible='1' placeholder="Medium"  readonly="1" widget="selection" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                    </group>
+                </xpath>
+                <!--Hiding other phone mobileand website fields from the student info -->
+                <xpath expr="//form/sheet/group[2]/group[2]" position="replace">
+                    <group>
+                        <field name="mobile" invisible='1' placeholder="Mobile Number" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                        <field name="email" invisible='1' placeholder="Email Address" String="Email" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                        <field name="website" invisible='1' widget="url" placeholder="e.g. www.serpentcs.com" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                    </group>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[1]" position="replace">
+                    <page string="Student General Information" name="Student General Information">
+                        <group>
+                            <group>
+                            	<field name="state_custom" invisible='1'/>
+                                <field name="active" invisible = '1'/>
+                                <field name="current_level"/>
+                                <field name="date_of_birth" string='Date of Birth' widget="date" placeholder="Date of Birth" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="gender" widget='radio' attrs="{'readonly':[('state','in',['alumni','terminate'])]}" placeholder="Gender"/>
+                                <field name="pid" invisible = '1'/>
+                                <field name="studentId" readonly='1'/>
+                            </group>
+                            <group>
+                                <field name="session" widget='radio'/>
+                                <field name="mother_tongue" invisible="1" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"  widget="selection" placeholder="Mother Tounge"/>
+                                <field name="admission_date" widget="date" placeholder="Admission Date" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="maritual_status" invisible="1" attrs="{'readonly':[('state','in',['alumni','terminate'])]}" placeholder="Maritial Status"/>
+                                <field name="date_of_integration"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="address_line">
+                                <tree string="Address">
+                                    <field name="city" placeholder="City" class="o_address_city" required="1" />
+                                    <field name="state_id" class="o_address_state" domain="[('country_id','=',country_id)]" placeholder="State" required="1"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <field name="country_id"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <group>
+                            	  <field name="child_presently_staying" attrs="{'invisible':[('address_line','!=',[])]}"/>
+                                <field name="child_staying_with_whome" attrs="{'invisible':[('child_presently_staying','!=','others')]}"/>
+                                <field name="age"/>
+                                <field name="age_1st_of_Jan"/>
+                                <field name="class_level" attrs="{'readonly':1}"/>
+                                <field name="class_number" attrs="{'readonly':1}"/>
+                                <field name="birth_place_id"/>
+                                <field name="nationality_id"/>
+                                <field name="citizenship_id"/>
+                                <field name="language_ids" widget="many2many_tags" options='{"no_open": True, "no_create": True}'/>
+                            </group>
+                            <group>
+                                <field name="programme"/>
+                                <field name="last_change_programme" invisible='1'/>
+                                <field name="race_id" context="{'form_view_ref' : 'atts_student_fields.view_student_race_form'}" options='{"no_open": True}'/> 
+                                <field name="withdraw_date"/>
+                                <field name="exit_qualifications" widget="radio"/>
+                                <field name="type_of_accommodation"/>
+                                <field name="ownership_of_accommodation"/>
+                                <field name="accommodation" attrs="{'invisible': [('ownership_of_accommodation', '!=', 'others')]}"/>
+                                <field name="de_registration"/>
+                                <field name="de_reg_comment" attrs="{'invisible': [('de_registration', '!=', 'others')]}"/>
+                                <field name="de_registration_graduation" attrs="{'invisible': [('de_registration', '!=', 'graduation')]}"/>
+                                <field name="reason_of_withdrawal"/>
+                            </group>
+                            <newline />
+                            <separator string="Emergency Contact Details" colspan="4" invisible="1" />
+                            <newline />
+                            <group colspan="4" col="4" invisible="1">
+                                <field name="contact_phone1" attrs="{'readonly':[('state','in',['alumni','terminate'])]}" placeholder="Phone Number"/>
+                                <field name="contact_mobile1" attrs="{'readonly':[('state','in',['alumni','terminate'])]}" placeholder="Mobile Number"/>
+                            </group>
+                            <newline />
+                        </group>
+                        <newline/>
+                        <separator string="Termination Reason" attrs="{'invisible':[('state','in',['draft','done','alumni'])]}" invisible="1"/>
+                        <group>
+                            <field name="terminate_reason" attrs="{'invisible':[('state','in',['draft','done','alumni'])]}" readonly="1" invisible="1"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[4]" position="replace">
+                    <page string="Education/Referral Information">
+                        <field name="previous_school_ids" nolabel="1" colspan="4" attrs="{'readonly':[('state','=','alumni')]}">
+                            <tree string="Education/Referral Information">
+                                <field name="name"  string='Referring School/Agency'/>
+                                <field name="admission_date" invisible='1'/>
+                                <field name="exit_date" invisible='1'/>
+                                <field name="registration_no" required="False" invisible='1'/>
+                                <field name="course_id" widget="selection" required="False" invisible='1'/>
+                            </tree>
+                            <form string="Education/Referral Information">
+                                <separator string="Education/Referral Information" />
+                                <group col="4" colspan="4">
+                                    <field name="name" placeholder="School Name" string = 'School Name'/>
+                                    <field name="admission_date" placeholder="Admission Date" invisible='1'/>
+                                    <field name="exit_date" placeholder="Exit Date" invisible='1'/>
+                                    <field name="registration_no" required="False" invisible='1'/>
+                                    <field name="course_id" widget="selection" required="False" invisible='1'/>
+                                    <newline />
+                                    <separator string="Subjects Details"  invisible='1'/>
+                                    <field name="add_sub" nolabel="1" colspan="4" invisible='1'/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Admission of Offer">
+                        <form string="Admission of Offer">
+                            <separator string="Admission of Offer"/>
+                            <group col="4" colspan="4">
+                                <field name="class_id" invisible='1'/>
+                                <field name="admitted" invisible='1'/>
+                                <field name="admissionDate"/>
+                                <field name="offer_letter_date"/>
+                            </group>
+                        </form>
+                    </page>
+                    <page string="Class History">
+                        <field name="class_history_line">
+                            <tree string="Class History" editable='bottom'>
+                                <field name="class_code" />
+                                <field name="class_level"/>
+                                <field name="class_number"/>
+                                <field name="teacher_id" domain="[('is_school_teacher','=',True)]" required='1'/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="English Level History">
+                        <field name="english_level_history_line">
+                            <tree string="English Level History" editable='bottom'>
+                                <field name="level_name" />
+                                <field name="english_level_number"/>
+                                <field name="english_score"/>
+                                <field name="teacher_id" domain="[('is_school_teacher','=',True)]" context="{'default_is_school_teacher': context.get('is_school_teacher', True)}" required='1'/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Math Level History">
+                        <field name="math_level_history_line">
+                            <tree string="Math Level History" editable='bottom'>
+                                <field name="level_name" />
+                                <field name="math_level_number"/>
+                                <field name="math_score"/>
+                                <field name="teacher_id" domain="[('is_school_teacher','=',True)]" context="{'default_is_school_teacher': context.get('is_school_teacher', True)}" required='1'/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Transport Mode History">
+                       <field name="transport_mode_history_line">
+                            <form string="Transport Mode History">
+                                <group>
+                                    <group>
+                                        <field name="transport_mode_in"/>
+                                    </group>
+                                    <group>
+                                        <field name="car" attrs="{'invisible': [('transport_mode_in', '!=', 'private_transport')]}"/>
+                                        <field name="comments_car" attrs="{'invisible': ['|',('transport_mode_in', '!=', 'private_transport'),('car', '!=',True)]}"/>
+                                        <field name="walk_home" attrs="{'invisible': [('transport_mode_in', '!=', 'private_transport')]}"/>
+                                        <field name="comments_walk_home" attrs="{'invisible': ['|',('transport_mode_in', '!=', 'private_transport'),('walk_home', '!=', True)]}"/>
+                                        <field name="others_private" attrs="{'invisible': [('transport_mode_in', '!=', 'private_transport')]}"/>
+                                        <field name="comments_private_others" attrs="{'invisible': ['|',('transport_mode_in', '!=', 'private_transport'),('others_private', '!=', True)]}"/>
+                                        <field name="mtr" attrs="{'invisible': [('transport_mode_in', '!=', 'public_transport')]}"/>
+                                        <field name="public_bus" attrs="{'invisible': [('transport_mode_in', '!=', 'public_transport')]}"/>
+                                        <field name="taxi" attrs="{'invisible': [('transport_mode_in', '!=', 'public_transport')]}"/>
+                                         <field name="comments_taxi" attrs="{'invisible': ['|',('transport_mode_in', '!=', 'public_transport'),('taxi', '!=', True)]}"/>
+                                        <field name="others_public" attrs="{'invisible': [('transport_mode_in', '!=', 'public_transport')]}"/>
+                                        <field name="comments_public_other" attrs="{'invisible': ['|',('transport_mode_in', '!=', 'public_transport'),('others_public', '!=', True)]}"/>
+                                        <field name="a_to_z" attrs="{'invisible': [('transport_mode_in', '!=', 'school_bus')]}"/>
+                                        <field name="a_to_z_school_bus" attrs="{'invisible': ['|',('transport_mode_in', '!=', 'school_bus'),('a_to_z', '!=', True)]}"/>
+                                        <field name="others_school_bus" attrs="{'invisible': [('transport_mode_in', '!=', 'school_bus')]}" />
+                                        <field name="comments_school_bus_other" attrs="{'invisible': ['|',('transport_mode_in', '!=', 'school_bus'),('others_school_bus', '!=', True)]}"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                         <field name="transport_mode_out"/>
+                                    </group>
+                                    <group>
+                                    <field name="car_out" attrs="{'invisible': [('transport_mode_out', '!=', 'private_transport')]}"/>
+                                    <field name="comments_car_out" attrs="{'invisible': ['|',('transport_mode_out', '!=', 'private_transport'),('car_out', '!=',True)]}"/>
+                                    <field name="walk_home_out" attrs="{'invisible': [('transport_mode_out', '!=', 'private_transport')]}"/>
+                                    <field name="comments_walk_home_out" attrs="{'invisible': ['|',('transport_mode_out', '!=', 'private_transport'),('walk_home_out', '!=', True)]}"/>
+                                    <field name="others_private_out" attrs="{'invisible': [('transport_mode_out', '!=', 'private_transport')]}"/>
+                                    <field name="comments_private_others_out" attrs="{'invisible': ['|',('transport_mode_out', '!=', 'private_transport'),('others_private_out', '!=', True)]}"/>
+                                    <field name="mtr_out" attrs="{'invisible': [('transport_mode_out', '!=', 'public_transport')]}"/>
+                                    <field name="public_bus_out" attrs="{'invisible': [('transport_mode_out', '!=', 'public_transport')]}"/>
+                                    <field name="taxi_out" attrs="{'invisible': [('transport_mode_out', '!=', 'public_transport')]}"/>
+                                     <field name="comments_taxi_out" attrs="{'invisible': ['|',('transport_mode_out', '!=', 'public_transport'),('taxi_out', '!=', True)]}"/>
+                                    <field name="others_public_out" attrs="{'invisible': [('transport_mode_out', '!=', 'public_transport')]}"/>
+                                    <field name="comments_public_other_out" attrs="{'invisible': ['|',('transport_mode_out', '!=', 'public_transport'),('others_public_out', '!=', True)]}"/>
+                                    <field name="a_to_z_out" attrs="{'invisible': [('transport_mode_out', '!=', 'school_bus')]}"/>
+                                    <field name="a_to_z_school_bus_out" attrs="{'invisible': ['|',('transport_mode_out', '!=', 'school_bus'),('a_to_z_out', '!=', True)]}"/>
+                                    <field name="others_school_bus_out" attrs="{'invisible': [('transport_mode_out', '!=', 'school_bus')]}" />
+                                    <field name="comments_school_bus_other_out" attrs="{'invisible': ['|',('transport_mode_out', '!=', 'school_bus'),('others_school_bus_out', '!=', True)]}"/>
+                                </group>
+                                </group>
+                                <group col='4' colspan='2'>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                </group>
+                            </form>
+                       </field>
+                    </page>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[12]" position="replace">
+                    <page string="Medical Information">
+                        <group string="General Information">
+                            <group>
+                                <field name="designation" placeholder="Doctor Designation" attrs="{'readonly':[('state','in',['alumni','terminate'])]}" invisible='1'/>
+                                <field name="doctor_phone" placeholder="Doctor's Contact No" attrs="{'readonly':[('state','in',['alumni','terminate'])]}" invisible='1'/>
+                                <field name="primary_disabilities"/>
+                                <field name="development_milestone"/>
+                                <field name="secondory_disability"/>
+                                <field name="have_any_disability" invisible='1'/>
+                            </group>
+                            <group>
+                                <field name="other_primary_disability" attrs="{'invisible': [('primary_disabilities', '!=', 'other')]}"/>
+                                <field name="birth_history"/>
+                                <field name="medical_condition_background"/>
+                            </group>
+                            <group string="Physical Information" invisible='1'>
+                                <field name="blood_group" placeholder="e.g.B+,Ab+" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="height" attrs="{'readonly':[('state','in',['alumni','terminate'])]}" placeholder="Height"/>
+                                <field name="weight" attrs="{'readonly':[('state','in',['alumni','terminate'])]}" placeholder="Weight"/>
+                            </group>
+                        </group>
+                        <group string="Mental Health Conditions">
+                            <group>
+                                <field name="mdd_disability"/>
+                                <field name="mdd_comment" class="o_address_state" placeholder="mdd comment" attrs="{'invisible': [('mdd_disability', '!=', True)]}" />
+                            </group>
+                            <group>
+                                <field name="adhd_disability"/>
+                                <field name="adhd_comment" placeholder="adhd comment" attrs="{'invisible': [('adhd_disability', '!=', True)]}"/>
+                            </group>
+                            <group>
+                                <field name="anxiety_disorder_disability"/>
+                                <field name="anxiety_comment" placeholder="anxiety comment" attrs="{'invisible': [('anxiety_disorder_disability', '!=', True)]}"/>
+                            </group>
+                            <group>
+                                <field name="ocd_disability"/>
+                                <field name="ocd_comment" placeholder="ocd comment" attrs="{'invisible': [('ocd_disability', '!=', True)]}"/>
+                            </group>
+                            <group>
+                                <field name="other_disability"/>
+                                <field name="specify_other_disability" placeholder="comment" attrs="{'invisible': [('other_disability', '!=', True)]}"/>
+                            </group>
+                        </group>
+                        <group string="Medical Conditions">
+                            <group>
+                                <field name="diabetes"/>
+                                <field name="diabetes_comment" attrs="{'invisible': [('diabetes', '!=', True)]}" placeholder="diabetes comment"/>
+                            </group>
+                            <group>
+                                <field name="seizure_disorder"/>
+                                <field name="seizure_comment" attrs="{'invisible': [('seizure_disorder', '!=', True)]}" placeholder="seizure comment"/>
+                            </group>
+                            <group>
+                                <field name="asthma_disorder_disability"/>
+                                <field name="asthma_comment" attrs="{'invisible': [('asthma_disorder_disability', '!=', True)]}" placeholder="asthma disorder disability comment"/>
+                            </group>
+                            <group>
+                                <field name="physical_disability"/>
+                                <field name="physical_comment" attrs="{'invisible': [('physical_disability', '!=', True)]}" placeholder="physical disability comment"/>
+                            </group>
+                            <group>
+                                <field name="dysmorphic_disability"/>
+                                <field name="dysmorphic_comment" attrs="{'invisible': [('dysmorphic_disability', '!=', True)]}" placeholder="dysmorphic disability comment"/>
+                            </group>
+                            <group>
+                                <field name="heart_disability"/>
+                                <field name="heart_comment" attrs="{'invisible': [('heart_disability', '!=', True)]}" placeholder="heart disability comment"/>
+                            </group>
+                            <group>
+                                <field name="cancer_disability"/>
+                                <field name="cancer_comment" attrs="{'invisible': [('cancer_disability', '!=', True)]}" placeholder="cancer comment"/>
+                            </group>
+                            <group>
+                                <field name="haemophilia_disorder"/>
+                                <field name="haemophilia_comment" attrs="{'invisible': [('haemophilia_disorder', '!=', True)]}" placeholder="haemophilia comment"/>
+                            </group>
+                            <group>
+                                <field name="Others_disability"/>
+                                <field name="Others_comment" attrs="{'invisible': [('Others_disability', '!=', True)]}" placeholder="Others disability comment"/>
+                            </group>
+                        </group>
+                        <!-- <separator string="Does the applicant have any Disabilities?" colspan="4" />
+                        <group col="6" colspan="4">
+                            <field name="eye" attrs="{'readonly':[('state','in',['alumni','terminate'])]}" />
+                            <field name="ear" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="nose_throat" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="respiratory" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="cardiovascular" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="neurological" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="muskoskeletal" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="dermatological" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="blood_pressure" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                        </group> -->
+                        <separator string="Notes" colspan="4" invisible="1"/>
+                        <group col="6" colspan="4" invisible="1">
+                            <field name="comment" placeholder="Notes About Medical.." nolabel="1" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                        </group>
+                        <separator colspan="4"/>
+                        <group>
+							<field name="G6PD_deficiency" widget="radio"/>
+							<field name="g6pd_comment" attrs="{'invisible': [('G6PD_deficiency', '!=', 'yes')]}"/>
+							<field name="list_of_major_injury" help='List of major injuries and illnesses have required medical treat, long-term therapy or hospitalizations' widget="radio"/>
+							<field name="injury_comment" attrs="{'invisible': [('list_of_major_injury', '!=', 'yes')]}"/>
+                        </group>
+                        <group string="Medication Details">
+                            <group>
+                                <field name="currently_child_medication" widget="radio"/>
+                            </group>
+                            <group attrs="{'invisible': [('currently_child_medication', '!=', 'yes')]}">
+                                <field name="medication" placeholder="medication comment "/>
+                                <field name="reason" placeholder="reason "/>
+                                <field name="dose" placeholder="dose comment "/>
+                                <field name="frequency" placeholder="frequency"/>
+                            </group>
+                            <group>
+                                <field name="medication_needed_in_school" widget="radio"/>
+                                <field name="medication_comment" placeholder="medication comment " attrs="{'invisible': [('medication_needed_in_school', '!=', 'yes')]}"/>
+                            </group>
+                            <group>
+                                <field name="is_child_have_side_effect" widget="radio"/>
+                                <field name="side_effect_comment" placeholder="side effect comment" attrs="{'invisible': [('is_child_have_side_effect', '!=', 'yes')]}"/>
+                            </group>
+                        </group>
+                        <group string="Allergies">
+                            <group>
+                                <field name="medicine_allergy"/>
+                                <field name="medicine_allergy_comment" attrs="{'invisible': [('medicine_allergy', '!=', True)]}" placeholder="medicine allergy comment"/>
+                            </group>
+                            <group>
+                                <field name="food_allergy"/>
+                                <field name="food_allergy_comment" attrs="{'invisible': [('food_allergy', '!=', True)]}" placeholder="food allergy comment"/>
+                            </group>
+                            <group>
+                                <field name="other_allergy"/>
+                                <field name="other_allergy_comment" attrs="{'invisible': [('other_allergy', '!=', True)]}" placeholder="other allergy comment"/>
+                            </group>
+                        </group>
+                        <group string="Medical Precautions">
+                            <group>
+                                <field name="medical_precaution" placeholder="any precaution"/>
+                                <field name="medical_remarks" placeholder="any remarks" help='Remarks/Recommendations/Prognosis'/>
+                            </group>
+                        </group>
+                        <group string="Physical Examination">
+                            <group>
+                                <field name="musculoskeletal_system"/>
+                                <field name="musculoskeletal_system_comment" attrs="{'invisible': [('musculoskeletal_system', '!=', True)]}" placeholder="musculoskeletal comment"/>
+                            </group>
+                            <group>
+                                <field name="hearing_condition"/>
+                                <field name="hearing_condition_comment" attrs="{'invisible': [('hearing_condition', '!=', True)]}" placeholder="hearing comment"/>
+                            </group>
+                            <group>
+                                <field name="vision_condition"/>
+                                <field name="vision_comment" attrs="{'invisible': [('vision_condition', '!=', True)]}" placeholder="vision comment"/>
+                            </group>
+                            <group>
+                                <field name="head_circumference"/>
+                            </group>
+                        </group>
+                        <group string="Physical Education Restriction">
+                            <group>
+                                <field name="unfit_pe"/>
+                                <field name="unfit_pe_comment" attrs="{'invisible': [('unfit_pe', '!=', True)]}" placeholder="comment"/>
+                            </group>
+                            <group>
+                                <field name="unfit_swimming"/>
+                                <field name="unfit_swimming_comment" attrs="{'invisible': [('unfit_swimming', '!=', True)]}" placeholder="swimming comment"/>
+                            </group>
+                            <group>
+                                <field name="hydrotherapy"/>
+                                <field name="hydrotherapy_comment" attrs="{'invisible': [('hydrotherapy', '!=', True)]}" placeholder="hydrotherapy comment"/>
+                            </group>
+                            <group>
+                                <field name="horse_riding"/>
+                                <field name="horse_riding_comment" attrs="{'invisible': [('horse_riding', '!=', True)]}" placeholder="horse riding comment"/>
+                            </group>
+                            <group>
+                                <field name="other_physical_restriction"/>
+                                <field name="other_physical_restriction_comment" attrs="{'invisible': [('other_physical_restriction', '!=', True)]}" placeholder="other restriction comment"/>
+                            </group>
+                        </group>
+                        <group string="HPB Medical Required Precaution">
+                            <group>
+                                <field name="temporary_precaution"/>
+                                <field name="temporary_precaution_comment" attrs="{'invisible': [('temporary_precaution', '!=', True)]}" placeholder="precaution comment"/>
+                            </group>
+                            <group>
+                                <field name="special_precaution"/>
+                                <field name="special_precaution_comment" attrs="{'invisible': [('special_precaution', '!=', True)]}" placeholder="special precaution comment"/>
+                            </group>
+                            <group>
+                                <field name="precaution_type"/>
+                            </group>
+                            <group attrs="{'invisible': [('precaution_type', '!=', True)]}">
+                                <field name="low_intensity" help="Exempt from Low – Intensity Physical"/>
+                                <field name="contact_sport" help="Exempt from contact sport and Games"/>
+                                <field name="competive_sport" help="Exempt from Competive Sports"/>
+                                <field name="preferential_seating" help="Preferential Seating"/>
+                                <field name="physical_activity" help="Exempt from moderate – intensity Physical Activities"/>
+                                <field name="physical_excercise" help="Exempt from Physical Exercise"/>
+                                <field name="competitive_game" help="Exempt from Competitive Games"/>
+                                <field name="subject" help="Special Choice of Subjects/Careers"/>
+                                <field name="intense_activity" help="Allow Watersports, Cycling on Roads, Climbing Heights, Gymnastics only under supervision"/>
+                                <field name="intense_physical" help="Exempt from high-intensity physical"/>
+                                <field name="fitness_test" help="Exempt from Physical Fitness Test"/>
+                                <field name="graded_excercise" help="Requires modifield/graded physical exercise"/>
+                                <field name="ast" help="Exempt from PE during asthmatic attacks"/>
+                                <field name="pre_snacks" help="Exempt extra snack before exercise, watch for symptoms.signs of hypoglycaemia)"/>
+                            </group>
+                            <group attrs="{'invisible': [('precaution_type', '!=', True)]}">
+                            	<field name="other_physical_precaution" help="Others"/>
+                            	<field name="oth_comment" attrs="{'invisible': [('other_physical_precaution', '!=', True)]}"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page[14]" position="replace">
+                    <page string="Emergency Contacts">
+                        <field name="description" nolabel="1" colspan="4" attrs="{'readonly':[('state','in',['alumni','terminate'])]}">
+                            <tree string="Emergent Contacts" editable="bottom" store="True">
+                                <field name="relation_selection" required='1' />
+                                <field name="parent_id" context="{'form_view_ref' : 'atts_course.view_parent_form','default_parent_school': context.get('parent_school', True)}" attrs="{'invisible': ['|',('relation_selection', '!=', 'parent'),('relation_selection', '==', 'others')]}" options='{"no_open": True, "no_create": True}'/>
+                                <field name="caregiver_id" attrs="{'invisible': ['|',('relation_selection', '!=', 'caregiver'),('relation_selection', '==', 'others')]}" options='{"no_open": True, "no_create": True}'/>
+                                <field name="guardian_id" attrs="{'invisible': ['|',('relation_selection', '!=', 'guardian'),('relation_selection', '==', 'others')]}" options='{"no_open": True, "no_create": True}'/>
+                                <field name="name" placeholder="Enter Name" string="Emergency Contact Person" required="1"/>
+                                <field name="description" placeholder="Enter Mobile No" string="Emergency Contact HP/Tel-H/others"/>
+                                <field name="emer_relation_with_student"/>
+                            </tree>
+                            <form string="Extra Details">
+                                <group>
+                                    <field name="relation_selection"/>
+                                    <field name="name" placeholder="Field Name" string="Emergency Contact Person"/>
+                                    <field name="description" placeholder="Description" string="Emergency Contact HP/Tel-H/others"/>
+                                    <field name="emer_relation_with_student"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[11]" position="replace">
+                    <page string="Family Details">
+                        <group string="Student General Info">
+                            <group>
+                                <field name="child_custody"/>
+                                <field name="other_caretaker" attrs="{'invisible': [('child_custody', '!=', 'other')]}" placeholder="Other Caregiver"/>
+                                <field name="birth_order"/>
+                                <field name="no_of_family_member" placeholder="including the student"/>
+                            </group>
+                            <group>
+                                <field name="no_of_brother" placeholder="total brother"/>
+                                <field name="no_of_sister" placeholder="total sister"/>
+                                <field name="sibling_in_school" placeholder="any sibling in school" invisible='1'/>
+                                <field name="sibling_line" string="Student with sibling in school">
+                                	<tree editable='bottom'>
+                                		<field name="student_id" string="Sibling"/>
+                                	</tree>
+                                </field>
+                            </group>
+                        </group>
+                        <group>
+	                        <group string="Father Information">
+	                        		<field name="father_line" context="{'form_view_ref':'atts_student_fields.view_parent_form_inherit','default_father':True,'default_parent_school': context.get('parent_school', True)}">
+	                        			<tree>
+	                        				<field name="name"/>
+	                        			</tree>
+	                        		</field>
+	                        </group>
+	                        <group string="Mother Information">
+	                       		<field name="mother_line" context="{'form_view_ref':'atts_student_fields.view_parent_form_inherit','default_mother':True,'default_parent_school': context.get('parent_school', True)}">
+	                       			<tree>
+	                       				<field name="name"/>
+	                       			</tree>
+	                       		</field>
+                          </group>
+                	</group>
+                    </page>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[6]" position="after">
+                    <page string="Guardians">
+                        <group>
+                            <field name="guardian_ids" nolabel='1'/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[6]" position="after">
+                    <page string="Caregivers">
+                        <group>
+                            <field name="caregiver_ids" nolabel='1'/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[10]" position="after">
+                    <page string="WPLN">
+                        <group>
+                            <field name="wpln_ids" nolabel='1'>
+                                <tree editable="bottom">
+                                    <field name="year"/>
+                                    <field name="reading"/>
+                                    <field name="listening"/>
+                                    <field name="numeracy"/>
+                                    <field name="speaking"/>
+                                    <field name="writing"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_guardian_line_view" model="ir.ui.view">
+            <field name="name">guardian.line.view</field>
+            <field name="model">guardian.line</field>
+            <field name="arch" type="xml">
+                <form string="Guardian Information">
+                    <group string="Guardian Information">
+                        <group>
+                            <field name="name" placeholder="name" required='1'/>
+                            <field name="guardian_nric" placeholder="guardian_nric"/>
+                            <field name="guardian_office_no" placeholder="guardian office no"/>
+                            <field name="occupation_id"/>
+                            <field name="occupation" invisible='1'/>
+                            <field name="guardian_postal_code" placeholder="postal code" invisible='1'/>
+                            <field name="guardian_accomodation"/>
+                            <field name="guardin_ownership_of_accomodation"/>
+                            <field name="guardian_other_accomodation"   attrs="{'invisible': [('guardin_ownership_of_accomodation', '!=', 'others')]}" placeholder='other accomodation'/>
+                            <field name="guardian_home_no" placeholder="guardian home number"/>
+                            <field name="guardian_relation_with_student_id" required = '1' placeholder="relationship to student"/>
+                        </group>
+                        <group>
+                            <label for="guardian_street" string="Address" />
+                            <div class="o_address_format">
+                                <field name="guardian_street" class="o_address_street" placeholder="Street..."/>
+                                <field name="guardian_street2" class="o_address_street" placeholder="Street2..."/>
+                                <field name="guardian_city" placeholder="City" class="o_address_city"/>
+                                <field name="guardian_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;:True}"/>
+                                <field name="guardian_zip" placeholder="ZIP" class="o_address_zip" /><br/>
+                                <field name="guardian_country_id" placeholder="Country" class="o_address_country,oe_no_button" options="{&quot;no_open&quot;: True}" />
+                            </div>
+                            <field name="guardian_mobile_ids" context="{'form_view_ref' : 'atts_student_fields.view_guardian_contact_view'}"/>
+                        </group>
+                        <group>
+                            <field name="guardian_citizenship" placeholder="guardian citizenship"/>
+                            <field name="guardian_email" placeholder="guardian email"/>
+                            <field name="guardian_dob" placeholder="guardian dob"/>
+                            <field name="guardian_country_of_birth" placeholder=" country of birth"/>
+                            <field name="guardian_language" widget="many2many_tags"  options='{"no_open": True, "no_create": True}' />
+                            <field name="guardian_race_selection" placeholder="guardian race" invisible='1'/>
+                            <field name="guardian_religion" placeholder="guardian religion" invisible='1'/>
+                            <field name="religion_id"/>
+                    		<field name="race_id"/>
+                        </group>
+                        <group>
+                            <field name="guardian_marital_status" widget="radio"/>
+                            <field name="guardian_qualification" widget="radio"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_caregiver_line_view" model="ir.ui.view">
+            <field name="name">caregiver.line.view</field>
+            <field name="model">caregiver.line</field>
+            <field name="arch" type="xml">
+                <form string="Guardian Information">
+                    <group string="Caregiver Information">
+                        <group>
+                            <field name="name" placeholder="caregiver name" required='1'/>
+                            <field name="caregiver_nric" placeholder="caregiver nric"/>
+                            <field name="caregiver_office_no" placeholder="caregiver office no"/>
+                            <field name="occupation_id"/>
+                            <field name="occupation" invisible='1'/>
+                            <field name="caregiver_postal_code" placeholder="postal code" invisible='1'/>
+                            <field name="caregiver_accomodation"/>
+                            <field name="caregiver_ownership_of_accomodation"/>
+                            <field name="caregiver_other_accomodation"   attrs="{'invisible': [('caregiver_ownership_of_accomodation', '!=', 'others')]}" placeholder='other accomodation'/>
+                            <field name="caregiver_relation_with_student_id" required = '1' placeholder="relationship to student"/>
+                        </group>
+                        <group>
+                            <label for="caregiver_street" string="Address" />
+                            <div class="o_address_format">
+                                <field name="caregiver_street" class="o_address_street" placeholder="Street..." />
+                                <field name="caregiver_street2" class="o_address_street" placeholder="Street2..."/>
+                                <field name="caregiver_city" placeholder="City" class="o_address_city" />
+                                <field name="caregiver_state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" />
+                                <field name="caregiver_zip" placeholder="ZIP" class="o_address_zip" /><br/>
+                                <field name="caregiver_country_id" placeholder="Country" class="o_address_country,oe_no_button" options="{&quot;no_open&quot;: True}" />
+                            </div>
+                            <field name="caregiver_mobile_ids" context="{'form_view_ref' : 'atts_student_fields.view_caregiver_contact_view'}"/>
+                        </group>
+                        <group>
+                            <field name="caregiver_citizenship" placeholder="caregiver citizenship"/>
+                            <field name="caregiver_email" placeholder="caregiver email"/>
+                            <field name="caregiver_dob" placeholder="caregiver dob"/>
+                            <field name="caregiver_country_of_birth" placeholder="country of birth"/>
+                            <field name="caregiver_language" widget="many2many_tags"  options='{"no_open": True, "no_create": True}' />
+                            <field name="caregiver_race_selection" placeholder="caregiver race" invisible='1'/>
+                            <field name="caregiver_religion" placeholder="caregiver religion" invisible='1'/>
+                            <field name="religion_id"/>
+                    		<field name="race_id"/>
+                        </group>
+                        <group>
+                            <field name="caregiver_marital_status" widget="radio"/>
+                            <field name="caregiver_qualification" widget="radio"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_father_contact_view" model="ir.ui.view">
+            <field name="name">father.multiple.view</field>
+            <field name="model">father.multiple.contact</field>
+            <field name="arch" type="xml">
+                <form string="Father Contact Line">
+                    <group string="Father Contact Info">
+                        <field name="father_no" required='1'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_mother_contact_view" model="ir.ui.view">
+            <field name="name">mother.multiple.view</field>
+            <field name="model">mother.multiple.contact</field>
+            <field name="arch" type="xml">
+                <form string="Mother Contact Line">
+                    <group string="Mother Contact Info">
+                        <field name="mother_no" required='1'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_guardian_contact_view" model="ir.ui.view">
+            <field name="name">guardian.multiple.view</field>
+            <field name="model">guardian.multiple.contact</field>
+            <field name="arch" type="xml">
+                <form string="Guardian Contact Line">
+                    <group string="Guardian Contact Info">
+                        <field name="guardian_no" required='1'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_caregiver_contact_view" model="ir.ui.view">
+            <field name="name">caregiver.multiple.view</field>
+            <field name="model">caregiver.multiple.contact</field>
+            <field name="arch" type="xml">
+                <form string="Caregiver Contact Line">
+                    <group string="Caregiver Contact Info">
+                        <field name="caregiver_no" required='1'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        
+        <record id="student_view" model="ir.ui.view">
+            <field name="name">student.address.view</field>
+            <field name="model">student.address</field>
+            <field name="arch" type="xml">
+                <form string="Student Address">
+                    <group>
+                        <group>
+                            <label for="street" string="Address" />
+                            <div class="o_address_format">
+                                <field name="street" class="o_address_street" placeholder="Street..."/>
+                                <field name="street" class="o_address_street" placeholder="Street2..."/>
+                                <field name="city" placeholder="City" class="o_address_city" required="1" />
+                                <field name="state_id" class="o_address_state" placeholder="State" required="1"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"/><br/>
+                                <field name="country_id" placeholder="Country" class="o_address_country,oe_no_button"  required="1"/>
+                            </div>
+                        </group>
+                        <!-- <group invisible='1'>
+                            <field name="phone" placeholder="Phone Number"/>
+                            <field name="mobile" placeholder="Mobile Number"/>
+                            <field name="email" placeholder="Email Address" String="Email"/>
+                            <field name="other_contact_numbers"/>
+                            <field name="phone_home"/>
+                        </group> -->
+                    </group>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_student_transport_tree" model="ir.ui.view">
+           <field name="name">transport.mode.history.tree</field>
+           <field name="model">transport.mode.history</field>
+           <field name="arch" type="xml">
+               <tree string="Transport Mode History">
+                   <field name="transport_mode_in" />
+                   <field name="transport_mode_out" />
+                   <field name="start_date"/>
+                   <field name="end_date"/>
+               </tree>
+           </field>
+       </record>
+       
+       <record id="view_parent_form_inherited_id" model="ir.ui.view">
+           <field name="name">res.partner.parent.form</field>
+           <field name="model">res.partner</field>
+           <field name="inherit_id" ref="atts_course.view_parent_form" />
+           <field name="arch" type="xml">
+               <xpath expr="//form/sheet/form/group[2]/group[1]/div/field[5]" position="after">
+                    <br/>
+               </xpath>
+           </field>
+       </record>
+       
+        <record id="view_student_student_tree_1_inherit" model="ir.ui.view">
+           <field name="name">student.student.tree.1</field>
+           <field name="model">student.student</field>
+           <field name="inherit_id" ref="atts_course.view_student_student_tree_1" />
+           <field name="arch" type="xml">
+              <xpath expr="//tree/field[@name='pid']" position="attributes">
+                    <attribute name='invisible'>1</attribute>
+               </xpath>
+               <xpath expr="//tree/field[@name='name']" position="before">
+               		<field name="studentId"/>
+               </xpath>
+           </field>
+       </record>
+       
+       <record id="view_student_nationality_form" model="ir.ui.view">
+           <field name="name">res.nationality.from</field>
+           <field name="model">res.nationality</field>
+           <field name="arch" type="xml">
+               <form string="Student Nationality">
+               	<group>
+                   <field name="name" />
+                   <field name="student_ids" widget='many2many_tags' invisible='True'/>
+                </group>
+               </form>
+           </field>
+       </record>
+       
+       <record id="view_student_race_form" model="ir.ui.view">
+           <field name="name">student.race.from</field>
+           <field name="model">student.race</field>
+           <field name="arch" type="xml">
+               <form string="Student Race">
+               	<group>
+                   <field name="name" />
+                </group>
+               </form>
+           </field>
+       </record>
+
+	<record id="atts_course.action_student_alumni" model="ir.actions.act_window">
+            <field name="name">Student Alumni</field>
+            <field name="domain">['|','|','|',('state','=','alumni'),('state','=','terminate'),('state_custom','=','de_register'),('state_custom','=','withdraw')]</field>
+            <field name="res_model">student.student</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+        
+	 <record id="atts_course.action_student_student_form_12" model="ir.actions.act_window">
+            <field name="name">Students</field>
+            <field name="domain">[('state', '=', 'done'),('state_custom', '=','draft')]</field>
+            <field name="context">{'search_default_done_student':1}</field>
+            <field name="res_model">student.student</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="" />
+            <field name="search_view_id" ref="atts_course.view_student_student_search_1" />
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+	
+
+    </data>
+</odoo>
+

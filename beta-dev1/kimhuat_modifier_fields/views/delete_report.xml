@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <report id="sale.report_sale_order"
+            string="Quotation / Order"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="sale.report_saleorder"
+            name="sale.report_saleorder"
+            menu="False"
+        />
+        <!-- QWeb Reports -->
+		<report id="account.account_invoices" model="account.invoice"
+			string="Invoices" report_type="qweb-pdf" name="account.report_invoice"
+			file="account.report_invoice" attachment_use="True"
+			attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
+			menu="False" />
+
+		<report id="account.account_invoice_action_report_duplicate"
+			model="account.invoice" string="Duplicates" report_type="qweb-pdf"
+			name="account.account_invoice_report_duplicate_main" file="account.report_invoice_duplicate"
+			attachment_use="False" menu="False" />
+
+		<record id="make_invisible" model="res.groups">
+            <field name="name">Invisible</field>
+        </record>
+        <!-- Quotations -->
+        <record model="ir.ui.menu" id="stable_account_analytic_analysis.menu_action_hr_tree_invoiced_all">
+            <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+        </record>
+		<record model="ir.ui.menu" id="purchase_requisition.menu_purchase_requisition_pro_mgt">
+            <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+        </record>
+        <record id="stock.action_report_picking" model="ir.actions.report.xml">
+            <field name="multi" eval="True"/>
+        </record>
+        <record id="stock.action_report_delivery" model="ir.actions.report.xml">
+            <field name="multi" eval="True"/>
+        </record>
+    </data>
+</odoo>

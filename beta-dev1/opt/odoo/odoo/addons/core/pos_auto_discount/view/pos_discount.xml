@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+
+        <record id="view_pos_discount_form" model="ir.ui.view">
+            <field name="name">pos.auto.discount.form</field>
+            <field name="model">pos.auto.discount</field>
+            <field name="arch" type="xml">
+                <form string="Discount">
+                    <header>
+                        <button name="apply_discount_to_all_config" string="Apply Now" type="object" icon="fa-arrow-circle-o-right" states="active,cancel"/>
+                        <button name="stop_apply_discount_to_all_config" string="Stop discount" type="object" icon="fa-circle" states="active"/>
+                        <field name="state" widget="statusbar" clickable="True"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                            </group>
+                            <group>
+                                <field name="start_dt"/>
+                                <field name="end_dt"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="rule_ids" nolabel="1">
+                                <tree string="Rules" editable="top">
+                                    <field name="quantity"/>
+                                    <field name="list_price"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Session apply">
+                            <field name="config_ids" widget="many2many_tags" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_pos_discount_tree" model="ir.ui.view">
+            <field name="name">pos.auto.discount.tree</field>
+            <field name="model">pos.auto.discount</field>
+            <field name="arch" type="xml">
+                <tree string="Discounts">
+                    <field name="product_id"/>
+                    <field name="start_dt"/>
+                    <field name="end_dt"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_pos_discount_search" model="ir.ui.view">
+            <field name="name">pos.auto.discount.search</field>
+            <field name="model">pos.auto.discount</field>
+            <field name="arch" type="xml">
+                <search string="Discounts">
+                    <field name="product_id"/>
+                    <field name="start_dt"/>
+                    <field name="end_dt"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_pos_discount" model="ir.actions.act_window">
+            <field name="name">Discount Rules</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.auto.discount</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_discount"
+                  action="action_pos_discount"
+                  parent="point_of_sale.menu_point_config_product"
+                  sequence="100"
+                  groups="point_of_sale.group_pos_manager,point_of_sale.group_pos_user"
+                  />
+
+        <record model="ir.ui.view" id="view_pos_discount">
+            <field name="name">pos_access_rights</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="pos_base.pos_base_config"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='pos_config_extend']" position="inside">
+                    <group>
+                        <field name="discount_ids" widget="many2many_tags"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<record id="reschedule_booking_form_view" model="ir.ui.view">
+		<field name="name">Reschedule Booking</field>
+		<field name="model">reschedule.booking</field>
+		<field name="arch" type="xml">
+			<form string="Reschedule">
+				<group>
+					<field name="start_datetime"/>
+					<field name="end_datetime"/>
+				</group>
+				<footer>
+					<button name="reschedule_booking" string="Confirm" type="object" class="btn-primary" />
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+	
+	
+</odoo>

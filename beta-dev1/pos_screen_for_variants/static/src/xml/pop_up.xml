@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ProductVariantsPopupWidget">
+        <div class="modal-dialog options-dialog" style="background-color: rgba(0,0,0,0.5) !important;">
+	        <div class="popup popup-options" style="background-color: #F0EEEE !important;">
+	            <p class="title" style="background: rgba(255,255,255,0.5) !important;
+    color: #ab460b !important;"><t t-esc=" widget.options.title || '' " /></p>
+				<div class='popup-option content' style="text-align: left; margin: 35px;">
+                    <div class="pick-attribute">
+
+                    </div>
+				</div>
+                <div class="footer centered">
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                    <div class="button confirm">
+                        Ok
+                    </div>
+                </div>
+	        </div>
+	    </div>
+    </t>
+    <t t-name="AttributeLinePopupWidget">
+        <img t-att-src='image_url' />
+        <t t-foreach="lines" t-as="line">
+            <div class="form-group">
+              <label for="sel1"><t t-esc="line.name"/></label>
+              <select class="form-control" t-attr-type-id="line.id">
+                  <t t-foreach="line.values" t-as="value">
+                      <option t-attr-value="value.id"><t t-esc="value.name"/></option>
+                  </t>
+              </select>
+            </div>
+        </t>
+    </t>
+</templates>

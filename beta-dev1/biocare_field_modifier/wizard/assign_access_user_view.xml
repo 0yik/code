@@ -1,0 +1,20 @@
+<openerp>
+    <data>
+
+        <record id="view_assign_acess_for_users" model="ir.ui.view">
+            <field name="name">Assign Acsess for Users</field>
+            <field name="model">employee.assign.user</field>
+            <field name="arch" type="xml">
+                <form string="Create Users">
+                    <field name="notification" readonly="1"/>
+                    <field name="user_id" invisible="1"/>
+                    <footer>
+                        <button string="Assign Access" type="object" name="action_assign_user" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

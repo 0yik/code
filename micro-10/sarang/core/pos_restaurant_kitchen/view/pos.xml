@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_pos_config_syncing">
+            <field name="name">pos.config.sync</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="pos_bus.view_pos_config_syncing"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='bus']" position="inside">
+                    <field name="screen_type"/>
+                    <field name="categ_ids" attrs="{'invisible': [('screen_type', '!=', 'kitchen')]}" widget="many2many_tags"/>
+                    <field name="play_sound"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

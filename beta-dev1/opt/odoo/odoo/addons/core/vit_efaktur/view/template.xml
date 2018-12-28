@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="account assets" inherit_id="web.assets_backend">
+        	<xpath expr="link[last()]" position="inside">
+        		<link rel="stylesheet" href="/vit_efaktur/static/src/less/lable_responsive.less"/>
+        	</xpath>
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/vit_efaktur/static/lib/jquery.inputmask/jquery.inputmask.bundle.js"></script>
+                <script type="text/javascript" src="/vit_efaktur/static/src/js/widgets.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

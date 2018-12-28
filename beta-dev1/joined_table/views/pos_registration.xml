@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="pos_joined_table" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/joined_table/static/src/js/pos_orders.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

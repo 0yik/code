@@ -1,0 +1,106 @@
+<odoo>
+	<data>
+		<record id="my_request_view" model="ir.ui.view">
+			<field name="name">my.request.view</field>
+			<field name="model">my.request</field>
+			<field name="arch" type="xml">
+				<form string="Request">
+					<header>
+						<button name="waiting_approvel" string="Submit" type="object"
+							class="btn-primary" attrs="{'invisible': [('status', '!=', 'draft')]}" />
+						<button name="state_approvel" string="Approve" type="object"
+							class="btn-primary" attrs="{'invisible': [('status', '!=', 'awaitinapprovel')]}"
+							groups="hilti_modifier_tester_myrequests.my_request_group" />
+						<button name="state_reject" string="Reject" type="object"
+							class="btn-primary" attrs="{'invisible': [('status', '=', 'draft')]}"
+							groups="hilti_modifier_tester_myrequests.my_request_group" />
+						<field name="status" widget="statusbar"
+							statusbar_visible="draft,awaitinapprovel,approved,reject" />
+					</header>
+					<sheet>
+						<div class="oe_title">
+							<h1>
+								<field name="req_no" readonly="1" />
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="partner_id" invisible="1" />
+								<field name="req_type" string="Request Type"/>
+								<field name="description" />
+							</group>
+							<group>
+								<field name="is_half_leave" attrs="{'invisible': [('req_type', '=', 'overtime')]}"/>
+								<field name="start_date" string="Start Date &amp; Time" attrs="{'invisible': ['|',('req_type', '=', 'overtime'),('is_half_leave', '=', False)]}"/>
+								<field name="end_date" string="End Date &amp; Time" attrs="{'invisible': ['|',('req_type', '=', 'overtime'),('is_half_leave', '=', False)]}"/>
+								<field name="full_start_date" attrs="{'invisible': ['|',('req_type', '=', 'overtime'),('is_half_leave', '=', True)]}"/>
+								<field name="full_end_date" attrs="{'invisible': ['|',('req_type', '=', 'overtime'),('is_half_leave', '=', True)]}"/>
+								<field name="days" invisible="1"/>
+								<field name="duration" invisible="1"/>
+								<label for="days_compute" attrs="{'invisible': ['|',('req_type', '=', 'overtime'), ('is_half_leave', '=', True)]}"/>
+								<div attrs="{'invisible': ['|',('req_type', '=', 'overtime'), ('is_half_leave', '=', True)]}">
+									<field name="days_compute" attrs="{'invisible': ['|',('req_type', '=', 'overtime'), ('is_half_leave', '=', True)]}" />
+									<span> Days </span>
+								</div>
+								<label for="duration_compute" attrs="{'invisible': [('is_half_leave', '=', False)]}"/>
+								<div attrs="{'invisible': [('is_half_leave', '=', False)]}">
+									<field name="duration_compute" attrs="{'invisible': [('is_half_leave', '=', False)]}" />
+									<span> Hours </span>
+								</div>
+							</group>
+						</group>
+						<notebook>
+							<page string="Overtime Details"
+							attrs="{'invisible': [('req_type', '=', 'unavailability')]}">
+							<field name="ot_req_ids" >
+								<tree editable="bottom">
+									<field name="t_re_id" invisible="1" />
+									<field name="ot_start_date" string="Actual Start date &amp; Time"/>
+									<field name="ot_end_date" string="Actual Start end &amp; Time"/>
+									<field name="duration" invisible="1"/>
+									<field name="duration_compute"/>
+								</tree>
+							</field>
+						</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="my_request_view_tree" model="ir.ui.view">
+			<field name="name">my.request.view.tree</field>
+			<field name="model">my.request</field>
+			<field name="arch" type="xml">
+				<tree string="Request">
+					<field name="req_no" string="Request Number"/>
+					<field name="partner_id" />
+					<field name="req_type" string="Request Type"/>
+					<field name="description" />
+					<field name="days" invisible="1"/>
+					<field name="duration" invisible="1"/>
+					<field name="days_compute" />
+					<field name="duration_compute" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_my_request_view" model="ir.actions.act_window">
+			<field name="name">My Requests</field>
+			<field name="res_model">my.request</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					My Request
+				</p>
+				<p>
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_action_my_request_view" parent="sales_team.menu_sales"
+			sequence="7" action="hilti_modifier_tester_myrequests.action_my_request_view" />
+
+
+	</data>
+</odoo>

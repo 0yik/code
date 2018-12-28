@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+    <t t-extend="PaymentScreen-Numpad">
+        <t t-jquery="button[data-action='+10']"  t-operation="replace">
+            <button class="mode-button" data-action='+1000'>+1k</button>
+        </t>
+        <t t-jquery="button[data-action='+20']"  t-operation="replace">
+            <button class="mode-button" data-action='+5000'>+5k</button>
+        </t>
+        <t t-jquery="button[data-action='+30']"  t-operation="replace">
+            <button class="mode-button" data-action='+10000'>+10k</button>
+        </t>
+        <t t-jquery="button[data-action='+50']"  t-operation="replace">
+            <button class="mode-button" data-action='+50000'>+50k</button>
+        </t>
+        <t t-jquery=".numpad-backspace"  t-operation="after">
+            <br/>
+            <button class="mode-button" data-action='+20000'>+20k</button>
+            <button class="mode-button" data-action='+50000'>+50k</button>
+            <button class="mode-button" data-action='+100000'>+100k</button>
+            <button class="input-button numpad-char" data-action='EXACT'>E</button>
+        </t>
+    </t>
+</template>
+

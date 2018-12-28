@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+<!-- Vertical Slider with news -->
+<template id="layout_header_news" name="News Vertical Slider">  
+    <section id="layout_header_news" class="event_news carousel vertical slide s_vertical_news" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+              <p class="ticker-headline">
+                  19 Jan 2018 Technical Seminar
+              </p>
+          </div>
+          <div class="item">
+              <p class="ticker-headline">
+                  20 Feb 2018 Functional Seminar
+              </p>
+          </div>
+          <div class="item">
+              <p class="ticker-headline">
+                  27 Feb 2018 Functional Seminar
+              </p>
+          </div>
+          <div class="item">
+              <p class="ticker-headline">
+                  15 March 2018 Functional Seminar
+              </p>
+          </div>
+        </div>
+    </section>
+</template>
+<!-- End -->
+
+<template id="add_snippets_atts" inherit_id="website.snippets" name="Add Custom snippet">
+    <xpath expr="//div[@id='snippet_structure']//div[@class='o_panel_body']" position="inside">
+
+        <t t-snippet="theme_atts.layout_header_news"
+            t-thumbnail="/theme_stoneware/static/src/icon/home_slider01.png"/>
+    </xpath>
+</template>
+</odoo>

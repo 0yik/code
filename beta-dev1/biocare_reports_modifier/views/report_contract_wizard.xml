@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="report_contract_wizard">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="biocare_reports_modifier.external_layout_contract">
+                <div class="page" style="font-size: 17px;">
+                    <style>
+                        .maintain td, .maintain tr, .maintain th{
+                            vertical-align: middle;
+                        }
+                        .maintain td{
+                            border:1px solid black;
+                            padding:5px;
+                            width: 72px;
+                            text-align: center;
+                        }
+                    </style>
+                    <div class="col-xs-3">
+                        <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="height: 110px; width: 110px;"/>
+                    </div>
+                    <div class="col-xs-12">
+                        <table class="col-xs-12">
+                            <tr>
+                                <td class="text-right">Date:&amp;nbsp;&amp;nbsp;</td>
+                                <t t-if="o.date_start">
+                                    <th><span t-esc="datetime.datetime.strptime(o.date_start, '%Y-%m-%d').strftime('%d-%b-%y')"></span></th>
+                                </t>
+                                <td class="text-right">Tel:&amp;nbsp;&amp;nbsp;</td>
+                                <th><span t-field="o.partner_id.mobile"></span></th>
+                            </tr>
+                            <tr>
+                                <td class="text-right">Customer:&amp;nbsp;&amp;nbsp;</td>
+                                <th><span t-field="o.partner_id"></span></th>
+                                <td class="text-right">Fax:&amp;nbsp;&amp;nbsp;</td>
+                                <th><span t-field="o.partner_id.fax"></span></th>
+                            </tr>
+                            <tr>
+                                <td class="text-right">Billing Address:&amp;nbsp;&amp;nbsp;</td>
+                                <th><span t-field="o.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' />
+                                </th>
+                                <td class="text-right">Site Address:&amp;nbsp;&amp;nbsp;</td>
+                                <th><span t-field="o.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' />
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="text-right">Contact Person:&amp;nbsp;&amp;nbsp;</td>
+                                <th><span t-field="o.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' />
+                                </th>
+                                <td class="text-right">Email:&amp;nbsp;&amp;nbsp;</td>
+                                <th><span t-field="o.partner_id.email"/></th>
+                            </tr>
+                        </table>
+
+                        <div style="text-align:center;" class="col-xs-12 mt16">
+                            <span style="text-align:center;"><strong><u>Preventive Maintenance Schedule</u></strong></span><br/>
+                            <t t-if="o.date_start"><span class="mt16" style="text-align:center;">From &amp;nbsp;&amp;nbsp;<b><span t-esc="datetime.datetime.strptime(data['form']['start_date'], '%Y-%m-%d').strftime('%B %Y')"/></b>&amp;nbsp;&amp;nbsp; To &amp;nbsp;&amp;nbsp;<b><span t-esc="(o.get_year_increment_dynamic(data['form']['start_date'], data['form']['end_date'])).strftime('%B %Y')"/></b></span></t>
+                        </div>
+
+                    <t t-foreach="o.bo_line_ids" t-as="line">
+                        <table style="width:100%; padding:5px;border:3px solid black; page-break-inside: avoid;" class="maintain col-xs-12 mt16">
+                                    <thead>
+                                        <tr >
+                                            <td style="border:3px solid black;" colspan="2">Frequency
+                                            </td>
+                                            <td style="border:3px solid black;" colspan="3">Service
+                                            </td>
+                                            <td style="border:3px solid black;" colspan="6">Location
+                                            </td>
+                                            <td style="border:3px solid black;" colspan="1">Time
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <t t-set="qux" t-value="[]"/>
+                                    <tbody>
+                                        <tr >
+                                            <td style="border:3px solid black;" colspan="2"><strong><span t-field="line.book_interval"></span></strong>
+                                            </td>
+                                            <td style="border:3px solid black;" colspan="3"><strong><span t-field="line.product_id"></span></strong>
+                                            </td>
+                                            <td style="border:3px solid black;" colspan="6"><strong><span t-field="line.remarks"></span></strong>
+                                            </td>
+                                            <td  style="border:3px solid black;" colspan="1"><strong><!--span t-field="line.st_time"></span-->
+                                            <t t-if="line.st_time">
+                                                <t t-esc="'%02d:%02d' % (int(str(line.st_time).split('.')[0]), int(float(str('%.2f' % line.st_time).split('.')[1])/100*60))" /> to 
+                                                <t t-esc="'%02d:%02d' % (int(str(line.st_time).split('.')[0])+1, int(float(str('%.2f' % line.st_time).split('.')[1])/100*60))" />
+                                             </t>
+                                            </strong>
+                                            </td>
+                                        </tr>
+                                        <tr >
+                                            <t t-foreach="line.line_data(data)" t-as="l">
+                                                <t t-if="l['months']">
+                                                <td style="border-bottom:3px solid black; border-left:1px solid black;"><span t-esc="l['months']"></span>
+                                                </td>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                            <t t-foreach="line.line_data(data)" t-as="max_l">
+                                                <t t-if="'max_lenght' in max_l">
+                                                    <t t-set="qux" t-value="max_l['max_lenght']"/>
+                                                </t>
+                                            </t>
+                                            <!--t t-foreach="[1, 2, 3,4,5,6,7,8,9,10,11]" t-as="item"-->
+                                            <t t-foreach="qux" t-as="item">
+                                                <tr>
+                                                <t t-foreach="line.line_data(data)" t-as="l">
+                                                    <t t-if="l['dates']">
+                                                        <t t-foreach="l['dates']" t-as="dt">
+                                                            <t t-foreach="dt" t-as="day">
+                                                                <t t-if="day == str(item)">
+                                                                <td><b><span t-esc="day_value"></span></b></td>
+                                                            </t>
+                                                        </t>
+	                                                
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                </tr>
+                                                </t>
+                                    </tbody>
+                        </table>
+                        <br/>
+                        </t>
+                    </div>
+                </div>
+            <div class="oe_structure"/>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

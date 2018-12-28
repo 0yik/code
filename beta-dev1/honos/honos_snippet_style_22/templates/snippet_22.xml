@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<template id="snippet_style_tewntytwo" inherit_id="honos_snippets.honos_snippets"
+		name="honos snippet" priority="22">
+		<xpath
+			expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']"
+			position="inside">
+			<t t-snippet="honos_snippet_style_22.snippet_style_22_template" t-thumbnail="/honos_snippet_style_22/static/src/img/style_22.jpg" />
+		</xpath>
+	</template>
+	
+	<template id="snippet_style_22_template" name ="Style 22">
+		<section class="s22_main_wrap">
+			<div class="s22_container">
+				<div class="style_22_heading_main_div">
+				<h4 class="chs_heading">Brands</h4>
+				<p class="s_22_sub_title">We offer finest brands in our store</p>
+				</div>
+				<div class="brand_img_div">
+					<a href="#"><section><img class="s_image_common" src="/honos_snippet_style_22/static/src/img/style_22_img_1.jpg"></img></section></a>
+				</div>
+				<div class="brand_img_div">
+					<a href="#"><section><img class="s_image_common" src="/honos_snippet_style_22/static/src/img/style_22_img_2.jpg"></img></section></a>
+				</div>
+				<div class="brand_img_div">
+					<a href="#"><section><img class="s_image_common" src="/honos_snippet_style_22/static/src/img/style_22_img_3.jpg"></img></section></a>
+				</div>
+				<div class="brand_img_div">
+					<a href="#"><section><img class="s_image_common" src="/honos_snippet_style_22/static/src/img/style_22_img_4.jpg"></img></section></a>
+				</div>
+				<div class="brand_img_div">
+					<a href="#"><section><img class="s_image_common" src="/honos_snippet_style_22/static/src/img/style_22_img_5.jpg"></img></section></a>
+				</div>
+			</div>
+		</section>
+	</template>
+</odoo>

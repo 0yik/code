@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+		<record id="account_invoice_view_form_inherit" model="ir.ui.view">
+			<field name="name">account invoice view form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<field name="payment_term_id" position="after">
+					<!-- <field name="cost_element_id1" required="True"/> <field name="cost_element_id2" 
+						required="True"/> <field name="cost_element_id3" required="True"/> <field 
+						name="cost_element_code_sub"/> -->
+					<field name="cost_element_id1" invisible="1" />
+					<field name="cost_element_id2" invisible="1" />
+					<field name="cost_element_id3" invisible="1" />
+					<field name="cost_element_code_sub" invisible="1" />
+				</field>
+
+				<!-- <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='account_id']" 
+					position="attributes" > <attribute name="style">width:70</attribute> </xpath> -->
+				<!-- <xpath expr="//field[@name='invoice_line_ids']/tree/button[@name='create_analytic']" 
+					position="attributes"> <attribute name="string">Analytic Distribution</attribute> 
+					</xpath> -->
+				<xpath
+					expr="//form/header/button[@name='%(account.action_account_invoice_refund)d']"
+					position="attributes">
+					<attribute name="string">Credit Note</attribute>
+				</xpath>
+				<xpathz
+					expr="//field[@name='invoice_line_ids']/tree/field[@name='account_analytic_id']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpathz>
+				<xpath
+					expr="//field[@name='invoice_line_ids']/tree/field[@name='analytic_tag_ids']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/label[2]" position="attributes">
+					<attribute name="string">Credit Note</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/h1/label[2]" position="attributes">
+					<attribute name="string">Draft Credit Note</attribute>
+				</xpath>
+				<!--<xpath
+					expr="//field[@name='invoice_line_ids']/tree/field[@name='cost_element_id']"
+					position="after">
+					<field name="cost_element_id2" />
+					<field name="cost_element_id3" />
+				</xpath>-->
+			</field>
+		</record>
+
+		<record id="account_invoice_supplier_view_form_inherit" model="ir.ui.view">
+			<field name="name">account invoice supplier view form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/div/label[4]" position="attributes">
+					<attribute name="string">Debit Note</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/div/label[2]" position="attributes">
+					<attribute name="string">Draft Debit Note</attribute>
+				</xpath>
+				<xpath expr="//button[@name='%(account.action_account_invoice_refund)d']"
+					position="attributes">
+					<attribute name="string">Debit Note</attribute>
+				</xpath>
+				<xpath
+					expr="//field[@name='invoice_line_ids']/tree/field[@name='account_analytic_id']"
+					position="attributes">
+					<attribute name="invisible">True</attribute>
+				</xpath>
+				<xpath
+					expr="//field[@name='invoice_line_ids']/tree/field[@name='analytic_tag_ids']"
+					position="attributes">
+					<attribute name="invisible">True</attribute>
+				</xpath>
+				<!-- <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='cost_element_id']" 
+					position="attributes"> <attribute name="invisible">True</attribute> </xpath> -->
+				<!--<xpath
+					expr="//field[@name='invoice_line_ids']/tree/field[@name='cost_element_id']"
+					position="after">
+					<field name="cost_element_id2" />
+					<field name="cost_element_id3" />
+				</xpath>-->
+			</field>
+		</record>
+
+		<record id="account_invoice_view_form_inherit_2" model="ir.ui.view">
+			<field name="name">account invoice view form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id"
+				ref="contract_cost_element_budget.account_invoice_inherit" />
+			<field name="arch" type="xml">
+				<field name="contract_id" position="attributes">
+					<attribute name="String">Project</attribute>
+				</field>
+			</field>
+		</record>
+		<record id="invoice_supplier_form_inherit_2" model="ir.ui.view">
+			<field name="name">invoice supplier view form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id"
+				ref="contract_cost_element_budget.invoice_supplier_form_inherit" />
+			<field name="arch" type="xml">
+				<field name="contract_id" position="attributes">
+					<attribute name="String">Project</attribute>
+				</field>
+			</field>
+		</record>
+
+		<record id="account_analytic_distribution_form_ext" model="ir.ui.view">
+			<field name="name">account.analytic.distribution.form.ext</field>
+			<field name="model">account.analytic.distribution</field>
+			<field name="inherit_id"
+				ref="multi_category_analytic_account.account_analytic_distribution_form" />
+			<field name="arch" type="xml">
+				<xpath expr='//field[@name="line_ids"]/tree' position="attributes">
+					<attribute name="create">false</attribute>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_invoice_view_form_inherit_3" model="ir.ui.view">
+			<field name="name">account invoice view form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="sale.account_invoice_form" />
+			<field name="arch" type="xml">
+				<field name="partner_shipping_id" position="replace">
+					<field name="delivery_address" />
+				</field>
+			</field>
+		</record>
+
+		<record id="account.action_account_invoice_refund" model="ir.actions.act_window">
+			<field name="name">Credit Note/Refund Invoice</field>
+		</record>
+
+		<menuitem action="credit_debit_note.action_out_refund" name="Credit Note"
+			id="credit_debit_note.submenu_credit_note" parent="account.menu_finance_receivables"
+			sequence="2" />
+		<menuitem action="account.action_account_payments"
+			id="account.menu_action_account_payments_receivable" parent="payment.root_payment_menu"
+			sequence="20" groups="account.group_account_user" />
+		<menuitem action="credit_debit_note.action_in_refund" name="Debit Note"
+			id="credit_debit_note.submenu_debit_note" parent="account.menu_finance_payables"
+			sequence="2" />
+				
+
+
+
+	</data>
+</odoo>

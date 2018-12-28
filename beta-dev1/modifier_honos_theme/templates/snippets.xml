@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ************************************************* Featured Products Snippet Block ********************************************** -->
+    <template id="s_featured_products" name="Featured Products">
+        <section id="theme_ccm_featured_categories" class="s_featured_products oe_multi_category_slider" contentEditable="false" data-multi-cat-slider-type="">
+            <div class="container">
+                <div class="block-title">
+                    <h3 class="fancy">Featured Products</h3>
+                </div>
+            </div>
+        </section>
+    </template>
+    <template id="theme_ccm_multi_featured_categories_slider_option" inherit_id="website.snippet_options" name="Modify Options">
+        <xpath expr="//div" position="after">
+            <div data-js="featured_categories" data-selector=".oe_multi_category_slider" data-snippet-option-id="featured_categories">
+                <li data-multi_category_slider="">
+                    <a class="oe_multi_category_slider">Modify</a>
+                </li>
+            </div>
+        </xpath>
+    </template>
+    <template id="theme_ccm_multi_featured_categories_slider_view" name="Multi Purpose Featured Category Snippet">
+            <div class="f_categories_main">
+                <section>
+                    <div class="bs_margin"></div>
+                </section>
+                <section>
+                    <div class="f_categories_container">
+                        <div class="f_categories_heading">
+                            <t t-if="not slider_header">
+                                <h3>Our Featured Products</h3>
+                            </t>
+                            <t t-if="slider_header">
+                                <h3><t t-esc="slider_header.name"/></h3>
+                            </t>
+                        </div>
+                        <ul id="owl-fp" class="owl-theme f_categories_wrapper">
+                            <t t-as="product" t-foreach="slider_details.featured_products_line_ids">
+	                            <li class="item">
+	                                <div class="feature_inner">
+	                                    <div class="feature_img">
+	                                        <div itemprop="image" t-field="product.products_id.image" t-options='{"widget": "image", "style":"width: 100%; height:100%;", "alt-field": "name"}'></div>
+	                                        <div class="f_ribbon_wrapper">
+	                                            <div class="ribbon btn btn-danger f_sale_btn">Exclusive</div>
+	                                        </div>
+	                                        <div class="feature_img_hover_wrapper">
+	                                            <div class="fsearch_icon">
+	                                                <a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+	                                            </div>
+	                                            <div class="fsearch_icon">
+	                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+	                                            </div>
+	                                            <div class="fsearch_icon">
+	                                                <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="feature_desc">
+	                                        <div class="f_rating_star_card">
+	                                            <div class="f_stars disabled">
+	                                                <i class="fa fa-star"></i>
+	                                                <i class="fa fa-star"></i>
+	                                                <i class="fa fa-star"></i>
+	                                                <i class="fa fa-star"></i>
+	                                                <i class="fa fa-star"></i>
+	                                            </div>
+	                                        </div>
+	                                        <p class="feature_title">
+	                                            <a class="#" href="#"><t t-esc="product.products_id.name"/></a>
+	                                        </p>
+	                                        <div class="#">
+	                                            <!-- <del class="text-danger" style="white-space: nowrap;"><span class="#">1,599.00</span>&amp;nbsp;$</del> -->
+	                                            <span class="feature_prise">
+	                                               <span class="#">
+	                                                   <span t-field="product.products_id.lst_price" t-options='{
+                                                                                       "widget": "monetary",
+                                                                                       "display_currency": website.currency_id
+                                                                                   }'/>
+                                                    </span>
+	                                                <!-- <span class="#"><span class="#">799.50</span>&amp;nbsp;$</span> -->
+	                                            </span>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </li>
+	                        </t>
+						</ul>
+					</div>
+				</section>
+			</div>
+    </template>
+
+	<template id="featured_products" inherit_id="website.snippets" name="Featured Products">
+        <xpath expr="//div[@id='snippet_structure']/div[@class='o_panel_body']" position="inside">
+            <t t-snippet="modifier_honos_theme.s_featured_products" t-thumbnail="/modifier_honos_theme/static/src/img/snippet_images/block_well.png"/>
+        </xpath>
+    </template>
+    <!-- ************************************************* End of Featured product Snippet Block ********************************************** -->
+
+    <!-- ************************************************* New Arrival Snippet Block ********************************************** -->
+    <template id="s_new_arrival" name="New Arrivals">
+        <section id="theme_ccm_new_arrival" class="s_new_arrival oe_multi_arrival_slider" contentEditable="false" data-multi-arrival-slider-type="">
+            <div class="container">
+                <div class="block-title">
+                    <h3 class="fancy">New Arrivals</h3>
+                </div>
+            </div>
+        </section>
+    </template>
+    <template id="theme_ccm_multi_featured_new_arrival_slider_option" inherit_id="website.snippet_options" name="Modify Options">
+        <xpath expr="//div" position="after">
+            <div data-js="new_arrival" data-selector=".oe_multi_arrival_slider" data-snippet-option-id="new_arrival">
+                <li data-multi_category_slider="">
+                    <a class="oe_multi_arrival_slider">Modify</a>
+                </li>
+            </div>
+        </xpath>
+    </template>
+    <template id="theme_ccm_multi_featured_new_arrival_slider_view" name="Multi Purpose Featured New Arrivals Snippet">
+            <div class="f_categories_main">
+                <section>
+                    <div class="bs_margin"></div>
+                </section>
+                <section>
+                    <div class="f_categories_container">
+                        <div class="f_categories_heading">
+                            <t t-if="not slider_header">
+                                <h3>New Arrivals</h3>
+                            </t>
+                            <t t-if="slider_header">
+                                <h3><t t-esc="slider_header.name"/></h3>
+                            </t>
+                        </div>
+                        <ul id="owl-na" class="owl-theme f_categories_wrapper">
+                            <t t-as="product" t-foreach="slider_details.new_arrival_products_line_ids">
+                                <li class="item">
+                                    <div class="feature_inner">
+                                        <div class="feature_img">
+                                            <div itemprop="image" t-field="product.products_id.image" t-options='{"widget": "image", "style":"width: 100%; height:100%;", "alt-field": "name"}'></div>
+                                            <div class="f_ribbon_wrapper">
+                                                <div class="ribbon btn btn-danger f_sale_btn">Exclusive</div>
+                                            </div>
+                                            <div class="feature_img_hover_wrapper">
+                                                <div class="fsearch_icon">
+                                                    <a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+                                                </div>
+                                                <div class="fsearch_icon">
+                                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                </div>
+                                                <div class="fsearch_icon">
+                                                    <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="feature_desc">
+                                            <div class="f_rating_star_card">
+                                                <div class="f_stars disabled">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p class="feature_title">
+                                                <a class="#" href="#"><t t-esc="product.products_id.name"/></a>
+                                            </p>
+                                            <div class="#">
+                                                <span class="feature_prise">
+                                                   <span class="#">
+                                                       <span t-field="product.products_id.lst_price" t-options='{
+                                                                                       "widget": "monetary",
+                                                                                       "display_currency": website.currency_id
+                                                                                   }'/>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </t>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+    </template>
+
+    <template id="new_arrival" inherit_id="website.snippets" name="New Arrivals">
+        <xpath expr="//div[@id='snippet_structure']/div[@class='o_panel_body']" position="inside">
+            <t t-snippet="modifier_honos_theme.s_new_arrival" t-thumbnail="/modifier_honos_theme/static/src/img/snippet_images/block_well.png"/>
+        </xpath>
+    </template>
+    <!-- ************************************************* End of New Arrival Snippet Block ********************************************** -->
+</odoo>

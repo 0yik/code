@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="report_purchase_order_document">
+            <t t-call="beumer_modifer_printout.external_layout_purchase">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <div class="page">
+                    <div class="col-xs-12" style="border-bottom : 1px solid black;">
+                        <span t-field="o.company_id.name" style="font-weight:bold"></span>
+                        <br/>
+                        <span>Attn:</span>
+                        <span t-if="o.partner_id.child_ids" t-esc="o.partner_id.child_ids[0].name"></span>
+                        <br/>
+                        <span t-field="o.partner_id.street"></span>
+                        <br t-if="o.partner_id.street"/>
+                        <span t-field="o.partner_id.street2"></span>
+                        <br t-if="o.partner_id.street2"/>
+                        <span t-field="o.partner_id.city"></span>
+                        <br t-if="o.partner_id.city"/>
+                        <span t-field="o.partner_id.state_id.name"></span>
+                        <br t-if="o.partner_id.state_id"/>
+                        <span t-field="o.partner_id.country_id.name"></span>
+                        <br t-if="o.partner_id.country_id"/>
+                        <span t-field="o.partner_id.zip"></span>
+                        <div class="pull-right">
+                            <span>Your Reference:</span>
+                            <span></span>
+                            <br/>
+                            <span>Our Reference:</span>
+                            <span></span>
+                            <br/>
+                            <span>Your Contact:</span>
+                            <span></span>
+                            <br/>
+                            <span>E-mail:</span>
+                            <span><t t-esc="o.partner_id.email"/></span>
+                            <br/>
+                            <span>Phone:</span>
+                            <span><t t-esc="o.partner_id.phone"/></span>
+                            <br/>
+                            <span>Fax:</span>
+                            <span><t t-esc="o.partner_id.fax"/></span>
+                            <br/>
+                            <span>Date:</span>
+                            <span></span>
+                            <br/>
+                            <span>Page:</span>
+                            <span></span>
+                            <br/>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 pull-left">
+                        <span>Purchase Order:</span>
+                        <span t-field="o.name"></span>
+                        <br/>
+                        <span>Tax ID:</span>
+                        <span></span>
+                        <br/>
+                    </div>
+                    <div class="col-xs-4 pull-right">
+                        <span>Delivery Address:</span>
+                        <span t-field="o.dest_address_id.name"></span>
+                        <br/>
+                    </div>
+                    <div class="col-xs-12">
+                        <p>
+                            The effected shipment has to be announced to us on the delivery day. All deliveries must be
+                            proviced with a shipping note and
+                            all packages with a packing list. Invoices, shipping notes, delivery notes and packing lists
+                            must bear all necessary date for the
+                            identification, like purchase order number, item number and position number. Partial
+                            deliveries are only permitted with our explicit
+                            approval.
+                        </p>
+                    </div>
+                    <table class="table table-condensed mt48"
+                           style="collapse;margin-left:15px;width:96%;">
+                        <thead>
+                            <tr style="collapse; border:1px solid black">
+                                <th style="collapse;width:5%;">
+                                    <span>Pos</span>
+                                </th>
+                                <th style="collapse;width:5%;">
+                                    <strong>Item No</strong>
+                                </th>
+                                <th style="collapse;width:47%;">
+                                    <strong>Description</strong>
+                                </th>
+                                <th style="collapse;width:9%;">
+                                    <strong>Quantity</strong>
+                                </th>
+                                <th style="collapse;width:14%;">
+                                    <strong>Unit Price<br/>(CNY)</strong>
+                                </th>
+                                <th style="collapse;width:15%;">
+                                    <strong>Total<br/>(CNY)</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="No" t-value="0"/>
+                            <tr t-foreach="o.order_line" t-as="line" style="collapse; border-bottom:1px solid black">
+                                <t t-set="No" t-value="No + 1"/>
+                                <td>
+                                    <span t-esc="No"/>
+                                </td>
+                                <td>
+                                    <!--<span t-field=""/>-->
+                                </td>
+                                <td>
+                                    <span t-field="line.product_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-esc="int(line.product_qty)"/>
+                                    <!--<span>set</span>-->
+                                </td>
+                                <td>
+                                    <span t-esc="line.price_unit"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line.price_subtotal"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-xs-12" style="page-break-after:auto;">
+                        <strong>Pricing</strong>
+                        <br/>
+                        <p>
+                            The indicated total price is to be understood<br/>
+                            - FOB Shanghai Sea Port according to the version of the Incotems valid on the day of signing
+                            the contract<br/>
+                            - including surface treatment as described<br/>
+                            - including packing as necessary and usual for sea transport<br/>
+                            - without installation and commissioning<br/>
+                            Your prices do not include import duties, charges, fees and taxes charged bt authorities
+                            outside of China for the deliveries and services. These shall be borne and paid by Purchaser.
+                        </p>
+                        <br/>
+                        <br/>
+                        <strong>Price basis</strong>
+                    </div>
+                    <div class="col-xs-12">
+                        <table class="table table-condensed mt48"
+                               style="collapse; border:1px solid black ;margin-left:15px;width:96%;">
+                            <thead>
+                                <tr style="collapse; ">
+                                    <th style="collapse; width:5%;">
+                                        <strong>Purchase Order</strong>
+                                    </th>
+                                    <th style="collapse; width:5%;">
+                                        <strong>Date</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span t-field="o.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.date_order"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-condensed mt48"
+                               style="collapse;margin-left:15px;width:96%;">
+                            <thead>
+                                <tr style="collapse; border:1px solid black ; ">
+                                    <th style="collapse;width:5%;">
+                                        <strong>Pos</strong>
+                                    </th>
+                                    <th style="collapse; width:5%;">
+                                        <strong>Item No</strong>
+                                    </th>
+                                    <th style="collapse; width:47%;">
+                                        <strong>Description</strong>
+                                    </th>
+                                    <th style="collapse; width:9%;">
+                                        <strong>Quantity</strong>
+                                    </th>
+                                    <th style="collapse; width:14%;">
+                                        <strong>Price<br/>(CNY)</strong>
+                                    </th>
+                                    <th style="collapse; width:15%; ">
+                                        <strong>Total<br/>(CNY)</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="No" t-value="0"/>
+                                <tr t-foreach="o.order_line" t-as="line" style="collapse; border-bottom:1px solid black">
+                                    <t t-set="No" t-value="No + 1"/>
+                                    <td>
+                                        <span t-esc="No"/>
+                                    </td>
+                                    <td>
+                                        <!--<span t-field=""/>-->
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="int(line.product_qty)"/>
+                                        <!--<span>set</span>-->
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.price_unit"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.price_subtotal"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-12">
+                        <p>The agreed prices are firm and not subject to price escalation or any other adjustment for any reason whatsever.</p>
+                        <br/>
+                        <strong>Belt conveyor system &amp; Check-in conveyor system</strong>
+                        <br/>
+                        <p>Appendix 1 Belt system Equipment List Dated 20160607Rev0</p>
+                        <p>Appendix 2 Belt convenyor Scope of Supply Rev0 20160801</p>
+                        <p>Appendix 3 Overview convenyor Technical Requirement REV0 2016801</p>
+                        <p>Appendix 4A_ATRAX Scope of Supply</p>
+                        <p>Appendix 4B-Project 1232 ATRAX Scope Diagram Dated 20160801</p>
+                        <p>Appendix 5 Master Shipment Plan Dated 20160801Rev 0</p>
+                        <p>Appendix 6-BSB-BTH Scope Matrix dated 20160801Rev0 </p>
+                        <p>Appendix 8 - Painting Specification_RAL 5017_EN</p>
+                        <p>Appendix 9A - 113947_Check-In Reflective Sensor Reflector</p>
+                        <p>Appendix 9B - 210533_Check-In Reflective Sensor With Connector</p>
+                        <p>Appendix 9D - Installation of Rotary Pulse Generator</p>
+                        <br/><br/>
+                        <strong>Packing</strong>
+                        <br/>
+                        <p>Delivery will be made including packing as necessary and usual for Sea transport</p>
+                        <br/>
+                        <strong>Time of delivery</strong>
+                        <br/>
+                        <p>FOB delivery separate 2 shipment as below schedule</p>
+                        <br/>
+                        <strong>Belt conveyor system</strong>
+                        <br/>
+                        <p>-M/C delivery FOB Shanghai Port : </p>
+                        <br/>
+                        <strong>Check-In conveyor system</strong>
+                        <br/>
+                        <p>-M/C delivery FOB Shanghai Port : </p>
+                        <br/>
+                        <strong>Payment</strong>
+                        <br/>
+                        <p>30% Down payment, payable within 30days after invoice date <br/>
+                        70% Payment upon delivery pro rata within 30days after invoice date
+                        </p>
+                        <br/>
+                        <strong>Shipping document</strong>
+                        <br/>
+                        <p>-Invoice</p>
+                        <p>-Packing List</p>
+                        <p>-Export declaration</p>
+                        <br/>
+                        <br/>
+                        <p>Liquidated damage for dalay delivery</p>
+                        <br/>
+                        <p>In case of delayed delivery for reasons attributable to Supplier, Purchase in entitled to demand liquidated damages in
+                        lieu or any further rings and remedies</p>
+                        <br/>
+                        <span>Equipment:</span>
+                        <p>These liquidated damages will amount to 1% of tatal order value for each completed week of delay in delivery, however, max. 10% of tal
+                        order value.
+                        </p>
+                        <br/>
+                        <span>Drawing:</span>
+                        <p>These liquidated damages will amount to 0.5% of tatal order value for each day  of delay in delivery, however, max. 5% of tal
+                        order value.
+                        </p>
+                        <br/>
+                        <strong>FAT</strong>
+                        <br/>
+                        <p>Schedule FAT temporary <br/> Belt conveyor system : CW 43 <br/> Check-in convenyor system : CW 45</p>
+                        <br/>
+                        <strong>Other Terms and Conditions</strong>
+                        <br/>
+                        <p>Other Terms and conditions shall follow frame work agreement between BTH and BCH</p>
+                        <br/>
+                    </div>
+                    <div class="col-xs-12">
+                        <table class="table table-condensed mt48"
+                               style="collapse; border:1px solid black ;margin-left:15px;width:96%;">
+                            <thead>
+                                <tr style="collapse; ">
+                                    <th style="collapse; width:5%;">
+                                        <strong>Purchase Order</strong>
+                                    </th>
+                                    <th style="collapse; width:5%;">
+                                        <strong>Date</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span t-field="o.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.date_order"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-condensed mt48"
+                               style="collapse;margin-left:15px;width:96%;">
+                            <thead>
+                                <tr style="collapse; border:1px solid black ; ">
+                                    <th style="collapse;width:5%;">
+                                        <strong>Pos</strong>
+                                    </th>
+                                    <th style="collapse; width:5%;">
+                                        <strong>Item No</strong>
+                                    </th>
+                                    <th style="collapse; width:47%;">
+                                        <strong>Description</strong>
+                                    </th>
+                                    <th style="collapse; width:9%;">
+                                        <strong>Quantity</strong>
+                                    </th>
+                                    <th style="collapse; width:14%;">
+                                        <strong>Price<br/>(CNY)</strong>
+                                    </th>
+                                    <th style="collapse; width:15%; ">
+                                        <strong>Total<br/>(CNY)</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="No" t-value="0"/>
+                                <tr t-foreach="o.order_line" t-as="line" style="collapse; border-bottom:1px solid black">
+                                    <t t-set="No" t-value="No + 1"/>
+                                    <td>
+                                        <span t-esc="No"/>
+                                    </td>
+                                    <td>
+                                        <!--<span t-field=""/>-->
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="int(line.product_qty)"/>
+                                        <!--<span>set</span>-->
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.price_unit"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.price_subtotal"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-4 pull-right">
+                        <table style="border:0;">
+                             <tr>
+                                <th class="col-xs-4 col-xs-offset-5">Total weight:</th>
+                                <td class="col-xs-3" style="padding-left: 0px;">
+                                    <span /> <span> kg</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="col-xs-4 col-xs-offset-5">Amout (CNY):</th>
+                                <td class="col-xs-3" style="padding-left: 0px;">
+                                    <span t-esc="o.amount_untaxed"/>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:1px solid black">
+                                <th class="col-xs-4 col-xs-offset-5" style="padding-right:1px">Total (CNY):</th>
+                                <td>
+                                    <span t-esc="o.amount_total"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-xs-12" style="margin-top:30px">
+                        <div class="col-xs-4">
+                            <span class="text-left">Yours Faithfully</span>
+                            <br/>
+                            <span style="font-weight:bold;font-size:10px;" t-esc="o.company_id.partner_id.name"/>
+                            <br/>
+                            <div style="margin-top:90px; border-top:1px solid black">
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_purchase_order">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="beumer_modifer_printout.report_purchase_order_document" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- QWeb Reports -->
+        <report
+                id="picking_purchase_order"
+                model="purchase.order"
+                string="Purchase Order"
+                report_type="qweb-pdf"
+                name="beumer_modifer_printout.report_purchase_order"
+                file="beumer_modifer_printout.report_purchase_order"
+        />
+
+    </data>
+</odoo>

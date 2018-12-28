@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+	
+	<t t-extend="ActionpadWidget">  
+		<t t-jquery="#all_orders" t-operation="replace">
+
+		</t>
+		<t t-jquery=".actionpad" t-operation="after">
+			<span class="control-button" id="all_orders" style="width: 384px;margin-right: 5px;margin-top: 3px;margin-bottom: -7px;">
+				All Orders
+			</span>
+		</t>
+	</t>
+
+	<t t-extend="ProductScreenWidget">
+		<t t-jquery=".leftpane" t-operation="replace">
+			<div class="leftpane">
+				<div class='window'>
+					<div class='subwindow'>
+						<div class='subwindow-container'>
+							<div class='subwindow-container-fix'>
+								<div class="placeholder-OrderWidget"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</t>
+
+		<t t-jquery=".leftpane" t-operation="after">
+			<div class="centerpane">
+				<div class='subwindow collapsed'>
+					<div class='subwindow-container'>
+						<div class='subwindow-container-fix pads'>
+							<div class="placeholder-ActionpadWidget"></div>
+							<div class="control-buttons oe_hidden"></div>
+							<div class="placeholder-NumpadWidget"></div>
+						</div>
+					</div>
+				</div>
+		   </div>       
+	   </t>
+
+</t>
+</template>
+

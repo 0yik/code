@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="base.sg" model="res.country">
+            <field name="sort">1</field>
+        </record>
+
+       <record id="base.my" model="res.country">
+            <field name="sort">2</field>
+        </record>
+         <record id="atts_course.seq_student_student" model="ir.sequence">
+            <field name="name">Student</field>
+            <field name="code">student.student</field>
+            <field name="prefix">GO/%(year)s/</field>
+            <field name="padding">3</field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+.takeaway-apply {
+    background-color: #6EC89B !important;
+    border: solid 1px #64AF8A !important;
+    color: white !important;
+}
+.process_next_order{
+}
+
+.process_next{
+    left: 1140px;
+   	position: absolute;
+    top: 0px;
+    line-height: 32px;
+    padding: 3px 13px;
+    font-size: 20px;
+    background: rgb(230, 230, 230);
+    margin: 12px;
+    border-radius: 3px;
+    border: solid 1px rgb(209, 209, 209);
+    cursor: pointer;
+    transition: all 150ms linear;
+}
+

@@ -1,0 +1,92 @@
+<odoo>
+    <data>
+
+        <record id="view_inactive_users_tree" model="ir.ui.view">
+            <field name="name">res.users.tree</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <tree string="Users" create="0" edit="0">
+                    <field name="name"/>
+                    <field name="login"/>
+                    <field name="account_number"/>
+                    <field name="active" invisible='1'/>
+                    <button name="verify_customer" type="object" string="Verify" attrs="{'invisible': [('active', '=', True)]}" class="btn btn-lg fa btn btn-link "/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_users_search_customer_varification" model="ir.ui.view">
+            <field name="name">res.users.search</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <search string="Users">
+                    <field name="name" filter_domain="['|', '|', ('name','ilike',self), ('login','ilike',self), ('email','ilike',self)]" string="User"/>
+                    <field name="login"/>
+                    <field name="account_number"/>
+                    <field name="company_ids" string="Company" groups="base.group_multi_company"/>
+                    <field name="share"/>
+                    <filter name="no_share" string="Internal Users" domain="[('share','=',False)]"/>
+                    <filter name="Inactive" string="Inactive Users" domain="[('active','=',False)]"/>
+                    <filter name="active_users" string="Active Users" domain="[('active','=',True)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_users_search_extnded" model="ir.ui.view">
+            <field name="name">view.users.search.extnded</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_search" />
+            <field name="arch" type="xml">
+                <filter name="Inactive" position='after'>
+                    <filter name="active_users" string="Active Users" domain="[('active','=',True)]"/>
+                </filter>
+            </field>
+        </record>
+
+
+        <record id="action_res_users_inactive" model="ir.actions.act_window">
+            <field name="name">Customer Verification</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.users</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{'customer_verification': True}</field>
+            <field name="search_view_id" ref="view_users_search_customer_varification"/>
+
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_inactive_users_tree')}),
+                ]"/>
+
+        </record>
+
+        <menuitem id="menu_inactive_user" parent="hilti_reusable_user_respartner_changepassword.menu_admin_users" action="action_res_users_inactive" sequence='5'/>
+
+        <act_window id="customer_verification_wizard_approve_action"
+            name="Approve" context="{'approve': True}"
+            src_model="res.users"
+            res_model="customer.verification.wizard"
+            key2="client_action_multi" target="new" view_mode="form" view_type="tree"/>
+
+        <act_window id="customer_verification_wizard_reject_action"
+            name="Reject" context="{'approve': False}"
+            src_model="res.users"
+            res_model="customer.verification.wizard"
+            key2="client_action_multi" target="new" view_mode="form" view_type="tree"/>
+
+
+        <record id="view_users_form_custom" model="ir.ui.view">
+            <field name="name">res.users.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="account_number"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- <delete model="website.menu" id="website.menu_homepage" />
+                <delete model="website.menu" id="website.menu_contactus" />
+                <delete model="website.menu" id="website.website2_menu_homepage" />
+                <delete model="website.menu" id="website.website2_menu_contactus" /> -->
+        </data>
+    </odoo>

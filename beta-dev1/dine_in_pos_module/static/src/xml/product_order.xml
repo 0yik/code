@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    
+    <t t-extend="OptionsPopupWidget">
+         <t t-jquery="button[data-action='1']" t-operation="replace">
+            <button class="button icon cancel dive_in" data-action='1'><img src="/pizzahut_modifier_startscreen/static/src/img/dinein.png"></img><span>Dine-in</span></button>
+         </t>
+    </t>
+
+    <t t-name="DineinToTakeawayWidget">
+        <button class="btn btn-default btn-fill btn-wd control-button take_away_dinein oe_hidden"><i class="pe-7s-angle-right-circle"/>Take - Away</button>
+    </t>
+
+    <t t-extend="Orderline">
+        <t t-jquery=".info-list" t-operation="after">
+            <t t-if="line.popup_option == 'dive_in_take_away'">
+                <ul style="color: #888;margin-left: 10px;">
+                    <li class="info">
+                        <i class='fa fa-tag'/><t> Take-away </t>
+                    </li>
+                </ul>
+            </t>
+        </t>
+    </t>
+    <t t-extend="TempOrdersScreenWidget">
+        <!-- <section class="full-content"> -->
+        <t t-jquery="section[class='full-content']" t-operation="before">
+            <section class="process_next">
+                 <span class='button process_next_order'>
+                    Process
+                    <i class='fa fa-angle-double-right'></i>
+                </span>
+            </section>
+        </t>
+       <!--  <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </span>
+                 
+                    <span class='searchbox'></span>
+                    <span class='button next oe_hidden highlight'>
+                        Select Customer
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                    <span class='button process_next next'>
+                        Process
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                </section> -->
+
+    </t>
+     <t t-extend="tempOrderLine"> 
+        <t t-jquery="tr" t-operation="replace">
+            <tr class='temp-order-line' t-att-data-id='order.id' t-att-data-uid='order.uid'  t-att-data-index='index' style="cursor:pointer;">
+                <td><t t-esc='order.name' /></td>
+                <td><t t-esc='order.pos_reference' /></td>
+                <td><t t-esc="order.temp_customer_name" /></td>
+                <!-- <td><t t-esc='order.date_order' /></td> -->
+                  <td><t t-esc="order_date"/><!-- t t-esc='order_date.getDate()' />/<t t-esc='order_date.getMonth()' />/<t t-esc='order_date.getYear()' /--></td>
+                <td><t t-esc='order.created_time'/></td>
+                <!-- <td><t t-esc='order.creation_date'/></td> -->
+
+            </tr>
+        </t>
+    </t>
+    <t t-extend="TempOrdersScreenWidget">
+        <t t-jquery="tr" t-operation="append">
+            <th>Time</th>
+        </t>
+    </t>
+
+    <t t-extend="PosTicket">
+        <t t-jquery="[t-esc='orderline.get_product().display_name']" t-operation="append">
+            <div class="pos-disc-font">
+                <b><i t-if="orderline.popup_option == 'dive_in_take_away' || orderline.get_note()" class="fa fa-tag"/>
+                    <t t-if="orderline.popup_option == 'dive_in_take_away'"> Take-away </t>
+                    <t t-if="orderline.popup_option == 'dive_in_take_away' and orderline.get_note()">,</t>
+                    <t t-if="orderline.get_note() or orderline.get_attribute_string()">
+                       <t t-esc="orderline.get_attribute_string()" /><t t-esc="orderline.get_note()" />
+                    </t>
+                </b>
+            </div>
+        </t>
+    </t>
+
+
+</templates>

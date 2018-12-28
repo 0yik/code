@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" type="text/less" href="/honos_cart/static/src/less/cart.less" />
+			<link rel="stylesheet" type="text/less" href="/honos_cart/static/src/less/responsive.less" />
+			
+			<script type="text/javascript" src="/honos_cart/static/src/js/honos_cart.js"></script>
+		</xpath>
+	</template>
+</odoo>

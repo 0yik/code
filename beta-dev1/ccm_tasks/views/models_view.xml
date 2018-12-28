@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <!-- Milestone views  -->
+        <record id="project_milestone_tree_view_inherit_ccm_tasks" model="ir.ui.view">
+            <field name="name">milestone.milestone.tree.inherit.ccm.tasks</field>
+            <field name="model">milestone.milestone</field>
+            <field name="inherit_id" ref="project_milestone.project_milestone_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="project_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="project_milestone_form_view_inherit_ccm_tasks" model="ir.ui.view">
+            <field name="name">milestone.milestone.form.inherit.ccm.tasks</field>
+            <field name="model">milestone.milestone</field>
+            <field name="inherit_id" ref="project_milestone.project_milestone_form_view"/>
+            <field name="arch" type="xml">
+                <field name="complete" position="after">
+                    <field name="project_id"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Project views -->
+        <record id="edit_project_inherit_ccm_tasks" model="ir.ui.view">
+            <field name="name">project.project.form.inherit.ccm.tasks</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <group name="misc" position="after">
+                    <group name="milestones">
+                        <field name="milestone_ids" widget="one2many_list"/>
+                    </group>
+                </group>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="account_analytic_account_form_inherit" model="ir.ui.view">
+        <field name="name">account.analytic.account.form.inherit</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="financial_budget_number"/>
+                <!--<field name="parent_id"/>-->
+                <label for="date_from" string="Period"/>
+                <div>
+                    <field name="date_from" nolabel="1" class="oe_inline test" />
+                    -
+                    <field name="date_to" nolabel="1" class="oe_inline test"/>
+                </div>
+            </field>
+        </field>
+    </record>
+
+    <record id="account_analytic_account_form_form_boolean_budget" model="ir.ui.view">
+        <field name="name">account.analytic.account.form.inherit</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='project']" position="inside">
+                <field name="use_budget"/>
+                <label for="use_budget"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_analytic_account_form_inherit_inehrit" model="ir.ui.view">
+        <field name="name">account.analytic.account.form.inherit</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="budget_management.view_account_analytic_account_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='reserved_amount']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_inherit_account_budget_page" model="ir.ui.view">
+        <field name="name">account.analytic.account.form.inherit</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="budget_management_extension.view_inherit_account_budget"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Budget Controller" attrs="{'invisible' :[('use_budget','=',False)]}">
+                    <group>
+                        <field name="planned_amount" />
+                        <field name="reserved_amount" readonly="1"/>
+                        <field name="allocation_amount" readonly="1"/>
+                        <field name="practical_amount" readonly="1"/>
+                        <field name="theoritical_amount" readonly="1"/>
+                        <field name="achievement"/>
+                        <field name="allow_over_limit"/>
+                    </group>
+                </page>
+                <page string=" Division Budget Lines" attrs="{'invisible' :[('use_budget','=',False)]}">
+                    <field name="line_ids" invisible="1"/>
+                    <field name="child_ids"
+                           context="{'default_planned_amount': planned_amount,'default_financial_budget_number': financial_budget_number,'default_date_from': date_from,'default_use_budget': use_budget,
+                           'default_date_to': date_to, 'default_type': type}" colspan="4" nolabel="1">
+                        <tree string="Division Budget Lines" editable="top">
+                            <field name="name" string="Analytic Account"/>
+                            <button name="show_popup" icon="fa-external-link-square" type="object" class="oe_stat_button" />
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="type" invisible="1"/>
+                            <field name="use_budget" invisible="1"/>
+                            <field name="financial_budget_number" invisible="1"/>
+                            <field name="planned_amount"/>
+                            <field name="reserved_amount" readonly="1"/>
+                            <field name="allocation_amount" readonly="1"/>
+                            <field name="practical_amount" readonly="1" sum="Practical Amount" widget="monetary"/>
+                            <field name="theoritical_amount" readonly="1" sum="Theoretical Amount" widget="monetary"/>
+                            <field name="achievement"/>
+                            <field name="allow_over_limit"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+        <record id="view_division_aa_dept_wizard" model="ir.ui.view">
+            <field name="name">division.aa.lines</field>
+            <field name="model">aa.wizard</field>
+            <field name="arch" type="xml">
+                <form >
+                    <field name="analytic_account_id" invisible="1"/>
+                    <field name="date_from" invisible="1"/>
+                    <field name="date_to" invisible="1"/>
+                    <field name="use_budget" invisible="1"/>
+                    <field name="planned_amount" invisible="1"/>
+                    <field name="type" invisible="1"/>
+                    <field name="financial_budget_number" invisible="1"/>
+                    <field name="aa_ids" context="{'default_planned_amount': planned_amount,'default_parent_id': analytic_account_id,'default_financial_budget_number': financial_budget_number,'default_date_from': date_from,'default_use_budget': use_budget,'default_date_to': date_to, 'default_type': type}">
+                        <tree >
+                            <field name="name" string="Analytic Account"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="type" invisible="1"/>
+                            <field name="financial_budget_number" invisible="1"/>
+                            <field name="use_budget" invisible="1"/>
+                            <field name="planned_amount"/>
+                            <field name="reserved_amount" readonly="1"/>
+                            <field name="allocation_amount" readonly="1"/>
+                            <field name="practical_amount" readonly="1" sum="Practical Amount" widget="monetary"/>
+                            <field name="theoritical_amount" readonly="1" sum="Theoretical Amount" widget="monetary"/>
+                            <field name="achievement"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+</odoo>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="wasted_management_search_view" model="ir.ui.view">
+        <field name="name">wasted.management.search</field>
+        <field name="model">wasted.management</field>
+        <field name="arch" type="xml">
+            <search string="Search Wasted Management">
+                <field name="product_id"/>
+                <field name="location_id"/>
+                <field name="wast_location_id"/>
+                <field name="create_date"/>
+                <group expand="0" string="Group By">
+                    <filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+                    <filter string="Location" domain="[]" context="{'group_by':'location_id'}"/>
+                    <filter string="Wast Location" domain="[]" context="{'group_by':'wast_location_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="wasted_management_form_view" model="ir.ui.view">
+        <field name="name">wasted.management.form</field>
+        <field name="model">wasted.management</field>
+        <field name="arch" type="xml">
+            <form string="Wasted Management">
+                <header>
+                    <!--<button string="Request Approval"
+                            icon="" states="draft" type="object" name="to_approval" class="oe_highlight"/>
+                    <button string="Approve" icon=""
+                            states="to_be_approved" type="object" name="action_approval" class="oe_highlight"/>
+                    <button string="Reject" icon="" states="to_be_approved" type="object" name="action_reject" class="oe_highlight"/>-->
+                    <button string="Confirm" states="draft" type="object" name="action_confirm" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft, done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name="action_get_stock_picking"
+                                string="Stock Operation" type="object"
+                                attrs="{'invisible':[('picking_id','=',False)]}" icon="fa-cogs"/>
+                        <field name="picking_id" invisible="1"/>
+                        <button class="oe_stat_button" name="action_get_stock_move"
+                                string="Inventory Move" type="object"
+                                attrs="{'invisible':[ ('move_id','=',False),('state', 'not in', 'done')]}" icon="fa-arrows-v"/>
+                        <field name="move_id" invisible="1"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" nolabel="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                            <label for="wast_qty"/>
+                            <div class="o_row">
+                                <field name="wast_qty"/>
+                                <field name="product_uom_id" groups="product.group_uom"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="lot_id" attrs="{'invisible': [('tracking', '=', 'none')]}"
+                                   groups="stock.group_production_lot"/>
+                            <field name="tracking" invisible="1"/>
+                            <field name="package_id" groups="stock.group_tracking_lot"/>
+                            <field name="owner_id" groups="stock.group_tracking_owner"/>
+                            <field name="workorder_id" attrs="{'invisible': [('workorder_id', '=', False)]}"/>
+                            <field name="machine_mgt_id" attrs="{'invisible': [('workorder_id', '=', False)]}"/>
+                            <field name="production_id" attrs="{'invisible': [('production_id', '=', False)]}"/>
+                            <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                            <field name="wast_location_id" groups="stock.group_stock_multi_locations"/>
+                            <field name="origin"/>
+                            <field name="date_expected"/>
+                            <!--<field name="employee_id"/>-->
+                            <field name="picking_id" attrs="{'invisible': [('picking_id', '=', False)]}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="wasted_management_tree_view" model="ir.ui.view">
+        <field name="name">wasted.management.tree</field>
+        <field name="model">wasted.management</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="state == 'draft'">
+                <field name="name"/>
+                <field name="create_date" string="Create Date"/>
+                <field name="product_id"/>
+                <field name="wast_qty"/>
+                <field name="product_uom_id" groups="product.group_uom"/>
+                <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                <field name="wast_location_id" groups="stock.group_stock_multi_locations"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_wasted_management">
+        <field name="name">Wasted Management</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wasted.management</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to Wasted Management products.
+            </p>
+            <p>
+                Products you wast will be removed from the stock and moved to a specific wast location, for reporting
+                purposes.
+            </p>
+        </field>
+    </record>
+
+    <record id="wasted_management_form_view2" model="ir.ui.view">
+        <field name="name">wasted.management.form2</field>
+        <field name="model">wasted.management</field>
+        <field name="arch" type="xml">
+            <form string="Wasted Management">
+                <group>
+                    <group>
+                        <field name="state" invisible="1"/>
+                        <field name="product_id" domain="[('id', 'in', context.get('product_ids', []))]"/>
+                        <label for="wast_qty"/>
+                        <div class="o_row">
+                            <field name="wast_qty"/>
+                            <field name="product_uom_id" groups="product.group_uom"/>
+                        </div>
+                    </group>
+                    <group>
+                        <field name="picking_id" attrs="{'invisible': [('picking_id', '=', False)]}"/>
+                        <field name="tracking" invisible="1"/>
+                        <field name="lot_id" attrs="{'invisible': [('tracking', '=', 'none')]}"
+                               groups="stock.group_production_lot"/>
+                        <field name="package_id" groups="stock.group_tracking_lot"/>
+                        <field name="owner_id" groups="stock.group_tracking_owner"/>
+                        <field name="workorder_id" attrs="{'invisible': [('workorder_id', '=', False)]}"/>
+                        <field name="machine_mgt_id" attrs="{'invisible': [('workorder_id', '=', False)]}"/>
+                        <field name="production_id" attrs="{'invisible': [('production_id', '=', False)]}"/>
+                        <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                        <field name="wast_location_id" groups="stock.group_stock_multi_locations"/>
+                        <!--<field name="employee_id"/>-->
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_done" string="Done" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_wasted_management"
+            name="Wasted Management"
+            parent="stock.menu_stock_inventory_control"
+            action="action_wasted_management"
+            sequence="100"/>
+
+</odoo>

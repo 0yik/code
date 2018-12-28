@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_journal_pos_discount_form" model="ir.ui.view">
+            <field name="name">account.journal.pos.discount.form.inherit</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="point_of_sale.view_account_journal_pos_user_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_authorized_diff']" position="after">
+                    <field name="discount_type"/>
+                    <field name="discount_value"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

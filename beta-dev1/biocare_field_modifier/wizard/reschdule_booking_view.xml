@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_reschedule_booking_form" model="ir.ui.view">
+            <field name="name">reschedule.booking.form</field>
+            <field name="model">reschedule.booking</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <form string="Re-Schedule Booking">
+                <group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="reschedule_reason"/>
+                    </group>
+                    <group>
+                        <field name="end_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Reschedule" 
+                        icon="" states="" type="object"
+                        name="action_reschedule"/>
+                    <button string="Cancel" special="cancel" class="btn-default"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_reschedule_booking_view">
+            <field name="name">Re-Schedule Booking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reschedule.booking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <!--record model="ir.actions.act_window.view" id="act_open_reschedule_booking_view_form">
+            <field name="act_window_id" ref="act_open_reschedule_booking_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_reschedule_booking_form"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_reschedule_booking_view_tree">
+            <field name="act_window_id" ref="act_open_reschedule_booking_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_reschedule_booking_tree"/>
+        </record>
+
+        <menuitem id="menu_reschedule_booking"
+            parent="module.xmlid"
+            sequence="20"
+            action="act_open_reschedule_booking_view"/-->
+    </data>
+</odoo>

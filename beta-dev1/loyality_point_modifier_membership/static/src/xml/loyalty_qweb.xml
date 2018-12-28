@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+	<t t-extend="PosTicket">
+	    <t t-jquery='div.loyalty' t-operation='after'>
+	    	<t t-if="receipt.loyalty.membership_lines">
+	    		<t t-foreach="receipt.loyalty.membership_lines" t-as="line">
+	    			<p style="font-size:13px;margin-bottom:0px;"><b>* Get  <t t-esc="line.membership_point"/>  points more to get  <t t-esc="line.name"/> membership.</b></p>
+	    		</t>
+	    	</t>
+	    </t>
+	</t>
+
+</templates>

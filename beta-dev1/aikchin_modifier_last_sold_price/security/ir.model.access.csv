@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aikchin_modifier_last_sold_price_aikchin_modifier_last_sold_price,aikchin_modifier_last_sold_price.aikchin_modifier_last_sold_price,model_aikchin_modifier_last_sold_price_aikchin_modifier_last_sold_price,,1,0,0,0

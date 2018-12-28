@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_pos_pos_form_inherit" model="ir.ui.view">
+        <field name="name">pos.order.form</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="model">pos.order</field>
+        <field name="arch" type="xml">
+            <field name="session_id" position="after">
+                <field name="all_free" attrs="{'readonly': [('state','=','invoiced')]}"/>
+            </field>
+            <xpath expr="//field[@name='lines']/tree" position="inside">
+                <field name="is_complimentary"/>
+            </xpath>
+            <field name="session_id" position="after">
+                <field name="service_charge" attrs="{'readonly': [('state','=','invoiced')]}"/>
+            </field>
+            <xpath expr="//field[@name='lines']//tree//field[@name='discount']" position="after">
+            </xpath>
+            <xpath expr="//field[@name='lines']//form//field[@name='discount']" position="after">
+            </xpath>
+            <field name="amount_tax" position="before">
+                <field name="amount_service" widget="monetary" attrs="{'invisible': [('service_charge', '!=', True)]}"/>
+            </field>
+            <field name="amount_tax" position="after">
+                <field name="rounding" widget="monetary" />
+            </field>
+        </field>
+    </record>
+</odoo>

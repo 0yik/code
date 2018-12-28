@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+         <record id="global_purchase_report_wizard_view" model="ir.ui.view">
+            <field name="name">Print Global Purchase Order Vendors</field>
+            <field name="model">global.purchase.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Global Sales Order Customer">
+                    <group col="4">
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                        <field name="partner_id" domain="[('supplier','=',True)]"/>
+                        <field name="format"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-default"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="global_purchase_wizard_action" model="ir.actions.act_window">
+            <field name="name">Global Purchase Order Supplier</field>
+            <field name="res_model">global.purchase.report.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        
+        <menuitem id="menu_global_purchase_report_wizard" action="global_purchase_wizard_action" name="Global Purchase Order Report" parent="pdp_summary_purchase_report.main_purchase_report"/>
+        <!--menuitem id="menu_global_purchase_report_wizard" action="global_purchase_wizard_action" name="Global Purchase Order Report" parent="purchase.menu_purchase_root"/-->
+
+    </data>
+</odoo>

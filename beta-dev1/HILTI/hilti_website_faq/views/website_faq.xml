@@ -1,0 +1,88 @@
+<odoo>
+    
+    <record model="ir.ui.view" id="view_website_faq_form">
+		<field name="name">view.website.faq.form</field>
+        <field name="model">website.faq</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+					<div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="FAQ Title"/>
+                        <h1><field name="name" placeholder="FAQ Title"/></h1>
+                        <group>
+                        	<field name="faq_tags" widget='many2many_tags' required='1'/>
+                            <field name="faq_type_id" required='1'/>
+                            <field name="faq_type"/>
+                        </group>              
+                        <div attrs="{'invisible':[('faq_type', '!=', 'question_answer')]}">
+                       		<label for="website_question_answer_ids" invisible='1'/>
+                            <field name="website_question_answer_ids" attrs="{'required':[('faq_type', '=', 'question_answer')]}">
+                            	<tree>
+                            		<field name="sequence" widget="handle"/>
+	                            	<field name="question"/>
+	                            	<field name="answer"/>
+                            	</tree>
+                            	<form>
+                           			<group>
+                           				<field name="question"/>
+	                            		<field name="answer"/>
+                           			</group>
+                            	</form>
+                            </field>
+                        </div>
+                        <div attrs="{'invisible':[('faq_type', 'not in', ['user_manual', 'instructional_video'])]}">
+                        	<group>
+	                            <field name="sub_title"/>
+	                            <field name="description"/>
+                            </group>
+                            <group attrs="{'invisible':[('faq_type', '!=', 'user_manual')]}">
+								<field name="user_manual" filename="user_manual_datas_fname" attrs="{'required': [('faq_type', '=', 'user_manual')]}"/>
+								<field name="user_manual_datas_fname" invisible="1" attrs="{'required': [('faq_type', '=', 'user_manual')]}" class="oe_inline oe_right"/> 
+                            </group>
+                            <group attrs="{'invisible':[('faq_type', '!=', 'instructional_video')]}">
+								<field name="instructional_video" filename="instructional_video_datas_fname" attrs="{'required': [('faq_type', '=', 'instructional_video')]}"/>
+								<field name="instructional_video_datas_fname" invisible="1" attrs="{'required': [('faq_type', '=', 'instructional_video')]}" class="oe_inline oe_right"/>
+                            </group>
+                        </div>    
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_website_faq_tree">
+        <field name="name">view.website.faq.tree</field>
+        <field name="model">website.faq</field>
+        <field name="arch" type="xml">
+            <tree string="Website FAQ">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="faq_type_id"/>
+                <field name="faq_type"/>
+            </tree>
+        </field>
+    </record>
+
+	<record id="view_website_faq_search" model="ir.ui.view">
+        <field name="name">view.website.faq.search</field>
+        <field name="model">website.faq</field>
+        <field name="arch" type="xml">
+            <search string="Website FAQ">
+                <field name="faq_type_id"/>
+                <group expand="0" string="Group By">
+                    <filter string="Category" domain="[]" context="{'group_by':'faq_type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="website_faq_action">
+        <field name="name">FAQ</field>
+        <field name="res_model">website.faq</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="website_faq_menu" name="Faq" parent="website.menu_website_configuration" action="website_faq_action"/>
+    
+</odoo>

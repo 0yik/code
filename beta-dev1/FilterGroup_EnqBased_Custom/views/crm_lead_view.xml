@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Account Invoice Search view inherited -->
+        <record model="ir.ui.view" id="inherit_crm_case_opportunities_filter_view">
+            <field name="name">crm.lead.filter.view.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+            <field name="arch" type="xml">
+                <group expand="0" string="Group By">
+                    <filter name="enquiry_stage_basis" string="Enquiry Stage Basis" domain="[]" 
+                        context="{'group_by':'stage_id'}"/>
+                    <filter name="group_by_enquiry_stage_per_day_basis" string="Enquiry Stage Per Day Basis" 
+                        context="{'group_by':['create_date:day', 'stage_id']}"/>
+                    <filter name="group_by_enquiry_stage_per_month_basis" string="Enquiry Stage per Month Basis" 
+                        context="{'group_by':['create_date:month', 'stage_id']}"/>
+                    <filter name="group_by_enquiry_stage_per_year_basis" string="Enquiry Stage per Year Basis" 
+                        context="{'group_by':['create_date:year', 'stage_id']}"/>
+                </group>
+            </field>
+        </record>
+    </data>
+</odoo>

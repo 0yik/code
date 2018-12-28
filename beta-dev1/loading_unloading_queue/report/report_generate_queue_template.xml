@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_generate_queue_template">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="row">
+                            <div class="col-xs-12 ">
+                                <h4 t-field="o.company_id"></h4>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <h3>Queue Number</h3>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <h2 t-field="o.queue_number"/>
+                                <br/>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <center>
+                                    <table class="text-center">
+                                        <tr>
+                                            <td class="text-center" style="font-size: 15px; word-wrap: none;">
+                                                Reference
+                                            </td>
+                                            <td>&amp;emsp;:&amp;emsp;</td>
+                                            <td class="text-center" style="font-size: 15px; word-wrap: none;">
+                                                <span style="font-size: 15px;" t-field="o.reference"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center" style="font-size: 15px; word-wrap: none;">Date
+                                                Created
+                                            </td>
+                                            <td>&amp;emsp;:&amp;emsp;</td>
+                                            <td class="text-center" style="font-size: 15px; word-wrap: none;">
+                                                <span style="font-size: 15px;" t-field="o.created_date"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

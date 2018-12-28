@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="so_line_header">
+			<div class="header">
+				<div class="row">
+					<div class="col-xs-12">
+						<img t-if="company.report_header" t-att-src="'data:image/png;base64,%s' % company.report_header"/>
+                        <img t-if="not company.report_header" src="/modifier_teo_sale_order/static/src/img/logo.png" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12"
+						style="border-top:2px solid;border-bottom:2px solid; padding-top:5px; padding-bottom:5px;">
+						<h3 class="text-center mt8">
+							<strong>SO Garment By Shipment Delivery Date Report</strong>
+						</h3>
+						<h3 class="text-center mt0">
+							<strong>
+								From
+								<span t-esc="da['from_date']" />
+								To
+								<span t-esc="da['to_date']" />
+							</strong>
+						</h3>
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="so_line_footer">
+			<div class="footer">
+				<div class="text-center" style="border-top: 1px solid black;">
+					<ul t-if="not company.custom_footer" class="list-inline">
+						<t t-set="company" t-value="company.sudo()" />
+						<li t-if="company.phone">
+							Phone:
+							<span t-field="company.phone" />
+						</li>
+
+						<li t-if="company.fax and company.phone">&amp;bull;</li>
+						<li t-if="company.fax">
+							Fax:
+							<span t-field="company.fax" />
+						</li>
+
+						<li
+							t-if="company.email and company.fax or company.email and company.phone">&amp;bull;</li>
+						<li t-if="company.email">
+							Email:
+							<span t-field="company.email" />
+						</li>
+
+						<li
+							t-if="company.website and company.email or company.website and company.fax or company.website and company.phone">&amp;bull;</li>
+						<li t-if="company.website">
+							Website:
+							<span t-field="company.website" />
+						</li>
+					</ul>
+
+					<ul t-if="not company.custom_footer" class="list-inline" name="financial_infos">
+						<li t-if="company.vat">
+							TIN:
+							<span t-field="company.vat" />
+						</li>
+					</ul>
+
+					<t t-if="company.custom_footer">
+						<span t-raw="company.rml_footer" />
+					</t>
+
+					<ul class="list-inline">
+						<li>Page:</li>
+						<li>
+							<span class="page" />
+						</li>
+						<li>/</li>
+						<li>
+							<span class="topage" />
+						</li>
+					</ul>
+				</div>
+			</div>
+		</template>
+
+		<template id="so_line_layout">
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+
+			<t t-call="modifier_teo_sale_order.so_line_header" />
+			<t t-raw="0" />
+			<t t-call="modifier_teo_sale_order.so_line_footer" />
+		</template>
+
+		<template id="so_line_report">
+			<t t-call="report.html_container">
+				<t t-foreach="data['get_data']" t-as="da">
+					<t t-call="modifier_teo_sale_order.so_line_layout">
+						<div class="page">
+							<table class="table table-condensed">
+								<thead>
+									<tr>
+										<th class="text-center" style="width:10px;">Image</th>
+										<th class="text-center" style="width:20px;">Shipment DelyDate</th>
+										<th class="text-center" style="width:10px;">SOID</th>
+										<th class="text-center" style="width:20px;">ShipBuyer OrderNo</th>
+										<th class="text-center" style="width:10px;">Line #</th>
+										<th class="text-center" style="width:10px;">STKID</th>
+										<th class="text-center" style="width:15px;">Description</th>
+										<th class="text-center" style="width:20px;">Final Destination</th>
+										<th class="text-center" style="width:30px;">LatestRev. DelyDate</th>
+										<th class="text-center" style="width:10px;">Price</th>
+										<th class="text-center" style="width:10px;">Qty</th>
+										<th class="text-center" style="width:10px;">Total</th>
+										<th class="text-center" style="width:10px;">FiberContent/ Note</th>
+									</tr>
+								</thead>
+								<tbody class="invoice_tbody">
+									<t t-foreach="da['lines']" t-as="dl">
+										<tr>
+											<td class="text-center">
+												<img width="100" height="80" alt="Product Images"
+													t-attf-src="data:image/gif;base64, #{dl['image']}" />
+											</td>
+											<td class="text-center">
+												<span t-esc="dl['ship_dely_date']" />
+												<br />
+												<br />
+												<span style="font-weight:bold;">Buyer Name</span>
+											</td>
+											<td>
+												<span t-esc="dl['so_id']" />
+												<br />
+												<br />
+												<br />
+												<span t-esc="dl['buyer_name']" />
+											</td>
+											<td>
+												<span t-esc="dl['ship_buyer_order_no']" />
+											</td>
+											<td class="text-center">
+												<span t-esc="dl['line']" />
+											</td>
+											<td class="text-center">
+												<span t-esc="dl['stk_id']" />
+											</td>
+											<td>
+												<span t-esc="dl['description']" />
+											</td>
+											<td>
+												<span t-esc="dl['final_destination']" />
+											</td>
+											<td class="text-center">
+												<span t-esc="dl['latest_rev_date']" />
+											</td>
+											<td class="text-right">
+												<span t-esc="dl['price']" />
+											</td>
+											<td class="text-right">
+												<span t-esc="dl['qty']" />
+											</td>
+											<td class="text-right">
+												<span t-esc="dl['total']" />
+											</td>
+											<td>
+												<span t-esc="dl['fiber_content']" />
+											</td>
+										</tr>
+									</t>
+								</tbody>
+							</table>
+							<div class="row" name="total">
+								<div class="col-xs-4 pull-right">
+									<table class="table table-condensed">
+										<tr class="border-black">
+											<td>
+												<strong>Qunatity</strong>
+											</td>
+											<td t-if="da['quantity']" class="text-right">
+												<span t-esc="da['quantity']" />
+											</td>
+										</tr>
+										<tr class="border-black">
+											<td>
+												<strong>Total</strong>
+											</td>
+											<td t-if="da['amount']" class="text-right">
+												<span t-esc="da['amount']" />
+												<span t-esc="da['currency_id']" />
+											</td>
+										</tr>
+										<tr class="border-black">
+											<td colspan='2'>
+												<span t-raw="da['remarks']" />
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

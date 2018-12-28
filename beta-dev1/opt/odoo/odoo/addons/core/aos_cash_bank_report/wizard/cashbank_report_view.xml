@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<report 
+	        id="cash_bank_report_xls_aos"
+	        model="daily.report"
+	        string="Cash In / Out"
+	        report_type="xls"
+	        name="cash.bank.report.xls"
+	        file="cash.bank.report.xls"
+	        attachment_use="False"
+	    />
+	
+    	<record model="ir.ui.view" id="view_daily_report_cb_management">
+            <field name="name">Cash In / Out</field>
+            <field name="model">daily.report</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+				<form string="Cash In / Out">
+					<field name="date_from" invisible="1"/>
+					<field name="type" invisible="1"/>
+					<group col="4" colspan="4">
+						<field name="date"/>
+						<field name="display_type"/>
+					</group>
+					<field name="daily_cashbank_ids" nolabel="1">
+						<tree string="Account Cash" create="0">
+							<field name="account_id"/>
+							<field name="amount" invisible="1"/>
+							<field name="notes" invisible="1"/>
+						</tree>
+						<form string="Account Cash" create="0">	
+							<group>
+								<group>				
+									<field name="account_id"/>
+								</group>
+								<group>				
+									<field name="amount"/>
+								</group>
+							</group>				
+							<field name="notes" placeholder="Reason" nolabel="1"/>
+						</form>
+					</field>			
+                    <footer>
+                        <button name="xls_export" string="Export" type="object" context="{'xls_export':1}" class="fa fa-file-excel-o oe_highlight"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+				</form>
+            </field>
+        </record>
+              
+        <record model="ir.actions.act_window" id="action_daily_report_cb_management">
+            <field name="name">Cash In / Out</field>
+            <field name="res_model">daily.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'default_type': 'cash'}</field>
+            <field name="view_id" ref="view_daily_report_cb_management"/>
+        </record>
+        
+		<menuitem id="menu_daily_report_cb_management" name="Cash In / Out" action="action_daily_report_cb_management" parent="account.account_reports_management_menu"/>
+		
+		<record model="ir.ui.view" id="view_daily_report_b_management">
+            <field name="name">Bank In / Out</field>
+            <field name="model">daily.report</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+				<form string="Bank In / Out">
+					<field name="date_from" invisible="1"/>
+					<field name="type" invisible="1"/>
+					<group col="4" colspan="4">
+						<field name="date"/>
+						<field name="display_type"/>
+					</group>
+					<field name="daily_cashbank_ids" nolabel="1">
+						<tree string="Account Bank" create="0">
+							<field name="account_id"/>
+							<field name="amount" invisible="1"/>
+							<field name="notes" invisible="1"/>
+						</tree>
+						<form string="Account Bank" create="0">	
+							<group>
+								<group>				
+									<field name="account_id"/>
+								</group>
+								<group>				
+									<field name="amount"/>
+								</group>
+							</group>				
+							<field name="notes" placeholder="Reason" nolabel="1"/>
+						</form>
+					</field>			
+                    <footer>
+                        <button name="xls_export" string="Export" type="object" context="{'xls_export':1}" class="fa fa-file-excel-o oe_highlight"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+				</form>
+            </field>
+        </record>
+              
+        <record model="ir.actions.act_window" id="action_daily_report_b_management">
+            <field name="name">Bank In / Out</field>
+            <field name="res_model">daily.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'default_type': 'bank'}</field>
+            <field name="view_id" ref="view_daily_report_b_management"/>
+        </record>
+		<menuitem id="menu_daily_report_b_management" name="Bank In / Out" action="action_daily_report_b_management" parent="account.account_reports_management_menu"/>
+	</data>
+</openerp>

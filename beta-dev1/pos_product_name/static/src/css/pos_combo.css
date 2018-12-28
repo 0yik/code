@@ -1,0 +1,33 @@
+.product .product-img {
+
+    width: 100% !important;
+    height: 100% !important;
+    text-align: center !important;
+}
+.pos .product{
+    background: #9a9a9a !important;
+    border:0px !important; border-bottom-width: 0px !important;
+}
+
+/* Product font size */
+
+.product_div{
+    height: 85px !important;
+}
+
+.product_span{
+    font-size: 18px !important;
+}
+
+/* Price tag font size */
+
+.pos .product .price-tag{
+    font-size: 13px !important;
+}
+
+/* product size */
+.pos .product {
+    height: 105px !important;
+    width: 105px !important;
+    }
+

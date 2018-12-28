@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+<!-- 		<record model="ir.ui.view" id="view_pos_config_form_branch_extend"> -->
+<!--             <field name="name">pos.config.form.view.brand.extend</field> -->
+<!--             <field name="model">pos.config</field> -->
+<!--             <field name="inherit_id" ref="point_of_sale.view_pos_config_form" /> -->
+<!--             <field name="arch" type="xml"> -->
+<!--                 <xpath expr="//field[@name='active']" position="after"> -->
+<!--                     <field name='brand_id'/> -->
+<!--                 </xpath> -->
+<!--             </field> -->
+<!--         </record> -->
+
+        <record id="view_res_branch_form" model="ir.ui.view">
+            <field name="name">res.branch.form</field>
+            <field name="model">res.branch</field>
+            <field name="inherit_id" ref="branch.view_res_branch_form"/>
+            <field name="arch" type="xml">
+                <field name="address" position="before">
+                    <field name="brand_id" />
+                </field>
+            </field>
+        </record>
+            
+<!-- 	    <record id="res_users_form_brand_ext" model="ir.ui.view"> -->
+<!-- 	        <field name="name">Res Users Form brand ext</field> -->
+<!-- 	        <field name="model">res.users</field> -->
+<!-- 	        <field name="inherit_id" ref="base.view_users_form"/> -->
+<!-- 	        <field name="arch" type="xml"> -->
+<!-- 	            <field name="branch_id" position="after"> -->
+<!-- 	                <field name="brand_ids" widget="many2many_tags"/> -->
+<!-- 	                <field name="screen_type" /> -->
+<!-- 	            </field> -->
+<!-- 	            <field name="branch_id" position="attributes"> -->
+<!-- 	            	<attribute name="invisible">True</attribute> -->
+<!-- 	            </field> -->
+<!-- 	        </field> -->
+<!-- 	    </record> -->
+
+
+		<record id="product_template_only_form_view_extend" model="ir.ui.view">
+	        <field name="name">product_template_only_form_view_extend</field>
+	        <field name="model">product.template</field>
+	        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+	        <field name="arch" type="xml">
+				<field name="categ_id" position="after">
+	            	<field name="brand_ids" widget="many2many_tags"/>
+	            </field>
+	        </field>
+	    </record>
+        
+		<record id="view_product_normal_form_brand_extend" model="ir.ui.view">
+	        <field name="name">product_normal_form_brand_extend</field>
+	        <field name="model">product.product</field>
+	        <field name="inherit_id" ref="product.product_normal_form_view"/>
+	        <field name="arch" type="xml">
+				<field name="categ_id" position="after">
+<!-- 	            	<field name="brand_id" /> -->
+	            	<field name="brand_ids" widget="many2many_tags"/>
+	            </field>
+ 				<field name="purchase_method" position="after">
+ 	            	<field name="branch_ids" widget="many2many_tags"/>
+ 	            </field>
+
+	        </field>
+	    </record>
+    	
+		<record model="ir.ui.view" id="view_product_brand_tree">
+			<field name="name">view.product.brand.tree</field>
+			<field name="model">product.brand</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" string="Name" />
+				</tree>
+			</field>
+		</record>
+	
+		<record model="ir.ui.view" id="view_product_brand_form">
+			<field name="name">product.brand.form</field>
+			<field name="model">product.brand</field>
+			<field name="arch" type="xml">
+				<form string="Brand">
+					<sheet>
+						<div class="oe_title">
+							<h1>
+                            	<field name="name" default_focus="1" placeholder="Name" />
+                        	</h1>
+						</div>
+	                    <notebook>
+	                        <page string="Branch" >
+	                        	<field name="branch_ids">
+	                        		<tree string="Branch" editable="top">
+										<field name="branch_id" required="True"/>
+									</tree>
+	                        	</field>
+							</page>
+							
+	                        <page string="Product" >
+	                        	<field name="product_brand_ids">
+	                        		<tree string="Products" editable="top">
+										<field name="product_id" required="True" domain="[('available_in_pos','=',True)]"/>
+									</tree>
+	                        	</field>
+							</page>
+						</notebook>				
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_product_brand" model="ir.actions.act_window">
+			<field name="name">Brand</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">product.brand</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Brand" id="menu_product_brand"
+			parent="point_of_sale.menu_point_of_sale" sequence="10" action="action_product_brand" />
+		
+	</data>
+</odoo>

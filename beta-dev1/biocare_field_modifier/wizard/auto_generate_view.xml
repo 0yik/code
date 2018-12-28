@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_auto_generate_workorder_tree" model="ir.ui.view">
+            <field name="name">auto.generate.workorder.tree</field>
+            <field name="model">auto.generate.workorder</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <tree string="Auto Generate Workorder">
+                <field name="options"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_auto_generate_workorder_form" model="ir.ui.view">
+            <field name="name">auto.generate.workorder.form</field>
+            <field name="model">auto.generate.workorder</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <!--form string="Auto Generate Workorder"-->
+            <form string="Auto-generate Booking Order">
+                <field name="state" invisible="1" />
+                <b>
+                Please select the Period for auto-generating the booking orders.
+                </b>    
+                <group>
+                    <group>
+                        <!--field name="options" required="1"  attrs="{'invisible': [('state','=', 'done')]}"/-->
+                        <field name="date_start" required="1"
+                            attrs="{'invisible': [('state','=', 'done')]}"/>
+                        <field name="counter"
+                            attrs="{'invisible': [('state','=', 'draft')]}" />
+                    </group>
+                    <group>
+                        <field name="date_end" required="1"
+                            attrs="{'invisible': [('state','=', 'done')]}"/>
+                    </group>
+                </group>
+                <footer>
+                    <!--button string="Generate Workorder(s)" icon="" 
+                        states="draft" type="object" name="generate_wo"/-->
+                    <button string="Generate Booking Order(s)" icon="" 
+                        states="draft" type="object" name="generate_wo"/>
+                    <button string="Cancel" states="draft" special="cancel" class="btn-default"/>
+                    <button string="Ok" icon="" states="done" type="object" name="act_close"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="view_auto_generate_workorder_search" model="ir.ui.view">
+            <field name="name">auto.generate.workorder.search</field>
+            <field name="model">auto.generate.workorder</field>
+            <field name="type">search</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <search string="Auto Generate Workorder">
+                <field name="options"/>
+            </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_auto_generate_workorder_view">
+            <field name="name">Auto-generate Booking Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">auto.generate.workorder</field>
+            <field name="view_type">form</field>
+            <!--field name="view_mode">tree,form</field-->
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <!--field name="search_view_id" ref="view_auto_generate_workorder_search"/-->
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_auto_generate_workorder_view_form">
+            <field name="act_window_id" ref="act_open_auto_generate_workorder_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_auto_generate_workorder_form"/>
+        </record>
+
+        <!--record model="ir.actions.act_window.view" id="act_open_auto_generate_workorder_view_tree">
+            <field name="act_window_id" ref="act_open_auto_generate_workorder_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_auto_generate_workorder_tree"/>
+        </record-->
+
+        <menuitem id="menu_auto_generate_workorder"
+            parent="generate_bo_order_report_menu"
+            sequence="1"
+            groups="booking_service_V2.group_manager"
+            action="act_open_auto_generate_workorder_view"/>
+    
+    </data>
+</odoo>

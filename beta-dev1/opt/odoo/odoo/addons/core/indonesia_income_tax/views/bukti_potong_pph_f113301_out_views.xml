@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="bukti_potong_pph_f113301_out_view_tree" model="ir.ui.view">
+            <field name="name">Bukti Potong PPh f.11.33.01 Out Tree</field>
+            <field name="model">l10n_id.bukti_potong_pph_f113301_out</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="indonesia_income_tax.bukti_potong_pph_view_tree"/>
+            <field name="arch" type="xml">
+                <data/>
+            </field>
+        </record>
+
+        <record id="bukti_potong_pph_f113301_out_view_form" model="ir.ui.view">
+            <field name="name">Bukti Potong PPh f.11.33.01 Out Form</field>
+            <field name="model">l10n_id.bukti_potong_pph_f113301_out</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="indonesia_income_tax.bukti_potong_pph_view_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//h1[@name='form_name']" attributes="inside">
+                        <label string="Bukti Potong PPh 21 (f.1.1.33.01) - Out"/>
+                    </xpath>
+                    <xpath expr="//field[@name='wajib_pajak_id']" position="attributes">
+                        <attribute name="domain">[('is_company','=',False),('parent_id','=',False)]</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="bukti_potong_pph_f113301_out_view_search" model="ir.ui.view">
+            <field name="name">Bukti Potong PPh f.11.33.01 Out Search</field>
+            <field name="model">l10n_id.bukti_potong_pph_f113301_out</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="indonesia_income_tax.bukti_potong_pph_view_search"/>
+            <field name="arch" type="xml">
+                <data/>
+            </field>
+        </record>
+
+        <record id="bukti_potong_pph_f113301_out_action" model="ir.actions.act_window">
+            <field name="name">Bukti Potong PPh 21 Tidak Final (f.1.33.01) Out</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">l10n_id.bukti_potong_pph_f113301_out</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="bukti_potong_pph_f113301_out_view_search"/>
+            <field name="context">{'default_filter_draft':1, 'default_filter_confirm':1}</field>
+        </record>
+
+        <menuitem
+            id="bukti_potong_pph_f113301_out_menu"
+            name="PPh 21 Tidak Final (f.1.33.01) Out"
+            parent="indonesia_income_tax.taxform_bukti_potong_menu"
+            groups="indonesia_income_tax.user_group_taxform"
+            action="bukti_potong_pph_f113301_out_action"
+            sequence="21"
+            />
+
+    </data>
+</odoo>

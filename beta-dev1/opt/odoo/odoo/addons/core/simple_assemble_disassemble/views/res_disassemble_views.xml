@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="res_disassemble_tree" model="ir.ui.view">
+        <field name="name">Disassemble Tree</field>
+        <field name="model">res.disassemble</field>
+        <field name="arch" type="xml">
+            <tree string="Disassemble">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="stock_production_prod"/>
+                <field name="quantity_pro"/>
+                <field name="date_disassemble"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="res_disassemble_form_view" model="ir.ui.view">
+        <field name="name">Disassemble Form</field>
+        <field name="model">res.disassemble</field>
+        <field name="arch" type="xml">
+            <form class="oe_form_configuration">
+                <header>
+                    <button name="action_disassemble" type="object" states="draft" string="Disassemble" class="oe_highlight"/>
+                    <button name="action_cancel" type="object" states="draft" string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_id" required="1"/>
+                            <field name="product_product_id" invisible="1"/>
+                            <field name="location_src_id" domain="[('usage','=','internal')]" required="1"/>
+                            <field name="stock_production_prod" domain="[('product_id','=',product_product_id)]" groups="stock.group_production_lot"/>
+                        </group>
+                        <group>
+                            <field name="quantity_pro" required="1"/>
+                            <field name="date_disassemble"/>
+                        </group>
+                    </group>
+                    <separator string="Materials"/>
+                    <field name="material_id">
+                        <tree string="Materials" editable="bottom">
+                            <field name="product_id" required="1"/>
+                            <field name="qty_pro" required="1"/>
+                            <field name="stock_lot" domain="[('product_id','=',product_id)]" groups="stock.group_production_lot"/>
+                        </tree>
+                    </field>
+                    <separator string="Products to Form"/>
+                    <field name="material_form_id">
+                        <tree string="Products to Form" editable="bottom" create="false">
+                            <field name="product_id" readonly="1"/>
+                            <field name="materials" readonly="1"/>
+                            <field name="possible_qty" invisible="1"/>
+                            <field name="possible_qty_dynamic" readonly="1" string="Possible Quantity"/>
+                            <field name="quantity" required="1"/>
+                        </tree>
+                    </field>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="res_disassemble_action" model="ir.actions.act_window">
+        <field name="name">Disassemble</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.disassemble</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to define a new Disassemble.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_res_disassemble" action="res_disassemble_action" parent="stock.menu_stock_warehouse_mgmt" sequence="2"/>
+
+    <record id="product_template_form_view_inherit" model="ir.ui.view">
+        <field name="name">Product Template Form Inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button string="Disassemble" type="object" name="disassemble_form_view"/>
+            </header>
+            <xpath expr="//page[@name='sales']" position="after">
+                <page string="Components" name="component">
+                    <separator string="Components"/>
+                    <field name="material_ids">
+                        <tree editable="bottom">
+                            <field name="product_id" required="1"/>
+                            <field name="material_quantity" required="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,28 @@
+<odoo>
+        <!--form view of working days wizard-->
+        <record id="view_form_vendor_bill_report" model="ir.ui.view">
+            <field name="name">Vendor Bill Report</field>
+            <field name="model">vendor.bill.report</field>
+            <field name="arch" type="xml">
+                <form string="Full names" version="8.0">
+                    <group>
+                        <field name="customer_id"/>
+                    </group>
+                    <footer>
+                        <button name='generate_excel' string='proceed' type='object' class='oe_highlight'/>
+                        OR
+                        <button string='Cancel' special='Cancel' class='oe_link'/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!--action view of working days-->
+        <record id="action_view_form_vendor_bill_report" model="ir.actions.act_window">
+            <field name="name">Vendor Bill Report</field>
+            <field name="res_model">vendor.bill.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+</odoo>

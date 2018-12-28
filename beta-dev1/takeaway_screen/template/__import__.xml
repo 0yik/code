@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets" inherit_id="complex_kds.assets">
+            <xpath expr="//script[last()]" position="after">
+            	<link rel="stylesheet" type="text/css" href="/takeaway_screen/static/src/css/takeaway_screen.css" />
+                <script type="text/javascript" src="/takeaway_screen/static/src/js/takeaway_screen.js"></script>
+                <script type="text/javascript" src="/takeaway_screen/static/src/js/models.js"></script>
+                <script type="text/javascript" src="/takeaway_screen/static/src/js/chrome.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

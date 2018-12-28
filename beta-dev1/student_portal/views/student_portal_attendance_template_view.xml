@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="student_portal_attendance_template" name="Student Monthly Attendance Sheet">
+		<t t-call="student_portal.student_portal_layout">
+			<h3 class="page-header">Your Monthly Attendance Sheet</h3>
+			<t t-if="not invoices">
+				<p>Monthly Attendance Sheet</p>
+			</t>
+			<t t-if="profile">
+				<div>Monthly Attendance Sheet</div>
+				<div t-if="pager" class="o_portal_pager text-center">
+					<t t-call="website.pager"/>
+				</div>
+			</t>
+		</t>
+	</template>
+</odoo>

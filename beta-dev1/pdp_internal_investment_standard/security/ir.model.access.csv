@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pdp_internal_investment_standard_pdp_internal_investment_standard,pdp_internal_investment_standard.pdp_internal_investment_standard,model_pdp_internal_investment_standard_pdp_internal_investment_standard,,1,0,0,0

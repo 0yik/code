@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_product_template_service_tree" model="ir.ui.view">
+            <field name="name">product.template.tree</field>
+            <field name="model">product.template</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="1500"/>
+            <field name="arch" type="xml">
+            <tree string="Services">
+                <field name="name"/>
+                <field name="type"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_product_template_service_form" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="type">form</field>
+            <field name="priority" eval="1500"/>
+            <field name="arch" type="xml">
+            <form string="Service">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                            class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button>
+                        <button class="oe_stat_button" name="action_view_sales"
+                            type="object" icon="fa-usd">
+                            <field string="Sales" name="sales_count" widget="statinfo" />
+                        </button>
+                    </div>
+                    <field name="image_medium" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Service Type"/>
+                        <h1><field name="name" placeholder="Service Type"/></h1>
+                        <!--div name="options" groups="base.group_user">
+                            <div>
+                                <field name="sale_ok"/>
+                                <label for="sale_ok"/>
+                            </div>
+                            <div>
+                                <field name="purchase_ok"/>
+                                <label for="purchase_ok"/>
+                            </div>
+                        </div-->
+                    </div>
+                    <group>
+                        <group>
+                            <field name="description_sale" string="Service Description"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        
+    <record id="product_template_service_kanban_view" model="ir.ui.view">
+        <field name="name">Product.template.product.kanban</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="image_small"/>
+                <field name="lst_price"/>
+                <field name="product_variant_count"/>
+                <field name="product_variant_ids"/>
+                <field name="currency_id"/>
+                <field name="description_sale"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('product.template', 'image_small', record.id.value)"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong>
+                                    <span t-if="record.default_code.value">[<field name="default_code"/>]</span>
+                                    <field name="name"/>
+                                </strong>
+                                <div t-if="record.description_sale.value">
+                                    <strong>
+                                        <t t-esc="record.description_sale.value"/>
+                                    </strong>
+                                </div>
+                                <!--div name="tags"/>
+                                <ul>
+                                    <li>Price: <field name="lst_price" widget="monetary"></field></li>
+                                </ul>
+                                <div name="tags"/-->
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+        <record id="view_product_template_service_search" model="ir.ui.view">
+            <field name="name">product.template.search</field>
+            <field name="model">product.template</field>
+            <field name="type">search</field>
+            <field name="priority" eval="1500"/>
+            <field name="arch" type="xml">
+            <search string="Service">
+                <field name="name"/>
+            </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_product_template_service_view">
+            <field name="name">Services</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <!--field name="view_id" ref="product_template_service_kanban_view"/-->
+            <field name="view_id" ref="product.product_template_kanban_view"/>
+            <!--field name="search_view_id" ref="view_product_template_service_search"/-->
+            <!--field name="search_view_id" ref="product."/-->
+            <field name="domain">[('type', '=', 'service')]</field>
+            <field name="context">{'default_type': 'service', 'search_default_filter_services': 'services'}</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_product_template_service_view_form">
+            <field name="act_window_id" ref="act_open_product_template_service_view"/>
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <!--field name="view_id" ref="view_product_template_service_form"/-->
+            <field name="view_id" ref="product.product_template_only_form_view"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_product_template_service_view_tree">
+            <field name="act_window_id" ref="act_open_product_template_service_view"/>
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <!--field name="view_id" ref="view_product_template_service_tree"/-->
+            <field name="view_id" ref="product.product_template_tree_view"/>
+        </record>
+        
+        <record model="ir.actions.act_window.view" id="act_open_product_template_service_view_kanban">
+            <field name="act_window_id" ref="act_open_product_template_service_view"/>
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">kanban</field>
+            <!--field name="view_id" ref="product_template_service_kanban_view"/-->
+            <field name="view_id" ref="product.product_template_kanban_view"/>
+        </record>
+
+        <menuitem id="menu_product_template_service"
+            parent="sales_team.menu_sales"
+            sequence="111"
+            action="act_open_product_template_service_view"/>
+
+        <!-- Vehicle Menu -->
+        <record model="ir.actions.act_window" id="act_open_product_template_vehicle_view">
+            <field name="name">Vehicles</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <!--field name="view_id" ref="product_template_service_kanban_view"/-->
+            <field name="view_id" ref="product.product_template_kanban_view"/>
+            <!--field name="search_view_id" ref="view_product_template_service_search"/-->
+            <!--field name="search_view_id" ref="product."/-->
+            <field name="domain">[('is_equipment', '=', True)]</field>
+            <field name="context">{'default_type': 'product', 'default_is_equipment': True}</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_product_template_vehicle_view_form">
+            <field name="act_window_id" ref="act_open_product_template_vehicle_view"/>
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <!--field name="view_id" ref="view_product_template_service_form"/-->
+            <field name="view_id" ref="product.product_template_only_form_view"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_product_template_vehicle_view_tree">
+            <field name="act_window_id" ref="act_open_product_template_vehicle_view"/>
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <!--field name="view_id" ref="view_product_template_service_tree"/-->
+            <field name="view_id" ref="product.product_template_tree_view"/>
+        </record>
+        
+        <record model="ir.actions.act_window.view" id="act_open_product_template_vehicle_view_kanban">
+            <field name="act_window_id" ref="act_open_product_template_vehicle_view"/>
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">kanban</field>
+            <!--field name="view_id" ref="product_template_service_kanban_view"/-->
+            <field name="view_id" ref="product.product_template_kanban_view"/>
+        </record>
+
+        <menuitem id="menu_product_template_vehicle"
+            parent="sales_team.menu_sales"
+            sequence="109"
+            action="act_open_product_template_vehicle_view"/>
+
+
+
+    </data>
+</odoo>

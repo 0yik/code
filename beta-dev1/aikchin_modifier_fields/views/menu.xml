@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <menuitem id="account.menu_finance_receivables" name="Receivables" parent="account.menu_finance" sequence="2"/>
+        <menuitem id="account.menu_finance_payables" name="Payables" parent="account.menu_finance" sequence="3"/>
+        <menuitem id="account.menu_finance_entries" name="General Ledger" parent="account.menu_finance" sequence="4"
+                  groups="account.group_account_manager"/>
+        <menuitem parent="account.menu_finance_entries" id="account_asset.menu_action_account_asset_asset_form"
+                  action="account_asset.action_account_asset_asset_form" sequence="101"
+                  groups="account.group_account_user" name="Fixed Assets"/>
+        <menuitem id="sg_bank_reconcile.menu_finance_menu_finance_entries" name="Bank Recon"
+                  parent="account.menu_finance" sequence="3"/>
+        <menuitem name="Fixed Assets" action="account_asset.action_asset_asset_report"
+                  id="account_asset.menu_action_asset_asset_report"
+                  parent="account.account_reports_management_menu" sequence="21"/>
+        <menuitem
+                action="sg_bank_reconcile.action_bank_acc_rec_statement"
+                id="sg_bank_reconcile.bank_acc_rec_statement_menu"
+                parent="sg_bank_reconcile.menu_finance_menu_finance_entries"
+                sequence="5" name="Bank Reconciliation"/>
+        <menuitem id="account.menu_account_supplier" name="Suppliers"
+                  parent="account.menu_finance_payables"
+                  action="base.action_partner_supplier_form" sequence="100"/>
+
+        <menuitem
+                id="account.menu_aged_trial_balance"
+                name="Detail Aging"
+                action="account.action_account_aged_balance_view"
+                parent="account.menu_finance_legal_statement"
+                groups="base.group_erp_manager"
+        />
+
+        <record id="account.action_account_aged_balance_view" model="ir.actions.act_window">
+            <field name="name">Detail Aging</field>
+        </record>
+
+        <record id="account_aged_balance_view_inherit" model="ir.ui.view">
+            <field name="name">account.aged.trial.balance.inherit</field>
+            <field name="model">account.aged.trial.balance</field>
+            <field name="inherit_id" ref="account.account_aged_balance_view"/>
+            <field name="arch" type="xml">
+                <!-- find field description and add the field
+                     idea_ids after it -->
+                <xpath expr="//form/separator[1]" position="attributes">
+                    <attribute name="string">Detail Aging</attribute>
+                </xpath>
+                <xpath expr="//form/label[1]" position="attributes">
+                    <attribute name="string">Detail Aging is a more detailed report of your receivables by intervals. Odoo calculates a table of credit balance by start Date. So if you request an interval of 30 days Odoo generates an analysis of creditors for the past month, past two months, and so on.</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.menu" id="account_voucher.menu_action_sale_receipt">
+            <field name="groups_id"
+                   eval="[(6,0,[ref('group_menu_invisible')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="account_voucher.menu_action_purchase_receipt">
+            <field name="groups_id"
+                   eval="[(6,0,[ref('group_menu_invisible')])]"/>
+        </record>
+        <record id="hr_payroll.action_report_payslip" model="ir.actions.report.xml">
+            <field name="multi">1</field>
+        </record>
+        <record id="hr_payroll.payslip_details_report" model="ir.actions.report.xml">
+            <field name="multi">1</field>
+        </record>
+        <record id="sg_account_report.account_aged_balance_view_inherited" model="ir.ui.view">
+            <field name="active" eval="False"/>
+        </record>
+
+        <!--Hide Menu TimeSheets-->
+        <record id="hr_timesheet.timesheet_menu_root" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+    </data>
+</odoo>

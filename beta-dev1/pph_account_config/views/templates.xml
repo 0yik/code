@@ -1,0 +1,70 @@
+<odoo>
+    <data>
+        <record id="pph_account_config_form" model="ir.ui.view">
+            <field name="name">pph.account.config.form</field>
+            <field name="model">pph.account.config</field>
+            <field name="arch" type="xml">
+                <form string="Account Tax" create="false" delete="false">
+                    <sheet>
+                    <group>
+                        <!--<field name="name"/>-->
+                        <field name="pph_account_purchase"/>
+                        <field name="pph_account_sales"/>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--<record id="pph_account_config_tree" model="ir.ui.view">-->
+            <!--<field name="name">pph.account.config.tree</field>-->
+            <!--<field name="model">pph.account.config</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<tree string="Account Tax">-->
+                    <!--&lt;!&ndash;<field name="name"/>&ndash;&gt;-->
+                    <!--<field name="pph_account_purchase"/>-->
+                    <!--<field name="pph_account_sales"/>-->
+                <!--</tree>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <record id="menu_pph_account_config_action" model="ir.actions.act_window">
+            <field name="name">PPH Accounts</field>
+            <field name="res_model">pph.account.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field eval="pph_account_config_form" name="view_id"/>
+            <field eval="1" name="res_id"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to record a new vendor bill.
+              </p><p>
+                You can control the invoice from your vendor according to
+                what you purchased or received.
+              </p>
+            </field>
+        </record>
+
+        <!--<record id="a" model="ir.actions.act_window.view">-->
+            <!--<field eval="1" name="sequence"/>-->
+            <!--<field name="view_mode">tree</field>-->
+            <!--<field name="view_id" ref="pph_account_config_tree"/>-->
+            <!--<field name="nocreate" eval="True"></field>-->
+            <!--<field name="act_window_id" ref="menu_pph_account_config_action"/>-->
+        <!--</record>-->
+
+        <record id="b" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="pph_account_config_form"/>
+            <field name="res_id">1</field>
+            <field name="act_window_id" ref="menu_pph_account_config_action"/>
+        </record>
+
+        <menuitem id="menu_pph_account_config"
+        name="PPH"
+        parent="account.account_account_menu"
+        action="menu_pph_account_config_action"
+        sequence="1"/>
+    </data>
+</odoo>

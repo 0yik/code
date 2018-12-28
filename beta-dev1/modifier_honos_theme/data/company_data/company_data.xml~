@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+     
+		 <record id="base.main_company" model="res.company">
+			<field name="name">CCM</field>
+			<field name="phone"></field>
+			<field name="email"></field>
+			<field name="website">www.hashmicro.com</field>
+			<field name="street"></field>
+			<field name="street2"></field>
+			<field name="city"></field>
+			<field name="country_id" ref="base.sg" />
+			<field name="logo" type="base64"
+				file="modifier_honos_theme/static/src/img/data_img/company_logo.png">
+			</field>
+			<field name="currency_id" ref="base.SGD" />
+		</record>
+		
+	</data>
+</odoo>

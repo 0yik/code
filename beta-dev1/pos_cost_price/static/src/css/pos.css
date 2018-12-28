@@ -1,0 +1,11 @@
+.pos .product .cost-tag {
+    position: absolute;
+    top: 20px;
+    right: 2px;
+    vertical-align: top;
+    color: white;
+    line-height: 13px;
+    background: #FF9933;
+    padding: 2px 5px;
+    border-radius: 2px;
+}

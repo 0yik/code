@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="website.homepage" name="honos Home">
+		<t t-call="website.layout">
+			<div class="mask_cover"></div>
+			<div id="wrap" class="oe_structure oe_empty">
+			    <section class="banner_wrapper">
+                    <div id="top_banner_slider" class="top_banner_slider" data-loading="true" data-template="modifier_honos_theme.theme_ccm_top_banner_slider_view" />
+                </section>
+                <!--************************************Feature Category section start *************************************************-->
+                <div class="f_categories_main">
+                    <section>
+                        <div class="bs_margin"></div>
+                    </section>
+                    <section class="s_image" data-multi-categ-slider-type="">
+				        <div class="ss_container f_categories_container">
+				            <div class="cat_showcase_heading">
+				                <h3 class="cat_title o_default_snippet_text">Our Featured Categories</h3>
+				            </div>
+				            <div id="all_categ" class="custom_js_get_category" data-loading="true" data-template="honos_category.honos_category_category_showcase"/>
+				        </div>
+				    </section>
+                </div>
+                <!-- ******************************End of Feature category section ***************************************************** -->
+                <!-- ************************************** New Arrivals section start **************************************************** -->
+                <div class="professional_main">
+			        <section id="theme_ccm_new_arrival" class="oe_multi_arrival_slider" contentEditable="false" data-new-arrival-slider-type="">
+			            <div id="new_arrival" class="arrival_slider" data-loading="true"
+                        data-template="modifier_honos_theme.theme_ccm_new_arrival_slider_view" />
+			        </section>
+                </div>
+                <!-- *****************************************End of new arrivals section ***********************************************-->
+                <section>
+                    <div class="bs_margin"></div>
+                </section>
+                <!-- ************************************** Carosuel banner start *********************************************************** -->
+                <section class="img_adv_banner">
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                            <li data-target="#myCarousel" data-slide-to="3"></li>
+                            <li data-target="#myCarousel" data-slide-to="4"></li>
+                            <li data-target="#myCarousel" data-slide-to="5"></li>
+                        </ol>
+
+                        <div class="carousel-inner">
+                            <div class="item img_adv_banner_inner active">
+                                <img src="/modifier_honos_theme/static/src/img/2121.jpg" />
+                            </div>
+
+                            <div class="item img_adv_banner_inner">
+                                <img src="/modifier_honos_theme/static/src/img/2122.jpg" />
+                            </div>
+
+                            <div class="item img_adv_banner_inner">
+                                <img src="/modifier_honos_theme/static/src/img/2123.jpg" />
+                            </div>
+                            <div class="item img_adv_banner_inner">
+                                <img src="/modifier_honos_theme/static/src/img/2124.jpg" />
+                            </div>
+                            <div class="item img_adv_banner_inner">
+                                <img src="/modifier_honos_theme/static/src/img/2125.jpg" />
+                            </div>
+                            <div class="item img_adv_banner_inner">
+                                <img src="/modifier_honos_theme/static/src/img/2126.jpg" />
+                            </div>
+                        </div>
+
+                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                            <span class="fa fa-chevron-left"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                            <span class="fa fa-chevron-right"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <!-- <div class="img_adv_banner_inner">
+                        <a href="#">
+                            <img src="img/2121.jpg" />
+                        </a>
+                    </div> -->
+                </section>
+                <!-- ************************************** Carosuel banner end *********************************************************** -->
+                <!-- ************************************** big_catg_wrapper start ******************************************************** -->
+                <section class="big_catg_wrapper">
+                    <div class="big_catg_container">
+                        <div class="bottom_big_catg">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div class="big_catg_img">
+                                    <a href="#">
+                                        <img class="#" src="/modifier_honos_theme/static/src/img/retro2.png"/>
+                                    </a>
+                                </div>
+                                <div class="big_product_info">
+                                    <a href="#" class="big_product_title">Elvis Presley</a>
+                                    <p class="big_product_sub_title">New exclusive matte colors available</p>
+                                    <a class="big_product_btn" href="#">Shop Now</a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div class="big_catg_img">
+                                    <a href="#">
+                                        <img class="#" src="/modifier_honos_theme/static/src/img/fairy3.png"/>
+                                    </a>
+                                </div>
+                                <div class="big_product_info">
+                                    <a href="#" class="big_product_title">Christmas Characters</a>
+                                    <p class="big_product_sub_title">New exclusive matte colors available</p>
+                                    <a class="big_product_btn" href="#">Shop Now</a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div class="big_catg_img">
+                                    <section>
+                                        <a href="#">
+                                            <img class="#" src="/modifier_honos_theme/static/src/img/retro7.png"/>
+                                        </a>
+                                    </section>
+                                </div>
+                                <div class="big_product_info">
+                                    <a href="#" class="big_product_title">Michael Jackson</a>
+                                    <p class="big_product_sub_title">New exclusive matte colors available</p>
+                                    <a class="big_product_btn" href="#">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- **************************************** big_catg_wrapper end ******************************************************** -->
+
+                <section>
+                    <div class="bs_margin"></div>
+                </section>
+                
+                <!-- **************************************** timer section start ******************************************************** -->
+                <section class="timer_design">
+                    <div class="col-md-6 left_timer_container">
+                            <div class="timer_sale_icon">
+                                15%<span>off</span>
+                            </div>
+                            <div class="left_timer_details">
+                                <div class="left_content">
+                                    <h3>Spring Collection</h3>
+                                    <p>We have lots of styles for spring collection that makes you feel wow! Update yourself with latest trends now.</p>
+                                    <a href="#">Shop now</a>
+                                </div>
+                                <div class="snippet_right_timer_div">
+                                    <div id="timer">
+                                        <div>
+                                            <span id="days"></span>
+                                            <p>days</p>
+                                        </div>
+                                        <p class="timer_colon">:</p>
+                                        <div>
+                                            <span id="hours"></span>
+                                            <p>hours</p>
+                                        </div>
+                                        <p class="timer_colon">:</p>
+                                        <div>
+                                            <span id="minutes"></span>
+                                            <p>minutes</p>
+                                        </div>
+                                        <p class="timer_colon">:</p>
+                                        <div>
+                                            <span id="seconds"></span>
+                                            <p>seconds</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 right_timer_container" style="background-image:url('/modifier_honos_theme/static/src/img/7.png')">
+                        </div>
+                </section>
+                <!-- ******************************************* timer section end ******************************************************** -->
+
+                <section>
+                    <div class="bs_margin"></div>
+                </section>
+                
+                <!-- ******************************************* Advertise2 product start ******************************************* --> 
+                <section class="adv2_product">
+                    <div class="adv2_product_container">
+                        <div class="col-md-6 left_adv2_wrapper">
+                            <img src="/modifier_honos_theme/static/src/img/39.png"/>
+                        </div>
+                        <div class="col-md-6 right_adv2_wrapper">
+                            <h2>Stamford Raffles </h2>
+                            <p>
+                                Ccm is your one-stop online fashion destination for all your wardrobe needs.Inspired by the international catwalks and the global street scene, we offer wearable fashion at pocket-friendly prices—right to your doorstep. Refresh your closet with the hottest international labels and the most exclusive collections. Keep it fashionable, keep it fresh! honos style will make you fall in love with yourself!
+                            </p>
+                            <a href="#">shop Now</a>
+                        </div>
+                    </div>
+                </section>
+                <!-- ******************************************* Advertise2 product end ******************************************* -->
+            </div>
+		</t>
+	</template>
+</odoo>
+

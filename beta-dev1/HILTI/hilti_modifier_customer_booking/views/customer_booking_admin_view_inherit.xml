@@ -1,0 +1,145 @@
+<odoo>
+	<data>
+
+		<record id="project_booking_view_tree_admin_inherit" model="ir.ui.view">
+			<field name="name">project.booking.view.tree.admin.inherit</field>
+			<field name="model">project.booking</field>
+			<field name="inherit_id"
+				ref="hilti_modifier_company.project_booking_view_tree_admin" />
+			<field name="arch" type="xml">
+				<field name="booking_no" position="after">
+					<field name="booking_type" />
+					<field name="start_date_time" />
+					<field name="end_date_time" />
+				</field>
+			</field>
+		</record>
+
+		<record id="project_booking_view_admin_inherit" model="ir.ui.view">
+			<field name="name">project.booking.view.admin.inherit</field>
+			<field name="model">project.booking</field>
+			<field name="inherit_id" ref="hilti_modifier_company.project_booking_view_admin" />
+			<field name="arch" type="xml">
+				<field name="create_date" position="after">
+					<field name="booking_type" required="1" />
+					<field name="start_date_time"
+						attrs="{'invisible': [('booking_type', '=', 'normal')]}" />
+					<field name="end_date_time"
+						attrs="{'invisible': [('booking_type', '=', 'normal')]}" />
+				</field>
+				<xpath expr="//sheet" position="inside">
+					<notebook>
+						<page string='Anchor Details'>
+							<field name="project_booking_anchor_ids">
+								<tree editable='bottom'>
+									<field name="name" required="1" />
+									<field name="anchor_type_id" options="{'no_create_edit': True}"
+										required="1" />
+									<field name="anchor_size_id" options="{'no_create_edit': True}"
+										context="{'parent_anchor_type_id': anchor_type_id}" required="1" />
+									<field name="anchor_qty" required="1" />
+									<field name="an_complexity" required="1" />
+								</tree>
+							</field>
+						</page>
+						<page string="Booking Date &amp; Time"
+							attrs="{'invisible': [('booking_type', '=', 'special')]}">
+							<field name="time_booking_ids">
+								<form string="TimeSlot Booking">
+									<sheet>
+										<group>
+											<group>
+												<field name="pr_booking_id" invisible="1" />
+												<field name="booking_date" required="1" />
+												<field name="time_slot_id" options="{'no_create_edit': True}"/>
+											</group>
+											<group>
+												<field name="timeslot_start_id" readonly="1" />
+												<field name="timeslot_end_id" readonly="1" />
+											</group>
+										</group>
+									</sheet>
+								</form>
+								<tree>
+									<field name="pr_booking_id" invisible="1" />
+									<field name="booking_date" />
+									<field name="time_slot_id" invisible="1" />
+									<field name="timeslot_start_id" readonly="1" />
+									<field name="timeslot_end_id" readonly="1" />
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</xpath>
+				<xpath expr='//header/field' position='before'>
+					<button name="final_booking_admin" type="object" string="Book"
+						attrs="{'invisible': [('is_final', '=', True)]}" />
+					<button name="reschedule_booking" type="object" string="Re-Schedule"
+						attrs="{'invisible': [('status', 'not in', ['pending'])]}" />
+					<button name="reassign_tester_from_admin" type="object"
+						string="Re-Assign Tester" attrs="{'invisible': [('status', 'not in', ['pending'])]}" groups='hilti_modifier_accessrights.group_hilti_admin'/>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="project_booking_view_admin_re_booking_inherit" model="ir.ui.view">
+			<field name="name">project.booking.view.admin.inherit</field>
+			<field name="model">project.booking</field>
+			<field name="inherit_id" ref="hilti_modifier_company.project_booking_view_admin_re_booking" />
+			<field name="arch" type="xml">
+				<field name="create_date" position="after">
+					<field name="booking_type" required="1" />
+					<field name="start_date_time"
+						attrs="{'invisible': [('booking_type', '=', 'normal')], 'required': [('booking_type', '=', 'special')]}" />
+					<field name="end_date_time"
+						attrs="{'invisible': [('booking_type', '=', 'normal')], 'required': [('booking_type', '=', 'special')]}" />
+				</field>
+				<xpath expr="//sheet" position="inside">
+					<notebook>
+						<page string='Anchor Details'>
+							<field name="project_booking_anchor_ids">
+								<tree editable='bottom'>
+									<field name="name" required="1" />
+									<field name="anchor_type_id" options="{'no_create_edit': True}"
+										required="1" />
+									<field name="anchor_size_id" options="{'no_create_edit': True}"
+										context="{'parent_anchor_type_id': anchor_type_id}" required="1" />
+									<field name="anchor_qty" required="1" />
+									<field name="an_complexity" required="1" />
+								</tree>
+							</field>
+						</page>
+						<page string="Booking Date &amp; Time"
+							attrs="{'invisible': [('booking_type', '=', 'special')]}">
+							<field name="time_booking_ids" attrs="{'required':[('booking_type','=','normal')]}">
+								<form string="TimeSlot Booking">
+									<sheet>
+										<group>
+											<group>
+												<field name="pr_booking_id" invisible="1" />
+												<field name="booking_date" required="1" />
+												<field name="time_slot_id" options="{'no_create_edit': True}"/>
+											</group>
+											<group>
+												<field name="timeslot_start_id" readonly="1" />
+												<field name="timeslot_end_id" readonly="1" />
+											</group>
+										</group>
+									</sheet>
+								</form>
+								<tree>
+									<field name="pr_booking_id" invisible="1" />
+									<field name="booking_date" />
+									<field name="time_slot_id" invisible="1" />
+									<field name="timeslot_start_id" readonly="1" />
+									<field name="timeslot_end_id" readonly="1" />
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

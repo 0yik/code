@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="Product" t-extend="Product">
+        <t t-jquery="img" t-operation="after">
+            <span class="rent_price-tag" title="Rent price">
+                <t t-esc="widget.format_currency(product.rent_price,'Product Rent Price')"/>
+            </span>
+        </t>
+    </t>
+
+    <t t-name="SelectionPopupWidget" t-extend="SelectionPopupWidget">
+        <t t-jquery=".selection-item" t-operation="replace">
+            <div class='selection-item' t-att-data-item-index='item_index'>
+                <t t-if="item.image_url">
+                    <img t-att-src="item.image_url" class="selection_image"/>
+                </t>
+                <t t-esc='item.label'/>
+            </div>
+        </t>
+    </t>
+
+    <t t-name="Orderline" t-extend="Orderline">
+        <t t-jquery=".info-list:first" t-operation="append">
+            <t t-if="line.get_booking_str()">
+                <li><t t-esc="line.get_booking_str()"/></li>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="ProductCategoriesWidget" t-extend="ProductCategoriesWidget">
+        <t t-jquery=".breadcrumbs" t-operation="after">
+            <div class="toggle_mode">
+                <button id="change_mode" title="Switch mode between Sale and Rent.">Mode : RENT</button>
+            </div>
+        </t>
+    </t>
+
+    <t t-name="ProductReturnPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup">
+                <p class="title"><t t-esc="widget.title"/></p>
+                <div class="header-products">
+                    <input name="prod_name"/>
+                    <button class="clear" name="clear">Clear</button>
+                </div>
+                <hr />
+                <div class="prd_lines">
+                    <table>
+                        <thead>
+                            <th> Product Name </th>
+                            <th> RFID </th>
+                            <th> Scanned </th>
+                        </thead>
+                        <tbody>
+                            <t t-if="widget.options and widget.options.lines">
+                                <t t-foreach="widget.options.lines" t-as="l">
+                                    <tr>
+                                        <td><span t-esc="l.name"/></td>
+                                        <td><span t-esc="l.barcode or '-'"/></td>
+                                        <td t-att-id="l.id">
+                                            <t t-if="l.scanned"><span class="fa fa-check"/></t>
+                                            <t t-else=""><span class="fa fa-close"/></t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        <t t-esc="widget.confirm_btn_str"/>
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="AdvanceReturnPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup wk_coupon_popup">
+                <p class="title">Return Deposit</p>
+                <div class="control">
+                    <input type="number" name="note" class="wk_input"/>
+                </div>
+
+                <div class="footer">
+                    <div class="button coupon_button wk_return_confirm">
+                        Return
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    
+    <t t-name="ClientListScreenWidget" t-extend="ClientListScreenWidget">
+        <t t-jquery=".client-list thead tr" t-operation="append">
+            <th>NRIC</th>
+        </t>
+    </t>
+    <t t-name="ClientLine" t-extend="ClientLine">
+        <t t-jquery=".client-line" t-operation="append">
+            <td>
+                <t t-if="partner.nric_no">
+                    <t t-esc='partner.nric_no'/>
+                </t>
+            </td>
+        </t>
+    </t>
+
+    <t t-name="DepositOrderButton">
+        <span id="deposit_button" class="control-button order-split">
+            <i></i>
+            Deposit
+        </span>
+    </t>
+    
+    <t t-name="FullOrderHistoryButton">
+        <span id="all_orders" class="control-button">
+           <i class="fa fa-calendar"></i>
+            All Orders
+        </span>
+    </t>
+    
+    <t t-name="TodayOrderHistoryButton">
+        <span id="today_orders" class="control-button">
+            <i class="fa fa-list"></i>
+            Today's Order
+        </span>
+    </t>
+    
+     
+
+    <t t-name="OrderScreenWidget">
+        <div class='screen'>
+            <div class='screen-content sk_extend'>
+                <div class='top-content'>
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                    <span class="searchbox">
+                        <input placeholder="Search Orders" class="order_search"/>
+                        <span class="search-clear"></span>
+                    </span>
+                </div>
+                <div class='wk_table_body'>
+                    <table class='wk_order_table'>
+                        <thead>
+                            <tr class="wk_table_header">
+                                <th bgcolor="#5D7B9D">Order Ref</th>
+                                <th>Booking Ref</th>
+                                <th>Customer</th>
+                                <th>Order Date</th>
+                                <th>Invoice No</th>
+                                <th>Start Date</th>
+                                <th>Deposit</th>
+                                <th>Advance Returned?</th>
+                                <th>Estimate Return Date</th>
+                                <th>Product Status</th>
+                                <th>Refundable Deposit</th>
+                                <th>View Products</th>
+                            </tr>
+                        </thead>
+                        <tbody class='client-list-contents'>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t>
+
+      <t t-name="OrderLineBody">     
+        <tr class="order-line" t-att-data-id='order.id'>
+            <td><t t-esc='order.name'/></td>
+            <td>
+                <t t-if="order.booking_id">
+                    <t t-esc="order.booking_id[1]"/>
+                </t>
+                <t t-else="">
+                    -
+                </t>
+            </td>
+            <td><t t-esc='order.partner_id[1] or "-"'/></td>
+            <td><t t-esc='order.date_order' /></td>
+            <td>
+                <t t-esc="order.invoice_id and order.invoice_id[1].split(' ')[0] or '-'"/>
+            </td>
+            <td><t t-esc='order.start_date or "-"'/></td>
+            <t t-if="order.booking_id">
+                <td>
+                    <t t-if='order.state != "draft"' t-esc='order.deposit_amount'/>
+                    <t t-else="">
+                        <button class="wk_order_state" t-att-id='order.id' style="background-color:rgb(110, 200, 155)!important">Collect Deposit</button>
+                    </t>
+                </td>
+                <td class="return_status">
+                    <t t-if="order.return_status=='Fully-Returned'">
+                        <i class='fa fa-check'/>
+                    </t>
+                    <t t-else="">
+                        <i class='fa fa-times'/>
+                    </t>
+                </td>
+                <td><t t-esc='order.end_date or "-"' /></td>
+                <td>
+                    <t t-if="order.collected">
+                        <button class="wk_collected" t-att-id='order.id' style="background-color:#e2e2e2 !important;">Collect</button>
+                    </t>
+                    <t t-else="">
+                        <button class="wk_collected" t-att-id='order.id'>Collect</button>
+                    </t>
+
+                    <t t-if="order.returned">
+                        <button class="wk_returned" t-att-id='order.id' style="background-color:#e2e2e2 !important;">Return</button>
+                    </t>
+                    <t t-else="">
+                        <button class="wk_returned" t-att-id='order.id'>Return</button>
+                    </t>
+
+                    <t t-if="order.laundry">
+                        <button class="wk_laundry" t-att-id='order.id' style="background-color:#e2e2e2 !important;">Laundry</button>
+                    </t>
+                    <t t-else="">
+                        <button class="wk_laundry" t-att-id='order.id'>Laundry</button>
+                    </t>
+
+                    <t t-if="order.all_done">
+                        <button class="wk_available" t-att-id='order.id' style="background-color:#e2e2e2 !important;">Available</button>
+                    </t>
+                    <t t-else="" >
+                        <button class="wk_available" t-att-id='order.id'>Available</button>
+                    </t>
+                </td>
+                <td>
+                    <t t-if="order.return_status=='Fully-Returned'">
+                        <button class="wk_return_content" t-att-id='order.id' style="background-color:#e2e2e2 !important;">Return Deposit</button>
+                    </t>
+                    <t t-else="">
+                        <button class="wk_return_content" t-att-id='order.id'>Return Deposit</button>
+                    </t>
+                </td>
+                <td>
+                    <button class="view_products" t-att-id='order.id'>View Products</button>
+                </td>
+            </t>
+            <t t-else="">
+                <td> - </td>
+                <td> - </td>
+                <td> - </td>
+                <td> Direct Sale </td>
+                <td> No Deposit </td>
+                <td>
+                    <button class="view_products" t-att-id='order.id'>View Products</button>
+                </td>
+            </t>
+        </tr>
+        </t>
+
+<!--Kunal Chavda-->
+     <t t-name="PosBookingCalendar">
+        <div class="modal-dialog">
+            <div class="wk_popup_body">
+                <div class="header">
+                    <div class="wk_button_book">
+                        Proceed to Booking
+                    </div>
+                    <div class="wk_button_close">
+                        Close
+                    </div>
+                </div>
+                <br/>
+                <div class="wk_laundry_buffer">
+                    <select class="wk_top_title">
+                        <option value="0">Laundry Buffer</option>
+                        <option value="1">1 Day</option>
+                        <option value="2">2 Days</option>
+                        <option value="3" selected="selected">3 Days</option>
+                        <option value="4">4 Days</option>
+                        <option value="5">5 Days</option>
+                        <option value="6">6 Days</option>
+                        <option value="7">7 Days</option>
+                        <option value="8">8 Days</option>
+                        <option value="9">9 Days</option>
+                        <option value="10">10 Days</option>
+                        <option value="11">11 Days</option>
+                        <option value="12">12 Days</option>
+                        <option value="13">13 Days</option>
+                        <option value="14">14 Days</option>
+                        <option value="15">15 Days</option>
+                    </select> 
+                </div>
+                <div id="wk_main" class="wk_main">
+                     <h2>Select Dates for Booking</h2> 
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
+    </t>
+   
+</templates>

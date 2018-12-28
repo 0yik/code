@@ -1,0 +1,70 @@
+<openerp>
+	<data>
+		
+		<!-- CRM Report -->
+		<record model="ir.ui.view" id="view_crm_report_wizard">
+			<field name="name">CRM Report</field>
+			<field name="model">crm.report.wizz</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form col="4" string="CRM Report">
+					<separator string="CRM Report" colspan="4" />
+					<group colspan="4">
+						<field name="all_details" groups="avanta_fields_modifier.group_crm_user,avanta_fields_modifier.group_management_representative"/>
+						<field name="user_id" required="1"  options='{"no_open": True, "no_create_edit": True, "no_create": True}'/>
+						<field name="services" attrs="{'invisible':[('all_details','=',True)], 'required':[('all_details','=',False)]}" domain="[('type', '=', 'service')]" options='{"no_open": True, "no_create_edit": True, "no_create": True}'/>
+						<field name="products" attrs="{'invisible':[('all_details','=',True)], 'required':[('all_details','=',False)]}" domain="[('service_id', '=', services)]" options='{"no_open": True, "no_create_edit": True, "no_create": True}'/>
+						<field name="company_id" required="1" options='{"no_open": True, "no_create_edit": True, "no_create": True}'/>
+						<field name="date_start" required="1"/>
+						<field name="date_end" required="1"/>
+						<field name="check_user"  on_change="onchange_check_user(check_user)" invisible="1"/>
+					</group>
+					<newline />
+					<footer>
+						<button name="generate_report" string="Print" type="object" class="oe_highlight" />
+						or
+						<button special="cancel" string="_Cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_crm_report_wizard_inherit">
+			<field name="name">CRM Report Inherit</field>
+			<field name="model">crm.report.wizz</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="avanta_crm_report.view_crm_report_wizard"/>
+			<field name="groups_id" eval="[(6,0, [ref('sales_team.group_sale_manager')])]"/>
+			<field name="arch" type="xml">
+				<field name="user_id" position="before">
+					<field name="all"/>
+				</field>
+				<field name="user_id" position="replace">
+					<field name="user_id" options='{"no_open": True, "no_create_edit": True, "no_create": True}' attrs="{'invisible':[('all','=',True)], 'required':[('all','=',False)]}"/>
+				</field>
+				<field name="products" position="replace">
+					<field name="products" domain="[('service_id', '=', services)]" options='{"no_open": True, "no_create_edit": True, "no_create": True}' attrs="{'invisible':[('all','=',True)], 'required':[('all','=',False)]}"/>
+				</field>
+				<field name="services" position="replace">
+					<field name="services" domain="[('type', '=', 'service')]" options='{"no_open": True, "no_create_edit": True, "no_create": True}' attrs="{'invisible':[('all','=',True)], 'required':[('all','=',False)]}"/>
+				</field>
+				<field name="company_id" position="replace">
+					<field name="company_id" options='{"no_open": True, "no_create_edit": True, "no_create": True}' required="1"/>
+				</field>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_crm_report_wizard">
+			<field name="name">CRM Report</field>
+			<field name="res_model">crm.report.wizz</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+		
+		<menuitem id="menu_crm_report_wizard" name="CRM Report" parent="sales_team.menu_base_partner"
+			action="action_crm_report_wizard" sequence="100"/>
+		
+	</data>
+</openerp>

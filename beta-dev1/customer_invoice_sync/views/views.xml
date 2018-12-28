@@ -1,0 +1,113 @@
+<odoo>
+    <data>
+
+        <record id="sync_server_view_tree" model="ir.ui.view">
+            <field name="name">sync_server tree</field>
+            <field name="model">sync.server</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="url" placeholder="http://127.0.0.1:8069"/>
+                    <field name="db"/>
+                    <field name="username"/>
+                    <field name="password"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        <record id="sync_server_view_form" model="ir.ui.view">
+            <field name="name">sync_server form</field>
+            <field name="model">sync.server</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="url" placeholder="http://127.0.0.1:8069"/>
+                            <field name="db"/>
+                            <field name="username"/>
+                            <field name="password"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sync_server_action" model="ir.actions.act_window">
+            <field name="name">Sync Invoice</field>
+            <field name="res_model">sync.server</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="sync_server_action" id="menu_sync_server" parent="account.account_account_menu" sequence="20"/>
+
+        <record id="invoice_tree" model="ir.ui.view">
+            <field name="name">invoice_tree tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="before">
+                    <field name="inv_sync"/>
+                </field>
+            </field>
+        </record>
+        <record id="invoice_form" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_term_id" position="after">
+                    <field name="inv_sync"/>
+                </field>
+            </field>
+        </record>
+
+<!--        <record id="view_account_config" model="ir.ui.view">
+            <field name="name">account settings</field>
+            <field name="model">account.config.settings</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="priority" eval="18"/>
+            <field name="arch" type="xml">
+                <group name="accounting" position="after">
+                    <group name="invoice_sync" string="Invoice sync to another server">
+                        <label for="url" string="URL with Port"/>
+                        <div>
+                            <field name="url"/>
+                        </div>
+                        <label for="db"/>
+                        <div>
+                            <field name="db"/>
+                        </div>
+                        <label for="username"/>
+                        <div>
+                            <field name="username"/>
+                        </div>
+                        <label for="password"/>
+                        <div>
+                            <field name="password"/>
+                        </div>
+                    </group>
+                </group>
+            </field>
+        </record>-->
+
+        <record id="action_invoice_sync" model="ir.actions.server">
+            <field name="name">Sync Invoice</field>
+            <field name="model_id" ref="account.model_account_invoice"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                records.update_invoice_sync()
+            </field>
+        </record>
+
+        <record id="values_invoice_sync" model="ir.values">
+            <field name="model_id" ref="account.model_account_invoice"/>
+            <field name="name">Sync Invoice(s)</field>
+            <field name="key2">client_action_multi</field>
+            <field name="key">action</field>
+            <field name="model">account.invoice</field>
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_invoice_sync'))"/>
+        </record>
+    </data>
+</odoo>

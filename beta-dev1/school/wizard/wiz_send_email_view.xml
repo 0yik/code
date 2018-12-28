@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+
+        <!-- Form View Of Send Mail -->
+
+        <record id="wiz_send_email_form_view" model="ir.ui.view">
+            <field name="name">send.email.form</field>
+            <field name="model">send.email</field>
+            <field name="arch" type="xml">
+                <form string="Send Email">
+                    <field name='note' nolabel="0" height="350" width="350" placeholder="Notes"/>
+                    <newline/>
+                    <footer>
+                        <button name="send_email" string="Send Email" class="btn btn-sm btn-default fa fa-envelope" type="object"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action Of Form View Of Send Mail -->
+
+        <act_window id="act_send_email"
+            name="Send Email"
+            res_model="send.email"
+            src_model="student.student"
+            view_mode="form"
+            target="new"
+            view_type="form" groups="school.group_school_administration,school.group_school_teacher"
+            />
+
+        <!-- Action to change status of student to  Alumni-->
+        <record id="ir_actions_server_student_alumni" model="ir.actions.server">
+            <field name="name">Alumni</field>
+            <field name="model_id" ref="school.model_student_student"/>
+            <field name="state">code</field>
+            <field name="code">
+record = model.browse(context['active_ids'])
+for rex in record:
+    rex.write({'state':'alumni'})
+            </field>
+        </record>
+        <record id="id_student_alumni" model="ir.values">
+            <field name="model_id" ref="school.model_student_student" />
+            <field name="name">Alumni</field>
+            <field name="key2">client_action_multi</field>
+            <field eval="'ir.actions.server,%d'%ir_actions_server_student_alumni" name="value"/>
+            <!-- <field name="key">action</field> -->
+            <field name="model">student.student</field>
+        </record>
+
+        <!-- Action to change status of student to  Terminate-->
+        <record id="ir_actions_student_terminate" model="ir.actions.server">
+            <field name="name">Terminate</field>
+            <field name="model_id" ref="school.model_student_student"/>
+            <field name="state">code</field>
+            <field name="code">
+record = model.browse(context['active_ids'])
+for rex in record:
+    rex.write({'state':'terminate'})
+            </field>
+        </record>
+        <record id="id_put_away_stock_quant" model="ir.values">
+            <field name="model_id" ref="school.model_student_student" />
+            <field name="name">Terminate</field>
+            <field name="key2">client_action_multi</field>
+            <field eval="'ir.actions.server,%d'%ir_actions_student_terminate" name="value"/>
+            <!-- <field name="key">action</field> -->
+            <field name="model">student.student</field>
+        </record>
+</odoo>

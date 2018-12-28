@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+          <menuitem id="menu_report_payroll1" name="Reports" parent="hr.menu_hr_root"
+          sequence="15" groups="indo_hr_payroll.group_indonesia_hr_payroll_admin"/>
+
+
+        <!-- Salary Related Menus Access Rights -->
+        <record id="hr_payroll.menu_hr_payroll_structure_view" model="ir.ui.menu">
+            <field name="name">Salary Structure</field>
+            <field name="parent_id" ref="hr_payroll.menu_hr_payroll_configuration"/>
+            <field name="groups_id"   eval="[(6, 0, [ref('base.group_system'), ref('group_indonesia_hr_payroll_admin')])]"/>
+            <field name="action" ref="hr_payroll.action_view_hr_payroll_structure_list_form"/>
+        </record>
+        <record id="hr_payroll.menu_hr_payroll_structure_tree" model="ir.ui.menu">
+            <field name="name">Salary Structure Hierarchy</field>
+            <field name="parent_id" ref="hr_payroll.menu_hr_payroll_configuration"/>
+            <field name="groups_id"   eval="[(6, 0, [ref('base.group_system'), ref('group_indonesia_hr_payroll_admin')])]"/>
+            <field name="action" ref="hr_payroll.action_view_hr_payroll_structure_tree"/>
+            <field name="sequence">2</field>
+        </record>
+        <record id="hr_payroll.menu_hr_salary_rule_category" model="ir.ui.menu">
+            <field name="name">Salary Rule Category</field>
+            <field name="parent_id" ref="hr_payroll.menu_hr_payroll_configuration"/>
+            <field name="groups_id"   eval="[(6, 0, [ref('base.group_system'), ref('group_indonesia_hr_payroll_admin')])]"/>
+            <field name="action" ref="hr_payroll.action_hr_salary_rule_category"/>
+            <field name="sequence">11</field>
+        </record>
+        <record id="hr_payroll.menu_hr_salary_rule_category_tree_view" model="ir.ui.menu">
+            <field name="name">Salary Rule Category Hierarchy</field>
+            <field name="parent_id" ref="hr_payroll.menu_hr_payroll_configuration"/>
+            <field name="groups_id"   eval="[(6, 0, [ref('base.group_system'), ref('group_indonesia_hr_payroll_admin')])]"/>
+            <field name="action" ref="hr_payroll.action_hr_salary_rule_category_tree_view"/>
+            <field name="sequence">12</field>
+        </record>
+        <record id="hr_payroll.menu_action_hr_salary_rule_form" model="ir.ui.menu">
+            <field name="name">Salary Rule</field>
+            <field name="parent_id" ref="hr_payroll.menu_hr_payroll_configuration"/>
+            <field name="groups_id"   eval="[(6, 0, [ref('base.group_system')])]"/>
+            <field name="action" ref="hr_payroll.action_salary_rule_form"/>
+            <field name="sequence">13</field>
+        </record>
+
+        <!-- HR Menus -->
+        <menuitem
+            id="hr_payroll.menu_action_hr_contribution_register_form"
+            parent="hr_payroll.menu_hr_payroll_configuration"
+	        name="Contribution Register"
+        	sequence="10"
+            groups="base.group_system,group_indonesia_hr_payroll_admin" />
+
+        <menuitem id="hr_payroll.menu_hr_payroll_root" groups="base.group_system,base.group_erp_manager,group_indonesia_hr_payroll_admin,-hr.group_hr_manager" parent="sg_hr_employee.menu_root_hr_parent" name="Payroll" sequence="2"/>
+        <menuitem action="hr_payroll.action_view_hr_payslip_form" groups="group_indonesia_hr_payroll_admin,-hr.group_hr_manager,-hr.group_hr_user" id="hr_payroll.menu_department_tree" parent="hr_payroll.menu_hr_payroll_root"/>
+        <menuitem action="hr_payroll.action_hr_payslip_run_tree" groups="group_indonesia_hr_payroll_admin,-hr.group_hr_manager,-hr.group_hr_user" id="hr_payroll.menu_hr_payslip_run" parent="hr_payroll.menu_hr_payroll_root"/>
+        <menuitem action="hr_contract.action_hr_contract" id="hr_contract.hr_menu_contract" parent="hr_payroll.menu_hr_payroll_root" name="Contracts" sequence="4" groups="hr.group_hr_manager,group_indonesia_hr_payroll_admin"/>
+    </data>
+</odoo>

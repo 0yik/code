@@ -1,0 +1,28 @@
+<odoo>
+	<data>
+
+		<record id="view_production_lot_inherit_form" model="ir.ui.view">
+            <field name="name">stock.production.lot.inherit.form</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+            	<field name="name" position="after">
+            		<field name="barcode_image" widget="image" invisible="1"/>
+            	</field>
+            </field>
+    	</record>
+
+		<record model="ir.ui.view" id="view_move_form_produce">
+            <field name="name">stock.production.lot.form.produce</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="product_expiry.view_move_form_expiry" />
+            <field name="arch" type="xml">
+	            <field name="removal_date" position="after">
+	                <field name="produce_date"/>
+					<field name="count_for_print"/>
+				</field>
+            </field>
+        </record>
+
+	</data>
+</odoo>

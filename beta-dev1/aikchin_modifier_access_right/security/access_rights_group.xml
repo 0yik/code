@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!--BOSS-->
+        <record id="boss_access_groups" model="access.rights.group">
+            <field name="name">Boss</field>
+            <field name="group_ids" eval="[(4, ref('auditor_group')),
+                                           (4, ref('general_leger_manager_group')),
+                                           (4, ref('account_receivable_manager_group')),
+                                           (4, ref('account_payable_manager_group')),
+                                           (4, ref('head_of_sales_group')),
+                                           (4, ref('sales_manager_group')),
+                                           (4, ref('branch_manager_group')),
+                                           (4, ref('branch_group')),
+                                           (4, ref('cashier_group')),
+                                           (4, ref('procurement_manager_group')),
+                                           (4, ref('procurement_executive_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+                                           (4, ref('warehouse_worker_group')),
+            (4, ref('account.group_account_manager')),]"/>
+
+        </record>
+
+        <!--CEO-->
+        <record id="ceo_access_groups" model="access.rights.group">
+            <field name="name">CEO</field>
+            <field name="group_ids" eval="[(4, ref('auditor_group')),
+                                           (4, ref('general_leger_manager_group')),
+                                           (4, ref('account_receivable_manager_group')),
+                                           (4, ref('account_payable_manager_group')),
+                                           (4, ref('head_of_sales_group')),
+                                           (4, ref('sales_manager_group')),
+                                           (4, ref('branch_manager_group')),
+                                           (4, ref('branch_group')),
+                                           (4, ref('cashier_group')),
+                                           (4, ref('procurement_manager_group')),
+                                           (4, ref('procurement_executive_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+                                           (4, ref('warehouse_worker_group')),
+            (4, ref('account.group_account_manager')),]"/>
+            <!--]"/>-->
+
+        </record>
+
+        <!--CFO-->
+        <record id="cfo_access_groups" model="access.rights.group">
+            <field name="name">CFO</field>
+            <field name="group_ids" eval="[(4, ref('auditor_group')),
+                                           (4, ref('general_leger_manager_group')),
+                                           (4, ref('account_receivable_manager_group')),
+                                           (4, ref('account_payable_manager_group')),
+                                           (4, ref('head_of_sales_group')),
+                                           (4, ref('sales_manager_group')),
+                                           (4, ref('branch_manager_group')),
+                                           (4, ref('branch_group')),
+                                           (4, ref('cashier_group')),
+                                           (4, ref('procurement_manager_group')),
+                                           (4, ref('procurement_executive_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+                                           (4, ref('warehouse_worker_group')),
+            (4, ref('account.group_account_manager')),]"/>
+
+        </record>
+
+        <!--Finance Manage-->
+        <record id="account_payable_manager_group_access_groups" model="access.rights.group">
+            <field name="name">Finance Manager</field>
+            <field name="group_ids" eval="[
+                                           (4, ref('auditor_group')),
+                                           (4, ref('general_leger_manager_group')),
+                                           (4, ref('account_receivable_manager_group')),
+                                           (4, ref('account_payable_manager_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+
+            (4, ref('account.group_account_manager')),]"/>
+
+        </record>
+
+        <!--GL Executive-->
+        <record id="gl_manager_access_groups" model="access.rights.group">
+            <field name="name">GL Executive</field>
+            <field name="group_ids" eval="[
+                                           (4, ref('auditor_group')),
+                                           (4, ref('general_leger_manager_group')),
+                                           (4, ref('account_receivable_manager_group')),
+                                           (4, ref('account_payable_manager_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+
+            (4, ref('account.group_account_manager')),]"/>
+
+        </record>
+
+        <!--AR Executive-->
+        <record id="ar_manager_access_groups" model="access.rights.group">
+            <field name="name">AR Executive</field>
+            <field name="group_ids" eval="[
+                                           (4, ref('auditor_group')),
+                                           (4, ref('general_leger_manager_group')),
+                                           (4, ref('account_receivable_manager_group')),
+                                           (4, ref('account_payable_manager_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+
+            (4, ref('account.group_account_manager')),]"/>
+
+        </record>
+
+        <!--AR Executive-->
+        <record id="ap_manager_access_groups" model="access.rights.group">
+            <field name="name">AP Executive</field>
+            <field name="group_ids" eval="[
+                                           (4, ref('auditor_group')),
+                                           (4, ref('general_leger_manager_group')),
+                                           (4, ref('account_receivable_manager_group')),
+                                           (4, ref('account_payable_manager_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+                                           (4, ref('procurement_manager_group')),
+                                           (4, ref('procurement_executive_group')),
+
+            (4, ref('account.group_account_manager')),]"/>
+
+        </record>
+
+        <!--Auditor-->
+        <record id="auditor_access_groups" model="access.rights.group">
+            <field name="name">Auditor</field>
+            <field name="group_ids" eval="[
+                                           (4, ref('auditor_group')),
+                                           (4, ref('general_leger_manager_group')),
+                                           (4, ref('account_receivable_manager_group')),
+                                           (4, ref('account_payable_manager_group')),
+            (4, ref('account.group_account_manager')),]"/>
+        </record>
+
+        <!--Head Of Sales-->
+        <record id="head_of_sale_access_groups" model="access.rights.group">
+            <field name="name">Head Of Sales</field>
+            <field name="group_ids" eval="[(4, ref('sales_manager_group')),
+                                           (4, ref('cashier_group')),
+                                           (4, ref('branch_manager_group')),
+                                           (4, ref('branch_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+            (4, ref('account.group_account_manager')),]"/>
+            <!--]"/>-->
+        </record>
+
+        <!--Sales Manager-->
+        <record id="sales_manager_access_groups" model="access.rights.group">
+            <field name="name">Sales Manager</field>
+            <field name="group_ids" eval="[(4, ref('sales_manager_group')),
+                                           (4, ref('cashier_group')),
+                                           (4, ref('branch_manager_group')),
+                                           (4, ref('branch_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+            (4, ref('account.group_account_manager')),]"/>
+        </record>
+
+        <!--Procurement Manager-->
+        <record id="procurement_manager_access_groups" model="access.rights.group">
+            <field name="name">Procurement Manager</field>
+            <field name="group_ids" eval="[(4, ref('procurement_manager_group')),
+                                           (4, ref('procurement_executive_group')),
+                                           (4, ref('account_payable_manager_group')),
+                                           (4, ref('branch_manager_group')),
+                                           (4, ref('warehouse_worker_group')),
+
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+            (4, ref('account.group_account_manager')),]"/>
+        </record>
+
+        <!--Procurement Executive-->
+        <record id="procurement_excutive_access_groups" model="access.rights.group">
+            <field name="name">Procurement Executive</field>
+            <field name="group_ids" eval="[(4, ref('procurement_manager_group')),
+                                           (4, ref('procurement_executive_group')),
+                                           (4, ref('account_payable_manager_group')),
+
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+            (4, ref('account.group_account_manager')),]"/>
+        </record>
+
+        <!--Branch Manager-->
+        <record id="branch_manager_access_groups" model="access.rights.group">
+            <field name="name">Branch Manager</field>
+            <field name="group_ids" eval="[
+                                           (4, ref('account_payable_manager_group')),
+                                           (4, ref('head_of_sales_group')),
+                                           (4, ref('sales_manager_group')),
+                                           (4, ref('branch_manager_group')),
+                                           (4, ref('branch_group')),
+                                           (4, ref('cashier_group')),
+                                           (4, ref('procurement_manager_group')),
+                                           (4, ref('procurement_executive_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+                                           (4, ref('warehouse_worker_group')),
+            (4, ref('account.group_account_manager')),]"/>
+        </record>
+
+        <!--Warehouse Worker-->
+        <record id="warehouse_worker_access_groups" model="access.rights.group">
+            <field name="name">Warehouse Worker</field>
+            <field name="group_ids" eval="[(4, ref('procurement_manager_group')),
+                                           (4, ref('branch_manager_group')),
+                                           (4, ref('warehouse_worker_group')),
+
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+            (4, ref('account.group_account_manager')),]"/>
+        </record>
+
+        <!--Cashier-->
+        <record id="cashier_access_groups" model="access.rights.group">
+            <field name="name">Cashier</field>
+            <field name="group_ids" eval="[(4, ref('sales_manager_group')),
+                                           (4, ref('cashier_group')),
+                                           (4, ref('branch_manager_group')),
+                                           (4, ref('branch_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+            (4, ref('account.group_account_manager')),]"/>
+        </record>
+
+        <!--Branch Staff-->
+        <record id="branch_staff_access_groups" model="access.rights.group">
+            <field name="name">Branch Staff</field>
+            <field name="group_ids" eval="[(4, ref('sales_manager_group')),
+                                           (4, ref('cashier_group')),
+                                           (4, ref('branch_manager_group')),
+                                           (4, ref('branch_group')),
+                                           (4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+            (4, ref('account.group_account_manager')),]"/>
+        </record>
+
+        <!--HR Manager-->
+        <record id="hr_manager_access_groups" model="access.rights.group">
+            <field name="name">HR Manager</field>
+            <field name="group_ids" eval="[(4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+            (4, ref('account.group_account_manager')),]"/>
+        </record>
+
+        <!--All Employees-->
+        <record id="all_employees_access_groups" model="access.rights.group">
+            <field name="name">All Employees</field>
+            <field name="group_ids" eval="[(4, ref('hr_manager_group')),
+                                           (4, ref('all_employees_group')),
+            (4, ref('account.group_account_manager')),]"/>
+        </record>
+    </data>
+</odoo>

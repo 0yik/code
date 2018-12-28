@@ -1,0 +1,23 @@
+<odoo>
+        <record id="emp_eval_form_view" model="ir.ui.view">
+            <field name="name">emp.eval.form.view</field>
+            <field name="model">employee.evaluation</field>
+            <field name="inherit_id" ref="employee_appraisal.emp_eval_form_view"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='emp_rating_ids']/tree/field[@name='rating']" position="replace">
+            		<field name="rating" context="{'eval_department_id':parent.department_id, 'eval_rating_id':rating_label_id,'full_score':full_score}"  attrs="{'readonly':[('is_attendance_type','=',True)],'required':[('is_attendance_type','=',False)]}" options="{'no_create_edit':True,'no_open':True,'no_quick_create':True}" invisible="1" />
+            		<field name="rating_float" string="Rating" sum="Total"/>
+            	</xpath>
+            </field>
+        </record>
+        <record id="hr_employee_view" model="ir.ui.view">
+            <field name="name">hr.employee.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="employee_appraisal.hr_employee_view"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='current_salary']" position="before">
+                    <field name="reviewer_id"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>

@@ -1,0 +1,42 @@
+/* Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) */
+/* See LICENSE file for full copyright and licensing details. */
+/* License URL : <https://store.webkul.com/license.html/> */
+.printer_select {
+	cursor: pointer;
+	width: 70px;
+	/*background: aqua;*/
+}
+
+.printer_dropdown {
+	color: white;
+	width: 100%; 
+	display: none;
+	position: relative;
+	z-index: 100; 
+	display: ''; 
+	background-color: rgb(28, 26, 26);
+}
+.printer_dropdown li{
+	cursor:pointer;
+	height:30px;
+	padding-top:20px;
+	border:1px solid grey
+}
+.printer_status{
+    font-size: 14px;
+    cursor:pointer;
+}
+
+
+.printer_disconnected{
+    color: rgb(222, 9, 12);
+}
+.printer_connected{
+    color: rgb(94, 185, 55);
+}
+.printer_connecting{
+    color: rgb(239, 153, 65);
+}
+.oe_hidden{
+    display: none !important;
+}

@@ -1,0 +1,337 @@
+<openerp>
+	<data>
+
+		<!--Header-->
+		<template id="crm_report_header">
+			<!-- Multicompany -->
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+
+			<div class="header">
+				<div class="row">
+					<div class="col-xs-3 pull-left">
+						<span style="text-align:left;" t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M')"/>
+					</div>
+					<div class="col-xs-3 col-xs-offset-2 text-center">
+						<span style="text-align:center;" t-esc="company.name"/>
+					</div>
+					<div class="col-xs-2 col-xs-offset-2  pull-right">
+						<ul class="list-inline">
+							<li><span class="page"/></li>
+							<li>/</li>
+							<li><span class="topage"/></li>
+						</ul>
+					</div>
+					<div class="col-xs-3" style="page-break-inside:avoid;">
+                        <img class="pull-left" t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
+                        style="max-height: 100px; max-wight: 70px; float:left; margin-right: 35px; margin-top: -5px; margin-left: -10px;"/>
+                             <!--style="height: 80px;width: 150px;"/>-->
+                    </div>
+				</div>
+			</div>
+			<t t-raw="0" />
+		</template>
+	 	
+		<template id="report_crm_report_document">
+		    <t t-call="report.html_container">
+		        <t t-call="avanta_crm_report.crm_report_header">
+		            <div class="page">
+		            	<style>
+		            		.font10px
+							{
+								font-size: 10px;
+							}
+							.font8px
+							{
+								font-size: 8px;
+							}
+							.border_all{
+								border-left: 1px solid black;
+								border-right: 1px solid black;
+								border-top: 1px solid black;
+								border-bottom: 1px solid black;}
+							.border_left
+                             {
+                             border-left: 1px solid black;}
+                             .border_right
+                             {
+                             border-right: 1px solid black;}
+                             .border_top
+                              {
+                              border-top: 1px solid black;}
+                             .border_top_dushed
+                              {
+                              border-top: 1px dushed black;}
+                             .border_bottom
+                             {
+                             border-bottom: 1px solid black;}
+                             .table.no-border tr td, .table.no-border tr th {
+							    border-width: 0;}
+		            	</style>
+		                <p></p>
+						
+						<table padding-top="5px" cellpadding="2px" width="100%" class="table-borderless font8px">
+							<tr>
+								<td width="55%"><strong>AVANTA GLOBAL SALES REPORT</strong></td>
+								<td width="35%" align="right"><strong>Start Date : <span t-esc="time.strftime('%d/%b/%Y', time.strptime(data['date_start'],'%Y-%m-%d'))"/></strong></td>
+							</tr>
+							<!--<tr>-->
+								<!--<td width="35%"><strong>AVANTA GLOBAL SALES REPORT</strong></td>-->
+								<!--<td width="25%" align="right"><strong>Start Date : <span t-esc="time.strftime('%d/%b/%Y', time.strptime(data['date_start'],'%Y-%m-%d'))"/></strong></td>-->
+								<!--<td width="40%"></td>-->
+							<!--</tr>-->
+							<tr>
+								<td width="55%"></td>
+								<td width="35%" align="right"><strong>End Date : <span t-esc="time.strftime('%d/%b/%Y', time.strptime(data['date_end'],'%Y-%m-%d'))"/></strong></td>
+							</tr>
+						</table>
+						<table padding-top="5px" cellpadding="2px" width="100%" class="table-borderless font8px">
+
+							<tr>
+								<td colspan="3" height="30px">&#032;</td>
+							</tr>
+							<!--sales person names based on view all records-->
+							<tr t-if="not data['all']" height="20px" valign="center">
+								<td style="vertical-align: middle;"><strong>Sales PersonName</strong></td>
+								<td> : <span t-esc="data['user_id'][1]"/></td>
+								<td></td>
+							</tr>
+							<tr t-if="data['all']" height="20px" valign="center">
+								<td><strong>Sales Person Name</strong></td>
+								<td> : All</td>
+							</tr>
+							<!--Name of Services based on view all records-->
+							<tr t-if="not data['all'] and not data['all_details']" height="20px" valign="center">
+								<td style="vertical-align: middle;"><strong>Name of Services</strong></td>
+								<td> : <span t-esc="data['services'][1]"/></td>
+								<td></td>
+							</tr>
+							<tr t-if="data['all'] or data['all_details']" height="20px" valign="center">
+								<td><strong>Name of Services    </strong></td>
+								<td> : All</td>
+							</tr>
+							<!--Name of Products based on view all records-->
+							<tr t-if="not data['all'] and not data['all_details']" height="20px" >
+								<td style="vertical-align: middle;"><strong>Name of Products</strong></td>
+								<td> : <span t-esc="data['products'][1]"/></td>
+								<td></td>
+							</tr>
+							<tr t-if="data['all'] or data['all_details']" height="20px" >
+								<td><strong>Name of Product   </strong></td>
+								<td> : All</td>
+							</tr>
+							<!--Company based on view all records-->
+
+							<tr height="20px" >
+								<td style="vertical-align: middle;"><strong>Company  Name</strong></td>
+								<td> : <span t-esc="data['company_id'][1]"/></td>
+								<td></td>
+							</tr>
+							<!--<tr t-if="data['all']" height="20px" >-->
+								<!--<td width="10%"><strong>Company Name     </strong></td>-->
+								<!--<td width="10%"> : All</td>-->
+								<!--<td width="80%"></td>-->
+							<!--</tr>-->
+
+						</table>
+						
+						<table padding-top="5px" cellpadding="2px" width="100%" class="table table-bordered font8px">
+							<tr align="center" valign="center" bgcolor="lightgrey" >
+								<td style="border:none;border-top:2px;border-right:2px;border-left:2px"></td>
+								<!--<td colspan="1"><strong>Internal Reference</strong></td>-->
+								<td colspan="2"><strong>Services</strong></td>
+								<td colspan="2"><strong>Products</strong></td>
+								<td colspan="2"><strong>Enquiry</strong></td>
+								<td colspan="2"><strong>Allocation</strong></td>
+								<td colspan="2"><strong>Follow Up</strong></td>
+								<td colspan="2"><strong>Quotation</strong></td>
+								<td colspan="2"><strong>Won</strong></td>
+								<td colspan="2"><strong>Lost</strong></td>
+							</tr>
+							<tr align="center" valign="center" bgcolor="lightgrey" >
+
+								<!--<td style="border:none;border-bottom:2px;border-right:2px;border-left:2px"></td>-->
+
+								<!--<td style="border-bottom:2px;border-right:60px;border-left:2px"></td>-->
+								<!--<td/>-->
+								<td><strong>Total <br/> Number</strong></td>
+								<td><strong>Total <br/> Number</strong></td>
+								<td><strong>Total <br/> Amount</strong></td>
+								<td><strong>Total <br/> Number</strong></td>
+								<td><strong>Total <br/> Amount</strong></td>
+								<td><strong>Total <br/> Number</strong></td>
+								<td><strong>Total <br/> Amount</strong></td>
+								<td><strong>Total <br/> Number</strong></td>
+								<td><strong>Total <br/> Amount</strong></td>
+								<td><strong>Total <br/> Number</strong></td>
+								<td><strong>Total <br/> Amount</strong></td>
+								<td><strong>Total <br/> Number</strong></td>
+								<td><strong>Total <br/> Amount</strong></td>
+								<td><strong>Total <br/> Number</strong></td>
+								<td><strong>Total <br/> Amount</strong></td>
+								<td><strong>Total <br/> Number</strong></td>
+								<td><strong>Total <br/> Amount</strong></td>
+							</tr>
+							<tr align="center" valign="center" bgcolor="lightgrey" >
+								<td width="30%"><strong>Customer - Company / <br/> Invidual</strong></td>
+								<!--<td></td>-->
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<t t-set="no" t-value="0"/>
+							<t t-set="total_items_0" t-value="0.0"/>
+							<t t-set="total_amount_0" t-value="0.0"/>
+							<t t-set="total_items_1" t-value="0.0"/>
+							<t t-set="total_amount_1" t-value="0.0"/>
+							<t t-set="total_items_2" t-value="0.0"/>
+							<t t-set="total_amount_2" t-value="0.0"/>
+							<t t-set="total_items_3" t-value="0.0"/>
+							<t t-set="total_amount_3" t-value="0.0"/>
+							<t t-set="total_items_4" t-value="0.0"/>
+							<t t-set="total_amount_4" t-value="0.0"/>
+							<t t-set="total_items_5" t-value="0.0"/>
+							<t t-set="total_amount_5" t-value="0.0"/>
+							<t t-set="total_items_6" t-value="0.0"/>
+							<t t-set="total_amount_6" t-value="0.0"/>
+							<t t-set="total_items_7" t-value="0.0"/>
+							<t t-set="total_amount_7" t-value="0.0"/>
+
+							<t t-foreach="get_data(data)" t-as="l">
+								<t t-set="no" t-value="no + 1"/>
+								<tr align="center" valign="left" bgcolor="lightgrey" >
+									<td align="left"><span t-esc="l['customer_name']"/></td>
+
+									<td><span t-esc="l['items_0']"/></td>
+									<td align="right">S$<span t-esc="l['amount_0']"/></td>
+									<t t-set="total_items_0" t-value="total_items_0 + l['items_0']"/>
+									<t t-set="total_amount_0" t-value="total_amount_0 + l['amount_0']"/>
+
+									<td><span t-esc="l['items_1']"/></td>
+									<td align="right">S$<span t-esc="l['amount_1']"/></td>
+									<t t-set="total_items_1" t-value="total_items_1 + l['items_1']"/>
+									<t t-set="total_amount_1" t-value="total_amount_1 + l['amount_1']"/>
+
+									<td><span t-esc="l['items_2']"/></td>
+									<td align="right">S$<span t-esc="l['amount_2']"/></td>
+									<t t-set="total_items_2" t-value="total_items_2 + l['items_2']"/>
+									<t t-set="total_amount_2" t-value="total_amount_2 + l['amount_2']"/>
+
+									<td><span t-esc="l['items_3']"/></td>
+									<td align="right">S$<span t-esc="l['amount_3']"/></td>
+									<t t-set="total_items_3" t-value="total_items_3 + l['items_3']"/>
+									<t t-set="total_amount_3" t-value="total_amount_3 + l['amount_3']"/>
+
+									<td><span t-esc="l['items_4']"/></td>
+									<td align="right">S$<span t-esc="l['amount_4']"/></td>
+									<t t-set="total_items_4" t-value="total_items_4 + l['items_4']"/>
+									<t t-set="total_amount_4" t-value="total_amount_4 + l['amount_4']"/>
+
+									<td><span t-esc="l['items_5']"/></td>
+									<td align="right">S$<span t-esc="l['amount_5']"/></td>
+									<t t-set="total_items_5" t-value="total_items_5 + l['items_5']"/>
+									<t t-set="total_amount_5" t-value="total_amount_5 + l['amount_5']"/>
+
+									<td><span t-esc="l['items_6']"/></td>
+									<td align="right">S$<span t-esc="l['amount_6']"/></td>
+									<t t-set="total_items_6" t-value="total_items_6 + l['items_6']"/>
+									<t t-set="total_amount_6" t-value="total_amount_6 + l['amount_6']"/>
+
+									<td><span t-esc="l['items_7']"/></td>
+									<td align="right">S$<span t-esc="l['amount_7']"/></td>
+									<t t-set="total_items_7" t-value="total_items_7 + l['items_7']"/>
+									<t t-set="total_amount_7" t-value="total_amount_7 + l['amount_7']"/>
+								</tr>
+							</t>
+
+							<t t-foreach="range(10 - no)" t-as="l">
+								<tr align="center" valign="center" bgcolor="lightgrey" >
+									<!--<td>&#032;</td>-->
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+									<td>&#032;</td>
+								</tr>
+							</t>
+
+							<tr align="center" valign="left" bgcolor="lightgrey" >
+								<!--<td/>-->
+								<td><strong>TOTAL</strong></td>
+								<td><strong><span t-esc="total_items_0"/></strong></td>
+								<td align="right"><strong>S$<span t-esc="total_amount_0"/></strong></td>
+								<td><strong><span t-esc="total_items_1"/></strong></td>
+								<td align="right"><strong>S$<span t-esc="total_amount_1"/></strong></td>
+								<td><strong><span t-esc="total_items_2"/></strong></td>
+								<td align="right"><strong>S$<span t-esc="total_amount_2"/></strong></td>
+								<td><strong><span t-esc="total_items_3"/></strong></td>
+								<td align="right"><strong>S$<span t-esc="total_amount_3"/></strong></td>
+								<td><strong><span t-esc="total_items_4"/></strong></td>
+								<td align="right"><strong>S$<span t-esc="total_amount_4"/></strong></td>
+								<td><strong><span t-esc="total_items_5"/></strong></td>
+								<td align="right"><strong>S$<span t-esc="total_amount_5"/></strong></td>
+								<td><strong><span t-esc="total_items_6"/></strong></td>
+								<td align="right"><strong>S$<span t-esc="total_amount_6"/></strong></td>
+								<td><strong><span t-esc="total_items_7"/></strong></td>
+								<td align="right"><strong>S$<span t-esc="total_amount_7"/></strong></td>
+							</tr>
+
+							<tr align="center" valign="center" bgcolor="lightgrey" >
+								<td width="30%">&#032;</td>
+								<!--<td>&#032;</td>-->
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+								<td>&#032;</td>
+							</tr>
+						</table>
+						<br/>
+		            </div>
+		        </t>
+		    </t>
+		</template>
+
+	</data>
+</openerp>

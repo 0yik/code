@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <!--Report-->
+        <report
+            id="action_sale_pipeline_retail_report_modify"
+            model="sale.pipeline.retail.report"
+            string="Sale Pipeline Retail Report"
+            name="dzh_sales_pipeline_retail_report_modify.sale_pipeline_retail_report"
+            file="dzh_sales_pipeline_retail_report_modify.sale_pipeline_retail_report"
+            report_type="qweb-pdf"/>
+
+        <!--Paperformat-->
+        <record id="sale_pipeline_retail_report_qweb_paperformat" model="report.paperformat">
+            <field name="name">Sale Pipeline Retail Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">280</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">15</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_sale_pipeline_retail_report_modify" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="sale_pipeline_retail_report_qweb_paperformat"/>
+        </record>
+
+        <!--Headers and Footers for Credit Note Report -->
+        <template id="external_layout_sales_pipeline_retail">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="dzh_sales_pipeline_retail_report_modify.external_layout_header_sales_pipeline_retail" />
+            <t t-raw="0" />
+            <t t-call="dzh_sales_pipeline_retail_report_modify.external_layout_footer_sales_pipeline_retail" />
+        </template>
+
+        <!--HEARDER-->
+        <template id="dzh_sales_pipeline_retail_report_modify.external_layout_header_sales_pipeline_retail">
+            <div class="header">
+                <div class="row">
+                    <div>
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:40px;width:160px;float:right"/>
+                    </div>
+                    <div>
+                        <span  style="font-size:24px;font-weight:bold">Sale Pipeline Retail Report as at
+                                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %b %Y')"/></span>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!--FOOTER-->
+        <template id="dzh_sales_pipeline_retail_report_modify.external_layout_footer_sales_pipeline_retail">
+            <div class="footer" style="font-size:10pt;">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <div class="text-right" style="float:right">
+                            <ul class="list-inline">
+                                <li>Page:</li>
+                                <li><span class="page"/></li>
+                                <li>of</li>
+                                <li><span class="topage"/></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="dzh_sales_pipeline_retail_report_modify.sale_pipeline_retail_report">
+            <t t-call="report.html_container">
+                <t t-call="dzh_sales_pipeline_retail_report_modify.external_layout_sales_pipeline_retail">
+                <t t-foreach="docs" t-as="o">
+                    <t >
+                        <div class="page">
+                            <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet"/>
+                            <t t-foreach="o.country_ids" t-as="country">
+
+                                <!--TABLE NEW-->
+                                <t t-set="count_new_paid" t-value="0"/>
+                                <t t-set="total_new_paid" t-value="0"/>
+                                <t t-set="terminal_count_new_paid" t-value="0"/>
+                                <t t-set="terminal_total_new_paid" t-value="0"/>
+                                <t t-set="count_new_open" t-value="0"/>
+                                <t t-set="total_new_open" t-value="0"/>
+                                <t t-set="terminal_count_new_open" t-value="0"/>
+                                <t t-set="terminal_total_new_open" t-value="0"/>
+                                <table class="table table-bordered" style="font-size:14px;page-break-inside:avoid;" >
+                                    <thead>
+                                        <tr class="text-right" style="background-color:#3399FF;font-size:15px;">
+                                            <th style="color:white;"><t t-esc="country.name"/> </th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-right" style="background-color:#FFFF00;">NEW</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;">Username</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;">Name</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;">Services</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:5%;">Period</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:8%;">Amount W/O GST</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:8%;">Amount with GST</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:7%;">Start Date</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:11%;">Terminal W/O Data Feed(per Month)</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:5%;">Probability</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:5%;">Status</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:8%;">Invoice Number</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:7%;">Payment Date Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-right" style="background-color:#66FF99;">Paid</td>
+                                        </tr>
+                                        <t t-set="total_amount_untaxed_new" t-value="0"/>
+                                        <t t-set="total_amount_new" t-value="0"/>
+                                        <t t-set="total_amount_product_new" t-value="0"/>
+                                        <t t-foreach="o.invoice_ids" t-as="invoice">
+                                            <t t-if="invoice.team_id.country.id == country.id and invoice.invoice_arrange == 'new' and invoice.state == 'paid'">
+                                                <t t-set="count_new_paid" t-value="count_new_paid + 1"/>
+                                                <tr>
+                                                    <td  style="font-family: 'Noto Sans TC', sans-serif;">
+                                                        <t t-if="invoice.partner_id.partner_users">
+                                                            <t t-foreach="invoice.partner_id.partner_users" t-as="user_id">
+                                                                <span t-esc="user_id.name"></span> ,
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                    <td  style="font-family: 'Noto Sans TC', sans-serif;"><t t-esc="invoice.partner_id.name"/></td>
+                                                    <td>
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <t t-if="product.invoice_id.id == invoice.id">
+                                                                <span t-esc="product.name"></span> ,
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                    <td><t t-esc="invoice.x_month_number"/> </td>
+                                                    <td><t t-esc="'{0:,.2f}'.format(invoice.amount_untaxed)"/> </td>
+                                                    <t t-set="total_amount_untaxed_new" t-value="total_amount_untaxed_new + invoice.amount_untaxed"/>
+                                                    <td><t t-esc="'{0:,.2f}'.format(invoice.amount_total)"/> </td>
+                                                    <t t-set="total_amount_new" t-value="total_amount_new + invoice.amount_total"/>
+                                                    <td><t t-esc="invoice.x_subscription_period"/> </td>
+                                                    <td>
+                                                        <t t-set="total_product_terminal" t-value="0"/>
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <t t-if="product.invoice_id.id == invoice.id and product.product_id.terminal_ok">
+                                                                <t t-set="total_product_terminal" t-value="total_product_terminal + product.price_subtotal"/>
+                                                                <t t-set="total_amount_product_new" t-value="total_amount_product_new + product.price_subtotal"/>
+                                                            </t>
+                                                        </t>
+                                                        <span t-esc="'{0:,.2f}'.format(total_product_terminal)"></span>
+                                                        <t t-if="total_product_terminal != 0">
+                                                            <t t-set="terminal_count_new_paid" t-value="terminal_count_new_paid + 1"/>
+                                                        </t>
+                                                    </td>
+                                                    <td><t t-esc="int(invoice.probability)"/></td>
+                                                    <td><t t-esc="invoice.state"/> </td>
+                                                    <td><t t-esc="invoice.name"/> </td>
+                                                    <td>
+                                                        <t t-foreach="o.account_payment_ids" t-as="account_payment">
+                                                            <t t-if="account_payment.communication == invoice.number">
+                                                                <t t-esc="account_payment.payment_date"/>
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-set="total_new_paid" t-value="total_amount_untaxed_new"/>
+                                        <t t-set="terminal_total_new_paid" t-value="total_amount_product_new"/>
+                                        <tr style="font-weight:bold">
+                                            <td>TOTAL</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_untaxed_new)"/> </td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_new)"/> </td>
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_product_new)"/> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right" style="background-color:#66FF99;">Pending</td>
+                                        </tr>
+                                        <t t-set="total_amount_untaxed_new" t-value="0"/>
+                                        <t t-set="total_amount_new" t-value="0"/>
+                                        <t t-set="total_amount_product_new" t-value="0"/>
+                                        <t t-foreach="o.invoice_ids" t-as="invoice">
+                                            <t t-if="invoice.team_id.country.id == country.id and invoice.invoice_arrange == 'new' and invoice.state == 'open'">
+                                                <t t-set="count_new_open" t-value="count_new_open + 1"/>
+                                                <tr>
+                                                    <td  style="font-family: 'Noto Sans TC', sans-serif;">
+                                                        <t t-if="invoice.partner_id.partner_users">
+                                                            <t t-foreach="invoice.partner_id.partner_users" t-as="user_id">
+                                                                <span t-esc="user_id.name"></span> ,
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                    <td  style="font-family: 'Noto Sans TC', sans-serif;"><t t-esc="invoice.partner_id.name"/></td>
+                                                    <td>
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <t t-if="product.invoice_id.id == invoice.id">
+                                                                <span t-esc="product.name"></span> ,
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                    <td><t t-esc="invoice.x_month_number"/> </td>
+                                                    <td><t t-esc="'{0:,.2f}'.format(invoice.amount_untaxed)"/> </td>
+                                                    <t t-set="total_amount_untaxed_new" t-value="total_amount_untaxed_new + invoice.amount_untaxed"/>
+                                                    <td><t t-esc="'{0:,.2f}'.format(invoice.amount_total)"/> </td>
+                                                    <t t-set="total_amount_new" t-value="total_amount_new + invoice.amount_total"/>
+                                                    <td><t t-esc="invoice.x_subscription_period"/> </td>
+                                                    <td>
+                                                        <t t-set="total_product_terminal" t-value="0"/>
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <t t-if="product.invoice_id.id == invoice.id and product.product_id.terminal_ok">
+                                                                <t t-set="total_product_terminal" t-value="total_product_terminal + product.price_subtotal"/>
+                                                                <t t-set="total_amount_product_new" t-value="total_amount_product_new + product.price_subtotal"/>
+                                                            </t>
+                                                        </t>
+                                                        <span t-esc="'{0:,.2f}'.format(total_product_terminal)"></span>
+                                                        <t t-if="total_product_terminal != 0">
+                                                            <t t-set="terminal_count_new_open" t-value="terminal_count_new_open + 1"/>
+                                                        </t>
+                                                    </td>
+                                                    <td><t t-esc="int(invoice.probability)"/></td>
+                                                    <td><t t-esc="invoice.state"/> </td>
+                                                    <td><t t-esc="invoice.name"/> </td>
+                                                    <td>
+                                                        <t t-foreach="o.account_payment_ids" t-as="account_payment">
+                                                            <t t-if="account_payment.communication == invoice.number">
+                                                                <t t-esc="account_payment.payment_date"/>
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-set="total_new_open" t-value="total_amount_untaxed_new"/>
+                                        <t t-set="terminal_total_new_open" t-value="total_amount_product_new"/>
+                                        <tr style="font-weight:bold">
+                                            <td>TOTAL</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_untaxed_new)"/> </td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_new)"/> </td>
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_product_new)"/> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                                <!--TABLE RENEWAL-->
+                                <t t-set="count_renewal_paid" t-value="0"/>
+                                <t t-set="total_renewal_paid" t-value="0"/>
+                                <t t-set="terminal_count_renewal_paid" t-value="0"/>
+                                <t t-set="terminal_total_renewal_paid" t-value="0"/>
+                                <t t-set="count_renewal_open" t-value="0"/>
+                                <t t-set="total_renewal_open" t-value="0"/>
+                                <t t-set="terminal_count_renewal_open" t-value="0"/>
+                                <t t-set="terminal_total_renewal_open" t-value="0"/>
+                                <table class="table table-bordered" style="font-size:14px;page-break-inside:avoid" >
+                                    <thead>
+                                        <tr>
+                                            <th class="text-right" style="background-color:#FFFF00;">RENEWAL</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;">Username</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;">Name</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;">Services</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:5%;">Period</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:8%;">Amount W/O GST</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:8%;">Amount with GST</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:7%;">Start Date</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:11%;">Terminal W/O Data Feed(per Month)</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:5%;">Probability</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:5%;">Status</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:8%;">Invoice Number</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:7%;">Payment Date Remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-right" style="background-color:#66FF99;">Renewed</td>
+                                        </tr>
+                                        <t t-set="total_amount_untaxed_new" t-value="0"/>
+                                        <t t-set="total_amount_new" t-value="0"/>
+                                        <t t-set="total_amount_product_new" t-value="0"/>
+                                        <t t-foreach="o.invoice_ids" t-as="invoice">
+                                            <t t-if="invoice.team_id.country.id == country.id and invoice.invoice_arrange == 'renewal' and invoice.state == 'paid'">
+                                                <t t-set="count_renewal_paid" t-value="count_renewal_paid + 1"/>
+                                                <tr>
+                                                    <td  style="font-family: 'Noto Sans TC', sans-serif;">
+                                                        <t t-if="invoice.partner_id.partner_users">
+                                                            <t t-foreach="invoice.partner_id.partner_users" t-as="user_id">
+                                                                <span t-esc="user_id.name"></span> ,
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                    <td  style="font-family: 'Noto Sans TC', sans-serif;"><t t-esc="invoice.partner_id.name"/></td>
+                                                    <td>
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <t t-if="product.invoice_id.id == invoice.id">
+                                                                <span t-esc="product.name"></span> ,
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                    <td><t t-esc="invoice.x_month_number"/> </td>
+                                                    <td><t t-esc="'{0:,.2f}'.format(invoice.amount_untaxed)"/> </td>
+                                                    <t t-set="total_amount_untaxed_new" t-value="total_amount_untaxed_new + invoice.amount_untaxed"/>
+                                                    <td><t t-esc="'{0:,.2f}'.format(invoice.amount_total)"/> </td>
+                                                    <t t-set="total_amount_new" t-value="total_amount_new + invoice.amount_total"/>
+                                                    <td><t t-esc="invoice.x_subscription_period"/> </td>
+                                                    <td>
+                                                        <t t-set="total_product_terminal" t-value="0"/>
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <t t-if="product.invoice_id.id == invoice.id and product.product_id.terminal_ok">
+                                                                <t t-set="total_product_terminal" t-value="total_product_terminal + product.price_subtotal"/>
+                                                                <t t-set="total_amount_product_new" t-value="total_amount_product_new + product.price_subtotal"/>
+                                                            </t>
+                                                        </t>
+                                                        <span t-esc="'{0:,.2f}'.format(total_product_terminal)"></span>
+                                                        <t t-if="total_product_terminal != 0">
+                                                            <t t-set="terminal_count_renewal_paid" t-value="terminal_count_renewal_paid + 1"/>
+                                                        </t>
+                                                    </td>
+                                                    <td><t t-esc="int(invoice.probability)"/></td>
+                                                    <td><t t-esc="invoice.state"/> </td>
+                                                    <td><t t-esc="invoice.name"/> </td>
+                                                    <td>
+                                                        <t t-foreach="o.account_payment_ids" t-as="account_payment">
+                                                            <t t-if="account_payment.communication == invoice.number">
+                                                                <t t-esc="account_payment.payment_date"/>
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-set="total_renewal_paid" t-value="total_amount_untaxed_new"/>
+                                        <t t-set="terminal_total_renewal_paid" t-value="total_amount_product_new"/>
+                                        <tr style="font-weight:bold">
+                                            <td>TOTAL</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_untaxed_new)"/> </td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_new)"/> </td>
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_product_new)"/> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right" style="background-color:#66FF99;">Pending</td>
+                                        </tr>
+                                        <t t-set="total_amount_untaxed_new" t-value="0"/>
+                                        <t t-set="total_amount_new" t-value="0"/>
+                                        <t t-set="total_amount_product_new" t-value="0"/>
+                                        <t t-foreach="o.invoice_ids" t-as="invoice">
+                                            <t t-if="invoice.team_id.country.id == country.id and invoice.invoice_arrange == 'renewal' and invoice.state == 'open'">
+                                                <t t-set="count_renewal_open" t-value="count_renewal_open + 1"/>
+                                                <tr>
+                                                    <td  style="font-family: 'Noto Sans TC', sans-serif;">
+                                                        <t t-if="invoice.partner_id.partner_users">
+                                                            <t t-foreach="invoice.partner_id.partner_users" t-as="user_id">
+                                                                <span t-esc="user_id.name"></span> ,
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                    <td  style="font-family: 'Noto Sans TC', sans-serif;"><t t-esc="invoice.partner_id.name"/></td>
+                                                    <td>
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <t t-if="product.invoice_id.id == invoice.id">
+                                                                <span t-esc="product.name"></span> ,
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                    <td><t t-esc="invoice.x_month_number"/> </td>
+                                                    <td><t t-esc="'{0:,.2f}'.format(invoice.amount_untaxed)"/> </td>
+                                                    <t t-set="total_amount_untaxed_new" t-value="total_amount_untaxed_new + invoice.amount_untaxed"/>
+                                                    <td><t t-esc="'{0:,.2f}'.format(invoice.amount_total)"/> </td>
+                                                    <t t-set="total_amount_new" t-value="total_amount_new + invoice.amount_total"/>
+                                                    <td><t t-esc="invoice.x_subscription_period"/> </td>
+                                                    <td>
+                                                        <t t-set="total_product_terminal" t-value="0"/>
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <t t-if="product.invoice_id.id == invoice.id and product.product_id.terminal_ok">
+                                                                <t t-set="total_product_terminal" t-value="total_product_terminal + product.price_subtotal"/>
+                                                                <t t-set="total_amount_product_new" t-value="total_amount_product_new + product.price_subtotal"/>
+                                                            </t>
+                                                        </t>
+                                                        <span t-esc="'{0:,.2f}'.format(total_product_terminal)"></span>
+                                                        <t t-if="total_product_terminal != 0">
+                                                            <t t-set="terminal_count_renewal_open" t-value="terminal_count_renewal_open + 1"/>
+                                                        </t>
+                                                    </td>
+                                                    <td><t t-esc="int(invoice.probability)"/></td>
+                                                    <td><t t-esc="invoice.state"/> </td>
+                                                    <td><t t-esc="invoice.name"/> </td>
+                                                    <td>
+                                                        <t t-foreach="o.account_payment_ids" t-as="account_payment">
+                                                            <t t-if="account_payment.communication == invoice.number">
+                                                                <t t-esc="account_payment.payment_date"/>
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-set="total_renewal_open" t-value="total_amount_untaxed_new"/>
+                                        <t t-set="terminal_total_renewal_open" t-value="total_amount_product_new"/>
+                                        <tr style="font-weight:bold">
+                                            <td>TOTAL</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_untaxed_new)"/> </td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_new)"/> </td>
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_product_new)"/> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!--TABLE FALL OUT-->
+                                <t t-set="count_fall_out" t-value="0"/>
+                                <t t-set="total_fall_out" t-value="0"/>
+                                <t t-set="terminal_count_fall_out" t-value="0"/>
+                                <t t-set="terminal_total_fall_out" t-value="0"/>
+                                <table class="table table-bordered" style="font-size:14px;page-break-inside:avoid;" >
+                                    <thead>
+                                        <tr>
+                                            <th class="text-right" style="background-color:#FFFF00;">FALL OUT</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;">Username</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;">Name</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;">Services</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:5%;">Period</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:8%;">Amount W/O GST</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:8%;">Amount with GST</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:7%;">Start Date</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:11%;">Terminal W/O Data Feed(per Month)</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:5%;">Probability</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:5%;">Status</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:8%;">Invoice Number</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:7%;">Payment Date Remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="total_amount_untaxed_new" t-value="0"/>
+                                        <t t-set="total_amount_new" t-value="0"/>
+                                        <t t-set="total_amount_product_new" t-value="0"/>
+                                        <t t-foreach="o.invoice_ids" t-as="invoice">
+                                            <t t-if="invoice.team_id.country.id == country.id and invoice.invoice_arrange == 'fallout'">
+                                                <t t-set="count_fall_out" t-value="count_fall_out + 1"/>
+                                                <tr>
+                                                    <td  style="font-family: 'Noto Sans TC', sans-serif;">
+                                                        <t t-if="invoice.partner_id.partner_users">
+                                                            <t t-foreach="invoice.partner_id.partner_users" t-as="user_id">
+                                                                <span t-esc="user_id.name"></span> ,
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                    <td  style="font-family: 'Noto Sans TC', sans-serif;"><t t-esc="invoice.partner_id.name"/></td>
+                                                    <td>
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <t t-if="product.invoice_id.id == invoice.id">
+                                                                <span t-esc="product.name"></span> ,
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                    <td><t t-esc="invoice.x_month_number"/> </td>
+                                                    <td><t t-esc="'{0:,.2f}'.format(invoice.amount_untaxed)"/> </td>
+                                                    <t t-set="total_amount_untaxed_new" t-value="total_amount_untaxed_new + invoice.amount_untaxed"/>
+                                                    <td><t t-esc="'{0:,.2f}'.format(invoice.amount_total)"/> </td>
+                                                    <t t-set="total_amount_new" t-value="total_amount_new + invoice.amount_total"/>
+                                                    <td><t t-esc="invoice.x_subscription_period"/> </td>
+                                                    <td>
+                                                        <t t-set="total_product_terminal" t-value="0"/>
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <t t-if="product.invoice_id.id == invoice.id and product.product_id.terminal_ok">
+                                                                <t t-set="total_product_terminal" t-value="total_product_terminal + product.price_subtotal"/>
+                                                                <t t-set="total_amount_product_new" t-value="total_amount_product_new + product.price_subtotal"/>
+                                                            </t>
+                                                        </t>
+                                                        <span t-esc="'{0:,.2f}'.format(total_product_terminal)"></span>
+                                                        <t t-if="total_product_terminal != 0">
+                                                            <t t-set="terminal_count_fall_out" t-value="terminal_count_fall_out + 1"/>
+                                                        </t>
+                                                    </td>
+                                                    <td><t t-esc="int(invoice.probability)"/></td>
+                                                    <td><t t-esc="invoice.state"/> </td>
+                                                    <td><t t-esc="invoice.name"/> </td>
+                                                    <td>
+                                                        <t t-foreach="o.account_payment_ids" t-as="account_payment">
+                                                            <t t-if="account_payment.communication == invoice.number">
+                                                                <t t-esc="account_payment.payment_date"/>
+                                                            </t>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-set="total_fall_out" t-value="total_amount_untaxed_new"/>
+                                        <t t-set="terminal_total_fall_out" t-value="total_amount_product_new"/>
+                                        <tr style="font-weight:bold">
+                                            <td>TOTAL</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_untaxed_new)"/> </td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_new)"/> </td>
+                                            <td></td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_amount_product_new)"/> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered" style="font-size:14px;page-break-inside:avoid;" >
+                                    <thead>
+                                        <tr>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;">TOTAL</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;"></th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:12%;"></th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:5%;">COUNT</th>
+                                            <th class="text-right" style="background-color:#EEEEEE;width:8%;">$</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td>NEW (paid)</td>-->
+                                            <!--<td><t t-esc="count_new_paid"/> </td>-->
+                                            <!--<td><t t-esc="total_new_paid"/> </td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td>Terminal Only</td>-->
+                                            <!--<td><t t-esc="terminal_count_new_paid"/> </td>-->
+                                            <!--<td><t t-esc="terminal_total_new_paid"/> </td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                        <!--</tr>-->
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>NEW (Pending)</td>
+                                            <td><t t-esc="'{0:,.2f}'.format(count_new_open)"/> </td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_new_open)"/> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Terminal Only</td>
+                                            <td><t t-esc="'{0:,.2f}'.format(terminal_count_new_open)"/> </td>
+                                            <td><t t-esc="'{0:,.2f}'.format(terminal_total_new_open)"/> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td>RENEWAL (paid)</td>-->
+                                            <!--<td><t t-esc="count_renewal_paid"/> </td>-->
+                                            <!--<td><t t-esc="total_renewal_paid"/> </td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                        <!--</tr>-->
+                                        <!--<tr>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td>Terminal Only</td>-->
+                                            <!--<td><t t-esc="terminal_count_renewal_paid"/> </td>-->
+                                            <!--<td><t t-esc="terminal_total_renewal_paid"/> </td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                        <!--</tr>-->
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>RENEWAL (Pending)</td>
+                                            <td><t t-esc="'{0:,.2f}'.format(count_renewal_open)"/> </td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_renewal_open)"/> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Terminal Only</td>
+                                            <td><t t-esc="'{0:,.2f}'.format(terminal_count_renewal_open)"/> </td>
+                                            <td><t t-esc="'{0:,.2f}'.format(terminal_total_renewal_open)"/> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>FALL OUT</td>
+                                            <td><t t-esc="'{0:,.2f}'.format(count_fall_out)"/> </td>
+                                            <td><t t-esc="'{0:,.2f}'.format(total_fall_out)"/> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Terminal Only</td>
+                                            <td><t t-esc="'{0:,.2f}'.format(terminal_count_fall_out)"/> </td>
+                                            <td><t t-esc="'{0:,.2f}'.format(terminal_total_fall_out)"/> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+                </t>
+            </t>
+        </template>
+
+        <!--# SHOW POP UP-->
+        <record id="sale_pipeline_retail_report_view" model="ir.ui.view">
+            <field name="name">Sale Pipeline Retail Report</field>
+            <field name="model">sale.pipeline.retail.report</field>
+            <field name="arch" type="xml">
+            <form string="Report Options" style="height:240px">
+                <label string=""/>  <!-- binding for inherited views -->
+                <group>
+                    <group>
+                        <field name="country"/>
+                        <field name="start_date" string="Start Date"/>
+                    </group>
+                    <group>
+                        <field name="sales_person"/>
+                        <field name="end_date" string="End Date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="sale_pipeline_retail_report_actions" model="ir.actions.act_window">
+            <field name="name">Sale Pipeline Retail Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.pipeline.retail.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="sale_pipeline_retail_report_menu"
+            name="Sales Pipeline Retail Report"
+            parent="sales_team.menu_sale_report"
+            action="sale_pipeline_retail_report_actions"
+        />
+    </data>
+</odoo>

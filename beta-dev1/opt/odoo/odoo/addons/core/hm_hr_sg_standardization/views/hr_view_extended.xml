@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- <record id="hr_employee_hide_dependents_inherit" model="ir.ui.view">
+            <field name="name">Hr Employee Hide Dependents Inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="sg_holiday_extended.hr_employee_inherit_form_extended"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='Dependents']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record> -->
+
+        <record id="hr_employee_nric_inherit" model="ir.ui.view">
+            <field name="name">Hr Employee Nric Inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="sg_ir21.view_hr_view_employee_form_inherited_view2"/>
+            <field name="arch" type="xml">
+                <field name="nric_no" position="replace">
+                    <field name="nric_no" invisible="1"/>
+                </field>
+                <field name="fin_no" position="replace">
+                    <field name="fin_no" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

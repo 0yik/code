@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-extend="OrderWidget">
+      <t t-jquery='.subentry' t-operation="inner"/>
+      <t t-jquery='.label' t-operation="before">
+          <line>
+            <div class="subtotal" style='text-align:right;font-size: 16px;font-weight: normal;'><t t-set='subtotal' t-value='order.get_subtotal()'/>
+                  <left>Subtotal:</left> 
+                   <right><t t-esc="widget.format_currency(order.get_subtotal())" /></right></div></line>
+
+      			<div class='subentry' style='text-align:right'>GST: <span class="value">0.00€</span></div>
+      </t>
+    </t>
+</templates>

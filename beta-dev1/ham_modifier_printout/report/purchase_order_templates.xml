@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- Header and Footers for Request for Quote report -->	
+<template id="external_layout_purchase_order">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="ham_modifier_printout.external_layout_header_purchase_order"/>
+    <t t-raw="0" />
+    <t t-call="ham_modifier_printout.external_layout_footer_purchase_order"/>
+</template>
+
+<template id="external_layout_header_purchase_order">
+     <div class="header">
+        <div class="row">
+            <div class="col-xs-8">
+                <span style="font-weight:bold;font-size:18px;" t-esc="company.partner_id.name" />
+                <br/>
+                <span style="font-size:14px;" t-esc="company.partner_id.street"/>
+                <span style="font-size:14px;" t-esc="company.partner_id.street2"/>                
+                <span style="font-size:14px;" t-esc="company.partner_id.city"/> <span style="font-size:14px;" t-esc="company.partner_id.zip"/>
+                <br/>
+                <span style="font-size:14px;">Tel:</span>
+                <span style="font-size:14px;" t-esc="company.partner_id.phone and company.partner_id.phone or ''"/>
+                <span style="font-size:14px;">Fax:</span>
+                <span style="font-size:14px;" t-esc="company.partner_id.fax and company.partner_id.fax or ''"/>
+                <br/>
+                <span style="font-size:14px;">(CO REG/GST NO. </span>
+                <span style="font-size:14px;" t-esc="company.company_registry and company.company_registry or ''"/> )
+            </div>
+            <div class="col-xs-4">
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 80px;width: 300px;"/>
+                <br/>
+                <br/>
+                <br/>
+                    <span style="font-size:30px;"><b> PURCHASE ORDER </b></span>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="external_layout_footer_purchase_order">
+    <div class="footer">
+        <div class="col-xs-5 pull-right text-center" style="border-top: 1px solid black;">
+            <span> Athorised Signatory </span>
+        </div>
+    </div>           
+</template>
+		
+<template id="report_purchase_order_document1">
+    <t t-call="ham_modifier_printout.external_layout_purchase_order">
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+        <div class="page">
+            <br/>
+            <br/>
+            <div class="col-xs-8">
+                <table>
+                    <tr>
+                        <td style="width:35px;">
+                            <span> TO : </span>
+                        </td>
+                        <td>
+                            <div><span t-field="o.partner_id.name"/></div>
+                            <div style="padding-top:5px;" t-if="o.partner_id.street"><span t-field="o.partner_id.street"/> <span t-field="o.partner_id.street2"/></div>
+                            <div style="padding-top:5px;" t-if="o.partner_id.city"><span t-field="o.partner_id.city"/> <span t-field="o.partner_id.zip"/></div>
+                            <div style="padding-top:5px;" t-if="o.partner_id.country_id"><span t-field="o.partner_id.country_id.name"/></div>
+                            <div style="padding-top:5px;" t-if="o.partner_id.phone or o.partner_id.fax">
+                                <span>Tel : <span t-field="o.partner_id.phone"/></span>
+                                <span>Fax : <span t-field="o.partner_id.fax"/></span>
+                            </div>
+                            <span t-if="o.partner_id.vat">TIN: <span t-field="o.partner_id.vat"/></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-xs-4">
+                <table class="table-condensed" style="border:1px solid white;">
+                    <tr style="border:1px solid white;">
+                        <td class="text-right"> DATE : </td>
+                        <td>
+                                <span t-field="o.date_order"/>
+                        </td>
+                    </tr>
+                    <tr style="border:1px solid white;">
+                        <td class="text-right"> PO : </td>
+                        <td t-esc="o.name and o.name or ''"/>
+                    </tr>
+                </table>
+                </div>
+                <t t-set="count" t-value="1"/>
+                <table class="table table-condensed mt48" style="border:1px solid black;">
+                    <thead>
+                        <tr style="border:1px solid black;">
+                            <th class="text-center" style="border:1px solid black;"><strong>ITEM</strong></th>
+                            <th class="text-center" style="border:1px solid black;"><strong>DESCRIPTION</strong></th>
+                            <th class="text-center" style="border:1px solid black;"><strong>UNIT PRICE(SGD)</strong></th>
+                            <th class="text-center" style="border:1px solid black;"><strong>QUANTITY</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.order_line" t-as="move" style="border:1px solid black;">
+                            <td class="text-center" style="border:1px solid black;">
+                                <span>
+                                    <span t-esc="count"/> 
+                                </span>
+                                <t t-set="count" t-value="count + 1"/>
+                            </td>
+                            <td style="border:1px solid black;"><span t-field="move.name"/></td>
+                            <td class="text-right" style="border:1px solid black;"><span t-field="move.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/></td>
+                            <td class="text-center" style="border:1px solid black;">
+                                <span t-field="move.product_qty"/>
+                                <span t-field="move.product_uom"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+    </t>
+</template>
+
+<template id="report_purchase_order1">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="ham_modifier_printout.report_purchase_order_document1" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+<!-- QWeb Reports -->
+        <report 
+            id="report_purchase_order"
+            model="purchase.order"
+            string="Purchase Order"
+            report_type="qweb-pdf"
+            name="ham_modifier_printout.report_purchase_order1"
+            file="ham_modifier_printout.report_purchase_order1"
+        />
+</odoo>

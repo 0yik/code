@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_shipper_tree" model="ir.ui.view">
+            <field name="name">shipper.view.tree</field>
+            <field name="model">shipper</field>
+            <field name="arch" type="xml">
+               <tree>
+                   <field name="code"/>
+                   <field name="name"/>
+                   <field name="address"/>
+                   <field name="phone"/>
+                   <field name="city"/>
+                   <field name="country_id"/>
+                   <field name="contact"/>
+               </tree>
+            </field>
+        </record>
+
+        <record id="view_shipper_form" model="ir.ui.view">
+            <field name="name">shipper.view.form</field>
+            <field name="model">shipper</field>
+            <field name="arch" type="xml">
+               <form>
+                   <sheet>
+                        <group col="4">
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="address"/>
+                            <field name="zip_code"/>
+                            <field name="state_id"/>
+                            <field name="phone"/>
+                            <field name="city"/>
+                            <field name="fax"/>
+                            <field name="country_id"/>
+                            <field name="contact"/>
+                        </group>
+                   </sheet>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_shipper" model="ir.actions.act_window">
+            <field name="name">Shipper</field>
+            <field name="res_model">shipper</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_shipper" name="Shipper" parent="stock.menu_stock_warehouse_mgmt" action="action_shipper" sequence="4"/>
+
+    </data>
+</odoo>

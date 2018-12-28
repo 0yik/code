@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <!--Leave Days Limit Form-->
+        <record id="leave_days_limit_form" model="ir.ui.view">
+            <field name="name">Leave Days Limit Form</field>
+            <field name="model">leave.days.limit</field>
+            <field name="arch" type="xml">
+                <form string="Leave Days Limit">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="no_of_days" required="1"/>
+                            </group>
+                        </group>
+                        <group col="2" colspan="4">
+                            <field name="leave_type_line_ids" nolabel="1">
+                            	<tree editable="bottom">
+                            		<field name="leave_type_id" required="1"/>
+                            	</tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--Leave Days Limit Tree-->
+        <record id="leave_days_limit_tree" model="ir.ui.view">
+            <field name="name">Leave Days Limit Tree</field>
+            <field name="model">leave.days.limit</field>
+            <field name="arch" type="xml">
+                <tree string="Leave Days Limit">
+                    <field name="no_of_days"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Leave Days Limit Action-->
+        <record id="action_leave_days_limit" model="ir.actions.act_window">
+            <field name="name">Leave Days Limit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">leave.days.limit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a leave days limit.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="submenu_leave_days_limit" name="Leave Days Limit" parent="sg_hr_employee.sg_hr_leaves_configuration" sequence="4" action="action_leave_days_limit"/>
+
+    </data>
+</odoo>

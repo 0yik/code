@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="account_analytic_account_form_form2_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.account.invoice.form.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"/>
+            <field eval="40" name="priority"/>
+            <field name="arch" type="xml">
+                <button name="set_close" position="replace">
+                    <button name="set_close" string="Close Project" type="object" states="open,pending" />
+                </button>
+                <button name="set_cancel" position="replace">
+                    <button name="set_cancel" string="Cancel Project" type="object" states="open,pending"/>
+                </button>
+                <button name="set_pending" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <field name="state" position="replace">
+                    <field name="state" readonly="1" widget="statusbar"
+                            statusbar_visible="open,close" statusbar_colors='{"template":"blue"}'/>
+                </field>
+                <field name="type" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

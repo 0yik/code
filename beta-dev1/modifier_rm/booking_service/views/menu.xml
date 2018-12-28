@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<menuitem id="menu_booking_service_core" parent="sales_team.menu_base_partner" name="Booking" sequence="5" />
+</odoo>

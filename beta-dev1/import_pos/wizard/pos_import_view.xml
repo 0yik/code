@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="view_pos_import" model="ir.ui.view">
+        <field name="name">pos.import</field>
+        <field name="model">pos.import</field>
+        <field name="arch" type="xml">
+            <form string="POS Import">
+                <h4>Upload CSV which contains POS data</h4>
+                <group>
+                     <group>
+                        <field name="file"/>
+                        <field name="date"/>
+                     </group>
+                     <group>
+                     </group>
+                </group>
+                <footer>
+                    <button string='Import' name="import_pos_data" type="object" class="btn-primary" context="{'deposit_active_id': active_id}"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+
+    <record id="action_pos_import" model="ir.actions.act_window">
+        <field name="name">POS Import</field>
+        <field name="res_model">pos.import</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_pos_import"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="POS Import" id="menu_pos_import" sequence="5" parent="point_of_sale.menu_point_config_product" action="action_pos_import"/>
+    
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="multi_category_analytic_account_tree">
+            <field name="name">category_analytic_account list</field>
+            <field name="model">account.analytic.category</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="level"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="multi_category_analytic_account_form">
+            <field name="name">category_analytic_account form</field>
+            <field name="model">account.analytic.category</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="level"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_multi_category_analytic_account">
+            <field name="name">Analytic Category</field>
+            <field name="res_model">account.analytic.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Analytic Category" id="multi_category_analytic_account_menu_root"
+                  parent="account.menu_finance_configuration" />
+
+        <menuitem name="Analytic Category" id="multi_category_analytic_account_menu"
+                  parent="multi_category_analytic_account_menu_root"
+                  action="action_multi_category_analytic_account"/>
+
+    </data>
+</odoo>

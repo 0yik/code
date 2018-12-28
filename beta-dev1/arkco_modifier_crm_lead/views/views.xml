@@ -1,0 +1,212 @@
+<odoo>
+  <data>
+    <record id="custom_crm" model="ir.ui.view">
+        <field name="name">Custom CRM</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+          <xpath expr="//header" position="inside">
+            <button name="print_crm_lead" string="Print" type="object" class="oe_highlight o_wow"/>
+          </xpath>
+            <xpath expr="//field[@name='date_deadline']" position="replace">
+              <field name="date_created"/>
+              <field name="date_deadline" readonly="False"/>
+              <!-- <field name="title"/> -->
+            </xpath>
+            <xpath expr="//field[@name='name']" position="replace">
+              <field name="name" attrs="{'readonly':[('is_true', '=', True)]}"/>
+              <field name="crm_title" attrs="{'readonly':[('is_true', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="after">
+              <field name="product_interested" domain="[('room_flag','=',True)]" required="1"/>
+              <field name="location" groups="stock.group_stock_multi_locations" widget="selection" required="1"/>
+              <field name="total_nup_list" readonly="1"/>
+              <field name="is_true" invisible="1"/>
+              <field name="nup_price" invisible="1"/>
+            </xpath>
+
+            <!-- tree view of waiting list -->
+            <xpath expr="//page[2]" position="after">
+              <page string="Waiting List">
+                <field name="waiting_id">
+                  <tree colors="blue:is_partner==True" create="false" edit="false">
+                    <field name="number"/>
+                    <field name="nup_number"/>
+                    <field name="customer"/>
+                    <field name="nup_payment_date"/>
+                    <field name="sales_executive"/>
+                    <field name="is_partner" invisible="1"/>
+                  </tree>
+                </field>
+              </page>
+            </xpath>
+
+          <!-- action button for customer deposit -->
+          <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button class="oe_stat_button" name="get_button_nup"
+                        type="object"
+                        context="{'default_partner_id': partner_id,
+                        'default_amount': nup_price,
+                        'default_name_sequence': name,
+                        'default_payment_type': 'inbound',
+                        'default_is_deposit': 'True'
+                        }"
+                        icon="fa-usd">
+                  <field name="number" string="NUP" widget="statinfo"/>
+                </button>
+          </xpath>
+
+          <!-- removed expected revenue from crm lead -->
+          <xpath expr="//h2" position="replace">
+            <h2 class="o_row">
+                <div>
+                    <label for="probability" class="oe_edit_only"/>
+                    <div class="o_row">
+                        <field name="probability" widget="integer"/>
+                        <span>%</span>
+                    </div>
+                </div>
+            </h2>
+          </xpath>
+
+          <!-- interchanging the postions of team and executive and renaming user_id as sales executive -->
+          <xpath expr="//group/group[3]" position="replace">
+            <group>
+              <field name="team_id" widget="selection"/>
+              <field name="user_id" context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'sales_team.group_sale_salesman_all_leads'], 'team_id': team_id}" domain="[('share', '=', False)]" string="Sales Executive" required="1"/>
+            </group>
+          </xpath>
+
+          <xpath expr="//field[@name='partner_id']" position="replace">
+                <field name="partner_id"
+                    string="Customer" domain="[('customer', '=', True)]"
+                    context="{'search_default_customer': 1,
+                        'default_name': partner_name, 'default_street': street,
+                        'default_street2': street2, 'default_city': city,
+                        'default_state_id': state_id, 'default_zip': zip,
+                        'default_country_id': country_id, 'default_function': function,
+                        'default_phone': phone, 'default_mobile': mobile,
+                        'default_fax': fax, 'default_email': email_from,
+                        'default_user_id': user_id, 'default_team_id': team_id}" required="1"/>
+          </xpath>
+          <xpath expr="//field[@name='email_from']" position="replace">
+            <field name="email_from" string="Email" widget="email" required="1"/>
+          </xpath>
+
+          <xpath expr="//field[@name='phone']" position="replace">
+            <field name="phone" widget="phone" required="1"/>
+          </xpath>
+
+        </field>
+    </record>
+
+    <record id="custom_customer_deposite" model="ir.ui.view">
+        <field name="name">custom.customer.deposite</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account_deposit.form_view_account_payment_deposit"/>
+        <field name="arch" type="xml">
+          <xpath expr="//field[@name='partner_id']" position="replace">
+            <field name="partner_id" required="1" domain="[('customer', '=', True)]" attrs="{'readonly' : [('state', 'in', ['posted', 'returned', 'revenue', 'reconciled'])]}" string="Customer"/>
+          </xpath>
+          <xpath expr="//field[@name='amount']" position="replace">
+            <field name="amount" attrs="{'readonly' : [('state', 'in', ['posted', 'returned', 'revenue', 'reconciled'])]}" required="1" string="NUP Amount"/>
+          </xpath>
+          <xpath expr="//field[@name='payment_type']" position="replace">
+            <field name="payment_type"/>
+          </xpath>
+          <xpath expr="//field[@name='return_payment_reference']" position="after">
+            <field name="name_sequence" string="Source"/>
+          </xpath>
+        </field>
+    </record>
+
+<!-- loading main crm_lead form on click create button in kanban view of crm lead -->
+    <record id="create_opportunity_simplified" model="ir.actions.act_window">
+        <field name="name">Create an Opportunity</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="custom_kanban_view_form" model="ir.ui.view">
+        <field name="name">custom.kanban.view.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+          <xpath expr="//kanban" position="replace">
+                <kanban default_group_by="stage_id" class="o_kanban_small_column o_opportunity_kanban" on_create="arkco_modifier_crm_lead.create_opportunity_simplified">
+                    <field name="stage_id" options='{"group_by_tooltip": {"requirements": "Description", "legend_priority": "Use of stars"}}'/>
+                    <field name="color"/>
+                    <field name="priority"/>
+                    <field name="planned_revenue"/>
+                    <field name="kanban_state"/>
+                    <field name="date_action"/>
+                    <field name="user_email"/>
+                    <field name="user_id"/>
+                    <field name="partner_address_email"/>
+                    <field name="message_needaction_counter"/>
+                    <field name="tag_ids"/>
+                    <field name="partner_id"/>
+                    <field name="title_action"/>
+                    <field name="active"/>
+                    <field name="company_currency"/>
+                    <templates>
+                        <field name="date_deadline"/>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
+                                <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                                        <span class="fa fa-bars fa-lg"/>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
+                                        <t t-if="widget.deletable"><li><a type="delete">Delete</a></li></t>
+                                        <li t-if="! record.active.value"><a name="action_set_active" type="object">Unarchive</a></li>
+                                        <li t-if="record.active.value"><a name="action_set_unactive" type="object">Archive</a></li>
+                                        <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <div>
+                                        <field name="tag_ids"/>
+                                    </div>
+                                    <div>
+                                        <strong><field name="name"/></strong>
+                                    </div>
+                                    <div class="text-muted">
+                                        <t t-if="record.planned_revenue.raw_value"><field name="planned_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/><span t-if="record.partner_id.value">,</span></t> <span t-if="record.partner_id.value"> <t t-esc="record.partner_id.value"/></span>
+                                    </div>
+
+                                    <div class="o_kanban_footer">
+                                        <field name="priority" widget="priority" groups="base.group_user"/>
+                                        <t t-if="record.message_needaction_counter.raw_value">
+                                            <span class='oe_kanban_mail_new' title='Unread Messages'><i class='fa fa-comments'/><t t-raw="record.message_needaction_counter.raw_value"/></span>
+                                        </t>
+                                        <div>
+                                            <a name="%(crm.crm_activity_log_action)d" type="action" t-if="record.kanban_state.raw_value!='grey'">
+                                              <span
+                                                t-att-title="record.date_action.value + ': '+ record.title_action.value"
+                                                t-attf-class="oe_kanban_status oe_kanban_status_#{record.kanban_state.raw_value}"/>
+                                            </a>
+                                            <a name="%(crm.crm_activity_schedule_action)d" type="action" t-if="record.kanban_state.raw_value=='grey'">
+                                              <span
+                                                class="oe_kanban_status oe_kanban_status_grey"/>
+                                            </a>
+                                            <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+          </xpath>
+        </field>
+    </record>
+
+  </data>
+</odoo>

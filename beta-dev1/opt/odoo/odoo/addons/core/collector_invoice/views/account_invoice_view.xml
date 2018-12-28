@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="form_view_account_invoice_inherited">
+            <field name="name">account.invoice</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="user_ids"  attrs="{'readonly': [('state','!=','draft')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

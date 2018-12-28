@@ -1,0 +1,171 @@
+<odoo>
+	<data>
+		<record id="grade_master_form_view" model="ir.ui.view">
+			<field name="name">grade.master.form.view</field>
+			<field name="model">grade.master</field>
+			<field name="inherit_id" ref="school.view_grade_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='grade_ids']/tree/field[@name='grade']" position="after">
+					<field name="grade_point" />
+				</xpath>
+				<xpath expr="//field[@name='grade_ids']/form/group/field[@name='grade']" position="after">
+                    <field name="grade_point" />
+                </xpath>
+			</field>
+		</record>
+		
+		<delete model="ir.ui.menu" search="[('name','=','TimeTable'),('parent_id','=',ref('school.menu_ems'))]"/>
+		<delete model="ir.ui.menu" search="[('name','=','Regular Timetable'),('parent_id','=',ref('timetable.menu_timetable_1'))]"/>
+		<delete model="ir.ui.menu" search="[('name','=','Exam Timetable'),('parent_id','=',ref('timetable.menu_timetable_1'))]" />
+		
+		
+		<record id="view_exam_result_search_grade_point" model="ir.ui.view">
+			<field name="name">exam.result.search.grade.point</field>
+			<field name="model">exam.result</field>
+			<field name="inherit_id" ref="exam.view_exam_result_search" />
+			<field name="arch" type="xml">
+				<xpath expr="//search/group/field[@name='student_id']" position="after">
+					<field name="s_exam_ids" />
+					<field name="subject_id" />
+				</xpath>
+			</field>
+		</record>
+		
+		
+		<record id="action_exam_exam_result" model="ir.actions.act_window">
+            <field name="name">Exam Result</field>
+            <field name="res_model">exam.result</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_s_exam_ids': active_id}</field>
+        </record>
+		
+		<record id="view_exam_exam_form_grade_point" model="ir.ui.view">
+			<field name="name">exam.exam.form.view.grade.point</field>
+			<field name="model">exam.exam</field>
+			<field name="inherit_id" ref="exam.view_exam_exam_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//sheet/div[@name='button_box']/button[@name='generate_result']" position="replace">
+					<button name="%(action_exam_exam_result)d" type="action" string="Exam Result" 
+							class="oe_stat_button fa fa-graduation-cap" 
+							attrs="{'invisible':[('state','in',['draft','running','cancelled'])]}" 
+                            groups="school.group_school_teacher,school.group_school_administration"
+                            context="{'readonly_by_pass': True}"/>
+				</xpath>
+				
+				<xpath expr="//sheet/group/notebook/page[2]" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//sheet/group/field[@name='start_date']" position="attributes">
+					<attribute name="placeholder">Exam Start Date &amp; Time</attribute>
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//sheet/group/field[@name='end_date']" position="attributes">
+					<attribute name="placeholder">Exam End Date &amp; Time</attribute>
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//sheet/group/field[@name='exam_code']" position="before">
+					<field name="subject_id" options="{&quot;no_create&quot;: True}"/>
+				</xpath>
+				<xpath expr="//sheet/group/field[@name='name']" position="attributes">
+					<attribute name="domain">[('subject_id', '=', subject_id),('breakdown_type','=','Exam')]</attribute>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="view_exam_result_form_grade_point" model="ir.ui.view">
+			<field name="name">exam.result.form.view.grade.point</field>
+			<field name="model">exam.result</field>
+			<field name="inherit_id" ref="exam.view_exam_result_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//sheet/field[@name='result_ids']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//sheet/group[2]" position="after">
+					<group col="4" string="Marks" colspan="4">
+                        <field name="subject_id"/>
+                        <field name="obtain_marks"/>
+                        <field name="maximum_marks"/>
+                        <field name="marks_reeval"/>
+                        <field name="minimum_marks"/>
+                        <field name="marks_reeval_date" readonly="1"/>
+                        <field name="grade_line_id"/>
+                    </group>
+				</xpath>
+				<xpath expr="//sheet/group/group/field[@name='total']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//sheet/group/group/field[@name='percentage']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//sheet/group/group/field[@name='grade']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//sheet/group/group/field[@name='result']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+			</field>
+		</record>
+		
+		
+		<record id="view_exam_result_tree_grade_point" model="ir.ui.view">
+			<field name="name">exam.result.tree.grade.point</field>
+			<field name="model">exam.result</field>
+			<field name="inherit_id" ref="exam.view_exam_result_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//tree/field[@name='percentage']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//tree/field[@name='total']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//tree/field[@name='result']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//tree/field[@name='standard_id']" position="after">
+					<field name="subject_id" />
+				</xpath>
+				<xpath expr="//tree/field[@name='s_exam_ids']" position="after">
+					<field name="obtain_marks" />
+				</xpath>
+				<xpath expr="//tree/field[@name='s_exam_ids']" position="after">
+					<field name="grade_line_id" />
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="exam.action_exam_result_form" model="ir.actions.act_window">
+            <field name="name">Result</field>
+            <field name="res_model">exam.result</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{'readonly_by_pass': True}</field>
+        </record>
+		
+        <record id="action_exam_result_grade_point_form" model="ir.actions.act_window">
+            <field name="name">Subject Grade</field>
+            <field name="res_model">exam.result</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_student_id': active_id, 'readonly_by_pass': True,}</field>
+        </record>
+        
+        <!-- Inherited Form View Of Student -->
+        <record id="view_student_student_grade_point_form" model="ir.ui.view">
+            <field name="name">student.student.grade.point.form</field>
+            <field name="model">student.student</field>
+            <field name="inherit_id" ref="school.view_student_student_form_1"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div[@name='buttons']" position="inside">
+                        <button name="%(action_exam_result_grade_point_form)d" type="action" class="oe_inline oe_stat_button">
+                            <img src="/grade_point_system/static/description/icon.png" style="height:25px;width:50px;float:left;"/>
+                            <lable style="">Grages &amp; GPA</lable>
+                        </button>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+		
+	</data>
+</odoo>

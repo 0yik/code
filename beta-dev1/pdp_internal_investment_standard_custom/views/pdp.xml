@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <record id="view_stock_standard_form_view_custom1a" model="ir.ui.view">
+            <field name="name">stock.standard.form11</field>
+            <field name="model">stock.standard</field>
+            <field name="inherit_id" ref="pdp_internal_investment_standard.stock_standard_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group" position="replace">
+                    <group>
+                        <group>
+                            <field name="responsible_id"/>
+                            <field name="location_id" domain="[('is_shop','=',True)]" required="1"/>
+                            
+                            <field name="picking_type_id" domain="[('name','=','Internal Transfers')]"/>
+                            <field name="warehouse" required="1"/>
+                            <button name="import_product" string="Import Product" type="object" class="oe_highlight"/>
+                        </group>
+                        <group>
+                            <field name="create_date" string="Created Date" readonly="1"/>
+                        </group>
+                    </group>
+                </xpath>                 
+                
+                <xpath expr="//form/sheet/notebook/page/field[@name='stock_standard_line']" position="replace">
+                    <field name="stock_standard_line">
+                         <tree string="Lines" editable="bottom">
+                            <field name="product_id_code"/>
+                            <field name="product_id"/>
+                            <field name="investment_standard_amount"/>
+                            <field name="stock_buffer_amount" invisible="1"/>
+                             <field name="total_sold_a_month"/>
+                            <field name="stock_current_shop_amount"/>
+                            <!-- <field name="warehouse_id" domain="[('is_shop','=',False)]" invisible="1"/> -->
+                            <field name="stock_warehouse_amount"/>
+                            <field name="to_do_amount"/>
+                        </tree>
+                    </field>
+                    
+                </xpath> 
+                <xpath expr="//form/sheet/notebook/page[2]" position="replace">
+                    <page string="Addition information">
+                        <group>    
+                            <field name="notes"/>
+                        </group>
+                    </page>
+                </xpath>
+                
+            
+            </field>
+        </record>
+        
+        
+        
+        <record id="view_employee_mesh_form" model="ir.ui.view">
+            <field name="name">hr.file.form</field>
+            <field name="model">hr.file</field>
+            <field name="arch" type="xml">
+                <form string="Mess">
+                    <group>
+                        <field name="typee_format" widget="radio"/>
+                    
+                    </group>
+                    
+                    <group>
+                        <field name="file_name" invisible="1"/>
+                        <field name="file"  filename="file_name"/>
+                        
+                    </group>
+                    <footer>
+                    <button name="import_csv" string="Import" type="object" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="make_invisible" model="res.groups">
+            <field name="name">Invisible</field>
+        </record>
+        
+        <!-- <record model="ir.ui.menu" id="pdp_internal_investment_standard.stock_buffer_menu_id">
+            <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+        </record> -->
+        
+        <menuitem id="stock_buffer_menu" name="Stock Buffer" parent="stock.menu_stock_config_settings" sequence="100" groups="make_invisible"/>
+        
+        <!-- <record model="ir.ui.menu" id="pdp_internal_investment_standard.stock_buffer_menu">
+            <field name="action" eval="False">
+        </record> -->
+        
+    
+    
+    
+    </data>
+</odoo>

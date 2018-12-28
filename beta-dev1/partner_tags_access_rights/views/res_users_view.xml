@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_user_form_inherit_partner_tags" model="ir.ui.view">
+            <field name="name">res.user.form.inherit.partner.tags</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.user_groups_view"/>
+            <field name="arch" type="xml">
+                <field name="sel_groups_3_4" position="after">
+                    <field name="partner_tags_ids" widget="many2many_tags"/>
+                    <newline/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

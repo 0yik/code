@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report 
+            id="report_sale_order_global"
+            string="Global Sales Order Customer"
+            model="global.sale.report.wizard" 
+            report_type="qweb-pdf"
+            file="pdp_modifier_sales_report.report_global_saleorder"
+            name="pdp_modifier_sales_report.report_global_saleorder"
+        />
+
+        <report 
+            id="report_sale_order_per_customer"
+            string="Sales Reports Per Customer"
+            model="sales.reports.wizard"
+            report_type="qweb-pdf"
+            file="pdp_modifier_sales_report.report_saleorder_per_customer"
+            name="pdp_modifier_sales_report.report_saleorder_per_customer"
+        />
+
+        <report 
+            id="report_sale_order_per_item"
+            string="Sales Reports Per Item"
+            model="sales.reports.wizard"
+            report_type="qweb-pdf"
+            file="pdp_modifier_sales_report.report_saleorder_per_item"
+            name="pdp_modifier_sales_report.report_saleorder_per_item"
+        />
+        
+        <report 
+            id="report_sale_order_realization"
+            string="Sales Reports Customer Realization"
+            model="sales.reports.wizard"
+            report_type="qweb-pdf"
+            file="pdp_modifier_sales_report.report_saleorder_realization"
+            name="pdp_modifier_sales_report.report_saleorder_realization"
+        />
+
+
+    </data>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+        <record id="view_sale_order_date_inherit" model="ir.ui.view">
+            <field name="name">view.sale.order.date.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']//form//field[@name='tax_id']" position="after">
+                    <field name="requested_date"/>
+			        <field name="commitment_date"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="after">
+                    <field name="requested_date"/>
+			        <field name="commitment_date"/>
+                </xpath>
+            </field>
+        </record>
+        
+        
+        <record id="view_stock_move_date_inherit" model="ir.ui.view">
+	        <field name="name">view.stock.move.date.inherit</field>
+	        <field name="model">stock.move</field>
+	        <field name="inherit_id" ref="stock.view_move_picking_form"/>
+	        <field name="arch" type="xml">
+	                <xpath expr="//field[@name='name']" position="after">
+			            <field name="requested_date"/>
+			            <field name="commitment_date"/>
+	                </xpath>
+	        </field>
+        </record>
+        
+        <record id="view_stock_picking_cust_ref_inherit" model="ir.ui.view">
+	        <field name="name">view.stock.picking.cust.ref.inherit</field>
+	        <field name="model">stock.picking</field>
+	        <field name="inherit_id" ref="stock.view_picking_form"/>
+	        <field name="arch" type="xml">
+	                <xpath expr="//group//field[@name='origin']" position="after">
+			            <field name="client_order_ref"/>
+	                </xpath>
+	        </field>
+        </record>
+        
+        
+    </data>
+</openerp>

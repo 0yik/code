@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_order_form_add_source_field" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.add.source</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_term_id" position="after">
+                    <field name="source_document"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_joining_sales_form" model="ir.ui.view">
+            <field name="name">joining.sales.form</field>
+            <field name="model">joining.sales</field>
+            <field name="arch" type="xml">
+                <form string="Joining Sales Order">
+                    <group>
+                        <field name="sale_ids" widget="many2many_tags"/>
+                        <field name="so_date" />
+                        <field name="business_unit_id"/>
+                        <field name="product_ids" widget="many2many_tags"/>
+                        <field name="total_qty" />
+                        <field name="description" />
+                    </group>
+                    <footer>
+                        <button string="Create Sale Order" type="object" name="joining_sales" class="btn-primary" />
+                        <button string="Cancel" special="cancel" class="btn-default"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_joining_sales" model="ir.actions.act_window">
+            <field name="name">Joining Sales Order</field>
+            <field name="res_model">joining.sales</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_joining_sales_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.values" id="action_sale_joining">
+            <field name="model_id" ref="sale.model_sale_order" />
+            <field name="name">Joining Sales Order</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_joining_sales'))" />
+            <field name="key">action</field>
+            <field name="model">sale.order</field>
+        </record>
+    </data>
+</odoo>

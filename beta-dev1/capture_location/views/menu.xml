@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <menuitem name="Sign In"
+            id="menu_sale_sign_in" parent="sales_team.menu_base_partner"
+            sequence="6"/>
+        <menuitem id="sign_in_func_menu" name="Sign In" parent="menu_sale_sign_in" sequence="5" action="sign_in_action" />
+        <menuitem id="history_func_menu" name="History" parent="menu_sale_sign_in" sequence="10" action="sign_in_history_action"/>
+    </data>
+</odoo>

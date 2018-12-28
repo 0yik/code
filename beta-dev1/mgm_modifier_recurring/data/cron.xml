@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model="ir.cron" id="notification_asset_journal">
+        	<field name="name">notification_asset_journal</field>
+        	<field name="interval_number">1</field>
+        	<field name="interval_type">days</field>
+        	<!--<field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 12:00:00')" />-->
+        	<field name="numbercall">-1</field>
+        	<field name="doall" eval="False"/>
+        	<field name="model" eval="'account.asset.asset'"/>
+        	<field name="function" eval="'set_as_open'"/>
+        	<field name="args" eval="'()'" />
+    	</record>
+    </data>
+</odoo>

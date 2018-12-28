@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="job_estimation_action_request_price" model="ir.actions.act_window">
+        <field name="name">Job Estimates</field>
+        <field name="res_model">sale.estimate.job</field>
+        <field name="view_mode">form,tree,graph</field>
+    </record>
+    
+    <record id="act_job_estimation_action_from_requestjob" model="ir.actions.act_window">
+        <field name="res_model">sale.estimate.job</field>
+        <field name="name">Job Estimations</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_request_id': [active_id], 'default_request_id': active_id}</field>
+    </record>
+    
+    <record id="view_sale_estimate_form_request_job_inherit" model="ir.ui.view">
+        <field name="name">view.sale.estimate.form.request.job.inherit</field>
+        <field name="model">sale.estimate.job</field>
+        <field name="inherit_id" ref="job_cost_estimate_customer.view_sale_estimate_form_job"/>
+        <field name="arch" type="xml">
+        	<field name="job_type_ids" position="after">
+        		<field name="request_id" invisible='1'/>
+        	</field>
+        </field>
+    </record>
+    
+    <record id="view_sale_estimate_search_request_job_inherit" model="ir.ui.view">
+        <field name="name">view.sale.estimate.search.request.job.inherit</field>
+        <field name="model">sale.estimate.job</field>
+        <field name="inherit_id" ref="job_cost_estimate_customer.sale_estimate_search_view_job"/>
+        <field name="arch" type="xml">
+        	<field name="state" position="after">
+        		<field name="request_id" invisible='1'/>
+        	</field>
+        	<xpath expr="//group" position="inside">
+        		<filter string="Requests Price" context="{'group_by':'request_id'}"/>
+        	</xpath>
+        </field>
+    </record>
+    
+    
+	 <record id="view_request_price_form_view" model="ir.ui.view">
+        <field name="name">view.request.price.form.view</field>
+        <field name="model">request.price</field>
+        <field name="arch" type="xml">
+        	<form>
+	        	<header>
+	        		<button name="request_for_approval" type="object" string="Request for Approval" 
+	        				states="draft" class="oe_highlight"/>
+	        		<button name="approved" string="Approve" type="object" class="oe_highlight" 
+	        				states="request_appove"/>
+	        		<button name="reset_to_draft" string="Reset to Draft" type="object" 
+	        				states="request_appove,approve"/>
+	        		<button name="%(job_estimation_action_request_price)d" string="Create Job Estimate" 
+	        			type="action" states="approve"
+	        			context="{'default_partner_id': partner_id,
+	        					  'default_project_id': project_id,
+	        					  'default_request_id': active_id
+                                      }" class="oe_highlight"/>
+	        		<field name="state" widget="statusbar"/>
+	        	</header>
+	        	<sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(act_job_estimation_action_from_requestjob)d" type="action"
+                                class="oe_stat_button" icon="fa-pencil-square-o">
+                                <field name="job_cost_count" widget="statinfo" string="Job Estimates"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+	        			<label for="name"/>
+                        <h1>
+                            <field name="name" required='1'/>
+                        </h1>
+                    </div>
+	        		<group>
+	        			<group>
+	        				<field name="partner_id"/>
+	        				<field name="company_id"/>
+	        				<field name="salesman_id"/>
+	        			</group>
+	        			<group>
+	        				<field name="project_id"/>
+	        				<field name="approver_id"/>
+	        				<field name="location"/>
+	        				<field name="desc"/>
+	        			</group>
+	        		</group>
+	        	</sheet>
+        	</form>
+        </field>
+      </record>
+      
+      <record id="view_request_price_tree_view" model="ir.ui.view">
+      	<field name="name">view.request.price.tree.view</field>
+        <field name="model">request.price</field>
+        <field name="arch" type="xml">
+        	<tree>
+        		<field name="name"/>
+        		<field name="partner_id"/>
+  				<field name="salesman_id"/>
+  				<field name="project_id"/>
+	        	<field name="approver_id"/>
+	        	<field name="state"/>
+        	</tree>
+        </field>
+      </record>
+      
+      <record id="view_request_price_search_view" model="ir.ui.view">
+      	<field name="name">view.request.price.search.view</field>
+        <field name="model">request.price</field>
+        <field name="arch" type="xml">
+        	<search>
+        		<field name="partner_id"/>
+  				<field name="salesman_id"/>
+  				<field name="project_id"/>
+	        	<field name="approver_id"/>
+	        	<field name="state"/>
+	        	<group expand="0" string="Group By">
+                    <filter string="Customer" context="{'group_by':'partner_id'}"/>
+                </group>
+        	</search>
+        </field>
+      </record>
+      
+      <record id="action_request_price" model="ir.actions.act_window">
+	      <field name="name">Request Price</field>
+	      <field name="type">ir.actions.act_window</field>
+	      <field name="res_model">request.price</field>
+	      <field name="view_type">form</field>
+	      <field name="view_mode">tree,form</field>
+      </record>
+      
+      <record id="action_request_price_create" model="ir.actions.act_window">
+	      <field name="name">Request Price</field>
+	      <field name="type">ir.actions.act_window</field>
+	      <field name="res_model">request.price</field>
+	      <field name="view_mode">form,tree</field>
+      </record>
+      
+      <menuitem id="menu_request_price" name="Request Price" action="action_request_price" 
+      	parent="sales_team.menu_sales"/>
+               
+      <record id="view_crm_lead_form_add_rfs" model="ir.ui.view">
+		  <field name="name">view.crm.lead.form.add.rfs</field>
+		  <field name="model">crm.lead</field>
+		  <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+		  <field name="arch" type="xml">
+				<xpath expr="//button[@name='action_set_won']" position="before">
+					<button string="Create RFS" name="%(action_request_price_create)d" type="action" 
+					class="oe_highlight" context="{'default_partner_id': partner_id}"/>
+				</xpath>
+		  </field>
+	  </record>
+</odoo>

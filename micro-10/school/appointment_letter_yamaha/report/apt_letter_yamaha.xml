@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>	
+    <template id="report_apt_letter_yamaha">
+    	<t t-call="report.html_container">
+	    	<t t-call="report.external_layout">
+	  			 <div class="page" style="text-align: justify;">
+	  			 	<h2>
+	  			 		<center><b>Letter of Appointment</b></center>
+	  			 	</h2>
+	  			 	<br/>
+	  			 	<p>
+	  			 		<t t-esc="docs.employee_id.name"/>,
+	  			 	</p>
+	  			 	<p>
+	  			 		<t t-if="docs.employee_id.emp_city_id">
+	  			 			<t t-esc="docs.employee_id.emp_city_id.name"/>,
+	  			 		</t>
+	  			 		<t t-esc="docs.employee_id.emp_country_id.name"/>
+	  			 	</p>
+	  			 	<br/>
+	  			 	<p>
+	  			 		Dear <t t-esc="docs.employee_id.name"/>,
+	  			 	</p><br/><br/>
+	  			 	<p>
+	  			 		We are pleased to inform you that you have been selected for the position of 
+	  			 		<t t-esc="docs.job_id.name"/> at <t t-esc="docs.employee_id.school.name"/>! We 
+	  			 		had many qualified candidates, but you seemed to be the best fit for our growing organization!
+	  			 	</p>
+	  			 	<br/>
+	  			 	<p>
+	  			 		Your job appointment will begin on <t t-esc="context_timestamp(datetime.datetime.strptime(docs.date_start,'%Y-%m-%d')).strftime('%d %B %Y')"/>. You will receive the salary of
+	  			 		  <t t-esc="docs.wage"/> per annum, along with any possible bonuses. You will be given one month of 
+	  			 		 paid leave per year.
+	  			 	</p><br/><br/>
+	  			 	<p>
+	  			 		We look forward to hearing back from you to accept this position!
+	  			 	</p>
+	  			 	<br/><br/>
+	  			 	<p>Sincerely,</p>
+	  			 	<t t-esc="docs.employee_id.school.name"/>
+	  			 </div>	
+	    	</t>
+	    </t>
+    </template>
+    
+    <report 
+            id="report_appointment_letter"
+            string="Appointment Letter"
+            model="hr.contract" 
+            report_type="qweb-html"
+            file="appointment_letter_yamaha.report_apt_letter_yamaha" 
+            name="appointment_letter_yamaha.report_apt_letter_yamaha" 
+        />
+        
+</odoo>
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+        <report 
+            id="report_termly_updates_id"
+            string="Termly Updates"
+            model="ap.intervention" 
+            report_type="qweb-pdf" 
+            file="ap_intervention.report_ap_intervention" 
+            name="ap_intervention.report_ap_intervention"
+            menu="False" />
+            
+</odoo>

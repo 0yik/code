@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <record id="view_subscription_form_inherited" model="ir.ui.view">
+            <field name="name">account.subscription.form.inherited</field>
+            <field name="model">account.subscription</field>
+            <field name="inherit_id" ref="acc_recurring_entries.view_subscription_form"/>
+	    <field name="groups_id" eval="[(4, ref('accsess_user_ap_manager')),(4, ref('accsess_user_ar_manager')),(4, ref('accsess_ap_ar_manager'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='state_draft']" position="attributes">
+			<attribute name="invisible">1</attribute>
+		</xpath>
+		<xpath expr="//button[@name='compute']" position="attributes">
+			<attribute name="invisible">1</attribute>
+		</xpath>
+		<xpath expr="//button[@name='remove_line']" position="attributes">
+			<attribute name="invisible">1</attribute>
+		</xpath>
+            </field>
+        </record>
+   </data>
+</odoo>

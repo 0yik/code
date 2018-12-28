@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="wizard_sale_cash_reports_form" model="ir.ui.view">
+            <field name="name">wizard.sale.cash.reports.form</field>
+            <field name="model">wizard.sale.cash.reports</field>
+            <field name="arch" type="xml">
+                <form string="Choose your file">
+                   <field name="state" invisible="1" />
+                   <field name="name" invisible="1" />
+                   <group states="choose">
+                       <group>
+                           <field name="to_date" />
+                       </group>
+                   </group>
+                   <div states="get">
+                       <h2>Report Complete</h2>
+	                   <p>Here is the Xls File :
+	                       <field name="data" readonly="1" filename="name" />
+	                   </p>
+                   </div>
+                   <footer states="choose">
+                       <button name="action_print" class="oe_highlight" string="Create Xls"
+                                type="object"/>
+                   </footer>
+                   <footer states="get">
+                       <button special="cancel" string="Close" type="object" class="btn-primary" />
+                   </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_sale_cash_report_aged_receivable" model="ir.actions.act_window">
+            <field name="name">Sale vs Cash Reports</field>
+            <field name="res_model">wizard.sale.cash.reports</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_sale_cash_reports_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="sale_menu_custom_accounting_reports" name="Custom Reports" 
+        parent="account.menu_finance" sequence="6" groups="account.group_account_user"/>
+        <menuitem action="action_sale_cash_report_aged_receivable" 
+        id="menu_action_sc_report" parent="sale_menu_custom_accounting_reports" sequence="1"/>
+
+    </data>
+</openerp>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<template id="snippet_style_tewntythree" inherit_id="honos_snippets.honos_snippets"
+		name="honos snippet" priority="23">
+		<xpath
+			expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']"
+			position="inside">
+			<t t-snippet="honos_snippet_style_23.snippet_style_23_template" />
+		</xpath>
+	</template>
+	
+	<template id="snippet_style_23_template" name ="Style 23">
+		<section class="s23_main_wrap">
+			<div class="s23_content_left_div">
+					<div class="s23_snippet_left_container">
+						<div class="snippet_left_content">
+							<h3 class="s23_content_title">Beauty Collection</h3>
+							<p class="s23_desc_para">We have lots of styles for spring collection that makes you feel wow! Update yourself with latest trends now.
+							</p>
+							<a class="b_fashion_btn s23_bcolor" href="#">Shop now</a>
+						</div>
+					</div>
+					<div class="s23_left_btm_div">
+						<div class="l_btm_img">
+							<section><img class="s_image_common" src="/honos_snippet_style_23/static/src/img/style_23_img_2.png"></img></section>
+						</div>
+						<!-- <div class="l_btm_content_div">
+							<h3 class="s23_btm_text">New Collection</h3>
+						</div> -->
+					
+					</div>
+				</div>
+			<div class="s23_img_right_div">
+				<section><img class="s_image_common" src="/honos_snippet_style_23/static/src/img/style_23_img_1.png"></img></section>
+			</div>
+		</section>
+	</template>
+</odoo>

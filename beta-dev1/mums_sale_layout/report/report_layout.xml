@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="external_sale_order_layouts">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="mums_sale_layout.external_sale_layout_custom_header" />
+    <t t-raw="0" />
+</template>
+
+<template id="external_sale_layout_custom_header">
+    <div class="header">
+        <style type="text/css">
+            /* Declare fonts */
+            @font-face {
+                font-family: helvetica-neue-bold;
+                src: url(/mums_sale_layout/static/font/helvetica-neue-condensed-bold-5949196ed73f9.ttf) format('truetype');
+            }
+            @font-face {
+                font-family: helvetica-neue-medium;
+                src: url(/mums_sale_layout/static/font/HelveticaMedCd.ttf) format('truetype');
+            }
+        </style>
+        <div class="row">
+            <div class="col-xs-3">
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 100px;"/>
+            </div>
+            <div class="col-xs-9" name="company_address">
+                <div>
+                <span t-field="company.name" style="font-size:14pt;font-family:helvetica-neue-bold; display:block;color:#565656"/>
+                </div>
+                <div>
+                <i class="fa fa-map-marker" style="font-size:12pt;color:#da607f;margin-right: 5px;"></i>
+                <span t-field="company.street" style="font-size:12pt;font-family:helvetica-neue-medium;font-stretch:condensed;font-weight:normal;display:inline-block;color:#000000"/>,
+                <span t-field="company.street2" style="font-size:12pt;font-family:helvetica-neue-medium;font-stretch:condensed;font-weight:normal;display:inline-block;color:#000000"/>,
+                <span t-field="company.country_id.name" style="font-size:12pt;font-family:helvetica-neue-medium;font-stretch:condensed;font-weight:normal;display:inline-block;color:#000000"/>,
+                <span t-field="company.zip" style="font-size:12pt;font-family:helvetica-neue-medium;font-stretch:condensed;font-weight:normal;display:inline-block;color:#000000"/>.
+                </div>
+                <div>
+                <i class="fa fa-envelope-o" style="font-size:12pt;color:#da607f;margin-right: 5px;"></i>
+                <span t-field="company.email" style="font-size:12pt;font-family:helvetica-neue-medium;font-stretch:condensed;font-weight:normal;display:inline-block;color:#000000;"/>
+                <i class="fa fa-globe" style="font-size:12pt;color:#da607f;margin-right: 5px;margin-left: 5px;"></i>
+                <span t-field="company.website" style="font-size:12pt;font-family:helvetica-neue-medium;font-stretch:condensed;font-weight:normal;display:inline-block;color:#000000"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+    </data>
+</odoo>

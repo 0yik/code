@@ -1,0 +1,139 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    This module uses OpenERP, Open Source Management Solution Framework.
+#    Copyright (C) 2014-Today BrowseInfo (<http://www.browseinfo.in>)
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>
+#
+##############################################################################
+
+import time
+import operator
+import itertools
+from datetime import datetime
+from dateutil import relativedelta
+import xlwt
+from xlsxwriter.workbook import Workbook
+from tools.translate import _
+from cStringIO import StringIO
+import base64
+import netsvc
+
+from osv import fields, osv
+
+class bom_wizard(osv.osv_memory):
+    _name ='bom.wizard'
+
+    def print_consildatd_excel(self, cr, uid, ids, context=None):
+        """
+         To get the date and print the report
+         @param self: The object pointer.
+         @param cr: A database cursor
+         @param uid: ID of the user currently logged in
+         @param context: A standard dictionary
+         @return: return report
+        """
+        if context is None:
+            context = {}
+        bom_obj = self.pool.get('mrp.bom')
+        product_obj = self.pool.get('product.product')
+        task_obj = self.pool.get(context.get('active_model'))
+        res = []
+        task_ids = context.get('active_ids')
+        for task in task_obj.browse(cr, uid, task_ids, context=context):
+            for mat in task.material_lines:
+                if mat.product_id:
+                    bom_ids = bom_obj.search(cr, uid, [('product_id','=',mat.product_id.id)],context=context)
+                    for bom in bom_obj.browse(cr, uid, bom_ids, context=context):
+                        if bom.bom_lines:
+                            for bom_line in bom.bom_lines:
+                                res.append({
+                                    'product_id': bom.product_id.name,
+                                    'product_child_id': bom_line.product_id.name,
+                                    'desc' : bom_line.product_id.default_code,
+                                })
+        
+        groups = itertools.groupby(res, key=operator.itemgetter('product_id'))
+        result = [{'product_id':k, 'values':[x for x in v]} for k, v in groups]       
+        
+        # Create an new Excel file and add a worksheet.
+        import base64
+        filename = 'bom_report.xls'
+        workbook = xlwt.Workbook()
+        style = xlwt.XFStyle()
+        tall_style = xlwt.easyxf('font:height 720;') # 36pt
+        # Create a font to use with the style
+        font = xlwt.Font()
+        font.name = 'Times New Roman'
+        font.bold = True
+        font.height = 250
+        style.font = font
+        worksheet = workbook.add_sheet('Sheet 1')
+        worksheet.write(0,4, 'PROYECTO: VIA MAJADAS', style)
+        first_row = worksheet.row(1)
+        first_row.set_style(tall_style)
+        first_col = worksheet.col(1)
+        first_col.width = 256 * 30
+        second_row = worksheet.row(0)
+        second_row.set_style(tall_style)
+        second_col = worksheet.col(0)
+        second_col.width = 156 * 30
+        worksheet.write(2,0, 'ITEM', style)
+        worksheet.write(2,1, 'DESCRIPCION DE MATERIALES', style)
+        row = 1
+        col = 1
+        row_2 = 4
+        for line in result:
+            prod_ids = product_obj.search(cr, uid, [('name_template','=',line['product_id'])],context=context)
+            code = product_obj.browse(cr, uid, prod_ids, context=context)[0].default_code
+            worksheet.write(row_2, 0 , code , style) 
+            worksheet.write(row_2, col , line['product_id'], style) 
+            row_2+=1  
+            for i,val in enumerate(line['values']):
+                worksheet.write(row_2, 0, val['desc'])
+                worksheet.write(row_2, 1, val['product_child_id'])
+                row_2+=1             
+        
+        fp = StringIO()
+        workbook.save(fp)
+        export_id = self.pool.get('bom.excel').create(cr, uid, {'excel_file': base64.encodestring(fp.getvalue()), 'file_name': filename}, context=context)
+        fp.close()
+        return {
+                        'view_mode': 'form',
+                        'res_id': export_id,
+                        'res_model': 'bom.excel',
+                        'view_type': 'form',
+                        'type': 'ir.actions.act_window',
+                        'context': context,
+                        'target': 'new',
+                }
+        return True
+       
+
+     
+bom_wizard()
+
+class bom_excel(osv.osv_memory):
+    _name= "bom.excel"
+    _columns= {
+               'excel_file': fields.binary('Excel Report for Bill Of Material'),
+               'file_name': fields.char('Excel File', size=64),
+               }
+
+bom_excel()
+
+
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

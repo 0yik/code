@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : <https://store.webkul.com/license.html/> -->
+<odoo>
+	<data>
+		<record id="pos_multiple_receipt_inherit_pos_config" model="ir.ui.view">
+			<field name="name">POS configuration</field>
+			<field name="model">pos.config</field>
+			<field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='iface_cashdrawer']" position="after">
+					<field name="allow_multiple_receipt_printer" attrs="{'invisible':[('iface_print_via_proxy','=',False)]}"/>
+					<field name='wk_printer_ids' attrs="{'invisible':['|',('allow_multiple_receipt_printer','=',False),('iface_print_via_proxy','=',False)]}">
+						<tree string="Add Multiple Printers">
+							<field name="name"/>
+							<field name="wk_proxy_ip"/>
+							<field name="short_code"/>
+							<field name="no_of_print"/>
+						</tree>
+					</field>
+				</xpath>
+				<xpath expr="//field[@name='proxy_ip']" position="replace">
+					<label for="proxy_ip" string="IP Address"/>
+					<div class="o_address_format">
+						<field name="proxy_ip" class="o_address_city"/>
+						<field name="no_of_print_for_proxy_ip" placeholder="Number Of Receipts" class="o_address_city" attrs="{'invisible':[('iface_print_via_proxy','=',False)]}"/>
+					</div>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="pos_order_printers_form_view">
+			<field name="name">pos.order.printer</field>
+			<field name="model">pos.order.printer</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml" >
+				<form string="Printer">
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name= "wk_proxy_ip"/>
+							</group>
+							<group>
+								<field name="short_code"/>
+								<field name= "no_of_print"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="pos_order_printers_tree_view">
+			<field name="name">pos.order.printer</field>
+			<field name="model">pos.order.printer</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml" >
+				<tree string="Printer">
+					<field name="name"/>
+					<field name= "wk_proxy_ip"/>
+					<field name="short_code"/>
+					<field name= "no_of_print"/>	
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id='pos_order_printers_form_view_action'>
+			<field name="name">Printers</field>
+			<field name="res_model">pos.order.printer</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_type">form</field>
+		</record>
+	    <menuitem name="Multiple Printers" id="menu_pos_multiple_printer" parent="point_of_sale.menu_point_config_product" action="pos_multiple_receipts.pos_order_printers_form_view_action"/>
+	</data>
+</odoo>

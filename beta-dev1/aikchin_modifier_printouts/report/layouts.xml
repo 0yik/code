@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="report.external_layout">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="report.external_layout_header" />
+            <t t-raw="0" />
+            <t t-call="report.external_layout_footer" />
+        </template>
+        <template id="aikchin_modifier_printouts.external_layout">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="aikchin_modifier_printouts.external_layout_header" />
+            <t t-raw="0" />
+            <t t-call="aikchin_modifier_printouts.external_layout_footer" />
+        </template>
+
+        <template id="aikchin_modifier_printouts.external_layout_header">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-12"
+                             style="line-height:16px;text-align:center;font-family: Times New Roman; text-transform:uppercase; "><!-- padding-left:63px; -->
+                            <div style="width: 100%; display: inline-block; padding-bottom: 20px;">
+                                <img src="/aikchin_modifier_printouts/static/src/aikchin_logo.png" width="442" height="100"/>
+                            </div>
+                            <span style="font-size:22px;" t-esc="o.company_id.name"/>
+                            <br/>
+                            <span style="font-size:14px;">ROC:</span>
+                            <span style="font-size:14px;" t-esc="o.company_id.company_uen"/>
+                            <span style="font-size:14px;">GST:</span>
+                            <span style="font-size:14px;" t-esc="o.company_id.gst_no"/>
+                            <br/>
+                            <span style="font-size:14px;font-weight:1px" t-esc="o.company_id.street"/>
+                            <span style="font-size:14px;font-weight:1px" t-esc="o.company_id.street2"/>
+                            <span style="font-size:14px;font-weight:1px" t-esc="o.company_id.city"/>
+                            <span style="font-size:14px;font-weight:1px" t-esc="o.company_id.zip"/>
+                            <br/>
+                            <span style="font-sisze:13px;text-transform:lowercase;">Website:</span>
+                            <span style="font-size:13px;font-weight:1px;text-transform:lowercase;"
+                                  t-esc="o.company_id.website"/>
+                            <br/>
+                            <span style="font-size:14px;font-weight:1px">TEL:</span>
+                            <span style="font-size:14px;font-weight:1px" t-esc="o.company_id.phone"/>
+                            <span>&#160;</span>
+                            <span style="font-size:14px;font-weight:1px">FAX:</span>
+                            <span style="font-size:14px;font-weight:1px" t-esc="o.company_id.fax"/>
+                            <br/>
+                        </div>
+                </div>
+            </div>
+        </template>
+        <template id="aikchin_modifier_printouts.external_layout_footer">
+
+        </template>
+
+        <template id="minimal_layout" inherit_id="report.minimal_layout">
+            <xpath expr="//t[@t-if='subst is True']" position="replace">
+                <t t-if="subst is True">
+                    <script>
+                        function subst() {
+                            var vars = {};
+                            var x = document.location.search.substring(1).split('&amp;');
+                            for (var i in x) {
+                                var z = x[i].split('=', 2);
+                                vars[z[0]] = unescape(z[1]);
+                            }
+                            var x=['frompage', 'topage', 'page', 'webpage', 'section', 'subsection', 'subsubsection'];
+                            for (var i in x) {
+                                var y = document.getElementsByClassName(x[i]);
+                                for (var j=0; j&lt;y.length; ++j)
+                                    y[j].textContent = vars[x[i]];
+                            }
+                            var operations = {
+                                'not-first-page': function (elt) {
+                                    elt.style.display = (vars.page === vars.frompage) ? "None" : "";
+                                },
+                                'not-last-page': function (elt) {
+                                    elt.style.display = (vars.page === vars.topage) ? "None" : "";
+                                },
+                                'first-page': function (elt) {
+                                    elt.style.display = (vars.page === vars.frompage) ? "None" : "";
+                                },
+                                'last-page': function (elt) {
+                                    elt.style.display = (vars.page === vars.topage) ? "None" : "";
+                                },
+                            };
+                            for (var klass in operations) {
+                                var y = document.getElementsByClassName(klass);
+                                for (var j=0; j&lt;y.length; ++j)
+                                    operations[klass](y[j]);
+                            }
+                        var vars = {};
+                        var x = document.location.search.substring(1).split('&amp;');
+                        for (var i in x) {
+                        var z = x[i].split('=', 2);
+                        vars[z[0]] = unescape(z[1]);
+                        }
+                        var x=['frompage', 'topage', 'page', 'webpage', 'section', 'subsection', 'subsubsection'];
+                        for (var i in x) {
+                        var y = document.getElementsByClassName(x[i]);
+                        for (var j=0; j&lt;y.length; ++j)
+                        y[j].textContent = vars[x[i]];
+                        }
+                        var operations = {
+                        'not-first-page': function (elt) {
+                        elt.style.display = (vars.page === vars.frompage) ? "None" : "";
+                        },
+                        'not-last-page': function (elt) {
+                        elt.style.display = (vars.page === vars.topage) ? "None" : "";
+                        },
+                        'first-page': function (elt) {
+                        elt.style.display = (vars.page === vars.frompage) ? "None" : "";
+                        },
+                        'last-page': function (elt) {
+                        elt.style.display = (vars.page === vars.topage) ? "None" : "";
+                        },
+                        };
+                        for (var klass in operations) {
+                        var y = document.getElementsByClassName(klass);
+                        for (var j=0; j&lt;y.length; ++j)
+                        operations[klass](y[j]);
+                        }
+
+                        }
+                    </script>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>

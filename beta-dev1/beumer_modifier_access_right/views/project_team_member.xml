@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="account_analytic_account_form_form_inherit_teammember" model="ir.ui.view">
+          <field name="name">account.analytic.account.invoice.form.inherit.teammember</field>
+          <field name="model">account.analytic.account</field>
+          <field name="inherit_id" ref="beumer_modifier_project.account_analytic_account_form_form_inherit"/>
+          <field name="arch" type="xml">
+            <xpath expr="//field[@name='team_members']/tree/field[@name='user_id']" position="after">
+                <field  name="right"/>
+            </xpath>
+              <xpath expr="//field[@name='team_members']/form/group/group[1]/field[@name='user_id']" position="after">
+                <field  name="right"/>
+            </xpath>
+          </field>
+        </record>
+    </data>
+</odoo>

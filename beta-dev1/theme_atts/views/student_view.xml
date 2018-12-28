@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>    
+    <!-- Form View Of Student Profile Information -->
+    <record id="view_student_profile_form" model="ir.ui.view">
+        <field name="name">student.student.profile.form</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <form string="Student Profile">
+                <sheet>
+                    <group string="Student Information">
+                        <group>
+                            <field name="state" invisible="1"/>
+                            <field name="name" placeholder="Student Name" attrs="{'invisible':[('student_type','=', 'corporate')]}"/>
+                            <field name="user_id" attrs="{'invisible':[('student_type','=', 'individual')]}"/>
+                            <field name="student_type"/>
+                            <field name="contact_number" attrs="{'invisible':[('student_type','=', 'corporate')]}"/>
+                            <field name="contact_number" string="Contact No." attrs="{'invisible':[('student_type','=', 'individual')]}"/>
+                            <field name="date_of_birth" attrs="{'invisible':[('student_type','=', 'corporate')]}"/>
+                            <field name="email"/>
+                        </group>
+                        <group>
+                            <field name="fax_no" attrs="{'invisible':[('student_type','=', 'individual')]}"/>
+                            <field name="mail_address" attrs="{'invisible':[('student_type','=', 'corporate')]}"/>
+                            <field name="certi_mailing_add" attrs="{'invisible':[('student_type','=', 'individual')]}"/>
+                            <field name="contact_person" attrs="{'invisible':[('student_type','=', 'individual')]}"/>
+                        </group>
+                        <group>
+                            <field name="nric_passport" attrs="{'invisible':[('student_type','=', 'corporate')]}"/>
+                            <field name="company_name"/>
+                            <field name="job_title" attrs="{'invisible':[('student_type','=', 'corporate')]}"/>
+                            <field name="nationality" attrs="{'invisible':[('student_type','=', 'corporate')]}"/>
+                            <field name="country_id" attrs="{'invisible':[('student_type','=', 'corporate')]}"/>
+                            <field name="dietary_request" attrs="{'invisible':[('student_type','=', 'corporate')]}"/>
+                            <field name="dietary_request_comment" attrs="{'invisible':[('student_type','=', 'corporate')]}"/>
+                            <field name="payment_method"/>
+                        </group>
+                        <group>
+                            <field name="uen_no_company_number" attrs="{'invisible':[('student_type','=', 'individual')]}"/>
+                            <field name="company_address" attrs="{'invisible':[('student_type','=', 'individual')]}"/>
+                            <field name="billing_address" attrs="{'invisible':[('student_type','=', 'individual')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_student_profile_tree" model="ir.ui.view">
+        <field name="name">student.student.profile.tree</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <tree string="Student Profile">
+                <field name="name"/>
+                <field name="student_type"/>
+                <field name="contact_number"/>
+                <field name="email"/>
+                <field name="state" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_student_profile_form" model="ir.actions.act_window">
+        <field name="name">Student Profile</field>
+        <field name="res_model">student.student</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('view_student_profile_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_student_profile_form')})]"/>
+    </record>
+
+    <menuitem id="profile" name="Profile" parent="atts_course.menu_ems" sequence="1" groups="atts_course.group_school_administration,atts_course.group_is_admission"/>
+    <menuitem id="student_profile" name="Student Profile" parent="profile" action="action_student_profile_form" sequence="1" groups="atts_course.group_school_administration,atts_course.group_is_admission"/>
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="seq_customer_fmd_partner" model="ir.sequence">
+      <field name="name">Customer FMd</field>
+      <field name="code">res.partner</field>
+      <!-- <field name="prefix">0000</field> -->
+      <field name="padding">4</field>
+      <field name="client_cust_id"  />
+    </record>
+  </data>
+</odoo>

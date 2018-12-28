@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_commission_quarter_with_details_form" model="ir.ui.view">
+        <field name="name">commission.quarter.form</field>
+        <field name="model">commission.quarter</field>
+        <field name="arch" type="xml">
+            <form string="Commission Quarter">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="view_commission_quarter_with_details_tree" model="ir.ui.view">
+        <field name="name">commission.quarter.tree</field>
+        <field name="model">commission.quarter</field>
+        <!--field name="priority">4</field-->
+        <field name="arch" type="xml">
+            <tree string="Commission Quarter">
+            <!-- class="o_sale_order" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'" -->
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_commission_quarter_with_details" model="ir.actions.act_window">
+        <field name="name">Commission Quarter</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">commission.quarter</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+   </record>
+
+    <menuitem id="menu_commission_quarter_with_details" name="Commission Quarter" parent="sales_team.menu_sale_config" sequence="2"/>
+    <menuitem id="menu_commission_quarte" name="Commission Quarter" parent="menu_commission_quarter_with_details" action="action_commission_quarter_with_details" sequence="1"/>
+</odoo>

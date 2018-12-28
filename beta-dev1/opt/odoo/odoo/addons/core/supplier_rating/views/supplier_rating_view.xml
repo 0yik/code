@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_supplier_rating_form">
+            <field name="name">view.supplier.rating.form</field>
+            <field name="model">supplier.rating</field>
+            <field name="arch" type="xml">
+                <form string="Supplier Rating">
+                    <header>
+                        <button name="validate_rating" states="draft" string="Validate" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" clickable="True"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" domain="[('supplier','=',True)]" options='{"always_reload": True}' required="1"/>
+                                <field name="date_rating"/>
+                                <field name="average_rating" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Ratings">
+                                <field name="rating_lines" colspan ="2">
+                                    <tree editable="bottom">
+                                        <field name='name'/>
+                                        <field name='value'
+                                               context="{'rating_lines': config_id}"/>
+                                        <field name='description'/>
+                                        <field name='config_id' invisible="1"/>
+
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="supplier_rating_tree" model="ir.ui.view">
+            <field name="name">supplier.rating.tree</field>
+            <field name="model">supplier.rating</field>
+            <field name="arch" type="xml">
+                <tree string="Supplier Rating">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="date_rating"/>
+                    <field name="average_rating" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="pivot_supplier_rating">
+            <field name="name">pivot.supplier.rating</field>
+            <field name="model">supplier.rating</field>
+            <field name="arch" type="xml">
+                <pivot string="Supplier Rating">
+                    <field name="partner_id" type="row"/>
+                    <field name="average_rating" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="supplier_rating_graph_view" model="ir.ui.view">
+            <field name="name">supplier.rating.graph.view</field>
+            <field name="model">supplier.rating</field>
+            <field name="arch" type="xml">
+                <graph string="Supplier Rating">
+                    <field name="partner_id" type="row"/>
+                    <field name="average_rating" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="supplier_rating_form_action" model="ir.actions.act_window">
+            <field name="name">Supplier Rating</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">supplier.rating</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+        </record>
+
+        <record id="supplier_rating_line_tree1" model="ir.ui.view">
+            <field name="name">supplier.rating.line.tree</field>
+            <field name="model">ratings.lines</field>
+            <field name="arch" type="xml">
+                <tree string="Supplier Rating Lines" create="false">
+                    <field name="name"/>
+                    <field name="value"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="supplier_rating_line_graph_view" model="ir.ui.view">
+            <field name="name">supplier.rating.line.graph.view</field>
+            <field name="model">ratings.lines</field>
+            <field name="arch" type="xml">
+                <graph string="Supplier Rating Lines">
+                    <field name="config_id" type="row"/>
+                    <field name="value_value" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="pivot_supplier_rating">
+            <field name="name">pivot.supplier.rating</field>
+            <field name="model">ratings.lines</field>
+            <field name="arch" type="xml">
+                <pivot string="Supplier Rating">
+                    <field name="config_id" type="row"/>
+                    <field name="value_value" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="rating_line_form_action" model="ir.actions.act_window">
+            <field name="name">All Ratings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ratings.lines</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="supplier_rating_line_tree1"/>
+            <field name="view_mode">tree,pivot,graph</field>
+        </record>
+
+
+        <menuitem
+                id="menu_supplier_rating" name="Ratings"
+                parent="purchase.menu_purchase_root"/>
+
+        <menuitem
+                action="supplier_rating_form_action"
+                id="menu_supplier_ratings"
+                parent="menu_supplier_rating"/>
+        <menuitem
+                action="rating_line_form_action"
+                id="menu_supplier_ratings_lines"
+                parent="menu_supplier_rating"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="pos_promotion_form_extended">
+        <field name="name">pos.promotion.form.extended</field>
+        <field name="model">pos.promotion</field>
+        <field name="inherit_id" ref="pos_promotion.pos_promotion_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='discount_order_ids']/tree/field[@name='minimum_amount']" position="after">
+					<field name="maximum_amount"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>

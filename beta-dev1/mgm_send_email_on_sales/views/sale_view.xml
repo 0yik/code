@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_mail_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.mail.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!--<xpath expr="//button[@name='action_confirm']" position="replace">-->
+                 <!--<button name="action_confirm" states="sent,so_sent" string="Confirm Sale" class="btn-primary o_sale_confirm" type="object" />-->
+            <!--</xpath>-->
+
+            <!--<xpath expr="//button[@name='action_cancel']" position="replace">-->
+                 <!--<button name="action_cancel" states="draft,sent,sale,so_sent" type="object" string="Cancel"/>-->
+            <!--</xpath>-->
+
+            <!--<xpath expr="//button[@name='action_quotation_send']" position="replace">-->
+                 <!--<button name="print_quotation" string="Print" type="object" states="sent,sale,so_sent"/>-->
+            <!--</xpath>-->
+
+            <xpath expr="//button[@name='print_quotation']" position="replace">
+                <button name="print_quotation" string="Print" type="object" states="draft" class="btn-primary"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_quotation_send']" position="replace">
+                <button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="btn-primary"/>
+            </xpath>
+
+            <field name="state" position="replace">
+                <!--<attribute name="statusbar_visible">draft,so_sent,sent,sale</attribute>-->
+                <field name="state" widget="statusbar" statusbar_visible="draft,so_sent,sent,sale"/>
+            </field>
+
+            <button name="action_quotation_send" position="after">
+                <button name="action_quotation_send" string="Send by Email" type="object" states="so_sent"/>
+                <button name="action_quotation_send_sale" string="Send Mail SO" type="object" class="btn-primary" attrs="{'invisible': [('vals_update', '=', False)]}"/>
+                <button name="print_quotation" string="Print" type="object" states="so_sent"/>
+                <button name="action_confirm" states="so_sent" string="Confirm Sale" class="btn-primary o_sale_confirm" type="object" />
+                <button name="action_cancel" states="so_sent" type="object" string="Cancel"/>
+            </button>
+
+            <field name="partner_id" position="before">
+                <field name="vals_update" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

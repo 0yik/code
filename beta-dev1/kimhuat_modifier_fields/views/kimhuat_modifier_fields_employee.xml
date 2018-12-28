@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--EDIT EMPLOYEE FORM VIEW-->
+        <record id="kimhuat_modifier_fields_edit_employee_view" model="ir.ui.view">
+            <field name="name">employee form view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/div[2]/h1" position="after">
+                    <label for="employee_id" string="Employee ID" class="oe_edit_only"/>
+                    <field name="employee_id" string="Employee ID"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!--EDIT LEAVES (ALLOCATION REQUEST) FORM VIEW-->
+        <record id="kimhuat_modifier_fields_edit_allocation_request_view" model="ir.ui.view">
+            <field name="name">allocation request form view</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group/group/field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('type', '=', 'add')]}</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/group/group/field[@name='name']" position="attributes">
+                    <attribute name="string">Reason</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--EDIT EMPLOYEE CONTRACT FORM VIEW-->
+        <record id="kimhuat_modifier_fields_edit_employee_contract_view" model="ir.ui.view">
+            <field name="name">employee contract form view</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page/group/group[2]/label" position="attributes">
+                    <attribute name="string">Probation Duration</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,216 @@
+<odoo>
+    <data>
+    
+    	
+    
+        <record id="my_request_view" model="ir.ui.view">
+            <field name="name">my.request.view</field>
+            <field name="model">my.request</field>
+            <field name="arch" type="xml">
+                <form string="Request">
+                    <header>
+                        <button name="waiting_approvel" string="Submit" type="object"
+                            class="btn-primary" attrs="{'invisible': [('status', '!=', 'draft')]}" />
+                        <button name="action_cancel" string="Cancel" type="object"
+                            class="btn-primary" attrs="{'invisible': [('status', 'not in', ['approved', 'draft'])]}" />
+                        <button name="state_approvel" string="Approve" type="object"
+                            class="btn-primary"
+                            attrs="{'invisible': [('status', 'in', ['approved', 'reject']), ('req_type', '=', 'overtime')]}"
+                            groups='hilti_modifier_accessrights.group_hilti_admin' />
+                        <button name="force_approve" string="Force Approval" type="object"
+                            confirm="Are you sure you want to forcefully approve this request?"
+                            class="btn-primary"
+                            attrs="{'invisible': [('status', 'in', ['approved', 'reject', 'cancel'] , ('req_type', '!=', 'unavailability'))]}"
+                            groups='hilti_modifier_accessrights.group_hilti_admin' />
+                        <button name="state_reject" string="Reject" type="object"
+                            class="btn-primary" attrs="{'invisible': [('status', 'in', ['draft', 'reject'])]}"
+                            groups='hilti_modifier_accessrights.group_hilti_admin' />
+                        <field name="status" widget="statusbar"
+                            statusbar_visible="draft,awaitinapprovel,approved,reject,cancel" />
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="req_no" readonly="1" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="user_id" groups='hilti_modifier_accessrights.group_hilti_admin' domain="[('type_of_user', '=', 'hilti_tester')]" attrs="{'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/>
+                                <field name="req_type" string="Request Type" attrs="{'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/>
+                                <field name="description" attrs="{'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/>
+                                <field name="duration_compute" widget='float_time' readonly="1" attrs="{'invisible': [('is_half_leave', '=', False)], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}" /> hours
+                            </group>
+
+                            <group attrs="{'invisible': [('req_type', '=', 'overtime')], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}">
+                                <field name="is_half_leave" attrs="{'invisible': [('req_type', '=', 'overtime')], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/>
+                                <field name="start_date" string="Start Date &amp; Time" attrs="{'invisible': ['|',('req_type', 'in', ['overtime', '']), ('is_half_leave', '=', False)], 'required': [('req_type', '=', 'unavailability'), ('is_half_leave', '=', True)], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/>
+                                <field name="half_day_hour" widget='float_time' attrs="{'invisible': ['|',('req_type', 'in', ['overtime', '']),('is_half_leave', '=', False)], 'required': [('req_type', '=', 'unavailability'), ('is_half_leave', '=', True)], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/>
+                                <field name="full_start_date" attrs="{'invisible': ['|',('req_type', 'in', ['overtime', '']),('is_half_leave', '=', True)], 'required': [('req_type', '=', 'unavailability'), ('is_half_leave', '=', False)], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/>
+                                <field name="full_end_date" attrs="{'invisible': ['|',('req_type', 'in', ['overtime', '']),('is_half_leave', '=', True)], 'required': [('req_type', '=', 'unavailability'), ('is_half_leave', '=', False)], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/>
+                                <label for="days_compute" attrs="{'invisible': ['|',('req_type', '=', 'overtime'), ('is_half_leave', '=', True)]}"/>
+                                <div attrs="{'invisible': ['|',('req_type', '=', 'overtime'), ('is_half_leave', '=', True)]}">
+                                    <field name="days_compute" readonly="1" attrs="{'invisible': ['|',('req_type', '=', 'overtime'), ('is_half_leave', '=', True)]}" /> Days
+                                </div>
+                            </group>
+
+
+                            <group string="Overtime working hours (During Weekdays)" attrs="{'invisible': [('req_type', '=', 'unavailability')], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}">
+                                <label for="overtime_start_time" string="Overtime Start Time" attrs="{'invisible': [('req_type', '=', 'unavailability')], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/>
+                                <div attrs="{'invisible': [('req_type', '=', 'unavailability')], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}">
+                                    <field name="overtime_start_time" 
+                                        widget='float_time' readonly='1'
+                                        attrs="{'invisible': [('req_type', '=', 'unavailability')], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/> hours
+                                </div>
+                                <label for="overtime_end_time" string="Overtime End Time " attrs="{'invisible': [('req_type', '=', 'unavailability')], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/>
+                                <div attrs="{'invisible': [('req_type', '=', 'unavailability')], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}">
+                                    <field name="overtime_end_time" widget='float_time'
+                                        readonly='1'
+                                        attrs="{'invisible': [('req_type', '=', 'unavailability')], 'readonly': [('status', 'in', ['approved','reject', 'cancel'])]}"/> hours
+                                </div>
+                            </group>
+                        </group>
+                        <notebook attrs="{'invisible': [('req_type', '=', 'unavailability')]}">
+                            <page string="Overtime Details">
+                                <field name="ot_req_ids" context="{'req_type': req_type}" attrs="{'required': [('req_type', '=', 'overtime')], 'readonly': [('status', 'in', ['reject', 'cancel', 'approved'])]}">
+                                    <tree editable="bottom">
+                                        <field name="t_re_id" invisible="1" />
+                                        <field name="ot_start_date" string="Start Date &amp; Time"/>
+                                        <field name="ot_end_date" string="End Date &amp; Time"/>
+                                        <field name="duration" widget='float_time' readonly='1'/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="my_request_view_tree" model="ir.ui.view">
+            <field name="name">my.request.view.tree</field>
+            <field name="model">my.request</field>
+            <field name="arch" type="xml">
+                <tree string="Request">
+                    <field name="req_no" string="Request Number"/>
+                    <field name="partner_id" />
+                    <field name="req_type" string="Request Type"/>
+                    <field name="description" />
+                    <!-- <field name="days" invisible="1"/>
+                                        <field name="duration" invisible="1"/> -->
+                                        <field name="days_compute" sum="Duration"/>
+                                        <field name="duration_compute" sum="Total Duration"/>
+                                        <field name="status" />
+                                    </tree>
+                                </field>
+                            </record>
+
+                            <record id="action_my_request_view" model="ir.actions.act_window">
+                                <field name="name">My Requests</field>
+                                <field name="res_model">my.request</field>
+                                <field name="view_type">form</field>
+                                <field name="view_mode">tree,form</field>
+                                <field name="domain">[('user_id', '=', uid)]</field>
+                                <field name="help" type="html">
+                                    <p class="oe_view_nocontent_create">
+                                        My Request
+                                    </p>
+                                    <p>
+                                    </p>
+                                </field>
+                                <field name="view_ids"
+                                    eval="[(5, 0, 0),
+                                    (0, 0, {'view_mode': 'tree', 'view_id': ref('my_request_view_tree')}),
+                                    (0, 0, {'view_mode': 'form', 'view_id': ref('my_request_view')}),
+                                    ]" />
+                            </record>
+
+                            <record id="my_request_view_tree_search_admin" model="ir.ui.view">
+                                <field name="name">my.request.search.view</field>
+                                <field name="model">my.request</field>
+                                <field name="arch" type="xml">
+                                    <search string="Requests">
+                                        <field name="req_no" string="Request Number" filter_domain="[('req_no','ilike',self)]"/>
+                                        <!--field name="full_start_date" /-->
+                                        <field name="description" string="Description" filter_domain="[('description','ilike',self)]"/>
+                                        <field name="user_id" />
+                                        <separator />
+                                        <!-- start filter for customer and tester-->
+
+                                        <filter string="Unavailable Requests"
+                                            name="unavailable_request_ct"
+                                            domain="[('req_type', '=', 'unavailability')]"
+                                            groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                                        <filter string="Overtime Requests"
+                                            name="overtime_request_ct"
+                                            domain="[('req_type', '=', 'overtime')]"
+                                            groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                                        <separator />
+                                        <filter string="Draft"
+                                            name="draft_request_ct"
+                                            domain="[('status', '=', 'draft')]"
+                                            groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                                        <filter string="Awaiting Approval"
+                                            name="awaitinapprovel_request_ct"
+                                            domain="[('status', '=', 'awaitinapprovel')]"
+                                            groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                                        <filter string="Approved"
+                                            name="approved_request_ct"
+                                            domain="[('status', '=', 'approved')]"
+                                            groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                                        <filter string="Reject"
+                                            name="reject_request_ct"
+                                            domain="[('status', '=', 'reject')]"
+                                            groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                                        <filter string="Cancel"
+                                            name="cancel_request_ct"
+                                            domain="[('status', '=', 'cancel')]"
+                                            groups="hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_admin,hilti_modifier_accessrights.group_hilti_customer,hilti_modifier_accessrights.group_hilti_tester,hilti_modifier_accessrights.group_hilti_cs_engineer,hilti_modifier_accessrights.group_hilti_account_manager"/>
+                                        <separator />
+
+                                        <!-- end filter for customer and tester-->
+
+                                        <separator />
+                                        <filter string="Unavailable Requests"
+                                            name="unavailable_request"
+                                            domain="[('req_type', '=', 'unavailability')]"/>
+                                        <filter string="Overtime Requests"
+                                            name="overtime_request"
+                                            domain="[('req_type', '=', 'overtime')]"/>
+                                        <filter string="Today"
+                                            name="today"
+                                            domain="[('req_type', '=', 'unavailability'), ('full_start_date', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:01')), ('full_start_date', '&lt;=', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
+                                        <filter string="7 Days"
+                                            name="this_week"
+                                            domain="[('req_type', '=', 'unavailability'), ('full_start_date', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:01')), ('full_start_date', '&lt;=', (context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d 23:59:59'))]"/>
+                                        <group expand="1" string="Group By">
+                                            <filter string="Tester" name="user_id" context="{'group_by':'user_id'}"/>
+                                            <filter name="status" string="Status" context="{'group_by':'status'}"/>
+                                        </group>
+                                    </search>
+                                </field>
+                            </record>
+
+                            <record id="action_my_request_admin_view" model="ir.actions.act_window">
+                                <field name="name">Requests</field>
+                                <field name="res_model">my.request</field>
+                                <field name="view_type">form</field>
+                                <field name="view_mode">tree,form</field>
+                                <field name="search_view_id" ref="my_request_view_tree_search_admin"/>
+                                <field name="help" type="html">
+                                    <p class="oe_view_nocontent_create">
+                                        My Request
+                                    </p>
+                                    <p>
+                                    </p>
+                                </field>
+                            </record>
+
+                            <menuitem id="menu_action_my_request_view" groups='hilti_modifier_accessrights.group_hilti_tester' parent="hilti_modifier_company.menu_customer_tester"
+                                sequence="3" action="hilti_modifier_tester_myrequests.action_my_request_view" />
+
+                            <menuitem id="menu_action_my_request_admin_view" groups='hilti_modifier_accessrights.group_hilti_admin' parent="hilti_modifier_company.menu_customer_admin"
+                                sequence="3" action="hilti_modifier_tester_myrequests.action_my_request_admin_view"/>
+
+
+                        </data>
+                    </odoo>

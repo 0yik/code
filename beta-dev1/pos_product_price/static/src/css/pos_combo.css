@@ -1,0 +1,9 @@
+.product .product-img {
+
+    width: 100% !important;
+    height: 100% !important;
+    text-align: center !important;
+}
+.pos .product{
+    background: #9a9a9a !important;
+}

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="email_template_collect_data_report" model="mail.template">
+            <field name="name">Collect Data Enquiry - Send by Email</field>
+            <field name="email_from"></field>
+            <field name="subject">${object.name}</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+                    <p>Dear Sir/Madam,
+
+                    <p>Enquiry is in ${object.stage_id.name} Stage. You can reply to this email if you have any questions.</p>
+                    <p>You Can Find Link Below.</p>
+                    <a href="/web#id=${object.id}&view_type=form&model=crm.lead&menu_id=${'menu_id' in ctx and ctx['menu_id'] or ''}&action=${'action_id' in ctx and ctx['action_id'] or ''}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">View</a>
+                    <p>Thank you,</p>
+
+                    <p style="color:#eeeeee;">
+                    % if object.user_id and object.user_id.signature:
+                        ${object.user_id.signature | safe}
+                    % endif
+                    </p>
+                    ]]></field>
+        </record>
+
+        <record id="email_template_sale_order_approval_report" model="mail.template">
+            <field name="name">Sale Order Approval - Send by Email</field>
+            <field name="email_from"></field>
+            <field name="subject">${object.name}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+                    <p>Dear Sir/Madam,
+
+                    <p>Sale Order is in ${object.state} Stage. You can reply to this email if you have any questions.</p>
+                    <p>You Can Find Link Below.</p>
+                    <a href="/web#id=${object.id}&view_type=form&model=sale.order&menu_id=${'menu_id' in ctx and ctx['menu_id'] or ''}&action=${'action_id' in ctx and ctx['action_id'] or ''}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">View</a>
+                    <p>Thank you,</p>
+
+                    <p style="color:#eeeeee;">
+                    % if object.user_id and object.user_id.signature:
+                        ${object.user_id.signature | safe}
+                    % endif
+                    </p>
+                    ]]></field>
+        </record>
+
+        <record id="email_template_sale_order_approval_send_n" model="mail.template">
+            <field name="name">Sale Order Approval Send - Send by Email</field>
+            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field>
+            <field name="email_to">${ctx['email_to'] or object.partner_id.email}</field>
+            <field name="subject">${object.name}</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <!-- <field name="report_template" ref="product_quotation_customize.ips_quotation_report_template_id"/> -->
+            <field name="report_name">${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+                    <p>Dear Sir / Madam,</p>
+
+                    <p>Thank you very much for your inquiry. Attached please find for your review quotation ${object.name}.</p>
+                    <p>I am happy to discuss your order in detail - if you have any questions, please feel free to contact us.</p>
+                    
+                    <p><b>Best regards,</b></p>
+                    <p><b>Inti Presisi Toolsindo, PT.</b></p>
+                    
+                    <p style="color:#af9e9e;"><font class="bg-white" style="">
+                        Phone : +62-21-89832720</font>
+                    </p>
+                    <p style="color:#af9e9e;"><font class="bg-white" style="">
+                        Email : sales@inti-tools.com</font>
+                    </p>
+                    <p style="color:#af9e9e;"><font class="bg-white" style="">
+                        Jababeka IIE St. Blok C/15-F</font>
+                    </p>
+                    <p style="color:#af9e9e;"><font class="bg-white" style="">
+                        Kawasan Industri Jababeka 1</font>
+                    </p>
+                    <p style="color:#af9e9e;"> <font class="bg-white" style="">
+                        Cikarang - Bekasi</font>
+                    </p>
+                    <p style="color:#af9e9e;"><font class="bg-white" style="">
+                        Jawa Barat (17520) - Indonesia</font>
+                    </p>
+                    ]]></field>
+        </record>
+
+        <record model="crm.stage" id="stage_lead_collect_data">
+            <field name="name">Collect Data</field>
+            <field name="probability">0</field>
+        </record>
+        <record model="crm.stage" id="stage_lead_technical_check">
+            <field name="name">Technical Checking</field>
+            <field name="probability">0</field>
+        </record>
+        <record model="crm.stage" id="stage_lead_pricing">
+            <field name="name">Pricing</field>
+            <field name="probability">0</field>
+        </record>
+        <record model="crm.stage" id="stage_lead_quotations">
+            <field name="name">Quotations</field>
+            <field name="probability">0</field>
+        </record>
+        <record model="crm.stage" id="stage_lead_no_offers">
+            <field name="name">No Offer</field>
+            <field name="probability">0</field>
+        </record>
+
+        <!-- enquiry.status -->
+<!--         <record model="enquiry.status" id="stage_en_draft">
+            <field name="name">In Draft</field>
+        </record>
+        <record model="enquiry.status" id="stage_en_offers">
+            <field name="name">No Offer</field>
+        </record>
+        <record model="enquiry.status" id="stage_en_approved">
+            <field name="name">Approved</field>
+        </record> -->
+
+        <!-- Prospects.status -->
+<!--         <record model="crm.new.case" id="stage_pr_open">
+            <field name="name">Open</field>
+        </record>
+        <record model="crm.new.case" id="stage_pr_work">
+            <field name="name">Working</field>
+        </record>
+        <record model="crm.new.case" id="stage_pr_closed">
+            <field name="name">Closed</field>
+        </record> -->
+
+        <record id="seq_crm_lead" model="ir.sequence">
+            <field name="name">CRM LEAD</field>
+            <field name="code">crm.lead</field>
+            <field name="padding">0</field>
+            <field name="suffix">-%(month)s-%(year)s</field>
+        </record>
+
+    </data>
+</odoo>

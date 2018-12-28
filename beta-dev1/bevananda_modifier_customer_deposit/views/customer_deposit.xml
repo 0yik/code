@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="form_view_account_payment_deposit_inherit" model="ir.ui.view">
+            <field name="name">account.payment.form.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account_deposit.form_view_account_payment_deposit"/>
+            <field name="arch" type="xml">
+                <field name="writeoff_account_id" position="after">
+                    <field name="order_id" attrs="{'readonly' : [('state', 'in', ['posted', 'returned', 'revenue', 'reconciled'])]}"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

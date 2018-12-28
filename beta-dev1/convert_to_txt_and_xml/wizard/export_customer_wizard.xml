@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="ir_actions_server_download_customer_txt" model="ir.actions.server">
+            <field name="name">Export to Txt</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">action = model.download_txt()</field>
+        </record>
+
+        <record id="id_export_customer" model="ir.values">
+            <field name="model_id" ref="model_res_partner" />
+            <field name="name">Export Customer</field>
+            <field name="key2">client_action_multi</field>
+            <field eval="'ir.actions.server,%d'%ir_actions_server_download_customer_txt" name="value"/>
+            <field name="key">action</field>
+            <field name="model">res.partner</field>
+        </record>
+
+        <record id="view_customer_export_form" model="ir.ui.view">
+            <field name="name">customer.txt.file.form</field>
+            <field name="model">customer.txt.file</field>
+            <field name="arch" type="xml">
+                <form string="Customer Txt File">
+                    <group>
+                        <field name="txt_file" readonly="1" filename="file_name"/>
+                        <field name="file_name" invisible="1"/>
+                    </group>
+                    <footer>
+                       <button string="Close" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_customer_txt_file" model="ir.actions.act_window">
+            <field name="name">Customer txt File</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customer.txt.file</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_customer_export_form"/>
+            <field name="target">new</field>
+        </record>
+
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_expiring_document_holiday_manager,access.expiring.document.holiday.manager,model_expiring_document,hr_holidays.group_hr_holidays_manager,1,1,1,1
+access_expiring_document_holiday_user,access.expiring.document.holiday.user,model_expiring_document,hr_holidays.group_hr_holidays_user,1,1,1,1
+access_expiring_document_user,access.expiring.document.user,model_expiring_document,base.group_user,1,1,1,1
+access_employee_other_document_holiday_manager,access.employee.other.document.holiday.manager,model_employee_other_document,hr_holidays.group_hr_holidays_manager,1,1,1,1
+access_employee_other_document_holiday_user,access.employee.other.document.holiday.user,model_employee_other_document,hr_holidays.group_hr_holidays_user,1,1,1,1
+access_employee_other_document_user,access.employee.other.document.user,model_employee_other_document,base.group_user,1,1,1,1

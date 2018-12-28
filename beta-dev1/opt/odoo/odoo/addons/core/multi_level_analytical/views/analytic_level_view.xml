@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="view_account_analytic_account_form_inherit" model="ir.ui.view">
+		<field name="name">Account Analytic Account Inherit</field>
+		<field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+		<field name="arch" type="xml">
+			<field name="partner_id" position="after">
+                <field name="level_id"/>
+            </field>
+		</field>
+	</record>
+
+    <record id="account_analytic_level_tree_view" model="ir.ui.view">
+        <field name="name">Account Analytic Level Tree</field>
+		<field name="model">account.analytic.level</field>
+        <field name="arch" type="xml">
+            <tree string="Account Analytic Level">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+	<record id="account_analytic_level_form_view" model="ir.ui.view">
+		<field name="name">Account Analytic Level Form</field>
+		<field name="model">account.analytic.level</field>
+		<field name="arch" type="xml">
+			<form class="Account Analytic Level">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="open_analytic_account" icon="fa-bars" type="object" class="oe_stat_button" attrs="{'invisible': [('analytic_account_count','=',0)]}">
+                            <field name="analytic_account_count" string="Accounts" widget="statinfo" />
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" placeholder="Name.."/>
+                    </group>
+                    <separator string="Description"/>
+                    <field name="description"/>
+                </sheet>
+            </form>
+		</field>
+	</record>
+
+    <record id="account_analytic_level_action" model="ir.actions.act_window">
+        <field name="name">Analytic Account Level</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.analytic.level</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a Analytic Account Level.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_account_analytic_level" action="account_analytic_level_action" parent="account.menu_analytic_accounting" sequence="15"/>
+
+</odoo>

@@ -1,0 +1,48 @@
+<odoo>
+	<data>
+
+		<!-- First Time Quality Wizard Form view -->
+		<record model="ir.ui.view" id="sale_order_wizard_form">
+			<field name="name">sale.order.wizard.form</field>
+			<field name="model">sale.order.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Sale Order Line Wizard">
+					<sheet>
+						<group>
+							<group>
+								<field name="from_date" />
+							</group>
+							<group>
+								<field name="to_date" />
+							</group>
+						</group>
+						<group>
+							<field name="remarks" />
+						</group>
+					</sheet>
+					<footer>
+						<button name="print_report" string="Generate Report" type="object"
+							class="oe_highlight" />
+						or
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_sale_order_wizard" model="ir.actions.act_window">
+			<field name="name">Sale Order Report</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order.wizard</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="sale_order_wizard_form" />
+			<field name="target">new</field>
+		</record>
+
+<!-- 		<menuitem id="sale_order_wizard_menu" name="Sale Order Report" -->
+<!-- 			action="action_sale_order_wizard" sequence="20" -->
+<!-- 			parent="sales_team.menu_sale_report" /> -->
+
+	</data>
+</odoo>

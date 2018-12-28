@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="product_import_view_form" model="ir.ui.view">
+        <field name="name">product.import.form</field>
+        <field name="model">product.import</field>
+        <field name="arch" type="xml">
+            <form string="Product Import">
+                <group class="oe_title">
+                    <field name="file_to_import" filename="file_name"/>
+                    <field name="file_name"/>
+                </group>
+                <footer>
+                    <button name="action_import_file" string="Submit" type="object" class="btn btn-sm btn-primary"/>
+                    <button string="Cancel" class="btn btn-sm btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="import_product_action" model="ir.actions.act_window">
+        <field name="name">Import Product</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.import</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="product_import_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem action="import_product_action" id="menu_product_import" parent="sales_team.menu_sale_config" sequence="26"/>
+
+     <record id="view_industry_type_import_form" model="ir.ui.view">
+        <field name="name">industry.type.import.form</field>
+        <field name="model">industry.type.import</field>
+        <field name="arch" type="xml">
+            <form string="Industry Type Import">
+                <group class="oe_title">
+                    <field name="file_to_import" filename="file_name"/>
+                    <field name="file_name"/>
+                </group>
+                <footer>
+                    <button name="action_import_file" string="Submit" type="object" class="btn btn-sm btn-primary"/>
+                    <button string="Cancel" class="btn btn-sm btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="industry_type_import_action" model="ir.actions.act_window">
+        <field name="name">Industry Type Import</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">industry.type.import</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_industry_type_import_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem action="industry_type_import_action" id="menu_industry_type_import" parent="sales_team.menu_sale_config" sequence="30"/>
+</odoo>

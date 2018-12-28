@@ -1,0 +1,61 @@
+<odoo>
+  <data>
+    
+  <record id="view_pos_config_form_inherit_field" model="ir.ui.view">
+            <field name="name">view.pos.config.form.inherit.field</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                  <field name="order_station" string="Ordering station"/>
+                  <field name="table_management" string="Table Management"/>
+
+                 </field> 
+                
+            </field>
+  </record>
+
+    
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="pos_modifier_fields.action_window">
+      <field name="name">pos_modifier_fields window</field>
+      <field name="res_model">pos_modifier_fields.pos_modifier_fields</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="pos_modifier_fields.action_server">
+      <field name="name">pos_modifier_fields server</field>
+      <field name="model_id" ref="model_pos_modifier_fields_pos_modifier_fields"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="pos_modifier_fields" id="pos_modifier_fields.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="pos_modifier_fields.menu_1" parent="pos_modifier_fields.menu_root"/>
+    <menuitem name="Menu 2" id="pos_modifier_fields.menu_2" parent="pos_modifier_fields.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="pos_modifier_fields.menu_1_list" parent="pos_modifier_fields.menu_1"
+              action="pos_modifier_fields.action_window"/>
+    <menuitem name="Server to list" id="pos_modifier_fields" parent="pos_modifier_fields.menu_2"
+              action="pos_modifier_fields.action_server"/>
+    -->
+  </data>
+</odoo>

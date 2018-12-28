@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+    <!--remove old button-->
+    <t t-extend="DeliveryOrderWidget">
+		<t t-jquery="div.button.clear" t-operation="after">
+            <div class="button print" style="margin-right: 30px;">
+                Print
+            </div>
+		</t>
+	</t>
+</template>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="des_hod" model="staff.designation">
+			<field name="name">HOD</field>
+		</record>
+
+		<record id="des_apa" model="staff.designation">
+			<field name="name">Allied Professional Associate</field>
+		</record>
+
+		<record id="des_ap" model="staff.designation">
+			<field name="name">AP</field>
+		</record>
+		
+		<record id="des_st" model="staff.designation">
+            <field name="name">Speech Therapist</field>
+        </record>
+        
+        <record id="des_ot" model="staff.designation">
+            <field name="name">Occupational Therapist</field>
+        </record>
+        
+        <record id="des_artp" model="staff.designation">
+            <field name="name">Art Psychotherapist</field>
+        </record>
+        
+        <record id="des_psychologist" model="staff.designation">
+            <field name="name">Psychologist</field>
+        </record>
+        
+        <record id="des_sw" model="staff.designation">
+            <field name="name">Social Worker</field>
+        </record>
+        
+        <record id="des_tc" model="staff.designation">
+            <field name="name">Teacher Counsellor</field>
+        </record>
+
+	</data>
+</odoo>

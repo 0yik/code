@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_buffer_form_view">
+            <field name="name">stock.buffer.form</field>
+            <field name="model">stock.buffer</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label string="Name"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="create_date" string="Created Date" readonly="1"/>
+                            <field name="location_id" domain="[('name','=','Stock')]"/>
+                        </group>
+                        <notebook>
+                            <page string="Lines">
+                                <field name="stockt_buffer_line">
+                                 <tree string="Lines" editable="bottom">
+                                    <field name="product_id_code" />
+                                    <field name="product_id" />
+                                    <field name="stock_buffer_amount"/>
+                                </tree>
+                            </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_buffer_tree_view">
+            <field name="name">stock.buffer.tree</field>
+            <field name="model">stock.buffer</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="create_date" string="Created Date"/>
+                    <field name="create_uid" string="Created by"/>
+                    <field name="write_date" string="Update Date"/>
+                    <field name="write_uid" string="Updated by"/>
+                    <field name="location_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="stock_buffer_action">
+            <field name="name">Stock Buffer</field>
+            <field name="res_model">stock.buffer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="stock_buffer_menu" name="Stock Buffer" parent="stock.menu_stock_config_settings" sequence="100"/>
+
+        <menuitem id="stock_buffer_menu_id" name="Stock Buffer"
+                  parent="stock_buffer_menu"
+                  action="stock_buffer_action"/>
+    </data>
+</odoo>

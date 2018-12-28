@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_aged_forex_view" model="ir.ui.view">
+        <field name="name">Account Aged Foreign Currency Report</field>
+        <field name="model">account.aged.forex.report</field>
+        <field name="arch" type="xml">
+            <form string="Report Options">
+                <separator string="Ageing report - Foreign Currency"/>
+                <group col="4">
+                    <field name="date_from" required="1"/>
+                    <field name="period_length"/>
+                    <newline/>
+                    <field name="result_selection" widget="radio"/>
+                    <field name="target_move" widget="radio"/>
+                </group>
+                <separator string="Customers" colspan="4" attrs="{'invisible': [('result_selection', '!=', 'customer')]}"/>
+                     <separator string="Suppliers" colspan="4" attrs="{'invisible': [('result_selection', '!=', 'supplier')]}"/>
+                     <separator string="Customers and Suppliers" colspan="4" attrs="{'invisible': [('result_selection', '!=', 'customer_supplier')]}"/>
+                <field name="partner_ids"/>
+                <div attrs="{'invisible': [('result_selection', '!=', 'customer')]}">Note: If No customer is selected then all customers will be considered</div>
+                     <div attrs="{'invisible': [('result_selection', '!=', 'supplier')]}">Note: If No supplier is selected then all suppliers will be considered</div>
+                     <div string="Customers and Suppliers" colspan="4" attrs="{'invisible': [('result_selection', '!=', 'customer_supplier')]}">Note: If No customer or partner is selected then all customers and partners will be considered</div>
+                <footer>
+                    <button name="export_excel" string="Export Excel" type="object" default_focus="1" class="oe_highlight"/>
+                    <button name="check_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_aged_forex_view" model="ir.actions.act_window">
+        <field name="name">Account Aged Foreign Currency</field>
+        <field name="res_model">account.aged.forex.report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="account_aged_forex_view"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_account_aged_forex_report"
+        name="Account Balance ageing – Foreign currency"
+        action="action_account_aged_forex_view"
+        parent="account.menu_finance_legal_statement"/>
+
+</odoo>

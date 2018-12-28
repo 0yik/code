@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="pos_combo_asset" name="pos_combo asset" inherit_id="point_of_sale.assets">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/pos_combo/static/src/js/pos_combo.js"></script>
+                <link rel="stylesheet" href="/pos_combo/static/src/css/pos_combo.css"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>
+	

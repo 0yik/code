@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend" name="Custom Calendar" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+        	<link rel="stylesheet" type="text/less" href="/hilti_modifier_company/static/src/css/style.css"/>
+            <script type="text/javascript" src="/hilti_modifier_company/static/src/js/hilti_modifier_company.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

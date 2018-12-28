@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="my_note_user_rule" model="ir.rule">
+        <field name="name">User their own note</field>
+        <field name="model_id" ref="note.model_note_note"/>
+        <field name="groups" eval="[(6,0, [ref('base.group_user')])]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+    </record>
+
+    <record id="my_note_admin_rule" model="ir.rule">
+        <field name="name">Admin all note</field>
+        <field name="model_id" ref="note.model_note_note"/>
+        <field name="groups" eval="[(6,0, [ref('base.group_system')])]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="domain_force">[('1','=','1')]</field>
+    </record>
+</odoo>

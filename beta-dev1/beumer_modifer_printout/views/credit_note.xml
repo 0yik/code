@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <template id="report_credit_note_document">
+            <t t-call="beumer_modifer_printout.external_layout_invoice_tax">
+            <t t-set="o" t-value="o.with_context({'lang':o.lang})"/>
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-12">
+                        <div class="col-xs-8 text-left">
+                            <span style="font-size:12px;font-weight:bold;" t-esc="o.company_id.name or ''"/>
+                            <br/>
+                            <span style="font-weight:bold;font-size:12px;" t-esc="o.house_no" />,
+                            <span style="font-weight:bold;font-size:12px;" t-esc="o.unit_no" />
+                            <br/>
+                            <span style="font-weight:bold;font-size:12px;" t-esc="o.level_no" />,
+                            <span style="font-size:12px;font-weight:1px" t-esc="o.street"/>
+                            <br/>
+                            <span style="font-size:12px;font-weight:1px" t-esc="o.street2"/>
+                            <br/>
+                            <span style="font-size:12px;font-weight:1px" t-esc="o.city"/>
+                            <span style="font-size:12px;font-weight:1px" t-esc="o.country_id.name"/>
+                            <br/>
+                            <div style="text-decoration: underline"><span style="font-size:12px;font-weight:bold">Attention &#160; :</span><span style="font-size:12px;font-weight:bold" t-esc="o.name"></span></div>
+                            <span style="font-size:12px;font-weight:bold">(email :</span><span style="font-size:12px;font-weight:bold" t-esc="o.email"></span>)
+                            <br/>
+                            <span style="font-size:12px;font-weight:bold">BIPO Ref No:</span><span style="font-size:12px;font-weight:bold" t-esc="o.name"></span>
+                        </div>
+                        <div class="col-xs-4" style="margin-top:30px">
+                            <span style="font-size:25px;font-weight:bold">CREDIT NOTE</span>
+                            <br/>
+                            <br/>
+                            <table>
+                                <tr>
+                                    <td><span style="font-size:12px;font-weight:1px">Number&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+                                    <td>:&#160;&#160;&#160;&#160;
+                                        <!--<span style="font-size:12px;font-weight:bold" t-esc="o.number"></span>-->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-size:12px;font-weight:1px">Date</span></td>
+                                    <td>:&#160;&#160;&#160;&#160;
+                                        <!--<span style="font-size:12px;font-weight:bold" t-esc="o.date_invoice"></span>-->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-size:12px;font-weight:1px">Terms</span></td>
+                                    <td><span>:&#160;&#160;&#160;&#160;</span>
+                                        <!--<span style="font-size:12px;font-weight:bold" t-field="o.payment_term_id"></span>-->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-size:12px;font-weight:1px">Order No</span></td>
+                                    <td>:&#160;&#160;&#160;&#160;</td>
+                                </tr>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                    <table class="table table-condensed mt48" style="margin-left:15px;width:95%;border-collapse: collapse;border-top: 3px solid black;font-size:12px;border-bottom:3px solid black;border-left:1px solid black;border-right:1px solid black">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="border: 1px solid black;width:5%;">S/N</th>
+                                <th class="text-center" style="border: 1px solid black;width:52%;">Description</th>
+                                <th class="text-center" style="border: 1px solid black;width:8%;">Qty/Hours</th>
+                                <th class="text-center" style="border: 1px solid black;width:10%;">Unit Cost<br/>
+                                    <span style="font-size:12px;font-weight:1px">(</span>
+                                    <span style="font-size:12px;font-weight:1px" t-esc="o.currency_id.name"/>
+                                    <span style="font-size:12px;font-weight:1px" >)</span>
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;width:10%;">Total<br/>
+                                    <span style="font-size:12px;font-weight:1px">(</span>
+                                    <span style="font-size:12px;font-weight:1px" t-esc="o.currency_id.name"/>
+                                    <span style="font-size:12px;font-weight:1px" >)</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom:hidden">
+                                <td style="border-right:1px solid black;border-bottom:hidden;"></td>
+                                <td style="border-right:1px solid black;border-bottom:hidden;"><span><strong>Your Po No</strong></span><span>I24534</span>
+                                    <br/>
+                                    <span style="text-decoration: underline;">Supply of Spare Parts for KLIA2 </span>
+                                </td>
+                                <td style="border-right:1px solid black;border-bottom:hidden;"></td>
+                                <td style="border-right:1px solid black;border-bottom:hidden;"></td>
+                                <td></td>
+                            </tr>
+                            <t t-set="total_qty" t-value="0"/>
+                            <t t-set="count" t-value="0"/>
+                            <!--<tr t-foreach="o.invoice_line_ids" t-as="invoice">-->
+                                <!--<t t-set="count" t-value="count+1"/>-->
+                                <!--<td class="text-center" style="border-right:1px solid black;border-bottom:hidden;"><span t-esc="count"/></td>-->
+                                <!--<td class="text-left" style="border-right:1px solid black;border-bottom:hidden;"><span t-esc="invoice.product_id.name"></span><span>&#160;&#160;</span><span t-esc="invoice.name"/></td>-->
+                                <!--<td class="text-center" style="border-right:1px solid black;border-bottom:hidden;"><span t-esc="invoice.quantity"></span><t t-set="total_qty" t-value="total_qty + invoice.quantity"/></td>-->
+                                <!--<td style="border-right:1px solid black;border-bottom:hidden;"><span style="float:left;" t-esc="o.currency_id.symbol"/><span style="float:right;" t-esc="invoice.price_unit"/></td>-->
+                                <!--<td><span style="float:left;"  t-esc="o.currency_id.symbol"/><span style="float:right;" t-esc="invoice.price_unit * invoice.quantity"></span></td>-->
+                            <!--</tr>-->
+                            <tr rowspan="3" >
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;">&#160;</td>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;"></td>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;"></td>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;"></td>
+                                <td style="border-top:hidden;border-bottom:1px solid black;"></td>
+                            </tr>
+                            <tr>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;"></td>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;border-left:1px solid black;"></td>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;border-left:1px solid black;"></td>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;border-left:1px solid black;"></td>
+                                <td style="border-top:1px solid black;border-bottom:hidden;border-left:1px solid black">
+                                    <span style="float:left;" t-esc="o.currency_id.symbol"/>
+                                    <!--<span style="float:right;" t-esc="o.amount_untaxed"/>-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;"></td>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;">Tax &#160;</td>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:1px solid black;"></td>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;"></td>
+                                <td style="border-left:1px solid black;border-bottom:1px solid black;">
+                                    <span style="float:left;" t-esc="o.currency_id.symbol"/>
+                                    <!--<span style="float:right;" t-esc="o.amount_tax"/>-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;"></td>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;border-left:1px solid black;"><strong>TOTAL DUE</strong></td>
+                                <td class="text-center" style="border:1px solid black">
+                                    <!--<span t-esc="total_qty"/>-->
+                                </td>
+                                <td style="border-right:1px solid black;border-top:hidden;border-bottom:hidden;border-left:1px solid black;"></td>
+                                <td style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black;">
+                                    <span style="float:left;" t-esc="o.currency_id.symbol"/>
+                                    <!--<span style="float:right;" t-esc="o.amount_total"/>-->
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:3px solid black">
+                                <td style="border-right:1px solid black;border-bottom:3px solid black;border-top:hidden">&#160;</td>
+                                <td style="border-right:1px solid black;border-bottom:3px solid black;border-left:1px solid black;border-top:hidden"></td>
+                                <td style="border-right:1px solid black;border-bottom:3px solid black;border-left:1px solid black;border-top:3px solid black"></td>
+                                <td style="border-right:1px solid black;border-bottom:3px solid black;border-left:1px solid black;border-top:hidden"></td>
+                                <td style="border-right:1px solid black;border-bottom:3px solid black;border-left:1px solid black;border-top:3px solid black"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-xs-6" style="font-size:12px;">
+                        <span>
+                            Please transfer the above invoice amount in full with no deduction whatsoever via
+                            telegraphic transfer following bank account.  All bank charges are for your account.
+                            <br/>
+                        </span>
+                    </div>
+                    <br/>
+                    <div class="col-xs-12 text-left" style="font-size:12px;">
+                        <br/>
+                        <!--<span t-field="o.partner_bank_id1.bank_id"></span>-->
+                        <br/>
+                        <!--<span t-field="o.partner_bank_id1.street"></span>-->
+                        <br/>
+                        <!--<span t-field="o.partner_bank_id1.street2"></span>-->
+                        <br/>
+                        <!--<span t-field="o.partner_bank_id1.country_id.name">&#160;</span><span t-field="o.partner_bank_id1.zip"></span>-->
+                        <br/>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="col-xs-12" style="margin-top:20px;">
+                        <table>
+                            <tr>
+                                <th style="font-size:12px;">Name of Account:</th>
+                                <th>&#160;&#160;&#160;</th>
+                                <th style="font-size:12px">
+                                    <!--<span t-esc="o.partner_bank_id1.partner_id.name"/>-->
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="font-size:12px">Bank/Branch code:</th>
+                                <th></th>
+                                <th style="font-size:12px">
+                                    <!--<span t-esc="o.partner_bank_id1.branch_id"/>-->
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="font-size:12px">Account No:</th>
+                                <th></th>
+                                <!--<th style="font-size:12px"><span t-esc="o.partner_bank_id1.acc_number"/>-->
+                                    <!--<span style="font-size:12px;font-weight:1px">(</span>-->
+                                    <!--<span style="font-size:12px;font-weight:1px" t-esc="o.partner_bank_id1.currency_id.name"/>-->
+                                    <!--<span style="font-size:12px;font-weight:1px" >)</span>-->
+                                <!--</th>-->
+                            </tr>
+                            <tr>
+                                <th style="font-size:12px">Swift code:</th>
+                                <th></th>
+                                <!--<th style="font-size:12px"><span t-esc="o.partner_bank_id1.swift_code"/></th>-->
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_credit_note">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="beumer_modifer_printout.report_credit_note_document" t-lang="o.lang"/>
+            </t>
+        </template>
+
+        <!-- QWeb Reports -->
+        <report
+            id="picking_credit_note"
+            model="res.partner"
+            string="Credit Note"
+            report_type="qweb-pdf"
+            name="beumer_modifer_printout.report_credit_note"
+            file="beumer_modifer_printout.report_credit_note"
+        />
+        <!--<record id="account_invoice_print_tax_invoice" model="ir.actions.act_window">-->
+            <!--<field name="name">Leaves Summary</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">hr.holidays.summary.employee</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">form</field>-->
+            <!--<field name="target">new</field>-->
+        <!--</record>-->
+
+        <!--<record id="account_balance_reporting_print_wizard_ir_values" model="ir.values">-->
+            <!--<field name="name">Tax Invoice</field>-->
+            <!--<field name="key2">client_print_multi</field>-->
+            <!--<field name="value" eval="'ir.actions.act_window,' + str(ref('account_invoice_print_tax_invoice'))"/>-->
+            <!--<field name="key">action</field>-->
+            <!--<field name="model">account.invoice</field>-->
+        <!--</record>-->
+    </data>
+</odoo>

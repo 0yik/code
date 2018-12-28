@@ -1,0 +1,20 @@
+<odoo>
+  <data>
+    <record id="laborindo_account_fiscal_position_form_inherit" model="ir.ui.view">
+        <field name="name">laborindo.account.fiscal.position.form.inherit</field>
+        <field name="model">account.fiscal.position</field>
+        <field name="inherit_id" ref="account.view_account_position_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='country_id']" position="attributes"><attribute name="invisible">1</attribute></xpath>
+            <xpath expr="//field[@name='country_group_id']" position="attributes"><attribute name="invisible">1</attribute></xpath>
+
+            <xpath expr="//field[@name='state_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state_ids']" position="after">
+                <field name="state_id"/>
+            </xpath>
+        </field>
+     </record>
+  </data>
+</odoo>

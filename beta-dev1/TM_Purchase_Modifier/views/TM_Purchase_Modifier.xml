@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="view_tm_purchase_modifier" model="ir.ui.view">
+        <field name="name">purchase.order.line.tm.purchase.modifier</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+				<attribute name="string">Product UoM</attribute>
+			 </xpath>
+        </field>
+    </record>
+
+	<record id="tm_purchase_modifier_average_price" model="ir.ui.view">
+        <field name="name">purchase.order.line.form.tm.purchase.modifier.average.price</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="last_price_po.purchase_order_form"/>
+        <field name="arch" type="xml">
+			<field name="last_average_unit_price" position="attributes">
+	            <attribute name="invisible">True</attribute>
+	        </field>
+        </field>
+	</record>
+
+    <menuitem id="purchase_request.parent_menu_purchase_request"
+              groups="purchase_request.group_purchase_request_user,purchase_request.group_purchase_request_manager"
+            name="Purchase requests"
+              parent="purchase.menu_purchase_root"
+    />
+
+    <!--<record id="invoice_supplier_form_add_brand" model="ir.ui.view">-->
+        <!--<field name="name">account.invoice.form.add.brand</field>-->
+        <!--<field name="model">account.invoice</field>-->
+        <!--<field name="inherit_id" ref="account.invoice_supplier_form"/>-->
+        <!--<field name="arch" type="xml">-->
+            <!--<xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="before">-->
+                <!--<field name="brand"/>-->
+             <!--</xpath>-->
+            <!--<xpath expr="//form/sheet/notebook/page/field[@name='order_line']/form/group/group" position="inside">-->
+                <!--<field name="brand"/>-->
+             <!--</xpath>-->
+        <!--</field>-->
+    <!--</record>-->
+</odoo>
+

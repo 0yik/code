@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="menu_my_notification_web" model="website.menu">
+            <field name="name">Notifications</field>
+            <field name="url">/notification</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_tester'), ref('hilti_modifier_accessrights.group_hilti_admin'), ref('hilti_modifier_accessrights.group_hilti_account_manager'), ref('hilti_modifier_accessrights.group_hilti_cs_engineer')])]"/>
+            <field name="sequence" type="int">8</field>
+        </record>
+        
+        <record id="menu_my_notification_web" model="website.menu">
+            <field name="name">Notifications</field>
+            <field name="url">/notification_staff</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_tester'), ref('hilti_modifier_accessrights.group_hilti_admin'), ref('hilti_modifier_accessrights.group_hilti_customer'), ref('hilti_modifier_accessrights.group_hilti_cs_engineer')])]"/>
+            <field name="sequence" type="int">8</field>
+        </record>
+
+		
+
+        <record id="menu_my_notification_web_cusotmer" model="website.menu">
+            <field name="name">Notifications</field>
+            <field name="url">/notification_customer</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="group_id" eval="[(6, 0, [ref('hilti_modifier_accessrights.website_user'), ref('hilti_modifier_accessrights.group_hilti_customer'), ref('hilti_modifier_accessrights.group_hilti_admin'), ref('hilti_modifier_accessrights.group_hilti_account_manager'), ref('hilti_modifier_accessrights.group_hilti_cs_engineer')])]"/>
+            <field name="sequence" type="int">7</field>
+        </record>
+
+        
+    </data>
+</odoo>

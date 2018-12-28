@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data noupdate="0">
+		
+		<record id="honos_diningroom" model="website.menu">
+			<field name="name">Beauty</field>
+			<!-- <field name="url">/</field> -->
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="menu_html">
+				<![CDATA[
+			<div class="custom-menu-inside-maxW">
+	<div class="column-main">
+		<div class="cat-column">
+			<div class="block-cate">
+				<div style="height:40px;"></div>
+				<div class="thumb">
+					<section>
+						<img class="menu-cate-image" src="/honos_layout/static/src/img/1.jpg">
+					</section>
+				</div>
+			
+				<a href="/shop" class="button button_cat">
+					shop category    
+				</a>
+			</div>
+		</div>
+		<div class="cat-column">
+			<div class="block-cate-down">
+				
+				<div class="thumb">
+					<section>
+						<img class="menu-cate-image" src="/honos_layout/static/src/img/2.jpg">
+					</section>
+				</div>
+				
+				<a href="/shop" class="button button_cat">
+					shop category    
+				</a>
+			</div>
+		</div>
+		<div class="cat-column">
+			<div class="block-cate">
+				<div style="height:40px;"></div>
+				<div class="thumb">
+					<section>
+						<img class="menu-cate-image" src="/honos_layout/static/src/img/3.jpg">
+					</section>
+				</div>
+			
+				<a href="/shop" class="button button_cat">
+					shop category   
+				</a>
+			</div>
+		</div>
+		<div class="cat-column">
+			<div class="block-cate-down">
+				
+				<div class="thumb">
+					<section>
+						<img class="menu-cate-image" src="/honos_layout/static/src/img/4.jpg">
+					</section>
+				</div>
+				
+				<a href="/shop" class="button button_cat">
+					shop category    
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+			
+				]]>
+			</field>
+			<field name="sequence" type="int">61</field>
+		</record>
+
+		<record id="honos_livingroom" model="website.menu">
+			<field name="name">Skincare</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="menu_html">
+				<![CDATA[
+					<div class="custom-menu-inside-maxW ">
+	<div class="custom-menu-inside-left-div">
+		<div class="static_menu_pc_view">
+			<div class="category-heading-div">
+				<div class="category-heading-center">
+					<a class="ctg_title_a" href="/shop">Facial Makeup</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<h4><a href="#">Foundation</a></h4>
+						<h4><a href="#">Highlighters</a></h4>
+						<h4><a href="#">Concealers</a></h4>
+						<h4><a href="#">Bronzers</a></h4>
+					</ul>
+				</div>
+			</div>
+			<div class="category-heading-div ">
+				<div class="category-heading-center">
+					<a class="ctg_title_a" href="/shop">Lip Makeup</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<h4><a href="#">Lipstick</a></h4>
+						<h4><a href="#">Lip Gloss</a></h4>
+						<h4><a href="#">Lip Liners</a></h4>
+						<h4><a href="#">Lip Pencils</a></h4>
+					</ul>
+				</div>
+			</div>
+			<div class="category-heading-div ">
+				<div class="category-heading-center">
+					<a class="ctg_title_a" href="/shop">Makeup Accessories</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<h4><a href="#">Eyelash Tools</a></h4>
+						<h4><a href="#">Puffs</a></h4>
+						<h4><a href="#">Sharpeners</a></h4>
+						<h4><a href="#">Brushes</a></h4>
+					</ul>
+				</div>
+			</div>
+			<div class="category-heading-div ">
+				<div class="category-heading-center">
+					<a class="ctg_title_a" href="/shop">Nails</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<h4><a href="#">Nail Cleansers</a></h4>
+						<h4><a href="#">Nail Buffers</a></h4>
+						<h4><a href="#">Nail Files</a></h4>
+						<h4><a href="#">Nail Removers</a></h4>
+					</ul>
+				</div>
+			</div>
+			<div class="category-heading-div ">
+				<div class="category-heading-center">
+					<a class="ctg_title_a" href="/shop">Skin care</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<h4><a href="#">Moisturisers</a></h4>
+						<h4><a href="#">Skin Toner</a></h4>
+						<h4><a href="#">Dry Cream</a></h4>
+						<h4><a href="#">Serums</a></h4>
+					</ul>
+				</div>
+			</div>
+			<div class="category-heading-div ">
+				<div class="category-heading-center">
+					<a class="ctg_title_a" href="/shop">Skin Toner</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<h4><a href="#">Tonifying Lotion</a></h4>
+						<h4><a href="#">Lancaster Cleanser</a></h4>
+						<h4><a href="#">Refining Lotion</a></h4>
+						<h4><a href="#">Circulagel Toning </a></h4>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="custom-menu-inside-right-div">
+	<div class="menu-right-img-div">
+			<div>
+			<section>
+						<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/5.jpg"></a>
+			</section>
+			</div>
+			<div class="menu-right-info">
+				<a class="b_fashion_sub_heading" href="#">Beauty Box</a>
+				<p class="b_fashion_para">Come on a worldwide beauty journey with us and uncover our favourite summer essentials with our August Beauty Box, Global Glamour!</p>
+				
+			</div>
+			
+		</div>
+		<div class="menu-right-img-div">
+			<div>
+			<section>
+			<a href="#">	<img class="s_image_common" src="/honos_layout/static/src/img/6.jpg"></a>
+			</section>
+			</div>
+			<div class="menu-right-info">
+				<a class="b_fashion_sub_heading" href="#">Foundation</a>
+				<p class="b_fashion_para">Discover which should be your new foundation, with lookfantastic's exclusive guide to finding your perfect shade, match and finish.</p>
+			</div>
+			
+		</div>
+		
+	</div>
+</div>
+				]]>
+			</field>
+			<field name="sequence" type="int">62</field>
+		</record>
+
+		<record id="honos_fashion" model="website.menu">
+			<field name="name">categ</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="menu_html">
+				<![CDATA[
+					<div class="custom-menu-inside-maxW ind_maxw">
+						<div class="menu_ctg_row">
+							
+								<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+											<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m1.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">lipstick</div>
+								</section>
+								
+								<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+										<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m2.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">face wash</div>
+								</section>
+							
+							<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+											<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m3.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">compact</div>
+								</section>
+								<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+											<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m4.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">foundation</div>
+								</section>
+								<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+											<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m5.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">lipstick</div>
+								</section>
+								<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+											<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m10.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">talcum</div>
+								</section>
+							</div>
+							<div class="menu_ctg_row">
+								<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+											<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m6.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">Nail art</div>
+								</section>
+								<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+											<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m7.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">skin tonner</div>
+								</section>
+							<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+											<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m8.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">hair care</div>
+								</section>
+								<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+											<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m9.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">eye mackup</div>
+								</section>
+								<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+											<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m1.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">glossy liner</div>
+								</section>
+								<section class="ctg_name_img_container">
+									<div class="menu_catg_img_div">
+										<section>
+											<a href="#"><img class="s_image_common" src="/honos_layout/static/src/img/m2.png"></a>
+										</section>
+									</div>
+									<div class="menu_catg_name">foundation cream</div>
+								</section>
+								</div>
+						</div>
+				
+			
+				]]>
+			</field>
+			<field name="sequence" type="int">63</field>
+		</record>
+		
+		<record id="honos_style_4_menu" model="website.menu">
+			<field name="name">Make Up</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="dynamic_menu" eval="True"></field>
+			<field name="sequence" type="int">66</field>
+		</record>
+
+	</data>
+</odoo>

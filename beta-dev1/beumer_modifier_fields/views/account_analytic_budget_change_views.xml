@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="wizard_account_analytic_budget_change_view_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.budget.change.form</field>
+            <field name="model">account.analytic.budget.change</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.wizard_account_analytic_budget_change_view"/>
+            <field name="arch" type="xml">
+                <field name="remarks" position="after">
+                    <field name="volog_change_id"/>
+                    <field name="project_id" invisible="True"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="analytic_account_budget_log_inherit2" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="contract_cost_element_budget.analytic_account_budget_log_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/field/tree/field[@name='remarks']" position="after">
+                     <field name="volog_change_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

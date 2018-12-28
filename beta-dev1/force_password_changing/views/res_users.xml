@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        
+         <!-- Password Form Inherit -->
+    <record id="view_user_password_extend" model="ir.ui.view">
+        <field name="name">res.password.form.inherit</field>
+        <field name="model">res.password</field>
+        <field name="inherit_id" ref="reusable_login.view_password_form" />
+        <field name="arch" type="xml">
+        <xpath expr="//label[@for='lock_after']" position="before">
+              <label for="change_before"/>
+                <div>
+                    <p><field name="change_before" style="padding-top: 1px"/> months</p>
+                </div>
+        </xpath>
+         
+        </field>
+    </record>
+    
+    <record id="view_user_password_tree_extend" model="ir.ui.view">
+        <field name="name">res.password.tree.inherit</field>
+        <field name="model">res.password</field>
+        <field name="inherit_id" ref="reusable_login.view_password_tree" />
+        <field name="arch" type="xml">
+        <xpath expr="//field[@name='lock_after']" position="after">
+               <field name="change_before" />
+        </xpath> 
+        </field>
+    </record>
+        
+        
+
+        
+    </data>
+</openerp>

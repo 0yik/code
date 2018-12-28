@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-name="FieldStatus.content.extended">
+	    <t t-foreach="widget.selection.unfolded" t-as="i">
+	    	<t t-if="i[0] === widget.get('value')">
+		        <li t-att-class="i[0] === widget.get('value') ? 'oe_active' : ''" t-att-data-id="i[0]">
+		            <span class="label"><t t-esc="i[1]"/></span>
+		            <!-- are you mit ? -->
+		            <span class="arrow"><span></span></span>
+		        </li>
+	        </t>
+	    </t>
+	</t>
+</templates>

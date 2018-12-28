@@ -1,0 +1,67 @@
+<odoo>
+    <data>
+    	<record id="view_pos_promotion_program_inherit_form" model="ir.ui.view">
+            <field name="name">pos.prom.prohram.otion.inherit.form</field>
+            <field name="model">pos.promotion</field>
+            <field name="inherit_id" ref="pos_promotion.pos_promotion_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="before">
+                    <field name="period_type"/>
+                </xpath>
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name='item_type'/>
+                </xpath>
+                <xpath expr="//field[@name='start_date']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('period_type', '!=', 'certain_time')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='end_date']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('period_type', '!=', 'certain_time')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='branch_ids']" position="after">
+                    <field name='buyer_type'/>
+                </xpath>
+                <xpath expr="//sheet//group[last()]" position="after">
+                    
+                    <group  attrs="{'invisible': [('item_type', '=', 'all item no exception')]}">
+                        <button name="%(pos_promotion_program.import_product_wizard_action)d" string="Import Product" type="action" class="btn-primary"/>
+                    </group>
+                    <field name="minimum_sales_ids" nolabel="1" attrs="{'invisible': [('type', '!=', '7_discount_amount_with_sales'),('type', '!=', '8_global_disc_with_payment_type')]}">
+                        <tree string="Minimum sales" editable="1">
+                            <field name="type" />
+                            <field name="payment_method_id" domain="[('journal_user','=',True)]" attrs="{'invisible': [('type', '!=', '8_global_disc_with_payment_type')]}"/>
+                            <field name="minimum_sales"/>
+                            <field name="discount_amount"/>
+                        </tree>
+                    </field>
+                    <field name="import_line_ids" nolabel="1" attrs="{'invisible': [('item_type', '=', 'all item no exception')]}">
+                        <tree string="Import Product" editable="1">
+                            <field name="product_code"/>
+                            <field name="product_id"/>
+                            <field name="categ_id"/>
+                            <field name="sale_price"/>
+                            <field name="item_type" invisible="1"/>
+                            <field name="discount_exception" attrs="{'invisible': [('item_type', '!=', 'specific item only')]}"/>
+                            <field name="product_id2"/>
+                            <field name="product_code2"/>
+                        </tree>
+                    </field>
+                    <field name="min_max_sales_ids" nolabel="1" attrs="{'invisible': [('type', '!=', '9_second_item_disc_with_min_max_qty'),('item_type', '=', 'all item no exception')]}">
+                        <tree string="Minimum sales" editable="1">
+                            <field name="first_min_qty" />
+                            <field name="second_max_qty"/>
+                            <field name="first_minimum_sales"/>
+                            <field name="discount_amount"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+
+
+        <template id="assets_promotion_program" inherit_id="point_of_sale.assets" priority="20">
+          <xpath expr="//script[last()]" position="after">
+              <script type="text/javascript" src="/pos_promotion_program/static/src/js/promotion_program.js"></script>
+          </xpath>
+        </template>
+    </data>
+</odoo>

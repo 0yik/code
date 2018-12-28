@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tax_free_button_tax_free_button,tax_free_button.tax_free_button,model_tax_free_button_tax_free_button,,1,0,0,0

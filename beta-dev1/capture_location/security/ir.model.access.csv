@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_location_gps_history1,location.meeting.history.1,model_sign_in_history,sales_team.group_sale_manager,1,1,1,1
+access_location_gps_history2,location.meeting.history.2,model_sign_in_history,sales_team.group_sale_salesman_all_leads,1,1,1,1
+access_location_gps_history3,location.meeting.history.3,model_sign_in_history,sales_team.group_sale_salesman,1,1,1,1
+access_location_gps_meeting1,location.meeting.1,model_sign_in,sales_team.group_sale_manager,1,1,1,1
+access_location_gps_meeting2,location.meeting.2,model_sign_in,sales_team.group_sale_salesman_all_leads,1,1,1,1
+access_location_gps_meeting3,location.meeting.3,model_sign_in,sales_team.group_sale_salesman,1,1,1,1

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="shipping_address_form" model="ir.ui.view">
+            <field name="name">shipping.address.form</field>
+            <field name="model">shipping.address</field>
+            <field name="arch" type="xml">
+                <form string="Shipping Address">
+                    <sheet>
+                        <separator string="Customer Shipping Address"/>
+                        <group class="o_label_nowrap">
+                            <field name="name" string="Name"/>
+                            <field name="phone" string="Phone"/>
+                            <field name="street" string="Street"/>
+                            <field name="street2" string="Street2"/>
+                            <field name="city" string="City"/>
+                            <field name="zip" string="Zip"/>
+                            <field name="country_id" string="Country"
+                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                            <field name="shipping_code" string="Shipping Code"/>
+                            <field name="shipping_method" string="Shipping Method"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="billing_address_form" model="ir.ui.view">
+            <field name="name">billing.address.form</field>
+            <field name="model">billing.address</field>
+            <field name="arch" type="xml">
+                <form string="Billing Address">
+                    <sheet>
+                        <separator string="Customer Billing Address"/>
+                        <group class="o_label_nowrap">
+                            <field name="name" string="Name"/>
+                            <field name="phone" string="Phone"/>
+                            <field name="street" string="Street"/>
+                            <field name="street2" string="Street2"/>
+                            <field name="city" string="City"/>
+                            <field name="zip" string="Zip"/>
+                            <field name="country_id" string="Country"
+                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

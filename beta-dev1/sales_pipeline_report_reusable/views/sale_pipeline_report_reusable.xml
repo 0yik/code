@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--create header and footer for report-->
+        <template id="external_layout_offer">
+             <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <t t-call="sales_pipeline_report_reusable.external_layout_header_offer" />
+            <t t-raw="0" />
+            <t t-call="sales_pipeline_report_reusable.external_layout_footer_offer" />
+        </template>
+        <!--create header-->
+        <template id="sales_pipeline_report_reusable.external_layout_header_offer">
+             <div class="header">
+                <div class="row">
+                    <header>
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:60px;width:240px;float:right"/>
+                        <span style="font-size: 24px;align-text:center;font-weight:bold;">Financial Solutions - Sales Pipeline (Retail)</span>
+                    </header>
+                </div>
+            </div>
+        </template>
+        <!--create footer-->
+        <template id="sales_pipeline_report_reusable.external_layout_footer_offer">
+            <div class="footer" style="font-size:10pt;">
+                <div class="row">
+                    <div class="col-xs-12 text-right">
+                        <div class="text-right" style="float:right">
+                            <ul class="list-inline">
+                                <li>Page:</li>
+                                <li><span class="page"/></li>
+                                <li>of</li>
+                                <li><span class="topage"/></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <report
+            id="action_sales_pipeline_report"
+            model="sales.pipeline.report"
+            string="Sales Pipeline Report"
+            name="sales_pipeline_report_reusable.sales_pipeline_report"
+            file="sales_pipeline_report_reusable.sales_pipeline_report"
+            report_type="qweb-pdf"
+        />
+
+        <record id="report_pipe_qweb_paperformat" model="report.paperformat">
+            <field name="name">Holidays Summary</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_sales_pipeline_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report_pipe_qweb_paperformat"/>
+        </record>
+        <!--create report-->
+        <template id="sales_pipeline_report_reusable.sales_pipeline_report">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="sales_pipeline_report_reusable.external_layout_offer">
+                        <div class="page" style="padding-top:10px; margin-top:10px">
+                            <!--ALL TABLE-->
+                            <span style="page-break-inside:avoid;background-color: #F0E68C;padding: 6px 14% 0px 0px">ALL </span>
+                            <table class="table table-condensed" style="font-size:10px; padding-top:10px; width:100%">
+                                <thead>
+                                    <!--<tr>-->
+                                        <!--<td style="background-color: #F0E68C;">ALL</td>-->
+                                    <!--</tr>-->
+                                    <tr style="background-color: lightgray;">
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Username</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Name(Username)</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Services</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Period</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Amount W/O GST</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Amount with GST</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Start Date</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:12%">Terminal W/O Data Feed (per Month)</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Probability</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Status</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Invoice Number</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Payment Dat Remark</th>
+                                    </tr>
+                                </thead>
+                                <t t-set="total_all" t-value="0" />
+                                <tbody>
+                                    <tr t-foreach="doc.lead_ids" t-as="lead" t-if="lead.stage_id.id==1 or lead.stage_id.id==2 or lead.stage_id.id==3 or lead.stage_id.id==7">
+                                        <!--<t  t-if="'lead.stage_id.id'==1">-->
+                                            <td>
+
+                                                <!--<span t-field="lead.user_id"/>-->
+                                                <span t-field="lead.user_id"/>
+                                                <!--<span t-if="lead.stage_id.id == '1' or lead.stage_id.id == '2' or lead.stage_id.id == '3' or lead.stage_id.id == '7'"><t t-field="lead.user_id"/></span>-->
+                                            </td>
+                                            <td>
+                                                <span t-field="lead.partner_id"/>
+                                                <!--<span t-if="lead.stage_id.id == '1' or lead.stage_id.id == '2' or lead.stage_id.id == '3' or lead.stage_id.id == '7'"><t t-field="lead.partner_id"/></span>-->
+                                            </td>
+                                            <td>
+                                                <span t-field="lead.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="lead.date_conversion"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="lead.planned_revenue"/>
+                                                <t t-set="total_all" t-value="total_all + lead.planned_revenue" />
+                                            </td>
+                                            <td>
+                                                <span t-esc="lead.planned_revenue + 7*lead.planned_revenue/100"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="lead.create_date"/>
+                                            </td>
+                                            <td>
+                                                <t t-foreach="doc.invoice_ids" t-as="invoice" t-if="invoice.partner_id.id == lead.partner_id.id and invoice.type == 'out_invoice'">
+                                                    <t t-foreach="invoice.invoice_line_ids" t-as="line" t-if="line.product_id.terminal_ok == True">
+                                                        <span t-field="line.price_subtotal"></span><br/>
+                                                    </t>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <span t-field="lead.probability"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="lead.stage_id"/>
+                                            </td>
+                                            <td>
+                                                <t t-foreach="doc.invoice_ids" t-as="invoice" t-if="invoice.partner_id.id == lead.partner_id.id">
+                                                    <span t-field="invoice.number"/>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <span t-field="lead.description"/>
+                                            </td>
+                                        <!--</t>-->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table style="border : 3px solid black; width:35%; margin : auto; font-size:11px;margin-top:20px;margin-bottom:20px">
+                                <tr>
+                                    <td class="text-left">Total ALL (Terminal Only)</td>
+                                    <td class="text-right">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">Terminal ALL</td>
+                                    <td class="text-right"><span t-esc="total_all"/></td>
+                                </tr>
+                            </table>
+                            <!--NEW TABLE-->
+                            <span style="page-break-inside:avoid;background-color: #F0E68C;padding: 6px 14% 0px 0px">New </span>
+                            <table class="table table-condensed" style="font-size:10px; padding-top:10px; width:100%">
+                                <thead>
+                                    <!--<tr>-->
+                                        <!--<td style="background-color: #F0E68C;">New</td>-->
+                                    <!--</tr>-->
+                                    <tr style="background-color: lightgray;">
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Username</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Name(Username)</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Services</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Period</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Amount W/O GST</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Amount with GST</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Start Date</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:12%">Terminal W/O Data Feed (per Month)</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Probability</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Status</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Invoice Number</th>
+                                        <th class="text-left" style="background-color:lightgray; border:1px solid #BFBFBF; width:8%">Payment Dat Remark</th>
+                                    </tr>
+                                </thead>
+                                <t t-set="total_new" t-value="0" />
+                                <tbody>
+                                    <tr t-foreach="doc.lead_ids" t-as="new" t-if="new.stage_id.id==1">
+                                        <td>
+                                            <span t-field="new.user_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="new.partner_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="new.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="new.date_conversion"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="new.planned_revenue"/>
+                                            <t t-set="total_new" t-value="total_new + new.planned_revenue"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="new.planned_revenue + 7*new.planned_revenue/100"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="new.create_date"/>
+                                        </td>
+                                        <td>
+                                            <t t-foreach="doc.invoice_ids" t-as="invoice" t-if="invoice.partner_id.id == new.partner_id.id">
+                                                <t t-foreach="invoice.invoice_line_ids" t-as="line" t-if="line.product_id.terminal_ok == True">
+                                                    <span t-field="line.price_subtotal"></span><br/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-field="new.probability"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="new.stage_id"/>
+                                        </td>
+                                        <td>
+                                            <t t-foreach="doc.invoice_ids" t-as="invoice" t-if="invoice.partner_id.id == new.partner_id.id">
+                                                <span t-field="invoice.number"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-field="new.description"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table style="border : 3px solid black; width:35%; margin : auto; font-size:11px;margin-top:20px;margin-bottom:20px">
+                                <tr>
+                                    <td class="text-left">Total New (Terminal Only)</td>
+                                    <td class="text-right">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">Terminal New</td>
+                                    <td class="text-right"><span t-esc="total_new"/></td>
+                                </tr>
+                            </table>
+                            <!--RENEWAL TABLE-->
+                            <span style="page-break-inside:avoid;background-color: #F0E68C;padding: 6px 100% 0px 0px">Renewal </span>
+                            <table style="font-size:10px;padding-top:10px;padding-bottom:10px; width:100%">
+                                <thead>
+                                    <!--<tr>-->
+                                        <!--<td style="background-color: #F0E68C;">Renewal</td>-->
+                                    <!--</tr>-->
+                                    <tr>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:12%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                    </tr>
+                                </thead>
+                                <t t-set="total_renewal" t-value="0" />
+                                <tbody>
+                                    <tr t-foreach="doc.lead_ids" t-as="renewal" t-if="renewal.stage_id.id==6">
+                                        <td>
+                                            <span t-field="renewal.user_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="renewal.partner_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="renewal.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="renewal.date_conversion"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="renewal.planned_revenue"/>
+                                            <t t-set="total_renewal" t-value="total_renewal + renewal.planned_revenue"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="renewal.planned_revenue + 7*renewal.planned_revenue/100"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="renewal.create_date"/>
+                                        </td>
+                                        <td>
+                                            <t t-foreach="doc.invoice_ids" t-as="invoice" t-if="invoice.partner_id.id == renewal.partner_id.id">
+                                                <t t-foreach="invoice.invoice_line_ids" t-as="line" t-if="line.product_id.terminal_ok == True">
+                                                    <span t-field="line.price_subtotal"></span><br/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-field="renewal.probability"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="renewal.stage_id"/>
+                                        </td>
+                                        <td>
+                                            <t t-foreach="doc.invoice_ids" t-as="invoice" t-if="invoice.partner_id.id == renewal.partner_id.id">
+                                                <span t-field="invoice.number"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-field="renewal.description"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table style="border : 3px solid black; width:35%; margin : auto;font-size:11px;margin-top:20px;margin-bottom:20px">
+                                <tr>
+                                    <td class="text-left">Total Renewal (Terminal Only)</td>
+                                    <td class="text-right">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">Terminal Renewal</td>
+                                    <td class="text-right"><span t-esc="total_renewal"/></td>
+                                </tr>
+                            </table>
+                            <!--PENDING TABLE-->
+                            <span style="page-break-inside:avoid;background-color: #F0E68C;padding: 6px 100% 0px 0px">Pending </span>
+                            <table style="font-size:10px; padding-bottom:10px; width:100%">
+                                <thead>
+                                    <!--<tr>-->
+                                        <!--<td style="background-color: #F0E68C;">Pending</td>-->
+                                    <!--</tr>-->
+                                    <tr>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:12%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                    </tr>
+                                </thead>
+                                <t t-set="total_pending" t-value="0" />
+                                <tbody>
+                                    <tr t-foreach="doc.lead_ids" t-as="pending" t-if="pending.stage_id.id==2 or pending.stage_id.id==3 or pending.stage_id.id==7">
+                                        <td>
+                                            <span t-field="pending.user_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="pending.partner_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="pending.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="pending.date_conversion"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="pending.planned_revenue"/>
+                                            <t t-set="total_pending" t-value="total_pending + pending.planned_revenue"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="pending.planned_revenue + 7*pending.planned_revenue/100"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="pending.create_date"/>
+                                        </td>
+                                        <td>
+                                            <t t-foreach="doc.invoice_ids" t-as="invoice" t-if="invoice.partner_id.id == pending.partner_id.id">
+                                                <t t-foreach="invoice.invoice_line_ids" t-as="line" t-if="line.product_id.terminal_ok == True">
+                                                    <span t-field="line.price_subtotal"></span><br/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-field="pending.probability"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="pending.stage_id"/>
+                                        </td>
+                                        <td>
+                                            <t t-foreach="doc.invoice_ids" t-as="invoice" t-if="invoice.partner_id.id == pending.partner_id.id">
+                                                <span t-field="invoice.number"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-field="pending.description"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table style="border : 3px solid black; width:35%; margin : auto; font-size:11px;margin-top:20px;margin-bottom:20px">
+                                <tr>
+                                    <td class="text-left">Total Pending (Terminal Only)</td>
+                                    <td class="text-right">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">Terminal Pending</td>
+                                    <td class="text-right"><span t-esc="total_pending"/></td>
+                                </tr>
+                            </table>
+                            <!--FALL OUT TABLE-->
+                            <span style="page-break-inside:avoid;background-color: #F0E68C;padding: 6px 100% 0px 0px">Fall Out </span>
+                            <table style="font-size:10px; padding-top:10px;padding-bottom:10px; width:100%">
+                                <thead>
+                                    <!--<tr>-->
+                                        <!--<td style="background-color: #F0E68C;">Fall Out</td>-->
+                                    <!--</tr>-->
+                                    <tr>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:12%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                        <td style="width:8%"></td>
+                                    </tr>
+                                </thead>
+                                <t t-set="total_fallout" t-value="0" />
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <!--<span t-field="lead.user_id"/>-->
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="lead.partner_id"/>-->
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="lead.name"/>-->
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="lead.date_conversion"/>-->
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="lead.planned_revenue"/>-->
+                                            <!--<t t-set="total" t-value="total + lead.planned_revenue"/>-->
+                                        </td>
+                                        <td>
+                                            <!--<span t-esc="lead.planned_revenue + 7*lead.planned_revenue/100"/>-->
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="lead.create_date"/>-->
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="lead.name"/>-->
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="lead.probability"/>-->
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="lead.stage_id"/>-->
+                                        </td>
+                                        <td>
+                                            <!--<span t-field=""/>-->
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="lead.description"/>-->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table style="border : 3px solid black; width:35%; margin : auto; font-size:11px;margin-top:20px;margin-bottom:20px">
+                                <tr>
+                                    <td class="text-left">Total Fall Out (Terminal Only)</td>
+                                    <td class="text-right">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">Terminal Fall Out</td>
+                                    <td class="text-right"><span t-esc="total_fallout"/></td>
+                                </tr>
+                            </table>
+
+                            <div style="margin-top:50px;border-top: 3px solid black; font-size:10px;">
+                                 <div class="row">
+                                    <div class="col-xs-2 col-xs-offset-4 text-right">ALL</div>
+                                    <div class="col-xs-2 text-center">0</div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-xs-2 col-xs-offset-4 text-right">Terminal ALL</div>
+                                    <div class="col-xs-2 text-center"><span t-esc="total_all"/></div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-xs-2 col-xs-offset-4 text-right">New</div>
+                                    <div class="col-xs-2 text-center"><span t-esc="total"/></div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-xs-2 col-xs-offset-4 text-right">Terminal New</div>
+                                    <div class="col-xs-2 text-center"><span t-esc="total_new"/></div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-xs-2 col-xs-offset-4 text-right">Renewal</div>
+                                    <div class="col-xs-2 text-center"><span t-esc="total"/></div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-xs-2 col-xs-offset-4 text-right">Terminal Renewal</div>
+                                    <div class="col-xs-2 text-center"><span t-esc="total_renewal"/></div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-xs-2 col-xs-offset-4 text-right">Peding</div>
+                                    <div class="col-xs-2 text-center"><span t-esc="total"/></div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-xs-2 col-xs-offset-4 text-right">Terminal Peding</div>
+                                    <div class="col-xs-2 text-center"><span t-esc="total_pending"/></div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-xs-2 col-xs-offset-4 text-right">Fall Out</div>
+                                    <div class="col-xs-2 text-center"><span t-esc="total"/></div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-xs-2 col-xs-offset-4 text-right">Terminal Fall Out</div>
+                                    <div class="col-xs-2 text-center"><span t-esc="total_fallout"/></div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-xs-4 col-xs-offset-4 text-right" style="border-top: 3px solid black"></div>
+                                 </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="view_sales_pipeline_report" model="ir.ui.view">
+            <field name="name">sales.pipeline.report.form</field>
+            <field name="model">sales.pipeline.report</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		        <form string="Sales Pipeline Report" version="10.0" style="height:240px">
+
+		            	<group>
+		            		<group>
+		            			<field name="country_id" string="Country"/>
+                                <field name="start_date" string="Start Date" required="1"/>
+		            		</group>
+		            		<group>
+		            			<field name="user_id" string="Sales Person" />
+                                <field name="end_date" string="End Date" required="1"/>
+		            		</group>
+		        		</group>
+
+		            <footer>
+						<button string="Sales Pipeline Report" name="print_report" type="object" class="oe_highlight"/>
+		                or
+		                <button string="Cancel" class="oe_link" special="cancel" />
+		            </footer>
+		        </form>
+            </field>
+        </record>
+
+        <record id="action_sales_pipeline_report" model="ir.actions.act_window">
+            <field name="name">Sales Pipeline Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.pipeline.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="sales_pipeline_report_menu"
+            name="Sales Pipeline Report"
+            parent="sales_team.menu_sale_report"
+            action="action_sales_pipeline_report"
+        />
+   </data>
+</odoo>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="branch_target_form" model="ir.ui.view">
+            <field name="name">branch.target.form.inherit</field>
+            <field name="model">branch.target</field>
+            <field name="arch" type="xml">
+                <form string="Branch Target">
+                    <header>
+                        <button name="%(crm_team_popup_sale_target_action)d" type="action" class="oe_highlight" string="Print"/>
+                    </header>
+                    <sheet>
+                      <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="branch_id" class="oe_edit_only" string="Branch"/>
+                            <h1>
+                                <field name="branch_id"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group name="left">
+                                <field name="user_id"/>
+                            </group>
+                            <group name="right">
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="members" string="Team Members">
+                                <field name="member_ids" widget="many2many_kanban" options="{'not_delete': True}">
+                                    <kanban quick_create="false" create="true" delete="true">
+                                        <field name="name"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click" style="position: relative">
+                                                    <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                                    <div class="oe_module_vignette">
+                                                        <img t-att-src="kanban_image('res.users', 'image_small', record.id.value)" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                                        <div class="oe_module_desc">
+                                                            <field name="name"/>
+                                                            <br/>
+                                                            <strong> Target: <field name="total_target"/></strong>
+                                                            <br/>
+                                                            <strong>Archievement: <field name="total_achievement"/></strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                            <page string="Target &amp; Achievement" name="target_achievement">
+                                <field name="target_id" context="{'branch_target_id':active_id,'model':active_model}">
+                                    <tree editable="bottom">
+                                        <field name="date_from"/>
+                                        <field name="date_to"/>
+                                        <field name="target"/>
+                                        <field name="achievement"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group col="4">
+                                                <field name="date_from"/>
+                                                <field name="date_to"/>
+                                                <field name="target"/>
+                                                <field name="achievement"/>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="branch_target_tree" model="ir.ui.view">
+            <field name="name">branch.target.form.inherit</field>
+            <field name="model">branch.target</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="branch_id"/>
+                    <field name="user_id"/>
+                    <field name="member_ids"/>
+                    <field name="target"/>
+                    <field name="achievement"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_branch_target" model="ir.actions.act_window">
+            <field name="name">Branch Target</field>
+            <field name="res_model">branch.target</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Branch Target" id="menu_branch_target" parent="sales_team.menu_base_partner" sequence="5" action="action_branch_target"/>
+        <record id="sale.menu_sale_invoicing" model="ir.ui.menu">
+            <field name="sequence" eval="6"/>
+        </record>
+
+        <record id="res_users_simplified_form_inherited" model="ir.ui.view">
+           <field name="name">res.users.simplified.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_simple_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet" position="inside">
+                    <notebook>
+                        <page string="Target &amp; Achievement" name="target_achievement">
+                            <field name="user_target_id" context="{'active_model':active_model,'active_id':active_id}">
+                                <tree editable="bottom">
+                                    <field name="date_from" required="1"/>
+                                    <field name="date_to" required="1"/>
+                                    <field name="target"/>
+                                    <field name="achievement"/>
+                                </tree>
+                                <form>
+                                    <sheet>
+                                        <group col="4">
+                                            <field name="date_from"/>
+                                            <field name="date_to"/>
+                                            <field name="target"/>
+                                            <field name="achievement"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+      </record>
+    </data>
+</odoo>

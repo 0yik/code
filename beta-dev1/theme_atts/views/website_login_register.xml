@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="auth_signup_login" inherit_id="auth_signup.login" name="Sign up - Reset Password" priority="17">
+        <xpath expr="//a[@t-if='signup_enabled']" position="replace">
+            <button type="reset" class="btn pull-right btn-cancel">Cancel</button>
+        </xpath>
+        <xpath expr="//a[@t-if='reset_password_enabled']" position="replace"></xpath>
+    </template>
+
+    <!-- Login Page -->
+    <template id="login" inherit_id="web.login" name="Login" priority="17">
+        <xpath expr="//form" position="before">
+            <section class="as-t-title">
+                <h2 class="o_default_snippet_text">Login</h2>
+            </section>
+        </xpath>
+        <xpath expr="//form/div[@class='form-group field-login']" position="replace">
+            <div class="form-group field-login">
+                <label for="login" class="control-label">Email</label>
+                <input type="text" name="login" t-att-value="login" id="login" class="form-control" required="required" autofocus="autofocus" autocapitalize="off" placeholder="example@example.com"/>
+            </div>
+        </xpath>
+        <xpath expr="//form/div[@class='form-group field-password']" position="replace">
+            <div class="form-group field-password">
+                <label for="password" class="control-label">Password</label>
+                <input type="password" name="password" id="password" class="form-control" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096" placeholder="password"/>
+            </div>
+        </xpath>
+        <xpath expr="//form/div[@class='clearfix oe_login_buttons']" position="after">
+            <div class="clearfix new_account">
+                <div class="pull-left">
+                    <a t-if="reset_password_enabled" t-attf-href="/web/reset_password?{{ keep_query() }}" class="btn btn-link pull-right">Reset Password</a>
+                </div>
+                <div class="pull-right">
+                    <span>New account? </span>
+                    <a t-if="signup_enabled" t-attf-href="/web/signup?{{ keep_query() }}" class="btn btn-link">Sign up</a>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- SignUP Page -->
+    <template id="signup" inherit_id="auth_signup.signup" name="Sign UP" priority="17">
+        <xpath expr="//form" position="before">
+            <section class="as-t-title">
+                <h2 class="o_default_snippet_text">Sign UP</h2>
+            </section>
+        </xpath>
+        <xpath expr="//form/div[@class='clearfix oe_login_buttons']/a" position="replace">
+            <button type="reset" class="btn pull-right btn-cancel">Cancel</button>
+        </xpath>
+    </template>
+
+    <template id="theme_fields" inherit_id="auth_signup.fields">
+        <xpath expr="div[@class='form-group field-name']" position="replace">
+        </xpath>
+        <xpath expr="div[@class='form-group field-confirm_password']" position="after">
+            <div class="form-group form-field o_website_form_required_custom signup_student_type" t-if="not only_passwords">
+                <input type="radio" name="student_type" value="individual"> Individual</input>
+                <input type="radio" name="student_type" value="corporate" class="ml32"> Corporate</input>
+            </div>
+            <div class="corporate_details hidden">
+                <div class="form-group form-field">
+                    <label class="control-label" for="company_name">Company Name</label>
+                    <input type="text" class="form-control" name="company_name"/>
+                </div>
+                <div class="form-group form-field">
+                    <label class="control-label" for="fax_no">Fax No</label>
+                    <input type="text" class="form-control" name="fax_no"/>
+                </div>
+                <div class="form-group form-field">
+                    <label class="control-label" for="uen_no_company_number">UEN No/Company Number</label>
+                    <input type="text" class="form-control" name="uen_no_company_number"/>
+                </div>
+                <div class="form-group form-field">
+                    <label class="control-label" for="company_address">Company Address</label>
+                    <input type="text" class="form-control" name="company_address"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//input[@name='login']" position="attributes">
+            <attribute name="placeholder">example@example.com</attribute>
+        </xpath>
+        <xpath expr="//input[@name='password']" position="attributes">
+            <attribute name="placeholder">password</attribute>
+        </xpath>
+        <xpath expr="//input[@name='confirm_password']" position="attributes">
+            <attribute name="placeholder">confirm password</attribute>
+        </xpath>
+    </template>
+
+    <!-- Corporate user welcome page -->
+    <template id="website.atts_corporate_welcome_page" name="ATTS welcome page" page="True">
+        <t t-call="website.layout">
+            <t t-set="title">Thank you for registration in ATTS!</t>
+            <div class="oe_structure"/>
+            <div class="container mb128 mt128 text-center">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <h1>
+                            Welcome to ATTS
+                        </h1>
+
+                        <h3>Thank you for your interest. We will activate your account as soon as possible. – ATTS</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,9 @@
+.detail_location{
+    font-style: italic;
+}
+.detail_location_name{
+    padding-left: 50px;
+}
+.scrollit{
+     overflow:scroll;
+}

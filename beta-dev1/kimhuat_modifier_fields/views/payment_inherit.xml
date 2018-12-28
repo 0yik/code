@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="account_view_account_payment_invoice_form_inherit" model="ir.ui.view">
+            <field name="name">account.payment.invoice.form.inherited</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_invoice_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='communication']" position="after">
+                    <field name="cheque_number" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

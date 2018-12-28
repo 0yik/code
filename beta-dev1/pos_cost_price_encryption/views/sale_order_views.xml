@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record id="view_order_form_inherit_sale_order_aikchin" model="ir.ui.view">
+			<field name="name">sale.order.form.sale</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="aikchin_modifier_fields.view_order_form_inherit_sale_stock_aikchin"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='order_line']/tree//field[@name='cost_price']" position="replace">
+					<field name="cost_encrypt_price"/>
+				</xpath>
+			</field>
+		</record>
+    </data>
+</odoo>
+
+
+

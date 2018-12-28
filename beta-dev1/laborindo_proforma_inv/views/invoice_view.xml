@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data noupdate="1">
+        <!-- Proforma sequences -->
+        <record id="sequence_proforma_customer_invoice" model="ir.sequence">
+            <field name="name">Proforma customer invoices sequence</field>
+            <field name="code">account.proforma.customer.invoice</field>
+            <field name="prefix">PRO-FORMA/%(range_year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+     </data>
+
+     <data>
+        <!-- Customer Invoice Form -->
+        <record id="proforma_invoice_view" model="ir.ui.view">
+            <field name="name">proforma.custinvoice_form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="proforma_number" attrs="{'invisible': [('state','not in',('open','paid'))]}"/>
+                </xpath>
+                <xpath expr="//sheet/h1[@class='mt0']/field[@name='number']" position="after">
+                    <field name="inv_number"/>
+                    <field name="is_proforma" invisible="1"/>
+                </xpath>
+                <!--<xpath expr="//sheet/h1[@class='mt0']/field[@name='number']" position="replace"/>-->
+                <xpath expr="//sheet/h1[@class='mt0']/field[@name='number']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Customer Invoice Tree -->
+        <record id="proforma_invoice_tree_view" model="ir.ui.view">
+            <field name="name">proforma.custinvoice_tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='number']" position="after">
+                    <field name="inv_number"/>
+                </xpath>
+                <!--<xpath expr="//field[@name='number']" position="replace"/>-->
+                <xpath expr="//field[@name='number']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

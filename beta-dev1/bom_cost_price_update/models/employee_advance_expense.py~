@@ -1,0 +1,399 @@
+# -*- coding: utf-8 -*-
+
+import time
+
+from odoo.exceptions import UserError
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning
+import odoo.addons.decimal_precision as dp
+
+class EmployeeAdvanceExpense(models.Model):
+    _name = 'employee.advance.expense'
+    _description = "Employee Advance Expense"
+    _inherit = ['mail.thread', 'ir.needaction_mixin']
+    _order = 'id desc'
+
+    @api.model
+    def get_currency(self):
+        return self.env.user.company_id.currency_id
+        
+    @api.multi
+    @api.depends('advance_expense_line_ids', 'advance_expense_line_ids.total_amount')
+    def _compute_total_amount_expense(self):
+        for rec in self:
+            rec.total_amount_expense = 0.0
+            for line in rec.advance_expense_line_ids:
+                rec.total_amount_expense += line.total_amount
+            
+    @api.multi
+    @api.depends('journal_id', 'currency_id')
+    def _compute_paid_currency(self):
+        for rec in self:
+            if not rec.journal_id.currency_id:
+                rec.paid_in_currency = rec.currency_id.id
+            else:  
+                rec.paid_in_currency = rec.journal_id.currency_id
+    
+    @api.multi
+    @api.depends('move_id', 'move_id.amount')
+    def _compute_payed_amount(self):
+        for rec in self:
+            rec.paid_amount = rec.move_id.amount
+    
+    name = fields.Char(
+        string='Number',
+        index=True,
+        default=lambda self: _('New'),
+        readonly=1,
+    )
+    employee_id = fields.Many2one('hr.employee', required=True, readonly=True, string="Employee",default=lambda self: self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1), states={'draft': [('readonly', False)]})
+    request_date = fields.Date(string='Requested Date', default=fields.Date.today(), readonly=True, states={'draft': [('readonly', False)]})
+    confirm_date = fields.Date(string='Confirmed Date', \
+                        readonly=True, copy=False)
+    
+    hr_validate_date = fields.Date(string='Approved Date', \
+                        readonly=True, copy=False)
+    account_validate_date = fields.Date(string='Paid Date', \
+                        readonly=True, copy=False)
+    confirm_by_id = fields.Many2one('res.users', string='Confirmed By', readonly=True, copy=False)
+    hr_manager_by_id = fields.Many2one('res.users', string='Approved By', readonly=True, copy=False)
+    
+    account_by_id = fields.Many2one('res.users', string='Paid By', readonly=True, copy=False)
+    
+    department_id = fields.Many2one('hr.department', string='Department', readonly=True, states={'draft': [('readonly', False)]})
+    job_id = fields.Many2one('hr.job', string='Job Title', readonly=True, states={'draft': [('readonly', False)]})
+    currency_id = fields.Many2one('res.currency', string='Currency', default=get_currency, required=True, readonly=True, states={'draft': [('readonly', False)]})
+    comment = fields.Text(string='Comment')
+    total_amount_expense = fields.Float(string='Requested Amount', store=True, compute='_compute_total_amount_expense', digits=dp.get_precision('Account'))
+    user_id = fields.Many2one('res.users', default=lambda self: self.env.user, string='Requested User', readonly=True)
+    company_id = fields.Many2one('res.company', default=lambda self: self.env.user.company_id, string='Company', readonly=True)
+    reason_for_advance = fields.Text(string='Reason For Advance', readonly=True, states={'draft': [('readonly', False)]})
+    state = fields.Selection(selection=[
+                        ('draft', 'Draft'), \
+                        ('confirm', 'Confirmed'), \
+                        ('approved_hr_manager', 'Approved'),\
+                        ('paid', 'Paid'),\
+                        ('done', 'Done'),\
+                        ('cancel', 'Cancelled'),\
+                        ('reject', 'Rejected')],string='State', \
+                        readonly=True, default='draft', \
+                        track_visibility='onchange')
+    partner_id = fields.Many2one('res.partner', string='Employee Partner')
+    journal_id = fields.Many2one('account.journal', string='Payment Method')
+    payment_id = fields.Many2one('account.payment', string='Payment', readonly=True)
+    paid_in_currency = fields.Many2one('res.currency', string='Paid in Currency',compute='_compute_paid_currency')
+    account_id = fields.Many2one('account.account', string='Asset Account')
+    
+    move_id = fields.Many2one('account.move', string = 'Journal Entry', readonly=True)
+    advance_expense_line_ids = fields.One2many('advance.expense.line', 'advance_line_id', string='Advance Expenses Lines', copy=False)
+    paid_amount = fields.Float(compute=_compute_payed_amount, string='Paid Amount', store=True, digits=dp.get_precision('Account'))
+    
+    @api.onchange('employee_id', 'employee_id.address_home_id')
+    def get_department(self):
+        for line in self:
+            line.department_id = line.employee_id.department_id.id
+            line.job_id = line.employee_id.job_id.id
+            line.manager_id = line.employee_id.parent_id.id
+            line.partner_id = line.employee_id.address_home_id and line.employee_id.address_home_id.id or False
+   
+    @api.multi
+    def request_set(self):
+        self.state = 'draft'
+    
+    @api.multi
+    def exit_cancel(self):
+        self.state = 'cancel'
+        
+    @api.multi
+    def get_confirm(self, vals):
+        if not self.advance_expense_line_ids:
+           raise Warning(_('Please add some advance expense lines.'))
+        else:
+            self.name = self.env['ir.sequence'].next_by_code('employee.advance.expense')
+            self.state = 'confirm'
+            self.confirm_date = time.strftime('%Y-%m-%d')
+            self.confirm_by_id = self.env.user.id
+   
+    @api.multi
+    def get_apprv_hr_manager(self):
+        self.state = 'approved_hr_manager'
+        self.hr_validate_date = time.strftime('%Y-%m-%d')
+        self.hr_manager_by_id = self.env.user.id
+        
+    @api.multi
+    def get_done(self):
+        self.state = 'done'
+    
+    @api.multi
+    def get_reject(self):
+        self.state = 'reject'
+        
+        
+        
+        
+    @api.multi
+    def action_sheet_move_advance(self):
+        print '000000000000000000000000000000000000000111111111111111111111111111111111'
+        if any(self.state != 'approved_hr_manager' for sheet in self):
+            print '00000000000000000000000000000000000003333333333333333333333333333333333333'
+            raise UserError(_("You can only generate accounting entry for approved expense(s)."))
+
+        if any(not sheet.journal_id for sheet in self):
+            print '000000000000000000000000000000000000004444444444444444444444444444444444'
+            raise UserError(_("Expenses must have an expense journal specified to generate accounting entries."))
+
+        #res = self.mapped('advance_expense_line_ids').advance_action_move_create()
+        res = self.advance_action_move_create()
+        print '00000000000000000000000000000000000005555555555555555555555555555555555555last last',res
+        if not self.request_date:
+            print '0000000000000000000000000000000000066666666666666666666666666666666666666',self.request_date
+            self.request_date = self.account_move_id.date
+            print '00000000000000000000000000000000077777777777777777777777777777777',self.request_date
+        #if self.payment_mode=='own_account':
+            #self.write({'state': 'post'})
+        #else:
+            #self.write({'state': 'done'})
+            print '0000000000000000000000000000000888888888888888888888888888888888888'
+        self.account_validate_date = time.strftime('%Y-%m-%d')
+        self.account_by_id = self.env.user.id
+        self.state = 'paid'
+        return res
+        
+        
+    @api.multi          
+    def advance_action_move_create(self):
+        '''
+        main function that is called when trying to create the accounting entries related to an expense
+        '''
+        print '111111111111111111111111111111111111111111111111111111111111111'
+        print '11111111111111111111111111111111111111111111111111111111selfffffff',self
+        for expense in self:
+            journal = expense.journal_id # credit account
+            print 'jornallllllllllllllllllllllllllllllllllllllllllllll',journal #credit account
+            print 'jornalllllllllllllllllllllllllllllllllllllllldefault',journal.default_credit_account_id
+            print 'jornalllllllllllllllllllllllllllllllllllllllldefault',journal.default_credit_account_id.code
+            account_id = self.env['account.account'].browse(journal.id)
+            print 'acocuuuuuuuccccccccccccccccccccccccccccccccccccccccccccccc',account_id
+            print 'acocuuuuuuuccccccccccccccccccccccccccccccccccccccccccccccc',account_id
+            #journal = expense.journal_id
+            print '3333333333333333333333333333333333333333333333333333333333333',journal
+            print '444444444444444444444444444444444444444444444444444444444444444444'
+            #create the move that will contain the accounting entries
+            acc_date = expense.request_date
+            print '555555555555555555555555555555555555555555555555555555555555555555555555',acc_date
+            move = self.env['account.move'].create({
+                'journal_id': journal.id, # credit account in account.move
+                'company_id': self.env.user.company_id.id,
+                'date': acc_date,
+                'ref': expense.name,
+                # force the name to the default value, to avoid an eventual 'default_name' in the context
+                # to set it to '' which cause no number to be given to the account.move when posted.
+                'name': '/',
+            })
+            
+            print 'account moveeeee6666666666666666666666666666666666666666666666666666666666',move
+            expense.move_id = move.id
+            company_currency = expense.company_id.currency_id
+            print '777777777777777777777777777777777777777777777777777777777777777777777777777777',company_currency
+            diff_currency_p = expense.currency_id != company_currency
+            print '888888888888888888888888888888888888888888888888888888888888888888888888888888',diff_currency_p
+            #one account.move.line per expense (+taxes..)
+            move_lines = expense._move_advance_line_get()
+
+            #create one more move line, a counterline for the total on payable account
+            print '22222222222222222222222222222222222244444444444444444444444444444444444',move_lines
+            payment_id = False
+            print '2222222222222222222222222222222222255555555555555555555555555555555555555555555',payment_id
+            
+            total, total_currency, move_lines = expense._compute_advnce_expense_totals(company_currency, move_lines, acc_date)
+            print '222222222222222222222222222222222266666666666666666666666666666666666666666666666',total
+            print '2222222222222222222222222222222227777777777777777777777777777777777777',total_currency
+            print '222222222222222222222222222222222888888888888888888888888888888888888888888888888',move_lines
+             
+            if expense.journal_id == 'company_account':
+                print '2222222222222222222222222229999999999999999999999999999999999',expense.journal_id
+                if not expense.sheet_id.bank_journal_id.default_credit_account_id:
+                    print '333333333333333333333333333300000000000000000000000000000000'
+                    raise UserError(_("No credit account found for the %s journal, please configure one.") % (expense.sheet_id.bank_journal_id.name))
+                print '333333333333333333333333333300000000000000000000000000000000000000'
+                emp_account = expense.sheet_id.bank_journal_id.default_credit_account_id.id
+                print '3333333333333333333333333331111111111111111111111111111111111111111111111111111111',emp_account
+                journal = expense.journal_id
+                print '3333333333333333333333333322222222222222222222222222222222222222222',journal
+                #create payment
+                payment_methods = (total < 0) and journal.outbound_payment_method_ids or journal.inbound_payment_method_ids
+                print '33333333333333333333333334444444444444444444444444444444444444444444444444444444444',payment_methods
+                journal_currency = journal.currency_id or journal.company_id.currency_id
+                print '33333333333333333333333355555555555555555555555555555555555555555555555555',journal_currency
+                payment = self.env['account.payment'].create({
+                    'payment_method_id': payment_methods and payment_methods[0].id or False,
+                    'payment_type': total < 0 and 'outbound' or 'inbound',
+                    'partner_id': expense.employee_id.address_home_id.commercial_partner_id.id,
+                    'partner_type': 'supplier',
+                    'journal_id': journal.id,
+                    'payment_date': expense.date,
+                    'state': 'reconciled',
+                    'currency_id': diff_currency_p and expense.currency_id.id or journal_currency.id,
+                    'amount': diff_currency_p and abs(total_currency) or abs(total),
+                    'name': expense.name,
+                })
+                print '3333333333333333333333366666666666666666666666666666666666666666666666',payment
+                payment_id = payment.id
+                print '333333333333333333333777777777777777777777777777777777777777777777',payment_id
+            else:
+                print '3333333333333333333333333333333333333333333333333333333888888888888888888888888888888'
+                if not expense.employee_id.address_home_id:
+                    print '33333333333333333333333333333333333333999999999999999999999999999999999999999999'
+                    raise UserError(_("No Home Address found for the employee %s, please configure one.") % (expense.employee_id.name))
+                #emp_account = expense.employee_id.address_home_id.property_account_payable_id.id
+                emp_account = journal.default_credit_account_id #  credit account 
+                print '444444444444444444444444444444440000000000000000000000000000000000000',emp_account
+
+            aml_name = expense.employee_id.name + ': ' + expense.name.split('\n')[0][:64]
+            print '44444444444444444444444444444111111111111111111111111111111111111111111',aml_name
+            move_lines.append({
+                    'type': 'dest',
+                    'name': aml_name,
+                    'price': total,
+                    'account_id': emp_account.id, #credit account in account.move.line
+                    'date_maturity': acc_date,
+                    'amount_currency': diff_currency_p and total_currency or False,
+                    'currency_id': diff_currency_p and expense.currency_id.id or False,
+                    'payment_id': payment_id,
+                    })
+            print '444444444444444444444444444442222222222222222222222222222222222222222222222',move_lines
+
+            #convert eml into an osv-valid format
+            lines = map(lambda x: (0, 0, expense._prepare_advance_move_line(x)), move_lines)
+            print '444444444444444444444444444444444444444447777777777777777777777777777777',lines
+            move.with_context(dont_create_taxes=True).write({'line_ids': lines})
+            print '44444444444444444444444444444444444444448888888888888888888888888888888888888888888'
+            expense.write({'advance_account_move_id': move.id})
+            print '44444444444444444444444444444444444444448888888888888888888888888888888888888888888'
+            move.post()
+            print '4444444444444444444444444444444444449999999999999999999999999999999999999999999999'
+            if expense.journal_id == 'company_account':
+                print '5555555555555555555555555555550000000000000000000000000000000000000000',expense.journal_id
+                expense.sheet_id.paid_expense_sheets()
+                print '55555555555555555555555555551111111111111111111111111111111111111111111111111111'
+        return True
+       
+       
+    @api.multi
+    def _move_advance_line_get(self):
+        print '9999999999999999999999999999999999999999999999999999999999999999999999999999999999999'
+        account_move = []
+        print '111111111111111111111111111111111000000000000000000000000000000000000000000000000000'
+        for expense in self:
+            print '111111111111111111111111111111111222222222222222222222222222222222222222222222222',self
+            if expense.account_id:
+                print '1111111111111111111111111111133333333333333333333333333333333333333333333',expense.account_id
+                account = expense.account_id
+                print '1111111111111111111111111111144444444444444444444444444444444444444',account
+            elif expense.product_id:
+                print '1111111111111111111111111111155555555555555555555555555555555555',expense.product_id
+                account = expense.product_id.product_tmpl_id._get_product_accounts()['expense']
+                print '11111111111111111111111111116666666666666666666666666666666666666666666',account
+                if not account:
+                    print '11111111111111111111111111116666666666666666666666666666666666666666666'
+                    raise UserError(_("No Expense account found for the product %s (or for it's category), please configure one.") % (expense.product_id.name))
+            else:
+                print '1111111111111111111111111117777777777777777777777777777777777777777777777777'
+                account = self.env['ir.property'].with_context(force_company=expense.company_id.id).get('property_account_expense_categ_id', 'product.category')
+                print '11111111111111111111111111188888888888888888888888888888888888888888888888888888888888',account
+                if not account:
+                    print '111111111111111111111111111999999999999999999999999999999999999999999999999999999999999'
+                    raise UserError(_('Please configure Default Expense account for Product expense: `property_account_expense_categ_id`.'))
+
+            aml_name = expense.employee_id.name + ': ' + expense.name.split('\n')[0][:64]
+            print '2222222222222222222222222222000000000000000000000000000000',aml_name
+            move_line = {
+                    'type': 'src',
+                    'name': aml_name,
+                    #'price_unit': self.unit_amount,
+                    #'quantity': self.quantity,
+                    'price': expense.total_amount_expense,
+                    'account_id': account.id,  #  Debit account ----company asset account id - Deit account
+                    #'product_id': expense.product_id.id,
+                    #'uom_id': expense.product_uom_id.id,
+                    #'analytic_account_id': expense.company_id.analytic_account_id.id,
+            }
+            print '2222222222222222222222222222222222222211111111111111111111111111111111111111111',move_line
+            account_move.append(move_line)
+
+            # Calculate tax lines and adjust base line
+            #taxes = expense.tax_ids.compute_all(expense.unit_amount, expense.currency_id, expense.quantity, expense.product_id)
+            #taxes = expense.compute_all(expense.unit_amount, expense.currency_id, expense.quantity, expense.product_id)
+            #account_move[-1]['price'] = taxes['total_excluded']
+            ##account_move[-1]['tax_ids'] = expense.tax_ids.ids
+            #for tax in taxes['taxes']:
+               #account_move.append({
+                    #'type': 'tax',
+                    #'name': tax['name'],
+                    #'price_unit': tax['amount'],
+                    #'quantity': 1,
+                    #'price': tax['amount'],
+                    #'account_id': tax['account_id'] or move_line['account_id'],
+                    #'tax_line_id': tax['id'],
+                #})
+        print '2222222222222222222222222222222222222333333333333333333333333333333333333333333',account_move
+        return account_move
+
+    @api.multi
+    def _compute_advnce_expense_totals(self, company_currency, account_move_lines, move_date):
+        '''
+        internal method used for computation of total amount of an expense in the company currency and
+        in the expense currency, given the account_move_lines that will be created. It also do some small
+        transformations at these account_move_lines (for multi-currency purposes)
+
+        :param account_move_lines: list of dict
+        :rtype: tuple of 3 elements (a, b ,c)
+            a: total in company currency
+            b: total in hr.expense currency
+            c: account_move_lines potentially modified
+        '''
+        self.ensure_one()
+        total = 0.0
+        total_currency = 0.0
+        for line in account_move_lines:
+            line['currency_id'] = False
+            line['amount_currency'] = False
+            if self.currency_id != company_currency:
+                line['currency_id'] = self.currency_id.id
+                line['amount_currency'] = line['price']
+                line['price'] = self.currency_id.with_context(date=move_date or fields.Date.context_today(self)).compute(line['price'], company_currency)
+            total -= line['price']
+            total_currency -= line['amount_currency'] or line['price']
+        return total, total_currency, account_move_lines
+
+
+    def _prepare_advance_move_line(self, line):
+        
+        print '444444444444444444444444444433333333333333333333333333333333333333333333333333333333',line
+        '''
+        This function prepares move line of account.move related to an expense
+        '''
+        partner_id = self.employee_id.address_home_id.commercial_partner_id.id
+        print '444444444444444444444444444555555555555555555555555555555555555555555555555555555',partner_id
+        print '44444444444444444444444444455555555555555555555555555555555555555555555acount-id check',line['account_id']
+        return {
+            'date_maturity': line.get('date_maturity'),
+            'partner_id': partner_id,
+            'name': line['name'][:64],
+            'debit': line['price'] > 0 and line['price'],
+            'credit': line['price'] < 0 and - line['price'],
+            'account_id': line['account_id'], 
+            'analytic_line_ids': line.get('analytic_line_ids'),
+            'amount_currency': line['price'] > 0 and abs(line.get('amount_currency')) or - abs(line.get('amount_currency')),
+            'currency_id': line.get('currency_id'),
+            'tax_line_id': line.get('tax_line_id'),
+            'tax_ids': line.get('tax_ids'),
+            'quantity': line.get('quantity', 1.00),
+            'product_id': line.get('product_id'),
+            'product_uom_id': line.get('uom_id'),
+            'analytic_account_id': line.get('analytic_account_id'),
+            'payment_id': line.get('payment_id'),
+        }
+      
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

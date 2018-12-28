@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<odoo>
+    <template id="report_health_datasheet">
+            <div class="page">
+	            <span><strong>THE LIST IS CONFIDENTIAL AND STRICTLY FOR INTERNAL REFERENCE ONLY</strong></span>                                                         <strong><span t-esc="current_date_year.get('current_date')"/></strong><br/><br/>
+	            <strong><span t-esc="current_date_year.get('current_year')"/></strong>  <span><strong>Student Health Datasheet</strong></span><br/>
+               <table cellspacing="0" cellpadding="0" class="table table-condensed"  style="border: 1px solid black">
+                   	 <thead>
+                            <tr style="background-color: slategray;">
+                                <th style="border: medium none !important;">
+                                 <strong>Class:</strong>
+                                 <strong t-field="doc.class_level"></strong> <strong t-field="doc.class_number"></strong>
+                                </th >
+                                <th style="border: medium none !important;">
+                                 <strong>StudentName:</strong>
+                                <strong t-field="doc.name"></strong>
+                                 </th>
+                                <th style="border: medium none !important;">
+                                 <strong>NRIC:</strong>
+                                 <strong t-field="doc.nric_fin"></strong>
+                                </th >
+                                <th style="border: medium none !important;"> <strong>DOB:</strong><strong t-field="doc.date_of_birth"></strong></th>
+                                <th style="border: medium none !important;"> <strong>Age:</strong><strong t-field="doc.age"></strong></th>
+                            </tr>
+                            
+                            <tr style="background-color: slategray;">
+                                <th style="border: medium none !important;">
+                                 <strong></strong>
+                                </th >
+                                <th style="border: medium none !important;">
+                                 <strong></strong>
+                                 </th>
+                                <th style="border: medium none !important;">
+                                 <strong></strong>
+                                </th >
+                                <th style="border: medium none !important;"><strong>Admision Date:</strong><strong t-field="doc.admission_date"></strong></th>
+                                <th style="border: medium none !important;"></th>
+                            </tr>
+                        </thead>
+                        </table>	
+                    	<table cellspacing="0" cellpadding="0" class="table table-condensed"  style="border: 1px solid black">
+                        	<tr style="background-color: slategray; text-align: center;">
+                                <td  style="text-align: center;" colspan='2'>
+                                 <span>Diagnostic/Background Information</span>
+                                </td >
+                            </tr>
+                        	<tbody>
+                        	<tr>
+                        		<td><span>Primary Diagnostic Disabilities</span></td>
+                        		<td><span t-field="doc.primary_disabilities"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Secondary Disabilities</span></td>
+                        		<td><span t-field="doc.secondory_disability"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Diagnosis relevant to referral/Medical Conditions Background</span></td>
+                        		<td><span t-field="doc.medical_condition_background"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Birth History ampersand Development Milestones</span></td>
+                        		<td><span t-field="doc.birth_history"/></td>
+                        	</tr>
+                        	
+                        	<tr style="background-color: slategray;">
+                        		<td  style="text-align: center;" colspan='2'><span>Mental Health Conditions</span></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>MDD</span></td>
+                        		<td><span t-field="doc.mdd_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>ADHD</span></td>
+                        		<td><span t-field="doc.adhd_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Anxiety Disorder</span></td>
+                        		<td><span t-field="doc.anxiety_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>OCD</span></td>
+                        		<td><span t-field="doc.ocd_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Others</span></td>
+                        		<td><span t-field="doc.specify_other_disability"/></td>
+                        	</tr>
+                        	
+                        	<tr style="background-color: slategray;">
+                        		<td  style="text-align: center;" colspan='2'><span>Medical Conditions</span></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Diabetes</span></td>
+                        		<td><span t-field="doc.diabetes_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Seizure Disorder (Epilepsy)</span></td>
+                        		<td><span t-field="doc.seizure_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Asthma (Lungs)</span></td>
+                        		<td><span t-field="doc.asthma_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Heart Conditions</span></td>
+                        		<td><span t-field="doc.heart_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Cancer</span></td>
+                        		<td><span t-field="doc.cancer_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Haemophilia</span></td>
+                        		<td><span t-field="doc.haemophilia_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Physical Disability</span></td>
+                        		<td><span t-field="doc.physical_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Dysmorphic Features</span></td>
+                        		<td><span t-field="doc.dysmorphic_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Others</span></td>
+                        		<td><span t-field="doc.Others_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Does the child have G6PD Deficiency?</span></td>
+                        		<td><span t-field="doc.g6pd_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>List of major injuries and illnesses have required medical treat, long -term therapy or hospitalizations</span></td>
+                        		<td><span t-field="doc.list_of_major_injury"/></td>
+                        	</tr>
+                        	
+                        	<tr style="background-color: slategray;">
+                        		<td  style="text-align: center;" colspan='2'><span>Medication Details</span></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Is the child currently on medications?</span></td>
+                        		<td><span t-field="doc.medication"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Medications needed in School</span></td>
+                        		<td><span t-field="doc.medication_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Is the child having any side – effects from medication?</span></td>
+                        		<td><span t-field="doc.side_effect_comment"/></td>
+                        	</tr>
+                        	
+                        	<tr style="background-color: slategray;">
+                        		<td  style="text-align: center;" colspan='2'><span>Allergies</span></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Medicine</span></td>
+                        		<td><span t-field="doc.medicine_allergy_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Food</span></td>
+                        		<td><span t-field="doc.food_allergy_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Others</span></td>
+                        		<td><span t-field="doc.other_allergy_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Other Medical Precautions</span></td>
+                        		<td><span t-field="doc.medical_precaution"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Remarks/Recommendations/Prognosis</span></td>
+                        		<td><span t-field="doc.medical_remarks"/></td>
+                        	</tr>
+                        	
+                        	<tr style="background-color: slategray;">
+                        		<td  style="text-align: center;" colspan='2'><span>Physical Examination</span></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Musculoskeletal System</span></td>
+                        		<td><span t-field="doc.musculoskeletal_system_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Hearing Conditions</span></td>
+                        		<td><span t-field="doc.hearing_condition_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Vision Conditions</span></td>
+                        		<td><span t-field="doc.vision_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Head Circumfereance</span></td>
+                        		<td><span t-field="doc.head_circumference"/></td>
+                        	</tr>
+                        	
+                        	<tr style="background-color: slategray;">
+                        		<td  style="text-align: center;" colspan='2'><span>Physical Education Restrictions</span></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Unfit PE</span></td>
+                        		<td><span t-field="doc.unfit_pe_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Unfit Swimming</span></td>
+                        		<td><span t-field="doc.unfit_swimming_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Hydrotherapy</span></td>
+                        		<td><span t-field="doc.hydrotherapy_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Horse Riding</span></td>
+                        		<td><span t-field="doc.horse_riding_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Others</span></td>
+                        		<td><span t-field="doc.other_physical_restriction_comment"/></td>
+                        	</tr>
+                        	
+                        	<tr style="background-color: slategray;">
+                        		<td style="text-align: center;" colspan='2'><span>HPB Medical Required Precaution</span></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Requiring Temporary Precaution in School</span></td>
+                        		<td><span t-field="doc.temporary_precaution_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Requiring Special Precaution in School</span></td>
+                        		<td><span t-field="doc.special_precaution_comment"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td><span>Precaution Type</span></td>
+                        		<td><span t-field="doc.precaution_type"/>
+                        		</td>
+                        	</tr>
+                      	 </tbody>
+                      </table> 
+                        	<table cellspacing="0" cellpadding="0" class="table table-condensed"  style="border: 1px solid black">
+                        		<thead>
+                                <tr style="background-color: slategray; text-align: center;">
+                        			<th style="text-align: center;" colspan='3'>
+                        				<strong>Emergency Contact Details</strong>
+                        			</th>
+                        		</tr>
+                        		</thead>
+                        		<tr>
+	                        		<td><span>Emergency Contact Person Name</span></td>
+	                        		<td><span>Phone No.</span></td>
+	                        		<td><span>Relationship to Child</span></td>
+	                        		</tr>
+	                        	<tr t-foreach="doc.description" t-as="line">
+	                        		<td><span t-field="line.name"/><span t-field="line.caregiver_id.name"/><span t-field="line.guardian_id.name"/></td>
+	                        		<td><span t-field="line.description"/></td>
+	                        		<td><span t-field="line.relation_selection"/></td>
+                        		</tr>
+                        	</table>
+            </div>
+    </template>
+    
+    <template id="health_datasheet_report_temp">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="atts_student_fields.report_health_datasheet" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+    
+</odoo>

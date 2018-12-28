@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_accounttransaction">
+    <t t-call="report.html_container">
+        <t t-call="report.internal_layout">
+            <div class="page">
+            	<t t-if="type=='customer'">
+                	<h2>Account Receivable Transacton</h2>
+            	</t>
+            	<t t-if="type=='supplier'">
+                	<h2>Account Payable Transacton</h2>
+            	</t>
+            	<t t-if="type=='both'">
+                	<h2>Account Receivable/Payable Transacton</h2>
+            	</t>
+
+
+                <div class="row mt32">
+                    <div class="col-xs-3">
+                        <strong>Start Date:</strong>
+                        <p t-esc="data['date_from']"/>
+                    </div>
+                    <div class="col-xs-3">
+                        <strong>End Date</strong>
+                        <p t-esc="data['date_to']"/>
+                    </div>
+                </div>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Name</th>
+                            <th class="text-left">Date</th>
+                            <th class="text-left">Invoice reference</th>
+                            <th class="text-left">Amount (foreign Currency)</th>
+                            <th class="text-left">Currency</th>
+                            <th class="text-left" style="white-space:normal;">Exchange rate on the date</th>
+                            <th class="text-left">Amount in <t t-if="data['company_currency']" t-esc="data['company_currency']"/></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	<t t-foreach="invoices.keys()" t-as="invoice_partner">
+                        	<tr>
+	                            <th>
+	                                <strong t-esc="invoice_partner[1]"/>
+	                            </th>
+	                            <th/>
+	                            <th/>
+	                            <th/>
+	                            <th/>
+	                            <th/>
+	                            <th/>
+	                        </tr>
+	                        <tr t-foreach="invoices[invoice_partner]" t-as="invoice">
+	                        	<td/>
+	                            <td class="text-left">
+	                                <span t-esc="invoice['date']"/>
+	                            </td>
+	                            <td class="text-left">
+	                                <span t-esc="invoice['number']"/>
+	                            </td>
+	                            <td class="text-right" style="padding-right:20px">
+	                                <span t-esc="invoice['amount']" t-options="{'widget': 'monetary', 'display_currency': invoice['currency_id']}"/>
+	                            </td>
+	                            <td class="text-left">
+	                                <span t-esc="invoice['currency_id'].name"/>
+	                            </td>
+	                            <td class="text-right" style="padding-right:30px">
+	                                <span t-esc="invoice['rate']"/>
+	                            </td>
+	                            <td class="text-right">
+	                                <span t-esc="invoice['amount_company']" t-options="{'widget': 'monetary', 'display_currency': invoice['company_currency']}"/>
+	                            </td>
+	                        </tr>
+                    	</t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </t>
+</template>
+<report
+    id="action_report_account_transaction"
+    model="res.partner"
+    string="Account Transaction"
+    menu="False"
+    report_type="qweb-pdf"
+    name="sg_forexcurrency_reports.report_accounttransaction"
+    file="sg_forexcurrency_reports.report_accounttransaction"
+/>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="termly_updates_form_view" model="ir.ui.view">
+            <field name="name">termly.updates.wizard.form</field>
+            <field name="model">termly.updates.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Termly Updates form">
+                    <group>
+                        <footer>
+                        	<button name="check_report" string="Print" type="object" class="btn-primary"/>
+                        	<button string="Cancel" class="btn-default" special="cancel"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+		<!-- Action of Terminate Student Wizard -->
+        <record id="action_termly_updates_wizard" model="ir.actions.act_window">
+            <field name="name">Termly Updates</field>
+            <field name="res_model">termly.updates.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+           
+            <menuitem 
+            id="termly_updates_menu"
+            name="Termly Updates"
+            parent="menu_ap_intervention_main"
+            action="action_termly_updates_wizard"/>
+    </data>
+</odoo>

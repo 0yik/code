@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<odoo>
+	
+	<data>
+
+		<record id="view_users_form_inherit_user_leave_group" model="ir.ui.view">
+			<field name="name">view.users.form.inherit.user.leave.group</field>
+			<field name="model">res.users</field>
+			<field name="inherit_id" ref="access_rights_group.res_users_form_inherit" />
+			<field name="arch" type="xml">
+				<field name="access_rights_id" position="after">
+					<field name="leave_group_rights_id"/>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</odoo>		

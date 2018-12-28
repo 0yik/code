@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+      <xpath expr="." position="inside">
+          <link rel="stylesheet" href="/pos_all_free/static/src/css/pos_all_free.css" />
+          <script type="text/javascript" src="/pos_all_free/static/src/js/pos_all_free.js"></script>
+      </xpath>
+    </template>
+</odoo>

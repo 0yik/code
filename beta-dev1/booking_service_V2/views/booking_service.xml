@@ -1,0 +1,173 @@
+<odoo>
+    <data>
+
+        <record id="sale.action_orders" model="ir.actions.act_window">
+            <field name="name">Sales Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="context">{'default_is_booking':False}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel')), ('is_booking', '=', False)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a Quotation, the first step of a new sale.
+                </p><p>
+                    Once the quotation is confirmed, it becomes a sales order.
+                    You'll be able to invoice it and collect payments.
+                    From the <i>Sales Orders</i> menu, you can track delivery
+                    orders or services.
+                </p>
+            </field>
+        </record>
+
+        <record id="sale.action_quotations" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <!--<field name="context">{'default_is_booking':False}</field>-->
+            <field name="domain">[('state', 'in', ('draft', 'sent')), ('is_booking', '=', False)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a Quotation, the first step of a new sale.
+                </p><p>
+                    Once the quotation is confirmed, it becomes a sales order.
+                    You'll be able to invoice it and collect payments.
+                    From the <i>Sales Orders</i> menu, you can track delivery
+                    orders or services.
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="booking_order_action">
+            <field name="name">Booking Order</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="context">{'default_is_booking':True}</field>
+            <field name="domain">[('is_booking', '=',True)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first course
+                </p>
+            </field>
+        </record>
+
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">view.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header/button[3]" position="replace">
+                    <button name="action_quotation_send" string="Send by Email" attrs="{'invisible': ['|', ('is_booking', '=', True), ('state', '!=', 'draft')]}" type="object" class="btn-primary"/>
+                </xpath>
+                <xpath expr="//form/header/button[8]" position="replace">
+                    <button name="action_quotation_send" string="Send by Email" attrs="{'invisible': ['|', ('is_booking', '=', True), ('state', 'in', ['draft','done','cancel'])]}" type="object" class="btn-primary"/>
+                </xpath>
+                <xpath expr="//form/header/field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale" attrs="{'invisible': [('is_booking', '=', True)]}"/>
+                    <field name="state_booking" widget="statusbar" statusbar_visible="draft,sale" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//group[@name='technical']" position="before">
+                    <!--attrs="{'invisible': [('is_booking', '=', True)]}"-->
+                    <field name="is_booking_sub" invisible="True"/>
+                    <group string="Booking" attrs="{'invisible':[('is_booking_sub','=',True)]}">
+                        <field name="is_booking" attrs="{'invisible':[('is_booking_sub','=',True)]}"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="team" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                    <field name="team_leader" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                    <field name="team_employees" attrs="{'invisible': [('is_booking', '=', False)]}" mode="tree">
+                        <tree editable="bottom">
+                            <field name="employee_id"/>
+                        </tree>
+                        <form>
+                            <field name="employee_id"/>
+                        </form>
+                    </field>
+                    <field name="equipment_ids" attrs="{'invisible': [('is_booking', '=', False)]}" mode="tree">
+                        <tree editable="bottom">
+                            <field name="product_id"/>
+                            <field name="lot_id"/>
+                        </tree>
+                        <form>
+                            <field name="product_id"/>
+                            <field name="lot_id"/>
+                        </form>
+                    </field>
+                    <field name="start_date" attrs="{'invisible': [('is_booking', '=', False)], 'required': [('is_booking', '=', True)]}"/>
+                    <field name="end_date" attrs="{'invisible': [('is_booking', '=', False)], 'required': [('is_booking', '=', True)]}" />
+                </xpath>
+
+                <xpath expr="//button[@name='action_cancel']" position="before">
+                    <button name="action_check" string="Check" type="object" groups="hr.group_hr_user,booking_service_V2.group_user,booking_service_V2.group_manager" class="oe_stat_button" attrs="{'invisible': ['|', ('is_booking', '=', False), ('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="replace">
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="replace">
+                    <button attrs="{'invisible': ['|', ('is_booking', '=', False), ('state', '=', 'sale')]}" name="action_todo" string="Validate" class="btn-primary o_sale_confirm" type="object" group="booking_service_V2.group_user,booking_service_V2.group_manager"/>
+                    <button attrs="{'invisible': [('is_booking', '=', True)]}" name="action_confirm" string="Confirm Sale" class="btn-primary o_sale_confirm" type="object" />
+                </xpath>
+            </field>
+        </record>
+
+        <!--Team-->
+        <record model="ir.actions.act_window" id="team_action">
+            <field name="name">Team</field>
+            <field name="res_model">booking.team</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first course
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="team_form_view">
+            <field name="name">team.form.view</field>
+            <field name="model">booking.team</field>
+            <field name="arch" type="xml">
+                <form string="Team Form">
+                    <div>
+                        <label for="name" class="oe_edit_only"/>
+                        <field name="name"/>
+                    </div>
+                    <div>
+                        <group>
+                            <field name="team_leader" string="Team Leader"/>
+                        </group>
+                    </div>
+                    <group>
+                        <field name="team_employees" string="Employees">
+                            <tree editable="bottom" >
+                                <field name="employee_id"/>
+                            </tree>
+                        </field>
+                        <field name="product_ids" domain="[('is_equipment', '=', True)]" string="Equipments">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="lot_id"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+
+        <!-- top level menu: no parent -->
+        <menuitem id="main_booking_menu" name="Booking"/>
+        <!-- A first level in the left side menu is needed
+             before using action= attribute -->
+        <menuitem id="booking_order_menu" name="Booking Order"
+                  parent="main_booking_menu" action="booking_order_action" groups="group_manager"/>
+        <menuitem id="working_order_menu" name="Work Order"
+                  parent="main_booking_menu" groups="group_user"/>
+        <menuitem id="team_menu" name="Team"
+                  parent="main_booking_menu" action="team_action" groups="group_manager"/>
+    </data>
+</odoo>

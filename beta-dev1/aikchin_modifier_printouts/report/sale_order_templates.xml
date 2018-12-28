@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="report_sale_order_document">
+            <!--<xpath expr="//t[@t-call='report.external_layout']" position="replace">-->
+            <t t-call="aikchin_modifier_printouts.external_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <div class="page" style="padding-top: 120px; font-family: Times New Roman;text-transform:uppercase;"><!-- style="margin-top:300px;" -->
+                    <div class="row">
+                        <div class="col-xs-6 pull-left;font-size:12px">
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <table style="font-size: 100%;text-align:left;font-size:12px;width:100%" border="0">
+                                <tr>
+                                    <td style="width:30%">
+                                        <span>ATTN.</span>
+                                    </td>
+                                    <td style="width:70%;">
+                                        <span>:&#160; &#160;</span>
+                                        <span t-if="o.partner_id" t-esc="o.partner_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%">
+
+                                        <span>TEL</span>
+                                    </td>
+                                    <td style="width:70%;">
+                                        <span>:&#160; &#160;</span>
+                                        <span t-esc="o.partner_id.phone"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%">
+
+                                        <span>FAX</span>
+                                    </td>
+                                    <td style="width:70%;">
+                                        <span>:&#160; &#160;</span>
+                                        <span t-esc="o.partner_id.fax"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%">
+                                        <span>A/C NO.</span>
+                                    </td>
+                                    <td style="width:70%;">
+                                        <span>:&#160; &#160;</span>
+                                        <span t-esc="o.partner_id.customer_id"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br/>
+
+
+                        <div class="col-xs-5 pull-right">
+                            <span style="font-size:18px;">SALE ORDER</span>
+                            <br/>
+                            <br/>
+                            <table
+                                    style="font-size: 14px;font-family: Times New Roman;text-align:left;text-transform:uppercase;"
+                                    border="0">
+                                <tr>
+                                    <td style="width:40%">
+
+                                        <span>No.</span>
+                                    </td>
+                                    <td style="width:60%;">
+                                        <span>:&#160;</span>
+                                        <span t-esc="o.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:40%">
+
+                                        <span>DATE</span>
+                                    </td>
+                                    <td style="width:60%;">
+                                        <span>:&#160;</span>
+                                        <span t-field="o.date_order" t-field-options='{"format": "d/M/y"}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:40%">
+
+                                        <span>TERMS</span>
+                                    </td>
+                                    <td style="width:60%;">
+                                        <span>:&#160;</span>
+                                        <span t-esc="o.payment_term_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:40%">
+
+                                        <span>ISSUE BY</span>
+                                    </td>
+                                    <td style="width:60%;">
+                                        <span>:&#160;</span>
+                                        <span t-field="o.issuer_id.name" />
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td style="width:40%">
+                                        <span>SALES</span>
+                                    </td>
+                                    <td style="width:60%;">
+                                        <span>:&#160;</span>
+                                        <span t-field="o.issuer_id.salesmen_code" />
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td style="width:50%">
+
+                                        <span>PAGE</span>
+                                    </td>
+                                    <td style="width:50%;">
+                                        <span>:&#160;</span>
+                                        <span>1</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <table class="table table-condensed mt48" style="collapse;margin-left:15px;width:96%;">
+                        <thead>
+                            <tr style="collapse; border-top:1px solid black; border-bottom:1px solid black;font-size:12px">
+                                <th style="collapse;width:15%;">
+                                <strong>ITEM NO</strong>
+                            </th>
+                            <th style="collapse;width:30%;">
+                                <strong>DESCRIPTION</strong>
+                            </th>
+                            <th style="collapse;width:25%;">
+                                <strong>LOCATION</strong>
+                            </th>
+                            <th style="collapse;width:10;" class="text-center">
+                                <strong>QTY</strong>
+                            </th>
+                            <th style="collapse;width:10%;" class="text-right">
+                                <strong>
+                                    U.PRICE
+                                </strong>
+                            </th>
+                            <th style="collapse;width:10%;" class="text-right">
+                                <strong>
+                                    AMOUNT
+                                </strong>
+                            </th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size:12px">
+                            <t t-set="No" t-value="0"/>
+                            <tr t-foreach="o.order_line" t-as="line"
+                                style="collapse;">
+                                <t t-set="No" t-value="No + 1"/>
+                                <td>
+                                    <span t-esc="No"/>
+                                    <span t-field="line.product_id.default_code"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.product_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.location_id.complete_name"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="int(line.product_qty)"/>
+                                    <span t-esc="line.product_id.uom_id.name"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line.price_unit" class="text-right"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line.price_subtotal" class="text-right"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- </div> <div> -->
+                </div>
+                <div class="footer">
+                <div>
+                        <span style="font-size:12px;">SINGAPORE DOLLAR :</span>
+                        <span t-esc="o.amount_to_text(o.amount_total, o.currency_id)" style="text-transform:uppercase;font-size:12px;"/>
+                    </div>
+                <div style="border-top:1px solid black;font-size:12px;">
+                        <!--<div class="col-xs-5 pull-right" style="font-size:12px;" >-->
+                        <table class="col-xs-5 pull-right" style="collapse; float:right; border-top:1px solid black">
+                            <tr style="collapse;border:1px solid black;">
+                                <td class="text-left" style="width:25%;padding:5px">
+                                    <span style="padding-top:20px;padding-bottom:20px">AMOUNT</span>
+                                </td>
+                                <td class="text-right" style=" width:25%">
+                                    <span>S$</span>
+                                </td>
+                                <td class="text-right" style="width:25%;padding:5px">
+                                    <span t-field="o.amount_untaxed" style="padding-top:10px;padding-bottom:10px"/>
+                                </td>
+                            </tr>
+                            <tr style="collapse;border:1px solid black;">
+                                <td style=" width:25%;padding:5px" class="text-left">
+                                    <span>TAX</span>
+                                </td>
+                                <td class="text-right" style=" width:25%">
+                                    <span>S$</span>
+                                </td>
+                                <td class="text-right" style="width:25%;padding:5px">
+                                    <span t-field="o.amount_tax"
+                                          t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr style="collapse;border:1px solid black;">
+                                <td style=" width:25%;padding:5px" class="text-left">
+                                    <span>TOTAL</span>
+                                </td>
+                                <td class="text-right" style=" width:25%">
+                                    <span>S$</span>
+                                </td>
+                                <td class="text-right" style="width:25%;padding:5px">
+                                    <span t-esc="o.amount_total"
+                                          t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <!--</div>-->
+                        <div class="col-xs-7 pull-left" style="font-size:12px">
+                            <div class="col-xs-6 pull-left">
+                                <div style="margin-top:70px; border-top:1px solid black; text-align:center;">
+                                    <span>AUTHORISE SIGNATURE(S)</span>
+                                    <br/>
+
+                                </div>
+                            </div>
+                            <div class="col-xs-6 pull-right">
+                                <div style="margin-top:70px; border-top:1px solid black; text-align:center;">
+                                    <span>RECEIVED BY</span>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+			</div>
+			
+		            <div class="pull-right" style="margin-top:4em;">
+		                <h  style="font-size:9px;">Printed on&#160;<span
+		                    t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+		                </h>
+		            </div>
+                    </div>
+            </div>
+            </t>
+            <!--</xpath>-->
+        </template>
+
+
+        <template id="report_sale_order">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="aikchin_modifier_printouts.report_sale_order_document" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- QWeb Reports -->
+        <report
+                id="sale_order_report"
+                model="sale.order"
+                string="Sale Order"
+                report_type="qweb-pdf"
+                name="aikchin_modifier_printouts.report_sale_order"
+                file="aikchin_modifier_printouts.report_sale_order"
+        />
+
+        <record id="general_aikchin_report_qweb_paperformat" model="report.paperformat">
+            <field name="name">General Aikchin Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">50</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="sale_order_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="general_aikchin_report_qweb_paperformat"/>
+        </record>
+
+    </data>
+</odoo>

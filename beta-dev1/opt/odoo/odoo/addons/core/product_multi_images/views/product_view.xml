@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_ir_attachment_form_image"  model="ir.ui.view">
+            <field name="name">ir attachment image form</field>
+            <field name="model">ir.attachment</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <form create="false" delete="false" edit="false">
+                    <sheet>
+                        <group>
+                            <field name="name" string="Name"/>
+                            <field name="description"/>
+                            <field name="datas" widget="image" string="Image" align="middle" style="display:block;margin:auto"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+         </record>
+
+        <record model="ir.ui.view" id="view_document_image_file_kanban">
+            <field name="name">ir.attachment kanban</field>
+            <field name="model">ir.attachment</field>
+            <field name="priority">101</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="mimetype"/>
+                    <field name="type"/>
+                    <field name="datas_fname"/>
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="oe_kanban_vignette">
+                                    <div class="oe_attachment">
+                                        <div class="oe_name">
+                                            <field name="name"/>
+                                        </div>
+                                        <div t-if="record.type.raw_value == 'binary'">
+                                            <!--<a t-attf-href="/web/content/#{record.id.value}?download=1">-->
+                                                <t t-set="webimage" t-value="new RegExp('image.*(gif|jpeg|jpg|png)').test(record.mimetype.value)"/>
+                                                <div t-if="!webimage" class="o_image" t-att-data-mimetype="record.mimetype.value"/>
+                                                <div t-if="webimage" class="o_kanban_attachment_image">
+                                                    <img t-attf-src="/web/image/#{record.id.value}?download=1"/>
+                                                </div>
+                                            <!--</a>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_product_images_inheritform" model="ir.ui.view">
+            <field name="name">product.product.added.images.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <page name="notes" position="after">
+                    <page string="Images">
+                        <!--<separator string="Images"/>-->
+                        <field name="ir_attachment_ids"  widget="web_one2many_kanban"
+                               context="{'form_view_ref':'product_multi_images.view_ir_attachment_form_image','kanban_view_ref':'product_multi_images.view_document_image_file_kanban'}" mode="kanban" >
+                        </field>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

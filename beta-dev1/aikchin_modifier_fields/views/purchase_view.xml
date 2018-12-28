@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="purchase_order_tree_supplier_inherit">
+			<field name="name">purchase.order.tree.inherited</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_tree" />
+			<field name="arch" type="xml">
+                <field name="partner_id" position="attributes">
+                    <attribute name="string">Supplier</attribute>
+                </field>
+			</field>
+		</record>
+        <record model="ir.ui.view" id="product.product_supplierinfo_tree_view_inherit1">
+			<field name="name">purchase.order.tree.inherited</field>
+			<field name="model">product.supplierinfo</field>
+			<field name="inherit_id" ref="product.product_supplierinfo_tree_view" />
+			<field name="arch" type="xml">
+                <field name="name" position="attributes">
+                    <attribute name="string">Supplier</attribute>
+                </field>
+			</field>
+		</record>
+
+        <record model="ir.ui.view" id="purchase_order_form_supplier_inherit">
+			<field name="name">purchase.order.form.inherited</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form" />
+			<field name="arch" type="xml">
+                <field name="partner_id" position="attributes">
+                    <attribute name="string">Supplier</attribute>
+                </field>
+                <field name="partner_ref" position="attributes">
+                    <attribute name="string">Supplier Reference</attribute>
+                </field>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='account_analytic_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='analytic_tag_ids']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <button name="action_set_date_planned" position="replace"/>
+                <xpath expr="//field[@name='picking_type_id']" position="before">
+                    <label string=" " />
+                    <div>
+                    <button name="action_set_date_planned" type="object"
+                                            states="draft,sent"
+                                            string="Set date to all order lines"
+                                            help="This changes the scheduled date of all order lines to the given date"
+                                            class="fa fa-calendar o_icon_button oe_edit_only"/>
+                    </div>
+                </xpath>
+			</field>
+		</record>
+
+        <record id="product.product_supplierinfo_type_action" model="ir.actions.act_window">
+            <field name="name">Supplier Pricelists</field>
+        </record>
+
+        <record id="purchase.menu_procurement_management_supplier_name" model="ir.ui.menu">
+            <field name="name">Supplier</field>
+        </record>
+
+        <record id="base.action_partner_supplier_form" model="ir.actions.act_window">
+            <field name="name">Supplier</field>
+        </record>
+
+        <record id="purchase.menu_product_pricelist_action2_purchase" model="ir.ui.menu">
+            <field name="name">Supplier Pricelists</field>
+        </record>
+
+        <record id="purchase.menu_procurement_management_pending_invoice" model="ir.ui.menu">
+            <field name="name">Supplier Invoices</field>
+        </record>
+
+        <record id="purchase.action_invoice_pending" model="ir.actions.act_window">
+            <field name="name">Supplier Invoices</field>
+        </record>
+
+
+
+    </data>
+</odoo>

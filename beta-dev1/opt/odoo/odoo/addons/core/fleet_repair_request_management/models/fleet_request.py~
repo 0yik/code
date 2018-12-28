@@ -1,0 +1,365 @@
+# -*- coding: utf-8 -*-
+
+import time
+
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError, Warning
+
+class FleetRequest(models.Model):
+    _name = 'fleet.request'
+    _description = 'Fleet.Request'
+    _order = 'id desc'
+    _inherit = ['mail.thread', 'ir.needaction_mixin']
+    
+    @api.model
+    def create(self, vals):
+        if vals.get('name', 'New') == 'New':
+            vals['name'] = self.env['ir.sequence'].next_by_code('fleet.request') or 'New'
+        return super(FleetRequest, self).create(vals)
+    
+    @api.multi
+    @api.depends('timesheet_line_ids.unit_amount')
+    def _compute_total_spend_hours(self):
+        for rec in self:
+            spend_hours = 0.0
+            for line in rec.timesheet_line_ids:
+                spend_hours += line.unit_amount
+            rec.total_spend_hours = spend_hours
+    
+    @api.onchange('project_id')
+    def onchnage_project(self):
+        for rec in self:
+            rec.analytic_account_id = rec.project_id.analytic_account_id
+          
+    @api.one
+    def set_to_close(self):
+        if self.is_close != True:
+            self.is_close = True
+            self.close_date = fields.Datetime.now#time.strftime('%Y-%m-%d')
+            self.state = 'closed'
+            template = self.env.ref('fleet_repair_request_management.email_template_fleet_ticket')
+            template.send_mail(self.id, force_send=True)
+            
+    @api.one
+    def set_to_reopen(self):
+        if self.is_close != False:
+            self.is_close = False
+    
+    name = fields.Char(
+        string='Number', 
+        required=False,
+        default='New',
+        copy=False, 
+        readonly=True, 
+    )
+    state = fields.Selection(
+        [('new','New'),
+         ('need_to_repair','Need To Repair'),
+         ('communication_claim_opening','Communication Claim Opening'),
+         ('workshop_choice','Workshop_choice'),
+         ('workshop_entry','Workshop entry.Entry/Out shedule Contact'),
+         ('budget_evaluation','Budget Evaluation'),
+         ('authorization','Authorization'),
+         ('expert','Expert'),
+         ('reparation','Reparation'),
+         ('workshop_management_system','Workshop Management System'),
+          ('billing','Billing'),
+         ('delivery_output_date','Delivery Output Date'),
+         ('vehicle_tracking_customer_satisfaction','Vehicle Tracking Customer Satisfaction')],
+        track_visibility='onchange',
+        default='new',
+        copy=False, 
+    )
+#     customer_id = fields.Many2one(
+#         'res.partner',
+#         string="Customer", 
+#         required=True,
+#     )
+    email = fields.Char(
+        string="Email",
+        required=True
+    )
+    phone = fields.Char(
+        string="Phone"
+    )
+    category = fields.Selection(
+        [('technical', 'Technical'),
+        ('functional', 'Functional'),
+        ('support', 'Support')],
+        string='Category',
+    )
+    subject = fields.Char(
+        string="Subject"
+    )
+    description = fields.Text(
+        string="Description"
+    )
+    priority = fields.Selection(
+        [('0', 'Low'),
+        ('1', 'Middle'),
+        ('2', 'High')],
+        string='Priority',
+    )
+    partner_id = fields.Many2one(
+        'res.partner',
+        string='Customer',
+    )
+    request_date = fields.Datetime(
+        string='Create Date',
+        default=fields.Datetime.now,
+        copy=False,
+    )
+    close_date = fields.Datetime(
+        string='Close Date',
+    )
+    user_id = fields.Many2one(
+        'res.users',
+        string='Technician',
+    )
+    department_id = fields.Many2one(
+        'hr.department',
+        string='Department'
+    )
+    timesheet_line_ids = fields.One2many(
+        'account.analytic.line',
+        'fleet_request_id',
+        string='Timesheets',
+    )
+    is_close = fields.Boolean(
+        string='Is Repair Closed ?',
+        track_visibility='onchange',
+        default=False,
+        copy=False,
+    )
+    total_spend_hours = fields.Float(
+        string='Total Hours Spent',
+        compute='_compute_total_spend_hours'
+    )
+    project_id = fields.Many2one(
+        'project.project',
+        string='Project',
+    )
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account',
+        string='Analytic Account',
+    )
+    team_id = fields.Many2one(
+        'fleet.team',
+        string='Fleet Team',
+    )
+    team_leader_id = fields.Many2one(
+        'res.users',
+        string='Team Leader',
+#         related ='team_id.leader_id',
+#         store=True,
+    )
+    #invoice_line_ids = fields.One2many(
+        #'support.invoice.line',
+        #'support_id',
+        #string='Invoice Lines',
+    #)
+    journal_id = fields.Many2one(
+        'account.journal',
+         string='Invoice Journal',
+     )
+    invoice_id = fields.Many2one(
+        'account.invoice',
+         string='Invoice Reference',
+         copy='False',
+     )
+    is_invoice_created = fields.Boolean(
+        string='Is Invoice Created',
+        default=False,
+    )
+    task_id = fields.Many2one(
+        'project.task',
+        string='Task',
+        readonly = True,
+    )
+    is_task_created = fields.Boolean(
+        string='Is Task Created ?',
+        default=False,
+    )
+    company_id = fields.Many2one(
+        'res.company', 
+        default=lambda self: self.env.user.company_id, 
+        string='Company',
+        readonly=True,
+     )
+    comment = fields.Text(
+        string='Customer Comment',
+        readonly=True,
+    )
+    rating = fields.Selection(
+        [('poor', 'Poor'),
+        ('average', 'Average'),
+        ('good', 'Good'),
+        ('very good', 'Very Good'),
+        ('excellent', 'Excellent')],
+        string='Customer Rating',
+        readonly=True,
+    )
+    
+    #@api.multi
+    #@api.depends('analytic_account_id',
+                 #'total_consumed_hours',
+                 #'total_consumed_hours',
+                 #'remaining_hours')
+    #def compute_total_hours(self):
+        #total_remaining_hours = 0.0
+        #for rec in self:
+            #rec.total_purchase_hours = rec.analytic_account_id.total_purchase_hours
+            #rec.total_consumed_hours = rec.analytic_account_id.total_consumed_hours
+            #rec.remaining_hours = rec.analytic_account_id.remaining_hours
+    
+    total_purchase_hours = fields.Float(
+        string='Total Purchase Hours',
+        compute='compute_total_hours',
+        store=True,
+    )
+    total_consumed_hours = fields.Float(
+        string='Total Consumed Hours',
+        compute='compute_total_hours',
+        store=True,
+    )
+    remaining_hours = fields.Float(
+        string='Remaining Hours',
+        compute='compute_total_hours',
+        store=True,
+    )
+    service_type_ids = fields.Many2many(
+        'fleet.service.type',
+        string='Service Type',
+    )
+    year = fields.Selection(
+        [('00','2018'),
+        ('0', '2017'),
+        ('1', '2016'),
+        ('2', '2015'),
+        ('3', '2014'),
+        ('4', '2013'),
+        ('5', '2012'),
+        ('6', '2011'),
+        ('7', '2010'),
+        ('8', '2009'),
+        ('9', '2008'),
+        ('10', '2007'),
+        ('11', '2006'),
+        ('12', '2005'),
+        ('13', '2004'),
+        ('14', '2003'),
+        ('15', '2002'),
+        ('16', '2001'),
+        ('17', '2000'),
+        ('18', '1999'),
+        ('19', '1998'),
+        ('20', '1997'),
+        ('21', '1996'),
+        ('22', '1995'),
+        ('23', '1994'),
+        ('24', '1993'),
+        ('25', '1992'),
+        ('26', '1991'),
+        ('27', '1990'),
+        ('28', '1989'),
+        ('29', '1988'),
+        ('30', '1987'),
+        ('31', '1986'),
+        ('32', '1985'),
+        ('33', '1984'),
+        ('34', '1983'),
+        ('35', '1982'),
+        ('36', '1981'),
+        ('37', '1980'),
+        ('38', '1979'),
+        ('39', '1978'),
+        ('40', '1977'),
+        ('41', '1976'),
+        ('42', '1975'),
+        ('43', '1974'),
+        ('44', '1973'),
+        ('45', '1972'),
+        ('46', '1971'),
+        ('47', '1970'),
+        ('48', '1969'),
+        ('49', '1968'),
+        ('50', '1967'),
+        ('51', '1966'),
+        ('52', '1965'),
+        ('53', '1964'),
+        ('54', '1963'),
+        ('55', '1962'),
+        ('56', '1961'),
+        ('57', '1960'),
+        ('58', '1959'),
+        ('59', '1958'),
+        ('60', '1957'),
+        ('61', '1956'),
+        ('62', '1955'),
+        ('63', '1954'),
+        ('44', '1953'),
+        ('65', '1952'),
+        ('66', '1951'),
+        ('67', '1950')],
+        string='Year',
+        readonly = True
+    )
+    model = fields.Many2one(
+        'fleet.vehicle.model',
+        string="Model",
+        readonly = True
+    )
+    mileage = fields.Char(
+        string="Current Mileage",
+        readonly = True
+    )
+    make_id = fields.Many2one(
+        'fleet.vehicle.model.brand',
+        string='Make',
+        readonly = True
+    )
+    @api.multi
+    def action_create_fleet_task(self):
+        print 'taskcreateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+        for rec in self:
+            print 'recccccccccccccccccccccccccccccccc',rec
+            fleet_task = {
+            'name' : rec.subject +'('+rec.name+')',
+            'user_id' : rec.user_id.id,
+            'date_deadline' : rec.close_date,
+            'project_id' : rec.project_id.id,
+            'partner_id' : rec.partner_id.id,
+            'description' : rec.description,
+            'fleet_id' : rec.id,
+            }
+            print 'ttttttttttttttttttttttttttttttttttttttttttt',fleet_task
+            fleet_task_id= self.env['project.task'].create(fleet_task)
+            print 'ttttttttttttttttttttttttttttttttttttttttttt',fleet_task_id
+            vals = {
+            'task_id' : fleet_task_id.id,
+            'is_task_created' : True,
+            }
+            rec.write(vals)
+            
+    @api.multi
+    def show_fleet_task(self):
+        for rec in self:
+            res = self.env.ref('project.action_view_task')
+            res = res.read()[0]
+            res['domain'] = str([('id','=',rec.task_id.id)])
+        return res
+        
+class HrTimesheetSheet(models.Model):
+    _inherit = 'account.analytic.line'
+
+    fleet_request_id = fields.Many2one(
+        'fleet.request',
+        domain=[('is_close','=',False)],
+        string='Fleet Request',
+    )
+    billable = fields.Boolean(
+        string='Billable',
+        default=True,
+    )
+
+    # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="account_analytic_account_form_inherit" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.inherit</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="stable_account_analytic_analysis.account_analytic_account_form_form"/>
+            <field name="arch" type="xml">
+                <button name="set_open" position="before">
+                    <button class="btn btn-primary" name="open_purchase_tender" string="New Purchase Tender" type="object" attrs="{'invisible': ['|', ('type','!=','contract'), ('is_project', '!=', True)]}"/>
+                </button>
+            </field>
+        </record>
+    </data>
+</odoo>

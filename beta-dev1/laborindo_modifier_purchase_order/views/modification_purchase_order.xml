@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="modifier_type_purchase_order" model="ir.ui.view">
+            <field name="name">Purchase Order Type Modifier</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/div[@class='oe_title']" position="after">
+                    <label for="order_type" string="Type" style="font-weight:600"/>
+                    <field name="order_type" widget="radio" options="{'horizontal': true}" string="Type"/>
+                </xpath>
+                <field name="date_order" position="after">
+                    <field name="picking_type_id"
+                           domain="[('code','=','incoming')]"
+                           options="{'no_create': True}"
+                           groups="stock.group_stock_multi_locations"/>
+                </field>
+                <xpath expr="//form/sheet/notebook/page[2]/group/group[1]/field[@name='picking_type_id']" position="replace">
+                </xpath>
+
+                <field name="picking_type_id" position="after">
+                    <field name="payment_term_id"/>
+                </field>
+
+                <xpath expr="//form/sheet/notebook/page[2]/group/group[2]/field[@name='payment_term_id']" position="replace">
+                </xpath>
+
+
+                <field name="payment_term_id" position="before">
+                    <label for="date_planned"/>
+                    <div>
+                        <field name="date_planned" required="1" attrs="{'readonly': [('state', 'not in', ('draft', 'sent'))]}"/>
+                        <button name="action_set_date_planned" type="object" states="draft,sent" string="" class="fa fa-calendar o_icon_button oe_edit_only"/>
+                    </div>
+                </field>
+                <field name="payment_term_id" position="after">
+                    <field name="oa_number" attrs="{'invisible': [('state', 'not in', ('purchase','done'))]}"/>
+                    <field name="p_r_info" attrs="{'invisible':[('state','not in', ('purchase','done'))]}"/>
+                </field>
+
+                <xpath expr="//form/sheet/notebook/page[2]/group/group[1]/div" position="replace">
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[2]/group/group[1]/label" position="replace">
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

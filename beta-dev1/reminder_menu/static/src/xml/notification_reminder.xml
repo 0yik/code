@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <!--
+        This template is the ribbon at the top of the salesteam dashboard that adds
+        some figures to it. We call this rubbon the "SalesDashboard".
+    -->
+
+    <t t-name="QuotationReminder">
+        <li class="QuotationReminder" title="Quotation Reminder">
+            <span class="o_reminder_counter">0</span>
+            <a id="reminder_open" class="dropdown-toggle" data-toggle="dropdown" href="#" style="font-size:16px;opacity:0.5;cursor: pointer;">
+                <i class="fa fa-globe" aria-hidden="true"></i>
+            </a>
+            <ul class="o_reminder_dropdown_channels dropdown-menu" role="menu">
+            </ul>
+        </li>
+    </t>
+
+    <t t-name="reminder_order">
+        <li t-foreach="order" t-as="order" class="recorddata" t-att-id="order.id">
+            <t t-esc="order.name" />
+        </li>
+    </t>
+
+</templates>

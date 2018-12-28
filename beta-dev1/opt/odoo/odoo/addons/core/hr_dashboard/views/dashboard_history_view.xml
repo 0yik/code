@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Menu for Dashboard History -->
+    <menuitem id="dashboard_history_menu" name="Dashboard History" 
+    parent="sg_hr_employee.menu_root_hr_parent" groups="hr.group_hr_manager"/>
+
+    <!-- Absent History -->
+    <record id="absent_history_tree_view" model="ir.ui.view">
+        <field name="name">absent.history.tree.view</field>
+        <field name="model">absent.history.view</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="no_of_absent_emp"/>
+                <field name="date"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="absent_history_graph_view" model="ir.ui.view">
+         <field name="name">absent.history.graph.view</field>
+         <field name="model">absent.history.view</field>
+         <field name="arch" type="xml">
+             <graph string="Absent History">
+                 <field name="date" type="col"/>
+                 <field name="company_id" type="row"/>
+                 <field name="no_of_absent_emp" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+     <record id="absent_history_pivot_view" model="ir.ui.view">
+         <field name="name">absent.history.pivot.view</field>
+         <field name="model">absent.history.view</field>
+         <field name="arch" type="xml">
+            <pivot string="Absent History" >
+                 <field name="date" type="col"/>
+                 <field name="company_id" type="row"/>
+                 <field name="no_of_absent_emp" type="measure"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="absent_history_action" model="ir.actions.act_window">
+            <field name="name">Absent History</field>
+            <field name="res_model">absent.history.view</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">pivot,graph,tree</field>
+    </record>
+
+    <menuitem id="menu_absent_history" action="absent_history_action" 
+        parent="hr_dashboard.dashboard_history_menu" />
+
+    <!-- Late Employee History -->
+    <record id="late_employee_history_tree_view" model="ir.ui.view">
+        <field name="name">late.employee.history.tree.view</field>
+        <field name="model">late.employee.history.view</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="no_of_late_emp"/>
+                <field name="date"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="late_employee_history_graph_view" model="ir.ui.view">
+         <field name="name">late.employee.history.graph.view</field>
+         <field name="model">late.employee.history.view</field>
+         <field name="arch" type="xml">
+             <graph string="Late Employee History">
+                 <field name="date" />
+                 <field name="company_id"/>
+                 <field name="no_of_late_emp" />
+             </graph>
+         </field>
+    </record>
+    
+    <record id="late_employee_history_pivot_view" model="ir.ui.view">
+        <field name="name">late.employee.history.pivot.view</field>
+        <field name="model">late.employee.history.view</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="no_of_late_emp" type="measure"/>
+                <field name="date" type="col"/>
+                <field name="company_id" type="row" />
+            </pivot>
+        </field>
+    </record> 
+
+    <record id="late_employee_history_action" model="ir.actions.act_window">
+            <field name="name">Late Employee History</field>
+            <field name="res_model">late.employee.history.view</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">pivot,graph,tree</field>
+    </record>
+
+    <menuitem id="menu_late_employee_history" action="late_employee_history_action" 
+        parent="hr_dashboard.dashboard_history_menu" />
+
+    <!-- New-Join Employee History -->
+    <record id="new_join_history_tree_view" model="ir.ui.view">
+        <field name="name">new.join.history.tree.view</field>
+        <field name="model">new.join.history.view</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="no_of_join_emp"/>
+                <field name="date"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="new_join_history_pivot_view" model="ir.ui.view">
+        <field name="name">new.join.history.pivot.view</field>
+        <field name="model">new.join.history.view</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="no_of_join_emp" type="measure"/>
+                <field name="date" type="col"/>
+                <field name="company_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+    
+    <record id="new_join_history_graph_view" model="ir.ui.view">
+         <field name="name">new.join.history.graph.view</field>
+         <field name="model">new.join.history.view</field>
+         <field name="arch" type="xml">
+             <graph string="New Join Employee History">
+                 <field name="date" />
+                 <field name="company_id"/>
+                 <field name="no_of_join_emp"/>
+             </graph>
+         </field>
+    </record>
+    
+    <record id="new_join_history_action" model="ir.actions.act_window">
+            <field name="name">New-Join History</field>
+            <field name="res_model">new.join.history.view</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">pivot,graph,tree</field>
+    </record>
+    
+    <menuitem id="menu_new_join_history" action="new_join_history_action" 
+        parent="hr_dashboard.dashboard_history_menu" />
+    
+    <!-- Notice Period Employee History -->
+    <record id="notice_period_history_tree_view" model="ir.ui.view">
+        <field name="name">notice.period.history.tree.view</field>
+        <field name="model">notice.period.history.view</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="no_of_notice_emp"/>
+                <field name="date"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="notice_period_history_pivot_view" model="ir.ui.view">
+        <field name="name">notice.period.history.pivot.view</field>
+        <field name="model">notice.period.history.view</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="no_of_notice_emp" type="measure"/>
+                <field name="date" type="col"/>
+                <field name="company_id" type="row"/>
+            </pivot>
+        </field>
+    </record> 
+    
+    <record id="notice_period_history_graph_view" model="ir.ui.view">
+         <field name="name">notice.period.history.graph.view</field>
+         <field name="model">notice.period.history.view</field>
+         <field name="arch" type="xml">
+             <graph string="Notice Period Employee History">
+                 <field name="date" />
+                 <field name="company_id"/>
+                 <field name="no_of_notice_emp"/>
+             </graph>
+         </field>
+    </record>
+    
+    <record id="notice_period_history_action" model="ir.actions.act_window">
+            <field name="name">Notice Period Employee History</field>
+            <field name="res_model">notice.period.history.view</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">pivot,graph,tree</field>
+    </record>
+    
+    <menuitem id="menu_notice_period_history" action="notice_period_history_action" 
+        parent="hr_dashboard.dashboard_history_menu" />
+</odoo>

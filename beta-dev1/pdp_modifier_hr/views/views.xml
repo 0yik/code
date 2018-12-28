@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+    
+    <record id="view_employee_form_branch_inherit" model="ir.ui.view">
+            <field name="name">view.employee.form.branch.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                
+                <field name="calendar_id" position="after">
+                    <field name="branch_id"/>
+                    <field name="warehouse_id"/>
+                </field>
+
+            </field>
+    </record>
+
+    <record id="view_employee_filter_inherit_branch" model="ir.ui.view">
+            <field name="name">view.employee.form.branch.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+              <xpath expr="//search" position="inside">
+                <field name="branch_id"/>
+                <filter string="Branch" domain="[]" context="{'group_by':'branch_id'}"/>
+
+              </xpath>  
+            </field>  
+
+            
+             <!-- <filter string="Job"  position="after">
+                <filter string="Branch" domain="[]" context="{'group_by':'branch_id'}"/>
+             </filter> -->
+    </record>             
+                  
+
+
+  </data>
+</odoo>

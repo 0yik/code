@@ -1,0 +1,247 @@
+<odoo>
+	<data>
+		<record id="purchase_order_view_form" model="ir.ui.view">
+			<field name="name">purchase.order.view.form</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//header" position="replace">
+					<header>
+						<button name="action_rfq_verify" states="draft" string="Verify RFQ"
+							type="object" class="oe_highlight" />
+						<button name="action_rfq_send" states="verified" string="Send RFQ by Email"
+							type="object" context="{'send_rfq':True}" class="oe_highlight" />
+						<button name="action_rfq_send" states="sent"
+							string="Re-Send RFQ by Email" type="object" context="{'send_rfq':True}" />
+						<button name="print_quotation" string="Print RFQ" type="object"
+							states="sent" groups="base.group_user" />
+						<button name="button_confirm" type="object" states="verified"
+							string="Confirm Order" id="draft_confirm" />
+						<button name="button_confirm" type="object" states="sent"
+							string="Confirm Order" class="oe_highlight" id="bid_confirm" />
+						<button name="button_approve" type="object" states='to approve'
+							string="Approve Order" class="oe_highlight" groups="purchase.group_purchase_manager" />
+						<button name="action_rfq_send" states="purchase" string="Send PO by Email"
+							type="object" context="{'send_rfq':False}" />
+						<button name="action_view_picking" string="Receive Products"
+							class="oe_highlight" type="object"
+							attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}" />
+						<button name="button_draft" states="cancel" string="Set to Draft"
+							type="object" />
+						<button name="button_cancel" states="draft,verified,to approve,sent,purchase"
+							string="Cancel" type="object" />
+						<button name="button_done" type="object" string="Lock"
+							states="purchase" />
+						<button name="button_unlock" type="object" string="Unlock"
+							states="done" groups="purchase.group_purchase_manager" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,verified,sent,purchase"
+							readonly="1" />
+					</header>
+				</xpath>
+				<xpath
+					expr="//div[@name='button_box']/button[@name='action_view_picking']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='name']" position="replace">
+				    <field name="name" />
+				</xpath>
+				<xpath expr="//sheet/group" position="after">
+					<group>
+						<group>
+							<field name="customer_id" />
+							<field name="customer_shipping_id" />
+							<field name="customer_billing_id" />
+							<field name="dely_supplier_id" />
+							<field name="delydate" />
+							<field name="subject" />
+							<field name="verified_uid" invisible="1" />
+						</group>
+						<group>
+							<field name="opening" />
+							<field name="closing" />
+							<field name="paid" />
+							<field name="project_id" />
+							<field name="ref_ship" />
+							<field name="supp_ref" />
+						</group>
+					</group>
+				</xpath>
+				<!-- <xpath expr="//field[@name='order_line']/tree" position="attributes"> -->
+				<!-- <attribute name="editable"></attribute> -->
+				<!-- </xpath> -->
+				<xpath expr="//field[@name='order_line']/tree/field[@name='date_planned']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='order_line']/tree/field[@name='product_id']"
+					position="replace">
+					<field name="ref_no" />
+					<field name="ref_uom" />
+					<field name="product_id" string="Stk ID"
+						attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
+						context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}" />
+				</xpath>
+				<xpath
+					expr="//field[@name='order_line']/tree/field[@name='price_subtotal']"
+					position="after">
+					<field name="size" />
+					<field name="col_code" />
+					<field name="colour_name" />
+					<field name="width" />
+					<field name="weight" />
+					<field name="fabric_usage" />
+					<field name="fabric_usage_pound" />
+					<field name="fabric_tolerance" />
+					<field name="fabric_quantity" />
+					<field name="stk_receive" />
+					<field name="stk_receive_qty" />
+					<field name="department_id" />
+					<field name="shipment_ship_mode" />
+					<field name="shipment_delivery_date" />
+					<field name="original_delivery_date" />
+					<field name="asn_no" />
+					<field name="gender" />
+					<field name="col1_name" />
+					<field name="col1_content" />
+					<field name="col2_name" />
+					<field name="col2_content" />
+					<field name="col3_name" />
+					<field name="col3_content" />
+					<field name="fabric_id" invisible="1" />
+					<field name="fabric_uom_id" invisible="1" />
+					<field name="fiber_content" invisible="1" />
+					<field name="cat_no" />
+					<field name="log_no" />
+					<field name="warehouse_id" />
+					<field name="supplier_id" />
+					<field name="final_destination" />
+					<field name="disc_amt" />
+					<field name="disc_pct" />
+					<field name="end_date" />
+					<field name="taxable" />
+					<field name="mpn" />
+					<field name="project_id" />
+					<field name="pr_id" />
+					<field name="pr_item" />
+					<field name="pr_item2" />
+					<field name="location_id" />
+					<field name="garment_size" />
+					<field name="solid_size_pack" />
+					<field name="ratio" />
+					<field name="ttl_ctn" />
+					<field name="pm_no" />
+					<field name="shipment_buyer_order_no" />
+					<field name="product_pack_id" />
+					<field name="company_commision" />
+					<field name="agent_commision" />
+				</xpath>
+				<xpath
+					expr="//field[@name='order_line']/form/sheet/group/group/field[@name='product_id']"
+					position="replace">
+					<field name="product_id" string="Stk ID"
+						context="{'partner_id': parent.partner_id}" />
+					<field name="name" />
+				</xpath>
+				<xpath expr="//field[@name='order_line']/form/sheet/notebook"
+					position="replace">
+					<notebook>
+						<page string="Invoices and Incoming Shipments">
+							<field name="invoice_lines" />
+							<field name="move_ids" />
+						</page>
+					</notebook>
+				</xpath>
+				<xpath expr="//field[@name='order_line']/form/sheet/group/group/div"
+					position="replace">
+					<div>
+						<field name="product_qty" />
+					</div>
+					<field name="product_uom" groups="product.group_uom" />
+				</xpath>
+				<xpath
+					expr="//field[@name='order_line']/form/sheet/group/group/field[@name='price_unit']"
+					position="after">
+					<field name="state" invisible="1" />
+					<field name="so_id" />
+					<field name="pm_no" />
+					<field name="shipment_buyer_order_no" />
+					<field name="product_pack_id" />
+					<field name="width" />
+					<field name="weight" />
+					<field name="fabric_usage" />
+					<field name="fabric_usage_pound" />
+					<field name="fabric_tolerance" />
+					<field name="company_commision" />
+					<field name="agent_commision" />
+					<field name="fabric_quantity" />
+					<field name="colour_name" />
+					<field name="col_code" />
+					<field name="shipment_ship_mode" />
+					<field name="shipment_delivery_date" />
+					<field name="original_delivery_date" />
+					<field name="ref_no" />
+					<field name="ref_uom" />
+					<field name="asn_no" />
+					<field name="col1_content" />
+					<field name="col2_content" />
+					<field name="col3_content" />
+					<field name="fabric_id" invisible="1" />
+					<field name="fabric_uom_id" invisible="1" />
+					<field name="fiber_content" invisible="1" />
+				</xpath>
+				<xpath
+					expr="//field[@name='order_line']/form/sheet/group/group/field[@name='company_id']"
+					position="after">
+					<field name="stk_receive" />
+					<field name="stk_receive_qty" />
+					<field name="size" />
+					<field name="log_no" />
+					<field name="department_id" />
+					<field name="warehouse_id" />
+					<field name="supplier_id" />
+					<field name="final_destination" />
+					<field name="disc_amt" />
+					<field name="disc_pct" />
+					<field name="end_date" />
+					<field name="taxable" />
+					<field name="mpn" />
+					<field name="project_id" />
+					<field name="pr_id" />
+					<field name="pr_item" />
+					<field name="pr_item2" />
+					<field name="location_id" />
+					<field name="garment_size" />
+					<field name="solid_size_pack" />
+					<field name="ratio" />
+					<field name="ttl_ctn" />
+					<field name="cat_no" />
+					<field name="gender" />
+					<field name="col1_name" />
+					<field name="col2_name" />
+					<field name="col3_name" />
+				</xpath>
+				<xpath expr="//notebook" position="after">
+					<group>
+						<group string="Summary">
+							<field name="fabric_weight" />
+							<field name="fabric_width" />
+							<field name="fabric_usage" />
+							<field name="fabric_usage_pound" />
+						</group>
+						<group string="Sub Total Summary">
+							<field name="subtotal_line" nolabel="1">
+								<tree create="false">
+									<field name="col_code" />
+									<field name="price" />
+								</tree>
+							</field>
+						</group>
+						<field name="uom_line" invisible="1" />
+					</group>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

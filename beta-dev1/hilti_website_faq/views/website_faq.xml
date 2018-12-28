@@ -1,0 +1,112 @@
+<odoo>
+
+    <record model="ir.ui.view" id="view_website_faq_form">
+        <field name="name">view.website.faq.form</field>
+        <field name="model">website.faq</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="FAQ Title"/>
+                        <h1><field name="name" placeholder="FAQ Title"/></h1>
+                        <group>
+                            <field name="faq_tags" widget='many2many_tags' required='1'/>
+                            <field name="faq_type_id" required='1'/>
+                            <field name="faq_type"/>
+                        </group>              
+                        <div attrs="{'invisible':[('faq_type', '!=', 'question_answer')]}">
+                            <label for="website_question_answer_ids" invisible='1'/>
+                            <field name="website_question_answer_ids" attrs="{'required':[('faq_type', '=', 'question_answer')]}">
+                                <tree>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="question"/>
+                                    <field name="answer"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="question"/>
+                                        <field name="answer"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </div>
+                        <div attrs="{'invisible':[('faq_type', 'not in', ['user_manual', 'instructional_video'])]}">
+                            <group>
+                                <field name="sub_title"/>
+                                <field name="description"/>
+                            </group>
+                            <group attrs="{'invisible':[('faq_type', '!=', 'user_manual')]}">
+                                <field name="user_manual" filename="user_manual_datas_fname" attrs="{'required': [('faq_type', '=', 'user_manual')]}"/>
+                                <field name="user_manual_datas_fname" invisible="1" attrs="{'required': [('faq_type', '=', 'user_manual')]}" class="oe_inline oe_right"/> 
+                            </group>
+                            <group attrs="{'invisible':[('faq_type', '!=', 'instructional_video')]}">
+                                <field name="instructional_video" filename="instructional_video_datas_fname" attrs="{'required': [('faq_type', '=', 'instructional_video')]}"/>
+                                <field name="instructional_video_datas_fname" invisible="1" attrs="{'required': [('faq_type', '=', 'instructional_video')]}" class="oe_inline oe_right"/>
+                            </group>
+                        </div>    
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_website_faq_tree">
+        <field name="name">view.website.faq.tree</field>
+        <field name="model">website.faq</field>
+        <field name="arch" type="xml">
+            <tree string="Website FAQ">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="faq_type_id"/>
+                <field name="faq_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_website_faq_search" model="ir.ui.view">
+        <field name="name">view.website.faq.search</field>
+        <field name="model">website.faq</field>
+        <field name="arch" type="xml">
+            <search string="Website FAQ">
+                <field name="name" string="FAQ Title"/>
+                <field name="faq_type_id" string="FAQ Category"/>
+                <!--field name="faq_type" string="FAQ Type"/-->
+                <filter string="General Q&amp;A"
+                    name="general_q_a_ct"
+                    domain="[('faq_type', '=', 'question_answer')]"/>
+                <filter string="User Manual"
+                    name="user_manual_faq_ct"
+                    domain="[('faq_type', '=', 'user_manual')]"/>
+                <filter string="Instructional Video"
+                    name="instructional_video_faq_ct"
+                    domain="[('faq_type', '=', 'instructional_video')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="FAQ Type" name="faq_type_1" domain="[]" context="{'group_by':'faq_type'}"/>
+                    <filter string="FAQ Category" domain="[]" context="{'group_by':'faq_type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="website_faq_action">
+        <field name="name">FAQ Management</field>
+        <field name="res_model">website.faq</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="website_faq_menu" name="FAQ Management" parent="hilti_modifier_company.menu_admin_configuration" groups='hilti_modifier_accessrights.group_hilti_admin' action="website_faq_action" sequence="6"/>
+
+    <record id="action_open_faq" model="ir.actions.act_url">
+        <field name="name">FAQ</field>
+        <field name="target">self</field>
+        <field name="url">/page/faq</field>
+    </record>
+
+    <menuitem id="menu_faq" name='FAQ' parent="hilti_modifier_company.menu_customer_portal" action="action_open_faq" groups='hilti_modifier_accessrights.group_hilti_customer' sequence="3" />
+    <menuitem id="menu_faq_tester" name='FAQ' parent="hilti_modifier_company.menu_customer_tester" action="action_open_faq" groups='hilti_modifier_accessrights.group_hilti_tester' sequence="4" />
+    <menuitem id="menu_faq_admin" name='FAQ' parent="hilti_modifier_company.menu_customer_admin" action="action_open_faq" groups='hilti_modifier_accessrights.group_hilti_admin' sequence="3" />
+    <menuitem id="menu_faq_staff" name='FAQ' parent="hilti_modifier_company.menu_staff_portal" action="action_open_faq" groups='hilti_modifier_accessrights.group_hilti_account_manager,hilti_modifier_accessrights.group_hilti_cs_engineer' sequence="6" />
+
+</odoo>

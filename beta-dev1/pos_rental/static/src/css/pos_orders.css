@@ -1,0 +1,266 @@
+.pos .toggle_mode {
+    float: left;
+    margin: 10px;
+}
+
+.pos #change_mode {
+    font-size: medium;
+}
+
+.wk_popup_body{
+    position: absolute;
+    left: 45%;
+    width: 45%;
+    margin-left: -250px;
+    padding: 15px;
+    padding-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #F0EEEE;
+    border-radius: 3px;
+    font-size: 12px;
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.4);
+    z-index: 1200;   
+}
+
+.fc-button-prev {
+    position: relative;
+    padding: 14px;
+    font-size: 20px;
+    padding-top: 14px;
+    top: 15px;
+}
+
+.fc-button-next {
+    position: relative;
+    padding: 14px;
+    font-size: 20px;
+    padding-top: 14px;
+	float: right;
+}
+
+.fc-button-agendaWeek {
+    display: none;
+}
+.fc-button-agendaDay {
+    display: none;
+}
+
+.fc-button-month{
+    display: none;
+}
+.fc-button-today {
+    display: none;
+}
+
+.fc-other-month{
+    opacity: .3 !important;
+}
+
+.fc-header-center { 
+    text-align: center;
+}
+
+.fc-event {
+    text-align: center;
+}
+.wk_button_close {
+    float:right;
+    background-color: #3a87ad; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 50%;
+}
+
+.wk_button_book {
+    float:left;
+    background-color: #3a87ad; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 50%;
+}
+
+.fc-highlight {
+    /*background: #bce8f1 !important;*/
+    background: #2db92d !important;
+    opacity: .3;
+    filter: alpha(opacity=30); /* for IE */
+}
+
+.wk_top_title {
+    background-color: #3a87ad; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: -15px;
+}
+.wk_main {
+    padding-top: 18px;
+}
+.wk_table_body{    
+    margin-top: 65px;
+    overflow: scroll;
+    height: 83%;
+   
+}
+.highlight{
+    background: none repeat scroll 0% 0% #E6E6E6;
+}
+.wk_table_header {
+    background: #b3cccc !important;
+}
+
+.wk_order_table{
+    background: white;
+    font-size: 13px;
+    width: 100%;    
+    line-height: 40px;
+}
+
+.wk_order_table tr:nth-child(odd){ 
+    background: #E6E6E6;
+    text-align: center;
+}
+
+.wk_order_table tr:nth-child(even){
+    background: white;
+    text-align: center;
+}
+.wk_order_table th, td {
+    padding-left: 15px;
+}
+.sk_extend{
+    max-width:95% !important;
+   
+}
+.wk_collected{
+    background: rgb(110, 200, 155) !important;
+    padding: 10px 12px !important;
+}
+.wk_returned{
+    background: rgb(110, 200, 155) !important;
+    padding: 10px 12px !important;
+}
+.wk_laundry{
+    background: rgb(110, 200, 155) !important;
+    padding: 10px 12px !important;
+}
+.wk_available{
+    background: rgb(110, 200, 155) !important;
+    padding: 10px 12px !important;
+}
+.wk_return_content{
+    background: rgb(110, 200, 155) !important;
+    padding: 10px 12px !important;
+}
+
+.coupon_button{
+    margin-right: 4% !important;
+    width: 130px !important;    
+    background: rgb(110,200,155) !important;
+}
+
+.wk_coupon_popup {
+    width: 400px !important;
+    height: 200px !important;
+    margin: auto;
+    margin-top: 70px;
+    font-size: 11px;
+    background-color: #F0EEEE;
+}
+
+.wk_input {
+    padding: 15px;
+    display: block;
+    border-bottom: 1px solid #808080;
+    width: 92%;
+    border: 1px solid #ccc!important;
+    font-size:20px;
+
+}
+
+th,
+td,
+hr,
+thead,
+tbody,
+td.fc-row {
+  border-color: #ccc !important;
+  background: none !important;
+}
+.pos .paymentline.selected .edit {
+    background: white!important;
+    color: #6EC89B;
+    outline: 3px blue;
+    box-shadow: 0px 0px 0px 3px #6EC89B;
+    position: relative;
+    border-radius: 3px;
+}
+
+.wk_order_state {
+    padding: 10px 12px !important;
+}
+
+.view_products {
+    background-color: rgb(110, 200, 155) !important;
+    padding: 10px 12px !important;
+}
+
+/* popup for return product */
+div.header-products {
+    margin-top: 5px;
+    display: inline-flex;
+}
+
+div.header-products button{
+    width: 110px;
+    line-height: 40px;
+    cursor: pointer;
+    font-size: 14px;
+}
+div.header-products button.clear{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.prd_lines table{
+    width: 100%;
+}
+.prd_lines table tr{
+    border-bottom: 1px solid;
+}
+
+.selection_image {
+    height: 64px;
+    width: 64px;
+    vertical-align: middle;
+    margin-right: 5px;
+    border: 1px solid #e6e6e6;
+}
+
+/* rent price tag */
+.pos .product .rent_price-tag {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    vertical-align: top;
+    color: white;
+    line-height: 13px;
+    background: #7f82ac;
+    padding: 2px 5px;
+    border-radius: 2px;
+}

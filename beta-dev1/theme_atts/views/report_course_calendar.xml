@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report 
+        id="report_web_course_calendar"
+        string="Web Course Calendar"
+        model="class.class" 
+        report_type="qweb-pdf"
+        file="theme_atts.report_course_calendar" 
+        name="theme_atts.report_course_calendar" 
+        menu="False"
+    />
+
+    <template id="report_course_calendar" name="Course Calendar">
+        <t t-call="report.html_container">
+            <t t-set="data_report_margin_top" t-value="45"/>
+            <t t-set="data_report_header_spacing" t-value="40"/>
+            <t t-call="report.external_layout" t-if="docs">
+                <t t-set="o" t-value="docs[0]"/>
+                <t t-foreach="docs" t-as="classes">
+                    <div class="header"></div>
+                    <div class="page">
+                        <t t-call="theme_atts.course_calendar"/>
+                    </div>
+                    <div class="footer"></div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="course_calendar" name="Course Calendar">
+        <div class="page-header mt16">
+            <div class="container course_calendar">
+                <div class="row">
+                    <div class="col-md-6 th">
+                        <b>Course Title</b>
+                    </div>
+                    <div class="col-md-6 th">
+                        <b>Course Date &amp;Time</b>
+                    </div>
+                </div>
+                <div class="row" t-foreach="class_list" t-as="course">
+                    <div class="col-md-6 td">
+                        <p t-esc="course.name"/>
+                    </div>
+                    <div class="col-md-6 td">
+                        <t t-foreach="course_value" t-as="cls">
+                            <p t-esc="cls.class_schedule"/>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </template>
+</odoo>

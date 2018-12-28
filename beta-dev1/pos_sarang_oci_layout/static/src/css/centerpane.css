@@ -1,0 +1,307 @@
+
+.disc-button{
+    width:45% !important;
+    border-radius: 0px !important;
+    font-size: 18px !important;
+    margin: 0px 0px 0px -3px !important;
+    border: 5px solid #4d4d4d !important;
+}
+.charge-buttons{
+	display: -webkit-box;
+	width: 100%;
+
+}
+.js_service_charge_button{
+	box-sizing: border-box;
+	padding-left: 0;
+	float: right;
+	border-top: none !important;
+	border-right: none !important;
+	width: 50%;
+	padding: 0px 8px 0px 60px !important;
+}
+.js_tax_button{
+	box-sizing: border-box;
+	padding-left: 0;
+	float: right;
+	border-top: none !important;
+	width: 50%;
+	padding: 0px 8px 0px 60px !important;
+}
+.service-charge-apply {
+    background-color: #6EC89B !important;
+    border: solid 1px #64AF8A !important;
+    color: white !important;
+}
+.service-charge-on{
+    background-color: #797979 !important;
+    border: solid 1px #64AF8A !important;
+    color: white !important;
+}
+}
+.tax-apply {
+    background: #6EC89B !important;
+    border: solid 1px #64AF8A !important;
+    color: white !important;
+}
+
+.pos .centerpane {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+            box-sizing: border-box;
+    position:fixed;
+    /*top:80%;*/
+    /*width:100%;*/
+    height:24%;
+    bottom:0;
+    border-right: solid 1px #CECBCB;
+    border-right: solid 3px #787878;
+    background: #e2e2e2;
+}
+
+.pos .centerpane .pads {
+    border-top: solid 3px rgb(110, 200, 155);
+}
+.pos .control-button.btn {
+    line-height: 75px !important;
+}
+.pos .actionpad .button.pay {
+    height: 151px;
+}
+.pos .actionpad .button {
+    height: 50px;
+}
+
+.pos .centerpane .numpad{
+    width:100%!important;
+}
+.pos .centerpane .input-button {
+    font-size: 14px !important;
+}
+.pos .centerpane .mode-button {
+    font-size: 11px !important;
+}
+
+.pos .rightpane{
+    position: inherit;
+    left:35% !important;
+    width:65% !important;
+    height:80% !important;
+}
+
+.pos .leftpane{
+    position: inherit;
+    width:35% !important;
+    height:80% !important;
+}
+
+
+.btn.btn-fill{
+    color:white;
+    background-color:#929292;
+
+}
+.pos .product {
+    height: 90px;
+    width: 90px;
+}
+
+.pos .pos-branding .username{
+
+    margin-right: 122px !important;
+}
+.order-selector {
+    margin-left: -93px !important;
+}
+.pos .pos-rightheader{
+
+    left: 410px;
+}
+
+.pos .control-button { 
+ font-size: 13px; 
+ height: 50px; 
+
+ }
+
+.pos .actionpad .button.pay { 
+    height: 104px; 
+}
+
+.pos .actionpad .button { height: 47px; }
+
+
+
+.pos .actionpad .button:first-child { border-top-left-radius: 0px; } 
+.pos .actionpad .button:last-child { border-bottom-left-radius: 0px; }
+
+.order-submit{
+    height: 52px !important;
+}
+
+
+@media only screen and (max-width: 1280px){
+    .pos .centerpane .numpad {
+        margin: 8px 23px 0 0px;
+}
+
+}
+
+@media only screen and (max-width: 1260px){
+    .pos .centerpane .numpad {
+        margin: 8px -20px 0 0px;
+}
+
+}
+
+/*button.control-button.btn.btn-default.btn-fill.btn-wd.service-charge-button {
+       top: 2px;
+	   position: absolute;
+       padding-left: 0px !important;
+	   left: 64.5%;
+	   height: 75px;
+	   margin-left: 9px;
+	   width: 120px;
+	   white-space: pre;
+}*/
+/*button.control-button.btn.btn-default.btn-fill.btn-wd.bill-button {
+    top: 2px !important;
+    position: absolute;
+    left: 56.5% !important;
+    height: 76px !important;
+    margin: 0px 0px 0px 14px;
+    width: 100px !important;
+    white-space: pre;
+}
+
+@media (min-width: 1281px){
+    button.control-button.btn.btn-default.btn-fill.btn-wd.split-button {
+    top: 2px !important;
+    left: 49.4% !important;
+    height: 76px !important;
+    position: absolute;
+    width: 103px !important;
+}
+button.control-button.btn.btn-default.btn-fill.btn-wd.transfer-button {
+    height: 76px !important;
+    top: 2px !important;
+    left: 41.5% !important;
+    width: 102px !important;
+    position: absolute;
+}
+
+button.control-button.btn.btn-default.btn-fill.btn-wd.tax-non-discount-button {
+    top: 79px;
+    position: absolute;
+    padding-left: 0px !important;
+    left: 64.5%;
+    height: 75px;
+    margin-left: 9px;
+    width: 120px;
+    white-space: pre;
+    padding: 3px 3px 6px 6px !important;
+}*/
+
+/*.pos .control-button.btn.cdiscountl-button {
+    position: absolute;
+    left: 57.1% !important;
+    margin: 2px 0px 0px 3px;
+    top: 77px;
+    height: 74px;
+    width: 99px !important;
+}*/
+/*.btn.btn-default.btn-fill.btn-wd.button-section.control-button.Complimentary-orderline-button {
+    top: 22px;
+    left: 41.5%;
+    margin: 58px 0px 0px 0px;
+    height: 72px;
+    position: absolute;
+    width: 60px !important;
+    font-size: 9px;
+    white-space: nowrap;
+}
+.pos .control-button.btn.all-free-button {
+    position: absolute;
+    left: 49.4%;
+    margin: 2px 0px 0px 0px;
+    top: 75px;
+    height: 47px;
+    width: 81px;
+    font-size: 9px!important;
+    padding-top: 26px !important;
+}
+.btn .btn-default .btn-fill .btn-wd .button-section .control-button .service-charge-button{
+    position:  absolute;
+    left: 20%;
+    top: 45%;
+    display:none
+}
+
+.btn .btn-default .btn-fill .btn-wd .button-section .control-button .Complimentary-orderline-button{
+    position: absolute;
+    top: 43%;
+    left: 50.5%;
+}*/
+
+
+
+.control-buttons-section.control-buttons {
+    width: 80%;
+}
+
+button.control-button.btn.btn-default.btn-fill.btn-wd.control-button.order-submit {
+    position: absolute;
+    top: 4%;
+    left: 62%;
+    margin: 54px 0px 0px 30px;
+    display:none
+}
+
+.btn.btn-default.btn-fill.btn-wd.button-section.control-button.service-charge-button {
+    position: absolute;
+    display: none;
+    left: 43.5%;
+    margin: 49px 0px 0px 134px;
+}
+
+button.btn.btn-default.btn-fill.btn-wd.control-button.done-all-button {
+    position: absolute;
+    top: 0%;
+    left: 74%;
+    display:none
+}
+
+button.btn.btn-default.btn-fill.btn-wd.control-button.exit-priority-button {
+    position: absolute;
+    top: 2px;
+    left: 22%;
+    /*width: 133px;*/
+    height: 75px;
+}
+button.btn.btn-default.btn-fill.btn-wd.control-button.hight-priority-button {
+    position: absolute;
+    top: 2px;
+    left: 12%;
+    height: 76px;
+}
+
+
+
+button.mode-button.quantity-button{
+    position: absolute;
+    /*width: 88% !important;*/
+    left: 0%;
+    top: 0%;
+    height: 52% !important;
+    font-size: 20px !important;
+}
+
+.product-screen{
+    height: 92%;
+}
+
+body, .wrapper {
+    min-height: 96vh;
+    position: relative;
+}

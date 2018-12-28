@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_purchase_order_form_inherit_discount" model="ir.ui.view">
+            <field name="name">purchase.order.form.add.discount</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="inventory_on_purchase.custome_view_purchase_order_form_inherit_new"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//field[@name='price_unit']"
+                       position="after">
+                    <field name="discount_type"/>
+                    <field name="discount_rate" required="1"/>
+                </xpath>
+                <xpath expr="//tree//field[@name='price_unit']" position="after">
+                    <field name="discount_type"/>
+                    <field name="discount_rate" required="1"/>
+                </xpath>
+                <xpath expr="//tree//field[@name='price_subtotal']" position="after">
+                    <field name="price_total" widget="monetary"/>
+                </xpath>
+            </field>
+        </record>
+
+         <record id="view_purchase_order__line_tree_inherit_discount" model="ir.ui.view">
+            <field name="name">purchase.order.line.tree.inherit</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='price_subtotal']" position="after">
+                    <field name="price_total" widget="monetary"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

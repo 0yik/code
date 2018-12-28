@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="account.action_account_aged_balance_view" model="ir.actions.act_window">
+            <field name="name">Detailed Aging Report</field>
+        </record>
+
+	    <record id="account_aged_balance_view_inherited" model="ir.ui.view">
+            <field name="name">account.aged.trial.balance.inherited</field>
+            <field name="model">account.aged.trial.balance</field>
+            <field name="inherit_id" ref="account.account_aged_balance_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/separator[1]" position="attributes">
+                    <attribute name="string">Detailed Aging Report</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

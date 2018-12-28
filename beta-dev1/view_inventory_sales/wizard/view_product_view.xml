@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+
+        <record id="view_view_product_qty_form" model="ir.ui.view">
+            <field name="name">view.product.qty.form</field>
+            <field name="model">view.product.qty</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <form string="View Product Qty">
+                <group>
+                    <group>
+                        <field name="stock_qty"/>
+                    </group>
+                    <group>
+                        <field name="store_qty"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Close" icon="" states="" type="object" name="close_pop_up"/>
+                    <!--button string="_Cancel" class="btn-default" special="cancel" /-->
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_view_product_qty_view">
+            <field name="name">View Product Qty</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">view.product.qty</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_view_product_qty_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <!--record model="ir.actions.act_window.view" id="act_open_view_product_qty_view_form">
+            <field name="act_window_id" ref="act_open_view_product_qty_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_view_product_qty_form"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_view_product_qty_view_tree">
+            <field name="act_window_id" ref="act_open_view_product_qty_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_view_product_qty_tree"/>
+        </record-->
+
+        <!--menuitem id="menu_view_product_qty"
+            parent="module.xmlid"
+            sequence="20"
+            action="act_open_view_product_qty_view"/-->
+    </data>
+</odoo>

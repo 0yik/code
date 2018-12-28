@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="honos_brand_form" inherit_id="honos_shop.honos_shop_products_attributes">
+		<xpath expr="//form/ul[@class='nav nav-pills nav-stacked mt16']"
+			position="inside">
+			<t t-if="brand_list">
+				<li class="">
+					<div class="attribute-filter-div">
+                        <i class="down-arrow fa fa-caret-down" aria-hidden="true"></i>
+						<span class="filter-by-span">Filter By </span>
+						<strong class="attribute-filter-heading">Brands</strong>
+						<a class="clear-all-variant">(Clear all)</a>
+					</div>
+					<ul class="nav nav-pills nav-stacked attribute-chkbox-ul mCustomScrollbar sub-li-main">
+						<t t-foreach="brand_list" t-as="brand">
+							<li class="">
+								<label class="type-checkbox">
+									<input class="checkbox-custom" type="checkbox" name="attrib"
+										t-att-value="'0-%s' % (brand.id)"
+										t-att-checked="'checked' if brand.id in attrib_set else None" />
+									<label class="checkbox-custom-label" style="font-weight: normal"
+										t-field="brand.name" />
+								</label>
+							</li>
+						</t>
+					</ul>
+				</li>
+			</t>
+		</xpath>
+	</template>
+</odoo>

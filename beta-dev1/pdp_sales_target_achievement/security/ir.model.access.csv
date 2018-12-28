@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_branch_target_users,branch_target_users_group,model_branch_target,,1,1,1,1
+access_crm_team_popup_users,crm_team_popup_users_group,model_crm_team_popup,,1,1,1,1
+access_target_achievement_users,target_achievement_users_group,model_target_achievement,,1,1,1,1
+access_user_target_users,user_target_users_group,model_user_target,,1,1,1,1

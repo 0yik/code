@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_produce_product_quantity_inherit" model="ir.ui.view">
+            <field name="name">Produce Product Quantity</field>
+            <field name="model">stock.produce.product.qty</field>
+            <field name="inherit_id" ref="central_kitchen.view_produce_product_quantity"/>
+            <field name="arch" type="xml">
+                <field name="new_quantity" position="after">
+                    <field name="product_uom" required="1"/>
+                </field>
+                    <xpath expr="//footer" position="before">
+                        <field name="stock_produce_lines">
+                            <tree editable="bottom" create="false">
+                                <field name="product_id" readonly="1"/>
+                                <field name="bom_qty" readonly="1"/>
+                                <field name="actual_qty"/>
+                                <field name="product_uom"/>
+                                <field name="bom_line_id" invisible="1"/>                                
+                            </tree>
+                        </field>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="product_product_tree_inherit_view_hiden_produce" model="ir.ui.view">
+            <field name="name">Produce Product Hiden Produce</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="central_kitchen.product_product_tree_inherit_view"/>
+            <field name="arch" type="xml">
+                <button name="%(central_kitchen.action_view_produce_product_quantity)d" position="after">
+                    <field name="bom_count" invisible="1"/>
+                </button>
+                <button name="%(central_kitchen.action_view_produce_product_quantity)d" position="attributes">
+                    <attribute name="attrs">{'invisible':[('bom_count','=',0)]}</attribute>
+                </button>
+            </field>
+        </record>
+    </data>
+</odoo>
+

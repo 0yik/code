@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="custom_view_stock_config_settings" model="ir.ui.view">
+            <field name="name">stock settings</field>
+            <field name="model">stock.config.settings</field>
+            <field name="inherit_id" ref="stock.view_stock_config_settings"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='traceability']/div/div" position="inside">
+                    <field name="lot_or_serial_no" class="oe_inline" attrs="{'invisible': [('group_stock_production_lot','=',False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

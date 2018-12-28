@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <record id="employee_appraisal.rating_tlm" model="ir.ui.view">
+            <field name="groups_id" eval="[(3,ref('base.group_system'))]"/>
+        </record>
+
+        <record id="rating_hr_manager_inherit" model="ir.ui.view">
+            <field name="name">rating.hr.manager.inherit</field>
+            <field name="model">employee.evaluation</field>
+            <field name="inherit_id" ref="employee_appraisal.rating_hr_manager"/>
+            <field name="arch" type="xml">
+                <field name="year" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                    <attribute name="options">{'no_create_edit':False,'no_open':False,'no_quick_create':False}</attribute>
+                </field>
+                <field name="quarter" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                    <attribute name="options">{'no_create_edit':False,'no_open':False,'no_quick_create':False}</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pdp_modifier_sales_report.report_global_saleorder_document">
+        <t t-set="no" t-value="1"/>
+        <div class="page">
+            <div class="oe_structure" />
+            <div class="row">
+                   <div class="col-xs-4">
+                       <strong>Printed : </strong><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M')"/>
+                   </div>
+                   <div class="col-xs-8">
+                       <h4>
+                           <strong>GLOBAL SALES ORDER CUSTOMER</strong>
+                       </h4>
+                   </div>
+                   <div class="col-xs-4">
+                       <strong>Page : </strong><span t-esc="no"/>
+                   </div>
+                   <div class="col-xs-7">
+                       <strong>Period : </strong> <span t-field="doc.from_date"  t-field-options='{"format": "d MMMM y 00:00"}'/> upto <span t-field="doc.to_date"  t-field-options='{"format": "d MMMM y 23:59"}'/>
+                   </div>
+            </div>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Transaction</th>
+                        <th>Customer</th>
+                        <th>Term</th>
+                        <th>Total</th>
+                        <th>Discount</th>
+                        <th>Tax</th>
+                        <th>Net Total</th>
+                   </tr>
+                </thead>
+                <tbody>
+                    <t t-set="total" t-value="0" />
+                    <t t-set="discount" t-value="0" />
+                    <t t-set="tax" t-value="0" />
+                    <t t-set="net_total" t-value="0" />
+                    <t t-set="currency" t-value="0" />
+                    <t t-foreach="doc.get_order_details()" t-as="record">
+                        <t t-set="currency" t-value="record.company_id.currency_id.symbol" />
+                        <tr>
+	                        <td><span t-field="record.date_order" /></td>
+	                        <td><span t-field="record.name" /></td>
+	                        <td><span t-field="record.partner_id.name" /></td>
+	                        <td><span t-esc="record.payment_term_id.name or ''" /></td>
+	                        <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(record.amount_untaxed)" /></td>
+	                        <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(record.amount_discount)" /></td>
+	                        <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(record.amount_tax)" /></td>
+	                        <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(record.amount_total)" /></td>
+                        </tr>
+                        <t t-set="total" t-value="total + record.amount_untaxed" />
+	                    <t t-set="discount" t-value="discount + record.amount_discount" />
+	                    <t t-set="tax" t-value="tax + record.amount_tax" />
+	                    <t t-set="net_total" t-value="net_total + record.amount_total" />
+                    </t>
+                    <tr>
+                        <td colspan="4">Total</td>
+                        <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(total)"></span></td>
+                        <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(discount)"></span></td>
+                        <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(tax)"></span></td>
+                        <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(net_total)"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <t t-set="no" t-value="no+1"/>
+    </template>
+
+    <template id="pdp_modifier_sales_report.report_global_saleorder">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="pdp_modifier_sales_report.report_global_saleorder_document" />
+            </t>
+        </t>
+    </template>
+
+</odoo>

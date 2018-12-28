@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+
+        <template id="outstanding_fee_report">
+        	<t t-set="data_report_margin_top" t-value="2"/>
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!-- <t t-call="report.external_layout"> -->
+                   
+                        <div class="page">
+                        	<div class="row">
+                        		<b><span><left>Grade Orchard School</left></span></b>
+                    		</div>
+                    		<div class="row">
+                				<b><span><left>Outstanding School Fees as at <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></left></span></b>
+                    		</div>
+                        	<table width="100%" class="table table-condensed">
+                                    <tr>
+                                        <td width="15%">
+                                            
+                                        </td>
+                                        <td width="15%">
+                                            
+                                        </td>
+                                            
+                                      	<td  width="70%">
+                                            <b><center>Number Of Month outstanding</center></b>
+                                        </td>
+                                        
+                                    </tr>
+                           </table>
+                            <table width="100%" class="table table-condensed">
+                                    <tr>
+                                        <td>
+                                            <b>Name</b>
+                                        </td>
+                                        <td>
+                                            <b>Class</b>
+                                        </td>
+                                            
+                                      	<td >
+                                            <b>1 mth</b>
+                                        </td>
+                                        <td>
+                                            <b>2 mth</b>
+                                        </td>
+                                        <td>
+                                            <b>3 mth</b>
+                                        </td>
+                                        <td>
+                                            <b>4 mth</b>
+                                        </td>
+                                        <td>
+                                            <b>5 mth</b>
+                                        </td>
+                                        <td>
+                                            <b>6 mth</b>
+                                        </td>
+                                        <td>
+                                            <b>>6 mth</b>
+                                        </td>
+                                        <td>
+                                            <b>Total</b>
+                                        </td>
+                                    </tr>
+                                        <tr t-foreach="data_report" t-as="a">
+                                        <td>
+                                        	<span t-esc="a['name']"/>
+                                        </td>
+                                        <td>
+                                        	<span t-esc="a['class']"/>
+                                        </td>
+                                      	<td>
+                                      		<span t-esc="a['1_mth']"/>
+                                        </td>
+                                        <td>
+                                        	<span t-esc="a['2_mth']"/>
+                                        </td>
+                                        <td>
+                                        	<span t-esc="a['3_mth']"/>
+                                        </td>
+                                        <td>
+                                        	<span t-esc="a['4_mth']"/>
+                                        </td>
+                                        <td>
+                                        	<span t-esc="a['5_mth']"/>
+                                        </td>
+                                        <td>
+                                        	<span t-esc="a['6_mth']"/>
+                                        </td>
+                                        <td>
+                                        	<span t-esc="a['6_mth_grt']"/>
+                                        </td>
+                                        <td>
+                                        	<span t-esc="a['total']"/>
+                                        </td>
+                                    	  </tr>
+                                    <tr t-foreach="data_total" t-as="a">
+                                        <td>
+                                        	<b>Total</b>
+                                        </td>
+                                        <td>
+                                        	
+                                        </td>
+                                      	<td>
+                                      		<b><span t-esc="a['1_mth']"/></b>
+                                        </td>
+                                        <td>
+                                        	<b><span t-esc="a['2_mth']"/></b>
+                                        </td>
+                                        <td>
+                                        	<b><span t-esc="a['3_mth']"/></b>
+                                        </td>
+                                        <td>
+                                        	<b><span t-esc="a['4_mth']"/></b>
+                                        </td>
+                                        <td>
+                                        	<b><span t-esc="a['5_mth']"/></b>
+                                        </td>
+                                        <td>
+                                        	<b><span t-esc="a['6_mth']"/></b>
+                                        </td>
+                                        <td>
+                                        	<b><span t-esc="a['6_mth_grt']"/></b>
+                                        </td>
+                                        <td>
+                                        	<b><span t-esc="a['total']"/></b>
+                                        </td>
+                                    	</tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        	
+                                        </td>
+                                      	<td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    	</tr>
+                            </table>
+                            <p>
+                            	<b>Total Outstanding School Fees as at <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/> : <span t-esc="total"/></b>
+                            </p>
+                            <table width="100%">
+                                <tr>
+                                    <td width="50%" style="font-family: 'Helvetica';font-size: 16px;">
+                                        
+                                    </td>
+                                    <td width="50%">
+                                        <br />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            <!-- </t> -->
+        </template>
+
+</odoo>

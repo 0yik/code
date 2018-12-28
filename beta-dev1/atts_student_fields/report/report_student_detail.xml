@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<odoo>
+    <template id="report_studentdetail">
+	    <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc"/>
+            <div class="page">
+                <b>Pupil's Monthly Enrolment <span t-esc="enrolment_month"></span>-<span t-esc="enrolment_year"></span></b>
+                <table cellspacing="0" cellpadding="0" class="table table-condensed"  style="border: 1px solid black">
+                    <tbody>
+                        <tr style="background-color: slategray;">
+                            <td colspan="14">
+                                <span>Year of Birth</span>
+                            </td>
+                        </tr>
+                        <tr style="background-color: slategray;"> 
+                            <td style="border: medium none !important;">
+                                <span></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[11]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[10]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[9]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[8]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[7]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[6]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[5]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[4]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[3]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[2]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[1]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span t-esc="year_list[0]"></span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>Grand Total</span>
+                            </td>
+                            
+                        </tr>
+                        <tr style="background-color: slategray;">
+                            <td style="border: medium none !important;">
+                                <span>Age</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>18</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>17</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>16</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>15</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>14</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>13</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>12</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>11</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>10</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>9</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>8</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span>7</span>
+                            </td>
+                            <td style="border: medium none !important;">
+                                <span></span>
+                            </td>
+                            
+                        </tr>
+                        <tr style="background-color: lavender;">
+                            <td>
+                                <span>ASD</span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('18',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('17',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('16',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('15',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('14',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('13',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('12',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('11',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('10',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('9',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('8',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="asd_dict.get('7',' ')[0]"></span>
+                            </td>
+                            
+                            <td>
+                                <span t-esc="programme_dict.get('asd_total',' ')"></span>
+                            </td>
+                        </tr>
+                        <tr style="background-color: lavender;">
+                            <td>
+                                <span>Integrated MID</span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('18',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('17',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('16',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('15',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('14',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('13',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('12',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('11',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('10',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('9',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('8',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="integrated_dict.get('7',' ')[0]"></span>
+                            </td>
+                            
+                            <td>
+                                <span t-esc="programme_dict.get('integrated_total',' ')"></span>
+                            </td>
+                        </tr>
+                        <tr style="background-color: lavender;">
+                            <td>
+                                <span>MID</span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('18',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('17',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('16',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('15',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('14',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('13',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('12',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('11',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('10',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('9',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('8',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span t-esc="mid_dict.get('7',' ')[0]"></span>
+                            </td>
+                            <td>
+                                <span><span t-esc="programme_dict.get('mid_total',' ')"></span></span>
+                            </td>
+                        </tr>
+                        <tr  style="background-color: slategray;">
+                            <td>
+                                <span>Grand Total</span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('18',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('17',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('16',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('15',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('14',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('13',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('12',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('11',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('10',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('9',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('8',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('7',' ')"></span>
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict.get('grand_total',' ')"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <b>Enrollment and Withdraw Details</b>
+                <table class="table table-condensed"  style="border: 1px solid black;">
+                    <thead>
+                        <tr style="background-color: slategray;">
+                            <th style = 'align:centre'>Programme</th>
+                            <th style="border: 1px solid black;">Enrolled Integration(End <span t-esc="enrolment_month"></span>)</th>
+                            <th style="border: 1px solid black;">Name of Student</th>
+                            <th style="border: 1px solid black;">Withdraw (Number effect reflect on following month table)</th>
+                            <th style="border: 1px solid black;">Name of Student</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  style="background-color: lavender;">
+                            <td style="border: 1px solid black;align:centre">
+                                <span>ASD</span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre"> 
+                                <span t-esc="programme_dict2.get('ASD',' ')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('A_Name',' ')"></span> 
+                            </td>
+                            <td>
+                                <span t-esc="programme_dict2.get('withdraw_ASD',' ')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('withdraw_asd_Name',' ')"></span>
+                            </td>
+                        </tr>
+                        <tr  style="background-color: lavender;">
+                            <td style="border: 1px solid black;align:centre">
+                                <span>Integrated MID</span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('Integrated',' ')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('I_Name',' ')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('withdraw_Integrated',' ')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('withdraw_integrated_Name',' ')"></span>
+                            </td>
+                        </tr>
+                        <tr  style="background-color: lavender;">
+                            <td style="border: 1px solid black;align:centre">
+                                <span>MID</span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('MID',' ')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('M_Name',' ')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('withdraw_MID',' ')"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('withdraw_mid_Name',' ')"></span>
+                            </td>
+                        </tr>
+                        <tr style="background-color: slategray;">
+                            <td style="border: 1px solid black;align:centre">
+                                <span>Grand Total</span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('Total',0)"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span t-esc="programme_dict2.get('withdraw_total',0)"></span>
+                            </td>
+                            <td style="border: 1px solid black;align:centre">
+                                <span></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+	</t>
+    </template>
+    
+    
+    
+</odoo>
+

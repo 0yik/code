@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- added filter in search view sale -->
+
+        <!-- Sale Order Form -->
+
+        <record id="view_sale_order_timesheet_inherit_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_timesheet.view_order_form_inherit_sale_timesheet"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_project_project']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sale_biocare_modifier_fields" model="ir.ui.view">
+            <field name="name">sale.biocare.modifier</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="fiscal_position_id"]' position="after">
+                    <field name="terms_sale"/>
+                    <field name="attention_sale"/>
+                    <field name="prepared_by"/>
+                    <field name="validated_by"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="project_sale" invisible="1" />
+                    <field name="from_sale" invisible="1" />
+                    <field name="email_sale" invisible="1" />
+                </xpath>
+
+                <!--xpath expr="//field[@name='order_line']" position="attributes">
+                                    <attribute name="context">{'is_booking': 'parent.is_booking'}</attribute>
+                                </xpath-->
+
+                                <!--xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
+                                    <attribute name="domain">[('type', '=', 'service')]</attribute>
+                                    <attribute name="context">{'default_type': 'service'}</attribute>
+                                </xpath>
+                                <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="attributes">
+                                    <attribute name="domain">[('type', '=', 'service')]</attribute>
+                                    <attribute name="context">{'default_type': 'service'}</attribute>
+                                </xpath-->
+
+                                <!--xpath expr='//field[@name="payment_term_id"]' position="after">
+                                        <field name="pic_id" attrs="{'invisible':[('is_booking','=',False)]}"/>
+                                        <field name="job_history" attrs="{'invisible':[('is_booking','=',False)]}"/>
+                                </xpath-->
+                        </field>
+                    </record>
+
+                    <record id="view_sale_stock_order_view_form" model="ir.ui.view">
+                        <field name="name">sale.order.form</field>
+                        <field name="model">sale.order</field>
+                        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+                        <field name="arch" type="xml">
+                            <!--xpath expr="//field[@name='delivery_count']" position="attributes">
+                            <attribute name="string">Workorder</attribute>
+                        </xpath-->
+                        <xpath expr="//button[@name='action_draft']" position="replace">
+                            <button name="action_draft" type="object" string="Set to Quotation" 
+                                attrs="{'invisible': ['|', ('is_booking', '=', True), ('state', 'in', ['draft', 'sent', 'sale', 'done'])]}" />
+                        </xpath>
+                        <xpath expr="//button[@name='action_view_delivery']" position="replace">
+                            <button type="object"
+                                name="action_view_delivery"
+                                class="oe_stat_button"
+                                icon="fa-truck"
+                                context="{'is_booking': False, 'default_is_booking': False}"
+                                attrs="{'invisible': ['|', ('delivery_count', '=', 0), ('is_booking', '=', True)]}" groups="base.group_user">
+                                <field name="delivery_count" widget="statinfo" string="Delivery"/>
+                            </button>
+                        </xpath>
+                        <xpath expr="//button[@name='action_view_delivery']" position="after">
+                            <button type="object"
+                                name="action_view_delivery"
+                                class="oe_stat_button"
+                                icon="fa-truck"
+                                attrs="{'invisible': ['|',('wo_count', '=', 0), '|', ('state_booking','not in', ['sale', 'done', 'cancel']), ('is_booking', '=', False)]}"
+                                context="{'default_is_booking': True, 'create': 'false', 'is_booking': True}">
+                                <!-- attrs="{'invisible': [('delivery_count', '=', 0), ('is_booking', '=', False)]}"-->
+                                <field name="wo_count" widget="statinfo" string="Work Order"/>
+                            </button>
+                            <!--attrs="{'invisible': ['|', ('state_booking','not in', ['sale', 'done', 'cancel']), ('is_booking', '=', False)]}"-->
+                        </xpath>
+                        <xpath expr="//button[@name='action_draft']" position="after">
+                            <button name="action_draft_wo" type="object" string="Set to Booking" 
+                                attrs="{'invisible': ['|', ('is_booking', '=', False), ('state_booking', 'in', ['draft', 'sent', 'sale', 'done'])]}" />
+                        </xpath>
+                    </field>
+                </record>
+
+                <!-- template action override-->
+                <record id="stock.product_template_action_product" model="ir.actions.act_window">
+                    <field name="name">Products</field>
+                    <field name="type">ir.actions.act_window</field>
+                    <field name="res_model">product.template</field>
+                    <field name="view_mode">kanban,tree,form</field>
+                    <field name="view_type">form</field>
+                    <field name="context">{"search_default_consumable": 1, 'default_type': 'consu'}</field>
+                    <field name="help" type="html">
+                        <p class="oe_view_nocontent_create">
+                            Click to define a new product.
+                        </p>
+                    </field>
+                </record>
+
+                <record id="view_product_product_inherit_view_temp_form" model="ir.ui.view">
+                    <field name="name">product.product.form</field>
+                    <field name="model">product.product</field>
+                    <field name="inherit_id" ref="product.product_normal_form_view"/>
+                    <field name="arch" type="xml">
+                        <xpath expr="//field[@name='type']" position="after">
+                            <field name="is_equipment" attrs="{'invisible': [('type','in', ['consu', 'service'])]}"/>
+                        </xpath>
+                        <xpath expr="//label[@for='name']" position="replace">
+                            <label class="oe_edit_only" for="name"
+                                string="Product Name" 
+                                attrs="{'invisible': ['|', ('type','in', ['service']), ('is_equipment', '=', True)]}"/>
+                            <label class="oe_edit_only" for="name"
+                                string="Service Name" attrs="{'invisible': [('type','in', ['consu', 'product'])]}"/>
+                            <label class="oe_edit_only" for="name"
+                                string="Vehicle Number" attrs="{'invisible': [('is_equipment','=', False)]}"/>
+                        </xpath>
+                        <xpath expr="//div[@name='options']" position="attributes">
+                            <attribute name="attrs">{'invisible': ['|', ('type','in', ['service']), ('is_equipment', '=', True)]}</attribute>
+                        </xpath>
+                        <xpath expr="//field[@name='name']" position="replace">
+                            <!--field name="name" 
+                        attrs="{'invisible': ['|', ('type','in', ['service']), ('is_equipment', '=', True)]}"/-->
+                    <field name="name" />
+                </xpath>
+
+            </field>
+        </record>
+
+        <menuitem id="sale.menu_product_template_action" name="Products"
+            parent="sales_team.menu_sales"
+            action="stock.product_template_action_product" sequence="110"/>
+    </data>
+</openerp>

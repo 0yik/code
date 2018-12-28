@@ -1,0 +1,25 @@
+<odoo>
+	<data>
+		<record id="view_verification_window_wizard" model="ir.ui.view">
+	        <field name="name">view.verification.window.wizard</field>
+	        <field name="model">verification.window</field>
+	        <field name="type">form</field>
+	        <field name="arch" type="xml">
+		        <form>
+		        	<field name="name"/>
+		        </form>
+	        </field>
+		</record>
+		
+		<record id="action_verification_window_wizard" model="ir.actions.act_window">
+            <field name="name">Verification Window</field>
+            <field name="res_model">verification.window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_verification_window_wizard"/>
+            <!-- <field name="context">{'default_invoice_ids': [(4, active_id, None)]}</field> -->
+            <field name="target">new</field>
+        </record>
+		
+	</data>
+</odoo>

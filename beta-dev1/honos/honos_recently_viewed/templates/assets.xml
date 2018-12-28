@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="recently_viewed_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet"
+				href="/honos_base/static/src/less/recently_viewed.less"></link>
+			<link rel="stylesheet"
+				href="/honos_base/static/src/less/jquery.bxslider.css"></link>
+			<script
+				src="/honos_base/static/src/js/jquery.bxslider.min.js"></script>
+			<script src="/honos_base/static/src/js/recently_viewed.js"></script>
+		</xpath>
+	</template>
+</odoo>

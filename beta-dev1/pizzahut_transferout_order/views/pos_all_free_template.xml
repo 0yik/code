@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+      <xpath expr="." position="inside">
+      		<link rel="stylesheet" type="text/css" href="/pizzahut_transferout_order/static/src/css/pos_style.css" />
+          	<!--<script type="text/javascript" src="/pizzahut_transferout_order/static/src/js/pos_transferout_order.js"></script>-->
+      </xpath>
+    </template>
+</odoo>

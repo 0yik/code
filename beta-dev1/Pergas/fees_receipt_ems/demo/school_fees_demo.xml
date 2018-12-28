@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+    <data>
+        
+        <!-- Fees Structure Line-->
+        <record id="demo_student_fees_structure_line_10" model="student.fees.structure.line">
+            <field name="name">Enrollment Fee</field>
+            <field name="code">10</field>
+            <field name="type">enrollment_fee</field>
+            <field name="amount">4000.00</field>
+        </record>
+        <record id="demo_student_fees_structure_line_11" model="student.fees.structure.line">
+            <field name="name">Application Fee</field>
+            <field name="code">11</field>
+            <field name="type">application_fee</field>
+            <field name="amount">2000.00</field>
+        </record>
+
+        <!-- Fees Structure Information -->
+        <record id="demo_student_fees_structure_3" model="student.fees.structure">
+            <field name="name">Enrollment Fees Structure</field>
+            <field name="code">EFS</field>
+            <field eval="[(6,0,[ref('demo_student_fees_structure_line_10')])]" name="line_ids" />
+        </record>
+        <record id="demo_student_fees_structure_4" model="student.fees.structure">
+            <field name="name">Application Fees Structure</field>
+            <field name="code">AFS</field>
+            <field eval="[(6,0,[ref('demo_student_fees_structure_line_11')])]" name="line_ids"/>
+        </record>
+    </data>
+</odoo>

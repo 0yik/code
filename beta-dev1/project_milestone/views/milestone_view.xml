@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="project_milestone_tree_view">
+        <field name="name">milestone.milestone.tree</field>
+        <field name="model">milestone.milestone</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="sequence"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- MILESTONE FORM -->
+    <record model="ir.ui.view" id="project_milestone_form_view">
+        <field name="name">milestone.milestone.form</field>
+        <field name="model">milestone.milestone</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="Milestone Form">
+                    <div name="name">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" nolable="1" placeholder="Milestone Name"/>
+                        </h1>
+                    </div>
+                    <group name="common_field">
+                        <field name="bridal_specialist" class="oe_inline" attrs="{'invisible': [('is_tmpl', '=', True)]}"/>
+                        <field name="due_date" string="Due Date: " class="oe_inline" attrs="{'invisible': [('is_tmpl', '=', True)]}"/>
+                        <field name="sequence" string="Sequence: " class="oe_inline"/>
+                        <field name="is_tmpl" invisible="1"/>
+                        <field name="complete" class="oe_inline"/>
+                        <field name="category_id" string="Tags: " widget="many2many_tags" class="oe_inline"/>
+                    </group>
+                    <notebook>
+                        <page string="Task" name="task">
+                            <div class="row">
+                                <div class="col-md-4" style="display:block;overflow:scroll;">
+                                    <group string="Pre Appointment" name="pre_appointment">
+                                        <div class="clearfix" style="width: 100%;">
+                                            <div class="oe_left oe_inline" style="width: 100%;" name="pre_appointment_lines">
+                                                <field name="pre_appointment_lines"
+                                                       context="{'default_todo_type':'pre', 'default_milestone_id': active_id, 'default_task_date': due_date}">
+                                                    <tree editable="bottom">
+                                                        <field name="complete" string="Select"/>
+                                                        <field name="vendor_ids" widget="many2many_tags" string="Person In Charge"/>
+                                                        <field name="task_date" string="Date"/>
+                                                        <field name="name" style="word-wrap: break-word;;white-space:normal !important;"/>
+                                                        <field name="todo_type" invisible="1"/>
+                                                    </tree>
+                                                </field>
+                                            </div>
+                                        </div>
+                                    </group>
+                                </div>
+                                <div class="col-md-4" style="display:block;overflow:scroll;">
+                                    <group string="During Appointment" name="during_appointment">
+                                        <div class="clearfix" style="width: 100%;">
+                                            <div class="oe_left oe_inline" style="width: 100%;" name="during_appointment_lines">
+                                                <field name="during_appointment_lines"
+                                                       context="{'default_todo_type':'during', 'default_milestone_id': active_id}">
+                                                    <tree editable="bottom">
+                                                        <field name="complete" string="Select"/>
+                                                        <field name="vendor_ids" widget="many2many_tags" string="Person In Charge"/>
+                                                        <field name="task_date" string="Date"/>
+                                                        <field name="name" style="word-wrap: break-word;white-space:normal !important;"/>
+                                                        <field name="todo_type" invisible="1"/>
+                                                    </tree>
+                                                </field>
+                                            </div>
+                                        </div>
+                                    </group>
+                                </div>
+                                <div class="col-md-4" style="display:block;overflow:scroll;">
+                                    <group string="Post Appointment" name="post appointment">
+                                        <div class="clearfix" style="width: 100%;">
+                                            <div class="oe_left oe_inline" style="width: 100%;" name="post_appointment_lines">
+                                                <field name="post_appointment_lines"
+                                                       context="{'default_todo_type':'post', 'default_milestone_id': active_id}">
+                                                    <tree editable="bottom">
+                                                        <field name="complete" string="Select"/>
+                                                        <field name="vendor_ids" widget="many2may_tags" string="Person In Charge"/>
+                                                        <field name="task_date" string="Date"/>
+                                                        <field name="name" style="word-wrap: break-word;white-space:normal !important;"/>
+                                                        <field name="todo_type" invisible="1"/>
+                                                    </tree>
+                                                </field>
+                                            </div>
+                                        </div>
+                                    </group>
+                                </div>
+                            </div>
+                        </page>
+                    </notebook>
+                    <group string="Additional Notes/Comments" name="additional_notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter" name="chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_milestone_kanban_view">
+            <field name="name">milestone.milestone.kanban</field>
+            <field name="model">milestone.milestone</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey">
+                    <field name="sequence"/>
+                    <field name="category_id"/>
+                    <field name="due_date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_0 oe_kanban_card oe_kanban_project oe_kanban_global_click" name="header">
+                                <div class="oe_kanban_content">
+                                    <div name="sequence">
+                                        <h2 class="text-center">
+                                            <strong>
+                                                <field name="sequence"/>
+                                            </strong>
+                                        </h2>
+                                    </div>
+                                    <div name="name">
+                                        <h4 class="text-center">
+                                            <strong>
+                                                <field name="name"/>
+                                            </strong>
+                                        </h4>
+                                    </div>
+                                    <div class="oe_kanban_project_list" name="appointment_date">
+                                        <a t-if="record.due_date.raw_value" style="margin-right: 10px">
+                                            Appointment Date:
+                                            <field name="due_date"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="project_milestone_action">
+        <field name="name">Milestone</field>
+        <field name="res_model">milestone.milestone</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{'default_is_tmpl':True}</field>
+        <field name="domain">[('is_tmpl','=',True)]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the first Milestone</p>
+        </field>
+    </record>
+    <record id="action_milestone_tmpl_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="project_milestone_kanban_view"/>
+        <field name="act_window_id" ref="project_milestone_action"/>
+    </record>
+    <record id="action_milestone_tmpl_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="project_milestone_form_view"/>
+        <field name="act_window_id" ref="project_milestone_action"/>
+    </record>
+    <record id="action_milestone_tmpl_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="0"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="project_milestone_tree_view"/>
+        <field name="act_window_id" ref="project_milestone_action"/>
+    </record>
+
+    <menuitem id="milestone_menu" name="Milestone" parent="project.menu_main_pm"/>
+
+    <menuitem id="child_milestone_menu" name="Milestone" parent="milestone_menu" action="project_milestone_action"/>
+
+</odoo>

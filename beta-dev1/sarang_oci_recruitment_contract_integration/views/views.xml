@@ -1,0 +1,59 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="sarang_oci_recruitment_contract_integration.list">
+      <field name="name">sarang_oci_recruitment_contract_integration list</field>
+      <field name="model">sarang_oci_recruitment_contract_integration.sarang_oci_recruitment_contract_integration</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="sarang_oci_recruitment_contract_integration.action_window">
+      <field name="name">sarang_oci_recruitment_contract_integration window</field>
+      <field name="res_model">sarang_oci_recruitment_contract_integration.sarang_oci_recruitment_contract_integration</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="sarang_oci_recruitment_contract_integration.action_server">
+      <field name="name">sarang_oci_recruitment_contract_integration server</field>
+      <field name="model_id" ref="model_sarang_oci_recruitment_contract_integration_sarang_oci_recruitment_contract_integration"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="sarang_oci_recruitment_contract_integration" id="sarang_oci_recruitment_contract_integration.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="sarang_oci_recruitment_contract_integration.menu_1" parent="sarang_oci_recruitment_contract_integration.menu_root"/>
+    <menuitem name="Menu 2" id="sarang_oci_recruitment_contract_integration.menu_2" parent="sarang_oci_recruitment_contract_integration.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="sarang_oci_recruitment_contract_integration.menu_1_list" parent="sarang_oci_recruitment_contract_integration.menu_1"
+              action="sarang_oci_recruitment_contract_integration.action_window"/>
+    <menuitem name="Server to list" id="sarang_oci_recruitment_contract_integration" parent="sarang_oci_recruitment_contract_integration.menu_2"
+              action="sarang_oci_recruitment_contract_integration.action_server"/>
+    -->
+  </data>
+</odoo>

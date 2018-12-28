@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_biocare_modifier_fields_work_order" model="ir.ui.view">
+			<field name="name">biocare.modifier.work.order</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form"/>
+			<field name="arch" type="xml">
+                <!--<xpath expr="//form/sheet/notebook/page[2]/field[@name='move_lines']/kanban/field[@name='uom_id']" position="attributes">-->
+                        <!--<attribute name="string">UOM</attribute>-->
+                <!--</xpath>-->
+                <field name="origin" position="after">
+                    <field name="contract_id" string="Contract" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                    <label for="job_street" string="Job Site" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                        <div class="o_address_format" attrs="{'invisible': [('is_booking', '=', False)]}">
+                            <field name="job_house_no" style="width: 40%" placeholder="House No" class="oe_inline"/>
+                            <field name="job_level_no" style="width: 37%" placeholder="Level No" class="oe_inline"/>
+                            <field name="job_unit_no" style="width: 20%" placeholder="Unit No" class="oe_inline"/>
+                            <field name="job_street" placeholder="Street..." class="o_address_street"/>
+                                <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                            <field name="job_street2" placeholder="Street 2..." class="o_address_street"/>
+                                <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                            <field name="job_city" placeholder="City" class="o_address_city"/>
+                                <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                            <field name="job_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}' context="{'country_id': country_id, 'zip': zip}"/>
+                                <!--attrs="{'readonly': [('parent_id', '!=', False)]}" />-->
+                            <field name="job_zip" placeholder="ZIP" class="o_address_zip"/>
+                                <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                            <field name="job_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                <!--attrs="{'readonly': [('parent_id', '!=', False)]}"/>-->
+                        </div>
+                    <field name="job_location" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                    <field name="job_category_id" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                    <field name="job_detail" attrs="{'invisible': [('is_booking', '=', False)],'required':[('is_booking','=',True)]}"/>
+                    <field name="reminder" attrs="{'invisible': [('is_booking', '=', False)]}" widget="many2many_tags"/>
+                    <field name="remarks" attrs="{'invisible': [('is_booking', '=', False)]}"/>
+                </field>
+
+                <field name="location_dest_id" position="after">
+                    <field name="deliver_to_job_site" attrs="{'invisible': [('is_booking', '=', True)]}"/>
+                    <label for="job_street" string=" " attrs="{'invisible': ['|',('is_booking', '=', True),('deliver_to_job_site','=',False)]}"/>
+                    <div class="o_address_format" attrs="{'invisible': ['|',('is_booking', '=', True),('deliver_to_job_site','=',False)]}">
+                        <field name="picking_house_no" style="width: 40%" placeholder="House No" class="oe_inline"/>
+                        <field name="picking_level_no" style="width: 37%" placeholder="Level No" class="oe_inline"/>
+                        <field name="picking_unit_no" style="width: 20%" placeholder="Unit No" class="oe_inline"/>
+                        <field name="picking_street" placeholder="Street..." class="o_address_street"/>
+                        <field name="picking_street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="picking_city" placeholder="City" class="o_address_city"/>
+                        <field name="picking_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}' context="{'country_id': country_id, 'zip': zip}"/>
+                        <field name="picking_zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="picking_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                    </div>
+                </field>
+
+                <xpath expr="//form/sheet/notebook" position="inside">
+                    <page string="Kim Huat Service Chit" attrs="{'invisible': [('is_booking', '=', False)]}">
+                        <field name="service_chit">
+                            <tree editable="bottom">
+                                <field name="no_number"/>
+                                <field name="brand"/>
+                                <field name="model_make"/>
+                                <field name="serial"/>
+                                <field name="type"/>
+                                <field name="on_coil_temp"/>
+                                <field name="off_coil_temp"/>
+                                <field name="suctn"/>
+                            </tree>
+                            <group>
+                                <group>
+                                    <field name="no_number"/>
+                                    <field name="brand"/>
+                                    <field name="model_make"/>
+                                    <field name="serial"/>
+                                </group>
+                                <group>
+                                    <field name="type"/>
+                                    <field name="on_coil_temp"/>
+                                    <field name="off_coil_temp"/>
+                                    <field name="suctn"/>
+                                </group>
+                            </group>
+                        </field>
+                        <group>
+                            <group>
+                                <field name="symptoms_observations"/>
+                                <field name="service_rendered"/>
+                                <field name="recommendations"/>
+                            </group>
+                            <group>
+                                <label for="id" string="Routine Service"/>
+                                <div>
+                                    <div>
+                                        <field name="air_filter_cleaned"/>
+                                        <label for="air_filter_cleaned"/>
+                                    </div>
+                                    <div>
+                                        <field name="bearings_oiled"/>
+                                        <label for="bearings_oiled"/>
+                                    </div>
+                                    <div>
+                                        <field name="coils_cleaned"/>
+                                        <label for="coils_cleaned"/>
+                                    </div>
+                                    <div>
+                                        <field name="condenser_coil_cleaned"/>
+                                        <label for="condenser_coil_cleaned"/>
+                                    </div>
+                                    <div>
+                                        <field name="controls_checked"/>
+                                        <label for="controls_checked"/>
+                                    </div>
+
+                                    <div>
+                                        <field name="discharged_pressure_checked"/>
+                                        <label for="discharged_pressure_checked"/>
+                                    </div>
+                                    <div>
+                                        <field name="drain_tray_drain_pipe_cleaned"/>
+                                        <label for="drain_tray_drain_pipe_cleaned"/>
+                                    </div>
+                                    <div>
+                                        <field name="drives_checked"/>
+                                        <label for="drives_checked"/>
+                                    </div>
+                                    <div>
+                                        <field name="evaporator_coil"/>
+                                        <label for="evaporator_coil"/>
+                                    </div>
+                                    <div>
+                                        <field name="fan_blower_cleaned"/>
+                                        <label for="fan_blower_cleaned"/>
+                                    </div>
+
+                                    <div>
+                                        <field name="fan_coil_cover_cleaned"/>
+                                        <label for="fan_coil_cover_cleaned"/>
+                                    </div>
+                                    <div>
+                                        <field name="flushed_drainage"/>
+                                        <label for="flushed_drainage"/>
+                                    </div>
+                                    <div>
+                                        <field name="suction_pressure_checked"/>
+                                        <label for="suction_pressure_checked"/>
+                                    </div>
+                                    <div>
+                                        <field name="thermostat_checked"/>
+                                        <label for="thermostat_checked"/>
+                                    </div>
+                                    <div>
+                                        <field name="pumps_checked"/>
+                                        <label for="pumps_checked"/>
+                                    </div>
+                                </div>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="payment_mode"/>
+                            </group>
+                            <group>
+                                <field name="payment_made"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="PCF Service Chit" attrs="{'invisible': [('is_booking', '=', False)]}">
+                        <field name="pcf_service_chit_tree_1_ids" string="PCF Service Chit">
+                            <tree editable="bottom">
+                                <field name="type_of_aircon"/>
+                                <field name="units_to_service"/>
+                                <field name="units_serviced"/>
+                            </tree>
+                            <group>
+                                <group>
+                                    <field name="type_of_aircon"/>
+                                </group>
+                                <group>
+                                    <field name="units_to_service"/>
+                                    <field name="units_serviced"/>
+                                </group>
+                            </group>
+                        </field>
+                        <field name="pcf_service_chit_tree_2_ids" string="PCF Service Chit">
+                            <tree editable="bottom">
+                                <field name="type_of_fan"/>
+                                <field name="units_to_service"/>
+                                <field name="units_serviced"/>
+                            </tree>
+                            <group>
+                                <group>
+                                    <field name="type_of_fan"/>
+                                    <field name="units_to_service"/>
+                                    <field name="units_serviced"/>
+                                </group>
+                                <group>
+                                    <field name="time_in"/>
+                                    <field name="time_out"/>
+                                </group>
+                            </group>
+                        </field>
+                        <group>
+                            <group>
+                                <field name="time_in_pcf"/>
+                            </group>
+                            <group>
+                                <field name="time_out_pcf"/>
+                            </group>
+                        </group>
+                        <!--<lable for="pcf_service_chit_tree_3_ids" string="Type of Equipment"/>-->
+                        <div>
+                            <h4>Type of Equipment</h4>
+                            <field name="pcf_service_chit_tree_3_ids" string="Type of Equipment">
+                                <tree editable="bottom">
+                                    <field name="brand"/>
+                                    <field name="model_no"/>
+                                    <field name="type"/>
+                                    <field name="serial_no"/>
+                                    <field name="location"/>
+                                </tree>
+                                <group>
+                                    <group>
+                                        <field name="brand"/>
+                                        <field name="model_no"/>
+                                        <field name="type"/>
+                                        <field name="serial_no"/>
+                                    </group>
+                                    <group>
+                                        <field name="location"/>
+                                        <field name="header"/>
+                                    </group>
+                                </group>
+                            </field>
+                            <group>
+                                <field name="header"/>
+                            </group>
+                        </div>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="booking_order_inherit_view" model="ir.ui.view">
+            <field name="name">booking.order.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="booking_service_V2.view_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header/button[3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[8]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <field name="team_leader" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="equipment_ids" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <xpath expr="//button[@name='action_confirm']" position="replace">
+                    <button attrs="{'invisible': ['|', ('is_booking', '=', True), ('state', '!=', 'draft')]}" name="action_confirm" string="Confirm Sale" class="btn-primary o_sale_confirm" type="object"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="wokr_order_inherit_view" model="ir.ui.view">
+            <field name="name">work.order.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="booking_service_V2.view_picking_form_booking"/>
+            <field name="arch" type="xml">
+                <field name="team_leader" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="product_ids" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                 <field name="state" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,partially_available,assigned,done"/>
+                </field>
+                <!--<xpath expr="//button[@name='do_new_transfer']" position="replace">-->
+                     <!--<button name="do_new_transfer" string="Validate" type="object" class="oe_highlight"-->
+                         <!--groups="stock.group_stock_user,booking_service_V2.group_user,booking_service_V2.group_manager"-->
+                         <!--attrs="{'invisible':['|',('is_booking','=',True),('state', 'in', (['partially_available', 'done']))]}"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//button[@name='do_new_transfer']" position="before">-->
+                    <!--<button name="action_confirm" states="draft" string="Mark as Todo" type="object" class="oe_highlight" groups="base.group_user"-->
+                        <!--attrs="{'invisible':['|',('is_booking','=',True),('state', 'in', (['partially_available', 'done']))]}"/>-->
+                <!--</xpath>-->
+
+            </field>
+        </record>
+
+        <record id="booking_team_inherit_view" model="ir.ui.view">
+            <field name="name">booking.team.inherit</field>
+            <field name="model">booking.team</field>
+            <field name="inherit_id" ref="booking_service_V2.team_form_view"/>
+            <field name="arch" type="xml">
+                <field name="team_leader" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="product_ids" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="booking_setting_inherit_view" model="ir.ui.view">
+            <field name="name">booking.setting.inherit</field>
+            <field name="model">booking.settings</field>
+            <field name="inherit_id" ref="booking_service_restriction_reusable.booking_setting_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <field name="blook_by_equipment" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

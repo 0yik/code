@@ -1,0 +1,394 @@
+<odoo>
+    <template id="report_absolutepiano_external_layout_header">
+        <div class="header">
+            <div class="row">
+                <div class="col-xs-5">
+                    <div class="row" style="font-size: 14px;">
+                        <div class="col-xs-12">
+                            <b>
+                                <span t-field="company.name"/>
+                            </b>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size: 14px;margin-bottom:10px;">
+                        <div class="col-xs-12">
+                            GST Registration. No.
+                            <span t-field="company.vat"/>
+                        </div>
+                    </div>
+
+                    <div class="row" style='font-size:14px;'>
+                        <div class="col-xs-12">
+                            <span t-field="company.street"/>
+                        </div>
+                    </div>
+                    <div class="row" style='font-size:14px;margin-bottom:10px;'>
+                        <div class="col-xs-12">
+                            <span t-field="company.street2"/>,
+                            <span t-field="company.country_id"/>
+                            <span t-field="company.zip"/>
+                        </div>
+                    </div>
+                    <div class="row" style='font-size:14px;'>
+                        <div class="col-xs-12">
+                            Tel:
+                            <span t-field="company.phone"/>
+                        </div>
+                    </div>
+                    <div class="row" style='font-size:14px;'>
+                        <div class="col-xs-12">
+                            E:
+                            <span t-field="company.email"/>
+                        </div>
+                    </div>
+                    <div class="row" style='font-size:14px;'>
+                        <div class="col-xs-12">
+                            W:
+                            <span t-field="company.website"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-offset-4 col-xs-3">
+                    <img src="/absolutepiano_report_modifier/static/src/img/company_logo.png" class="img img-responsive"/>
+
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_absolutepiano_external_layout_footer">
+        <footer>
+            <div class="row">
+                <div class="col-xs-12 pull-right">
+                    <b>
+                        <span>ISO Certified By:</span>
+                    </b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 pull-right">
+                    <img src="/absolutepiano_report_modifier/static/src/img/company_logo.png" class="img img-responsive"/>
+                </div>
+            </div>
+        </footer>
+    </template>
+
+
+    <template id="report_delivery_external_layout">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+
+        <t t-call="absolutepiano_report_modifier.report_absolutepiano_external_layout_header"/>
+        <t t-raw="0"/>
+        <t t-call="absolutepiano_report_modifier.report_absolutepiano_external_layout_footer"/>
+    </template>
+    <template id="absolutepiano_report_modifier.report_delivery_document">
+        <t t-call="report.html_container">
+            <t t-call="absolutepiano_report_modifier.report_delivery_external_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-offset-6 col-xs-6" style="font-size:25px;">
+                            TAX Invoice
+                            <span t-field="o.name" style="color:#ab2931;"/>
+                        </div>
+                    </div>
+                    <hr style="border-color: #ab2931;margin-top: 5px;margin-bottom: 0px;"/>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="row" style="color:#ab2931;font-size: 14px;margin-bottom:10px;">
+                                <div class="col-xs-12">
+                                    <b>Bill To:</b>
+                                </div>
+                            </div>
+                            <div class="row" style=";font-size: 14px;margin-bottom:10px;">
+                                <div t-if="o.move_lines and o.move_lines[0].partner_id" name="partner_header">
+                                    <div class="col-xs-12">
+                                        <span t-field="o.move_lines[0].partner_id.name"/>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <span t-field="o.move_lines[0].partner_id.street"/>,
+                                    </div>
+                                    <div class="col-xs-12" style="margin-bottom:10px">
+                                        <span t-field="o.move_lines[0].partner_id.street2"/>
+                                        <span t-field="o.move_lines[0].partner_id.country_id"/>
+                                        <span t-field="o.move_lines[0].partner_id.zip"/>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        Contact:
+                                        <span t-field="o.move_lines[0].partner_id.phone"/>
+                                    </div>
+                                </div>
+                                <div t-if="not (o.move_lines and o.move_lines[0].partner_id) and o.partner_id" name="partner_header">
+                                    <div class="col-xs-12">
+                                        <span t-field="o.partner_id.name"/>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <span t-field="o.partner_id.street"/>,
+                                    </div>
+                                    <div class="col-xs-12" style="margin-bottom:10px">
+                                        <span t-field="o.partner_id.street2"/>
+                                        <span t-field="o.partner_id.country_id"/>
+                                        <span t-field="o.partner_id.zip"/>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        Contact:
+                                        <span t-field="o.partner_id.phone"/>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="row" style="color:#ab2931;font-size: 14px;margin-bottom:10px;">
+                                <div class="col-xs-12">
+                                    <b>Ship To:</b>
+                                </div>
+                            </div>
+                            <div class="row" style="font-size: 14px;margin-bottom:10px;">
+                                <div class="col-xs-12">
+                                    <span t-field="o.partner_id.name"/>
+                                </div>
+                                <div class="col-xs-12">
+                                    <span t-field="o.partner_id.street"/>,
+                                </div>
+                                <div class="col-xs-12" style="margin-bottom:10px">
+                                    <span t-field="o.partner_id.street2"/>
+                                    <span t-field="o.partner_id.country_id"/>
+                                    <span t-field="o.partner_id.zip"/>
+                                </div>
+                                <div class="col-xs-12">
+                                    Contact:
+                                    <span t-field="o.partner_id.phone"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="row" style="font-size: 12px;margin-bottom:10px;">
+                                <div class='col-xs-6' style="color:#ab2931;">
+                                    <b>Invoice Date:</b>
+                                </div>
+                                <div class='col-xs-6' style="float:left;">
+                                    <t t-if="o.state == 'done'">
+                                        <span t-esc="o._get_invoice_date()" t-options="{'widget': 'date'}"/>
+                                    </t>
+                                    <t t-if="o.state != 'done'">
+                                        <span t-esc="o._get_invoice_date()" t-options="{'widget': 'date'}"/>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row" style="font-size: 12px;margin-bottom:10px;">
+                                <div class='col-xs-6' style="color:#ab2931;">
+                                    <b>Shipping Date:</b>
+                                </div>
+                                <div class='col-xs-6' style="float:left;">
+                                    <span t-field="o.min_date" t-options="{'widget': 'date'}"></span>
+                                </div>
+                            </div>
+                            <div class="row" style="font-size: 12px;margin-bottom:10px;">
+                                <div class='col-xs-6' style="color:#ab2931;">
+                                    <b>Ref No:</b>
+                                </div>
+                                <div class='col-xs-6' style="float:left;">
+                                    <span t-field="o.carrier_tracking_ref"></span>
+                                </div>
+                            </div>
+                            <div class="row" style="font-size: 12px;margin-bottom:10px;">
+                                <div class='col-xs-6' style="color:#ab2931;">
+                                    <b>Due Date:</b>
+                                </div>
+                                <div class='col-xs-6' style="float:left;">
+                                    <span t-esc="o._get_delivery_date_due()" t-options="{'widget': 'date'}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <t t-set="backorder" t-value="False"/>
+                    <table class="table table-condensed mt48" t-if="o.pack_operation_ids"
+                           style="border:1px solid #ccc;">
+                        <t t-set="has_serial_number" t-value="o.pack_operation_ids.filtered('pack_lot_ids')"
+                           groups="stock.group_production_lot"/>
+                        <thead>
+                            <tr style="background-color:#dc1010; color:white;">
+                                <th class="text-center" style="border-left:1px solid #ccc;">
+
+                                </th>
+                                <th class="text-center" style="border-left:1px solid #ccc;">
+                                    Code
+                                </th>
+                                <th class="text-center" style="border-left:1px solid #ccc;">
+                                    Product
+                                </th>
+                                <th name="lot_serial" t-if="has_serial_number" class="text-center"
+                                    style="border-left:1px solid #ccc;">
+                                    Lot/Serial Number
+                                </th>
+                                <th class="text-center" style="border-left:1px solid #ccc;">
+                                    Ordered Quantity
+                                </th>
+                                <th t-if="any([pack_operation.state == 'done' for pack_operation in o.pack_operation_ids])"
+                                    class="text-center" style="border-left:1px solid #ccc;">
+                                    <strong>Delivered Quantity</strong>
+                                </th>
+                                <th class="text-center" style="border-left:1px solid #ccc;">
+                                    Unit Price
+                                </th>
+                                <th class="text-center" style="border-left:1px solid #ccc;">
+                                    Amount
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="count" t-value="1"/>
+                            <tr t-foreach="o.pack_operation_ids" t-as="pack_operation">
+                                <td class="text-center" style="border-left:1px solid #ccc;">
+                                    <span t-esc="count"/>
+                                    <t t-set="count" t-value="count+1"/>
+                                </td>
+                                <td class="text-center" style="border-left:1px solid #ccc;">
+                                    <span t-field="pack_operation.product_id.default_code"/>
+                                    <t t-if="not pack_operation.product_id and pack_operation.package_id">
+                                        <span t-field="pack_operation.package_id"/>
+                                    </t>
+                                </td>
+                                <td class="text-center" style="border-left:1px solid #ccc;">
+                                    <span t-field="pack_operation.product_id.name"/>
+                                    <t t-if="not pack_operation.product_id and pack_operation.package_id">
+                                        <span t-field="pack_operation.package_id"/>
+                                    </t>
+                                </td>
+                                <t t-if="has_serial_number">
+                                    <td t-if="pack_operation.pack_lot_ids" class="text-center"
+                                        style="border-left:1px solid #ccc;">
+                                        <table class="table table-condensed" t-if="pack_operation.pack_lot_ids">
+                                            <tr t-foreach="pack_operation.pack_lot_ids" t-as="packlot">
+                                                <td class="text-center" style="border-left:1px solid #ccc;">
+                                                    <span t-field="packlot.lot_id"/>
+                                                    <t t-if="not packlot.lot_id">
+                                                        <span t-field="packlot.lot_name"/>
+                                                    </t>
+                                                </td>
+                                                <td name="lot_qty" class="text-center"
+                                                    style="border-left:1px solid #ccc;">
+                                                    <span t-field="packlot.qty"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td t-if="not pack_operation.pack_lot_ids"/>
+                                </t>
+                                <td class="text-center" style="border-left:1px solid #ccc;">
+                                    <span t-if="pack_operation.package_id">:</span>
+                                    <span t-field="pack_operation.package_id"/>
+                                    <span t-field="pack_operation.ordered_qty"/>
+                                    <span t-field="pack_operation.product_uom_id"/>
+                                </td>
+                                <td class="text-center" style="border-left:1px solid #ccc;"
+                                    t-if="pack_operation.state == 'done'">
+                                    <t t-if="pack_operation.ordered_qty != pack_operation.qty_done">
+                                        <t t-set="backorder" t-value="True"/>
+                                    </t>
+                                    <span t-field="pack_operation.qty_done"/>
+                                    <span t-field="pack_operation.product_uom_id"/>
+                                </td>
+                                <td class="text-center" style="border-left:1px solid #ccc;">
+                                    <span t-field="pack_operation.product_id.list_price"></span>
+                                </td>
+                                <td class="text-center" style="border-left:1px solid #ccc;">
+
+                                    <span t-esc="pack_operation.product_id.list_price * pack_operation.ordered_qty"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="row">
+                        <div class="col-xs-4 pull-right">
+                            <table style="border-color:white !important;width: 100%;max-width: 100%;margin-bottom: 20px;">
+                                <tr>
+                                    <td>
+                                        <strong>Subtotal</strong>
+                                    </td>
+                                    <t t-set="subtotal" t-value="0"/>
+                                    <td class="text-right">
+                                        <t t-foreach="o.pack_operation_ids" t-as="pack_operation">
+                                            <t t-set="subtotal" t-value="subtotal+(pack_operation.product_id.list_price * pack_operation.ordered_qty)"/>
+                                        </t>
+                                        <span t-esc="subtotal"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>GST 7.0%</span>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="o._get_stock_text_amount()"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Shipping</span>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="o._get_delivery_price_amount()"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <!--<strong>Total</strong>-->
+                                    </td>
+                                    <td class="text-right">
+                                        <b>
+                                            <h4 t-esc="subtotal + o._get_stock_text_amount() + o._get_delivery_price_amount()" style="font-weight:800;"
+                                                />
+                                        </b>
+                                    </td>
+                                </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Paid</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="(subtotal + o._get_stock_text_amount() + o._get_delivery_price_amount())- o._get_stock_payment_amount()"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span>Due</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="o._get_stock_payment_amount()"/>
+                                        </td>
+                                    </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <hr style="border-color: #ab2931;margin-top: 10px;margin-bottom: 0px;"/>
+                    <div class="row">
+                        <div class="col-xs-12" style="margin-top:10px;">
+                            <span>Remark</span>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="report_deliveryslip_extended" inherit_id="stock.report_deliveryslip">
+        <t t-call="stock.report_delivery_document" position='replace'>
+            <t t-foreach="docs" t-as="o">
+                <t t-call="absolutepiano_report_modifier.report_delivery_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

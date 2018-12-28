@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="report_product_cooking_list"
+            string="Cooking List"
+            model="product.product"
+            report_type="qweb-pdf"
+            name="cooking_list.report_product_cookinglist"
+            file="cooking_list.report_product_cookinglist"/>
+
+    </data>
+</openerp>

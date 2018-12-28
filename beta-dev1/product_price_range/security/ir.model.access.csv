@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_remark_user,remark_user,model_remark,,1,1,1,1
+access_other_input_user,remark_user,model_other_input,,1,1,1,1
+access_child_detail_user,child_detail_user,model_child_detail,,1,1,1,1
+access_cessation_reason_user,cessation_reason_user,model_cessation_reason,,1,1,1,1
+access_division_user,division_user,model_division,,1,1,1,1
+access_job_family_user,job_family_user,model_job_family,,1,1,1,1
+access_vo_log_change,access_vo_log_change,model_vo_log_change,,1,1,1,1
+access_purchase_request_delivery_address_all,purchase_request_delivery_addressall_all,model_purchase_request_delivery_address,,1,1,1,1
+access_dependents_relation_all,dependents_relation_all,model_dependents_relation,,1,1,1,1

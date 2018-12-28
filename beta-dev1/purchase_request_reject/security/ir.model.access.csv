@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_reject_reason_public,reject_reason_group_public,model_reject_reason,,1,1,1,1
+access_purchase_request_reject_popup_public,purchase_request_reject_popup_group_public,model_purchase_request_reject_popup,,1,1,1,1
+
+

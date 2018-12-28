@@ -1,0 +1,778 @@
+<odoo>
+    <data noupdate="0">
+
+        <record id="product_brand_SCIEX" model="product.brand.list">
+            <field name="name">SCIEX</field>
+        </record>
+
+        <record id="product_category_SCIEX_INSTRUMENT" model="product.category.list">
+            <field name="name">INSTRUMENT</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+        </record>
+
+        <record id="product_category_SCIEX_INSTRUMENT_SPAREPARTS" model="product.sub.category.list">
+            <field name="name">SPAREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SCIEX_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_SCIEX_INSTRUMENT_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SCIEX_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_SCIEX_SOFTWARE" model="product.category.list">
+            <field name="name">SOFTWARE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+        </record>
+
+        <record id="product_category_SCIEX_SOFTWARE_SPAREPARTS" model="product.sub.category.list">
+            <field name="name">SPAREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SCIEX_SOFTWARE"/>
+        </record>
+
+        <record id="product_category_SCIEX_SOFTWARE_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SCIEX_SOFTWARE"/>
+        </record>
+
+        <record id="product_category_SCIEX_REAGEN_CONSUMABLE" model="product.category.list">
+            <field name="name">REAGEN &amp; CONSUMABLE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+        </record>
+
+        <record id="product_category_SCIEX_REAGEN_CONSUMABLE_SPAREPARTS" model="product.sub.category.list">
+            <field name="name">SPAREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SCIEX_REAGEN_CONSUMABLE"/>
+        </record>
+
+        <record id="product_category_SCIEX_REAGEN_CONSUMABLE_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SCIEX_REAGEN_CONSUMABLE"/>
+        </record>
+
+        <record id="product_category_SCIEX_SERVICE" model="product.category.list">
+            <field name="name">SERVICE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+        </record>
+
+        <record id="product_category_SCIEX_SERVICE_SPAREPARTS" model="product.sub.category.list">
+            <field name="name">SPAREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SCIEX_SERVICE"/>
+        </record>
+
+        <record id="product_category_SCIEX_SERVICE_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SCIEX"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SCIEX_SERVICE"/>
+        </record>
+
+        <record id="product_brand_WHATMAN" model="product.brand.list">
+            <field name="name">WHATMAN</field>
+        </record>
+
+        <record id="product_category_WHATMAN_BIACORE" model="product.category.list">
+            <field name="name">BIACORE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+        </record>
+
+        <record id="product_category_82_BIACORE_CONSUMABLES" model="product.sub.category.list">
+            <field name="name">82 BIACORE CONSUMABLES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_BIACORE"/>
+        </record>
+
+        <record id="product_category_WHATMAN_CELL_ANALYSIS" model="product.category.list">
+            <field name="name">CELL ANALYSIS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+        </record>
+
+        <record id="product_category_39_CELL_ANALYSIS" model="product.sub.category.list">
+            <field name="name">39 CELL ANALYSIS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_CELL_ANALYSIS"/>
+        </record>
+
+        <record id="product_category_WHATMAN_CELL_THERAPY" model="product.category.list">
+            <field name="name">CELL THERAPY</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+        </record>
+
+        <record id="product_category_1_DENSITY_GRADIENT_MEDIA" model="product.sub.category.list">
+            <field name="name">1 DENSITY GRADIENT MEDIA</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_CELL_THERAPY"/>
+        </record>
+
+        <record id="product_category_2_XURI_W_BIOREACTORS" model="product.sub.category.list">
+            <field name="name">2 XURI W BIOREACTORS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_CELL_THERAPY"/>
+        </record>
+
+        <record id="product_category_3_XURI_CELL_CULTURE_MEDIA" model="product.sub.category.list">
+            <field name="name">3 XURI CELL CULTURE MEDIA</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_CELL_THERAPY"/>
+        </record>
+
+        <record id="product_category_WHATMAN_HID" model="product.category.list">
+            <field name="name">HID</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+        </record>
+
+        <record id="product_category_22_SAMPLE_COLLECTION_FORENSICS" model="product.sub.category.list">
+            <field name="name">22 SAMPLE COLLECTION FORENSICS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_HID"/>
+        </record>
+
+        <record id="product_category_77_SAMPLE_COLLECTION_RESEARCH" model="product.sub.category.list">
+            <field name="name">77 SAMPLE COLLECTION RESEARCH</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_HID"/>
+        </record>
+
+
+        <record id="product_category_WHATMAN_LS_CONS" model="product.category.list">
+            <field name="name">LS CONS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+        </record>
+
+        <record id="product_category_8_MAGNETIC_BEADS" model="product.sub.category.list">
+            <field name="name">8 MAGNETIC BEADS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_CONS"/>
+        </record>
+
+        <record id="product_category_21_NUCLEIC_ACID_BLOTTING_AND_DETECTION" model="product.sub.category.list">
+            <field name="name">21 NUCLEIC ACID BLOTTING AND DETECTION</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_CONS"/>
+        </record>
+
+        <record id="product_category_24_GENOMICS" model="product.sub.category.list">
+            <field name="name">24 GENOMICS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_CONS"/>
+        </record>
+
+        <record id="product_category_26_1D_WB_CONSUMABLES" model="product.sub.category.list">
+            <field name="name">26 1D WB CONSUMABLES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_CONS"/>
+        </record>
+
+        <record id="product_category_32_CUSTOM_MOLECULAR_REAGENTS" model="product.sub.category.list">
+            <field name="name">32 CUSTOM MOLECULAR REAGENTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_CONS"/>
+        </record>
+
+        <record id="product_category_41_1D_WB_OTHER" model="product.sub.category.list">
+            <field name="name">41 1D WB OTHER</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_CONS"/>
+        </record>
+
+        <record id="product_category_44_CATALOGUE_CYDYE" model="product.sub.category.list">
+            <field name="name">44 CATALOGUE CYDYE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_CONS"/>
+        </record>
+
+        <record id="product_category_45_AMERSHAM_WB_SYSTEM" model="product.sub.category.list">
+            <field name="name">45 AMERSHAM WB SYSTEM</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_CONS"/>
+        </record>
+
+        <record id="product_category_50_CATALOGUE_MAG_BEADS" model="product.sub.category.list">
+            <field name="name">50 CATALOGUE MAG BEADS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_CONS"/>
+        </record>
+
+        <record id="product_category_51_2D_ELECTROPHORESIS_AND_DETECTION" model="product.sub.category.list">
+            <field name="name">51 2D ELECTROPHORESIS AND DETECTION</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_CONS"/>
+        </record>
+
+        <record id="product_category_68_BIOTRAK_IMMUNOASSAYS" model="product.sub.category.list">
+            <field name="name">68 BIOTRAK IMMUNOASSAYS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_CONS"/>
+        </record>
+
+        <record id="product_category_WHATMAN_LS_FILTRATION" model="product.category.list">
+            <field name="name">LS FILTRATION</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+        </record>
+
+        <record id="product_category_35_LAB_FILTRATION_GF" model="product.sub.category.list">
+            <field name="name">35 LAB FILTRATION GF</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_FILTRATION"/>
+        </record>
+
+        <record id="product_category_62_CUSTOM_MEMBRANES" model="product.sub.category.list">
+            <field name="name">62 CUSTOM MEMBRANES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_FILTRATION"/>
+        </record>
+
+        <record id="product_category_65_MEMBRANES" model="product.sub.category.list">
+            <field name="name">65 MEMBRANES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_FILTRATION"/>
+        </record>
+
+        <record id="product_category_67_CUSTOM_LAB_FILTRATION_CF_GF" model="product.sub.category.list">
+            <field name="name">67 CUSTOM LAB FILTRATION CF &amp; GF</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_FILTRATION"/>
+        </record>
+
+        <record id="product_category_75_LAB_FILTRATION_CF" model="product.sub.category.list">
+            <field name="name">75 LAB FILTRATION CF</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_FILTRATION"/>
+        </record>
+
+        <record id="product_category_76_LAB_FILTRATION_DEVICES" model="product.sub.category.list">
+            <field name="name">76 LAB FILTRATION DEVICES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_LS_FILTRATION"/>
+        </record>
+
+        <record id="product_category_WHATMAN_MICROSCOPY" model="product.category.list">
+            <field name="name">MICROSCOPY</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+        </record>
+
+        <record id="product_category_61_MICROSCOPY_" model="product.sub.category.list">
+            <field name="name">61 MICROSCOPY</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_WHATMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_WHATMAN_MICROSCOPY"/>
+        </record>
+
+
+        <record id="product_brand_BIOSAFE" model="product.brand.list">
+            <field name="name">BIOSAFE</field>
+        </record>
+
+        <record id="product_category_BIOSAFE_INSTRUMENT" model="product.category.list">
+            <field name="name">INSTRUMENT</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+        </record>
+
+        <record id="product_category_BIOSAFE_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_BIOSAFE_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_BIOSAFE_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_BIOSAFE_PROTOCOL_SOFTWARE" model="product.category.list">
+            <field name="name">PROTOCOL/SOFTWARE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+        </record>
+
+        <record id="product_category_BIOSAFE_PROTOCOL_SOFTWARE_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_BIOSAFE_PROTOCOL_SOFTWARE"/>
+        </record>
+
+        <record id="product_category_PROTOCOL_SOFTWARE_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_BIOSAFE_PROTOCOL_SOFTWARE"/>
+        </record>
+
+        <record id="product_category_BIOSAFE_KITS" model="product.category.list">
+            <field name="name">KITS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+        </record>
+
+        <record id="product_category_BIOSAFE_KITS_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_BIOSAFE_KITS"/>
+        </record>
+
+        <record id="product_category_KITS_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_BIOSAFE_KITS"/>
+        </record>
+
+        <record id="product_category_BIOSAFE_ACCESSORIES" model="product.category.list">
+            <field name="name">ACCESSORIES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+        </record>
+
+        <record id="product_category_BIOSAFE_ACCESSORIES_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_BIOSAFE_ACCESSORIES"/>
+        </record>
+
+        <record id="product_category_ACCESSORIES_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_BIOSAFE_ACCESSORIES"/>
+        </record>
+
+        <record id="product_category_BIOSAFE_SERVICE" model="product.category.list">
+            <field name="name">SERVICE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+        </record>
+
+        <record id="product_category_BIOSAFE_SERVICE_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_BIOSAFE_SERVICE"/>
+        </record>
+
+        <record id="product_category_SERVICE_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_BIOSAFE"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_BIOSAFE_SERVICE"/>
+        </record>
+
+        <record id="product_brand_DELTA_INSTRUMENT" model="product.brand.list">
+            <field name="name">DELTA INSTRUMENT</field>
+        </record>
+
+        <record id="product_category_DELTA_INSTRUMENT_INSTRUMENT_ACC" model="product.category.list">
+            <field name="name">INSTRUMENT &amp; ACC</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_DELTA_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_DELTA_INSTRUMENT_INSTRUMENT_ACC_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_DELTA_INSTRUMENT"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_DELTA_INSTRUMENT_INSTRUMENT_ACC"/>
+        </record>
+
+        <record id="product_category_DELTA_INSTRUMENT_INSTRUMENT_ACC_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_DELTA_INSTRUMENT"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_DELTA_INSTRUMENT_INSTRUMENT_ACC"/>
+        </record>
+
+        <record id="product_category_DELTA_INSTRUMENT_CONSUMABLES" model="product.category.list">
+            <field name="name">CONSUMABLES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_DELTA_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_DELTA_INSTRUMENT_CONSUMABLES_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_DELTA_INSTRUMENT"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_DELTA_INSTRUMENT_CONSUMABLES"/>
+        </record>
+
+        <record id="product_category_DELTA_INSTRUMENT_CONSUMABLES_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_DELTA_INSTRUMENT"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_DELTA_INSTRUMENT_CONSUMABLES"/>
+        </record>
+
+        <record id="product_category_DELTA_INSTRUMENT_SERVICE" model="product.category.list">
+            <field name="name">SERVICE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_DELTA_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_DELTA_INSTRUMENT_SERVICE_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_DELTA_INSTRUMENT"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_DELTA_INSTRUMENT_SERVICE"/>
+        </record>
+
+        <record id="product_category_DELTA_INSTRUMENT_SERVICE_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_DELTA_INSTRUMENT"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_DELTA_INSTRUMENT_SERVICE"/>
+        </record>
+
+        <record id="product_brand_CELSIS" model="product.brand.list">
+            <field name="name">CELSIS</field>
+        </record>
+
+        <record id="product_category_CELSIS_INSTRUMENT" model="product.category.list">
+            <field name="name">INSTRUMENT</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+        </record>
+
+        <record id="product_category_CELSIS_INSTRUMENT_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_CELSIS_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_CELSIS_INSTRUMENT_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_CELSIS_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_CELSIS_REAGEN" model="product.category.list">
+            <field name="name">REAGEN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+        </record>
+
+        <record id="product_category_CELSIS_REAGEN_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_CELSIS_REAGEN"/>
+        </record>
+
+        <record id="product_category_CELSIS_REAGEN_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_CELSIS_REAGEN"/>
+        </record>
+
+        <record id="product_category_CELSIS_SOFTWARE" model="product.category.list">
+            <field name="name">SOFTWARE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+        </record>
+
+        <record id="product_category_CELSIS_SOFTWARE_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_CELSIS_SOFTWARE"/>
+        </record>
+
+        <record id="product_category_CELSIS_SOFTWARE_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_CELSIS_SOFTWARE"/>
+        </record>
+
+        <record id="product_category_CELSIS_SERVICE" model="product.category.list">
+            <field name="name">SERVICE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+        </record>
+
+        <record id="product_category_CELSIS_SERVICE_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_CELSIS_SERVICE"/>
+        </record>
+
+        <record id="product_category_CELSIS_SERVICE_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_CELSIS"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_CELSIS_SERVICE"/>
+        </record>
+
+        <record id="product_brand_HUMAN" model="product.brand.list">
+            <field name="name">HUMAN</field>
+        </record>
+
+        <record id="product_category_HUMAN_INSTRUMENT" model="product.category.list">
+            <field name="name">INSTRUMENT</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+        </record>
+
+        <record id="product_category_HUMAN_INSTRUMENT_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_HUMAN_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_HUMAN_INSTRUMENT_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_HUMAN_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_HUMAN_ACCESSORIES" model="product.category.list">
+            <field name="name">ACCESSORIES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+        </record>
+
+        <record id="product_category_HUMAN_ACCESSORIES_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_HUMAN_ACCESSORIES"/>
+        </record>
+
+        <record id="product_category_HUMAN_ACCESSORIES_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_HUMAN_ACCESSORIES"/>
+        </record>
+
+        <record id="product_category_HUMAN_CONSUMABLES" model="product.category.list">
+            <field name="name">CONSUMABLES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+        </record>
+
+        <record id="product_category_HUMAN_CONSUMABLES_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_HUMAN_CONSUMABLES"/>
+        </record>
+
+        <record id="product_category_HUMAN_CONSUMABLES_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_HUMAN_CONSUMABLES"/>
+        </record>
+
+        <record id="product_category_HUMAN_SERVICE" model="product.category.list">
+            <field name="name">SERVICE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+        </record>
+
+        <record id="product_category_HUMAN_SERVICE_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_HUMAN_SERVICE"/>
+        </record>
+
+        <record id="product_category_HUMAN_SERVICE_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_HUMAN"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_HUMAN_SERVICE"/>
+        </record>
+
+        <record id="product_brand_PEAK_SCIENTIFIC" model="product.brand.list">
+            <field name="name">PEAK SCIENTIFIC</field>
+        </record>
+
+        <record id="product_category_PEAK_SCIENTIFIC_INSTRUMENT" model="product.category.list">
+            <field name="name">INSTRUMENT</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_PEAK_SCIENTIFIC"/>
+        </record>
+
+        <record id="product_category_PEAK_SCIENTIFIC_INSTRUMENT_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_PEAK_SCIENTIFIC"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_PEAK_SCIENTIFIC_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_PEAK_SCIENTIFIC_INSTRUMENT_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_PEAK_SCIENTIFIC"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_PEAK_SCIENTIFIC_INSTRUMENT"/>
+        </record>
+
+        <record id="product_category_PEAK_SCIENTIFIC_SPAREPARTS" model="product.category.list">
+            <field name="name">SPAREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_PEAK_SCIENTIFIC"/>
+        </record>
+
+        <record id="product_category_PEAK_SCIENTIFIC_SPAREPARTS_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_PEAK_SCIENTIFIC"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_PEAK_SCIENTIFIC_SPAREPARTS"/>
+        </record>
+
+        <record id="product_category_PEAK_SCIENTIFIC_SPAREPARTS_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_PEAK_SCIENTIFIC"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_PEAK_SCIENTIFIC_SPAREPARTS"/>
+        </record>
+
+        <record id="product_category_PEAK_SCIENTIFIC_SERVICE" model="product.category.list">
+            <field name="name">SERVICE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_PEAK_SCIENTIFIC"/>
+        </record>
+
+        <record id="product_category_PEAK_SCIENTIFIC_SERVICE_SAPREPARTS" model="product.sub.category.list">
+            <field name="name">SAPREPARTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_PEAK_SCIENTIFIC"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_PEAK_SCIENTIFIC_SERVICE"/>
+        </record>
+
+        <record id="product_category_PEAK_SCIENTIFIC_SERVICE_WARRANTY_SERVICE_PLAN" model="product.sub.category.list">
+            <field name="name">WARRANTY &amp; SERVICE PLAN</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_PEAK_SCIENTIFIC"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_PEAK_SCIENTIFIC_SERVICE"/>
+        </record>
+
+        <record id="product_brand_SIGMA_ALDRICH" model="product.brand.list">
+            <field name="name">SIGMA ALDRICH</field>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_BIOMONITORING" model="product.category.list">
+            <field name="name">BIOMONITORING</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_BIOMONITORING_A_CORE_PRODUCTS" model="product.sub.category.list">
+            <field name="name">A. CORE PRODUCTS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_BIOMONITORING"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_ADVANCED_ANALYTICAL" model="product.category.list">
+            <field name="name">ADVANCED ANALYTICAL</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_ADVANCED_ANALYTICAL_INSTRUMENTAL_ANALYTICS" model="product.sub.category.list">
+            <field name="name">A. INSTRUMENTAL ANALYTICS (IA)</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_ADVANCED_ANALYTICAL"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_ADVANCED_ANALYTICAL_B" model="product.sub.category.list">
+            <field name="name">B. POINT-OF-USE (POU)</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_ADVANCED_ANALYTICAL"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_ADVANCED_ANALYTICAL_C" model="product.sub.category.list">
+            <field name="name">C. REFERENCE MATERIALS (RM)</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_ADVANCED_ANALYTICAL"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_ADVANCED_ANALYTICAL_D" model="product.sub.category.list">
+            <field name="name">D. REFERENCE MATERIALS CERILLIANT</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_ADVANCED_ANALYTICAL"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_ADVANCED_ANALYTICAL_E" model="product.sub.category.list">
+            <field name="name">E. SEPARATIONS CONSUMABLES (SC)</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_ADVANCED_ANALYTICAL"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS" model="product.category.list">
+            <field name="name">BIOSYSTEMS AND REGULATED MATERIALS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS_A" model="product.sub.category.list">
+            <field name="name">A. ADVANCED GENOMICS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS_B" model="product.sub.category.list">
+            <field name="name">B. BRM APPLIED BIOLOGY – SIGMA</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS_C" model="product.sub.category.list">
+            <field name="name">C. BRM APPLIED LAB ESSENTIALS - SIGMA</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS_D" model="product.sub.category.list">
+            <field name="name">D. FLAVORS &amp; FRAGRANCES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS_E" model="product.sub.category.list">
+            <field name="name">E. BEADS &amp; FUSION</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS_F" model="product.sub.category.list">
+            <field name="name">F. LI APPLIED BIOLOGY - SIGMA</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_BIOSYSTEMS_AND_REGULATED_MATERIALS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LIFE_SCIENCE_REAGENTS_AND_KITS" model="product.category.list">
+            <field name="name">LIFE SCIENCE REAGENTS AND KITS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LIFE_SCIENCE_REAGENTS_AND_KITS_A" model="product.sub.category.list">
+            <field name="name">A. MOLECULAR PLATFORMS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_LIFE_SCIENCE_REAGENTS_AND_KITS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LIFE_SCIENCE_REAGENTS_AND_KITS_B" model="product.sub.category.list">
+            <field name="name">B. PROTEIN &amp; PATHWAY TECHNOLOGIES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_LIFE_SCIENCE_REAGENTS_AND_KITS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LIFE_SCIENCE_REAGENTS_AND_KITS_C" model="product.sub.category.list">
+            <field name="name">C. CELL BIOLOGY</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_LIFE_SCIENCE_REAGENTS_AND_KITS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LIFE_SCIENCE_REAGENTS_AND_KITS_D" model="product.sub.category.list">
+            <field name="name">D. IMMUNOASSAY PLATFORM SOLUTIONS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_LIFE_SCIENCE_REAGENTS_AND_KITS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LAB_AND_SPECIALTY_CHEMICALS" model="product.category.list">
+            <field name="name">LAB AND SPECIALTY CHEMICALS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+        </record>
+
+         <record id="product_category_SIGMA_ALDRICH_LAB_AND_SPECIALTY_CHEMICALS_A" model="product.sub.category.list">
+            <field name="name">A. LAB CLASSICS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_LAB_AND_SPECIALTY_CHEMICALS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LAB_AND_SPECIALTY_CHEMICALS_B" model="product.sub.category.list">
+            <field name="name">B. CHEMICAL SYNTHESIS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_LAB_AND_SPECIALTY_CHEMICALS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LAB_AND_SPECIALTY_CHEMICALS_C" model="product.sub.category.list">
+            <field name="name">C. BIOCHEMISTRY</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_LAB_AND_SPECIALTY_CHEMICALS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LAB_AND_SPECIALTY_CHEMICALS_D" model="product.sub.category.list">
+            <field name="name">D. MATERIAL SCIENCE</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_LAB_AND_SPECIALTY_CHEMICALS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LAB_AND_SPECIALTY_CHEMICALS_E" model="product.sub.category.list">
+            <field name="name">E. DISCOVERY CHEMISTRY &amp; SERVICES</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_LAB_AND_SPECIALTY_CHEMICALS"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LAB_SEPARATION_AND_WORKFLOW_TOOLS" model="product.category.list">
+            <field name="name">LAB SEPARATION AND WORKFLOW TOOLS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+        </record>
+
+        <record id="product_category_SIGMA_ALDRICH_LAB_SEPARATION_AND_WORKFLOW_TOOLS_WORKFLOW" model="product.sub.category.list">
+            <field name="name">A. LAB SEPARATION AND WORKFLOW TOOLS</field>
+            <field name="brand_id" ref="laborindo_product_brand_list.product_brand_SIGMA_ALDRICH"/>
+            <field name="category_id" ref="laborindo_product_brand_list.product_category_SIGMA_ALDRICH_LAB_SEPARATION_AND_WORKFLOW_TOOLS"/>
+        </record>
+
+
+    </data>
+</odoo>

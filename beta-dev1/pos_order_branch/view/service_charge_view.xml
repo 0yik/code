@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+    <odoo>
+        <record id="view_service_charge_tree" model="ir.ui.view">
+            <field name="name">service.charge.tree</field>
+            <field name="model">service.charge</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <tree string="Service Charge">
+                <field name="name"/>
+                <field name="service_charge_computation"/>
+                <field name="amount"/>
+                <field name="service_charge_account_id"/>
+                <field name="service_charge_account_refund_id"/>
+            </tree>
+            </field>
+        </record>
+        
+        <record id="view_service_charge_form" model="ir.ui.view">
+            <field name="name">service.charge.form</field>
+            <field name="model">service.charge</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Service Charge">
+                    <sheet string="Service Charge">
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="defination" string="Defination">
+                                <group>
+                                    <group>
+                                        <field name="service_charge_computation"/>
+										<label for="amount"/>
+										<div>
+				                            <field name="amount" class="oe_inline" />
+				                            <label string="%" class="oe_inline" attrs="{'invisible':[('service_charge_computation','=','fixed')]}" />
+										</div>
+                                    </group>
+                                    <group>
+                                        <field name="service_charge_account_id"/>
+                                        <field name="service_charge_account_refund_id"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_service_charge_search" model="ir.ui.view">
+            <field name="name">service.charge.search</field>
+            <field name="model">service.charge</field>
+            <field name="type">search</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <search string="Service Charge">
+                <field name="name"/>
+            </search>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="act_open_service_charge_view">
+            <field name="name">Service Charge</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">service.charge</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_service_charge_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <record model="ir.actions.act_window.view" id="act_open_service_charge_view_form">
+            <field name="act_window_id" ref="act_open_service_charge_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_service_charge_form"/>
+        </record>
+        
+        <record model="ir.actions.act_window.view" id="act_open_service_charge_view_tree">
+            <field name="act_window_id" ref="act_open_service_charge_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_service_charge_tree"/>
+        </record>
+        
+        <menuitem id="menu_service_charge"
+            parent="account.account_account_menu"
+            sequence="2"
+            action="act_open_service_charge_view"/>
+    </odoo>
+</data>

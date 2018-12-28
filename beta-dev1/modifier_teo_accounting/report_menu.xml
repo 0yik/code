@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="paperformat_teo_account" model="report.paperformat">
+            <field name="name">TEO Account Report</field>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">20</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">25</field>
+        </record>
+		
+		<report string="Journal Voucher" id="report_journal_entries"
+			model="account.move" report_type="qweb-pdf"
+			name="modifier_teo_accounting.journal_entries_report" file="modifier_teo_accounting.journal_entries_report" 
+			paperformat="modifier_teo_accounting.paperformat_teo_account" />
+
+		<report string="Payment Voucher" id="report_account_voucher"
+			model="account.voucher" report_type="qweb-pdf"
+			name="modifier_teo_accounting.account_voucher_report" file="modifier_teo_accounting.account_voucher_report" 
+			paperformat="modifier_teo_accounting.paperformat_teo_account" />
+
+		<report string="Generate Receipt" id="customer_receipt_report" model="receipt.payment"
+			report_type="qweb-pdf" name="modifier_teo_accounting.receipt_payment_report"
+			file="modifier_teo_accounting.customer_receipt_report"
+			paperformat="modifier_teo_accounting.paperformat_teo_account" />
+
+	</data>
+</openerp>

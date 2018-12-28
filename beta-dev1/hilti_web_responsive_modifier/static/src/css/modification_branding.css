@@ -1,0 +1,190 @@
+/* HILTI FONTS */
+
+@font-face {
+font-family: "Hilti Small Roman";
+src: url("/hilti_web_responsive_modifier/static/src/css/fonts/HiltiSmallRoman.ttf");
+src:
+url("/hilti_web_responsive_modifier/static/src/css/fonts/HiltiSmallRoman.woff") format("woff"),
+url("/hilti_web_responsive_modifier/static/src/css/fonts/HiltiSmallRoman.otf") format("opentype"),
+url("/hilti_web_responsive_modifier/static/src/css/fonts/HiltiSmall-Roman.svg") format("svg");
+}
+
+
+body{
+    font-family: 'Hilti Small Roman' , Arial !important;
+}
+
+
+
+/* Button style according to HILTI Guidelines*/
+
+.btn-primary, .btn-primary:focus, .btn-primary:hover,
+.btn-primary:active:hover, .btn-primary.active:hover, .open > .dropdown-toggle.btn-primary:hover, .btn-primary:active:focus, .btn-primary.active:focus, .open > .dropdown-toggle.btn-primary:focus, .btn-primary:active.focus, .btn-primary.active.focus, .open > .dropdown-toggle.btn-primary.focus,
+.btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary{
+	background-color: #671A3D !important;
+	border-color: #671A3D !important;
+}
+
+.o_main .o_browse_apps{
+    color : white !important;
+}
+
+
+
+.btn-sm,.btn-sm:focus,.btn-sm:hover,.btn-sm.focus,.btn-sm:active{
+    color : #ffffff !important;
+	background-color: #671A3D !important;
+	border-color: #671A3D !important;
+}
+
+
+
+.o_list_button_edit, .o_list_button_save, .o_list_button_add,.o_list_button_create,
+.o_list_button_edit:hover, .o_list_button_save:hover, .o_list_button_add:hover,.o_list_button_create:hover,
+.o_list_button_edit:focus, .o_list_button_save:focus, .o_list_button_add:focus,.o_list_button_create:focus,
+.o_list_button_edit.focus, .o_list_button_save.focus, .o_list_button_add.focus,.o_list_button_create.focus,
+.o_list_button_edit.active, .o_list_button_save.active, .o_list_button_add.active,.o_list_button_create:active,
+.o_form_button_edit, .o_form_button_save, .o_form_button_add,.o_form_button_create,
+.o_form_button_edit:hover, .o_form_button_save:hover, .o_form_button_add:hover, .o_form_button_create:hover,
+.o_form_button_edit:focus, .o_form_button_save:focus, .o_form_button_add:focus, .o_form_button_create:focus,
+.o_form_button_edit.focus, .o_form_button_save.focus, .o_form_button_add.focus, .o_form_button_create:focus,
+.o_form_button_edit.active, .o_form_button_save.active, .o_form_button_add.active, .o_form_button_create.active{
+	background-color: #D2051E !important;
+	border-color: #D2051E !important;
+}
+
+.table-condensed .o_main{
+    background-color : #DFD8CA !important;
+    color : black !important;
+}
+.table-condensed .o_secondary{
+    background-color : #DFD8CA !important;
+}
+
+.btn-default, .btn-default:hover, .btn-default:focus, .btn-default.focus,.btn-default:active{
+	background-color: #D2051E !important;
+	border-color: #D2051E !important;
+}
+
+.o_dropdown_toggler_btn, .o_dropdown_toggler_btn:focus, .o_dropdown_toggler_btn:hover, .o_dropdown_toggler_btn:active, .o_dropdown_toggler_btn.focus{
+    background-color: #D2051E !important;
+	border-color: #D2051E !important;
+}
+
+
+/* Statusbar modifications  */
+.oe_form_field_status oe_form_status o_form_field > .oe_open{
+    background-color: #D2051E !important;
+	border-color: #D2051E !important;
+}
+
+.o_form_view ul.oe_form_status li.oe_active, .o_form_view ul.oe_form_status_clickable li.oe_active {
+    background-color: #D2051E;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#D2051E), to(#D2051E));
+    background-image: -webkit-linear-gradient(top, #D2051E, #D2051E);
+    background-image: -moz-linear-gradient(top, #D2051E, #D2051E);
+    background-image: -ms-linear-gradient(top, #D2051E, #D2051E);
+    background-image: -o-linear-gradient(top, #D2051E, #D2051E);
+    background-image: linear-gradient(to bottom, #D2051E, #D2051E);
+}
+
+.o_form_view ul.oe_form_status_clickable li > .label {
+	color: #D2051E;
+	border-left: 1px solid #D2051E !important;
+}
+.o_form_view ul.oe_form_status li.oe_active > .label, .o_form_view ul.oe_form_status_clickable li.oe_active > .label{
+    text-shadow: none !important;
+	border-left: 1px solid #D2051E !important;
+}
+
+.o_form_view ul.oe_form_status li.oe_active > .arrow span, .o_form_view ul.oe_form_status_clickable li.oe_active > .arrow span {
+    background-color: #D2051E;
+    background: -moz-linear-gradient(135deg, #D2051E, #D2051E);
+    background: -o-linear-gradient(135deg, #D2051E, #D2051E);
+    background: -webkit-gradient(linear, left top, right bottom, from(#D2051E), to(#D2051E));
+    background: -ms-linear-gradient(top, #D2051E, #D2051E);
+}
+@media only screen and (max-device-width: 480px) {
+	.drawer-nav{
+		width: 55% !important;
+	}
+	#odooAppDrawer{
+		margin-top: 46px !important;
+		border-top-left-radius: 0px;
+	}
+	.app-drawer-nav .app-drawer-icon-app {
+		max-width: 1.5em !important;
+		max-height: 1.5em !important;
+		float: right;
+		right: 15px;
+		position: absolute;
+	}
+}
+
+
+/* Breadcrumbs */
+.breadcrumb li > a{
+    color : #000000 !important;
+    font-weight : bold !important;
+}
+.breadcrumb .active{
+    color : #000000 !important;
+    font-weight : normal !important;
+}
+.breadcrumb li > a:hover{
+    color : #D2051E !important;
+}
+
+/* Reporting buttons */
+.o_pivot_flip_button, .o_pivot_expand_button, .o_pivot_download, .o_external_button{
+   color : #ffffff !important;
+}
+
+.o_form_sheet .oe_stat_button{
+    background-color : #ececec !important;
+    color: #000000 !important;
+    border: 1px solid #d4d4d4 !important;
+}
+
+/* URLs */
+.o_notebook a{
+    color : #671A3D !important;
+}
+.o_notebook li.active > a{
+    color : #555555      !important;
+}
+.o_form_uri:first-line{
+    color : #671A3D !important;
+}
+.o_main a{
+    color : #000 !important;
+}
+
+.o_web_settings_dashboard_share .tw_share{
+    color : #00aced !important;
+}
+.o_web_settings_dashboard_share .fb_share{
+    color : #3b5998 !important;
+}
+.o_web_settings_dashboard_share .li_share{
+    color : #0077B5 !important;
+}
+
+.o_web_settings_dashboard_planner .o_web_settings_dashboard_progress_title{
+    color : black !important;
+}
+
+/* Kanban Cards */
+.o_kanban_card_header_title > .o_primary{
+    color : #671A3D !important;
+}
+
+/* Icon Modifications */
+
+/*
+.fa_search{
+    -webkit-transform:rotateY(180deg);
+    -moz-transform:rotateY(180deg);
+    -o-transform:rotateY(180deg);
+    -ms-transform:rotateY(180deg);
+}*/

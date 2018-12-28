@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="auto_send_report_config_tree_view">
+            <field name="name">auto_send_report.config.tree</field>
+            <field name="model">auto_send_report.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="reporting_id"/>
+                    <field name="filter_id"/>
+                    <field name="sending_frequency"/>
+                    <field name="next_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="auto_send_report_config_form_view">
+            <field name="name">auto_send_report.config.form</field>
+            <field name="model">auto_send_report.config</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <header>
+                            <button name="sending_report" string="Send Now" type="object"/>
+                        </header>
+                        <group>
+                            <group>
+                                <field name="reporting_id"/>
+                                <field name="filter_id"/>
+                                <field name="measure_ids" widget="many2many_tags"/>
+                                <field name="recipient_ids" widget="many2many_tags"/>
+                                <field name="sending_frequency"/>
+                                <field name="next_date"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="config_list_action">
+            <field name="name">Report Config</field>
+            <field name="res_model">auto_send_report.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first config
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="report_config_menu" name="Report Config"
+                  parent="base.menu_administration"/>
+        <menuitem id="configs_menu" name="Auto Send Report" parent="report_config_menu"
+                  action="config_list_action"/>
+    </data>
+</odoo>

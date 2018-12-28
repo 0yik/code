@@ -1,0 +1,80 @@
+
+.pos .centerpane {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+            box-sizing: border-box;
+    position:absolute;
+    left:25%;
+    width:25%;
+    top:0px;
+    bottom:0;
+    border-right: solid 1px #CECBCB;
+    border-right: solid 3px #787878;
+    background: #e2e2e2;
+}
+span#all_orders{
+    width:85% !important;
+}
+
+.pos .centerpane .pads {
+    border-top: solid 3px rgb(110, 200, 155);
+}
+.pos .control-button.btn {
+    line-height: 45px !important;
+}
+.pos .actionpad .button.pay {
+    height: 151px;
+}
+.pos .actionpad .button {
+    height: 50px;
+}
+.pos .actionpad{
+    width: 39%!important;
+}
+.pos .centerpane .numpad{
+    width:50%!important;
+}
+.pos .centerpane .input-button {
+    font-size: 14px !important;
+}
+.pos .centerpane .numpad button{
+    width: 39px !important;
+    height: 50px !important;
+}
+.pos .centerpane .mode-button {
+    font-size: 11px!important;
+}
+
+.pos .rightpane{
+
+    left:50% !important;
+}
+
+.pos .leftpane{
+     width:25% !important;
+
+}
+
+
+.btn.btn-fill{
+    color:white;
+    background-color:#929292;
+
+}
+.pos .control-button.btn{
+    line-height:68px;
+
+}
+.pos .product {
+    height: 90px;
+    width: 90px;
+}
+
+.pos .pos-branding .username{
+
+    margin-right: 98px !important;
+}
+.order-selector {
+    margin-left: -93px !important;
+}

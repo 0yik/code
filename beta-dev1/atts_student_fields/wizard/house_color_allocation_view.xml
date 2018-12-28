@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	 <record id="house_color_allocation_view" model="ir.ui.view">
+        <field name="name">House Color Allocation</field>
+        <field name="model">house.color.allocation</field>
+        <field name="arch" type="xml">
+        	<form string="House Color Allocation">
+	        	 <group>
+	        	 	 <field name="house_color_line">
+	        	 	 	<tree editable='bottom'>
+	        	 	 		<field name='house_color_id'/>
+	        	 	 	</tree>
+	        	 	 </field>
+	        	 </group>
+	        	<footer>
+		            <button string='Allocate All' name="allocate_all" type="object" class="btn-primary"/>
+		            <button string="Cancel" class="btn-default" special="cancel"/>
+	            </footer>
+              </form>
+            </field>
+    </record>
+
+    <record id="action_house_color_allocation_view" model="ir.actions.act_window">
+        <field name="name">Allocate All</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">house.color.allocation</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="house_color_allocation_view"/>
+        <field name="target">new</field>
+    </record>
+    
+    <record model="ir.values" id="house_color_allocation_all_house_color">
+           <field name="model_id" ref="atts_student_fields.model_house_colour"/>
+           <field name="name">Allocate All</field>
+           <field name="key2">client_action_multi</field>
+           <field name="value" eval="'ir.actions.act_window,' + str(ref('action_house_color_allocation_view'))" />
+           <field name="key">action</field>
+           <field name="model">house.colour</field>
+   </record>
+    
+    
+ 	</data>
+</odoo>

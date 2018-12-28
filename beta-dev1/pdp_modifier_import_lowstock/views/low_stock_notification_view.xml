@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="add_import_button_low_stock_notification_form" model="ir.ui.view">
+        <field name="name">add.import.button.low.stock.notification</field>
+        <field name="model">low.stock.notification</field>
+        <field name="inherit_id" ref="low_stock_notification.low_stock_notification_form"/>
+        <field name="arch" type="xml">
+            <data>
+                 <!--xpath expr="//field[@name='line_ids']" position="before"-->
+                 <xpath expr="//group[@name='Product']" position="before">
+                     <button string="Import Product" name="import_product_wizard" type="object" class="btn-primary" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

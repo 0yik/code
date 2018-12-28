@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="budget_change_sequence" model="ir.sequence">
+            <field name="name">Budget Change Sequence</field>
+            <field name="code">budget.change.sequence</field>
+            <field name="prefix">BCR/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <record id="view_budget_change_request_tree" model="ir.ui.view">
+            <field name="name">budget.change.request.tree</field>
+            <field name="model">budget.change.request</field>
+            <field name="arch" type="xml">
+                <tree string="Budget Change Request">
+                    <field name="name"/>
+                    <field name="requester"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_budget_change_request_form" model="ir.ui.view">
+            <field name="name">budget.change.request.form</field>
+            <field name="model">budget.change.request</field>
+            <field name="arch" type="xml">
+                <form string="Budget Change Request">
+                    <header>
+                        <button name="submit_for_approval" states="draft" string="Submit for Approval" type="object" class="oe_highlight"/>
+                        <button name="approve" states="waiting_for_approval" string="Approve" type="object" class="oe_highlight"/>
+                        <button name="submit_for_reject" states="waiting_for_approval" string="Reject" type="object" class="oe_highlight"/>
+                        <button name="reset_to_draft" states="rejected" string="Reset to Draft" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,waiting_for_approval,confirm"/>
+                    </header>
+                    <sheet>
+                    <label for="name" class="oe_edit_only" attrs="{'invisible':[('name','=','/')]}"/>
+                    <h1>
+                        <field name="name" readonly="True" attrs="{'invisible':[('name','=','/')]}"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="requester" attrs="{'readonly':[('state','!=','draft')]}" required="1"/>
+                            <field name="crossovered_budget_id" attrs="{'readonly':[('state','!=','draft')]}" required="1"/>
+                        </group>
+                        <group>
+                            <field name="budget_change_date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Budget Lines">
+                            <field name="crossovered_budget_line" attrs="{'readonly':[('state','!=','draft')]}">
+                                <tree editable="bottom" string="Budget Lines">
+                                    <field name="general_budget_id" required="1"/>
+                                    <!--<field name="crossovered_budget_id" invisible="1"/>-->
+                                    <field name="analytic_account_id"/>
+                                    <field name="current_planned_amount" readonly="1"/>
+                                    <field name="new_planned_amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_budget_change_request" model="ir.actions.act_window">
+            <field name="name">Budget Change Request</field>
+            <field name="res_model">budget.change.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_budget_change_request_tree"/>
+            <field name="context">{'readonly_by_pass': True}</field>
+        </record>
+
+		<menuitem id="menu_budget" name="Budget" parent="account.menu_finance" sequence="3" groups="account.group_account_manager"/>
+        
+        <menuitem
+            name="Budget Change Request"
+            action="action_budget_change_request"
+            id="menu_budget_change_request"
+            parent="budget_management.menu_budget"
+            sequence="61"/>
+
+		<menuitem parent="budget_management.menu_budget"
+            id="account_budget.menu_act_crossovered_budget_view"
+            name="Budgets"
+            action="account_budget.act_crossovered_budget_view" sequence="60" 
+            groups="account.group_account_user"/>
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+        <template id="pos_bus_restaurant_assets" inherit_id="point_of_sale.assets">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" type="text/css" href="/pos_bus_restaurant/static/src/css/restaurant.css" />
+                <script type="text/javascript" src="/pos_bus_restaurant/static/src/js/restaurant_get_notify.js"></script>
+                <script type="text/javascript" src="/pos_bus_restaurant/static/src/js/restaurant_send_notify.js"></script>
+                <script type="text/javascript" src="/pos_bus_restaurant/static/src/js/restaurant_screen.js"></script>
+            </xpath>
+        </template>
+
+	</data>
+</openerp>

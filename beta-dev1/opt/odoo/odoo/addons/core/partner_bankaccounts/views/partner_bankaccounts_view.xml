@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_partner_property_form" model="ir.ui.view">
+            <field name="name">res.partner.property.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="groups_id" eval="[(4, ref('account.group_account_invoice'))]"/>
+            <field name="arch" type="xml">
+                <page name="sales_purchases" position="after">
+                    <page string="Bank Accounts" name="bankaccounts">
+                        <field name="bank_ids">
+                            <tree>
+                                <field name="bank_id"/>
+                                <field name="acc_number"/>
+                                <field name="branch_code"/>
+                                <field name="swift_code"/>
+                                <field name="remarks"/>
+                            </tree>
+                            <form string="Bank Account">
+                                <group>
+                                    <group>
+                                        <field name="bank_id"/>
+                                        <field name="acc_number"/>
+                                    </group>
+                                    <group>
+                                        <field name="branch_code"/>
+                                        <field name="swift_code"/>
+                                    </group>
+                                    <field name="remarks"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page> 
+                </page>
+            </field>
+        </record>
+        
+        <record id="invoice_form" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_term_id" position="before">
+                    <field name="cust_sup_bank_account_id" domain="[('partner_id', '=', partner_id)]"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="invoice_supplier_form" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="reference" position="before">
+                    <field name="cust_sup_bank_account_id" domain="[('partner_id', '=', partner_id)]"/>
+                </field>
+            </field>
+        </record>                
+    </data>
+</odoo>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="student_portal_assignment_template" name="Student Assignment">
+		<t t-call="student_portal.student_portal_layout">
+			<h3 class="page-header">Your Assignment</h3>
+			<t t-if="not assignment_ids">
+				<p>Student Assignment</p>
+			</t>
+			<t t-if="assignment_ids">
+				<div>Student Assignment</div>
+				<table class="table table-hover o_my_status_table">
+					<thead>
+						<tr class="active">
+							<th style="background-color:transparent;width: 10%;text-align:left;">Description</th>
+							<th style="background-color:transparent;width: 8%;text-align:left;">Reference</th>
+							<th style="background-color:transparent;width: 10%;text-align:left;">Course</th>
+							<th style="background-color:transparent;width: 10%;text-align:left;">Created Date</th>
+							<th style="background-color:transparent;width: 8%;text-align:left;">Due Date</th>
+							<th style="background-color:transparent;width: 12%;text-align:left;">Assignment File</th>
+							<th style="background-color:transparent;width: 16%;text-align:left;">Student Assignment File</th>
+							<th style="background-color:transparent;width: 8%;text-align:left;">Marks</th>
+							<th style="background-color:transparent;width: 8%;text-align:left;">Grade</th>
+							<th style="background-color:transparent;width: 8%;text-align:left;">State</th>
+						</tr>
+					</thead>
+				<t t-foreach="assignment_ids" t-as="assignment">
+					<tr>
+						<form action="/student/profile/assignment/update" method="post" class="o_website_form form-horizontal container-fluid mt32" enctype="multipart/form-data">
+							<input type="hidden" id="assignment_id" name="assignment_id" t-att-value="assignment.id"/>
+							<td style="text-align:left;">
+								<span t-field="assignment.description"/>
+							</td>
+							<td style="text-align:left;">
+								<span t-field="assignment.name"/>
+							</td>
+							<td style="text-align:left;">
+								<span t-field="assignment.class_id.standard_id.name"/>
+							</td>
+							<td style="text-align:left;">
+								<span t-field="assignment.created_date"/>
+							</td>
+							<td style="text-align:left;">
+								<span t-field="assignment.date_due"/>
+							</td>
+							<td style="text-align:left;">
+								<a t-attf-href="/web/content?model=student.assignment&amp;field=attachment&amp;id={{assignment.id}}">
+									<span t-field="assignment.file_name"/>
+								</a>
+							</td>
+							<td style="text-align:left;">
+								<t t-if="not assignment.attachment_result">
+									<div class="upload-btn">
+		                                Upload Document
+		                            	<input type="file" id="fileupload" name="fileupload"/>
+		                            </div>
+		                            <input type="hidden" name="file_name" id="file_name"/>
+		                        </t>
+		                        <t t-if="assignment.attachment_result">
+		                        	<a t-attf-href="/web/content?model=student.assignment&amp;id={{assignment.id}}&amp;filename_field=file_name&amp;field=attachment_result&amp;download=true&amp;filename=file_name">
+										<span t-field="assignment.file_result"/>
+									</a>
+									<a t-attf-data="assignment.id" t-attf-href="/student/assignment/remove/{{assignment.id}}"><i class="fa fa-times" aria-hidden="true" style="padding-left:10px;"/></a>
+		                        </t>
+							</td>
+							<td style="text-align:left;">
+								<span t-field="assignment.marks"/>
+							</td>
+							<td style="text-align:left;">
+								<span t-field="assignment.grade_id"/>
+							</td>
+							<td style="text-align:left;">
+								<span t-field="assignment.state"/>
+							</td>
+							<td style="text-align:left;">
+								<a class="assignment_submit" id="assignment_submit"  name="assignment_submit" >
+									<button type="submit" class="btn btn-lg btn-info" style="border-radius: 5px; height:43px; background-color: #494949;border-color: #494949;" value="Save">Submit</button>
+								</a>
+							</td>
+						</form>
+					</tr>
+				</t>
+				</table>
+				<div t-if="pager" class="o_portal_pager text-center">
+					<t t-call="website.pager"/>
+				</div>
+			</t>
+		</t>
+	</template>
+</odoo>

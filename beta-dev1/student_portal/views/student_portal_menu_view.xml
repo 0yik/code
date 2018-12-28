@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="student_layout" name="Student Portal" inherit_id="website.layout">
+		<xpath expr="//li[@id='o_logout']" position="before">
+			<li id="o_logout"><a t-attf-href="/student/portal/home" role="menuitem">Student Portal</a></li>
+		</xpath>
+	</template>
+</odoo>

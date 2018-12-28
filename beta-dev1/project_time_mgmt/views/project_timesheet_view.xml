@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="inherit_view_task_form2_inherited" model="ir.ui.view">
+            <field name="name">inherit.view.task.form2.inherited</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='timesheet_ids']/tree/field[@name='date']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='timesheet_ids']/tree/field[@name='date']" position="before">
+                    <field name="start_datetime" string="Start Date"/>
+                    <field name="end_datetime" string="End Date"/>
+                </xpath>
+                <field name="user_id" position="attributes">
+                    <attribute name="widget">many2many_tags</attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

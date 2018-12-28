@@ -1,0 +1,728 @@
+<odoo>
+    <data>
+
+        <record id="make_a_booking_action" model="ir.actions.act_url">
+            <field name="name">Make a Booking</field>
+            <field name="target">self</field>
+            <field name="url">/booking</field>
+        </record>
+
+        <menuitem id="make_a_booking_menu"
+            parent="hilti_modifier_company.menu_customer_portal"
+            name='Make a Booking' action="make_a_booking_action"
+            groups='hilti_modifier_accessrights.group_hilti_customer' sequence="2" />
+
+		<menuitem id="make_a_booking_staff_menu"
+            parent="hilti_modifier_company.menu_staff_portal"
+            name='Make a Booking' action="make_a_booking_action"
+            groups='hilti_modifier_accessrights.group_hilti_account_manager,hilti_modifier_accessrights.group_hilti_cs_engineer' sequence="1" />
+
+        <!-- Project Booking Time -->
+        <record id="project_booking_view_inherit" model="ir.ui.view">
+            <field name="name">project.booking.view.inherit</field>
+            <field name="model">project.booking</field>
+            <field name="inherit_id" ref="hilti_modifier_company.project_booking_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group/group/field[@name='tester_id']"
+                    position="after">
+                    <field name="booking_type" />
+                </xpath>
+                <xpath expr="//form/sheet/group/group/field[@name='contact_number']"
+                    position="after">
+                    <field name="sic_required_hours" widget="float_time" attrs="{'invisible': [('booking_type', 'in', ['normal', 'special'])], 'required': [('booking_type', 'in', ['sic'])]}"/>
+                    <field name="start_date_time"
+                        attrs="{'invisible': [('booking_type', 'in', ['normal', 'sic'])], 'required': [('booking_type', 'in', ['special'])]}" />
+                    <field name="end_date_time"
+                        attrs="{'invisible': [('booking_type', 'in', ['normal', 'sic'])], 'required': [('booking_type', 'in', ['special'])]}" />
+                    <field name="final_start_dtime" invisible="1"/>
+                    <field name="final_end_dtime" invisible="1"/>
+                </xpath>
+                <xpath expr="//form/sheet/group" position="after">
+                    <notebook attrs="{'invisible': [('booking_type', 'in', ['special'])]}">
+                        <page string="Booking Date &amp; Time">
+                            <field name="time_booking_ids">
+                                <tree>
+                                    <field name="pr_booking_id" invisible="1" />
+                                    <field name="booking_date" />
+                                    <field name="time_slot_id" invisible="1"/>
+                                    <field name="timeslot_start_id" readonly="1" />
+                                    <field name="timeslot_end_id" readonly="1" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_booking_view_tree_readonly_inherit" model="ir.ui.view">
+            <field name="name">project.booking.view.tree.readonly.inherit</field>
+            <field name="model">project.booking</field>
+            <field name="inherit_id"
+                ref="hilti_modifier_company.project_booking_view_tree_readonly" />
+            <field name="arch" type="xml">
+                <field name="project_id" position="after">
+                    <field name="final_start_dtime" string="Booking Start Date &amp; Time"/>
+                    <field name="final_end_dtime" string="Booking End Date &amp; Time"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="project_booking_view_readonly_inherit" model="ir.ui.view">
+            <field name="name">project.booking.view.readonly.inherit</field>
+            <field name="model">project.booking</field>
+            <field name="inherit_id" ref="hilti_modifier_company.project_booking_view_readonly" />
+            <field name="arch" type="xml">
+                <field name="create_date" position="after">
+                    <field name="booking_type" />
+                    <field name="sic_required_hours" widget="float_time" attrs="{'invisible': [('booking_type', 'in', ['normal', 'special'])], 'required': [('booking_type', 'in', ['sic'])]}"/>
+                    <field name="start_date_time"
+                        attrs="{'invisible': [('booking_type', 'in', ['normal', 'sic'])], 'required': [('booking_type', 'in', ['special'])]}" />
+                    <field name="end_date_time"
+                        attrs="{'invisible': [('booking_type', 'in', ['normal', 'sic'])], 'required': [('booking_type', 'in', ['special'])]}" />
+                    <field name="final_start_dtime" invisible="1"/>
+                    <field name="final_end_dtime" invisible="1"/>
+                </field>
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string='Anchor Details' attrs="{'invisible': [('booking_type', 'in', ['sic'])]}">
+                            <field name="project_booking_anchor_ids">
+                                <tree editable='bottom'>
+                                    <field name="name" />
+                                    <field name="anchor_type_id" />
+                                    <field name="anchor_size_id" />
+                                    <field name="anchor_qty" />
+                                    <field name="an_complexity"/>
+                                    <field name="equipment_id" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Booking Date &amp; Time"
+                            attrs="{'invisible': [('booking_type', 'in', ['special'])]}">
+                            <field name="time_booking_ids">
+                                <tree>
+                                    <field name="pr_booking_id" invisible="1" />
+                                    <field name="booking_date" />
+                                    <field name="time_slot_id" invisible="1"/>
+                                    <field name="timeslot_start_id" readonly="1" />
+                                    <field name="timeslot_end_id" readonly="1" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+                <xpath expr='//header/field' position='before'>
+                    <button name="reschedule_booking" class="oe_stat_button"
+                        type="object" string="Re-Schedule"
+                        attrs="{'invisible': [('status', 'not in', ['pending'])]}"
+                        groups='hilti_modifier_accessrights.group_hilti_admin, hilti_modifier_accessrights.group_hilti_customer, hilti_modifier_accessrights.group_hilti_account_manager, hilti_modifier_accessrights.group_hilti_cs_engineer'/>
+                    <button name="rebook_booking" class="oe_stat_button"
+                        type="object" string="Re-Book"
+                        groups='hilti_modifier_accessrights.group_hilti_admin, hilti_modifier_accessrights.group_hilti_customer, hilti_modifier_accessrights.group_hilti_account_manager, hilti_modifier_accessrights.group_hilti_cs_engineer'/>
+                    <button name="reconfirm_booking" class="oe_stat_button"
+                        type="object" string="Re-confirm"
+                        attrs="{'invisible': [('status', 'not in', ['pending'])]}"
+                        groups='hilti_modifier_accessrights.group_hilti_admin, hilti_modifier_accessrights.group_hilti_customer, hilti_modifier_accessrights.group_hilti_account_manager, hilti_modifier_accessrights.group_hilti_cs_engineer'/>
+                    <button name="cancel_booking" class="oe_stat_button"
+                        type="object" string="Cancel"
+                        attrs="{'invisible': [('status', 'not in', ['pending'])]}"
+                        groups='hilti_modifier_accessrights.group_hilti_admin, hilti_modifier_accessrights.group_hilti_customer, hilti_modifier_accessrights.group_hilti_account_manager, hilti_modifier_accessrights.group_hilti_cs_engineer'/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_booking_view_tree_tester_inherit" model="ir.ui.view">
+            <field name="name">project.booking.view.tree.tester.inherit</field>
+            <field name="model">project.booking</field>
+            <field name="inherit_id"
+                ref="hilti_modifier_company.project_booking_view_tree_tester" />
+            <field name="arch" type="xml">
+                <field name="project_id" position="after">
+                    <field name="final_start_dtime" string="Booking Start Date &amp; Time"/>
+                    <field name="final_end_dtime" string="Booking End Date &amp; Time"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="project_booking_view_tester_inherit" model="ir.ui.view">
+            <field name="name">project.booking.view.tester.inherit</field>
+            <field name="model">project.booking</field>
+            <field name="inherit_id"
+                ref="hilti_modifier_company.project_booking_view_tester" />
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <field name="is_swap_req_sent" invisible="1" />
+                    <field name="is_swap_req_accepted" invisible="1" />
+                    <button name="cancel_booking_from_reminder" string="Cancel Booking" type="object"
+                        class="btn-primary"  attrs="{'invisible': ['|','|','|',('add_accept_button', '=', True),('status', '=', 'cancelled'),('status', '=', 'completed'), ('show_cancel_button', '=', False)]}"/>
+                    <button name="start_testing" string="Start Work" type="object"
+                        class="btn-primary" attrs="{'invisible': ['|','|',('add_accept_button', '=', True),('testing_start_time', '!=', False),('status', '=', 'cancelled')]}" />
+
+                    <button name="stop_testing" string="Stop Work" type="object"
+                        class="btn-primary" attrs="{'invisible': ['|','|' ,'|',('add_accept_button', '=', True),('status', '=', 'cancelled'),('testing_end_time', '!=', False),('testing_start_time', '=', False)]}" />
+                <!--Teester Swap button -->
+                    <button string="Swap Booking"
+                        type="action"
+                        name="%(act_open_tester_swap_booking_view)d"
+                        attrs="{'invisible': ['|', '|',('is_swap_req_sent','=', True),('status', 'not in', ['pending', 'reconfirmed']),('add_accept_button', '=', True)]}"
+                        groups=""/>
+                    <button string="Accept Swap"
+                        type="object" name="tester_accept_tester_swap_booking"
+                        attrs="{'invisible': [('is_swap_req_get', '=', False)]}"/>
+                    <button string="Reject Swap"
+                        type="object" name="tester_reject_tester_swap_booking" 
+                        attrs="{'invisible': [('is_swap_req_get', '=', False)]}"/>
+                <!-- end -->
+                </xpath>
+                <field name="create_date" position="after">
+                    <field name="booking_type" string="Booking Type"/>
+                    <field name="sic_required_hours" widget="float_time" attrs="{'invisible': [('booking_type', 'in', ['normal', 'special'])], 'required': [('booking_type', 'in', ['sic'])]}"/>
+                    <field name="add_accept_button" string="add_accept_button" invisible="1"/>
+                    <field name="start_date_time"
+                        attrs="{'invisible': [('booking_type', 'in', ['normal', 'sic'])]}" readonly="1" />
+                    <field name="end_date_time"
+                        attrs="{'invisible': [('booking_type', 'in', ['normal', 'sic'])]}" readonly="1" />
+                    <field name="show_cancel_button" invisible="1"/>
+                    <field name="is_cancel_from_tester" invisible="1"/>
+                    <field name="final_start_dtime" invisible="1"/>
+                    <field name="final_end_dtime" invisible="1"/>
+                    <field name="to_swap_req_booking_id" attrs="{'invisible': [('to_swap_req_booking_id', '=', False)]}"/>
+                    <field name="from_swap_booking_id"  attrs="{'invisible': [('from_swap_booking_id', '=', False)]}"/>
+                    <field name="is_swap_req_rejected" attrs="{'invisible': [('is_swap_req_rejected', '=', False)]}" />
+                    <field name="is_swap_req_get" invisible="1"/>
+                </field>
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string='Anchor Details' attrs="{'invisible': [('booking_type', 'in', ['sic'])]}">
+                            <field name="project_booking_anchor_ids" readonly="1">
+                                <tree editable='bottom'>
+                                    <field name="name" />
+                                    <field name="anchor_type_id" />
+                                    <field name="anchor_size_id" />
+                                    <field name="anchor_qty" />
+                                    <field name="an_complexity"/>
+                                    <field name="equipment_id" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Booking Date &amp; Time"
+                            attrs="{'invisible': [('booking_type', 'in', ['special'])]}">
+                            <field name="time_booking_ids" readonly="1">
+                                <tree>
+                                    <field name="pr_booking_id" invisible="1" />
+                                    <field name="booking_date" />
+                                    <field name="time_slot_id" invisible="1" />
+                                    <field name="timeslot_start_id" readonly="1" />
+                                    <field name="timeslot_end_id" readonly="1" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string='Testing Details'>
+                            <sheet>
+                                <group>
+                                    <group>
+                                        <field name="testing_start_time" readonly="1" />
+                                        <field name="testing_end_time" readonly="1" />
+                                        <field name="testing_duretion" readonly="1" />
+                                    </group>
+                                    <group>
+                                    </group>
+                                </group>
+                            </sheet>
+                        </page>
+                        <page string="Delay">
+                            <sheet>
+                                <group>
+                                    <field name="delay_time" readonly="1" widget="float_time"/>
+                                    <field name="delay_remark" readonly="1" />
+                                </group>
+                            </sheet>
+                        </page>
+                        <page string="Tester Feedback" name="tester_feedback">
+                            <sheet>
+                                <group>
+                                    <field name="feedback_anchor_ids" readonly="1" string="Anchor feedback">
+                                        <tree>
+                                            <field name="name" />
+                                            <field name="anchor_type_id" />
+                                            <field name="anchor_size_id" />
+                                            <field name="anchor_qty" />
+                                            <field name="an_complexity"/>
+                                            <field name="failer_qty" />
+                                        </tree>
+                                    </field>
+                                    <field name="testing_remark" string="Testing Remarks" readonly="1"/>
+                                </group>
+                            </sheet>
+                        </page>
+                        <page string="Reminder History" name="reminder_history">
+                            <sheet>
+                                <group>
+                                    <field name="reminder_count" readonly="1"/>
+                                    <field name="reminder_time" readonly="1"/>
+                                    <field name="reminder_history" readonly="1" string="Reminder History">
+                                        <tree>
+                                            <field name="reminder_count" />
+                                            <field name="reminder_time" />
+                                            <field name="partner_ids" widget="many2many_tags"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </sheet>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="time_slot_start_view" model="ir.ui.view">
+            <field name="name">time.slot.start.view</field>
+            <field name="model">time.slot.start</field>
+            <field name="arch" type="xml">
+                <form string="Timeslot Start">
+                    <sheet string="Timeslot Start">
+                        <group>
+                            <group>
+                                <field name="start_time" widget="float_time" reuired="1" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="time_slot_end_view" model="ir.ui.view">
+            <field name="name">time.slot.end.view</field>
+            <field name="model">time.slot.end</field>
+            <field name="arch" type="xml">
+                <form string="Timeslot End">
+                    <sheet string="Timeslot End">
+                        <group>
+                            <group>
+                                <field name="end_time" widget="float_time" required="1" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="time_slot_start_end_view" model="ir.ui.view">
+            <field name="name">time.slot.start.end.view</field>
+            <field name="model">time.slot.start.end</field>
+            <field name="arch" type="xml">
+                <form string="Timeslot Start End">
+                    <sheet string="Timeslot Start End">
+                        <group>
+                            <group>
+                                <field name="timeslot_start_id" />
+                            </group>
+                            <group>
+                                <field name="timeslot_end_id" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="time_slot_master_view" model="ir.ui.view">
+            <field name="name">timeslot.master.view</field>
+            <field name="model">timeslot.master</field>
+            <field name="arch" type="xml">
+                <form string="Timeslot Management">
+                    <sheet string="Timeslot Management">
+                        <label class="oe_edit_only" for="name" />
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="time_slot_based" />
+                                <!--label for="calandar_display" string="Display Calendar Months"/>
+                                <div>
+                                    <field name="calandar_display" /> months
+                                </div-->
+                                <label for="lunch_start_time" string="Lunch Start Time (HH:MM)" attrs="{'invisible': [('time_slot_based', '=', False)]}"/>
+                                <div attrs="{'invisible': [('time_slot_based', '=', False)]}">
+                                    <!--field name="lunch_start_time" widget="float_time" required="1" /> hours -->
+                                    <field name="lunch_start_time" widget="float_time" attrs="{'required': [('time_slot_based', '=', True)], 'invisible': [('time_slot_based', '=', False)]}"/> hours
+                                </div>
+                                <label for="lunch_end_time" string="Lunch End Time (HH:MM)" attrs="{'invisible': [('time_slot_based', '=', False)]}"/>
+                                <div attrs="{'invisible': [('time_slot_based', '=', False)]}">
+                                    <!--field name="lunch_end_time" widget="float_time" required="1"/> hours -->
+                                    <field name="lunch_end_time" widget="float_time" attrs="{'required': [('time_slot_based', '=', True)], 'invisible': [('time_slot_based', '=', False)]}" /> hours
+                                </div>
+                                <!-- new added-->
+                                    <label for="start_time" string="Timeslot Start Time" attrs="{'invisible': [('time_slot_based', '=', False)]}"/>
+                                    <div  attrs="{'invisible': [('time_slot_based', '=', False)]}">
+                                        <field name="start_time" widget="float_time" attrs="{'required': [('time_slot_based', '=', True)], 'invisible': [('time_slot_based', '=', False)]}"/> hours
+                                    </div>
+                                    <label for="end_time" string="Timeslot End Time" attrs="{'invisible': [('time_slot_based', '=', False)]}"/>
+                                    <div  attrs="{'invisible': [('time_slot_based', '=', False)]}">
+                                        <field name="end_time" widget="float_time" attrs="{'required': [('time_slot_based', '=', True)], 'invisible': [('time_slot_based', '=', False)]}"/> hours
+                                    </div>
+                                    <label for='segment_time' string="Segment Length" attrs="{'invisible': [('time_slot_based', '=', False)]}"/>
+                                    <div  attrs="{'invisible': [('time_slot_based', '=', False)]}">
+                                        <field name="segment_time" attrs="{'required': [('time_slot_based', '=', True)], 'invisible': [('time_slot_based', '=', False)]}"/> minutes
+                                    </div>
+                            </group>
+                        </group>
+                        <!--group attrs="{'invisible': [('time_slot_based', '=', False)]}">
+                            <group>
+                                <label for="start_time" string="Start Time"/>
+                                <div>
+                                    <field name="start_time" widget="float_time" attrs="{'required': [('time_slot_based', '=', True)]}"/> hours
+                                </div>
+                                <label for="end_time" string="End Time"/>
+                                <div>
+                                    <field name="end_time" widget="float_time" attrs="{'required': [('time_slot_based', '=', True)]}"/> hours
+                                </div>
+                            <label for='segment_time'/>
+                            <div>
+                                <field name="segment_time" attrs="{'required': [('time_slot_based', '=', True)]}"/> minutes
+                            </div>
+                            </group>
+                            <group>
+                            </group>
+                        </group-->
+
+                        <notebook colspan="4">
+                            <page string="Timeslot Summary" autofocus="autofocus">
+                                <field name="time_slot_ids">
+                                    <tree>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="start" widget="float_time"/>
+                                        <field name="end" widget="float_time"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="time_slot_master_tree" model="ir.ui.view">
+            <field name="name">timeslot.master.view.tree</field>
+            <field name="model">timeslot.master</field>
+            <field name="arch" type="xml">
+                <tree string="Timeslot Master Tree View">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_time_slot_master_view" model="ir.actions.act_window">
+            <field name="name">Timeslot Management</field>
+            <field name="res_model">timeslot.master</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Timeslot Management
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_time_slot_master_view" 
+            parent="hilti_modifier_company.menu_admin_configuration" groups='hilti_modifier_accessrights.group_hilti_admin'
+            sequence="8" name="Timeslot Management"
+            action="hilti_modifier_customer_booking.action_time_slot_master_view" />
+
+
+        <record id="time_slot_booking_view" model="ir.ui.view">
+            <field name="name">timeslot.booking.view</field>
+            <field name="model">timeslot.booking</field>
+            <field name="arch" type="xml">
+                <form string="Timeslot Booking">
+                    <sheet string="Timeslot Booking">
+                        <group>
+                            <group>
+                                <!-- <field name="user_id" /> -->
+                                <field name="booking_date" />
+                                <field name="time_slot_id" options="{'no_create_edit': True}"/>
+                            </group>
+                            <!-- <group>
+                                                                <field name="start" readonly="1" widget="float_time"/>
+                                                                <field name="end" readonly="1" widget="float_time"/>
+                                                        </group> -->
+                                                </group>
+                                            </sheet>
+                                        </form>
+                                    </field>
+                                </record>
+
+                                <record id="time_slot_booking_view_dynamic_view" model="ir.ui.view">
+                                    <field name="name">timeslot.booking.dynamic.view</field>
+                                    <field name="model">timeslot.booking</field>
+                                    <field name="arch" type="xml">
+                                        <form string="Timeslot Booking">
+                                            <sheet string="Timeslot Booking">
+                                                <group>
+                                                    <group>
+                                                        <!-- <field name="user_id" /> -->
+                                                        <field name="booking_date" />
+                                                        <field name="time_slot_id" context="{'display_start_time': True}" options="{'no_create_edit': True}"/>
+                                                    </group>
+                                                </group>
+                                            </sheet>
+                                        </form>
+                                    </field>
+                                </record>
+
+                                <record id="time_slot_booking_tree" model="ir.ui.view">
+                                    <field name="name">timeslot.booking.view.tree</field>
+                                    <field name="model">timeslot.booking</field>
+                                    <field name="arch" type="xml">
+                                        <tree string="Timeslot Booking Tree View">
+                                            <field name="booking_date" />
+                                            <field name="start" readonly="1" widget="float_time"/>
+                                            <field name="end" readonly="1" widget="float_time"/>
+                                        </tree>
+                                    </field>
+                                </record>
+
+                                <record id="time_slot_booking_view_1" model="ir.ui.view">
+                                    <field name="name">timeslot.booking.view</field>
+                                    <field name="model">timeslot.booking</field>
+                                    <field name="arch" type="xml">
+                                        <form string="Timeslot Booking" create='0' edit='0'>
+                                            <sheet string="Timeslot Booking">
+                                                <group>
+                                                    <group>
+                                                        <!-- <field name="user_id" /> -->
+                                                        <field name="booking_date" />
+                                                        <field name="time_slot_id" />
+                                                    </group>
+                                                    <!-- <group>
+                                                                <field name="start" readonly="1" widget="float_time"/>
+                                                                <field name="end" readonly="1" widget="float_time"/>
+                                                        </group> -->
+                                                </group>
+                                            </sheet>
+                                        </form>
+                                    </field>
+                                </record>
+                                <record id="time_slot_booking_tree_1" model="ir.ui.view">
+                                    <field name="name">timeslot.booking.view.tree</field>
+                                    <field name="model">timeslot.booking</field>
+                                    <field name="arch" type="xml">
+                                        <tree string="Timeslot Booking Tree View" create='0' edit='0'>
+                                            <field name="booking_date" />
+                                            <field name="start" readonly="1" widget="float_time"/>
+                                            <field name="end" readonly="1" widget="float_time"/>
+                                        </tree>
+                                    </field>
+                                </record>
+
+                                <!-- <record id="action_time_slot_booking_view" model="ir.actions.act_window">
+                        <field name="name">Timeslot Management</field>
+                        <field name="res_model">timeslot.booking</field>
+                        <field name="view_type">form</field>
+                        <field name="view_mode">tree,form</field>
+                        <field name="help" type="html">
+                                <p class="oe_view_nocontent_create">
+                                        Timeslot Booking
+                                </p>
+                                <p>
+                                </p>
+                        </field>
+                        <field name="view_ids"
+                                eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('time_slot_booking_tree_1')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('time_slot_booking_view_1')})]" />
+                </record>
+
+                <menuitem id="menu_action_time_slot_booking_view" parent="sales_team.menu_sale_config"
+                        sequence="0" name="Timeslot Management"
+                        action="hilti_modifier_customer_booking.action_time_slot_booking_view" />
+ -->
+                <record id="holiday_view" model="ir.ui.view">
+                    <field name="name">holiday.holiday.view</field>
+                    <field name="model">holiday.holiday</field>
+                    <field name="arch" type="xml">
+                        <form string="Holidays">
+                            <sheet string="Holidays">
+                                <group>
+                                    <group>
+                                        <field name="is_full_day"/>
+                                        <field name="holiday_date" />
+                                        <label for="start_time" string="Start Time (HH:MM)" attrs="{'invisible': [('is_full_day','=', True)]}"/>
+                                        <div attrs="{'invisible': [('is_full_day','=', True)]}">
+                                            <field name="start_time" widget="float_time"
+                                                attrs="{'invisible': [('is_full_day', '=', True)], 'required': [('is_full_day', '=', True)]}" />hours
+                                        </div>
+                                        <label for="end_time" string="End Time (HH:MM)" attrs="{'invisible': [('is_full_day','=', True)]}"/>
+                                        <div attrs="{'invisible': [('is_full_day','=', True)]}">
+                                            <field name="end_time" widget="float_time"
+                                                attrs="{'invisible': [('is_full_day', '=', True)], 'required': [('is_full_day', '=', True)]}" />hours
+                                        </div>
+                                    </group>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+                <record id="holiday_view_tree" model="ir.ui.view">
+                    <field name="name">holiday.holiday.view.tree</field>
+                    <field name="model">holiday.holiday</field>
+                    <field name="arch" type="xml">
+                        <tree string="Holidays Tree View">
+                            <field name="holiday_date" />
+                            <field name="is_full_day"/>
+                        </tree>
+                    </field>
+                </record>
+
+                <record id="view_holiday_holiday_search" model="ir.ui.view">
+                    <field name="name">holiday.holiday.search</field>
+                    <field name="model">holiday.holiday</field>
+                    <field name="type">search</field>
+                    <field name="priority" eval="8"/>
+                    <field name="arch" type="xml">
+                    <search string="Holidays Management">
+                            <field name="holiday_date" />
+                            <field name="is_full_day"/>
+                            <separator/>
+                            <group expand="0" string="Group By">
+                                <filter name="holi_day_group" string="Holiday Date" context="{'group_by':'holiday_date'}"/>
+                                <filter name="full_day_group" string="Is full day?" context="{'group_by':'is_full_day'}"/>
+                            </group>
+                    </search>
+                    </field>
+                </record>
+
+                <record id="action_holiday_view" model="ir.actions.act_window">
+                    <field name="name">Holidays Management</field>
+                    <field name="res_model">holiday.holiday</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="help" type="html">
+                        <p class="oe_view_nocontent_create">
+                            Holidays
+                        </p>
+                        <p>
+                        </p>
+                    </field>
+                </record>
+
+                <menuitem id="menu_action_holiday_view" parent="hilti_modifier_company.menu_admin_configuration" groups='hilti_modifier_accessrights.group_hilti_admin'
+                    sequence="6" name="Holidays Management"
+                    action="hilti_modifier_customer_booking.action_holiday_view" />
+            
+            		<!-- All tester task readonly view-->
+		<record id="project_booking_view_all_tester_task_booking" model="ir.ui.view">
+			<field name="name">project.booking.view</field>
+			<field name="model">project.booking</field>
+			<field name="arch" type="xml">
+				<form string="Booking" readonly="1" create="false" delete="false" edit="false">
+					<sheet string="Booking">
+						<h1>
+							<field name="booking_no" readonly="1" />
+						</h1>
+						<group>
+							<group>
+								<field name="company_id" widget="selection" invisible="1"/>
+								<field name="partner_id" widget="selection" invisible="1"/>
+								<field name="contact_id" required="1"/>
+								<field name="contact_number" required="1"/>
+								<field name="project_id" required="1" widget="selection"/>
+								<field name="sid_required" />
+								<field name="location_id" string="Address" required="1"/>
+								<field name="postal_code" required="1"/>
+								<field name="is_final" invisible="1"/>
+							</group>
+							<group>
+								<field name="create_date" readonly="1"/>
+								<field name="booking_type" required="1" />
+							<field name="sic_required_hours" widget="float_time" attrs="{'invisible': [('booking_type', 'in', ['normal', 'special'])], 'required': [('booking_type', 'in', ['sic'])]}"/>
+                            <field name="start_date_time"
+                                attrs="{'invisible': [('booking_type', '=', 'normal')], 'required': [('booking_type', 'in', ['special','sic'])]}" />
+                            <field name="end_date_time"
+                                attrs="{'invisible': [('booking_type', '=', 'normal')], 'required': [('booking_type', 'in', ['special','sic'])]}" />
+								<field name="tester_id" context="{'parent_project_tester_id': project_id}" readonly="1" />
+								<field name="tester_phone" readonly="1" />
+								<field name="from_swap_booking_id" readonly="1" attrs="{'invisible': [('from_swap_booking_id', '=', False)]}"/>
+							</group>
+						</group>
+						<notebook>
+                        <page string='Anchor Details'>
+                            <field name="project_booking_anchor_ids">
+                                <tree editable='bottom'>
+                                    <field name="name" required="1" />
+                                    <field name="anchor_type_id" options="{'no_create_edit': True}"
+                                        required="1" />
+                                    <field name="anchor_size_id" options="{'no_create_edit': True}"
+                                        context="{'parent_anchor_type_id': anchor_type_id}" required="1" />
+                                    <field name="anchor_qty" required="1" />
+                                    <field name="an_complexity" required="1" />
+                                    <field name="equipment_id" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Booking Date &amp; Time"
+                            attrs="{'invisible': [('booking_type', 'in', ['special', 'sic'])]}">
+                            <field name="time_booking_ids" attrs="{'required':[('booking_type','=','normal')]}">
+                                <form string="TimeSlot Booking" >
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="pr_booking_id" invisible="1" />
+                                                <field name="booking_date" required="1" context="{'parent_project_booking_anchor_ids': parent.project_booking_anchor_ids,
+                                                    'parent_project_id': parent.project_id, 'parent_sid_required': parent.sid_required, 'parent_postal_code': parent.postal_code }"/>
+                                                <field name="time_slot_id" options="{'no_create_edit': True}"/>
+                                            </group>
+                                            <group>
+                                                <field name="timeslot_start_id" readonly="1" />
+                                                <field name="timeslot_end_id" readonly="1" />
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                                <tree>
+                                    <field name="pr_booking_id" invisible="1" />
+                                    <field name="booking_date" />
+                                    <field name="time_slot_id" invisible="1" />
+                                    <field name="timeslot_start_id" readonly="1" />
+                                    <field name="timeslot_end_id" readonly="1" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+            
+                <record id="action_other_booking_view_tester_task" model="ir.actions.act_window">
+                    <field name="name">All Tester's Tasks</field>
+                    <field name="res_model">project.booking</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[('status', 'in', ['pending', 'reconfirmed']),('user_tester_id', '!=', uid)]</field>
+                    <field name="context">{'all_tester_swap': True}</field>
+                    <field name="help" type="html">
+                        <p class="oe_view_nocontent_create">
+                            All Tester's Tasks
+                        </p>
+                        <p>
+                        </p>
+                    </field>
+                    <field name="view_ids"
+                        eval="[(5, 0, 0),
+                        (0, 0, {'view_mode': 'tree', 'view_id': ref('hilti_modifier_company.project_booking_view_tree_tester')}),
+                        (0, 0, {'view_mode': 'form', 'view_id': ref('hilti_modifier_customer_booking.project_booking_view_all_tester_task_booking')}),
+                        (0, 0, {'view_mode': 'calendar', 'view_id': ref('hilti_modifier_company.project_booking_view_calendar_readonly')})
+                        ]" />
+                </record>
+        
+        <menuitem id="menu_action_other_tester_booking_view_tester" parent="hilti_modifier_company.menu_customer_tester" groups='hilti_modifier_accessrights.group_hilti_tester'
+                    name="Other Tester's Tasks" action="hilti_modifier_customer_booking.action_other_booking_view_tester_task"
+                    sequence="3" />
+
+            </data>
+        </odoo>

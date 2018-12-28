@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <!--# REPORT-->
+        <report
+            id="action_sales_revenue_report"
+            model="sales.revenue.report"
+            string="Sales Revenue Report"
+            name="sales_revenue_report_reusable.sales_revenue_report"
+            file="sales_revenue_report_reusable.sales_revenue_report"
+            report_type="qweb-pdf"/>
+
+        <record id="report_revenue_qweb_paperformat" model="report.paperformat">
+            <field name="name">Sales Revenue</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">15</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_sales_revenue_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report_revenue_qweb_paperformat"/>
+        </record>
+
+        <!-- Headers and Footers for Credit Note Report -->
+        <template id="external_layout_sales_revenue">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="sales_revenue_report_reusable.external_layout_header_sales_revenue" />
+            <t t-raw="0" />
+            <t t-call="sales_revenue_report_reusable.external_layout_footer_sales_revenue" />
+        </template>
+
+        <template id="sales_revenue_report_reusable.external_layout_header_sales_revenue">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:60px;width:240px"/>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="sales_revenue_report_reusable.external_layout_footer_sales_revenue">
+            <div class="footer" style="font-size:10pt;">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <div class="text-right" style="float:right">
+                            <ul class="list-inline">
+                                <li>Page:</li>
+                                <li><span class="page"/></li>
+                                <li>of</li>
+                                <li><span class="topage"/></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+
+        <template id="sales_revenue_report_reusable.sales_revenue_report">
+            <t t-call="sales_revenue_report_reusable.external_layout_sales_revenue">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="col-xs-12" style="padding:0;margin-top:20px">
+                            <strong  style="font-size:16px">Revenue summary for period 2017</strong>
+                            <p style="font-size:12px">Customise Solutions , Terminal Subscription, Digital , Conference and Education</p>
+                            <p style="font-size:12px">for Institutional, Corporate Retail,Retail, Reseller, Digital and Conference &amp; Education Accounts only</p>
+                        </div>
+                        <div class="col-xs-12" t-foreach="o.invoice_filter[0]" t-as="f" style="padding:0;">
+                            <table class="table table-bordered" style="page-break-inside:avoid;">
+                                <thead style="background-color:#EEEEEE;">
+                                    <tr>
+                                        <th colspan="13">
+                                            <t style="color:red;font-size:15px" t-esc="f"></t>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th><p>Company</p></th>
+                                        <th><p>Start/increase</p></th>
+                                        <th><p>Userid</p></th>
+                                        <th><p>Start Date</p></th>
+                                        <th><p>Contract period</p></th>
+                                        <th><p>Billing Cycle</p></th>
+                                        <th><p>In other currency</p></th>
+                                        <th><p>X-Change</p></th>
+                                        <th><p>Billing (per mth)</p></th>
+                                        <th><p>FY-Booking</p></th>
+                                        <th><p>Annualised</p></th>
+                                        <th><p>Service</p></th>
+                                        <th><p>Remarks</p></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.invoice_ids" t-as="invoice" t-if="invoice.id in o.date_filter[0]['datas'][f]['ids']">
+                                        <td>
+                                            <span t-field="invoice.company_id"/>
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="invoice.refund_invoice_id.company_id"/>-->
+                                        </td>
+                                        <td>
+                                            <p t-foreach="invoice.partner_id.opportunity_ids" t-as="op">
+                                                <span t-field="op.name"/>
+                                            </p>
+                                        </td>
+                                        <td style="white-space:nowrap;">
+                                            <span t-field="invoice.x_subscription_period" t-field-options="{&quot;format&quot;: &quot;d-MMM-yy&quot;}" />
+                                        </td>
+                                        <td>
+                                            <span t-field="invoice.x_month_number"/>
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="invoice.refund_invoice_id."/>-->
+                                        </td>
+                                        <td>
+                                            <span t-field="invoice.currency_id"/>
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="invoice.refund_invoice_id.company_id"/>-->
+                                        </td>
+                                        <td>
+                                            <span t-field="invoice.amount_total"/>
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="invoice.refund_invoice_id.company_id"/>-->
+                                        </td>
+                                        <td>
+                                            <span>$ </span><span t-esc="invoice.amount_total*invoice.x_month_number"/>
+                                        </td>
+                                        <td>
+                                            <p t-foreach="invoice.invoice_line_ids" t-as="li">
+                                                <span t-field="li.product_id"/>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p t-foreach="invoice.partner_id.opportunity_ids" t-as="op">
+                                                <span t-field="op.description"/>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color:#29f729" t-if="not o.date_filter[0]['datas'][f]['ids']">
+                                        <td colspan="13" style="border:none;background-color:white;">
+                                            <span style="color:white;">Total  Revenue Month of 2017</span>
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color:#29f729">
+                                        <td colspan="8" style="border:none;">
+                                            <span>Total  Revenue Month of  <span t-esc="o.date_filter[0]['name']"/> 2017</span>
+                                        </td>
+                                        <td style="border:none;">
+                                            <span>$ </span><span t-esc="o.date_filter[0]['datas'][f]['total_amount']"/>
+                                        </td>
+                                        <td style="border:none;">
+                                            <!--<span t-esc="total"/>-->
+                                        </td>
+                                        <td style="border:none;">
+                                            <span>$ </span><span t-esc="o.date_filter[0]['datas'][f]['total_annualised']"/>
+                                        </td>
+                                        <td style="border:none;">
+                                            <!--<span t-esc="total"/>-->
+                                        </td>
+                                        <td style="border:none;">
+                                            <!--<span t-esc="total"/>-->
+                                        </td>
+                                    </tr>
+                                    <tr t-foreach="o.invoice_ids" t-as="invoice" t-if="invoice.id in o.date_filter[1]['datas'][f]['ids']">
+                                        <td>
+                                            <span t-field="invoice.company_id"/>
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="invoice.refund_invoice_id.company_id"/>-->
+                                        </td>
+                                        <td>
+                                            <t t-set="count_opportunity" t-value="0"/>
+                                            <span t-foreach="invoice.partner_id.opportunity_ids" t-as="op">
+                                                <span t-field="op.name"></span>
+                                                <t t-set="count_opportunity" t-value="count_opportunity + 1"/>
+                                                <span t-if="count_opportunity == len(invoice.partner_id.opportunity_ids) and op.name">, </span>
+                                            </span>
+                                        </td>
+                                        <td style="white-space:nowrap;">
+                                            <span t-field="invoice.x_subscription_period" t-field-options="{&quot;format&quot;: &quot;d-MMM-yy&quot;}" />
+                                        </td>
+                                        <td>
+                                            <span t-field="invoice.x_month_number"/>
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="invoice.refund_invoice_id."/>-->
+                                        </td>
+                                        <td>
+                                            <span t-field="invoice.currency_id"/>
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="invoice.refund_invoice_id.company_id"/>-->
+                                        </td>
+                                        <td>
+                                            <span t-field="invoice.amount_total"/>
+                                        </td>
+                                        <td>
+                                            <!--<span t-field="invoice.refund_invoice_id.company_id"/>-->
+                                        </td>
+                                        <td>
+                                            <span>$ </span><span t-esc="invoice.amount_total*invoice.x_month_number"/>
+                                        </td>
+                                        <td>
+                                            <p t-foreach="invoice.invoice_line_ids" t-as="li">
+                                                <span t-field="li.product_id"/>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p t-foreach="invoice.partner_id.opportunity_ids" t-as="op">
+                                                <span t-field="op.description"/>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color:#29f729" t-if="not o.date_filter[1]['datas'][f]['ids']">
+                                        <td colspan="13" style="border:none;background-color:white;">
+                                            <span style="color:white;">Total  Revenue Month of 2017</span>
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color:#29f729">
+                                        <td colspan="8" style="border:none;">
+                                            <span>Total  Revenue Month of  <span t-esc="o.date_filter[1]['name']"/> 2017</span>
+                                        </td>
+                                        <td style="border:none;">
+                                            <span>$ </span><span t-esc="o.date_filter[1]['datas'][f]['total_amount']"/>
+                                        </td>
+                                        <td style="border:none;">
+                                            <!--<span t-esc="total"/>-->
+                                        </td>
+                                        <td style="border:none;">
+                                            <span>$ </span><span t-esc="o.date_filter[1]['datas'][f]['total_annualised']"/>
+                                        </td>
+                                        <td style="border:none;">
+                                            <!--<span t-esc="total"/>-->
+                                        </td>
+                                        <td style="border:none;">
+                                            <!--<span t-esc="total"/>-->
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color:#00b0f0">
+                                        <td colspan="8" style="border:none;">
+                                            <span>Total Revenue <span><t t-esc="f"></t></span> in S$</span>
+                                        </td>
+                                        <td style="border:none;">
+                                            <span>$ </span><span t-esc="o.date_filter[0]['datas'][f]['total_amount'] + o.date_filter[1]['datas'][f]['total_amount']"/>
+                                        </td>
+                                        <td style="border:none;">
+                                            <!--<span t-esc="total"/>-->
+                                        </td>
+                                        <td style="border:none;">
+                                            <span>$ </span><span t-esc="o.date_filter[0]['datas'][f]['total_annualised'] + o.date_filter[1]['datas'][f]['total_annualised']"/>
+                                        </td>
+                                        <td style="border:none;">
+                                            <!--<span t-esc="total"/>-->
+                                        </td>
+                                        <td style="border:none;">
+                                            <!--<span t-esc="total  "/>-->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+            </t>
+        </template>
+
+
+
+        <!--# SHOW POP UP-->
+        <record id="sales_revenue_report_view" model="ir.ui.view">
+            <field name="name">Sales Revenue</field>
+            <field name="model">sales.revenue.report</field>
+            <field name="arch" type="xml">
+            <form string="Report Options" style="height:240px">
+                <label string=""/>  <!-- binding for inherited views -->
+                <group col="4">
+                    <field name="country"/>
+                    <field name="sales_person"/>
+                    <field name="start_date" string="Start Date"/>
+                    <field name="end_date" string="End Date"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="sales_revenue_report_menu" model="ir.actions.act_window">
+            <field name="name">Sales Revenue</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.revenue.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="sales_revenue_menu"
+            name="Sales Revenue Report"
+            parent="sales_team.menu_sale_report"
+            action="sales_revenue_report_menu"
+        />
+    </data>
+</odoo>

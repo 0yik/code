@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<odoo>
+
+    <!--Template Class Summary -->
+    <template id="report_class_summary">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    
+                <div class="row">
+                	<span><left>Updated On: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></left></span>
+                    <h4>
+                        <span><left><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y')"/> Class Summary Listing</left></span>
+                    </h4>
+                </div>
+                
+                    <table class="table table-condensed">
+                    	<tr>
+                            <td><strong>AM Sessions:</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>SN</strong></td>
+                            <td><strong>Class/Room</strong></td>
+                            <td><strong>Class Teacher</strong></td>
+                            <td><strong>Long Term RTA</strong></td>
+                            <td><strong>Female</strong></td>
+                            <td><strong>Male</strong></td>
+                            <td><strong>Total</strong></td>
+                        </tr>
+                        <tr t-foreach="class_data_am" t-as="a">
+                            <td><span t-esc="a_index+1"/></td>
+                            <td><span t-esc="a['name']"/> <span t-esc="a['room_no']"/></td>
+                            <td><span t-esc="a['teacher']"/></td>
+                            <td></td>
+                            <td><span t-esc="a['female']"/></td>
+                            <td><span t-esc="a['male']"/></td>
+                            <td><span t-esc="a['total']"/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><strong>AM Sessions Total:</strong></td>
+                            <td></td>
+                             <td><strong><span t-esc="am_total_female"/></strong></td>
+                            <td><strong><span t-esc="am_total_male"/></strong></td>
+							<td><strong><span t-esc="am_total"/></strong></td>
+                            
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+							<td></td>
+                            
+                        </tr>
+                    </table>
+                    
+                    <table class="table table-condensed">
+                    	<tr>
+                            <td><strong>PM Sessions:</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>SN</strong></td>
+                            <td><strong>Class/Room</strong></td>
+                            <td><strong>Class Teacher</strong></td>
+                            <td><strong>Long Term RTA</strong></td>
+                            <td><strong>Female</strong></td>
+                            <td><strong>Male</strong></td>
+                            <td><strong>Total</strong></td>
+                        </tr>
+                        <tr t-foreach="class_data_pm" t-as="b">
+                            <td><span t-esc="b_index+1"/></td>
+                            <td><span t-esc="b['name']"/> <span t-esc="b['room_no']"/></td>
+                            <td><span t-esc="b['teacher']"/></td>
+                            <td></td>
+                            <td><span t-esc="b['female']"/></td>
+                            <td><span t-esc="b['male']"/></td>
+                            <td><span t-esc="b['total']"/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><strong>PM Sessions Total:</strong></td>
+                            <td></td>
+                            <td><strong><span t-esc="pm_total_female"/></strong></td>
+                            <td><strong><span t-esc="pm_total_male"/></strong></td>
+							<td><strong><span t-esc="pm_total"/></strong></td>
+                            
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+							<td></td>
+                            
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Overall No. Of Students:</strong></td>
+                            <td></td>
+                             <td><strong><span t-esc="am_total_female+pm_total_female"/></strong></td>
+                            <td><strong><span t-esc="am_total_male+pm_total_male"/></strong></td>
+							<td><strong><span t-esc="am_total+pm_total"/></strong></td>
+                            
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    
+
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+        User ID Sequences
+        -->
+        <record id="sequence_user_id_seq" model="ir.sequence">
+            <field name="name">UserID sequence</field>
+            <field name="code">userid.seq</field>
+            <field name="prefix"></field>
+            <field eval="False" name="company_id"/>
+            <field name="padding">1</field>
+        </record>
+
+        <!--<record id="ir_cron_check_nofitication" model="ir.cron">-->
+            <!--<field name="name">Send Mai Nofitication</field>-->
+            <!--<field name="user_id" ref="base.user_root"/>-->
+            <!--<field name="interval_number">1</field>-->
+            <!--<field name="interval_type">hours</field>-->
+            <!--<field name="numbercall">-1</field>-->
+            <!--<field eval="False" name="doall"/>-->
+            <!--<field eval="'account.invoice'" name="model"/>-->
+            <!--<field eval="'send_mail_notification'" name="function"/>-->
+        <!--</record>-->
+
+    </data>
+</odoo>

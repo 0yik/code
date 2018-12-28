@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="invoice_supplier_form_view_inherit">
+            <field name="name">account.invoice.form.view.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="groups_id" eval="[(4, ref('access_head_purchase'))]"/>
+            <field name="arch" type="xml">
+                <field name="amount_total" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

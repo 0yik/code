@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+    <t t-extend="ButtonDoneAll">
+        <t t-jquery="button" t-operation="replace">
+            <button class="btn btn-default btn-fill btn-wd control-button hide_priority"><i class="pe-7s-check"/> Done all</button>
+        </t>
+    </t>
+
+    <t t-extend="ButtonExitHighPriority">
+        <t t-jquery="button" t-operation="replace">
+            <button class="btn btn-default btn-fill btn-wd control-button hide_priority"><i class="pe-7s-bottom-arrow"/> Exit priority</button>
+        </t>
+    </t>
+
+    <t t-extend="ButtonHighPriority">
+        <t t-jquery="button" t-operation="replace">
+            <button class="btn btn-default btn-fill btn-wd control-button hide_priority"><i class="pe-7s-gleam"/> High Priority</button>
+        </t>
+    </t>
+
+    <t t-name="PrioButton">
+        <button class="control-button btn btn-default btn-fill btn-wd prio-button"><i class="pe-7s-add-user"/> Priority</button>
+    </t>
+
+    <t t-name="CancelPrioButton">
+        <button class="control-button btn btn-default btn-fill btn-wd cancelprio-button"><i class="pe-7s-add-user"/> Cancel Priority</button>
+    </t>
+
+    <t t-name="ReprintButton">
+        <button class="control-button btn btn-default btn-fill btn-wd reprint-button"><i class="pe-7s-add-user"/> Re-Print</button>
+    </t>
+
+	<t t-extend="NewOrderlineNoteButton">
+		<t t-jquery="button" t-operation="replace">
+			 <button class="control-button btn btn-default btn-fill btn-wd note-button"><i class="pe-7s-note2"/> Note</button>
+		</t>
+	</t>
+</template>
+

@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <record model="ir.cron" id="stable_account_analytic_analysis.account_analytic_cron_for_invoice">
+           <field name="name">Generate Recurring Invoices from Contracts</field>
+           <field name="interval_number">1</field>
+           <field name="interval_type">months</field>
+           <field name="numbercall">-1</field>
+           <field name="model" eval="'account.analytic.account'"/>
+           <field name="function" eval="'_cron_recurring_create_invoice'"/>
+           <field name="args" eval="'()'"/>
+        </record>
+
+
+         <record model="ir.cron" id="account_analytic_valid_contract">
+            <field name="name">Contract valid reminder</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'account.analytic.account'"/>
+            <field name="function" eval="'_cron_job_check_valid_contract'"/>
+            <field name="args" eval="'()'" />
+        </record>
+
+        <record model="ir.cron" id="account_analytic_confirm_order">
+            <field name="name">Contract confirm order</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'account.analytic.account'"/>
+            <field name="function" eval="'_cron_job_confirm_delivery_order'"/>
+            <field name="args" eval="'()'" />
+        </record>
+    </data>
+</odoo>

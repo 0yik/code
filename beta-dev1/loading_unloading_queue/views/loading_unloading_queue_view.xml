@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_loading_queue_tree">
+            <field name="name">Loading queue</field>
+            <field name="model">loading.queue</field>
+            <field name="arch" type="xml">
+                <tree string="Loading Queue">
+                    <field name="queue_number"/>
+                    <field name="reference"/>
+                    <field name="created_date"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="form_action_loading_queue" model="ir.actions.act_window">
+            <field name="name">Loading Unloading Queue</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">loading.queue</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_loading_queue_form">
+            <field name="name">Loading queue</field>
+            <field name="model">loading.queue</field>
+            <field name="arch" type="xml">
+                <form string="Loading Queue">
+                    <header>
+                        <button name='time_start' type='object' string='Start'/>
+                        <button name='time_end' type='object' string='Finished'/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,finished"/>
+                    </header>
+                    <sheet>
+                        <div>
+                            <div class="oe_title">
+                                <h1 class="oe_left">
+                                    <field name="queue_no" readonly="1"/>
+                                </h1>
+                            </div>
+                            <div name="button_box" class="oe_right oe_button_box ">
+                                <button class="or_inside oe_stat_button" type="action"
+                                        name="%(form_action_loading_queue)d"
+                                        icon="fa-align-justify" string="View">
+                                </button>
+                            </div>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="queue_number" attrs="{'readonly':[('check','=', True)]}"
+                                       class="oe_inline"/>
+                                <field name="reference" class="oe_inline"/>
+                                <field name="created_date" class="oe_inline"/>
+                                <field name="vehicle_type" class="oe_inline"/>
+                                <field name="vehicle_model" class="oe_inline"/>
+                                <field name="vehicle_license" class="oe_inline"/>
+                            </group>
+                            <group>
+                                <field name="check" invisible='1'/>
+                                <field name="source_doc" class="oe_inline"/>
+                                <field name="start_time" class="oe_inline"/>
+                                <field name="end_time" class="oe_inline"/>
+                                <label for="duration"/>
+                                <div>
+                                    <button style="pointer-events: none;" class="oe_inline label label-default">
+                                        <field name="duration" widget="loading_queue_time_counter"/>
+                                    </button>
+                                </div>
+
+
+                                <!--<field name="duration" class="oe_inline" widget="loading_queue_time_counter"/>-->
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Product">
+                                <field name='pack_operation_product_ids'>
+                                    <tree name="line_data" editable="bottom">
+                                        <field name='product_id'/>
+                                        <field name='product_qty'/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <menuitem id="menu_loading_queue" name="Loading Unloading Queue" parent="stock.menu_stock_warehouse_mgmt"
+                  sequence="4"
+                  action="form_action_loading_queue"/>
+    </data>
+</odoo>
+

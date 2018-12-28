@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ccm_modifier_inherit_sale_tc_form" model="ir.ui.view">
+            <field name="name">ccm.modifier.inherit.sale.tc</field>
+            <field name="model">sale.tc</field>
+            <field name="inherit_id" ref="sales_term_and_condition.view_sale_tc_form"/>
+            <field name="arch" type="xml">
+                <div name="name" position="after">
+                  <group>
+                        <field name="subject"/>
+                    </group>
+                </div>
+                <field name="terms" position="attributes">
+                    <attribute name="widget">html</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

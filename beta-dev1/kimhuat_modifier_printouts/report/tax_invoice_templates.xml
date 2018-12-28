@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="report_tax_invoice_document">
+            <t t-call="kimhuat_modifier_printouts.external_layout_offer_modifier">
+            <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+            <div class="page">
+                <div class="col-xs-5 pull-right text-left" style="font-size:22px;">
+                            <span>TAX INVOICE</span>
+                        </div>
+                <div class="col-xs-8">
+                    <span t-field="o.partner_id.name" style="font-weight:bold"></span><br/>
+                    <t t-if="o.partner_id.child_ids"><span t-field="o.partner_id.child_ids[0].name"></span><br/></t>
+                    <span t-field="o.partner_id.street"></span><br t-if="o.partner_id.street"/>
+                    <span t-field="o.partner_id.street2"></span><br t-if="o.partner_id.street2"/>
+                    <span t-field="o.partner_id.city"></span><br t-if="o.partner_id.city"/>
+                    <span t-field="o.partner_id.state_id.name"></span><br t-if="o.partner_id.state_id"/>
+                    <span t-field="o.partner_id.country_id.name"></span>
+                    <t t-if="o.partner_id.country_id">
+                        <span t-field="o.partner_id.zip"></span>
+                    </t>
+                    <br/><br/>
+                    <span>Attn: </span><span t-if="o.partner_id.child_ids" t-esc="o.partner_id.child_ids[0].name"></span><br/><br/>
+                </div>
+                <div class="col-xs-4">
+                    <span>Invoice No: </span><span t-field="o.number"></span><br/>
+                    <span>Date: </span><span t-field="o.date_invoice" t-options ='{"format": "MM/dd/yyyy"}'></span><br/>
+                    <!--<span>Quote No: </span><span></span><br/>-->
+                    <span>Terms: </span><span t-field="o.payment_term_id.name"></span><br/>
+                </div>
+                <!--margin-left:15px-->
+                <table class="table table-condensed mt48" style="collapse; border:1px solid black;margin-left:15px;width:96%;">
+                    <thead>
+                        <tr style="collapse; border:1px solid black">
+                            <th style="collapse; border:1px solid black; text-align : center;">
+                                <strong>Item</strong>
+                            </th>
+                            <!--<th style="collapse; border:1px solid black">-->
+                                <!--<strong>Brand</strong>-->
+                            <!--</th>-->
+                            <!--<th style="collapse; border:1px solid black">-->
+                                <!--<strong>Type</strong>-->
+                            <!--</th>-->
+                            <!--<th style="collapse; border:1px solid black">-->
+                                <!--<strong>Product</strong>-->
+                            <!--</th>-->
+                            <th style="collapse; border:1px solid black" width="50%">
+                                <strong>Description</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;text-align : center;">
+                                <strong>Qty</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;text-align : center;">
+                                <strong>UOM</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;text-align : center;">
+                                <strong>Unit Price</strong>
+                            </th>
+                            <th style="collapse; border:1px solid black;text-align : center;">
+                                <strong>Amount</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="No" t-value="0"/>
+                        <tr t-foreach="o.invoice_line_ids" t-as="line" style="collapse; border:1px solid black">
+                            <t t-set="No" t-value="No + 1"/>
+                            <td style="collapse; border:1px solid black;width:4%;text-align : center;">
+                                <span t-esc="No"/>
+                            </td>
+                            <!--<td style="collapse; border:1px solid black;width:10%;">-->
+                                <!--<t t-if="line.brand"> <span t-esc="line.brand.name"/></t>-->
+                            <!--</td>-->
+                            <!--<td style="collapse; border:1px solid black;width:10%;">-->
+                                <!--<t t-if="line.type"><span t-esc="line.type.name"/></t>-->
+                            <!--</td>-->
+                            <!--<td style="collapse; border:1px solid black;width:15%;">-->
+                                <!--<span t-esc="line.product_id.name"/>-->
+                            <!--</td>-->
+                            <td style="collapse; border:1px solid black;width:22%;">
+                                <t t-if="line.brand"> <span t-esc="line.brand.name"/>, </t>
+                                <t t-if="line.type"><span t-esc="line.type.name"/>, </t>
+                                <span t-esc="line.product_id.name"/> ,
+                                <span t-field="line.name"/>
+                            </td>
+                            <td style="collapse; border:1px solid black;width:5%;text-align : center;">
+                                <span t-esc="int(line.quantity)"/>
+                            </td>
+                            <td style="collapse; border:1px solid black;width:8%;text-align : center;">
+                                <span t-field="line.uom_id"/>
+                            </td>
+                            <td style="collapse; border:1px solid black;width:13%;text-align : center;">
+                                <span>$ </span><span t-esc="'%.2f'%(line.price_unit)"/>
+                            </td>
+                            <td style="collapse; border:1px solid black;width:13%;text-align : center;">
+                                <span>$ </span><span t-esc="'%.2f'%(line.price_subtotal)"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col-xs-4 pull-right">
+                    <table style="border:0;">
+                        <tr>
+                            <th class="col-xs-4 col-xs-offset-6">Total Price:</th>
+                            <td class="col-xs-3" style="padding-left: 0px;">
+                                <span>$ </span><span t-esc="'%.2f'%(o.amount_untaxed)"/>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom:1px solid black">
+                            <td class="col-xs-4 col-xs-offset-6"><span>7% GST:</span></td>
+                            <td>
+                                <span>$ </span><span t-esc="o.amount_tax"/>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom:1px solid black">
+                            <th class="col-xs-4 col-xs-offset-6" style="padding-right:1px">Grand Total:</th>
+                            <td>
+                                <span>$ </span><span t-esc="'%.2f'%(o.amount_total)"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!--<table class="col-xs-3 pull-right text-left mt40">-->
+                    <!--<tr>-->
+                        <!--<td><span>  </span><span>Total Price &#160;&#160;&#160;:</span></td>-->
+                        <!--<td><span>$ </span><span t-esc="o.amount_untaxed"></span></td>-->
+                    <!--</tr>-->
+                    <!--<tr style="border-bottom:1px solid black">-->
+                        <!--<td><span>  </span><span>7% GST &#160;&#160;&#160;&#160;&#160;&#160;:</span></td>-->
+                        <!--<td><span>$ </span><span t-esc="o.amount_tax"></span></td>-->
+                    <!--</tr>-->
+                    <!--<tr style="border-bottom:1px solid black">-->
+                        <!--<td><span>  </span><span>Grand Total&#160;&#160;:</span></td>-->
+                        <!--<td><span>$ </span><span t-esc="o.amount_total"></span></td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+                <div class="col-xs-12">
+                    <!--<span style="font-weight:bold;text-decoration: underline;">Job Scope</span>-->
+                    <!--<t t-foreach="o.job_scope" t-as="scope">-->
+                        <!--<br/><span t-esc="scope.job_scope_id.name"></span>-->
+                    <!--</t>-->
+                    <!--<br/><span>Remarks: </span><span t-field="o.name"></span><br/><br/>-->
+                    <span>Cheque should be crossed to:</span><br/>
+                    <span style="font-weight:bold;">‘KIM HUAT REFRIGERATION &amp; ELECTRICAL PTE LTD’</span><br/>
+                    <span>Interbank Transfer to ‘OCBC UBI BRANCH’</span><br/>
+                    <span>Account Name: Kim Huat Refrigeration &amp; Electrical Pte Ltd</span><br/>
+                    <span>Account No: 588-007898-001 </span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                    <span>Branch Code: 7339</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                    <span>Swift Code: OCBCSGSG</span><br/>
+                    <span>Goods sold are NOT REFUNDABLE.</span><br/>
+                    <span>Deposit will be FORFEITED after 60 days</span><br/><br/>
+                </div>
+                <div class="col-xs-6 pull-right text-center" style="margin-top:100px">
+                    <span>_____________________________________</span><br/>
+                    <span>Authorised Signature &amp; Company Stamp</span>
+                </div>
+            </div>
+            </t>
+        </template>
+
+
+        <template id="report_tax_invoice">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="kimhuat_modifier_printouts.report_tax_invoice_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+        </template>
+
+        <!-- QWeb Reports -->
+        <report
+            id="picking_tax_invoice"
+            model="account.invoice"
+            string="Tax Invoice"
+            report_type="qweb-pdf"
+            name="kimhuat_modifier_printouts.report_tax_invoice"
+            file="kimhuat_modifier_printouts.report_tax_invoice"
+        />
+
+    </data>
+</odoo>

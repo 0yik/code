@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_order_form_add_tax_term" model="ir.ui.view">
+            <field name="name">sale.order.inherit.add.tax.term</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_term_id" position="after">
+                    <field name="tax_term"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="invoice_form_add_payment_proof" model="ir.ui.view">
+            <field name="name">account.invoice.inherit.add.payment.proof</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_term_id" position="after">
+                    <field name="payment_proof_name" invisible="1"/>
+                    <field name="payment_proof" attrs="{'invisible':[('advance_payment_method','in',('fixed','percentage'))]}" filename="payment_proof_name" widget="binary"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

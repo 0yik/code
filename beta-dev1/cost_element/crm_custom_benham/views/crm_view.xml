@@ -1,0 +1,176 @@
+<openerp>
+	<data>
+	
+		<!-- ###Inherit CRM View -->
+		<record id="crm_case_form_view_inherit_benham_leads" model="ir.ui.view">
+	        <field name="name">crm.lead.form.inherit.benham.lead</field>
+	        <field name="model">crm.lead</field>
+	        <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+	        <field name="arch" type="xml">
+	        	<field name="partner_id" position="after">
+	        		<field name="surname"/>
+	        		<field name="contact_surname"/>
+	        	</field>
+                <xpath expr="//field[@name='partner_name']" position="replace"/>
+	        	<xpath expr="//form/sheet/group/group/field[@name='priority']" position="after">
+	        		<field name="crm_source_id"/>
+					<div class="">
+						<field name="lea_off" class="textarea"/>
+						<field name="mana_fe" class="textarea"/>
+                    	<field name="parking" class="textarea"/>
+					</div>
+
+	        	</xpath>
+	        	<xpath expr="//field[@name='phone']" position="after">
+	        		<field name="work_phone"/>
+					<field name="property"/>
+					<field name="accom"/>
+				</xpath>
+                <!-- <xpath expr="//field[@name='street']" position="before"> -->
+                    <!-- <field name="partner_id"/> -->
+                <!-- </xpath> -->
+                
+	        </field>
+	   	</record>
+	   	
+	   	<!-- ##Opportunities## -->
+	   	<record id="crm_case_tree_view_inherit_benham_oppor" model="ir.ui.view">
+            <field name="name">crm.lead.tree.inherit.benham.opportunity</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+            <field name="arch" type="xml">
+            	<field name="partner_id" position="replace">
+	        		<field name="partner_name" string="First Name"/>
+	        	</field>
+            </field>
+       	</record>
+	   	
+	   	<record id="crm_case_form_view_inherit_benham_oppor" model="ir.ui.view">
+            <field name="name">crm.lead.form.inherit.benham.opportunity</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+	        	<field name="partner_id" position="after">
+	        		<field name="surname"/>
+	        		<!-- <field name="contact_surname"/>	        		 -->
+	        	</field>
+            	<field name="phone" position="after">
+            		<field name="work_phone"/>
+					<field name="mobile_num"/>
+	        		<field name="other_num"/>
+            	</field>
+                <field name="description" position="after">
+                    <separator string="BR Notes"/>
+                    <field name="br_notes" colspan="4" nolabel="1"/>
+                </field>
+                <xpath expr="//field[@name='partner_name']" position="replace"/>
+                <field name="partner_id" position="replace">
+	        		<field name="partner_name" string="First Name"/>
+	        	</field>
+                <xpath expr="//label[@for='street']" position="before">
+                    <field name="partner_id" string="Customer Name"/>
+                </xpath>
+
+				<xpath expr="//group/group[3]" position="before">
+                    <group>
+						<group>
+							<field name="property"/>
+							<field name="property_2"/>
+							<field name="property_3"/>
+						</group>
+
+						<group>
+							<field name="accom"/>
+							<field name="accom_2"/>
+							<field name="accom_3"/>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="rental_1"/>
+							<field name="rental_2"/>
+							<field name="rental_3"/>
+						</group>
+					</group>
+					<group>
+						<field name="crm_source_id"/>
+						<field name="lea_off"/>
+						<field name="mana_fe"/>
+						<field name="parking"/>
+					</group>
+            		<group>
+
+					</group>
+                </xpath>
+            </field>
+      	</record>
+
+	
+		<!-- ##CRM - Source## -->
+		<record id="view_crm_source_tree" model="ir.ui.view">
+            <field name="name">view.crm.source.tree</field>
+            <field name="model">crm.source</field>
+            <field name="arch" type="xml">
+            	<tree string="CRM Source List">
+        			<field name="name"/>
+            	</tree>
+            </field>
+    	</record>
+		<record id="view_crm_source_form" model="ir.ui.view">
+            <field name="name">view.crm.source.form</field>
+            <field name="model">crm.source</field>
+            <field name="arch" type="xml">
+            	<form string="CRM Source List">
+            		<sheet>
+            			<group>
+            				<field name="name" required="1"/>
+            			</group>
+            		</sheet>
+            	</form>
+            </field>
+    	</record>
+    	
+    	<record id="action_crm_source" model="ir.actions.act_window">
+            <field name="name">CRM-Source</field>
+            <field name="res_model">crm.source</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_crm_source_tree"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add an CRM Source.
+              </p>
+            </field>
+        </record>
+        <menuitem action="action_crm_source" id="menu_action_crm_source" 
+        		parent="crm.menu_crm_config_lead" sequence="20"/>
+        
+        <!--Email template -->
+        <record id="email_template_notify_opportunity" model="mail.template">
+            <field name="name">Notification Opportunities</field>
+            <field name="email_from">no-reply@hashmicro.com</field>
+            <field name="subject">Notification Opportunity (Ref ${object.name or 'n/a' })</field>
+            <field name="partner_to">${object.user_id and object.user_id.partner_id.id or 0}</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<p>Dear ${object.user_id and object.user_id.name or ''},
+</p><p>
+You have an Opportunity <strong>${object.name and object.name or ''}</strong> that requires your action.
+</p>
+<p>Please go inside this Opportunity and continue the processes.</p>
+<p>Best regards.</p>
+]]></field>
+        </record>
+		<record model="ir.cron" id="auto_notification_opportunity_cron">
+             <field name="name">Auto Notification Opportunities</field>
+             <field name="interval_number">1</field>
+             <field name="interval_type">days</field>
+             <field name="numbercall">-1</field>
+             <field name="doall" eval="False"/>
+             <field name="model" eval="'crm.lead'"/>
+             <field name="function" eval="'autosend_notification'"/>
+             <field name="args" eval="'()'" />
+         </record>
+	</data>
+</openerp>

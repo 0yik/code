@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_budget_analytic_account,access_budget_analytic_account,model_budget_analytic_account,,1,1,1,1
+access_budget_aa_lines,access_budget_aa_lines,model_budget_aa_lines,,1,1,1,1
+access_sub_dept_descendant_line,access_sub_dept_descendant_line,model_sub_dept_descendant_line,,1,1,1,1
+access_analytic_budget_reserve_request,access_analytic_budget_reserve_request,model_analytic_budget_reserve_request,,1,1,1,1
+access_budget_analytic_account_allocation,access_budget_analytic_account_allocation,model_budget_analytic_account_allocation,,1,1,1,1

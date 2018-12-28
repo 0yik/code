@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+    <template id="assets_backend" name="tree icon assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_rental/static/src/js/list_field_image.js"></script>
+        </xpath>
+    </template>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_rental/static/src/js/custom.js"></script>
+            <link rel='stylesheet' href='/pos_rental/static/src/css/fullcalendar.css'/>
+            <link rel='stylesheet' href='/pos_rental/static/src/css/fullcalendar.print.css' />
+            <link rel="stylesheet" href="/pos_rental/static/src/css/pos_orders.css" />
+        </xpath>
+    </template>
+    
+    <record id="product_product_advance_payment" model="product.product">
+        <!-- <field name="default_code">Advance</field> -->
+        <field name="list_price">0.0</field>
+        <field name="standard_price">0.0</field>
+        <field name="type">service</field>
+        <field name="name">Refundable Deposit</field>
+        <!-- <field name="categ_id" ref="connector_ecommerce.product_categ_services" />  -->
+    </record>
+
+    <!-- ENets journal -->
+    <record id="pos_journal_nets" model="account.journal">
+        <field name="name">NETS</field>
+        <field name="code">NETS</field>
+        <field name="type">cash</field>
+        <field name="journal_user">True</field>
+    </record>
+
+    <!-- PayWave journal -->
+    <record id="pos_journal_paywave" model="account.journal">
+        <field name="name">PayWave</field>
+        <field name="code">PWave</field>
+        <field name="type">cash</field>
+        <field name="journal_user">True</field>
+    </record>
+    
+    <!-- Cash journal -->
+    <record id="pos_journal_cashh" model="account.journal">
+        <field name="name">Cash</field>
+        <field name="code">Cash</field>
+        <field name="type">cash</field>
+        <field name="journal_user">True</field>
+    </record>
+    
+    <!-- Paypal journal -->
+    <record id="pos_journal_paypal" model="account.journal">
+        <field name="name">Paypal</field>
+        <field name="code">PyPl</field>
+        <field name="type">cash</field>
+        <field name="journal_user">True</field>
+    </record>
+
+    <record model="pos.config" id="point_of_sale.pos_config_main">
+        <field name="picking_type_id" ref="point_of_sale.picking_type_posout" /> 
+        <field name="advance_product_id" ref="product_product_advance_payment" />
+        <field name="journal_ids" eval="[(4, ref('pos_rental.pos_journal_nets')),
+                                         (4, ref('pos_rental.pos_journal_paywave')),
+                                         (4, ref('pos_rental.pos_journal_cashh'))]"/>
+    </record>
+</data>
+</odoo>

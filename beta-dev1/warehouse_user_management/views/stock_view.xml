@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem id="menu_warehouse_config" name="Warehouse User Configuration" parent="base.menu_administration" sequence="5"/>
+
+        <record id="stock_warehouse_user_recurrency_form" model="ir.ui.view">
+            <field name="name">stock.warehouse.user.line.popup.form</field>
+            <field name="model">stock.warehouse.user.line.popup</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <label for="interval"/>
+                            <div>
+                                <field name="interval" attrs="{'required': True}"  class="oe_inline"/>
+                                <field name="rrule_type" attrs="{'required': True}" class="oe_inline"/>
+                            </div>
+                            <label string="Until" for="end_type" attrs="{}"/>
+                            <div>
+                                <field name="end_type" attrs="{'required': True}" class="oe_inline"/>
+                                <field name="count" attrs="{'invisible': [('end_type', '!=', 'count')], 'required': True}" class="oe_inline"/>
+                                <field name="final_date" attrs="{'invisible': [('end_type', '!=', 'end_date')], 'required': [('end_type', '=', 'end_date')]}" class="oe_inline"/>
+                            </div>
+                            <label string="Select Weekdays" attrs="{'invisible' :[('rrule_type','not in', ['weekly'])]}"/>
+                            <group col="2" colspan="1" name="weekdays" attrs="{'invisible' :[('rrule_type','not in', ['weekly'])]}" >
+                                <field name="mo" attrs="{}"/>
+                                <field name="tu" attrs="{}"/>
+                                <field name="we" attrs="{}"/>
+                                <field name="th" attrs="{}"/>
+                                <field name="fr" attrs="{}"/>
+                                <field name="sa" attrs="{}"/>
+                                <field name="su" attrs="{}"/>
+                            </group>
+
+                            <label string="Day of Month"
+                                attrs="{'invisible': [('rrule_type','!=','monthly')]}"/>
+
+                            <div attrs="{'invisible': [('rrule_type','!=','monthly')]}">
+                                <field name="month_by" attrs="{}"/>
+                                <field name="day"
+                                    attrs="{'required': [('month_by','=','date'), ('rrule_type','=','monthly')],
+                                        'invisible': [('month_by','=','day')]}"/>
+                                <field name="byday" string="The"
+                                    attrs="{'required': [('month_by','=','day'), ('rrule_type','=','monthly')], 'invisible': [('month_by','=','date')]}"/>
+                                <field name="week_list" nolabel="1"
+                                    attrs="{'required': [('month_by','=','day'), ('rrule_type','=','monthly')], 'invisible': [('month_by','=','date')]}"/>
+                            </div>
+                        </group>
+                    </group>
+
+
+                    <footer>
+                    <button name="save_popup" string="Save" type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                     </footer>
+
+                </form>
+            </field>
+        </record>
+        <!--<record id="stock_warehouse_user_recurrency_form" model="ir.ui.view">
+            <field name="name">stock.warehouse.user.line.popup.form</field>
+            <field name="model">stock.warehouse.user.line.popup</field>
+            <field name="target">new</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="arch" type="xml">
+                <group>
+                    <group>
+                        <field name="recurrency" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+                    <group attrs="{'invisible': [('recurrency','=',False)]}">
+                        <label for="interval"/>
+                        <div>
+                            <field name="interval" attrs="{'required': [('recurrency','==',True)],'readonly':[('state','!=','draft')]}"  class="oe_inline"/>
+                            <field name="rrule_type" attrs="{'required': [('recurrency','==',True)],'readonly':[('state','!=','draft')]}" class="oe_inline"/>
+                        </div>
+                        <label string="Until" for="end_type" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <div>
+                            <field name="end_type" attrs="{'required': [('recurrency','==',True)],'readonly':[('state','!=','draft')]}" class="oe_inline"/>
+                            <field name="count" attrs="{'invisible': [('end_type', '!=', 'count')], 'required': [('recurrency','==',True)],'readonly':[('state','!=','draft')]}" class="oe_inline"/>
+                            <field name="final_date" attrs="{'invisible': [('end_type', '!=', 'end_date')], 'required': [('end_type', '=', 'end_date')],'readonly':[('state','!=','draft')]}" class="oe_inline"/>
+                        </div>
+                        <label string="Select Weekdays" attrs="{'invisible' :[('rrule_type','not in', ['weekly'])],'readonly':[('state','!=','draft')]}"/>
+                        <group col="2" colspan="1" name="weekdays" attrs="{'invisible' :[('rrule_type','not in', ['weekly'])]}" >
+                            <field name="mo" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="tu" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="we" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="th" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="fr" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="sa" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="su" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+
+                        <label string="Day of Month"
+                            attrs="{'invisible': [('rrule_type','!=','monthly')]}"/>
+
+                        <div attrs="{'invisible': [('rrule_type','!=','monthly')]}">
+                            <field name="month_by" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="day"
+                                attrs="{'required': [('month_by','=','date'), ('rrule_type','=','monthly')],
+                                    'invisible': [('month_by','=','day')],'readonly':[('state','!=','draft')]}"/>
+                            <field name="byday" string="The"
+                                attrs="{'required': [('month_by','=','day'), ('rrule_type','=','monthly')], 'invisible': [('month_by','=','date')],'readonly':[('state','!=','draft')]}"/>
+                            <field name="week_list" nolabel="1"
+                                attrs="{'required': [('month_by','=','day'), ('rrule_type','=','monthly')], 'invisible': [('month_by','=','date')],'readonly':[('state','!=','draft')]}"/>
+                        </div>
+                    </group>
+                </group>
+            </field>
+        </record>-->
+
+        <record id="stock_warehouse_user_form" model="ir.ui.view">
+			<field name="name">stock.warehouse.user.form</field>
+			<field name="model">stock.warehouse.user</field>
+			<field name="arch" type="xml">
+                <form string="Warehouse User" >
+				<header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+				<sheet>
+                    <field name="is_attendee" invisible="1"/>
+                    <field name="attendee_status" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="user_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                       <group>
+
+                       </group>
+
+                    </group>
+                    <notebook>
+                        <page string="Details">
+                            <field name="warehouse_line_ids">
+                                <form edit='false' create='false' delete='false'>
+                                    <group>
+                                        <group>
+                                            <field name="state" invisible="1"/>
+                                            <field name="warehouse_id"/>
+                                            <field name="location_id" domain="[('usage','=','internal')]"/>
+                                            <field name="allday"/>
+                                        </group>
+                                        <group>
+                                            <field name="start_date" string="Starting at" />
+                                            <field name="stop_date" string="Ending at"/>
+                                            <field name="recurrency"/>
+                                        </group>
+                                        <group attrs="{'invisible': [('recurrency','=',False)]}">
+                                        <label for="interval"/>
+                                        <div>
+                                            <field name="interval" attrs="{'required': [('recurrency','==',True)]}"  class="oe_inline"/>
+                                            <field name="rrule_type" attrs="{'required': [('recurrency','==',True)]}" class="oe_inline"/>
+                                        </div>
+                                        <label string="Until" for="end_type" attrs="{}"/>
+                                        <div>
+                                            <field name="end_type" attrs="{'required': [('recurrency','==',True)]}" class="oe_inline"/>
+                                            <field name="count" attrs="{'invisible': [('end_type', '!=', 'count')], 'required': [('recurrency','==',True)]}" class="oe_inline"/>
+                                            <field name="final_date" attrs="{'invisible': [('end_type', '!=', 'end_date')], 'required': [('end_type', '=', 'end_date')]}" class="oe_inline"/>
+                                        </div>
+                                        <label string="Select Weekdays" attrs="{'invisible' :[('rrule_type','not in', ['weekly'])]}"/>
+                                        <group col="2" colspan="1" name="weekdays" attrs="{'invisible' :[('rrule_type','not in', ['weekly'])]}" >
+                                            <field name="mo" attrs="{}"/>
+                                            <field name="tu" attrs="{}"/>
+                                            <field name="we" attrs="{}"/>
+                                            <field name="th" attrs="{}"/>
+                                            <field name="fr" attrs="{}"/>
+                                            <field name="sa" attrs="{}"/>
+                                            <field name="su" attrs="{}"/>
+                                        </group>
+
+                                        <label string="Day of Month"
+                                            attrs="{'invisible': [('rrule_type','!=','monthly')]}"/>
+
+                                        <div attrs="{'invisible': [('rrule_type','!=','monthly')]}">
+                                            <field name="month_by" attrs="{}"/>
+                                            <field name="day"
+                                                attrs="{'required': [('month_by','=','date'), ('rrule_type','=','monthly')],
+                                                    'invisible': [('month_by','=','day')]}"/>
+                                            <field name="byday" string="The"
+                                                attrs="{'required': [('month_by','=','day'), ('rrule_type','=','monthly')], 'invisible': [('month_by','=','date')]}"/>
+                                            <field name="week_list" nolabel="1"
+                                                attrs="{'required': [('month_by','=','day'), ('rrule_type','=','monthly')], 'invisible': [('month_by','=','date')]}"/>
+                                        </div>
+                                    </group>
+                                    </group>
+                                </form>
+                                <tree>
+                                    <field name="state" invisible="1"/>
+                                    <field name="warehouse_id"/>
+                                    <field name="location_id" domain="[('usage','=','internal')]"/>
+                                    <field name="start_date" string="Starting at" />
+                                    <field name="stop_date" string="Ending at"/>
+                                    <field name="allday"/>
+                                    <field name="recurrency" onchange="update_recurrency()"/>
+                                    <!--<button name="update_recurrency" type="object" string="Update Recurrency" />-->
+                                    <field />
+                                </tree>
+                            </field>
+                        </page>
+                        <group attrs="{'invisible': [('recurrency','==',False)]}" class="oe_edit_only ">
+                        <p class='alert alert-warning'> This event is linked to a recurrence...<br/>
+                            <button type="object" name="open_after_detach_event"  string="Update only this instance"  help="Click here to update only this instance and not all recurrences. " class="oe_link"/>
+                        </p>
+                        </group>
+                    </notebook>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+				    
+				</form>
+			</field>
+		</record>
+
+        <!--<record id="stock_warehouse_user_form" model="ir.ui.view">
+			<field name="name">stock.warehouse.user.form</field>
+			<field name="model">stock.warehouse.user</field>
+			<field name="arch" type="xml"/>
+
+        </record>-->
+
+		<record id="stock_warehouse_user_tree" model="ir.ui.view">
+			<field name="name">stock.warehouse.user.tree</field>
+			<field name="model">stock.warehouse.user</field>
+			<field name="arch" type="xml">
+				<tree string="Warehouse user">
+                    <field name="warehouse_name" string="Warehouse"/>
+					<field name="user_id"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+		
+		<!-- CRM Meeting Calendar -->
+        <record model="ir.ui.view" id="view_calendar_event_calendar">
+            <field name="name">Warehouse user Calendar</field>
+            <field name="model">stock.warehouse.user</field>
+            <field name="arch" type="xml">
+                <calendar string="Warehouse User" date_start="start" date_stop="stop" date_delay="duration" all_day="allday" 
+                              color="user_id"  avatar_model="res.users"
+                             event_open_popup="%(warehouse_user_management.stock_warehouse_user_form)s">
+                    <field name="name"/>
+                    <field name="state"/>
+                    <!-- <field name="user_id"/> -->
+                    <!-- <field name="color_partner_id"/> -->
+                    <!-- <field name="partner_ids"/> -->
+                </calendar>
+            </field>
+        </record>
+		
+		<record model="ir.actions.act_window" id="action_stock_warehouse_user">
+		    <field name="name">Warehouse User Configuration</field>
+		    <field name="res_model">stock.warehouse.user</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form,calendar</field>
+		</record>
+
+		<menuitem id="menu_action_stock_warehouse_user"
+		    action="action_stock_warehouse_user"
+		    parent="menu_warehouse_config" sequence="1"/>
+    </data>
+</openerp>

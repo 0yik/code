@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template_slot" xml:space="preserve">
+	
+	    <t t-name="time_picker">
+			<div id="time_point" class="row">
+				<div class="col-xs-12">
+					<input type="hidden" id="hidden_selected_date" name="hidden_selected_date"
+	t-att-value="selected_date" />
+					<t t-foreach="total_slot" t-as="time">
+						<t t-if="time.book_color == true">
+							<div class="time_s time_booked col-xs-3" style="pointer-events: none;">
+								<input type="hidden" t-att-value="time.time_slot_id"
+	name="time_slot_id" id="time_slot_id" />
+								<t t-if="time.start &lt; 12">
+									<t t-esc="time.start_time" /> AM
+								</t>
+								<t t-if="time.start &gt; 12">
+									<t t-esc="time.start_time" /> PM
+								</t>
+								<t t-if="time.start == 12">
+									<t t-esc="time.start_time" /> PM
+								</t>
+								 - 
+								<t t-if="time.end &lt; 12">
+									<t t-esc="time.end_time" /> AM
+								</t>
+								<t t-if="time.end &gt; 12">
+									<t t-esc="time.end_time" /> PM
+								</t>
+								<t t-if="time.end == 12">
+									<t t-esc="time.end_time" /> PM
+								</t>
+							</div>
+						</t>
+						<t t-if="time.book_color == false">
+							<div class="time_s col-xs-3">
+								<input type="hidden" t-att-value="time.time_slot_id"
+	name="time_slot_id" id="time_slot_id" />
+								<t t-if="time.start &lt; 12">
+									<t t-esc="time.start_time" /> AM
+								</t>
+								<t t-if="time.start &gt; 12">
+									<t t-esc="time.start_time" /> PM
+								</t>
+								<t t-if="time.start == 12">
+									<t t-esc="time.start_time" /> PM
+								</t>
+								 - 
+								<t t-if="time.end &lt; 12">
+									<t t-esc="time.end_time" /> AM
+								</t>
+								<t t-if="time.end &gt; 12">
+									<t t-esc="time.end_time" /> PM
+								</t>
+								<t t-if="time.end == 12">
+									<t t-esc="time.end_time" /> PM
+								</t>
+							</div>
+						</t>
+					</t>
+				</div>
+			</div>
+	    </t>
+	    <t t-name="booking_picker_div">
+			<div id="book_point" class="#">
+				<div class="col-xs-12 detail_display">
+					<input type="hidden" t-att-value="pr_id" id="pr_name" name="pr_name"/>
+					<input type="hidden" t-att-value="co_name" id="co_name" name="co_name"/>
+					<input type="hidden" t-att-value="co_no" id="co_no" name="co_no"/>
+					<input type="hidden" t-att-value="sic" id="sic" name="sic"/>
+					<input type="hidden" t-att-value="b_date" id="b_date" name="b_date"/>
+					<input type="hidden" t-att-value="b_time" id="b_time" name="b_time"/>
+					<input type="hidden" t-att-value="tm_id" id="tm_id" name="tm_id"/>
+					<input type="hidden" t-att-value="new_pr_result" id="sic_request" name="sic_request"/>
+					<input type="hidden" t-att-value="address" id="pr_address" name="pr_address"/>
+					<input type="hidden" t-att-value="postal_code" id="pr_postal_code" name="pr_postal_code"/>
+					<input type="hidden" id="all_anchor" t-att-value="created_anchor" name="all_anchor"/>
+					<input type="hidden" value="normal" id="special" name="special"/>
+					<p>Project Name: &amp;nbsp; <t t-if="pr_name"> <t t-esc="pr_name" /> </t></p>
+					<p>Contact Name: &amp;nbsp; <t t-if="co_name"><t t-esc="co_name" /></t></p>
+					<p>Contact Number: &amp;nbsp; <t t-if="co_no"><t t-esc="co_no" /></t></p>
+					<p>SIC Required: &amp;nbsp;<t t-if="sic"> <t t-esc="sic" /></t></p>
+					<p>Booking Date: &amp;nbsp;<t t-if="b_date"> <t t-esc="b_date" /></t></p>
+					<p>Booking Time: &amp;nbsp; <t t-if="b_time"><t t-esc="b_time" /></t></p>
+				</div>
+			</div>
+	    </t>
+	    
+	    <t t-name="booking_picker_special_div">
+			<div id="book_point" class="#">
+				<div class="col-xs-12 detail_display">
+					<input type="hidden" t-att-value="pr_id" id="pr_name" name="pr_name"/>
+					<input type="hidden" t-att-value="co_name" id="co_name" name="co_name"/>
+					<input type="hidden" t-att-value="co_no" id="co_no" name="co_no"/>
+					<input type="hidden" t-att-value="sic" id="sic" name="sic"/>
+					<input type="hidden" t-att-value="backend_st_dt" id="b_date_time" name="b_date_time"/>
+					<input type="hidden" t-att-value="backend_ed_dt" id="b_date_time1" name="b_date_time1"/>
+					<input type="hidden" t-att-value="created_anchor" id="all_anchor" name="all_anchor"/>
+					<input type="hidden" t-att-value="address" id="pr_address" name="pr_address"/>
+					<input type="hidden" t-att-value="new_pr_result" id="sic_request" name="sic_request"/>
+					<input type="hidden" t-att-value="postal_code" id="pr_postal_code" name="pr_postal_code"/>
+					<input type="hidden" value="special" id="special" name="special"/>
+					<p>Project Name: &amp;nbsp; <t t-if="pr_name"> <t t-esc="pr_name" /> </t></p>
+					<p>Contact Name: &amp;nbsp; <t t-if="co_name"><t t-esc="co_name" /></t></p>
+					<p>Contact Number: &amp;nbsp; <t t-if="co_no"><t t-esc="co_no" /></t></p>
+					<p>SIC Required: &amp;nbsp;<t t-if="sic"> <t t-esc="sic" /></t></p>
+					<p>Special Request Start Date: &amp;nbsp;<t t-if="start_date"> <t t-esc="start_date" /></t></p>
+					<p>Special Request Start Time: &amp;nbsp;<t t-if="st_time"> <t t-esc="st_time" /></t></p>
+					<p>Special Request End Date: &amp;nbsp; <t t-if="end_date"><t t-esc="end_date" /></t></p>
+					<p>Special Request End Time: &amp;nbsp; <t t-if="en_time"><t t-esc="en_time" /></t></p>
+				</div>
+			</div>
+	    </t>
+	    
+	</templates>

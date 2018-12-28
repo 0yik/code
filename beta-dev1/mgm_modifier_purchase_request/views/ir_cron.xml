@@ -1,0 +1,16 @@
+<openerp>
+    <data>
+        <record id="cron_get_product_code" model="ir.cron">
+            <field name="name">Update Product Code</field>
+            <field name="active" eval="False" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doal">1</field>
+            <field name="model" eval="'purchase.request.line'" />
+            <field name="function" eval="'cron_get_product_code'" />
+            <field name="args" eval="" />
+        </record>
+    </data>
+</openerp>

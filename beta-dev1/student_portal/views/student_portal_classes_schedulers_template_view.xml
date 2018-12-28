@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="student_portal_classes_schedulers_template" name="Student Portal Classes Schedulers">
+		<t t-call="student_portal.student_portal_layout">
+			<h3 class="page-header">Your Classes Schedules</h3>
+			<t t-if="not ems_class_ids">
+				<p>Student Classes Schedules</p>
+			</t>
+			<t t-if="ems_class_ids">
+				<table class="table table-hover o_my_status_table">
+					<thead>
+						<tr class="active">
+							<th style="background-color:transparent;width: 18%;">Name</th>
+							<th style="background-color:transparent;width: 13%;text-align: left;">Subject</th>
+							<th style="background-color:transparent;width: 20%;text-align: left;">Start Time</th>
+							<th style="background-color:transparent;width: 20%;text-align: left;">End Time</th>
+							<th style="background-color:transparent;width: 12%;text-align: left;">Intake</th>
+							<th style="background-color:transparent;width: 14%;text-align: left;">Teacher</th>
+							<th style="background-color:transparent;width: 12%;text-align: left;">Class Room</th>
+						</tr>
+					</thead>
+				<t t-foreach="ems_class_ids" t-as="class_id">
+					<tr>
+						<td style="text-align:left;">
+							<span t-field="class_id.name"/>
+						</td>
+						<td class= "cell_overflow" style="text-align:left;">
+							<span t-field="class_id.subject_id.name"/>
+						</td>
+						<td class= "cell_overflow" style="text-align:left;">
+							<span t-field="class_id.start_time"/>
+						</td>
+						<td class= "cell_overflow" style="text-align:left;">
+							<span t-field="class_id.end_time"/>
+						</td>
+						<td class= "cell_overflow" style="text-align:left;">
+							<span t-field="class_id.intake_id.name"/>
+						</td>
+						<td class= "cell_overflow" style="text-align:left;">
+							<span t-field="class_id.teacher_id.name"/>
+						</td>
+						<td class= "cell_overflow" style="text-align:left;">
+							<span t-field="class_id.classroom_id.name"/>
+						</td>
+					</tr>
+				</t>
+				</table>
+				<div t-if="pager" class="o_portal_pager text-center">
+					<t t-call="website.pager"/>
+				</div>
+			</t>
+		</t>
+	</template>
+</odoo>

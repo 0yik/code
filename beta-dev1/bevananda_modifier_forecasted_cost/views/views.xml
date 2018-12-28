@@ -1,0 +1,65 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="bevananda_modifier_forecasted_cost.list">
+      <field name="name">Cost Type list</field>
+      <field name="model">forcasted.cost</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="types"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="bevananda_modifier_forecasted_cost.list">
+      <field name="name">Cost Type Form</field>
+      <field name="model">forcasted.cost</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="types"/>
+        </tree>
+      </field>
+    </record>
+    
+
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="bevananda_modifier_forecasted_cost.action_window">
+      <field name="name">Cost Type</field>
+      <field name="res_model">forcasted.cost</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+
+    
+    <menuitem id="sale.menu_product_template_action" action="bevananda_modifier_forecasted_cost.action_window" parent="sales_team.menu_sales_product" name="Cost Type" sequence="14" />
+
+
+    <record id="view_order_image_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.sale.forcast</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[2]" position="after">
+              <page string="Forecasted Cost">
+                <group>
+                <field name="forcasted_cost_line" nolabel="1">
+                  <tree editable="bottom">
+                    <field name="cost_element"/>
+                    <field name="cost_vendor" omain="[('vendor', '=', True)]"/>
+                    <field name="cost_amount"/>
+                    <field name="cost_type"/>
+                    <field name="reimbursable"/>
+                  </tree>
+                </field>
+              </group>
+              </page>
+            </xpath>
+          </field>
+    </record>
+    
+  </data>
+</odoo>

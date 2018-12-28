@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_purchase_order_form_inherit_expiry_date" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <field name="date_order" position="after">
+                  <field name="expiry_date"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="purchase_order_expiry_cron" model="ir.cron">
+            <field name="name">Purchase Order Expiry Cron</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'purchase.order'"/>
+            <field name="function" eval="'checking_expiry_po'"/>
+            <field name="args" eval="'()'"/>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>

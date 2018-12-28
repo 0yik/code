@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" inherit_id="point_of_sale.template" xml:space="preserve">
+
+	<t t-extend="PaymentScreen-Paymentmethods">
+		<t t-jquery="div[class='paymentmethods']" t-operation="append">
+
+			<t t-foreach="widget.pos.cashregisters" t-as="cashregister">
+                <div class="paymentmethods">
+                    <label style="font-size: 15px;color:#43996E;">
+                        <strong>
+                        <t t-esc="cashregister.journal_id[1]"/>
+                        :
+                        <t t-esc="cashregister.journal.discount_value"/>
+                        <t t-esc="cashregister.journal.discount_type"/>
+                        </strong>
+                    </label>
+                </div>
+            </t>
+		</t>
+	</t>
+
+</templates>
+
+
+
+
+

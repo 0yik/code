@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="view_bonus_register_tree">
+            <field name="name">bonus_register list</field>
+            <field name="model">bonus.register</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                    <field name="period"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="action_bonus_register">
+            <field name="name">Bonus Register</field>
+            <field name="res_model">bonus.register</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_bonus_register_tree"/>
+        </record>
+
+        <!-- actions -->
+        <menuitem id="menu_bonus_register" parent="hr_payroll.menu_hr_payroll_configuration" sequence="20"
+                  action="action_bonus_register"/>
+
+        <record id="hr_payslip_extended_form_view_inherit000" model="ir.ui.view">
+            <field name="name">Hr Payslip Extended Form View Inherit</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <field name="struct_id" position="after">
+                    <field name="computed_bonus_amount" invisible="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

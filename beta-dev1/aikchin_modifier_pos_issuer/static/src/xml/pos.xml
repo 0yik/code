@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-name="IssuerPopupWidget">
+		<div class="modal-dialog">
+		    <div class="popup" style="width:600px;height:400px;">
+		        <div class="pos-issuer-container">
+				<div class="issuer">Issuer</div>
+				<div class='client-detail'>
+				        <select class='detail client-issuer needsclick' name='employee_id' id="employee_id"
+					style="width: 27em;height: 3em;margin-top: 2em;border:none;">
+					    <option value=''>None</option>
+				            <t t-foreach='widget.pos.employees' t-as='employee'>
+				                <option t-att-value='employee.id'> 
+				                    <t t-esc='employee.name'/>
+				                </option>
+				            </t>
+				        </select>
+				    </div>	
+			</div>
+		        <div class="footer">
+		            <div class="button pos_issuer confirm">
+		                Save
+		            </div>
+			    <div class="button press_cancel cancel">
+		                Cancel
+		            </div>
+		        </div>
+		    </div>
+        </div>
+	</t>
+	<t t-extend="ActionpadWidget">
+        <t t-jquery="button.pay" t-operation="before">
+		<button class='button set-issuer'>
+                <t t-if="widget.pos.get_issuer()">
+                    <t t-esc="widget.pos.get_issuer().name" />
+                </t>
+                <t t-if="!widget.pos.get_issuer()">
+                    Issuer
+                </t>
+            </button>
+	</t>
+	</t>
+</templates>

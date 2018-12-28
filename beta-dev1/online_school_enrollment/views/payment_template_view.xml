@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<template id="admission_payment">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Payment</t>
+            <div class="wrap">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img class="img img-responsive" style="width: 30%; height:200px;margin:auto" src="/online_school_enrollment/static/src/img/logo.jpg"/>
+                    </div>
+                </div>
+            <div id="wrap">
+                <div class="oe_structure"/>
+                <div class="container">
+                    <h1>Thank you for registering. A confirmation email will be sent to you upon the status of your application.</h1>
+                </div>
+                <div class="oe_structure"/>
+            </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

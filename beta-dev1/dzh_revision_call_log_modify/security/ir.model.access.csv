@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dzh_revision_call_log_modify_dzh_revision_call_log_modify,dzh_revision_call_log_modify.dzh_revision_call_log_modify,model_dzh_revision_call_log_modify_dzh_revision_call_log_modify,,1,0,0,0

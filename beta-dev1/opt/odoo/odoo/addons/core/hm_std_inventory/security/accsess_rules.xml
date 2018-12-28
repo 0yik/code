@@ -1,0 +1,191 @@
+<odoo>
+    <data>
+
+
+        <record id="view_users_form_inherit" model="ir.ui.view">
+            <field name="name">res.users.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <!-- find field description and add the field
+                     idea_ids after it -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="allowe_WH" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <!--warehouse domain-->
+        <record id="rule_stock_warehouse_allow" model="ir.rule">
+            <field name="name">Allowse Warehouses</field>
+            <field name="model_id" ref="stock.model_stock_warehouse"/>
+            <field name="domain_force">[('id','in', user.allowe_WH.ids)]</field>
+        </record>
+        
+        
+        <!--Receipts-->
+
+        <record id="rule_stock_group_receiving" model="ir.rule">
+            <field name="name">Operation:Receipts</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="domain_force">[('picking_type_id.code','=','incoming'),('picking_type_id.warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_receiving'))]"/>
+        </record>
+        
+        <record id="rule_stock_move_group_receiving" model="ir.rule">
+            <field name="name">OperationMove:Receipts</field>
+            <field name="model_id" ref="stock.model_stock_move"/>
+            <field name="domain_force">[('picking_type_id.code','=','incoming'),('picking_type_id.warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_receiving'))]"/>
+        </record>
+        
+        <record id="rule_stock_type_group_receiving" model="ir.rule">
+            <field name="name">Operation:Receipts</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="domain_force">[('name','=','Receipts'),('warehouse_id','in', user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_receiving'))]"/>
+        </record>
+
+        <!--Picking-->
+        <record id="rule_stock_group_picking" model="ir.rule">
+            <field name="name">Operation:Pick</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="domain_force">[('picking_type_id.code','=','outgoing'),('picking_type_id.warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_picking'))]"/>
+        </record>
+        <record id="rule_stock_type_group_picking" model="ir.rule">
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('code','=','outgoing'),('warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_picking'))]"/>
+        </record>
+        <record id="rule_stock_move_group_picking" model="ir.rule">
+            <field name="name">OperationMove:pick</field>
+            <field name="model_id" ref="stock.model_stock_move"/>
+            <field name="domain_force">[('picking_type_id.code','=','outgoing'),('picking_type_id.warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_picking'))]"/>
+        </record>
+
+
+        <!--Packing-->
+        <record id="rule_stock_group_packing" model="ir.rule">
+            <field name="name">Operation:Pack</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="domain_force">[('picking_type_id.name','=','Pack'),('picking_type_id.warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_packing'))]"/>
+        </record>
+        <record id="rule_stock_type_group_packing" model="ir.rule">
+            <field name="name">Operation:Pack</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="domain_force">[('name','=','Pack'),('warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_packing'))]"/>
+        </record>
+
+
+        <!--Delivery-->
+        <record id="rule_stock_group_delivery" model="ir.rule">
+            <field name="name">Operation:Delivery</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="domain_force">[('picking_type_id.name','=','Delivery Orders'),('picking_type_id.warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_delivery'))]"/>
+        </record>
+
+        <record id="rule_stock_type_group_delivery" model="ir.rule">
+            <field name="name">Operation:Delivery</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="domain_force">[('name','=','Delivery Orders'),('code','=', 'outgoing'),('warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_delivery'))]"/>
+        </record>
+        
+        <record id="rule_stock_move_group_delivery" model="ir.rule">
+            <field name="name">OperationMove:Delivery</field>
+            <field name="model_id" ref="stock.model_stock_move"/>
+            <field name="domain_force">[('picking_type_id.code','=','outgoing'),('picking_type_id.warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_delivery'))]"/>
+        </record>
+
+
+        <!--Internal Transfer-->
+        <record id="rule_stock_group_internal_transfer" model="ir.rule">
+            <field name="name">Operation:Internal Transfer</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="domain_force">[('picking_type_id.name','=','Internal Transfer'),('picking_type_id.warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_internal_transfer'))]"/>
+        </record>
+
+        <record id="rule_stock_type_group_internal_transfer" model="ir.rule">
+            <field name="name">Operation:Internal Transfer</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="domain_force">[('name','=','Internal Transfer'),('warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_internal_transfer'))]"/>
+        </record>
+
+        <!--Put Away-->
+        <record id="rule_stock_type_group_put_away" model="ir.rule">
+            <field name="name">Operation:Delivery</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="domain_force">[('name','=','qwerty'),]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_put_away'))]"/>
+        </record>
+        
+        <record id="rule_stock_move_group_put_away" model="ir.rule">
+            <field name="name">OperationMove:Delivery</field>
+            <field name="model_id" ref="stock.model_stock_move"/>
+            <field name="domain_force">[('name','=','qwerty'),('warehouse_id','in',user.allowe_WH.ids)]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_put_away'))]"/>
+        </record>
+
+        <!--Stock moves-->
+        <record id="rule_stock_type_group_stock_move" model="ir.rule">
+            <field name="name">Operation:Delivery</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="domain_force">[('name','=','qwerty'),]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_stock_move'))]"/>
+        </record>
+
+        <!--Inventory Valuation-->
+        <record id="rule_stock_type_group_inventory_valuation" model="ir.rule">
+            <field name="name">Operation:Delivery</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('name','=','qwerty'),]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_inventory_valuation'))]"/>
+        </record>
+
+        <!--Stocktake-->
+        <record id="rule_stock_type_group_stocktake" model="ir.rule">
+            <field name="name">Operation:Delivery</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('name','=','qwerty'),]</field>
+            <field name="groups" eval="[(4, ref('hm_std_inventory.group_stocktake'))]"/>
+        </record>
+
+
+        <menuitem name="Inventory" id="stock.menu_stock_root" sequence="30"
+                  groups="stock.group_stock_manager,stock.group_stock_user,group_warehousemanager,group_receiving,group_put_away,group_picking,group_packing,group_delivery,group_stocktake,group_inventory_valuation,group_stock_move"
+                  web_icon="stock,static/description/icon.png"/>
+
+        <menuitem id="stock.all_picking" name="All Transfers" parent="stock.menu_stock_warehouse_mgmt" sequence="2"
+                  action="stock.action_picking_tree_all"
+                  groups="stock.group_stock_manager,stock.group_stock_user,group_warehousemanager"/>
+
+
+        <menuitem id="stock.menu_quants" name="Inventory Valuation" parent="stock.menu_warehouse_report" sequence="120"
+                  action="stock.quantsact"
+                  groups="group_inventory_valuation,group_stock_move,stock.group_stock_manager,group_warehousemanager"/>
+
+        <menuitem id="stock.menu_warehouse_report" name="Reports" sequence="99" parent="stock.menu_stock_root"
+                  groups="stock.group_stock_manager,group_inventory_valuation,group_stock_move"/>
+        <menuitem action="stock.stock_move_action" id="stock_move_menu" parent="stock.menu_warehouse_report"
+                  sequence="130"
+                  groups="group_stock_move"/>
+
+        <menuitem
+                action="stock.stock_picking_type_action"
+                id="stock.stock_picking_type_menu"
+                parent="stock.menu_stock_root" sequence="0"
+                groups="group_warehousemanager,group_receiving,group_picking,group_packing,group_delivery"
+                name="Dashboard"/>
+    </data>
+</odoo>

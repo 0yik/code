@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_attendance_extended_view_config" model="ir.ui.view">
+        <field name="name">base.config.setting.hr.form.attendance_extended</field>
+        <field name="model">base.config.settings</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_config"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[last()]" position="after">
+                <group string="Attendance List AutoUpdate Server Details">
+                    <group>
+                        <field name="attendance_server_host"/>
+                        <field name="attendance_port"/>
+                        <field name="attendance_username"/>
+                        <field name="attendance_password"/>
+                    </group>
+                    <group>
+                        <!-- <field name="attendance_file_location"/> -->
+                        <field name="attendance_file_name"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

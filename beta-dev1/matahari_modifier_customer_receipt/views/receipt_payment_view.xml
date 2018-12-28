@@ -1,0 +1,73 @@
+<odoo>
+
+    <record id="receipt_payment_line_form" model="ir.ui.view">
+        <field name="name">receipt.payment.line.form</field>
+        <field name="model">receipt.payment.line</field>
+        <field name="arch" type="xml">
+            <form string="Credit" create="false" edit="false" delete="false">
+                <group>
+                    <group>
+                        <field name="account_payment_id" invisible="1"/>
+                        <field name="referensi" readonly="1"/>
+                        <field name="amount" readonly="1"/>
+                        <field name="date" readonly="1"/>
+                        <field name="journal_id" readonly="1"/>
+                        <field name="currency_id" readonly="1"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_customer_receipt_form">
+        <field name="name">receipt.payment.customer.form</field>
+        <field name="model">receipt.payment</field>
+        <field name="inherit_id" ref="sg_partner_payment.view_customer_receipt_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header/button[@name='compute_values']" position="replace">
+                <button name="compute_values" string="Refresh" type="object" states="draft" icon="fa-refresh" class="refresh_from"/>
+            </xpath>
+            <xpath expr="//form/sheet/group" position="replace">
+                <group>
+                    <field name="type" invisible="1"/>
+                    <field name="partner_id" domain="[('customer','=',True)]" attrs="{'readonly': [('state', '!=', 'draft')]}" string="Customer"/>
+                    <field name="pay_uisng" widget="radio" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                </group>
+            </xpath>
+            <xpath expr="//form/sheet/group" position="after">
+                <group attrs="{'invisible': [('pay_uisng', '=', 'check2')]}">
+                    <group>
+                        <field name="amount" attrs="{'readonly': [('state', '!=', 'draft')]}" string="Paid Amount"/>
+                        <field name="journal_id" widget="selection" attrs="{'readonly': [('state', '!=', 'draft')],'required': [('pay_uisng', '=', 'check1')]}"/>
+                        <field name="currency_id" groups="base.group_multi_currency" widget="selection" attrs="{'readonly': [('state', '!=', 'draft')],'required': [('pay_uisng', '=', 'check1')]}"/>
+                    </group>
+                    <group>
+                        <field name="date" attrs="{'readonly': [('state', '!=', 'draft')],'required': [('pay_uisng', '=', 'check1')]}"/>
+                        <field name="payment_ref" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="e.g. 003/10"/>
+                        <field name="memo" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="e.g. Invoice SAJ/0042"/>
+                        <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+                    </group>
+                </group>
+                <group attrs="{'invisible': ['|',('pay_uisng', '=', 'check1'),('state', '!=', 'draft')]}">
+                    <button class="o_highlight" type="action" name="%(matahari_modifier_customer_receipt.action_rec_pay_wiz)d"
+                        context="{'default_partner_id': partner_id,'default_receipt_payment_id': active_id}" string="Add payments"
+                    />
+                </group>
+                <group attrs="{'invisible': [('pay_uisng', '=', 'check1')]}">
+                    <field name="receipt_payment_line_ids" nolabel="1" attrs="{'readonly': [('state', '!=', 'draft')]}" >
+                        <tree editable="bottom" create="false" delete="false">
+                            <field name="account_payment_id" invisible="1"/>
+                            <field name="pay_uisng" invisible="1"/>
+                            <field name="referensi" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="journal_id" readonly="1"/>
+                            <field name="date" readonly="0" attrs="{'required': [('pay_uisng', '=', 'check2')]}"/>
+                            <field name="currency_id" readonly="0" attrs="{'required': [('pay_uisng', '=', 'check2')]}"/>
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

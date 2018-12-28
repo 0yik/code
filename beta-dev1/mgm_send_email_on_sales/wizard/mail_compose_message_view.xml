@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record model="ir.ui.view" id="email_compose_form_mass_mailing_inherit">
+            <field name="name">mail.compose.message.form.mass_mailing.inherit</field>
+            <field name="model">mail.compose.message</field>
+            <field name="inherit_id" ref="mail.email_compose_message_wizard_form"/>
+            <field name="arch" type="xml">
+
+                <field name="active_domain" position="after">
+                    <field name="action_id" invisible="1"/>
+                    <field name="menu_id" invisible="1"/>
+                </field>
+
+                <xpath expr="//form/group/div[2]/span[2]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|','|', ('model', '=', False), ('composition_mode', '=', 'mass_mail'),('action_id', '!=', False)]}</attribute>
+                </xpath>
+
+                <field name="partner_ids" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|',('composition_mode', '!=', 'comment'),('action_id', '!=', False)]}</attribute>
+                </field>
+
+                <field name="partner_ids" position="after">
+                    <field name="employee_ids" widget="many2many_tags_email" placeholder="Add contacts to notify..."
+                        context="{'force_email':True, 'show_email':True}"
+                        attrs="{'invisible': ['|', ('composition_mode', '!=', 'comment'), ('action_id','=',False)]}"/>
+                </field>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

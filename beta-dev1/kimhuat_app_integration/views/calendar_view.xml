@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+        <record id="view_calendar_event_form_inherit_work_order" model="ir.ui.view">
+            <field name="name">calendar.event.add.workorder</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+            <field name="arch" type="xml">
+                <field name="location" position="after">
+                    <field name="work_order_id" readonly="1" string="Work Order No"/>
+                    <field name="booking_order_id" readonly="1" string="Booking Order No"/>
+                    <field name="booking_order_status" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="calendar.view_calendar_event_tree" model="ir.ui.view">
+            <field name="name">calendar.event.tree</field>
+            <field name="model">calendar.event</field>
+            <field name="arch" type="xml">
+                <tree string="Meetings" decoration-bf="message_needaction==True">
+                    <field name="work_order_id" string="Work Order No"/>
+                    <field name="booking_order_id" string="Booking Order No"/>
+                    <field name="allday" invisible="True"/>
+                    <field name="start" string="Scheduled Start Date"/>
+                    <field name="stop" string="Scheduled End Date"/>
+                    <field name="partner_ids"/>
+                    <field name="location"/>
+                    <field name="state" invisible="True"/>
+                    <field name="duration" string="Scheduled Duration"/>
+                    <field name="booking_order_status"/>
+                    <field name="message_needaction" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</openerp>

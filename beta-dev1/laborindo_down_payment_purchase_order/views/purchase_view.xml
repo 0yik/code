@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_order_purchase_order_form_labo" model="ir.ui.view">
+        <field name="name">purchase.order.form.sale.image</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_rfq_send']" position="before">
+                <button name="%(action_view_purchase_advance_payment_inv)d" string="Create Invoice"
+                        type="action" class="btn-primary"
+                        attrs="{'invisible': [('invoice_status_dpp', '!=', 'to invoice')]}"/>
+                <button name="%(action_view_purchase_advance_payment_inv)d" string="Create Invoice"
+                        type="action" context="{'default_advance_payment_method': 'percentage'}"
+                        attrs="{'invisible': ['|',('invoice_status_dpp', '!=', 'no'), ('state', '!=', 'purchase')]}"/>
+            </xpath>
+            <field name="date_order" position="after">
+                <field name="invoice_status_dpp" invisible="1"/>
+            </field>
+            <xpath expr="//field[@name='order_line']/tree" position="inside">
+                <field name="invoice_status_dp" invisible="1"/>
+                <field name="qty_to_invoice" invisible="1"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="button_update_purchase" type="object" string="Update Purchase Order" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

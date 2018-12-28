@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_reassign_tester_form" model="ir.ui.view">
+            <field name="name">reassign.tester.form</field>
+            <field name="model">reassign.tester</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <form string="Reassign Tester">
+                <group>
+                    <field name="is_reassign_manually"/>
+                    <field name="partner_id"
+                        attrs="{'invisible': [('is_reassign_manually','=', False)], 'required': [('is_reassign_manually', '=', True)]}"
+                        options="{'no_create': True, 'no_open': True}"/>
+                </group>
+                <footer>
+                    <button string="Re-Assign" type="object" class="btn-primary" name="action_reassing"/>
+                    or
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_reassign_tester_view">
+            <field name="name">Reassign Tester</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reassign.tester</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <!--menuitem id="menu_reassign_tester"
+            parent="module.xmlid"
+            sequence="20"
+            action="act_open_reassign_tester_view"/-->
+
+    </data>
+</odoo>

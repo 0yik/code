@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend_new_reminder" name="Booking Reminder" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/hilti_modifier_booking_notification/static/src/js/booking_reminder.js"/>
+                <link rel="stylesheet" href="/hilti_modifier_booking_notification/static/src/css/quotation_reminder.css"/>
+            </xpath>
+        </template>
+
+        <record id="view_notification_notification_form" model="ir.ui.view">
+            <field name="name">view.notification.notification.form</field>
+            <field name="model">notification.notification</field>
+            <field name="arch" type="xml">
+                <form string="Notification" create='0' edit='0'>
+                    <sheet string="Notification">
+                        <group>
+                            <field name="notification_no" />
+                            <field name="name" />
+                            <!-- <field name="ref_number" /> -->
+                            <field name="create_date" />
+                            <field name="tester_request_id" attrs="{'invisible': [('tester_request_id', '=', False)]}"/>
+                            <field name="booking_id" attrs="{'invisible': [('booking_id', '=', False)]}"/>
+                            <!-- <field name="user_ids" /> -->
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_notification_notification_tree" model="ir.ui.view">
+            <field name="name">view.notification.notification.tree</field>
+            <field name="model">notification.notification</field>
+            <field name="arch" type="xml">
+                <tree string="Notification" create='0' edit='0'>
+                    <field name="notification_no" />
+                    <field name="create_date" />
+                    <field name="name" />
+                    <field name="user_ids" invisible="1"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_notification_notification_search" model="ir.ui.view">
+            <field name="name">notification.notification.search</field>
+            <field name="model">notification.notification</field>
+            <field name="type">search</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+            <search string="Notification">
+                <field name="notification_no" />
+                <field name="name" />
+            </search>
+            </field>
+        </record>
+
+        <record id="action_notification_notification_view" model="ir.actions.act_window">
+            <field name="name">Notifications</field>
+            <field name="res_model">notification.notification</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('user_ids', '=', uid)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Notifications
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_notification_notification_admin" 
+            sequence="4" name="Notifications" parent="hilti_modifier_company.menu_customer_admin" groups='hilti_modifier_accessrights.group_hilti_admin'
+            action="action_notification_notification_view" />
+
+        <menuitem id="menu_notification_notification_customer" 
+            sequence="4" name="Notifications" parent="hilti_modifier_company.menu_customer_portal" groups='hilti_modifier_accessrights.group_hilti_customer'
+            action="action_notification_notification_view" />
+
+        <menuitem id="menu_notification_notification_customer_tester" 
+            sequence="5" name="Notifications" parent="hilti_modifier_company.menu_customer_tester" groups='hilti_modifier_accessrights.group_hilti_tester'
+            action="action_notification_notification_view" />
+
+        <menuitem id="menu_notification_notification_customer_account_manager" 
+            sequence="10" name="Notifications" parent="hilti_modifier_company.menu_staff_portal" groups='hilti_modifier_accessrights.group_hilti_account_manager'
+            action="action_notification_notification_view" />
+
+        <record id="action_notification_notification_view_new" model="ir.actions.act_url">
+            <field name="name">Notification</field>
+            <field name="target">self</field>
+            <field name="url">/notification</field>
+        </record>
+    </data>
+</odoo>

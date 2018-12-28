@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="hr_template" xml:space="preserve">
+
+    <t t-extend="hr_dashboard.HrDashboard">
+        <t t-jquery="div.btn_action_org_charts_dept" t-operation="replace">
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_org_charts_deptment" role="button" >
+                <div class="box customer_oe_kanban_color_1 ">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12" width="100%">
+                            <h5>Department Chart</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <img src="/hr_organization_chart/static/src/img/icon_dept.png"
+                                height="15%" width="100%" class="img_bg"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 btn_action_org_charts_branch" role="button" >
+                <div class="box customer_oe_kanban_color_1 ">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12" width="100%">
+                            <h5>Branch Chart</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <img src="/hr_orgchart_det_branch/static/src/img/icon_branch.png" height="15%" width="100%" class="img_bg"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+
+        <t t-jquery="div#dept" t-operation="replace">
+            <div id="deptemp" class="hr_dashboard">
+            </div>
+            <div id="branchemp" class="hr_dashboard">
+            </div>
+        </t>
+
+    </t>
+</templates>

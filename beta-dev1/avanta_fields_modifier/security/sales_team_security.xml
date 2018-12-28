@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--CRM Groups-->
+    <record id="group_management_representative" model="res.groups">
+        <field name="name">Management Representative</field>
+        <field name="category_id" ref="avanta_fields_modifier.module_category_avanta_fields_modifier"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">The user will have access to view and create his own records.</field>
+    </record>
+
+    <record id="group_crm_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="avanta_fields_modifier.module_category_avanta_fields_modifier"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">The user will have access to create and view his own records.</field>
+    </record>
+
+    <record id="group_crm_admin" model="res.groups">
+        <field name="name">CRM ADMIN</field>
+        <field name="category_id" ref="avanta_fields_modifier.module_category_avanta_fields_modifier"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">The user will have only access to create and assign leads to salesperson.</field>
+    </record>
+
+    <!--CRM ADMIN Rule-->
+    <record id="crm_admin_leads_rule" model="ir.rule">
+        <field name="name">All Lead For CRM ADMIN</field>
+        <field ref="model_crm_lead" name="model_id"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_crm_admin'))]"/>
+    </record>
+
+    <!--CRM User Rules-->
+    <record id="crm_user_leads_rule" model="ir.rule">
+        <field name="name">Personal Lead For CRM User</field>
+        <field ref="model_crm_lead" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_crm_user'))]"/>
+    </record>
+
+    <record id="sales_order_crm_user_rule" model="ir.rule">
+        <field name="name">Personal Orders For CRM User</field>
+        <field ref="model_sale_order" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_crm_user'))]"/>
+    </record>
+
+    <record id="sales_order_line_crm_user_rule" model="ir.rule">
+        <field name="name">Personal Orders Lines For CRM User</field>
+        <field ref="model_sale_order_line" name="model_id"/>
+        <field name="domain_force">['|',('order_id.user_id','=',user.id),('order_id.user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_crm_user'))]"/>
+    </record>
+
+    <record id="sales_report_crm_user_rule" model="ir.rule">
+        <field name="name">Personal Orders Reports For CRM User</field>
+        <field ref="sale.model_sale_report" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_crm_user'))]"/>
+    </record>
+
+    <record id="opportunity_report_crm_user_rule" model="ir.rule">
+        <field name="name">Personal Opportunity Reports For CRM User</field>
+        <field ref="crm.model_crm_opportunity_report" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_crm_user'))]"/>
+    </record>
+
+    <record id="activity_report_crm_user_rule" model="ir.rule">
+        <field name="name">Personal Activity Reports For CRM User</field>
+        <field ref="crm.model_crm_activity_report" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_crm_user'))]"/>
+    </record>
+
+    <!--Management Representative Rules-->
+    <record id="crm_management_representatives_rule" model="ir.rule">
+        <field name="name">Personal Lead For Management Representative</field>
+        <field ref="model_crm_lead" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_management_representative'))]"/>
+    </record>
+
+    <record id="sales_order_management_representatives_rule" model="ir.rule">
+        <field name="name">Personal Orders For Management Representation</field>
+        <field ref="model_sale_order" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_management_representative'))]"/>
+    </record>
+
+    <record id="sales_order_line_management_representatives_rule" model="ir.rule">
+        <field name="name">Personal Orders Lines For Management Representation</field>
+        <field ref="model_sale_order_line" name="model_id"/>
+        <field name="domain_force">['|',('order_id.user_id','=',user.id),('order_id.user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_management_representative'))]"/>
+    </record>
+
+    <record id="sales_report_management_representative_rule" model="ir.rule">
+        <field name="name">Personal Orders Reports For Management Representive</field>
+        <field ref="sale.model_sale_report" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_management_representative'))]"/>
+    </record>
+
+    <record id="opportunity_report_management_representative_rule" model="ir.rule">
+        <field name="name">Personal Opportunity Reports For Management Representive</field>
+        <field ref="crm.model_crm_opportunity_report" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_management_representative'))]"/>
+    </record>
+
+    <record id="activity_report_management_representative_rule" model="ir.rule">
+        <field name="name">Personal Activity Reports For Management Representive</field>
+        <field ref="crm.model_crm_activity_report" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_management_representative'))]"/>
+    </record>
+
+    <!--Inprogress rules-->
+    <record id="in_progress_rule_all_records_view" model="ir.rule">
+        <field name="name">All Inprogress Records</field>
+        <field ref="model_in_progress" name="model_id"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+    </record>
+
+    <record id="in_progress_personal_records_rule" model="ir.rule">
+        <field name="name">Personal Inprogress Records</field>
+        <field ref="model_in_progress" name="model_id"/>
+        <field name="domain_force">['|',('primary_sales_person_id','=',user.id),('secondary_sales_person_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="1" name="perm_create"/>
+    </record>
+
+    <record id="in_progress_crm_user_personal_records_rule" model="ir.rule">
+        <field name="name">Personal Inprogress CRM User Records</field>
+        <field ref="model_in_progress" name="model_id"/>
+        <field name="domain_force">['|',('primary_sales_person_id','=',user.id),('secondary_sales_person_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_crm_user'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="1" name="perm_create"/>
+    </record>
+
+    <record id="in_progress_management_representative_personal_records_rule" model="ir.rule">
+        <field name="name">Personal Inprogress Management Representative Records</field>
+        <field ref="model_in_progress" name="model_id"/>
+        <field name="domain_force">['|',('primary_sales_person_id','=',user.id),('secondary_sales_person_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_management_representative'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="1" name="perm_create"/>
+    </record>
+
+    <!--Order lines rules-->
+    <record id="order_lines_rule_all_records_view" model="ir.rule">
+        <field name="name">All Order Lines Records</field>
+        <field ref="model_order_lines" name="model_id"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+    </record>
+
+    <record id="order_lines_personal_records_rule" model="ir.rule">
+        <field name="name">Personal Order Lines Records</field>
+        <field ref="model_order_lines" name="model_id"/>
+        <field name="domain_force">['|',('order_id.primary_sales_person_id','=',user.id),('order_id.secondary_sales_person_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+
+    <!--<record id="customer_record_user_access_rule" model="ir.rule">-->
+        <!--<field name="name">Customers Records - For User</field>-->
+        <!--<field ref="model_res_partner" name="model_id"/>-->
+        <!--<field name="domain_force">['|',('user_id','=',user.id), ('id','=',user.partner_id.id)]</field>-->
+        <!--<field name="groups" eval="[(4, ref('avanta_fields_modifier.group_crm_admin')), (4, ref('sales_team.group_sale_manager')), (4, ref('sales_team.group_sale_salesman')), (4, ref('avanta_fields_modifier.group_crm_user')), (4, ref('avanta_fields_modifier.group_management_representative'))]"/>-->
+        <!--<field eval="0" name="perm_unlink"/>-->
+        <!--<field eval="1" name="perm_write"/>-->
+        <!--<field eval="1" name="perm_read"/>-->
+        <!--<field eval="1" name="perm_create"/>-->
+    <!--</record>-->
+
+    <record id="customer_record_admin_access_rule" model="ir.rule">
+        <field name="name">Customers Records - For Administrator</field>
+        <field ref="model_res_partner" name="model_id"/>
+        <field name="domain_force">[(1 ,'=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="1" name="perm_create"/>
+    </record>
+
+    <record id="order_lines_crm_user_personal_records_rule" model="ir.rule">
+        <field name="name">Personal Order Lines CRM User Records</field>
+        <field ref="model_order_lines" name="model_id"/>
+        <field name="domain_force">['|',('order_id.primary_sales_person_id','=',user.id),('order_id.secondary_sales_person_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_crm_user'))]"/>
+    </record>
+
+    <record id="order_lines_management_representative_personal_records_rule" model="ir.rule">
+        <field name="name">Personal Order Lines Management Representative Records</field>
+        <field ref="model_order_lines" name="model_id"/>
+        <field name="domain_force">['|',('order_id.primary_sales_person_id','=',user.id),('order_id.secondary_sales_person_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('avanta_fields_modifier.group_management_representative'))]"/>
+    </record>
+
+</odoo>

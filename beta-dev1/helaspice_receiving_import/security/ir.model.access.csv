@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_manage_incoming_batch,manage_incoming_batch,model_manage_incoming_batch,,1,1,1,0
+access_shipment_reference,shipment_reference,model_shipment_reference,,1,1,1,0
+access_stock_count,stock_count,model_stock_count,,1,1,1,0
+access_stock_count_line,stock_count_line,model_stock_count_line,,1,1,1,0
+access_stock_count_lot,stock_count_lot,model_stock_count_lot,,1,1,1,0
+access_stock_count_quant,stock_count_quant,model_stock_count_quant,,1,1,1,0

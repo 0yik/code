@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pdp_modifier_sales_report.report_saleorder_per_item_document">
+        <t t-set="no" t-value="1"/>
+        <div class="page">
+            <div class="oe_structure" />
+            <div class="row">
+                   <div class="col-xs-4">
+                       <strong>Printed : </strong><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M')"/>
+                   </div>
+                   <div class="col-xs-8">
+                       <h4>
+                           <strong>Sales Order Customer Per Item</strong>
+                       </h4>
+                   </div>
+                   <div class="col-xs-4">
+                       <strong>Page : </strong><span t-esc="no"/>
+                   </div>
+                   <div class="col-xs-7">
+                       <strong>Period : </strong> <span t-field="doc.from_date"  t-field-options='{"format": "d MMMM y 00:00"}'/> upto <span t-field="doc.to_date"  t-field-options='{"format": "d MMMM y 23:59"}'/>
+                   </div>
+            </div>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>SOD No</th>
+                        <th>Customer</th>
+                        <th>Currency</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Disc</th>
+                        <th>Tax</th>
+                        <th>Total</th>
+                   </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="doc.get_order_per_item()" t-as="record">
+	                    <t t-set="discount" t-value="0" />
+	                    <t t-set="tax" t-value="0" />
+	                    <t t-set="net_total" t-value="0" />
+	                    <t t-set="currency" t-value="0" />
+                        <tr>
+	                        <td colspan="9"><strong><span t-esc="record" /></strong></td>
+	                    </tr>
+	                    <t t-foreach="record_value" t-as="line">
+	                    <t t-set="currency" t-value="line['company_id'].currency_id.symbol" />
+	                    <tr>
+                            <td><span t-esc="line['date_order']" /></td>
+                            <td><span t-esc="line['so_name']" /></td>
+                            <td><span t-esc="line['customer']" /></td>
+                            <td><span t-esc="line['currency_name']" /></td><!-- -->
+                            <td><span t-esc="line['qty']" /></td>
+                            <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(line['price'])" /></td>
+                            <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(line['discount'])" /></td>
+                            <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(line['tax'])" /></td>
+                            <td><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(line['total'])" /></td>
+                        </tr>
+	                    <t t-set="discount" t-value="discount + line['discount']" />
+	                    <t t-set="tax" t-value="tax + line['tax']" />
+	                    <t t-set="net_total" t-value="net_total + line['total']" />
+                        </t>
+                        <tr>
+                            <td colspan="5"><strong>Sub Total</strong></td>
+                            <td><strong><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(discount)" /></strong></td>
+                            <td><strong><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(tax)" /></strong></td>
+                            <td><strong><span t-esc="currency"/> <span t-esc="'{0:,.2f}'.format(net_total)" /></strong></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+        <t t-set="no" t-value="no+1"/>
+    </template>
+
+    <template id="pdp_modifier_sales_report.report_saleorder_per_item">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="pdp_modifier_sales_report.report_saleorder_per_item_document" />
+            </t>
+        </t>
+    </template>
+
+</odoo>

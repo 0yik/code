@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_product_template_common_inherited">
+            <field name="name">product.template.common.inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//h1" position="after">
+                    <field name="code" required="1" placeholder="Product Code"/>
+                </xpath>
+                <field name="uom_id" position="attributes">
+                    <attribute name="options">False</attribute>
+                </field>
+            </field>
+        </record>
+		
+		<record model="ir.ui.view" id="view_product_template_tree_view_inherited">
+            <field name="name">product.template.tree.view.inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="brand_id"/>
+					<field name="movement"/>
+                </xpath>
+                
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_product_template_inherited_custom">
+            <field name="name">product.template.inherited.form.custom</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="no_pom"/>
+                    <field name="sap"/>
+                    <field name="alias"/>
+                    <field name="brand_id"/>
+                    <field name="movement"/>
+                    <field name="product_category_ids" widget="many2many_tags"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

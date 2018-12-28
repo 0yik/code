@@ -1,0 +1,211 @@
+<odoo>
+	<data>
+		<record id="backend_menu" model="ir.actions.act_window">
+			<field name="name">Backend</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">qb.backend</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record model="ir.ui.view" id="Backend_tree_view">
+            <field name="name">Backend</field>
+            <field name="model">qb.backend</field>
+            <field name="arch" type="xml">
+                <tree string="Backend Tree">    
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="backend_form_view">
+            <field name="name">Registration Form</field>
+            <field name="model">qb.backend</field>
+            <field name="arch" type="xml">
+                <form string="Configuration Backend Form">
+                    <header>
+                        <button string="OAuth2 Authorization" class="oe_highlight"
+                            type="object" attrs="{'invisible': [('type','!=','oauth2')]}" name="qb_authorization_o2_step1" />
+                        <button string="Continue OAuth2 Authorization" class="oe_highlight"
+                            type="object" name="qb_authorization_o2_step2" attrs="{'invisible': ['|', ('o2_auth_url','=', False), ('type','!=','oauth2')]}"/>
+                        <button string="Test Connection" class="oe_highlight"
+                            type="object" attrs="{'invisible': [('type','!=','oauth2')]}" name="test_connection" />
+                        <button string="Refresh Token" class="oe_highlight"
+                            type="object" attrs="{'invisible': [('type','!=','oauth2')]}" name="refresh_connection" />
+
+                        <button string="OAuth1 Authorization" class="oe_highlight"
+                            type="object" attrs="{'invisible': [('type','!=','oauth1')]}" name="qb_authorization" />
+                        <button string="Continue OAuth1 Authorization" class="oe_highlight"
+                            type="object" name="qb_authorization_step2" attrs="{'invisible': ['|', ('new_url','=', False), ('type','!=','oauth1')]}"/>
+                    </header>
+                        <sheet>
+                        	<label string="Name"/>
+                        		<h1>
+                        			<field name="name" placeholder="Configuration Name"/>
+                        		</h1>
+                        		<separator string="Configuration"/>
+                            <group col="2">
+                                
+                    			<field name="location" placeholder="Enter Production OR Sandbox URL"/>
+                                <!-- <field name="request_token_url"/> -->
+                    			<field name="client_key" placeholder="Enter Consumer Key"/>
+                    			<field name="client_secret" placeholder="Enter Consumer Secret Key"/>
+                                <field name="type"/>
+                                <field name="version"/>
+                                <field name="company_id" placeholder="Ream ID"/>
+                                <field name="o2_go_to" placeholder='Go to the whole url after Authorization' widget="url"/>
+                                <field name="o2_auth_url" placeholder='Enter the whole url after Authorization'/>
+                            </group>
+                            <group attrs="{'invisible': [('type','!=','oauth1')]}">
+                                    <field name="request_token_url"/>
+                                    <field name="access_token_url"/>
+                                    <field name="authorization_base_url"/>
+                                    <field name="resource_owner_key" placeholder="Request Token(Auto-Generatable)"/>
+                                    <field name="resource_owner_secret" placeholder="Request Secret Token(Auto-Generatable)"/>
+                                    <field name="new_url" placeholder='Enter the whole url after Authorization'/>
+                                    <field name="verify_ssl" invisible="1"/>
+                                    <field name="default_lang_id" invisible="1"/>
+                                    <field name="go_to" placeholder='Go to the whole url after Authorization' widget="url"/>
+                            </group>
+                            <group attrs="{'invisible': [('type','!=','oauth2')]}">
+                                <field name="redirect_uri"/>
+                                <field name="oauth2_authorization_base_url"/>
+                                <field name="token_url"/>
+                                <field name="scope"/>
+                            </group>
+                            <notebook>
+                                <page string="Import Field">
+                                    <group>
+                                        <label string="Import Customer" class="oe_inline" />
+                                        <button name="import_customers" type="object" class="oe_highlight"
+                                            string="Import Customer"/>
+                                    </group>
+                                    <group>
+                                        <label string="Import Vendor" class="oe_inline" />
+                                        <button name="import_vendors" type="object" class="oe_highlight"
+                                            string="Import Vendor"/>
+                                    </group>
+                                    <group>
+                                        <label string="Import Product" class="oe_inline" />
+                                        <button name="import_products" type="object" class="oe_highlight"
+                                            string="Import Product"/>
+                                    </group>
+                                    <group>
+                                        <label string="Import Sales" class="oe_inline" />
+                                        <button name="import_sales" type="object" class="oe_highlight"
+                                            string="Import Sales"/>
+                                    </group>
+                                    <group>
+                                        <label string="Import Purchase" class="oe_inline" />
+                                        <button name="import_purchases" type="object" class="oe_highlight"
+                                            string="Import Purchase"/>
+                                    </group>
+                                    <group>
+                                        <label string="Import Account" class="oe_inline" />
+                                        <button name="import_accounts" type="object" class="oe_highlight"
+                                            string="Import Account"/>
+                                    </group>
+                                    <group>
+                                        <label string="Import Payment Term" class="oe_inline" />
+                                        <button name="import_terms" type="object" class="oe_highlight"
+                                            string="Import Payment Term"/>
+                                    </group>
+                                    <group>
+                                        <label string="Import Payment Methods" class="oe_inline"/>
+                                        <button name="import_payment_methods" type="object" class="oe_highlight" string="Import Payment Methods"/>
+                                    </group>
+                                    
+                                    <!-- <group>
+                                        <label string="Import Account Tax Rate" class="oe_inline" />
+                                        <button name="import_taxrates" type="object" class="oe_highlight"
+                                            string="Import Account Tax Rate"/>
+                                    </group> -->
+                                    <group>
+                                        <label string="Import Account Tax Code" class="oe_inline" />
+                                        <button name="import_taxes" type="object" class="oe_highlight"
+                                            string="Import Account Tax Code"/>
+                                    </group>
+                                    
+                                    <group>
+                                        <label string="Import Invoices" class="oe_inline" />
+                                        <button name="import_invoices" type="object" class="oe_highlight" string="Import Invoices"/>
+                                    </group>
+                                </page>
+                                
+                                <page string="Export">
+                                    <group>
+                                        <label string="Export Customers" class="oe_inline" />
+                                        <button name="export_customers" type="object" class="oe_highlight"
+                                        string="Export Customers"/>
+                                    </group>
+                                    <group>
+                                        <label string="Export Items" class="oe_inline" />
+                                        <button name="export_items" type="object" class="oe_highlight"
+                                        string="Export Items"/>
+                                    </group>
+                                    <group>
+                                        <label string="Export Vendors" class="oe_inline" />
+                                        <button name="export_vendors" type="object" class="oe_highlight"
+                                        string="Export Vendors"/>
+                                    </group>
+                                    <group>
+                                        <label string="Export Sales" class="oe_inline" />
+                                        <button name="export_sales" type="object" class="oe_highlight"
+                                        string="Export Sales"/>
+                                    </group>
+                                    <group>
+                                        <label string="Export Purchases" class="oe_inline" />
+                                        <button name="export_purchases" type="object" class="oe_highlight"
+                                        string="Export Purchases"/>
+                                    </group>
+                                    <group>
+                                        <label string="Export Accounts" class="oe_inline" />
+                                        <button name="export_accounts" type="object" class="oe_highlight"
+                                        string="Export Accounts"/>
+                                       
+                                    </group>
+                                    <group>
+                                         <label string="Export Invoice" class="oe_inline" />
+                                        <button name="export_invoice" type="object" class="oe_highlight" string="Export Invoice"/>
+                                    </group>
+                                    <group>
+                                         <label string="Export Payments Methods" class="oe_inline" />
+                                        <button name="export_payment_methods" type="object" class="oe_highlight" string="Export Payments Methods"/>
+                                    </group>
+
+                                    
+                                </page>
+                                <page string="Extra Field"> 
+                                    <group>
+                                        <field name="asset_account_ref" domain="[('backend_id', '!=', None )]"/>
+                                    </group>
+                                </page>
+                            </notebook>
+                        </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="bk_backend_view_form">
+			<field name="act_window_id" ref="backend_menu" />
+			<field name="sequence" eval="20" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="backend_form_view" />
+		</record>
+
+		<record model="ir.actions.act_window.view" id="bk_backend_view_tree">
+			<field name="act_window_id" ref="backend_menu" />
+			<field name="sequence" eval="10" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="Backend_tree_view" />
+		</record>
+        <menuitem id="quickbook_menu" name="Quickbook" sequence="0"/>
+        <menuitem id="configuration_menu" name="Configuration" parent="quickbook_menu"/>
+		<menuitem id="configuration_backend_menu" name="Backend" parent="configuration_menu" action="backend_menu"/>
+
+	</data>
+</odoo>
+
+
+    
+

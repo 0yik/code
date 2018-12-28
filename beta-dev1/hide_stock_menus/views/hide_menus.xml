@@ -1,0 +1,28 @@
+<!-- <?xml version="1.0" encoding="utf-8"?> -->
+<odoo>
+    <data>
+       
+        <!-- Group created with no users -->
+        <record id="group_hide_menus" model="res.groups">
+            <field name="name">Restricted Menus Group</field>
+            <field name="comment">Restricted Menus Group</field>
+        </record>
+
+        <!-- Hide Purchase menu -->
+        <record model="ir.ui.menu" id="purchase.menu_purchase_root"
+        >
+            <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+        </record>
+        <!-- Hide Inventory Menu -->
+        <record model="ir.ui.menu" id="stock.menu_stock_root"
+        >
+            <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+        </record>
+        <!-- Hide Accounting Menu -->
+        <record model="ir.ui.menu" id="account.menu_finance"
+        >
+            <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <report
+            id="action_month_id_report_modify"
+            model="ipt.month.id.report"
+            string="Month ID Report"
+            name="ipt_month_id_report_modify.ipt_month_id_report_modify"
+            file="ipt_month_id_report_modify.ipt_month_id_report_modify"
+            report_type="qweb-pdf"/>
+
+        <record id="report_month_id_qweb_paperformat" model="report.paperformat">
+            <field name="name">IPT Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">15</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_month_id_report_modify" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report_month_id_qweb_paperformat"/>
+        </record>
+
+         <!--Headers and Footers for Credit Note Report -->
+        <template id="external_layout_month_id">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="ipt_month_id_report_modify.external_layout_header_month_id" />
+            <t t-raw="0" />
+            <t t-call="ipt_month_id_report_modify.external_layout_footer_month_id" />
+        </template>
+
+        <template id="ipt_month_id_report_modify.external_layout_header_month_id">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height:40px;width:160px"/>
+                    </div>
+                    <!--<div class="col-xs-12">-->
+                        <!--<strong  style="font-size:16px"> </strong>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </template>
+
+        <template id="ipt_month_id_report_modify.external_layout_footer_month_id">
+            <div class="footer" style="font-size:10pt;">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <div class="text-right" style="float:right">
+                            <ul class="list-inline">
+                                <li>Page:</li>
+                                <li><span class="page"/></li>
+                                <li>of</li>
+                                <li><span class="topage"/></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!--# REPORT-->
+
+        <template id="ipt_month_id_report_modify.ipt_month_id_report_modify">
+            <t t-call="ipt_month_id_report_modify.external_layout_month_id">
+                <t t-call="report.html_container">
+                    <t t-foreach="docs" t-as="o">
+                        <div class="page">
+                            <t t-if="o.not_country_filter == 1">
+                                <table class="table table-bordered">
+                                    <!--style="font-size:14px"-->
+                                    <thead style="display:table-header-group;">
+                                        <tr class="text-left" style="background-color:#3399FF;page-break-inside:avoid;">
+                                           <!-- <t t-set="start_date" t-value="(o.start_date.split('-')[2] + '-' + o.start_date.split('-')[1] + '-'+ o.start_date.split('-')[0])"/>
+                                           <t t-set="end_date" t-value="(o.end_date.split('-')[2] + '-' + o.end_date.split('-')[1] + '-'+ o.end_date.split('-')[0])"/>-->
+                                            <th colspan="3">Account &amp; User Breakdown as at
+                                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %b %Y')"/></th>
+                                        </tr>
+                                        <tr class="text-left" style="page-break-inside:avoid;">
+                                            <th style="background-color:#FFFF00; width:50%;">SINGAPORE</th>
+                                            <th style="background-color:#FFFF00; width:25%;">Total no. of Billing Accounts</th>
+                                            <th style="background-color:#FFFF00; width:25%;">Total no. of Active User Ids Per iD/Termina</th>
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:7%;">Equities</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:3%;">%</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:7%;">Commodities Rubber</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:3%;">%</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:7%;">Commodities Palm</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:3%;">%</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:7%;">Others</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:3%;">%</th>-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--MONTH ID REPORT FOR SINGAPORE-->
+
+                                        <t t-set="total_billing_country" t-value="0"/>
+                                        <t t-set="total_user_country" t-value="0"/>
+                                        <t t-set="count" t-value="0"/>
+                                        <t t-set="total_billing_account" t-value="0"/>
+                                        <t t-set="total_active_users" t-value="0"/>
+                                        <t t-set="total_equities" t-value="0"/>
+                                        <t t-set="total_rubber" t-value="0"/>
+                                        <t t-set="total_Palm" t-value="0"/>
+                                        <t t-set="total_Future" t-value="0"/>
+                                        <t t-set="total_sin" t-value="0"/>
+                                        <t t-set="total_mal" t-value="0"/>
+                                        <t t-set="total_tha" t-value="0"/>
+                                        <t t-set="total_ind" t-value="0"/>
+
+                                        <t t-foreach="o.market_segment_ids" t-as="market_segment">
+                                            <t t-set="count" t-value="count + 1"/>
+                                            <t t-set="total_billing" t-value="0"/>
+                                            <t t-set="total_user" t-value="0"/>
+                                            <t t-set="equities" t-value="0"/>
+                                            <t t-set="rubber" t-value="0"/>
+                                            <t t-set="Palm" t-value="0"/>
+                                            <t t-set="Future" t-value="0"/>
+                                            <t t-foreach="o.customer_ids" t-as="customer">
+                                                <t t-if="customer.market_segment_id.id and customer.market_segment_id.id == market_segment.id and customer.country_id.code == 'SG'">
+                                                    <t t-set="total_billing" t-value="total_billing+1"/>
+                                                    <t t-foreach="customer.partner_users" t-as="user">
+                                                        <t t-if="user.dzh_partner_id.id == customer.id and user.status == 'active'">
+                                                            <t t-set="total_user" t-value="total_user+1"/>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Equities'">
+                                                                <t t-set="equities" t-value="equities+1"/>
+                                                            </t>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Rubber'">
+                                                                <t t-set="rubber" t-value="rubber+1"/>
+                                                            </t>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Palm'">
+                                                                <t t-set="Palm" t-value="Palm+1"/>
+                                                            </t>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Future'">
+                                                                <t t-set="Future" t-value="Future+1"/>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <t t-set="total_billing_country" t-value="total_billing_country + total_billing"/>
+                                            <t t-set="total_user_country" t-value="total_user_country + total_user"/>
+                                            <tr style="page-break-inside:avoid">
+                                                <td><t t-esc="'Singapore - '+ market_segment.name"/></td>
+                                                <td><t t-esc="total_billing"/></td>
+                                                <td><t t-esc="total_user"/></td>
+                                                <!--<td><t t-esc="equities"/></td>-->
+                                                <!--<t t-if="equities == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="equities != 0">-->
+                                                    <!--<td><t t-esc="round(float(equities * 100) / total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                                <!--<td><t t-esc="rubber"/></td>-->
+                                                <!--<t t-if="rubber == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="rubber != 0">-->
+                                                    <!--<td><t t-esc="round(float(rubber * 100) / total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                                <!--<td><t t-esc="Palm"/></td>-->
+                                                <!--<t t-if="Palm == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="Palm != 0">-->
+                                                    <!--<td><t t-esc="round(float(Palm * 100) / total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                                <!--<td><t t-esc="total_user-equities-rubber-Palm"/></td>-->
+                                                <!--<t t-if="(total_user-equities-rubber-Palm) == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="(total_user-equities-rubber-Palm) != 0">-->
+                                                    <!--<td><t t-esc="round(float((total_user-equities-rubber-Palm) * 100 )/ total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                            </tr>
+                                            <tr t-if="len(o.market_segment_ids) == count" style="page-break-inside:avoid" >
+                                                <td></td>
+                                                <td style="font-weight: bold;"><t t-esc="total_billing_country"/> </td>
+                                                <td style="font-weight: bold;"><t t-esc="total_user_country"/> </td>
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                            </tr>
+                                            <t t-set="total_equities" t-value="total_equities + equities"/>
+                                            <t t-set="total_rubber" t-value="total_rubber + rubber"/>
+                                            <t t-set="total_Palm" t-value="total_Palm + Palm"/>
+                                            <t t-set="total_Future" t-value="total_Future + Future"/>
+                                            <t t-set="total_sin" t-value="total_user_country"/>
+                                        </t>
+                                        <t t-set="total_billing_account" t-value="total_billing_account + total_billing_country"/>
+                                        <t t-set="total_active_users" t-value="total_active_users + total_user_country"/>
+
+                                        <!--MONTH ID REPORT FOR MALAYSIA-->
+
+                                        <tr class="text-left" style="background-color:#FFFF00;font-weight:bold;page-break-inside:avoid">
+                                            <td>MALAYSIA</td>
+                                            <td></td>
+                                            <td></td>
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                        </tr>
+                                        <t t-set="total_billing_country" t-value="0"/>
+                                        <t t-set="total_user_country" t-value="0"/>
+                                        <t t-set="count" t-value="0"/>
+                                        <t t-foreach="o.market_segment_ids" t-as="market_segment">
+                                            <t t-set="count" t-value="count + 1"/>
+                                            <t t-set="total_billing" t-value="0"/>
+                                            <t t-set="total_user" t-value="0"/>
+                                            <t t-set="equities" t-value="0"/>
+                                            <t t-set="rubber" t-value="0"/>
+                                            <t t-set="Palm" t-value="0"/>
+                                            <t t-set="Future" t-value="0"/>
+                                            <t t-foreach="o.customer_ids" t-as="customer">
+                                                <t t-if="customer.market_segment_id.id and customer.market_segment_id.id == market_segment.id and customer.country_id.code == 'MY'">
+                                                    <t t-set="total_billing" t-value="total_billing+1"/>
+                                                    <t t-foreach="o.user_ids" t-as="user">
+                                                        <t t-if="user.dzh_partner_id.id == customer.id and user.status == 'active'">
+                                                            <t t-set="total_user" t-value="total_user+1"/>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Equities'">
+                                                                <t t-set="equities" t-value="equities+1"/>
+                                                            </t>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Rubber'">
+                                                                <t t-set="rubber" t-value="rubber+1"/>
+                                                            </t>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Palm'">
+                                                                <t t-set="Palm" t-value="Palm+1"/>
+                                                            </t>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Future'">
+                                                                <t t-set="Future" t-value="Future+1"/>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <t t-set="total_billing_country" t-value="total_billing_country + total_billing"/>
+                                            <t t-set="total_user_country" t-value="total_user_country + total_user"/>
+                                            <tr style="page-break-inside:avoid">
+                                                <td><t t-esc="'Malaysia - '+ market_segment.name"/></td>
+                                                <td><t t-esc="total_billing"/></td>
+                                                <td><t t-esc="total_user"/></td>
+                                                <!--<td><t t-esc="equities"/></td>-->
+                                                <!--<t t-if="equities == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="equities != 0">-->
+                                                    <!--<td><t t-esc="round(float(equities * 100) / total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                                <!--<td><t t-esc="rubber"/></td>-->
+                                                <!--<t t-if="rubber == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="rubber != 0">-->
+                                                    <!--<td><t t-esc="round(float(rubber * 100) / total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                                <!--<td><t t-esc="Palm"/></td>-->
+                                                <!--<t t-if="Palm == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="Palm != 0">-->
+                                                    <!--<td><t t-esc="round(float(Palm * 100) / total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                                <!--<td><t t-esc="total_user-equities-rubber-Palm"/></td>-->
+                                                <!--<t t-if="(total_user-equities-rubber-Palm) == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="(total_user-equities-rubber-Palm) != 0">-->
+                                                    <!--<td><t t-esc="round(float((total_user-equities-rubber-Palm) * 100) / total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                            </tr>
+                                            <tr t-if="len(o.market_segment_ids) == count" style="page-break-inside:avoid" >
+                                                <td></td>
+                                                <td style="font-weight: bold;"><t t-esc="total_billing_country"/> </td>
+                                                <td style="font-weight: bold;"><t t-esc="total_user_country"/> </td>
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                            </tr>
+                                            <t t-set="total_equities" t-value="total_equities + equities"/>
+                                            <t t-set="total_rubber" t-value="total_rubber + rubber"/>
+                                            <t t-set="total_Palm" t-value="total_Palm + Palm"/>
+                                            <t t-set="total_Future" t-value="total_Future + Future"/>
+                                            <t t-set="total_mal" t-value="total_user_country"/>
+                                        </t>
+                                        <t t-set="total_billing_account" t-value="total_billing_account + total_billing_country"/>
+                                        <t t-set="total_active_users" t-value="total_active_users + total_user_country"/>
+
+                                        <!--MONTH ID REPORT FOR OTHERS-->
+
+                                        <tr class="text-left" style="background-color:#FFFF00;font-weight:bold;page-break-inside:avoid">
+                                            <td>OTHERS</td>
+                                            <td></td>
+                                            <td></td>
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                        </tr>
+                                        <t t-set="total_billing_country" t-value="0"/>
+                                        <t t-set="total_user_country" t-value="0"/>
+                                        <t t-set="count" t-value="0"/>
+                                        <t t-foreach="o.country_ids" t-as="country">
+                                            <t t-set="count" t-value="count + 1"/>
+                                            <t t-set="total_billing" t-value="0"/>
+                                            <t t-set="total_user" t-value="0"/>
+                                            <t t-set="equities" t-value="0"/>
+                                            <t t-set="rubber" t-value="0"/>
+                                            <t t-set="Palm" t-value="0"/>
+                                            <t t-set="Future" t-value="0"/>
+                                            <t t-if="country.code != 'SG' and country.code != 'MY'">
+                                                <t t-foreach="o.customer_ids" t-as="customer">
+                                                    <t t-if="customer.country_id.id == country.id">
+                                                        <t t-set="total_billing" t-value="total_billing+1"/>
+                                                        <t t-foreach="o.user_ids" t-as="user">
+                                                            <t t-if="user.dzh_partner_id.id == customer.id and user.status == 'active'">
+                                                                <t t-set="total_user" t-value="total_user+1"/>
+                                                                <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Equities'">
+                                                                    <t t-set="equities" t-value="equities+1"/>
+                                                                </t>
+                                                                <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Rubber'">
+                                                                    <t t-set="rubber" t-value="rubber+1"/>
+                                                                </t>
+                                                                <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Palm'">
+                                                                    <t t-set="Palm" t-value="Palm+1"/>
+                                                                </t>
+                                                                <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Future'">
+                                                                    <t t-set="Future" t-value="Future+1"/>
+                                                                </t>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <t t-set="total_billing_country" t-value="total_billing_country + total_billing"/>
+                                                <t t-set="total_user_country" t-value="total_user_country + total_user"/>
+                                                <t t-if="country.code == 'TH'">
+                                                    <t t-set="total_tha" t-value="total_user"/>
+                                                </t>
+                                                <t t-if="country.code == 'ID'">
+                                                    <t t-set="total_ind" t-value="total_user"/>
+                                                </t>
+
+                                                <tr style="page-break-inside:avoid">
+                                                    <td><t t-esc="country.name"/></td>
+                                                    <td><t t-esc="total_billing"/></td>
+                                                    <td><t t-esc="total_user"/></td>
+                                                    <!--<td><t t-esc="equities"/></td>-->
+                                                    <!--<t t-if="equities == 0">-->
+                                                        <!--<td>0%</td>-->
+                                                    <!--</t>-->
+                                                    <!--<t t-if="equities != 0">-->
+                                                        <!--<td><t t-esc="round(float(equities * 100) / total_user,0) "/>%</td>-->
+                                                    <!--</t>-->
+                                                    <!--<td><t t-esc="rubber"/></td>-->
+                                                    <!--<t t-if="rubber == 0">-->
+                                                        <!--<td>0%</td>-->
+                                                    <!--</t>-->
+                                                    <!--<t t-if="rubber != 0">-->
+                                                        <!--<td><t t-esc="round(float(rubber * 100) / total_user,0) "/>%</td>-->
+                                                    <!--</t>-->
+                                                    <!--<td><t t-esc="Palm"/></td>-->
+                                                    <!--<t t-if="Palm == 0">-->
+                                                        <!--<td>0%</td>-->
+                                                    <!--</t>-->
+                                                    <!--<t t-if="Palm != 0">-->
+                                                        <!--<td><t t-esc="round(float(Palm * 100) / total_user,0) "/>%</td>-->
+                                                    <!--</t>-->
+                                                    <!--<td><t t-esc="total_user-equities-rubber-Palm"/></td>-->
+                                                    <!--<t t-if="(total_user-equities-rubber-Palm) == 0">-->
+                                                        <!--<td>0%</td>-->
+                                                    <!--</t>-->
+                                                    <!--<t t-if="(total_user-equities-rubber-Palm) != 0">-->
+                                                        <!--<td><t t-esc="round(float((total_user-equities-rubber-Palm) * 100) / total_user,0) "/>%</td>-->
+                                                    <!--</t>-->
+                                                </tr>
+                                            </t>
+
+                                            <tr t-if="len(o.country_ids) == count" style="page-break-inside:avoid" >
+                                                <td></td>
+                                                <td style="font-weight: bold;"><t t-esc="total_billing_country"/> </td>
+                                                <td style="font-weight: bold;"><t t-esc="total_user_country"/> </td>
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                            </tr>
+                                            <t t-set="total_equities" t-value="total_equities + equities"/>
+                                            <t t-set="total_rubber" t-value="total_rubber + rubber"/>
+                                            <t t-set="total_Palm" t-value="total_Palm + Palm"/>
+                                            <t t-set="total_Future" t-value="total_Future + Future"/>
+                                        </t>
+                                        <t t-set="total_billing_account" t-value="total_billing_account + total_billing_country"/>
+                                        <t t-set="total_active_users" t-value="total_active_users + total_user_country"/>
+                                        <tr class="text-left" style="background-color:#FFFF00;page-break-inside:avoid;">
+                                            <td style="font-weight: bold;">Total Billing Accounts and Active Users</td>
+                                            <td style="font-weight: bold;"><t t-esc="total_billing_account"/> </td>
+                                            <td style="font-weight: bold;"><t t-esc="total_active_users"/> </td>
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                        </tr>
+                                        <t t-foreach="o.market_segment_ids" t-as="market_segment">
+                                            <t t-set="total_billing_account_market_segment" t-value="0"/>
+                                            <t t-set="total_active_user_market_segment" t-value="0"/>
+                                            <t t-foreach="o.customer_ids" t-as="customer">
+                                                <t t-if="customer.market_segment_id.id and customer.market_segment_id.id == market_segment.id">
+                                                    <t t-set="total_billing_account_market_segment" t-value="total_billing_account_market_segment + 1"/>
+                                                    <t t-foreach="o.user_ids" t-as="user">
+                                                        <t t-if="user.dzh_partner_id.id == customer.id and user.status == 'active'">
+                                                            <t t-set="total_active_user_market_segment" t-value="total_active_user_market_segment + 1"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <tr class="text-right" style="page-break-inside:avoid">
+                                                <td style="font-weight: bold;"><t t-esc="'Total '+ market_segment.name"/> </td>
+                                                <td style="font-weight: bold;"><t t-esc="total_billing_account_market_segment"/> </td>
+                                                <td style="font-weight: bold;"><t t-esc="total_active_user_market_segment"/> </td>
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                            </tr>
+                                        </t>
+                                        <tr style="page-break-inside:avoid">
+                                            <td style="font-weight: bold;">Summary by Market Segment</td>
+                                            <td> </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid">
+                                            <td>Equities</td>
+                                            <td>
+                                                <t t-if="total_equities == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="total_equities != 0">
+                                                    <td><t t-esc="round(float(total_equities * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid">
+                                            <td>Commodities- Future</td>
+                                            <td>
+                                                <t t-if="total_Future == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="total_Future != 0">
+                                                    <td><t t-esc="round(float(total_Future * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid">
+                                            <td>Commodities- Palm</td>
+                                            <td>
+                                                <t t-if="total_Palm == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="total_Palm != 0">
+                                                    <td><t t-esc="round(float(total_Palm * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid">
+                                            <td>Commodities- Rubber</td>
+                                            <td>
+                                                <t t-if="total_rubber == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="total_rubber != 0">
+                                                    <td><t t-esc="round(float(total_rubber * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td style="font-weight: bold;">Summary by Country</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid">
+                                            <td>Malaysia</td>
+                                             <td>
+                                                <t t-if="total_mal == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="total_mal != 0">
+                                                    <td><t t-esc="round(float(total_mal * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid">
+                                            <td>Singapore</td>
+                                            <td>
+                                                <t t-if="total_sin == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="total_sin != 0">
+                                                    <td><t t-esc="round(float(total_sin * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid">
+                                            <td>Thailand</td>
+                                            <td>
+                                                <t t-if="total_tha == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="total_tha != 0">
+                                                    <td><t t-esc="round(float(total_tha * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid">
+                                            <td>Indonesia</td>
+                                            <td>
+                                                <t t-if="total_ind == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="total_ind != 0">
+                                                    <td><t t-esc="round(float(total_ind * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid">
+                                            <td>Others</td>
+                                            <td>
+                                                <t t-set="total_other" t-value="total_active_users-total_mal-total_sin-total_tha-total_ind"/>
+                                                <t t-if="total_other == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="total_other != 0">
+                                                    <td><t t-esc="round(float(total_other * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+
+                            <!--IF COUNTRY TRUE-->
+
+                            <t t-if="o.not_country_filter == 0">
+                                <table class="table table-bordered" style="font-size:14px;" >
+                                    <thead style="display:table-header-group;">
+                                        <tr class="text-left" style="background-color:#3399FF;page-break-inside:avoid;">
+                                           <!-- <t t-set="start_date" t-value="(o.start_date.split('-')[2] + '-' + o.start_date.split('-')[1] + '-'+ o.start_date.split('-')[0])"/>
+                                            <t t-set="end_date" t-value="(o.end_date.split('-')[2] + '-' + o.end_date.split('-')[1] + '-'+ o.end_date.split('-')[0])"/>-->
+                                            <th colspan="3">Account &amp; User Breakdown to <t t-esc="start_date"/> from <t t-esc="end_date"/></th>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid;">
+                                            <th class="text-right" style="background-color:#FFFF00; width:60%;font-variant:small-caps"><t t-esc="o.country_ids[0].name"/> </th>
+                                            <th class="text-left" style="background-color:#FFFF00; width:20%;">Total no. of Billing Accounts</th>
+                                            <th class="text-left" style="background-color:#FFFF00; width:20%;">Total no. of Active User Ids Per iD/Termina</th>
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:7%;">Equities</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:3%;">%</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:7%;">Commodities Rubber</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:3%;">%</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:7%;">Commodities Palm</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:3%;">%</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:7%;">Others</th>-->
+                                            <!--<th class="text-left" style="background-color:#FFFF00; width:3%;">%</th>-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="total_billing_country" t-value="0"/>
+                                        <t t-set="total_user_country" t-value="0"/>
+                                        <t t-set="count" t-value="0"/>
+                                        <t t-set="total_billing_account" t-value="0"/>
+                                        <t t-set="total_active_users" t-value="0"/>
+                                        <t t-set="equities" t-value="0"/>
+                                        <t t-set="rubber" t-value="0"/>
+                                        <t t-set="Palm" t-value="0"/>
+                                        <t t-set="Future" t-value="0"/>
+                                        <t t-foreach="o.market_segment_ids" t-as="market_segment">
+                                            <t t-set="count" t-value="count + 1"/>
+                                            <t t-set="total_billing" t-value="0"/>
+                                            <t t-set="total_user" t-value="0"/>
+                                            <t t-foreach="o.customer_ids" t-as="customer">
+                                                <t t-if="customer.market_segment_id.id and customer.market_segment_id.id == market_segment.id">
+                                                    <t t-set="total_billing" t-value="total_billing+1"/>
+                                                    <t t-foreach="o.user_ids" t-as="user">
+                                                        <t t-if="user.dzh_partner_id.id == customer.id and user.status == 'active'">
+                                                            <t t-set="total_user" t-value="total_user+1"/>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Equities'">
+                                                                <t t-set="equities" t-value="equities+1"/>
+                                                            </t>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Rubber'">
+                                                                <t t-set="rubber" t-value="rubber+1"/>
+                                                            </t>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Palm'">
+                                                                <t t-set="Palm" t-value="Palm+1"/>
+                                                            </t>
+                                                            <t t-if="customer.member_type_id.name and customer.member_type_id.name == 'Commodities Future'">
+                                                                    <t t-set="Future" t-value="Future+1"/>
+                                                                </t>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <t t-set="total_billing_country" t-value="total_billing_country + total_billing"/>
+                                            <t t-set="total_user_country" t-value="total_user_country + total_user"/>
+                                            <tr style="page-break-inside:avoid;">
+                                                <td><t t-esc="o.country_ids[0].name +' - ' +market_segment.name"/></td>
+                                                <td><t t-esc="total_billing"/></td>
+                                                <td><t t-esc="total_user"/></td>
+                                                <!--<td><t t-esc="equities"/></td>-->
+                                                <!--<t t-if="equities == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="equities != 0">-->
+                                                    <!--<td><t t-esc="round(float(equities * 100) / total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                                <!--<td><t t-esc="rubber"/></td>-->
+                                                <!--<t t-if="rubber == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="rubber != 0">-->
+                                                    <!--<td><t t-esc="round(float(rubber * 100) / total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                                <!--<td><t t-esc="Palm"/></td>-->
+                                                <!--<t t-if="Palm == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="Palm != 0">-->
+                                                    <!--<td><t t-esc="round(float(Palm * 100) / total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                                <!--<td><t t-esc="total_user-equities-rubber-Palm"/></td>-->
+                                                <!--<t t-if="(total_user-equities-rubber-Palm) == 0">-->
+                                                    <!--<td>0%</td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="(total_user-equities-rubber-Palm) != 0">-->
+                                                    <!--<td><t t-esc="round(float((total_user-equities-rubber-Palm) * 100) / total_user,0) "/>%</td>-->
+                                                <!--</t>-->
+                                            </tr>
+                                            <tr t-if="len(o.market_segment_ids) == count" style="page-break-inside:avoid;" >
+                                                <td></td>
+                                                <td style="font-weight: bold;"><t t-esc="total_billing_country"/> </td>
+                                                <td style="font-weight: bold;"><t t-esc="total_user_country"/> </td>
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                                <!--<td></td>-->
+                                            </tr>
+                                        </t>
+                                        <t t-set="total_billing_account" t-value="total_billing_account + total_billing_country"/>
+                                        <t t-set="total_active_users" t-value="total_active_users + total_user_country"/>
+                                        <tr class="text-left" style="background-color:#FFFF00;page-break-inside:avoid;">
+                                            <td style="font-weight: bold;">Total Billing Accounts and Active Users</td>
+                                            <td style="font-weight: bold;"><t t-esc="total_billing_account"/> </td>
+                                            <td style="font-weight: bold;"><t t-esc="total_active_users"/> </td>
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                            <!--<td></td>-->
+                                        </tr>
+                                        <tr style="page-break-inside:avoid;">
+                                            <td style="font-weight: bold;">Summary by Market Segment</td>
+                                            <td> </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid;">
+                                            <td>Equities</td>
+                                            <td>
+                                                <t t-if="equities == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="equities != 0">
+                                                    <td><t t-esc="round(float(equities * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid;">
+                                            <td>Commodities- Future</td>
+                                            <td>
+                                                <t t-if="Future == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="Future != 0">
+                                                    <td><t t-esc="round(float(Future * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid;">
+                                            <td>Commodities- Palm</td>
+                                            <td>
+                                                <t t-if="Palm == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="Palm != 0">
+                                                    <td><t t-esc="round(float(Palm * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-right" style="page-break-inside:avoid;">
+                                            <td>Commodities- Rubber</td>
+                                            <td>
+                                                <t t-if="rubber == 0">
+                                                    <td>0%</td>
+                                                </t>
+                                                <t t-if="rubber != 0">
+                                                    <td><t t-esc="round(float(rubber * 100) / total_active_users,0) "/>%</td>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+
+        <!--# SHOW POP UP-->
+        <record id="month_id_report_view" model="ir.ui.view">
+            <field name="name">Month ID Report</field>
+            <field name="model">ipt.month.id.report</field>
+            <field name="arch" type="xml">
+            <form string="Report Options" style="height:240px">
+                <label string=""/>  <!-- binding for inherited views -->
+                <group>
+                    <group >
+                        <field name="country"/>
+                    </group>
+                    <group></group>
+                    <group><field name="start_date"/></group>
+                    <group>
+                        <!--<field name="" invisible="1" />-->
+                        <field name="end_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="ipt_month_id_report_menu" model="ir.actions.act_window">
+            <field name="name">Month ID Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ipt.month.id.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="month_id_report_menu"
+            name="Monthly ID Report"
+            parent="sales_team.menu_sale_report"
+            action="ipt_month_id_report_menu"
+        />
+    </data>
+</odoo>

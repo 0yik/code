@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="pos_in_indonesian_register" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_in_indonesian/static/src/js/pos_in_indonesian.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

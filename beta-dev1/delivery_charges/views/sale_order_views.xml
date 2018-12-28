@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="view_order_form_inherit2">
+      <field name="name">sale.order.form.inherit2</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//group/field[@name='amount_tax']" position="after">
+          <field name="delivery_charge" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+        </xpath>
+      </field>
+    </record>
+    <record id="view_res_branch_form_inherit" model="ir.ui.view">
+      <field name="name">View Res Branch Form Inherit</field>
+      <field name="model">res.branch</field>
+      <field name="inherit_id" ref="branch.view_res_branch_form"/>
+      <field name="arch" type="xml">
+        <field name="telephone_no" position="after">
+          <field name="delivery_charge_id"/>
+        </field>
+      </field>
+    </record>
+
+     <record id="view_delivery_tree" model="ir.ui.view">
+        <field name="name">order.charge.tree</field>
+        <field name="model">order.charge</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        <tree string="Delivery Charge">
+          <field name="name"/>
+          <field name="type"/>
+          <field name="amount"/>
+          <field name="order_charge_account_id"/>
+          <field name="order_charge_account_refund_id"/>
+        </tree>
+        </field>
+    </record>
+
+    <record id="view_order_charge_form" model="ir.ui.view">
+      <field name="name">order.charge.form</field>
+      <field name="model">order.charge</field>
+      <field name="type">form</field>
+      <field name="priority" eval="8"/>
+      <field name="arch" type="xml">
+        <form string="Delivery Charge">
+          <sheet string="Delivery Charge">
+            <group>
+              <group>
+                <field name="name"/>
+              </group>
+            </group>
+            <group>
+                <group>
+                    <field name="type"/>
+                    <label for="amount"/>
+                    <div>
+                      <field name="amount" class="oe_inline" />
+                      <label string="%" class="oe_inline" attrs="{'invisible':[('type','=','fixed')]}" />
+                    </div>
+                </group>
+                <group>
+                    <field name="order_charge_account_id"/>
+                    <field name="order_charge_account_refund_id"/>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+        </record>
+
+      <record id="view_order_charge_search" model="ir.ui.view">
+          <field name="name">order.charge.search</field>
+          <field name="model">order.charge</field>
+          <field name="type">search</field>
+          <field name="arch" type="xml">
+          <search string="Delivery Charge">
+              <field name="name"/>
+          </search>
+          </field>
+      </record>
+
+      <record model="ir.actions.act_window" id="act_open_delivery_charge_view">
+          <field name="name">Delivery Charge</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">order.charge</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="search_view_id" ref="view_order_charge_search"/>
+          <field name="domain">[]</field>
+          <field name="context">{}</field>
+      </record>
+
+      <menuitem id="menu_delivery_charge"
+          parent="point_of_sale.menu_point_config_product"
+          action="act_open_delivery_charge_view"/>
+  </data>
+</odoo>

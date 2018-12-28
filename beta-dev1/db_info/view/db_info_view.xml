@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+    	<record id="db_info_form_view" model="ir.ui.view">
+            <field name="name">db.info.form</field>
+            <field name="model">db.info</field>
+            <field name="arch" type="xml">
+                <form string="DB Information">
+                    <group>
+                        <footer>
+                        	<button name="action_generate_detail_xls" string="Get DB Information" type="object" class="btn-primary"/>
+                        	<button string="Cancel" class="btn-default" special="cancel"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+		<!-- Action of Terminate Student Wizard -->
+        <record id="action_db_info_form_view" model="ir.actions.act_window">
+            <field name="name">DB Information</field>
+            <field name="res_model">db.info</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem 
+            id="db_info_form_view_sub_menu"
+            name="DB Information"
+            parent="base.next_id_9"
+            action="db_info.action_db_info_form_view"/>
+                
+	</data>
+</openerp>
+        	

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+        <record id="account_invoice_form_tgw" model="ir.ui.view">
+            <field name="name">account.invoice.form.tgw</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='invoice_print']" position="after">
+                    <button name="tgw_invoice_print" string="TGW Invoice Print" type="object" attrs="{'invisible':[('state', '!=', 'open')]}" class="oe_highlight" groups="base.group_user"/>
+                </xpath>
+                <xpath expr="//form/sheet/group/group/field[@name='payment_term_id']" position="after">
+                    <field name="analytic_contract_id" string="Analytic Contract" readonly="1"/>
+                    <field name="client_name" invisible="1"/>
+                    <field name="client_tel" invisible="1"/>
+                    <field name="client_email" invisible="1"/>
+                    <field name="client_address" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//form/sheet/notebook/page[1]/field[@name='comment']" position="replace">
+                    <field name="comment" placeholder="Remarks..."/>
+                    <field name="sales_tc" string="Analytic Contract" placeholder="TGW Terms and Conditions..."/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</openerp>

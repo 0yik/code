@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="modifier_type_purchase_order_inherit" model="ir.ui.view">
+            <field name="name">Purchase Order Type Modifier</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"></field>
+            <field name="arch" type="xml">
+                <field name="picking_type_id" position="after">
+                    <field name="purchase_points" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+
+        <!--<record model="ir.ui.view" id="view_purchase_requisition_type_form">-->
+            <!--<field name="name">purchase.requisition.type.form</field>-->
+            <!--<field name="model">purchase.requisition.type</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Purchase Agreement Types">-->
+                <!--<sheet>-->
+                    <!--<group>-->
+                        <!--<group string="Agreement Type">-->
+                            <!--<field name="name"/>-->
+                            <!--<field name="exclusive" widget="radio"/>-->
+                        <!--</group>-->
+                        <!--<group string="Data for new quotations">-->
+                            <!--<field name="line_copy" widget="radio"/>-->
+                            <!--<field name="quantity_copy" widget="radio"/>-->
+                        <!--</group>-->
+                    <!--</group>-->
+                <!--</sheet>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <record model="ir.ui.view" id="purchase_order_search_inherits">
+            <field name="name">purchase.order.list.select.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search/group" position="inside">
+                    <filter string="Vendors" name="vendors" domain="[]" context="{'group_by':'partner_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_purchase_order_in_tree">
+            <field name="name">purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Points">
+                    <field name="partner_id"/>
+                    <field name="name"/>
+                    <field name="date_order"/>
+                    <field name="amount_total"/>
+                    <field name="purchase_points"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="vendor_point_action" model="ir.actions.act_window">
+            <field name="name">Vendor Points</field>
+            <field name="res_model">purchase.order</field>
+            <field name="domain">[('state','not in',('draft','sent','bid', 'confirmed'))]</field>
+            <field name="context">{'search_default_vendors':1,'tree_view_ref':'telering_vendor_point.view_purchase_order_in_tree',}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem
+            id="menu_purchase_orders_inh"
+            sequence="2"
+            parent="account.menu_finance_payables"
+            action="telering_vendor_point.vendor_point_action"/>
+
+
+    </data>
+</odoo>

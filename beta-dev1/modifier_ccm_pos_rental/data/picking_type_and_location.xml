@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Booking area location -->
+        <record id="ccm_stock_location_booking_area" model="stock.location">
+            <field name="name">Booking area</field>
+            <field name="location_id" search="[('name', '=', 'WH')]"/>
+            <field name="usage">internal</field>
+        </record>
+        <!-- Rented out (customer) location -->
+        <record id="ccm_stock_location_rented_out" model="stock.location">
+            <field name="name">Rented out</field>
+            <field name="location_id" ref="stock.stock_location_locations_partner"/>
+            <field name="usage">customer</field>
+        </record>
+        <!-- Alteration location -->
+        <record id="ccm_stock_location_alternation" model="stock.location">
+            <field name="name">Alteration</field>
+            <field name="location_id" search="[('name', '=', 'WH')]"/>
+            <field name="usage">internal</field>
+        </record>
+        <!-- Returned location -->
+        <record id="ccm_stock_location_returned" model="stock.location">
+            <field name="name">Returned</field>
+            <field name="location_id" search="[('name', '=', 'WH')]"/>
+            <field name="usage">internal</field>
+        </record>
+        <!-- Reserved rack location -->
+        <record id="ccm_stock_location_reserved_rack" model="stock.location">
+            <field name="name">Reserved rack</field>
+            <field name="location_id" search="[('name', '=', 'WH')]"/>
+            <field name="usage">internal</field>
+        </record>
+        <!-- Laundry location -->
+        <record id="stock_location_laundry" model="stock.location">
+            <field name="name">Laundry</field>
+            <field name="location_id" ref="stock.stock_location_locations_partner"/>
+            <field name="usage">supplier</field>
+        </record>
+        <!-- Sequence for Laundry -->
+        <record id="seq_picking_type_laundry" model="ir.sequence">
+            <field name="name">Picking Laundry</field>
+            <field name="prefix">LAU</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <!-- Laundry picking type -->
+        <record id="picking_type_laundry" model="stock.picking.type">
+            <field name="name">Laundry Orders</field>
+            <field name="sequence_id" ref="seq_picking_type_laundry"/>
+            <field name="default_location_src_id" ref="stock.stock_location_stock"/>
+            <field name="default_location_dest_id" ref="modifier_ccm_pos_rental.stock_location_laundry"/>
+            <field name="warehouse_id" eval="False"/>
+            <field name="code">outgoing</field>
+        </record>
+    </data>
+</odoo>

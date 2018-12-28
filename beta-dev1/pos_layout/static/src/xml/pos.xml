@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="NumpadWidget">
+        <div class="numpad">
+            <button class="input-button number-char">1</button>
+            <button class="input-button number-char">2</button>
+            <button class="input-button number-char">3</button>
+            <button class="input-button number-char">4</button>
+            <button class="input-button number-char">5</button>
+            <button class="input-button number-char">6</button>
+            <button class="input-button number-char">7</button>
+            <button class="input-button number-char">8</button>
+            <button class="input-button number-char">9</button>
+            <button class="input-button number-char">0</button>
+        </div>
+    </t>
+
+    <t t-name="Orderline">
+        <li t-attf-class="orderline #{ line.selected ? 'selected' : '' }">
+            <table class="table-line">
+                <tr>
+                    <td width="65%">
+                        <b><span class="product_name">
+                            <t t-esc="line.get_product().display_name"/>
+                            <t t-if="line.get_product().tracking!=='none'">
+                                <i t-attf-class="oe_link_icon fa fa-list oe_icon line-lot-icon #{line.has_valid_product_lot() ? 'oe_green' : 'oe_red' }"/>
+                            </t>
+                        </span></b>
+                    </td>
+                    <td width="35%"  class="sub_total">
+                        <b><span class="display_price">
+                            <t t-esc="widget.format_currency_custom(line.get_display_price(), 0)"/>
+                        </span></b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="quantity">
+                        <t t-esc="widget.format_float(line.get_quantity())" /> x <t t-esc="widget.format_float(line.get_unit_display_price(), 0)" />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center;">
+                        <span class="seat_position">
+                           Seat : <span><t t-esc="widget.pos.get_order().seat_number"/></span>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </li>
+    </t>
+
+    <t t-name="SplitOrderline">
+
+        <li t-attf-class="orderline #{ selected ? 'selected' : ''} #{ quantity !== line.get_quantity() ? 'partially' : '' }"
+            t-att-data-id="id">
+            <table class="table-line">
+                <tr>
+                    <td width="65%">
+                        <b><span class="product_name">
+                            <t t-esc="line.get_product().display_name"/>
+                            <t t-if="line.get_product().tracking!=='none'">
+                                <i t-attf-class="oe_link_icon fa fa-list oe_icon line-lot-icon #{line.has_valid_product_lot() ? 'oe_green' : 'oe_red' }"/>
+                            </t>
+                        </span></b>
+                    </td>
+                    <td width="35%"  class="sub_total">
+                        <t t-if='selected and line.get_unit().groupable'>
+                            <em class='big'>
+                                <t t-esc='quantity' />
+                            </em>
+                            /
+                            <t t-esc="line.get_quantity_str()" />
+                            <t t-esc="line.get_unit().name" />
+                        </t>
+                        <t t-if='!(selected and line.get_unit().groupable)'>
+                            <em>
+                                <t t-esc="line.get_quantity_str()" />
+                            </em>
+                            <t t-esc="line.get_unit().name" />
+                        </t>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <t t-if="line.get_quantity_str() !== '1'">
+                            <li class="info">
+                                at
+                                <t t-esc="widget.format_currency(line.get_unit_price())" />
+                                /
+                                <t t-esc="line.get_unit().name" />
+                            </li>
+                        </t>
+                        <t t-if="line.get_discount_str() !== '0'">
+                            <li class="info">
+                                With a
+                                <em>
+                                    <t t-esc="line.get_discount_str()" />%
+                                </em>
+                                discount
+                            </li>
+                        </t>
+                    </td>
+                    <td style="text-align: right; padding-right: 10px;">
+                        <b><span class="display_price">
+                            <t t-esc="widget.format_currency_custom(line.get_display_price(), 0)"/>
+                        </span></b>
+                    </td>
+                </tr>
+            </table>
+        </li>
+    </t>
+
+    <t t-extend="OrderWidget">
+        <t t-jquery=".summary" t-operation="replace"/>
+        <t t-jquery=".promotion" t-operation="replace"/>
+        <t t-jquery=".order-scroller" t-operation="after">
+            <div class="transaction">
+                <table class="table_transaction">
+                    <tr>
+                        <td class="total_qty">
+                            <div class="arrange-top">Total Quantity</div>
+                            <div class="arrange-bottom">0</div>
+                        </td>
+                        <td class="total_price">
+                            <div class="arrange-top">Total Price</div>
+                            <div class="arrange-bottom">0</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="total_tax">
+                            <div class="arrange-top">Tax + Charge</div>
+                            <div class="arrange-bottom">0</div>
+                        </td>
+                        <td class="total_discount">
+                            <div class="arrange-top">Discount</div>
+                            <div class="arrange-bottom">0</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="total_amount">
+                            <div class="arrange-top">Total Amount</div>
+                            <div class="arrange-bottom" style="font-size: 24px;">0</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+
+    </t>
+
+    <t t-extend="ActionpadWidget">
+		<t t-jquery="#all_orders" t-operation="replace">
+		</t>
+	</t>
+
+    <t t-extend="ProductScreenWidget">
+        <t t-jquery=".centerpane .control-buttons" t-operation="replace">
+        </t>
+        <t t-jquery=".centerpane" t-operation="replace">
+            <div class="centerpane">
+                <div class="placeholder-NumpadWidget"></div>
+            </div>
+        </t>
+        <t t-jquery=".product-screen" t-operation="after">
+            <div class="button-transaction">
+                <div class="button-list new_control-buttons">
+                    <button class="control-button btn btn-default btn-fill btn-wd transfer-button"><i class="pe-7s-shuffle"></i> Transfer</button>
+                    <button class='control-button btn btn-default btn-fill btn-wd seat_number_btn'>
+                        <i class="pe-7s-check"></i> Seat Position: <span><t t-esc="widget.seatnumber()"/></span>
+                    </button>
+                    <button class="control-button btn btn-default btn-fill btn-wd guest-button"><i class="pe-7s-add-user"></i> Guests: <span class="guest_number">1</span></button>
+                    <button class="control-button btn btn-default btn-fill btn-wd set-customer">
+                        <i class="fa fa-user"></i>
+                        <span class="client-name">
+                        <t t-if="widget.pos.get_client()">
+                            <t t-esc="widget.pos.get_client().name" />
+                        </t>
+                        <t t-if="!widget.pos.get_client()">
+                            Customer
+                        </t>
+                        </span>
+                    </button>
+                    <button class="control-button btn btn-default btn-fill btn-wd control-button order-submit"><i class="pe-7s-share"></i> Order</button>
+                    <!--<button class="control-button btn btn-default btn-fill btn-wd manual-promotion"><i class="pe-7s-repeat"></i> Promotion</button>-->
+                    <!--<button class="control-button btn-coupon"><i class="fa fa-gift"></i> Coupon</button>-->
+                    <button class="control-button btn btn-default btn-fill btn-wd btn-reward">Rewards</button>
+                    <button class="control-button btn btn-default btn-fill btn-wd btn-assign-order">Assign Order</button>
+                    <button class="control-button btn btn-default btn-fill btn-wd btn-removeline">Error Correction</button>
+                    <button class="control-button btn btn-default btn-fill btn-wd btn-backspace">Void Item</button>
+                    <button class="control-button branch_btn">
+                        <i class="pe-7s-share"></i>
+                        Branch (<span><t t-esc="widget.get_current_branch()"/> </span>)
+                    </button>
+                    <button class='control-button btn-create-so'>
+                        <i class='fa fa-star'/>Create Sales Order
+                    </button>
+                    <button class="control-button button pay">
+                        <div class="payment">
+                            Payment
+                        </div>
+                        <div class="pay-circle">
+                            <i class="fa fa-chevron-right"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="ActionpadWidget">
+        <t t-jquery='div.actionpad' t-operation='replace'/>
+    </t>
+
+    <t t-extend="ProxyScreenDisplay">
+        <t t-jquery=".customer_display_icon" t-operation="replace"/>
+    </t>
+
+    <t t-extend="PaymentScreenWidget">
+        <t t-jquery=".payment-buttons" t-operation="replace"/>
+        <t t-jquery=".payment-numpad" t-operation="inner">
+            <div class='payment-buttons'>
+                <div class="payment-receipt touch-scrollable">
+                    <div class="pos-receipt-payment"/>
+                </div>
+             </div>
+        </t>
+        <t t-jquery=".button.back" t-operation="after">
+            <span class="button btn-coupon-payment" style="left:120px;"><i class="fa fa-gift"></i> Coupon</span>
+        </t>
+    </t>
+
+    <t t-name="PaymentReceipt">
+        <div class="pos-sale-ticket">
+            <div class="pos-center-align"><t t-esc="moment().format('L LT')"/> <t t-esc="order.name"/></div>
+            <br />
+            <t t-esc="widget.pos.company.name"/><br />
+            <div class="receipt-phone">
+                Phone: <t t-esc="widget.pos.company.phone || ''"/><br />
+            </div>
+            <div class="receipt-user">
+                User: <t t-esc="widget.pos.cashier ? widget.pos.cashier.name : widget.pos.user.name"/><br />
+            </div>
+            <br />
+            <t t-if="receipt.header">
+                <div style='text-align:center'>
+                    <t t-esc="receipt.header" />
+                </div>
+                <br />
+            </t>
+            <table class='receipt-orderlines'>
+                <colgroup>
+                    <col width='50%' />
+                    <col width='15%' />
+                    <col width='35%' />
+                </colgroup>
+                <tr t-foreach="orderlines" t-as="orderline">
+                    <td>
+                        <t t-esc="orderline.get_product().display_name"/>
+                         <t t-if="orderline.get_discount() > 0">
+                            <div class="pos-disc-font">
+                                With a <t t-esc="orderline.get_discount()"/>% discount
+                            </div>
+                        </t>
+                    </td>
+                    <td class="pos-right-align">
+                        <t t-esc="orderline.get_quantity_str_with_unit()"/>
+                    </td>
+                    <td class="pos-right-align">
+                        <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <table class='receipt-total'>
+                <tr>
+                    <td>Subtotal:</td>
+                    <td class="pos-right-align">
+                        <t t-esc="widget.format_currency(order.get_total_without_tax())"/>
+                    </td>
+                </tr>
+                <t t-foreach="order.get_tax_details()" t-as="taxdetail">
+                    <tr>
+                        <td><t t-esc="taxdetail.name" /></td>
+                        <td class="pos-right-align">
+                            <t t-esc="widget.format_currency(taxdetail.amount)" />
+                        </td>
+                    </tr>
+                </t>
+                <tr>
+                    <t t-if="order.get_total_discount() > 0">
+                        <td>Discount:</td>
+                        <td class="pos-right-align">
+                            <t t-esc="widget.format_currency(order.get_total_discount())"/>
+                        </td>
+                    </t>
+                </tr>
+                <tr class="emph">
+                    <td>Total:</td>
+                    <td class="pos-right-align">
+                        <t t-esc="widget.format_currency(order.get_total_with_tax())"/>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <t t-if="receipt.footer">
+                <br />
+                <div style='text-align:center'>
+                    <t t-esc="receipt.footer" />
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <t t-extend="OrderSelectorWidget">
+        <t t-jquery=".neworder-button" t-operation="replace"/>
+        <t t-jquery=".deleteorder-button" t-operation="replace"/>
+    </t>
+
+    <t t-extend="TableWidget">
+        <t t-jquery=".order-information" t-operation="replace">
+            <div class="order-information">Rp <t t-esc='widget.pos.get_info_order(widget.table).amount_total_str'/></div>
+        </t>
+        <t t-jquery=".table-seats" t-operation="replace">
+            <span class="table-seats"><t t-esc="widget.customer_count" />/<t t-esc="widget.table.seats" /></span>
+        </t>
+        <t t-jquery=".create-time" t-operation="replace">
+            <div class="create-time">
+                <span>
+                    <i class="fa fa-clock-o"/>
+                    <t t-esc='widget.pos.get_info_order(widget.table).created_time'/>
+                </span>
+            </div>
+            <t t-if="widget.table.latest_order">
+                <span class="latest_order">
+                    <i class="fa fa-clock-o"/>
+                    <t t-esc='widget.table.latest_order'/>
+                </span>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="CouponPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-confirm" style="height: 250px !important;">
+                <p class="title" style="background-color: rgb(110,200,155); color: #fff;">Apply Coupon/Gift Voucher Code</p>
+                <p class="body" style="color: #0075AC;">Enter Your Coupon Code Here</p>
+                 <input id ="coupon_code" type="text" class="input-field" name="code"></input>
+                <div class="footer" style="background-color: rgb(110,200,155); color: #fff;">
+                    <div class="button cancel" style="background-color: #0075AC; color: #fff;">
+                        Cancel
+                    </div>
+                    <div class="button confirm" id="apply_coupon_code" style="background-color: #0075AC; color: #fff;">
+                        Apply
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

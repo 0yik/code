@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="hr_holiday_multiple_form_modifier" model="ir.ui.view">
+            <field name="name">leave.request.form.modifier</field>
+            <field name="model">hr.holidays.multiple</field>
+            <field name="inherit_id" ref="multiple_leave_application.hr_holiday_multiple_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header" position="inside">
+                    <field name="leave_matrix_line" widget="many2many_tags" invisible="1"/>
+                    <field name="check_access_request" invisible="1"/>
+                </xpath>
+                <button name="action_approve" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('check_access_request', '=', True)]}</attribute>
+                </button>
+            </field>
+        </record>
+    </data>
+</odoo>

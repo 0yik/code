@@ -1,0 +1,88 @@
+<odoo>
+    <data>
+
+        <record id="view_asset_depreciation_journal" model="ir.ui.view">
+            <field name="name">depreciation.journal</field>
+            <field name="model">depreciation.journal</field>
+            <field name="arch" type="xml">
+                <form create="0" edit="0">
+                    <field name="depreciation_journal_lines">
+                        <tree create="0" edit="0">
+                            <field name="name"/>
+                            <field name="category_id"/>
+                            <field name="depreciation_date" string="Depreciation Date"/>
+                            <field name="depreciated_value" string="Cumulative Depreciation"/>
+                            <field name="amount" string="Depreciation"/>
+                            <field name="remaining_value" string="Residual"/>
+                            <field name="move_id" string="Journal"/>
+                            <field name="sequence" string="Sequence"/>
+                            <field name="move_posted_check" string="Verified"/>
+                        </tree>
+                    </field>
+                </form>
+             </field>
+        </record>
+
+        <record id="view_asset_depreciation_journal_line" model="ir.ui.view">
+            <field name="name">depreciation.journal.line</field>
+            <field name="model">depreciation.journal.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                            <field name="move_id"/>
+                            <field name="move_check"/>
+                        </group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="depreciation_date"/>
+                            <field name="depreciated_value"/>
+                            <field name="remaining_value"/>
+                        </group>
+                    </group>
+                </form>
+             </field>
+        </record>
+
+        <record id="view_asset_depreciation_wizard" model="ir.ui.view">
+            <field name="name">asset.depreciation.wizard</field>
+            <field name="model">asset.depreciation.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Generate Entries Asset Journal">
+                    <group>
+                        <field name="date"/>
+                        <label for="posted" string="Status"/>
+                        <div>
+                            <field name="posted"  class="oe_inline" style="vertical-align: unset"/>
+                            <label for="posted" string="Posted"/>
+
+                            <field name="un_posted" class="oe_inline" style="vertical-align: unset"/>
+                            <label for="un_posted" string="Unposted"/>
+
+                        </div>
+                    </group>
+                    <footer>
+                        <button string="Generate Entries" name="asset_compute" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+             </field>
+        </record>
+
+        <record id="action_asset_depreciation_wizard" model="ir.actions.act_window">
+            <field name="name">Generate Entries Asset Journal</field>
+            <field name="res_model">asset.depreciation.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_asset_depreciation_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Assets Journal" action="action_asset_depreciation_wizard"
+        id="menu_asset_depreciation_wizard"
+        parent="account.menu_finance_entries" sequence="110" groups="base.group_no_one"/>
+
+    </data>
+</odoo>

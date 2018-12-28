@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!--EDIT PURCHASE REQUEST-->
+        <record id="view_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock picking inherit form view</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+				<field name="min_date" position="attributes">
+					<attribute name="widget">date</attribute>
+				</field>
+                <field name="origin" position="after">
+                    <field name="customer_reference"/>
+                </field>
+			</field>
+		</record>
+
+        <record id="view_move_picking_tree_inherit_view" model="ir.ui.view">
+            <field name="name">stock.move.inherit</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="before">
+                    <field name="brand"/>
+                    <field name="type"/>
+                </field>
+                <field name="product_id" position="after">
+                    <field name="description"/>
+                </field>
+                <field name="product_id" position="attributes">
+                    <attribute name="string">Model No</attribute>
+                </field>
+                <field name="product_uom" position="attributes">
+                    <attribute name="string">UOM</attribute>
+                </field>
+            </field>
+        </record>
+	</data>
+</odoo>
+

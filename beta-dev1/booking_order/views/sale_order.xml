@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    <record id="view_sale_order_form_extended" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='technical']" position="after">
+               
+                <group colspan="4" name='booking' string="Booking">
+                <field name='is_booking'/>
+                <field name="booking_team_id" attrs="{'invisible':[('is_booking','=',False)]}" />
+                
+               <field name="team_leader_id" attrs="{'invisible':[('is_booking','=',False)]}" />
+               <field name="employee_ids" attrs="{'invisible':[('is_booking','=',False)]}"  />
+               <field name="equipment_serial_ids"  attrs="{'invisible':[('is_booking','=',False)]}" >
+                    <tree editable="top">
+                        <field name="product_id" />
+                        <field name="serial_id"/>
+                    </tree>
+               </field>
+           </group>
+            </xpath> 
+        </field>
+    </record>
+
+    <record id="view_equipment_serial_tree_extended" model="ir.ui.view">
+        <field name="name">equipment.serial.tree</field>
+        <field name="model">equipment.serial</field>
+        <field name="arch" type="xml">
+          <tree  editable="top">
+            <field name="product_id" />
+            <field name="serial_id"/>
+          </tree>
+        </field>
+    </record>
+
+    <record id="view_equipment_serial_form_extended" model="ir.ui.view">
+        <field name="name">equipment.serial.form</field>
+        <field name="model">equipment.serial</field>
+        <field name="arch" type="xml">
+          <form>
+            <group>
+              <field name="product_id" domain="[('is_an_equipment','=',True)]"/>
+              <field name="serial_id"/>
+          </group>
+          </form>
+        </field>
+    </record>
+</data>
+</odoo>

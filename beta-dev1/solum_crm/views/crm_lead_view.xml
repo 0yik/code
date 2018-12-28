@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!-- CRM LEAD Form View -->
+	
+	<record id="sale_action_quotations_new_strip" model="ir.actions.act_window">
+        <field name="name">Quotation</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">form,tree,graph</field>
+        <field name="view_id" ref="solum_sale.view_led_strip_order_form"/>
+        <field name="domain">[('opportunity_id', '=', active_id)]</field>
+        <field name="context">{'search_default_opportunity_id': active_id, 'default_opportunity_id': active_id}</field>
+    </record>
+    
+    <record id="sale_action_quotations_new_attachment" model="ir.actions.act_window">
+        <field name="name">Quotation</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">form,tree,graph</field>
+        <field name="view_id" ref="solum_sale.view_led_attachment_order_form"/>
+        <field name="domain">[('opportunity_id', '=', active_id)]</field>
+        <field name="context">{'search_default_opportunity_id': active_id, 'default_opportunity_id': active_id}</field>
+    </record>
+    
+    <record id="sale_action_quotations_new_idesign" model="ir.actions.act_window">
+        <field name="name">Quotation</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">form,tree,graph</field>
+        <field name="view_id" ref="solum_sale.view_idesign_order_form"/>
+        <field name="domain">[('opportunity_id', '=', active_id)]</field>
+        <field name="context">{'search_default_opportunity_id': active_id, 'default_opportunity_id': active_id}</field>
+    </record>
+	
+	<record id="sale_crm.crm_case_form_view_oppor" model="ir.ui.view">
+        <field name="name">crm.lead.oppor.inherited.crm</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_set_won']" position="before">
+                <button string="New LED Strip Quotation" name="quotations_new_strip" type="object" class="oe_highlight"
+                    context="{'search_default_partner_id': partner_id,
+                              'default_partner_id': partner_id,
+                              'default_quote_type': 'led_strip',
+                              'default_team_id': team_id,
+                              'readonly_by_pass': True}"/>
+      		 	
+      		 	<button string="New LED Attachment Quotation" name="quotations_new_attachment" 
+      		 		type="object" class="oe_highlight"
+                    context="{'search_default_partner_id': partner_id,
+                              'default_partner_id': partner_id,
+                              'default_quote_type': 'led_attach',
+                              'default_team_id': team_id,
+                              'readonly_by_pass': True}"/>
+              	
+              	<button string="New iDesign Quotation" name="quotations_new_idesign" 
+      		 		type="object" class="oe_highlight"
+                    context="{'search_default_partner_id': partner_id,
+                              'default_partner_id': partner_id,
+                              'default_quote_type': 'idesign',
+                              'default_team_id': team_id,
+                              'readonly_by_pass': True}"/>
+              	
+              	<button string="Quote" name="%(solum_crm.action_crm_to_quote_wizard)d" type="action" class="oe_highlight"
+                    	context="{'partner_id': partner_id,'team_id': team_id}"/>
+            </xpath>
+            <xpath expr="//notebook/page['lead']/group/group/field[@name='partner_name']" position="attributes">
+				<attribute name='string'>Company</attribute>
+			</xpath>
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="object"
+                        name="action_open_lead_quotations" icon="fa-pencil-square-o"
+                        context="{'default_partner_id': partner_id, 'search_default_draft': 1}">
+                    <div class="o_stat_info">
+                        <field name="sale_number" class="o_stat_value"/>
+                        <span class="o_stat_text"> Quote(s) </span>
+                    </div>
+                </button>
+                
+                <button class="oe_stat_button" type="object" attrs="{'invisible': [('sale_amount_total', '=', 0)]}"
+                        name="action_open_lead_quotations" icon="fa-usd"
+                        context="{'search_default_partner_id': partner_id, 'default_partner_id': partner_id, 'search_default_sales': 1}">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value"><field name="sale_amount_total" widget="monetary" options="{'currency_field': 'company_currency'}"/></span>
+                        <span class="o_stat_text"> Orders</span>
+                    </div>
+                </button>
+            </div>
+            <xpath expr="//notebook/page[2]/group/group/field[@name='partner_name']" position="before">
+            	<field name="lead_state"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>   

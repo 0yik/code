@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="res_partner_report_document">
+			<div class="page">
+				<style>
+					.line tbody, .line tr, .line
+					th, .line td{
+					border:1px solid;
+					border-top:1px solid !important;
+					}
+				</style>
+				<div class="oe_structure" />
+				<div class="col-xs-12"
+					style="border-top:1px solid;padding-top:3px; padding-bottom:3px;">
+					<h4 class="text-center mt8">
+						<strong>CLIENT INFORMATION FORM</strong>
+					</h4>
+				</div>
+
+				<div class="row mt16" style="page-break-inside: avoid;">
+					<div class="col-xs-3" style="border:1px solid;">
+						<strong>Name of Company:</strong>
+					</div>
+					<div class="col-xs-9" style="border:1px solid;">
+						<strong>
+							<span t-field="doc.name" />
+						</strong>
+					</div>
+					<div class="col-xs-3" style="border:1px solid;">
+						<strong>Registration No.:</strong>
+					</div>
+					<div class="col-xs-9" style="border:1px solid;">
+						<!-- <strong> <span t-field="doc.company_no" /> </strong> -->
+					</div>
+				</div>
+
+				<t t-set='srn' t-value='1' />
+				<t t-foreach="doc.contact_list_line" t-as="dc">
+					<div class="row mt16">
+						<div class="col-xs-8" style="padding:0;">
+							<table class="table line">
+								<thead>
+									<tr>
+										<th colspan="3">
+											Authorized Contact Person
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4">
+											<span t-esc="srn" />
+										</td>
+										<td>
+											Name:
+										</td>
+										<td>
+											<span t-field="dc.name" />
+										</td>
+									</tr>
+									<tr>
+										<td>Tel No.
+										</td>
+										<td>
+											<span t-field="dc.phone" />
+										</td>
+									</tr>
+									<tr>
+										<td>Mobile No.
+										</td>
+										<td>
+											<span t-field="dc.mobile" />
+										</td>
+									</tr>
+									<tr>
+										<td>Email:
+										</td>
+										<td>
+											<span t-field="dc.email" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-xs-4" style="padding:0;">
+							<table class="table line">
+								<thead>
+									<tr>
+										<th>
+											For All Matters On:
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											Secretarial
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Billing
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Accounts/Tax/Report/Audit
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Others:
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<t t-set='srn' t-value='srn+1' />
+					</div>
+				</t>
+				<div class="row mt16" style="page-break-inside: avoid;">
+					<div class="col-xs-4" style="border:1px solid;">
+						<strong>NAME OF COMPANY:</strong>
+					</div>
+					<div class="col-xs-8" style="border:1px solid;">
+						<strong>
+							<span t-field="doc.name" />
+						</strong>
+					</div>
+					<div class="col-xs-4" style="border:1px solid;">
+						<strong>DECLARATION BY DIRECTORS</strong>
+					</div>
+					<div class="col-xs-8" style="border:1px solid;">
+						<strong>DECLARATION BY DIRECTORS</strong>
+					</div>
+				</div>
+				<div class="row mt16">
+					<div class="col-xs-12">
+						<span>I/We majority of the board of directors, hereby represent
+							the board of directors to confirm that the information given
+							above is true and correct.
+						</span>
+					</div>
+				</div>
+				<div class="row mt16">
+					<div class="col-xs-12">
+						<span>I/We, hereby authorize FMD Management Consultants Pte Ltd/LW
+							Ong &amp; Associates LLP/FMD 2008 Pte. Ltd./FMD Pte. Ltd./Advance
+							Secretaries Pte. Ltd. To liase with the above contact person as
+							per instruction indicated on this form. I/We will keep you inform
+							in writing for any changes in the information/instruction given
+							above.
+						</span>
+					</div>
+				</div>
+
+				<t t-set='srn' t-value='1' />
+				<t t-foreach="doc.director_list_line" t-as="dc">
+					<div class="row mt16">
+						<div class="col-xs-12" style="padding:0;">
+							<table class="table line" style="page-break-inside: avoid;">
+								<tbody>
+									<tr>
+										<td class="text-center" rowspan="4" style="width:5%;">
+											<span t-esc="srn" />
+										</td>
+										<td style="width:15%;">
+											Name:
+										</td>
+										<td style="width:60%;">
+											<span t-field="dc.name" />
+										</td>
+										<td class="text-center" rowspan="4" style="width:20%;">
+											Signature
+										</td>
+									</tr>
+									<tr>
+										<td>Mobile.
+										</td>
+										<td>
+											<span t-field="dc.mobile" />
+										</td>
+									</tr>
+									<tr>
+										<td>Email.
+										</td>
+										<td>
+											<span t-field="dc.email" />
+										</td>
+									</tr>
+									<tr>
+										<td>Address:
+										</td>
+										<td>
+											<span t-field="dc.street" />
+											,
+											<span t-field="dc.street2" />
+											,
+											<span t-field="dc.city" />
+											,
+											<span t-field="dc.zip" />
+											,
+											<span t-field="dc.state_id.name" />
+											,
+											<span t-field="dc.country_id.name" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<t t-set='srn' t-value='srn+1' />
+					</div>
+				</t>
+			</div>
+	</template>
+
+	<template id="fmd_customer.res_partner_report">
+		<t t-call="report.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="fmd_customer.res_partner_report_document" t-lang="doc.lang" />
+			</t>
+		</t>
+	</template>
+</odoo>

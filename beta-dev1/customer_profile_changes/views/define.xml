@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+   <template id="assets_backend" name="customer_profile_edit assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/customer_profile_changes/static/src/js/form_view_extend.js"/>
+<!--             <script type="text/javascript" src="/customer_profile_changes/static/src/js/list_view_extend.js"/> -->
+<!--             <script type="text/javascript" src="/customer_profile_changes/static/src/js/kanban_view_extend.js"/> -->
+        </xpath>
+    </template>
+
+</odoo>

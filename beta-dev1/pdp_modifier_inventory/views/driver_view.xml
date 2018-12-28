@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_driver_tree" model="ir.ui.view">
+            <field name="name">driver.view.tree</field>
+            <field name="model">driver</field>
+            <field name="arch" type="xml">
+               <tree>
+                   <field name="code"/>
+                   <field name="name"/>
+               </tree>
+            </field>
+        </record>
+
+        <record id="view_driver_form" model="ir.ui.view">
+            <field name="name">driver.view.form</field>
+            <field name="model">driver</field>
+            <field name="arch" type="xml">
+               <form>
+                   <sheet>
+                        <group cols="4">
+                            <field name="code"/>
+                            <field name="name"/>
+                        </group>
+                   </sheet>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_driver" model="ir.actions.act_window">
+            <field name="name">Driver</field>
+            <field name="res_model">driver</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_driver" name="Driver" parent="stock.menu_stock_warehouse_mgmt" action="action_driver" sequence="6"/>
+    </data>
+</odoo>

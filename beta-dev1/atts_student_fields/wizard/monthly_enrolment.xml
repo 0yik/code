@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="student_enrolment_form_view" model="ir.ui.view">
+            <field name="name">monthly.enrolment_form.form</field>
+            <field name="model">monthly.enrolment.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Student Enrolement form">
+                    <group>
+                    	<group>
+                        	<field name='date_selection'/> 
+                        </group>
+                        <footer>
+                        	<button name="check_report" string="Print" type="object" class="btn-primary"/>
+                        	<button string="Cancel" class="btn-default" special="cancel"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+		<!-- Action of Terminate Student Wizard -->
+        <record id="action_monthly_enrolment_wizard" model="ir.actions.act_window">
+            <field name="name">Monthly Enrolment Wizard</field>
+            <field name="res_model">monthly.enrolment.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <!-- <menuitem 
+            id="monthly_enrolment_form_action_sub_menu"
+            name="Monthly Enrolment by Programme"
+            parent="atts_course.menu_students_parents"
+            action="atts_student_fields.action_monthly_enrolment_wizard" /> -->
+        
+
+        <!--Wizard For Nationality Enrolment-->
+        
+         <record id="student_enrolment_by_nationality_form_view" model="ir.ui.view">
+            <field name="name">nationality.enrolment_form.form</field>
+            <field name="model">nationality.enrolment.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Student Nationality Enrolement form">
+                    <group>
+                        	<field name='date_selection' invisible='1'/> 
+                        <footer>
+                        	<button name="check_report" string="Print" type="object" class="btn-primary"/>
+                        	<button string="Cancel" class="btn-default" special="cancel"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+		<!-- Action of Terminate Student Wizard -->
+        <record id="action_nationality_enrolment_wizard" model="ir.actions.act_window">
+            <field name="name">Nationality Enrolment Report</field>
+            <field name="res_model">nationality.enrolment.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <!-- <menuitem 
+            id="nationality_enrolment_form_action_sub_menu"
+            name="Enrolment by Nationality"
+            parent="atts_course.menu_students_parents"
+            action="atts_student_fields.action_nationality_enrolment_wizard" />   	    
+         -->    	
+        
+    	<!--Wizard For Religion Enrolment-->
+        
+         <record id="student_enrolment_by_religion_form_view" model="ir.ui.view">
+            <field name="name">religion.enrolment_form.form</field>
+            <field name="model">religion.enrolment.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Student Religion Enrolement form">
+                    <group>
+                        <footer>
+                        	<button name="check_report" string="Print" type="object" class="btn-primary"/>
+                        	<button string="Cancel" class="btn-default" special="cancel"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+		<!-- Action of Terminate Student Wizard -->
+        <record id="action_religion_enrolment_wizard" model="ir.actions.act_window">
+            <field name="name">Religion Enrolment Report</field>
+            <field name="res_model">religion.enrolment.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <!-- <menuitem 
+            id="religion_enrolment_form_action_sub_menu"
+            name="Enrolment by Religion"
+            parent="atts_course.menu_students_parents"
+            action="atts_student_fields.action_religion_enrolment_wizard" /> 
+         -->
+    	<!--Wizard For Religion Enrolment-->
+        
+         <record id="student_enrolment_by_race_form_view" model="ir.ui.view">
+            <field name="name">race.enrolment_form.form</field>
+            <field name="model">race.enrolment.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Student Race Enrolement form">
+                    <group>
+                        <footer>
+                        	<button name="check_report" string="Print" type="object" class="btn-primary"/>
+                        	<button string="Cancel" class="btn-default" special="cancel"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+		<!-- Action of Terminate Student Wizard -->
+        <record id="action_race_enrolment_wizard" model="ir.actions.act_window">
+            <field name="name">Race Enrolment Report</field>
+            <field name="res_model">race.enrolment.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <!-- <menuitem 
+            id="race_enrolment_form_action_sub_menu"
+            name="Enrolment by Race"
+            parent="atts_course.menu_students_parents"
+            action="atts_student_fields.action_race_enrolment_wizard" /> -->
+        
+
+      	 <!--Wizard For monthly withdrawl-->
+        
+         <record id="student_monthly_withdrawl_form_view" model="ir.ui.view">
+            <field name="name">monthly.withdrawl.form</field>
+            <field name="model">monthly.withdrawl.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Student Race Enrolement form">
+                    <group>
+                    	<group>
+                        	<field name='date_selection'/> 
+                        </group>
+                        <footer>
+                        	<button name="check_report" string="Print" type="object" class="btn-primary"/>
+                        	<button string="Cancel" class="btn-default" special="cancel"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+		<!-- Action of Terminate Student Wizard -->
+        <record id="action_monthly_withdrawl_wizard" model="ir.actions.act_window">
+            <field name="name">Monthly Withdrawl Report</field>
+            <field name="res_model">monthly.withdrawl.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <!-- <menuitem 
+            id="monthly_withdrawl_form_action_sub_menu"
+            name="Monthly Withdrawl"
+            parent="atts_course.menu_students_parents"
+            action="atts_student_fields.action_monthly_withdrawl_wizard" />   -->     
+    </data>
+</odoo>

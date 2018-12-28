@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="button_account_invoice_view_form_strip" model="ir.ui.view">
+            <field name="name">button.account.invoice.strip</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="solum_invoice.led_strip_invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='%(account.action_account_invoice_payment)d']" position="attributes">
+                    <attribute name="groups">
+                    	solum_ar_modify.group_sales_manager_sl,
+                    	solum_ar_modify.group_sr_admin_sl,
+                    	solum_ar_modify.group_accountant_sl,
+                    	solum_ar_modify.group_man_dir_sl
+                    </attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='%(account.action_account_invoice_refund)d']" position="attributes">
+                    <attribute name="groups">
+                    	solum_ar_modify.group_sales_manager_sl,
+                    	solum_ar_modify.group_sr_admin_sl,
+                    	solum_ar_modify.group_accountant_sl,
+                    	solum_ar_modify.group_man_dir_sl
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="button_account_invoice_view_form_attachment" model="ir.ui.view">
+            <field name="name">button.account.invoice.attachment</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="solum_invoice.led_attachment_invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='%(account.action_account_invoice_payment)d']" position="attributes">
+                    <attribute name="groups">
+                    	solum_ar_modify.group_sales_manager_sl,
+                    	solum_ar_modify.group_sr_admin_sl,
+                    	solum_ar_modify.group_accountant_sl,
+                    	solum_ar_modify.group_man_dir_sl
+                    </attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='%(account.action_account_invoice_refund)d']" position="attributes">
+                    <attribute name="groups">
+                    	solum_ar_modify.group_sales_manager_sl,
+                    	solum_ar_modify.group_sr_admin_sl,
+                    	solum_ar_modify.group_accountant_sl,
+                    	solum_ar_modify.group_man_dir_sl
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="button_account_invoice_idesign" model="ir.ui.view">
+            <field name="name">button.account.invoice.idesign</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="solum_invoice.idesign_invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='%(account.action_account_invoice_payment)d']" position="attributes">
+                    <attribute name="groups">
+                    	solum_ar_modify.group_sales_manager_sl,
+                    	solum_ar_modify.group_sr_admin_sl,
+                    	solum_ar_modify.group_accountant_sl,
+                    	solum_ar_modify.group_man_dir_sl
+                    </attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='%(account.action_account_invoice_refund)d']" position="attributes">
+                    <attribute name="groups">
+                    	solum_ar_modify.group_sales_manager_sl,
+                    	solum_ar_modify.group_sr_admin_sl,
+                    	solum_ar_modify.group_accountant_sl,
+                    	solum_ar_modify.group_man_dir_sl
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="edit_res_user_view" model="ir.ui.view">
+            <field name="name">user form view</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.user_groups_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sel_groups_1_2']" position="after">
+                    <field name="re_notification" string="Receive Notification"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

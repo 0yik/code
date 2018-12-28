@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>   
+        
+        
+        <record id="view_vocational_education" model="ir.ui.view">
+	        <field name="name">vocational.education.form</field>
+	        <field name="model">vocational.education</field>
+	        <field name="arch" type="xml">
+	        <form string="Vocational Education">
+	            <sheet>
+	                <group>
+	                <group>
+	                    <field name="name" required='1'/>
+	                    <field name="level" widget="radio" />
+	                </group>
+	                <group>
+	                	<field name="description" required='1'/>
+	                    <field name="teacher_id" required='1'/>
+	                </group>
+	                </group>
+	                
+	                <field name="student_ids">
+	                <tree string="Student List" editable="bottom">
+	                   <field name="student_id" required='1'/>
+	                </tree>
+	                </field>
+	                
+	             </sheet>
+	        </form>
+	        </field>
+       </record>
+       
+       <record id="vocational_education_tree" model="ir.ui.view">
+            <field name="name">vocational.education.tree</field>
+            <field name="model">vocational.education</field>
+            <field name="arch" type="xml">
+                <tree string="Vocational Education">
+                    <field name="name"/>
+                	<field name="description"/>
+                	<field name="teacher_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_vocational_education" model="ir.actions.act_window">
+            <field name="name">Vocational Education</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vocational.education</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="vocational_education_tree"/>
+            <field name="help">Create and manage students vocational education.</field>
+        </record>
+        
+        <menuitem action="action_vocational_education" id="menu_action_vocational_education" parent="school.menu_ems" sequence="4"/>
+
+
+</odoo>

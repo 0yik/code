@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<!-- customer or warehose report -->
+		
+		<report id="sale_xlsx" model="custom.wizard" string=" " report_type="xlsx" name="itmcs_statistical_reports.sales_analysis.xlsx"
+			file="itmcs_statistical_reports.sales_analysis.xlsx" attachment_use="False" />
+		
+		<!-- overdue report -->
+		
+		<report id="overdue_xlsx" model="overdue.wizard" string=" " report_type="xlsx" name="itmcs_statistical_reports.overdue_analysis.xlsx"
+			file="itmcs_statistical_reports.overdue_analysis.xlsx" attachment_use="False" />
+		
+		<!-- stock report -->
+		
+		<report id="stock_xlsx" model="stock.wizard" string=" " report_type="xlsx" name="itmcs_statistical_reports.stock_analysis.xlsx"
+			file="itmcs_statistical_reports.stock_analysis.xlsx" attachment_use="False" />
+		
+		
+		<!-- profit analysis report -->
+		
+		<report id="profit_xlsx" model="profit.analysis.report" string=" " report_type="xlsx"
+			name="itmcs_statistical_reports.profit_analysis.xlsx" file="itmcs_statistical_reports.profit_analysis.xlsx"
+			attachment_use="False" />
+		
+		<!-- purchase analysis report -->
+		
+		<report id="purchase_xlsx" model="purchase.analysis.report" string=" " report_type="xlsx"
+			name="itmcs_statistical_reports.purchase_analysis.xlsx" file="itmcs_statistical_reports.purchase_analysis.xlsx"
+			attachment_use="False" />
+		
+		<!-- cash ledger report -->
+		
+		<report id="cash_xlsx" model="cash.ledger.wizard" string=" " report_type="xlsx" name="itmcs_statistical_reports.cash_ledger.xlsx"
+			file="itmcs_statistical_reports.cash_ledger.xlsx" attachment_use="False" />
+		
+	</data>
+</odoo>

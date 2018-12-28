@@ -1,0 +1,1 @@
+UPDATE ir_ui_menu SET name = 'Lead' where id in (SELECT id FROM ir_ui_menu WHERE name = 'My Pipeline');

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="external_layout_delivery_note">
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="docs"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="laborindo_report_delivery_note.external_layout_header_delivery_note"/>
+            <t t-raw="0"/>
+            <t t-call="laborindo_report_delivery_note.external_layout_footer_delivery_note"/>
+        </template>
+
+        <template id="laborindo_report_delivery_note.external_layout_header_delivery_note">
+            <div class="header">
+                <!--style=" background-image: url('/boston_modifier_status/static/description/content.png'); background-size: cover; background-repeat: no-repeat; height:140px">-->
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div class="row">
+                            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="height: 105px;"/>
+                        </div>
+                        <div class="row">
+                            <span>Date &#160;&#160;&#160;&#160;:</span>
+                            <br/>
+                            <span>No. &#160;&#160;&#160;&#160;&#160;&#160;:</span>
+                            <br/>
+                            <span>Re &#160;&#160;&#160;&#160;&#160;&#160;&#160;:</span>
+                            <br/>
+                            <span>Source&#160;:</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div style="margin-left:-30px;">
+                            <span style="font-size:18px;font-weight:bold;margin-left:-30px;padding-right:30px">PT.
+                                LABORIDON SARANA
+                            </span>
+                            <br/>
+                            <span style="font-size:10px;padding-right:50px;margin-left:-30px;;padding-right:30px">JI.
+                                Arteri Raya Pondok Indah No. 8A,Jakarta 12240
+                            </span>
+                            <br/>
+                            <span style="font-size:10px;padding-right:50px;margin-left:-30px;;padding-right:30px">Telp.
+                                (21) 7255165(H), 7257225, Fax. (21) 7257226
+                            </span>
+                            <br/>
+                            <span style="font-size:10px;padding-right:50px;margin-left:-30px;;padding-right:30px">
+                                e-mail:laborind@dnet.net.id, Isarana@cbn.net.id
+                            </span>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row" style="margin-top:6px;">
+                            <p style="margin-left:-80px;margin-top:16px;" t-esc="datetime.datetime.strptime(o.min_date,'%Y-%m-%d %H:%M:%S').strftime('%d/%m/%Y')"/>
+                            <p style="margin-left:-80px;margin-top:-9px;" t-field="o.name"/>
+                            <br/>
+                            <p style="margin-left:-80px;margin-top:-12px;" t-field="o.origin"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-5 text-center">
+                        <span style="font-size:16px;border-bottom:1px solid black">DELIVERY NOTE</span>
+                        <div style="padding-top:15px;"></div>
+                        <div class="text-left" style="width:370px;height:160px;border:1px solid black;border-radius:20px;magrin-top:20px;padding:5px;">
+                            <br/>
+                            <span t-if="o.partner_id.street">
+                                <span style="text-transform:uppercase" t-esc="o.partner_id.street">&#160;</span>
+                            </span>
+                            <span t-if="o.partner_id.blok2">BLOK
+                                <span t-esc="o.partner_id.blok2">&#160;</span>
+                            </span>
+                            <span t-if="o.partner_id.nomor2">NO.
+                                <span t-esc="o.partner_id.nomor2">&#160;</span>
+                            </span>
+                            <span t-if="o.partner_id.rt2">RT
+                                <span t-esc="o.partner_id.rt2">&#160;</span>
+                            </span>
+                            <span t-if="o.partner_id.rw2">RW
+                                <span t-esc="o.partner_id.rw2">&#160;</span>
+                            </span>
+                            <br/>
+                            <span t-if="o.partner_id.kelurahan_id2">
+                                <span t-esc="o.partner_id.kelurahan_id2.name"></span>
+                            </span>
+                            <span t-if="o.partner_id.kecamatan_id2">,
+                                <span t-esc="o.partner_id.kecamatan_id2.name"></span>
+                            </span>
+                            <span t-if="o.partner_id.city_id">,
+                                <span t-esc="o.partner_id.city_id.name"></span>
+                            </span>
+                            <span t-if="o.partner_id.state_id">,
+                                <span t-esc="o.partner_id.state_id.name"></span>
+                            </span>
+                            <span t-if="o.partner_id.zip">,
+                                <span t-esc="o.partner_id.zip"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </template>
+
+        <template id="laborindo_report_delivery_note.external_layout_footer_delivery_note">
+            <!--style=" background-image: url('/boston_modifier_status/static/description/footer.png'); background-size: cover; background-repeat: no-repeat; height:80px; margin:10px; padding: 50px; position: relative;">-->
+            <div class="footer text-center">
+                <ul class="list-inline">
+                    <li></li>
+                    <li>
+                        <span class="page"/>
+                    </li>
+                    <li>of</li>
+                    <li>
+                        <span class="topage"/>
+                    </li>
+                </ul>
+            </div>
+        </template>
+
+        <template id="report_delivery_note">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="laborindo_report_delivery_note.external_layout_delivery_note">
+                    <div class="page">
+                        <div class="row">
+                            <!--<div style="padding-top:190px;"></div>-->
+
+                            <div style="border:2px solid black;border-radius:20px;">
+                                <table style="width:100%;">
+                                    <thead>
+                                        <tr style="border-bottom:1px solid black">
+                                            <th class="text-center" style="border-right:1px solid black;width:10%">No.
+                                            </th>
+                                            <th class="text-center" style="border-right:1px solid black;width:20%">
+                                                Quantity
+                                            </th>
+                                            <th class="text-center" style="border-right:1px solid black;with:20%;">
+                                                Catalog Number
+                                            </th>
+                                            <th class="text-center" style="width:50%;">DESCRIPTION</th>
+                                        </tr>
+                                    </thead>
+                                    <t t-set="no" t-value="1"/>
+                                    <tbody t-foreach="o.move_lines" t-as="line">
+                                        <tr style="page-break-inside:avoid;">
+                                            <td class="text-center" style="border-right:1px solid black;">
+                                                <span t-esc="no"/>
+                                            </td>
+                                            <td class="text-center" style="border-right:1px solid black;">
+                                                <span t-esc="line.product_uom_qty"/>
+                                            </td>
+                                            <td class="text-left" style="border-right:1px solid black;padding-left:10px;">
+                                                <span t-esc="line.product_id.catelog_number"/>
+                                            </td>
+                                            <td class="text-left" style="padding-left:10px;">
+                                                <span t-esc="line.product_id.description or line.product_id.display_name"/>
+                                            </td>
+                                        </tr>
+                                        <t t-set="no" t-value="no + 1"/>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="padding-top:20px;"></div>
+                            <div class="last-page">
+                                <div class="col-xs-1"></div>
+                                <div class="text-center col-xs-3">RECEIVED BY
+                                    <div style="padding-top:70px;border-bottom:1px solid black"></div>
+                                </div>
+                                <div class="col-xs-3"></div>
+                                <div class="text-center col-xs-4">PT. LABORINDO SARANA
+                                    <div style="padding-top:70px;border-bottom:1px solid black"></div>
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="delivery_note_paper_format" model="report.paperformat">
+            <field name="name">Delivery Note</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">163</field>
+            <field name="page_width">214</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">65</field>
+            <field name="margin_bottom">7</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">55</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report id="action_report_delivery_note" model="stock.picking" report_type="qweb-pdf" string="Delivery Note" name="laborindo_report_delivery_note.report_delivery_note" file="laborindo_report_delivery_note.report_delivery_note" paperformat="laborindo_report_delivery_note.delivery_note_paper_format"/>
+
+
+    </data>
+</odoo>

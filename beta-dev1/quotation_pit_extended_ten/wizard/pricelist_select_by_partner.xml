@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="view_pricelist_line_by_partner" model="ir.ui.view">
+            <field name="name">pricelist.line.partner.form</field>
+            <field name="model">pricelist.line.partner</field>
+            <field name="arch" type="xml">
+                <form string="Select Pricelist Line">
+                    <!-- <header> -->
+                        
+                    <!-- </header> -->
+                    <group>
+                        <label colspan="4" nolabel="1" string="This wizard will generate orderline based on selected Pricelist Line." />
+                    </group>
+                    <field name="pricelist_id" invisible="1"></field>
+                    <group colspan="4" >
+                        <separator string="Pricelist Product line" colspan="4"/>
+                        <newline/>
+                        <field name="pricelis_line_ids" domain="[('pricelist_id', '=', pricelist_id),('product_id','!=',False)]" nolabel="1">
+                            <tree>
+                                <field name="product_id"/>
+                                <field name="part_number_product"/>
+                                <field name="drawing_number"/>
+                                <field name="product_id"/>
+                                <field name="fixed_price"/>
+                                <field name="pricing_date"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button icon="fa-cogs" string="Generate Orderline" name="compute_sheet_orderline" type="object" class="oe_highlight"  />
+                        or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pricelist_line_by_partner" model="ir.actions.act_window">
+            <field name="name">Select Pricelist Line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pricelist.line.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_pricelist_line_by_partner"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>

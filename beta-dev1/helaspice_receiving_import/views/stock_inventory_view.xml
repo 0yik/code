@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+
+        <record id="view_inventory_form_sap" model="ir.ui.view">
+            <field name="name">stock.inventory.form.sap</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="arch" type="xml">
+                <field name="exhausted" position="after">
+                    <field name="responsible_id" attrs="{'readonly':[('state', 'not in', ['draft', 'confirm'])]}"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_picking_form_inherit">
+            <field name="name">stock.picking.code.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_type_id']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='location_id']" position="before">
+                    <field name="picking_type_id" string="Picking Type"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_inventory_request_form_inherit">
+            <field name="name">inventory.request.code.inherit</field>
+            <field name="model">inventory.request</field>
+            <field name="inherit_id" ref="pdp_stock_inventory_request.view_inventory_request_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_type_id']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='location_id']" position="before">
+                    <field name="picking_type_id" string="Picking Type"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_tester_request_form_inherit">
+            <field name="name">tester.request.code.inherit</field>
+            <field name="model">tester.request</field>
+            <field name="inherit_id" ref="pdp_stock_inventory_request.view_tester_request_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_type_id']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='location_id']" position="before">
+                    <field name="picking_type_id" string="Picking Type"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_return_request_form_inherit">
+            <field name="name">return.request.code.inherit</field>
+            <field name="model">return.request</field>
+            <field name="inherit_id" ref="pdp_stock_inventory_request.view_return_request_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_type_id']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='location_id']" position="before">
+                    <field name="picking_type_id" string="Picking Type"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

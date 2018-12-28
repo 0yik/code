@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ismaya_uom_conversion_ismaya_uom_conversion,ismaya_uom_conversion.ismaya_uom_conversion,model_ismaya_uom_conversion_ismaya_uom_conversion,,1,0,0,0

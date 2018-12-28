@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<template id="honos_content" inherit_id="honos_snippets.honos_snippets" name="honos Snippet" priority="3">
+			<xpath expr="//div[@id='honos_snippet_structure']/div[@class='o_panel_body']" position="inside">
+				<t t-snippet="honos_snippet_style_3.snippet_style_3_template" t-thumbnail="/honos_snippet_style_3/static/src/img/style_3.jpg" />
+			</xpath>
+		</template>
+		<template id="snippet_style_3_template" name="Style 3">
+		<section class="s_honos_content">
+			 <div class="container">
+	            <div class="row">  
+					<p class="cc_content_class">honos is your one-stop online fashion destination for
+							all your wardrobe needs.Inspired by the international catwalks
+							and the global street scene, we offer wearable fashion at
+							pocket-friendly prices—right to your doorstep. Refresh your
+							closet with the hottest international labels and the most
+							exclusive collections. Keep it fashionable, keep it fresh! honos
+							style will make you fall in love with yourself!</p>
+				</div>
+				</div>
+		</section>
+		</template>
+</odoo>

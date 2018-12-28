@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+    	<record id="view_users_form_extended_for_dzh" model="ir.ui.view">
+    	    <field name="name">res.users.form.extended.dz</field>
+    	    <field name="model">res.users</field>
+    	    <field name="inherit_id" ref="base.view_users_form"/>
+    	    <field name="arch" type="xml">
+    	    	<xpath expr="//field[@name='partner_id']" position="after">
+    	    		<field name="support_email"/>
+    	    	</xpath>
+    	    </field>
+    	</record>
+
+        <record id="view_oppor_from_extended_for_dzh" model="ir.ui.view">
+            <field name="name">cr.lead.form.extended.dz</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_set_won']" position="after">
+                    <button name="notify_salesperson" string="Notify Salesperson" class="oe_highlight" type="object"></button>
+                </xpath>
+                <!--<xpath expr="//field[@name='tag_ids']" position="after">-->
+                    <!--<field name="dzh_partner_user_ids" widget="many2many_tags" context="{'dzh_user':True,'partner_id':partner_id}"/>-->
+                <!--</xpath>-->
+            </field>
+        </record>
+
+        <!--<record id="inherit_crm_case_phone_3tree_view" model="ir.ui.view">-->
+            <!--<field name="name">crm.phonecall3.tree.view</field>-->
+            <!--<field name="model">crm.phonecall</field>-->
+            <!--<field name="inherit_id" ref="crm_phonecall.crm_case_inbound_phone_tree_view"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="partner_id" position="attributes">-->
+                    <!--<attribute name="string">Customer</attribute>-->
+                <!--</field>-->
+                <!--<field name="user_id" position="attributes">-->
+                    <!--<attribute name="string">Salesperson</attribute>-->
+                <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
+
+    </data>
+</odoo>

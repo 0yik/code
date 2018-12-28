@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<record id="order_categ_01" model="pos.order.category">
+	    <field name="name">Dine In</field>
+	</record>
+
+	<record id="order_categ_02" model="pos.order.category">
+	    <field name="name">Delivery</field>
+	</record>
+
+	<record id="order_categ_03" model="pos.order.category">
+	    <field name="name">Staff Meal</field>
+	</record>
+
+	<record id="order_categ_04" model="pos.order.category">
+	    <field name="name">Take Away</field>
+	</record>
+
+	<record id="order_categ_05" model="pos.order.category">
+	    <field name="name">Transfer Out</field>
+	</record>
+	
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pos_sarangoci_down_payment_pos_assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/TM_down_payment_pos/static/src/js/pos_deposit.js"></script>
+            <script type="text/javascript" src="/TM_down_payment_pos/static/src/js/pos_create_deposit.js"></script>
+            <link rel="stylesheet" href="/TM_down_payment_pos/static/src/css/pos_deposit.css" />
+        </xpath>
+    </template>
+
+    <data>
+        <record id="form_view_account_payment_deposit_inherit" model="ir.ui.view">
+            <field name="name">account.payment.deposit.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="tm_account_deposit.form_view_account_payment_deposit"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='communication']" position="after">
+                    <field name="event"/>
+                </xpath>
+                <xpath expr="//field[@name='writeoff_account_id']" position="after">
+                    <field name="event_date"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

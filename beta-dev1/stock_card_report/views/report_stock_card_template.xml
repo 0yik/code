@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_stock_card">
+        <t t-call="report.external_layout">
+            <div class="page">
+                <t t-set="rows" t-value="docs.env.context.get('rows')"/>
+                <t t-if="rows">
+                    <h2> Stock Card Report </h2> <br/>
+                    <table class="table table-hover table-condensed table-bordered" border="1px solid #ddd">
+                        <t t-foreach="range(0, len(rows))" t-as="row_cnt">
+                            <t t-set="row" t-value="rows[str(row_cnt)]"/>
+                            <tr>
+                                <t t-foreach="range(0, len(row))" t-as="col_cnt">
+                                    <t t-set="col" t-value="row[str(col_cnt)]"/>
+                                    <t t-if="col.get('is_td')">
+                                        <td t-att-rowspan="col.get('rowspan') or 0" t-att-colspan="col.get('colspan') or 0" t-att-style="col.get('style') or ''">
+                                            <t t-esc="col.get('text')"/>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <th t-att-rowspan="col.get('rowspan') or 0" t-att-colspan="col.get('colspan') or 0" t-att-style="col.get('style') or ''">
+                                            <t t-if="row_cnt == 0 and col_cnt == 1">
+                                                Month
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="col.get('text')"/>
+                                            </t>
+                                        </th>
+                                    </t>
+                                </t>
+                            </tr>
+                        </t>
+                    </table>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

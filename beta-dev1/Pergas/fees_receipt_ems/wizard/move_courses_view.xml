@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+
+        <record id="view_move_courses_wizard_form" model="ir.ui.view">
+            <field name="name">move.courses.wizard.form</field>
+            <field name="model">move.courses.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Move Standards">
+                    <group>
+                        <field name="moved" class="oe_inline" invisible="1"/>
+                        
+                        <field name="school_id" attrs="{'invisible': [('moved', '!=', False)]}" widget="selection" class="oe_inline"/>
+                        <field name="standard_id" domain="[('school_id','=',school_id)]" attrs="{'invisible': [('moved', '!=', False)]}" widget="selection"/>
+                        <field name="academic_year_id" domain="[('standard_id','=',standard_id)]" attrs="{'invisible': [('moved', '!=', False)]}" widget="selection" class="oe_inline"/>
+                        <field name="message" readonly="1" attrs="{'invisible': [('moved', '!=', True)]}" class="oe_inline"/>
+                    </group>
+                    <footer>
+                        <button class="btn btn-sm btn-default fa fa-ban" special="cancel" string="Close"/>
+                        <button class="btn btn-sm btn-default fa fa-plus" attrs="{'invisible': [('moved', '!=', False)]}" name="move_courses" string="Move" type="object"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+        
+        <record id="action_move_courses_wizard_form" model="ir.actions.act_window">
+            <field name="name">Move Courses</field>
+            <field name="res_model">move.courses.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_move_courses_wizard_form" />
+            <field name="target">new</field>
+        </record>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="option_takeaway_order_template" inherit_id="pizzahut_modifier_startscreen.template" xml:space="preserve">
+
+	<t t-extend="OptionsPopupWidget">
+		<t t-jquery="button[data-action='2']" t-operation="replace">
+			<button class="button icon take_away" data-action='2'>
+				<img src="/pizzahut_modifier_startscreen/static/src/img/takeaway.png"></img><span>Take Away</span></button>
+		</t>
+	</t>
+
+</templates>
+
+
+
+
+

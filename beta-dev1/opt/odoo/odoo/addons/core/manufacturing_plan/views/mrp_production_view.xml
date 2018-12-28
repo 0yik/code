@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+        <record id="mrp_production_form_view_inherit" model="ir.ui.view">
+            <field name="name">mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Employees Involved">
+                        <field name="employee_involve_ids">
+                            <tree editable="bottom">
+                                 <field name="no_of_employees"/>
+                                 <field name="average_pay"/>
+                                 <field name="involvement" string="Involvement (%)"/>
+                            </tree>
+                        </field>
+                        <!--<group>-->
+                            <!--<group>-->
+                                <!--<field name="no_of_employees"/>-->
+                                <!--<label for="average_pay" string="Involvement"/>-->
+                                <!--<div name="involvement">-->
+                                    <!--<field name="involvement" class="oe_inline"/>-->
+                                    <!--%-->
+                                <!--</div>-->
+                                <!--<field name="average_pay"/>-->
+                            <!--</group>-->
+                        <!--</group>-->
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!--<record id="vview_move_form_form_inherit" model="ir.ui.view">-->
+            <!--<field name="name">account.move.form</field>-->
+            <!--<field name="model">account.move</field>-->
+            <!--<field name="inherit_id" ref="account.view_move_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//field[@name='currency_id']" position="after">-->
+                    <!--<field name="addition_cost" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+    </data>
+</odoo>

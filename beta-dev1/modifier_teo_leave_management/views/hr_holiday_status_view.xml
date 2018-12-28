@@ -1,0 +1,13 @@
+<odoo>
+    <record id="hr_holidays_status_form_view" model="ir.ui.view">
+		<field name="name">hr.holidays.status.form.view</field>
+		<field name="model">hr.holidays.status</field>
+		<field name="inherit_id" ref="hr_holidays.edit_holiday_status_form" />
+		<field name="arch" type="xml">
+            <field name="active" position="after">
+                <field name="max_back_date" string="Max Back Date"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

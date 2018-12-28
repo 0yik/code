@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="theme_stoneware.option_footer_option3" model="ir.ui.view">
+        <field name="active" eval="0"></field>
+    </record>
+    <record id="theme_stoneware.option_footer_option2" model="ir.ui.view">
+        <field name="active" eval="1"></field>
+    </record>
+    <record id="theme_stoneware.option_colorPreset3" model="ir.ui.view">
+        <field name="active" eval="0"></field>
+    </record>
+    <record id="theme_stoneware.option_colorPreset4" model="ir.ui.view">
+        <field name="active" eval="1"></field>
+    </record>
+</odoo>

@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="pos_promotion_add_pos_config" model="ir.ui.view">
+            <field name="name">pos.promotion.add.pos.config</field>
+            <field name="model">pos.promotion</field>
+            <field name="inherit_id" ref="pos_promotion.pos_promotion_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="pos_configs" widget="many2many_tags"></field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,14 @@
+<odoo>
+	<data>
+		<record id="crm_case_form_view_oppor_user_inherit2" model="ir.ui.view">
+	        <field name="name">crm.case.form.view.oppor.user.inherit2</field>
+	        <field name="model">crm.lead</field>
+	        <field name="inherit_id" ref="avanta_fields_modifier.crm_case_form_view_oppor_inherit"/>
+	        <field name="arch" type="xml">
+	            <field name="products" position="after">
+	                <field name="last_status_date"/>
+	            </field>
+	        </field>
+	    </record>
+	</data>
+</odoo>

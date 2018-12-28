@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-name="PivotView.FieldSelection">
+		<ul class="dropdown-menu o_pivot_field_menu" role="menu">
+		    <t t-foreach="fields" t-as="field">
+		        <t t-if="(field[1].type === 'date') || (field[1].type === 'datetime')">
+		            <t t-if="field[1].class === 'yes'">
+			            <li class="o_inline_dropdown custom_fld_hide" t-att-data-field="field[0]">
+			                <a href="#" class="o_pivot_field_selection">
+			                    <t t-esc="field[1].string"/>
+			                </a>
+			                <ul class="dropdown-menu">
+			                    <li t-att-data-field="field[0]"><a href="#" t-att-data-interval="'day'">Day</a></li>
+			                    <li t-att-data-field="field[0]"><a href="#" t-att-data-interval="'week'">Week</a></li>
+			                    <li t-att-data-field="field[0]"><a href="#" t-att-data-interval="'month'">Month</a></li>
+			                    <li t-att-data-field="field[0]"><a href="#" t-att-data-interval="'quarter'">Quarter</a></li>
+			                    <li t-att-data-field="field[0]"><a href="#" t-att-data-interval="'year'">Year</a></li>
+			                </ul>
+			            </li>
+			         </t>
+			         <t t-if="field[1].class === 'no'">
+		                <li class="o_inline_dropdown" t-att-data-field="field[0]">
+		                    <a href="#" class="o_pivot_field_selection">
+		                        <t t-esc="field[1].string"/>
+		                    </a>
+		                    <ul class="dropdown-menu">
+		                        <li t-att-data-field="field[0]"><a href="#" t-att-data-interval="'day'">Day</a></li>
+		                        <li t-att-data-field="field[0]"><a href="#" t-att-data-interval="'week'">Week</a></li>
+		                        <li t-att-data-field="field[0]"><a href="#" t-att-data-interval="'month'">Month</a></li>
+		                        <li t-att-data-field="field[0]"><a href="#" t-att-data-interval="'quarter'">Quarter</a></li>
+		                        <li t-att-data-field="field[0]"><a href="#" t-att-data-interval="'year'">Year</a></li>
+		                    </ul>
+		                </li>
+		             </t>
+		        </t>
+		        <t t-if="(field[1].type !== 'date') &amp;&amp; (field[1].type !== 'datetime')">
+		            <t t-if="field[1].class === 'yes'">
+		                <li class="custom_fld_hide" t-att-data-field="field[0]"><a href="#"><t t-esc="field[1].string"/></a></li>
+		            </t>
+		            <t t-if="field[1].class === 'no'">
+		                <li t-att-data-field="field[0]"><a href="#"><t t-esc="field[1].string"/></a></li>
+		            </t>
+		        </t>
+		    </t>
+		</ul>
+	</t>
+
+	<div t-name="SearchView.AddRemoveFields" class="btn-group o_dropdown">
+		<button class="o_dropdown_toggler_btn btn btn-sm dropdown-toggle" data-toggle="dropdown">
+		    <span class="fa fa-filter"/> Add / Remove Fields <span class="caret"/>
+		</button>
+		<ul class="dropdown-menu o_fields_menu" role="menu">
+		    <li class="o_add_fields o_closed_menu">
+		        <a href="#">Add Fields</a>
+		    </li>
+		    <li class="o_remove_fields o_closed_menu">
+		        <a href="#">Remove Fields</a>
+		    </li>
+		    <li class="o_add_fields_menu">
+		        <button id="ad_rem" class="btn btn-primary btn-sm o_apply_fields" type="button">Apply</button>
+		    </li>
+		</ul>
+	</div>
+	
+	<t t-name="SearchView.custom_report.proposition">
+		<li class="o_filter_condition">
+		    <span>
+		        <select class="o_pivot_extended_prop_field">
+		            <t t-foreach="widget.attrs.fields" t-as="field">
+		                <option t-att="{'selected': field === widget.attrs.selected ? 'selected' : null}"
+		                        t-att-value="field.name">
+		                    <t t-esc="field.string"/>
+		                </option>
+		            </t>
+		        </select>
+		    </span>
+		</li>
+	</t>
+</templates>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="product_product_category_modifier_cust_form" model="ir.ui.view">
+        <field name="name">product.product.form.inherit.category.cust</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='categ_id']" position="after">
+    			<field name="category_main_id"/>
+    			<field name="category_subfirst_id"/>
+    			<field name="category_subsecond_id"/>
+    			<field name="product_brand_id"/>
+			</xpath>
+        </field>
+    </record>
+
+    <record id="product_modifier_reusable_extend" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.brand.extend</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product_brand.product_modifier_reusable"/>
+        <field name="arch" type="xml">
+			<xpath expr="//form/sheet/notebook/page[@name='general_information']/group/group[1]/field[@name='product_brand_id']" position="replace">
+			</xpath>
+        </field>
+    </record>
+    <record id="product_category_modifier_cust" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.category.cust</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+			<xpath expr="//form/sheet/notebook/page[@name='general_information']/group/group[1]/field[@name='categ_id']" position="after">
+    			<field name="category_main_id"/>
+    			<field name="category_subfirst_id"/>
+    			<field name="category_subsecond_id"/>
+    			<field name="product_brand_id"/>
+			</xpath>
+        </field>
+    </record>
+
+    <record id="product_category_main" model="ir.ui.view">
+        <field name="name">category.main</field>
+        <field name="model">category.main</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_category_main" model="ir.actions.act_window">
+        <field name="name">Category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">category.main</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="product_category_main"/>
+    </record>
+
+    <menuitem action="action_category_main" id="menu_action_category_main" parent="sale.prod_config_main" sequence="2"/>
+        <record id="product_category_sub_first" model="ir.ui.view">
+        <field name="name">category.subfirst</field>
+        <field name="model">category.subfirst</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+		<field name="category_id" string="Category"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="product_category_sub_first_form" model="ir.ui.view">
+        <field name="name">category.subfirst.form</field>
+        <field name="model">category.subfirst</field>
+        <field name="arch" type="xml">
+            <form>
+            	<group>
+            		<field name="name"/>
+                	<field name="category_id" string="Category"/>
+            	</group>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_category_sub_second" model="ir.ui.view">
+        <field name="name">category.subsecond</field>
+        <field name="model">category.subsecond</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+		<field name="first_categ_id" string="First Category"/>
+            </tree>
+        </field>
+    </record>
+    <record id="product_category_sub_second_form" model="ir.ui.view">
+        <field name="name">category.subsecond.form</field>
+        <field name="model">category.subsecond</field>
+        <field name="arch" type="xml">
+            <form>
+            	<group>
+            		<field name="name"/>
+                	<field name="first_categ_id" string="First Category"/>
+            	</group>
+            </form>
+        </field>
+    </record>
+    
+	<record id="view_product_brand_form_inherited" model="ir.ui.view">
+		<field name="name">product.brand.form.inherited</field>
+		<field name="model">product.brand</field>
+		<field name="inherit_id" ref="product_brand.view_product_brand_form_1"/>
+		<field name="arch" type="xml">
+			<field name="name" position="after">
+				<field name="second_categ_id" string="Second Category"/>
+			</field>
+		</field>
+	</record>
+
+    <record model="ir.actions.act_window" id="action_sub_category_first">
+        <field name="name">Sub I</field>
+        <field name="res_model">category.subfirst</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="product_category_sub_first"/>
+    </record>
+    <record model="ir.actions.act_window" id="action_sub_category_second">
+        <field name="name">Sub II</field>
+        <field name="res_model">category.subsecond</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="product_category_sub_second"/>
+    </record>
+
+
+    <menuitem action="action_sub_category_first" id="menu_action_sub_category_first" parent="sale.prod_config_main" sequence="2"/>
+    <menuitem action="action_sub_category_second" id="menu_action_sub_category_second" parent="sale.prod_config_main" sequence="2"/>
+
+    </data>
+</odoo>
+

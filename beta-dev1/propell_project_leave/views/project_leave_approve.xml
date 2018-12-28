@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="hr_holidays_leave_approval_hierarchy_form_extend" model="ir.ui.view">
+        <field name="name">Hr Holidays Leave approval hierarchyForm extend</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="hr_employee_hierarchy.hr_holidays_leave_approval_hierarchy_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//button[@name='action_confirm']" position="after">
+                <button string="Approve by Project Manager" name="approve_pm" states="pm_approval" type="object" class="oe_highlight" groups=""/>
+                <button string="Approve by Supervisor" name="approve_sup" states="sup_approval" type="object" class="oe_highlight" groups=""/>
+                <button string="Approve by Engineer" name="approve_eng" states="eng_approval" type="object" class="oe_highlight" groups=""/>
+        	</xpath>
+		</field>
+	</record>
+		
+</odoo>

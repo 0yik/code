@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_sale_requisition_form_inherit_mgm">
+            <field name="name">sale.requisition.form</field>
+            <field name="model">sale.requisition</field>
+            <field name="arch" type="xml">
+                <form string="Sales Agreements">
+                    <header>
+                        <button name="action_quotation_send" string="Send by Email" states="drafts" type="object"
+                                class="btn-primary"/>
+                        <button name="action_in_progress" states="drafts" string="Confirm" type="object"
+                                class="btn-primary"/>
+                        <button name="action_drafts" states="cancel" string="Reset to Draft" type="object"/>
+                        <button name="%(so_blanket_order.action_sale_requisition_list)d" type="action"
+                                class="btn-primary" string="New Sale Order"
+                                attrs="{'invisible': [('state', '=', 'drafts')]}"/>
+                        <button name="action_cancel" states="drafts,in_progress,dailynote" string="Cancel Call"
+                                type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="drafts,in_progress,open,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(so_blanket_order.action_sale_requisition_list)d" type="action"
+                                    class="oe_stat_button" icon="fa-list-alt"
+                                    attrs="{'invisible': [('state', '=', 'drafts')]}">
+                                <field name="order_count" widget="statinfo" string="Sales Order"/>
+                            </button>
+                        </div>
+                        <div class="pull-left">
+                            <label for="name" class="oe_edit_only oe_inline"/>
+                            <h1>
+                                <field name="name" attrs="{'readonly': [('state','not in',('drafts'))]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="business_unit_text" invisible="1"/>
+                                <field name="user_id"
+                                       attrs="{'readonly': [('state','not in',('drafts','in_progress','open'))]}"/>
+                                <field name="business_unit" required="1"
+                                       attrs="{'readonly': [('state','not in',('drafts','in_progress','open'))]}"/>
+                                <field name="type_id"
+                                       attrs="{'readonly': [('state','not in',('drafts','in_progress','open'))]}"
+                                       widget="selection"/>
+                                <field name="partner_id" required="1"
+                                       context="{'search_default_customer':1, 'default_customer':1, 'default_supplier':0}"
+                                       domain="[('customer','=',True)]"/>
+                                <field name="mother_vessel"
+                                       attrs="{'readonly': [('state','not in',('drafts','in_progress','open'))]}"/>
+                                <field name="asset_id"
+                                       attrs="{'readonly': [('state','not in',('drafts','in_progress','open'))]}"/>
+                                <field name="vessel_type_id"
+                                       attrs="{'invisible':[('unit','!=','stevedoring')], 'readonly': [('state','not in',('drafts','in_progress','open'))]}"/>
+                                <field name="account_analytic_id" colspan="2" groups="sale.group_analytic_accounting"
+                                       attrs="{'readonly': [('state','not in',('drafts'))]}" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="date_end"
+                                       attrs="{'readonly': [('state','not in',('drafts','in_progress','open'))]}"/>
+                                <!--<field name="ordering_date"
+                                       attrs="{'readonly': [('state','not in',('drafts','in_progress','open'))]}"/>-->
+                                <field name="ordering_date"/>
+                                <field name="schedule_date" invisible="1"
+                                       attrs="{'readonly': [('state','not in',('drafts','in_progress','open'))]}"/>
+                                <field name="origin" placeholder="e.g. PO0025"
+                                       attrs="{'readonly': [('state', '!=', 'drafts')]}"/>
+
+                                <field name="pricelist_id" string="Pricelist" required="1"/>
+
+                                <!--<field name="picking_type_id" widget="selection" groups="stock.group_adv_location" attrs="{'readonly': [('state', '!=', 'drafts')]}"/> -->
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"
+                                       attrs="{'readonly': [('state','not in',('drafts'))]}"/>
+                                <button name="analytic_account" string="Analytic Account" type="object"
+                                        class="btn-primary" colspan="2"/>
+                                <field name="unit" invisible="1"></field>
+
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <field name="line_ids">
+                                    <tree string="Products" editable="bottom">
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="product_id" string="Product Name" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty,
+                                        'pricelist':parent.pricelist_id, 'uom':product_uom_id, 'company_id': parent.company_id}"/>
+                                        <field name="product_code"/>
+                                        <field name="description"/>
+                                        <field name="product_uom_qty" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty,
+                                        'pricelist':parent.pricelist_id, 'uom':product_uom_id, 'company_id': parent.company_id}"/>
+                                        <field name="qty_ordered"/>
+                                        <field name="product_uom_id" groups="product.group_uom"/>
+                                        <field name="schedule_date" groups="base.group_no_one"/>
+                                        <field name="account_analytic_id" groups="sale.group_analytic_accounting"/>
+                                        <field name="price_unit" sum="Total" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                                        <field name="sub_total" sum="Total" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                                    </tree>
+                                    <form string="Products">
+                                        <group>
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty,
+                                            'pricelist':parent.pricelist_id, 'uom':product_uom_id, 'company_id': parent.company_id}"/>
+                                            <field name="product_uom_qty" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty,
+                                            'pricelist':parent.pricelist_id, 'uom':product_uom_id, 'company_id': parent.company_id}"/>
+                                            <field name="qty_ordered"/>
+                                            <field name="product_uom_id"/>
+                                            <field name="schedule_date"/>
+                                            <field name="account_analytic_id" groups="sale.group_analytic_accounting"/>
+                                            <field name="company_id" groups="base.group_multi_company"
+                                                   options="{'no_create': True}"/>
+                                        </group>
+                                    </form>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <!--<field name="amount_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+                                </group>
+                                <separator string="Terms and Conditions"/>
+                                <field name="description"
+                                       attrs="{'readonly': [('state','not in',('drafts','in_progress','open'))]}"/>
+                            </page>
+                            <page string="Other Information">
+                                <field name="laycan_ids">
+                                    <tree editable="top">
+                                        <field name="laycan_in"/>
+                                        <field name="laycan_out"/>
+                                        <field name="commence_date"/>
+                                        <field name="complete_date"/>
+                                        <field name="subcon"/>
+                                        <field name="late_fee"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_sale_requisition_form_mgm">
+            <field name="name">sale.requisition.form</field>
+            <field name="model">sale.requisition</field>
+            <field name="arch" type="xml">
+                <form string="Sales Agreements">
+                    <header>
+                        <button name="action_quotation_send" string="Send by Email" states="draft1" type="object"
+                                class="btn-primary"/>
+                        <button name="action_done_dailynote" states="inprogress" string="Done" type="object"
+                                class="btn-primary"/>
+                        <button name="action_in_progress1" states="draft1" string="Confirm" type="object"
+                                class="btn-primary"/>
+                        <button name="%(so_blanket_order.action_sale_requisition_list)d" string="New Sale Order"
+                                class="btn-primary" type="action" attrs="{'invisible': [('state', '=', 'draft1')]}"/>
+                        <button name="action_draft1" states="cancel" string="Reset to Draft" type="object"/>
+                        <button name="action_cancel" states="draft1,inprogress,dailynote" string="Cancel Call"
+                                type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft1,inprogress,dailynote"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(so_blanket_order.action_sale_requisition_list)d" type="action"
+                                    class="oe_stat_button" icon="fa-list-alt"
+                                    attrs="{'invisible': [('state', '=', 'draft1')]}">
+                                <field name="order_count" widget="statinfo" string="Sales Order"/>
+                            </button>
+                        </div>
+                        <div class="pull-left">
+                            <label for="name" class="oe_edit_only oe_inline"/>
+                            <h1>
+                                <field name="name" attrs="{'readonly': [('state','not in',('draft1'))]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="business_unit_text" invisible="1"/>
+                                <field name="user_id"
+                                       attrs="{'readonly': [('state','not in',('draft1','inprogress','open'))]}"/>
+                                <field name="business_unit" required="1"
+                                       attrs="{'readonly': [('state','not in',('draft1','inprogress','open'))]}"/>
+                                <field name="type_id"
+                                       attrs="{'readonly': [('state','not in',('draft1','inprogress','open'))]}"
+                                       widget="selection"/>
+                                <field name="partner_id"
+                                       context="{'search_default_customer':1, 'default_customer':1, 'default_supplier':0}"
+                                       domain="[('customer','=',True)]" required="1"/>
+                                <field name="account_analytic_id" colspan="2" groups="sale.group_analytic_accounting"
+                                       attrs="{'readonly': [('state','not in',('draft1'))]}"/>
+                                <field name="port_id"
+                                       attrs="{'readonly': [('state','not in',('draft1','inprogress','open'))]}"/>
+                                <field name="dock_id"
+                                       attrs="{'readonly': [('state','not in',('draft1','inprogress','open'))]}"/>
+                                <field name="rit_type_id"
+                                       attrs="{'readonly': [('state','not in',('draft1','inprogress','open'))]}"/>
+                                <button name="analytic_account" string="Analytic Account" type="object"
+                                        class="btn-primary" colspan="2"/>
+                            </group>
+                            <group>
+                                <field name="date_end" string="Operation Schedule Date" required="1"
+                                       attrs="{'readonly': [('state','not in',('draft1','inprogress','open'))]}"/>
+                                <!--<field name="ordering_date"
+                                       attrs="{'readonly': [('state','not in',('draft1','inprogress','open'))]}"/>-->
+                                <field name="ordering_date" readonly="1"/>
+
+                                <field name="schedule_date"
+                                       attrs="{'readonly': [('state','not in',('draft1','inprogress','open'))]}"
+                                       invisible="1"/>
+
+                                <field name="origin" placeholder="e.g. PO0025"
+                                       attrs="{'readonly': [('state', '!=', 'draft1')]}"/>
+                                <field name="picking_type_id" widget="selection" groups="stock.group_adv_location"
+                                       attrs="{'readonly': [('state', '!=', 'draft1')]}"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"
+                                       attrs="{'readonly': [('state','not in',('draft1'))]}"/>
+                                <field name="asset_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <field name="line_ids">
+                                    <tree string="Products" editable="bottom">
+                                        <field name="product_id" string="Product Name"/>
+                                        <field name="product_code"/>
+                                        <field name="description"/>
+                                         <field name="currency_id" invisible="1"/>
+                                        <field name="product_uom_qty"/>
+                                        <field name="qty_ordered"/>
+                                        <field name="product_uom_id" groups="product.group_uom"/>
+                                        <field name="schedule_date" groups="base.group_no_one"/>
+                                        <field name="account_analytic_id" groups="sale.group_analytic_accounting"/>
+                                        <field name="price_unit" sum="Total" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                                        <field name="sub_total" sum="Total" widget="monetary"  options="{'currency_field': 'currency_id'}" />
+                                    </tree>
+                                    <form string="Products">
+                                        <group>
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="product_id"/>
+                                            <field name="product_uom_qty"/>
+                                            <field name="qty_ordered"/>
+                                            <field name="product_uom_id"/>
+                                            <field name="schedule_date"/>
+                                            <field name="account_analytic_id" groups="sale.group_analytic_accounting"/>
+                                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                        </group>
+                                    </form>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <!--<field name="amount_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+                                </group>
+                                <separator string="Remarks"/>
+                                <field name="description"
+                                       attrs="{'readonly': [('state','not in',('draft1','inprogress','open'))]}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sale_requisition_ferry_action1">
+            <field name="name">Daily Rit Draft</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+	                      (0, 0, {'view_mode': 'tree', 'view_id': ref('so_blanket_order.view_sale_requisition_tree')}),
+	                      (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_mgm')}),
+	                     ]"
+            />
+            <field name="context">{'default_state':'draft1', 'default_business_unit_text':'ferry'}</field>
+            <field name="domain">[('business_unit.unit','=','ferry'),('state','=','draft1')]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sale_requisition_ferry_action1_new">
+            <field name="name">Daily Rit Draft</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+	                      (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_mgm')}),
+	                     ]"
+            />
+            <field name="context">{'default_state':'draft1', 'default_business_unit_text':'ferry'}</field>
+            <field name="domain">[('business_unit.unit','=','ferry'),('state','=','draft1')]</field>
+        </record>
+
+        <record id="sale_requisition_ferry_action_done" model="ir.actions.act_window">
+            <field name="name">Daily Rit - Ferry</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('so_blanket_order.view_sale_requisition_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_mgm')}),
+                         ]"
+            />
+            <field name="domain">[('business_unit.unit','=','ferry'),('state','in',['inprogress','dailynote'])]</field>
+            <field name="context">{'default_state':'draft1','default_business_unit_text':'ferry'}</field>
+        </record>
+
+        <record id="action_orders_ferry" model="ir.actions.act_window">
+            <field name="name">Dailty Rit Final</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent',
+                'cancel')),('requisition_id.business_unit.unit','=','ferry')]
+            </field>
+        </record>
+
+        <record id="action_orders_to_invoice_ferry" model="ir.actions.act_window">
+            <field name="name">Sales to Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph,pivot</field>
+            <field name="context">{}</field>
+            <field name="domain">[('invoice_status','=','to invoice'),('requisition_id.business_unit.unit','=','ferry')]
+            </field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+        </record>
+
+        <menuitem id="menu_sale_requisition_ferry" name="Ferry" parent="sales_team.menu_base_partner" sequence="5"/>
+        <menuitem id="menu_sale_requisition_ferry_quotation" name="Draft" parent="menu_sale_requisition_ferry"
+                  sequence="5" action="sale_requisition_ferry_action1"/>
+        <menuitem id="menu_sale_requisition_ferry_quotation_done" name="Daily Rit" parent="menu_sale_requisition_ferry"
+                  sequence="5" action="sale_requisition_ferry_action_done"/>
+        <menuitem action="action_orders_ferry" name="ASDP Final" id="menu_sale_order_ferry"
+                  parent="menu_sale_requisition_ferry" sequence="5"/>
+        <menuitem action="action_orders_to_invoice_ferry" id="menu_sale_order_invoice_ferry"
+                  parent="menu_sale_requisition_ferry" sequence="6"/>
+
+        <record id="sale_requisition_tug_barge_action" model="ir.actions.act_window">
+            <field name="name">Quotation-Tug &amp; Barge</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('so_blanket_order.view_sale_requisition_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_inherit_mgm')}),
+                         ]"
+            />
+            <field name="context">{'default_state':'drafts','default_business_unit_text':'tug_barge'}</field>
+            <field name="domain">[('business_unit.unit','=','tug_barge'),('state','=','drafts')]</field>
+        </record>
+
+        <record id="sale_requisition_tug_barge_action_new" model="ir.actions.act_window">
+            <field name="name">Quotation-Tug &amp; Barge</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_inherit_mgm')}),
+                         ]"
+            />
+            <field name="context">{'default_state':'drafts','default_business_unit_text':'tug_barge'}</field>
+            <field name="domain">[('business_unit.unit','=','tug_barge'),('state','=','drafts')]</field>
+        </record>
+
+        <record id="sale_requisition_tug_action_done" model="ir.actions.act_window">
+            <field name="name">Fixture Note</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('so_blanket_order.view_sale_requisition_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_inherit_mgm')}),
+                         ]"
+            />
+            <field name="domain">[('business_unit.unit','=','tug_barge'),('state','in',['in_progress','done'])]</field>
+            <field name="context">{'default_state':'drafts','default_business_unit_text':'tug_barge'}</field>
+        </record>
+
+        <record id="action_orders_tug" model="ir.actions.act_window">
+            <field name="name">Sales Orders - Tug &amp; Barge</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent',
+                'cancel')),('requisition_id.business_unit.unit','=','tug_barge')]
+            </field>
+        </record>
+
+        <record id="action_orders_to_invoice_tug_barge" model="ir.actions.act_window">
+            <field name="name">Sales to Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph,pivot</field>
+            <field name="context">{}</field>
+            <field name="domain">[('invoice_status','=','to invoice'),('requisition_id.business_unit.unit','=','tug_barge')]
+            </field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+        </record>
+
+        <menuitem id="menu_sale_requisition_tug_barge" name="Tug &amp; Barge" parent="sales_team.menu_base_partner"
+                  sequence="5"/>
+        <menuitem id="menu_sale_requisition_tug_barge_quotation" name="Quotation"
+                  parent="menu_sale_requisition_tug_barge" sequence="5" action="sale_requisition_tug_barge_action"/>
+        <menuitem id="menu_sale_requisition_tug_quotation_done" name="Fixture Note"
+                  parent="menu_sale_requisition_tug_barge" sequence="5" action="sale_requisition_tug_action_done"/>
+        <menuitem action="action_orders_tug" name="Sales Order" id="menu_sale_order_tug"
+                  parent="menu_sale_requisition_tug_barge" sequence="5"/>
+        <menuitem action="action_orders_to_invoice_tug_barge" id="menu_sale_order_invoice_tug_barge"
+                  parent="menu_sale_requisition_tug_barge" sequence="6"/>
+
+        <record id="sale_requisition_stevedoring_action" model="ir.actions.act_window">
+            <field name="name">Quotation - Stevedoring</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('so_blanket_order.view_sale_requisition_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_inherit_mgm')}),
+                         ]"
+            />
+            <field name="domain">[('business_unit.unit','=','stevedoring'), ('state','=','drafts')]</field>
+            <field name="context">{'default_state':'drafts','default_business_unit_text':'stevedoring'}</field>
+        </record>
+
+        <record id="sale_requisition_stevedoring_action_new" model="ir.actions.act_window">
+            <field name="name">Quotation - Stevedoring</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_inherit_mgm')}),
+                         ]"
+            />
+            <field name="domain">[('business_unit.unit','=','stevedoring'), ('state','=','drafts')]</field>
+            <field name="context">{'default_state':'drafts','default_business_unit_text':'stevedoring'}</field>
+        </record>
+
+        <record id="sale_requisition_stevedoring_action_done" model="ir.actions.act_window">
+            <field name="name">Fixture Note</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('so_blanket_order.view_sale_requisition_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_inherit_mgm')}),
+                         ]"
+            />
+            <field name="domain">[('business_unit.unit','=','stevedoring'),('state','in',['in_progress','done'])]
+            </field>
+            <field name="context">{'default_state':'drafts','default_business_unit_text':'stevedoring'}</field>
+        </record>
+
+        <record id="action_orders_stevedoring" model="ir.actions.act_window">
+            <field name="name">Sales Orders - Stevedoring</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent',
+                'cancel')),('requisition_id.business_unit.unit','=','stevedoring')]
+            </field>
+        </record>
+
+        <record id="action_orders_to_invoice_stevedoring" model="ir.actions.act_window">
+            <field name="name">Sales to Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph,pivot</field>
+            <field name="context">{}</field>
+            <field name="domain">[('invoice_status','=','to invoice'),('requisition_id.business_unit.unit','=','stevedoring')]
+            </field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+        </record>
+
+        <menuitem id="menu_sale_requisition_stevedoring" name="Stevedoring" parent="sales_team.menu_base_partner"
+                  sequence="5"/>
+        <menuitem id="menu_sale_requisition_stevedoring_quotations" name="Quotations"
+                  parent="menu_sale_requisition_stevedoring" sequence="5" action="sale_requisition_stevedoring_action"/>
+        <menuitem id="menu_sale_requisition_stevedoring_quotation_done" name="Fixture Note"
+                  parent="menu_sale_requisition_stevedoring" sequence="5"
+                  action="sale_requisition_stevedoring_action_done"/>
+        <menuitem action="action_orders_stevedoring" name="Sales Order" id="menu_sale_order_stevedoring"
+                  parent="menu_sale_requisition_stevedoring" sequence="5"/>
+        <menuitem action="action_orders_to_invoice_stevedoring" id="menu_sale_order_invoice_stevedoring"
+                  parent="menu_sale_requisition_stevedoring" sequence="6"/>
+
+        <record id="sale_requisition_fls_action" model="ir.actions.act_window">
+            <field name="name">Quotation - FLF</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('business_unit.unit','=','fls'),('state','=', 'drafts')]</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('so_blanket_order.view_sale_requisition_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_inherit_mgm')}),
+                         ]"
+            />
+            <field name="context">{'default_state':'drafts','default_business_unit_text':'fls'}</field>
+        </record>
+
+        <record id="sale_requisition_fls_action_new" model="ir.actions.act_window">
+            <field name="name">Quotation - FLF</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[('business_unit.unit','=','fls'),('state','=', 'drafts')]</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_inherit_mgm')}),
+                         ]"
+            />
+            <field name="context">{'default_state':'drafts','default_business_unit_text':'fls'}</field>
+        </record>
+
+        <record id="sale_requisition_fls_action_done" model="ir.actions.act_window">
+            <field name="name">Fixture Note</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('so_blanket_order.view_sale_requisition_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_inherit_mgm')}),
+                         ]"
+            />
+            <field name="domain">[('business_unit.unit','=','fls'),('state','in',['in_progress','done'])]</field>
+            <field name="context">{'default_state':'drafts','default_business_unit_text':'fls'}</field>
+        </record>
+
+        <record id="action_orders_fls" model="ir.actions.act_window">
+            <field name="name">Sales Orders - FLF</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent',
+                'cancel')),('requisition_id.business_unit.unit','=','fls')]
+            </field>
+        </record>
+
+        <record id="action_orders_to_invoice_fls" model="ir.actions.act_window">
+            <field name="name">Sales to Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph,pivot</field>
+            <field name="context">{}</field>
+            <field name="domain">[('invoice_status','=','to invoice'),('requisition_id.business_unit.unit','=','fls')]
+            </field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+        </record>
+
+        <menuitem id="menu_sale_requisition_fls" name="FLF" parent="sales_team.menu_base_partner" sequence="5"/>
+        <menuitem id="menu_sale_requisition_fls_quotations" name="Quotations" parent="menu_sale_requisition_fls"
+                  sequence="5" action="sale_requisition_fls_action"/>
+        <menuitem id="menu_sale_requisition_fls_quotation_done" name="Fixture Note" parent="menu_sale_requisition_fls"
+                  sequence="5" action="sale_requisition_fls_action_done"/>
+        <menuitem action="action_orders_fls" name="Sales Order" id="menu_sale_order_fls"
+                  parent="menu_sale_requisition_fls" sequence="5"/>
+        <menuitem action="action_orders_to_invoice_fls" id="menu_sale_order_invoice_fls"
+                  parent="menu_sale_requisition_fls" sequence="6"/>
+
+        <record id="sale_requisition_others_action" model="ir.actions.act_window">
+            <field name="name">Quotation - Others</field>
+            <field name="res_model">sale.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('business_unit.unit','=','others')]</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('so_blanket_order.view_sale_requisition_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_sale_requisition_form_inherit_mgm')}),
+                         ]"
+            />
+            <field name="context">{'default_state':'drafts','default_business_unit_text':'others'}</field>
+        </record>
+
+        <record id="action_orders_others" model="ir.actions.act_window">
+            <field name="name">Sales Orders - Others</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent',
+                'cancel')),('requisition_id.business_unit.unit','=','others')]
+            </field>
+        </record>
+
+        <record id="action_orders_to_invoice_others" model="ir.actions.act_window">
+            <field name="name">Sales to Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph,pivot</field>
+            <field name="context">{}</field>
+            <field name="domain">[('invoice_status','=','to invoice'),('requisition_id.business_unit.unit','=','others')]
+            </field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+        </record>
+
+        <menuitem id="menu_sale_requisition_others" name="Other Quotations" parent="sales_team.menu_base_partner"
+                  sequence="14"/>
+        <menuitem id="menu_sale_requisition_others_quotations" name="Quotations" parent="menu_sale_requisition_others"
+                  sequence="5" action="sale_requisition_others_action"/>
+        <menuitem action="action_orders_others" name="Sales Order" id="menu_sale_order_others"
+                  parent="menu_sale_requisition_others" sequence="6"/>
+        <menuitem action="action_orders_to_invoice_others" id="menu_sale_order_invoice_others"
+                  parent="menu_sale_requisition_others" sequence="7"/>
+
+        <menuitem name="Invoicing" id="sale.menu_sale_invoicing" parent="sales_team.menu_base_partner" sequence="13"/>
+        <menuitem id="sales_team.menu_sales" name="Sales" parent="sales_team.menu_base_partner" sequence="15"/>
+
+        <!-- Ferry Setting Forms and Menus -->
+
+        <menuitem id="menu_sale_ferry_setting" name="Ferry Setting " parent="sales_team.menu_sale_config" sequence="2"/>
+
+        <record model="ir.ui.view" id="view_ferry_dock_form">
+            <field name="name">ferry.dock.form</field>
+            <field name="model">ferry.dock</field>
+            <field name="arch" type="xml">
+                <form string="Ferry Dock">
+                    <sheet>
+                        <group colspan="2">
+                            <field name="name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ferry_dock" model="ir.actions.act_window">
+            <field name="name">Ferry Dock</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ferry.dock</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_ferry_dock" name="Ferry Dock " action="action_ferry_dock" parent="menu_sale_ferry_setting"
+                  sequence="2"/>
+
+        <record model="ir.ui.view" id="view_ferry_port_form">
+            <field name="name">ferry.port.form</field>
+            <field name="model">ferry.port</field>
+            <field name="arch" type="xml">
+                <form string="Ferry Port">
+                    <sheet>
+                        <group colspan="2">
+                            <field name="name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ferry_port" model="ir.actions.act_window">
+            <field name="name">Ferry Port</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ferry.port</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_ferry_port" name="Ferry Port " action="action_ferry_port" parent="menu_sale_ferry_setting"
+                  sequence="2"/>
+
+        <record model="ir.ui.view" id="view_ferry_rittype_form">
+            <field name="name">ferry.rit.type.form</field>
+            <field name="model">ferry.rit.type</field>
+            <field name="arch" type="xml">
+                <form string="Ferry RitType">
+                    <sheet>
+                        <group colspan="2">
+                            <field name="name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ferry_rittype" model="ir.actions.act_window">
+            <field name="name">Rit Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ferry.rit.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_ferry_rittype" name="Rit Type " action="action_ferry_rittype"
+                  parent="menu_sale_ferry_setting" sequence="2"/>
+
+        <!-- Mother Vessel Setting -->
+
+        <menuitem id="menu_sale_mother_vessel_setting" name="Mother Vessel " parent="sales_team.menu_sale_config"
+                  sequence="2"/>
+
+        <!--<record model="ir.ui.view" id="view_mother_vessel_form">-->
+        <!--<field name="name">mother.vessel.type.form</field>-->
+        <!--<field name="model">mother.vessel</field>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<form string="Mother Vessel">-->
+        <!--<sheet>-->
+        <!--<group colspan="2">-->
+        <!--<field name="name" required="1"/>-->
+        <!--</group>-->
+        <!--</sheet>-->
+        <!--</form>-->
+        <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="action_mother_vessel" model="ir.actions.act_window">-->
+        <!--<field name="name">Mother Vessel</field>-->
+        <!--<field name="type">ir.actions.act_window</field>-->
+        <!--<field name="res_model">mother.vessel</field>-->
+        <!--<field name="view_type">form</field>-->
+        <!--<field name="view_mode">tree,form</field>-->
+        <!--</record>-->
+
+        <!--<menuitem id="menu_mother_vessel" name="Mother Vessel " action="action_mother_vessel" parent="menu_sale_mother_vessel_setting" sequence="2"/>-->
+
+        <record model="ir.ui.view" id="view_mother_vessel_type_form">
+            <field name="name">mother.vessel.type.form</field>
+            <field name="model">mother.vessel.type</field>
+            <field name="arch" type="xml">
+                <form string="Mother Vessel Type">
+                    <sheet>
+                        <group colspan="2">
+                            <field name="name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_mother_vessel_type" model="ir.actions.act_window">
+            <field name="name">Vessel Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mother.vessel.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_mother_vessel_type" name="Vessel Type " action="action_mother_vessel_type"
+                  parent="menu_sale_mother_vessel_setting" sequence="2"/>
+
+    </data>
+</odoo>

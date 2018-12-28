@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ClientDetails" t-extend="ClientDetails">
+        <t t-jquery=".client-detail:first" t-operation="after">
+            <t t-set="i" t-value="1"/>
+            <div class='client-detail'>
+                <span class='label'>Delivery Address</span>
+                <span class='detail'>
+                    <select id="delivery-address">
+                        <option value=""> --Choose Delivery Address--</option>
+                        <t t-foreach="partner.delivery_address" t-as="delivery">
+
+                           <!--  <option t-att-value="delivery[0]" t-att-selected="partner.selected_delivery_address_id==delivery[0] and true or false">
+                                    <t t-esc="delivery[1]" />
+                            </option> -->
+
+                            <option t-att-value='delivery[0]' t-att-selected="delivery[0] ? ((delivery[0] == partner.selected_delivery_address_id) ? true : undefined) : undefined"> 
+                                    <t t-esc='delivery[1]'/>
+                                </option>
+
+
+                        </t>
+                    </select>
+                </span>
+            </div>
+        </t>
+    </t>
+    <t t-name="PosTicket" t-extend="PosTicket">
+        <t t-jquery=".receipt-user:first" t-operation="after">
+            <div class="receipt-user">
+                Delivery Address : <t t-esc="order.get_delivery_address_details()"/>
+
+            </div>
+            <br />
+        </t>
+    </t>
+
+</templates>
